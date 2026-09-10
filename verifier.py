@@ -282,12 +282,18 @@ async def async_verify_pdf(file_bytes: bytes, password: Optional[str] = None) ->
             valid_statuses_for_ltv.append(status)
 
     # Step 4: Embed LTV (Long Term Validation) / DSS Information into Output PDF
+    # pyHanko's async_add_validation_info writes an INCREMENTAL revision on top of the
+    # existing PDF byte stream.  The output stream MUST be seeded with the original
+    # file bytes; otherwise we produce an empty/broken PDF with only the revision delta.
     verified_pdf_base64 = None
     ltv_applied = False
 
     if overall_status == "VALID" and embedded_sigs:
         try:
-            output_stream = io.BytesIO()
+            # Seed output stream with original bytes so the full PDF is preserved
+            output_stream = io.BytesIO(file_bytes)
+            output_stream.seek(0, 2)  # Seek to end so pyHanko appends incrementally
+
             # Apply DSS validation info for Adobe permanent green tick
             await async_add_validation_info(
                 embedded_sig=embedded_sigs[0],
@@ -295,16 +301,21 @@ async def async_verify_pdf(file_bytes: bytes, password: Optional[str] = None) ->
                 output=output_stream,
             )
             verified_bytes = output_stream.getvalue()
-            if verified_bytes:
+            if verified_bytes and len(verified_bytes) >= len(file_bytes):
                 verified_pdf_base64 = base64.b64encode(verified_bytes).decode("ascii")
                 ltv_applied = True
                 for s in signatures_detail:
                     s.ltv_added = True
+            else:
+                # Fallback: output shorter than original is a bug – use original bytes
+                logger.warning("LTV output smaller than input (%d < %d), falling back to original", len(verified_bytes or b""), len(file_bytes))
+                verified_pdf_base64 = base64.b64encode(file_bytes).decode("ascii")
         except Exception as ltv_exc:
             logger.info("LTV DSS embedding skipped: %s", ltv_exc)
             # If DSS embedding could not be completed, fallback to providing original base64
             verified_pdf_base64 = base64.b64encode(file_bytes).decode("ascii")
-    elif overall_status in ("VALID", "UNKNOWN"):
+    elif overall_status == "UNKNOWN":
+        # Chain unknown but hash intact – return the original document as-is
         verified_pdf_base64 = base64.b64encode(file_bytes).decode("ascii")
 
     # Construct final result
