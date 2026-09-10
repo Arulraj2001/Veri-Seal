@@ -1,0 +1,12 @@
+fastapi==0.109.0
+uvicorn==0.27.0
+pyhanko==0.21.0
+pyhanko-certvalidator==0.26.0
+python-multipart==0.0.6
+pydantic==2.5.3
+cryptography==42.0.0
+requests==2.31.0
+certifi==2024.2.2
+pyOpenSSL==24.0.0
+slowapi==0.1.9
+pypdf==4.0.1

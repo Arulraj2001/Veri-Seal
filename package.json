@@ -9,18 +9,37 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/third-parties": "^16.3.4",
+    "@sentry/nextjs": "^10.74.0",
+    "@supabase/supabase-js": "^2.109.0",
+    "@uiw/react-md-editor": "^4.1.2",
+    "@vercel/analytics": "^2.0.1",
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "critters": "^0.0.23",
+    "framer-motion": "^13.2.0",
+    "lucide-react": "^1.44.0",
+    "next": "14.2.15",
+    "next-auth": "^5.0.0-beta.32",
+    "next-themes": "^0.4.6",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.15"
+    "react-markdown": "^9.0.1",
+    "recharts": "^3.10.1",
+    "rehype-highlight": "^7.0.0",
+    "remark-gfm": "^4.0.0",
+    "resend": "^6.27.0",
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.15",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.15"
+    "typescript": "^5"
   }
 }

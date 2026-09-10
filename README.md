@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+---
+title: VeriSeal Backend
+emoji: 🛡️
+colorFrom: orange
+colorTo: red
+sdk: docker
+pinned: false
+---
 
-## Getting Started
+# 🛡️ VeriSeal Backend Verification Engine
 
-First, run the development server:
+Production-grade Indian Government PDF Digital Signature Verification Engine powered by **FastAPI**, **pyHanko**, and **CCA India PKI Trust Stores**.
 
+Designed for deployment on **Hugging Face Spaces** (Docker) or high-throughput production cloud instances.
+
+---
+
+## 🇮🇳 Capabilities
+
+- **CCA India PKI Chain Validation**: Validates digital signatures directly against the official Root Certifying Authority of India (RCAI 2004/2014/2022) and licensed Sub-CAs:
+  - National Informatics Centre (NIC CA 2014, 2017, 2021)
+  - eMudhra CA
+  - Capricorn CA
+  - (n)Code Solutions CA
+  - SafeScrypt (Sify) CA
+  - Protean (NSDL) e-Gov CA
+- **LTV (Long-Term Validation) Embedding**: Automatically applies Document Security Store (`/DSS`) structures and VRI dictionaries to valid PDFs so they retain permanent green ticks in Adobe Acrobat and all standard PDF readers without manual root cert imports.
+- **Intelligent Document Type Detection**: Identifies e-Aadhaar (UIDAI), Community Certificates (BC/MBC/SC/ST), Nativity, Income, First Graduate, PAN Cards, DigiLocker docs, ITR-V, Birth, and Death certificates.
+- **Zero-Storage Privacy Architecture**: All PDF processing, signature extraction, cryptographic checks, and LTV additions occur **100% in-memory** (`io.BytesIO`). No user documents are ever written to disk or persisted.
+- **DDoS & Abuse Protection**: Integrated `slowapi` rate limiting (10 requests/min per IP address for free tier).
+
+---
+
+## 📡 API Endpoints
+
+### 1. `POST /verify`
+Verifies a single Indian government PDF.
+
+- **Content-Type**: `multipart/form-data`
+- **Fields**:
+  - `file`: PDF binary file (max 25MB)
+  - `password`: *(Optional)* Decryption password for password-protected PDFs (e.g. e-Aadhaar convention `NAME1995`)
+- **Rate Limit**: 10 requests / minute / IP
+
+#### Example Request:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+curl -X POST "https://YOUR_HF_SPACE_URL/verify" \
+  -F "file=@eaadhaar_sample.pdf" \
+  -F "password=RAMA1992"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Success Response (`200 OK`):
+```json
+{
+  "status": "VALID",
+  "document_type": "e-Aadhaar (UIDAI)",
+  "signatures": [
+    {
+      "field_name": "Signature1",
+      "signer_name": "Unique Identification Authority of India",
+      "signer_org": "UIDAI",
+      "issuer": "NIC CA 2014 Sub-CA",
+      "valid_from": "2021-04-12T08:30:00",
+      "valid_to": "2024-04-12T08:30:00",
+      "signed_on": "2023-11-20T14:15:32",
+      "covers_whole_document": true,
+      "hash_valid": true,
+      "chain_valid": true,
+      "ltv_added": true
+    }
+  ],
+  "error": null,
+  "verified_pdf_base64": "JVBERi0xLjc..."
+}
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 2. `GET /health`
+Returns service status.
 
-## Learn More
+```bash
+curl -X GET "https://YOUR_HF_SPACE_URL/health"
+```
 
-To learn more about Next.js, take a look at the following resources:
+```json
+{
+  "status": "ok",
+  "version": "1.0.0"
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. `GET /supported-docs`
+Lists all supported document categories and detection patterns.
 
-## Deploy on Vercel
+```bash
+curl -X GET "https://YOUR_HF_SPACE_URL/supported-docs"
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. `POST /verify-batch` *(Pro / API Key)*
+Verifies up to 10 PDFs in a single request.
+
+- **Header**: `X-API-Key: your_api_key`
+- **Fields**: `files` (multiple PDF files)
+
+---
+
+## ⚠️ Error Responses
+
+All error responses strictly follow this schema:
+```json
+{
+  "error": true,
+  "code": "ERROR_CODE",
+  "message": "Human-readable explanation",
+  "detail": "Technical error detail"
+}
+```
+
+| Code | HTTP Status | Description |
+| :--- | :--- | :--- |
+| `NO_SIGNATURE_FOUND` | 422 | No cryptographic signature block exists in the PDF |
+| `WRONG_PASSWORD` | 401 | Document is password-encrypted and an invalid or missing password was provided |
+| `FILE_TOO_LARGE` | 413 | File exceeds 25MB size limit |
+| `INVALID_PDF` | 400 | File is corrupt or not a recognized PDF specification |
+| `UNSUPPORTED_FORMAT` | 415 | Uploaded file is not a PDF |
+| `RATE_LIMIT_EXCEEDED`| 429 | Exceeded 10 requests per minute per IP |
+| `VERIFICATION_FAILED`| 500 | Unexpected cryptographic verification failure |
+
+---
+
+## 🔒 Security Principles
+
+1. **In-Memory Pipeline**: All operations operate on memory streams (`io.BytesIO`).
+2. **Confidentiality**: Passwords and document text are never logged.
+3. **Soft-Fail Revocation**: Prevents false negatives when government CRL/OCSP servers experience network outages.
+4. **CORS Protected**: Configured for `https://veriseal.in` and local frontend environments.

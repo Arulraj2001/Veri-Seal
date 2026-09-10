@@ -1,0 +1,217 @@
+'use client';
+
+import * as React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Languages, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import type { SupportedLanguage } from '@/types';
+
+export function Header() {
+  const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [language, setLanguage] = React.useState<SupportedLanguage>('en');
+
+  React.useEffect(() => {
+    if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) return;
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
+
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) {
+    return null;
+  }
+
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === 'en' ? 'ta' : 'en'));
+  };
+
+  const navLinks = [
+    { label: 'Home', href: '/#hero' },
+    { label: 'Documents', href: '/#supported-docs' },
+    { label: 'How It Works', href: '/#how-it-works' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Security', href: '/#trust-section' },
+    { label: 'FAQ', href: '/#faq-section' },
+  ];
+
+  return (
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className={cn(
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md',
+        isScrolled
+          ? 'bg-background/90 shadow-md border-b border-surface-darker/60 py-3'
+          : 'bg-background/70 border-b border-transparent py-4'
+      )}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        {/* Logo Left */}
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
+        >
+          <div className="h-10 w-10 rounded-xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+            <svg
+              className="w-6 h-6 text-primary fill-primary/15 stroke-primary"
+              viewBox="0 0 24 24"
+              fill="none"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xl font-extrabold tracking-tight text-text-main flex items-center gap-1">
+              Veri<span className="text-primary">Seal</span>
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary mb-1"></span>
+            </span>
+            <span className="text-[10px] -mt-1 font-semibold text-text-main/60 tracking-wider uppercase">
+              India PKI Verify
+            </span>
+          </div>
+        </Link>
+
+        {/* Desktop Nav Center */}
+        <nav className="hidden md:flex items-center gap-1 bg-surface/80 px-4 py-1.5 rounded-full border border-surface-darker/60">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Right Actions */}
+        <div className="hidden md:flex items-center gap-3">
+          {/* Language Toggle */}
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-surface-darker/80 bg-white hover:border-primary/40 text-xs font-semibold text-text-main transition-colors shadow-sm"
+            title="Toggle Language (EN / தமிழ்)"
+          >
+            <Languages className="w-3.5 h-3.5 text-primary" />
+            <span className={language === 'en' ? 'text-primary font-bold' : 'text-text-main/70'}>
+              EN
+            </span>
+            <span className="text-text-main/40">|</span>
+            <span className={language === 'ta' ? 'text-primary font-bold font-tamil' : 'text-text-main/70 font-tamil'}>
+              தமிழ்
+            </span>
+          </button>
+
+          {/* Login Button */}
+          <Link href="/login">
+            <Button variant="outline" size="sm" className="h-9 font-semibold">
+              Login
+            </Button>
+          </Link>
+
+          {/* Quick CTA */}
+          <a href="#upload-zone">
+            <Button size="sm" className="h-9 font-semibold shadow-sm">
+              Verify PDF Free
+            </Button>
+          </a>
+        </div>
+
+        {/* Mobile Hamburger Button */}
+        <div className="flex md:hidden items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg border border-surface-darker text-xs font-semibold text-text-main bg-white"
+          >
+            <span className={language === 'en' ? 'text-primary font-bold' : 'text-text-main/70'}>
+              EN
+            </span>
+            <span>|</span>
+            <span className={language === 'ta' ? 'text-primary font-bold font-tamil' : 'text-text-main/70 font-tamil'}>
+              தமிழ்
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-xl text-text-main hover:bg-surface border border-surface-darker focus:outline-none"
+            aria-label="Toggle Navigation Menu"
+          >
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Full-Screen Mobile Nav Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: '100vh' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="fixed inset-0 top-[61px] bg-background z-40 md:hidden flex flex-col px-6 py-8 overflow-y-auto border-t border-surface-darker"
+          >
+            <div className="flex flex-col gap-3">
+              {navLinks.map((link, idx) => (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.06 }}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between py-3.5 px-4 rounded-xl text-lg font-semibold text-text-main hover:bg-surface hover:text-primary transition-colors border-b border-surface-darker/40"
+                >
+                  {link.label}
+                  <ArrowRight className="w-4 h-4 text-primary opacity-60" />
+                </motion.a>
+              ))}
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-surface-darker flex flex-col gap-3">
+              <a
+                href="#upload-zone"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full"
+              >
+                <Button size="lg" className="w-full">
+                  Verify PDF Now
+                </Button>
+              </a>
+
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Sign In to Portal
+              </Button>
+            </div>
+
+            <div className="mt-auto pt-8 text-center text-xs text-text-main/60">
+              <p>VeriSeal — India Government PKI Verification Tool</p>
+              <p className="mt-1">Free, Private & Secure. Files Never Leave Memory.</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
+  );
+}
