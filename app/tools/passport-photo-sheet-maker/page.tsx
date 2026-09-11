@@ -108,7 +108,7 @@ export default function PassportPhotoSheetPage() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -116,176 +116,175 @@ export default function PassportPhotoSheetPage() {
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
+            Photo Studio Suite
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <span className="text-primary font-bold truncate">Passport Photo Sheet Maker</span>
         </nav>
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero Section */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <Printer className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Cyber Cafe & Studio Utility</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Passport Photo Sheet Maker (4x6" & A4 at 300 DPI)
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Convert a single photo into a ready-to-print 8-photo sheet on standard 4×6" photo paper or a 32-photo sheet on A4 paper. Includes automatic scissor cutting guidelines and optional UPSC/SSC Name & Date of Photo strips.
-              </p>
-            </div>
+        {/* Hero Header */}
+        <div className="space-y-3 max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
+            <Printer className="w-3.5 h-3.5 text-purple-600" />
+            <span>Cyber Cafe &amp; Studio Production Engine</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight leading-tight">
+            Passport Photo Sheet Maker (4×6&quot; &amp; A4 at 300 DPI)
+          </h1>
+          <p className="text-base text-muted-foreground leading-relaxed">
+            Tile passport photos onto standard 4×6&quot; (8 photos for ₹5 lab print) or A4 sheets (32 photos). Multi-subject support with scissor cutting guidelines, candidate name &amp; DOP stamp, and pure client-side PDF download.
+          </p>
+        </div>
 
-            {/* In-Memory Privacy Callout */}
-            <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>
-                <strong>100% Secure RAM Generation:</strong> Your photo is processed exclusively in temporary computer memory. Zero photos are saved or archived on our servers.
-              </span>
-            </div>
+        {/* In-Memory Privacy Assurance Banner */}
+        <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium max-w-2xl shadow-2xs">
+          <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
+          <span>
+            <strong>100% Secure In-Memory RAM Processing:</strong> Your photos are rendered entirely inside your browser. Zero photos are uploaded or saved to any server disk.
+          </span>
+        </div>
 
-            {/* The Engine Component */}
-            <PhotoSheetEngine />
+        {/* THE MASTER STUDIO ENGINE (Full Width) */}
+        <div className="pt-2">
+          <PhotoSheetEngine />
+        </div>
 
-            {/* Cost Saving Comparison Table */}
-            <div className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-sm">
-              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-                <Award className="w-5 h-5 text-emerald-600" />
-                Why Cyber Cafes & Students Use VeriSeal Photo Sheet Maker
-              </h2>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs border-collapse">
-                  <thead>
-                    <tr className="border-b border-surface-darker/60 text-muted-foreground font-semibold">
-                      <th className="pb-3 pr-4">Printing Method</th>
-                      <th className="pb-3 pr-4">Cost for 8 Photos</th>
-                      <th className="pb-3 pr-4">Turnaround Time</th>
-                      <th className="pb-3">Customization</th>
+        {/* SEO & Knowledge Sections Below Studio */}
+        <div className="pt-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Cost Saving Comparison Table */}
+          <div className="lg:col-span-2 bg-white rounded-3xl border border-surface-darker/80 p-6 sm:p-8 space-y-6 shadow-xs">
+            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+              <Award className="w-5 h-5 text-purple-600" />
+              <span>Why Studios &amp; Candidates Use VeriSeal Photo Sheet Maker</span>
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-surface-darker/60 text-muted-foreground font-semibold">
+                    <th className="pb-3 pr-4">Printing Method</th>
+                    <th className="pb-3 pr-4">Cost for 8 Photos</th>
+                    <th className="pb-3 pr-4">Turnaround Time</th>
+                    <th className="pb-3">Customization</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-surface-darker/40 text-foreground">
+                  {COST_COMPARISON.map((row, idx) => (
+                    <tr
+                      key={idx}
+                      className={`hover:bg-surface-lighter/40 transition-colors ${
+                        idx === 2 ? 'bg-purple-50/50 font-semibold' : ''
+                      }`}
+                    >
+                      <td className="py-3 pr-4 text-purple-900 font-bold">{row.item}</td>
+                      <td className="py-3 pr-4 font-mono">{row.cost}</td>
+                      <td className="py-3 pr-4">{row.time}</td>
+                      <td className="py-3 text-muted-foreground">{row.control}</td>
                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-surface-darker/40 text-foreground">
-                    {COST_COMPARISON.map((row, idx) => (
-                      <tr key={idx} className={`hover:bg-surface-lighter/40 transition-colors ${idx === 2 ? 'bg-emerald-50/50 font-semibold' : ''}`}>
-                        <td className="py-3 pr-4 text-emerald-800">{row.item}</td>
-                        <td className="py-3 pr-4 font-mono">{row.cost}</td>
-                        <td className="py-3 pr-4">{row.time}</td>
-                        <td className="py-3 text-muted-foreground">{row.control}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
+          </div>
 
-            {/* Cutting & Trimming Guide */}
-            <div className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-4 shadow-sm">
-              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-                <Scissors className="w-5 h-5 text-emerald-600" />
-                How to Cut & Prepare Photos for Hall Tickets
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                  <span className="w-6 h-6 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-[11px]">1</span>
-                  <h3 className="font-bold text-slate-800 pt-1">Print at 100%</h3>
-                  <p className="text-slate-500 leading-relaxed">
-                    Print on 4x6" glossy photo paper. Ensure printer dialog is set to "Actual Size" (100%).
-                  </p>
-                </div>
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                  <span className="w-6 h-6 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-[11px]">2</span>
-                  <h3 className="font-bold text-slate-800 pt-1">Follow Dashed Guides</h3>
-                  <p className="text-slate-500 leading-relaxed">
-                    Use a pair of clean scissors or paper trimmer along the dotted grey borders.
-                  </p>
-                </div>
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
-                  <span className="w-6 h-6 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-[11px]">3</span>
-                  <h3 className="font-bold text-slate-800 pt-1">Paste on Admit Card</h3>
-                  <p className="text-slate-500 leading-relaxed">
-                    Use glue stick (not liquid gum) to avoid wrinkles on the examination attendance sheet.
-                  </p>
-                </div>
-              </div>
+          {/* Related Cyber Cafe & Studio Tools */}
+          <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 space-y-4 shadow-xs">
+            <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+              <Zap className="w-4 h-4 text-purple-600" />
+              <span>Related Studio Tools</span>
+            </h3>
+            <div className="space-y-2 text-xs">
+              <Link
+                href="/tools/stamp-size-photo-maker"
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50/60 transition-colors text-foreground font-medium group border border-slate-100"
+              >
+                <span className="truncate">Stamp Size &amp; NEET Postcard Maker</span>
+                <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+              </Link>
+              <Link
+                href="/tools/pvc-id-card-maker"
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50/60 transition-colors text-foreground font-medium group border border-slate-100"
+              >
+                <span className="truncate">Dual-Sided PVC Smart Card Studio</span>
+                <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+              </Link>
+              <Link
+                href="/tools/formal-attire-changer"
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50/60 transition-colors text-foreground font-medium group border border-slate-100"
+              >
+                <span className="truncate">Formal Suit &amp; Attire Changer</span>
+                <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+              </Link>
+              <Link
+                href="/tools/photo-date-name-stamper"
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50/60 transition-colors text-foreground font-medium group border border-slate-100"
+              >
+                <span className="truncate">SSC / UPSC Name &amp; DOP Stamper</span>
+                <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+              </Link>
+              <Link
+                href="/tools/biometric-face-aligner"
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50/60 transition-colors text-foreground font-medium group border border-slate-100"
+              >
+                <span className="truncate">ICAO Biometric Face Aligner</span>
+                <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+              </Link>
             </div>
+          </div>
+        </div>
 
-            {/* FAQ Section */}
-            <div className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-sm">
-              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-emerald-600" />
-                Frequently Asked Questions
-              </h2>
-              <div className="space-y-4">
-                {FAQS.map((faq, idx) => (
-                  <div key={idx} className="border-b border-surface-darker/40 pb-4 last:border-0 last:pb-0">
-                    <h3 className="font-semibold text-foreground text-sm mb-1.5 flex items-start gap-2">
-                      <span className="text-emerald-600 font-bold">Q:</span>
-                      {faq.question}
-                    </h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
-                      {faq.answer}
-                    </p>
-                  </div>
-                ))}
+        {/* Trimming Guide & FAQs */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
+          {/* Cutting & Trimming Guide */}
+          <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 sm:p-8 space-y-4 shadow-xs">
+            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+              <Scissors className="w-5 h-5 text-purple-600" />
+              <span>How to Cut &amp; Prepare Photos for Hall Tickets</span>
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-2">
+              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+                <span className="w-6 h-6 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-[11px]">
+                  1
+                </span>
+                <h3 className="font-bold text-slate-800 pt-1">Print at 100%</h3>
+                <p className="text-slate-500 leading-relaxed text-[11px]">
+                  Print on 4×6&quot; glossy photo paper. Ensure printer dialog is set to &quot;Actual Size&quot; (100%).
+                </p>
+              </div>
+              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+                <span className="w-6 h-6 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-[11px]">
+                  2
+                </span>
+                <h3 className="font-bold text-slate-800 pt-1">Follow Corner Ticks</h3>
+                <p className="text-slate-500 leading-relaxed text-[11px]">
+                  Use a steel ruler and cutter or sharp scissors along the professional corner tick marks.
+                </p>
+              </div>
+              <div className="p-3.5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1.5">
+                <span className="w-6 h-6 rounded-full bg-slate-900 text-white font-bold flex items-center justify-center text-[11px]">
+                  3
+                </span>
+                <h3 className="font-bold text-slate-800 pt-1">Paste on Admit Card</h3>
+                <p className="text-slate-500 leading-relaxed text-[11px]">
+                  Use a dry glue stick to paste smoothly without wrinkling the exam attendance sheet.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Right Column (32%) Sticky Rail */}
-          <div className="lg:col-span-4 space-y-6 sticky top-24">
-            {/* Top Ad Slot with Zero CLS */}
-            <AdSlot slot="sidebar" />
-
-            {/* Quick Links */}
-            <div className="bg-white rounded-3xl border border-surface-darker/60 p-5 space-y-4 shadow-sm">
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-                <Zap className="w-4 h-4 text-emerald-600" />
-                Exam Photo & Signature Tools
-              </h3>
-              <div className="space-y-2 text-xs">
-                <Link
-                  href="/tools/tnpsc-photo-signature-resizer"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
-                >
-                  <span className="truncate">TNPSC Photo & Sign Resizer</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
-                </Link>
-                <Link
-                  href="/tools/upsc-photo-signature-resizer"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
-                >
-                  <span className="truncate">UPSC Name & Date Photo Maker</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
-                </Link>
-                <Link
-                  href="/tools/gate-photo-signature-resizer"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
-                >
-                  <span className="truncate">GATE & JAM GOAPS Resizer</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
-                </Link>
-                <Link
-                  href="/tools/rrb-photo-signature-resizer"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
-                >
-                  <span className="truncate">Railway RRB Photo Resizer</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
-                </Link>
-                <Link
-                  href="/tools/unlock-pdf"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
-                >
-                  <span className="truncate">Unlock e-Aadhaar PDF</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
-                </Link>
-              </div>
+          {/* FAQ Section */}
+          <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 sm:p-8 space-y-4 shadow-xs">
+            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-purple-600" />
+              <span>Frequently Asked Questions</span>
+            </h2>
+            <div className="space-y-3">
+              {FAQS.map((faq, idx) => (
+                <div key={idx} className="p-3.5 rounded-2xl bg-slate-50/70 border border-slate-200/60">
+                  <h3 className="font-bold text-slate-800 text-xs">{faq.question}</h3>
+                  <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
             </div>
-
-            {/* Bottom Ad Slot with Zero CLS */}
-            <AdSlot slot="sidebar" />
           </div>
         </div>
       </div>
