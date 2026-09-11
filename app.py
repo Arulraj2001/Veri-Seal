@@ -74,7 +74,7 @@ app.add_middleware(
         "http://127.0.0.1:3001",
         "http://127.0.0.1:3002",
     ],
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$|^https://.*\.vercel\.app$|^https://.*\.veriseal\.in$",
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$|^https://.*\.vercel\.app$|^https://.*\.onrender\.com$|^https://.*\.veriseal\.in$",
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
@@ -92,7 +92,13 @@ async def startup_event():
         logger.error("Failed to initialize trust store: %s", exc)
 
 
-@app.get("/health", summary="Service Health Check")
+@app.api_route("/", methods=["GET", "HEAD"], summary="Service Root / Health Check")
+async def root():
+    """Returns the operational status and engine info for root health checks (e.g. Render / Cloud Run probes)."""
+    return {"status": "ok", "service": "VeriSeal Engine", "version": "1.0.0"}
+
+
+@app.api_route("/health", methods=["GET", "HEAD"], summary="Service Health Check")
 async def health_check():
     """Returns the operational status and engine version."""
     return {"status": "ok", "version": "1.0.0"}

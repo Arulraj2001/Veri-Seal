@@ -21,7 +21,10 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-import fitz
+try:
+    import pymupdf as fitz
+except ImportError:
+    import fitz
 import pikepdf
 from asn1crypto import cms, crl as asn1_crl, ocsp as asn1_ocsp, x509 as asn1_x509
 from cryptography import x509 as crypto_x509
