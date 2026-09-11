@@ -1,6 +1,8 @@
+'use client';
+
 import * as React from 'react';
 import Link from 'next/link';
-import { auth } from '@/auth';
+import { useSession } from 'next-auth/react';
 import {
   FileCheck2,
   Calendar,
@@ -13,9 +15,9 @@ import {
   AlertTriangle,
   ExternalLink,
   ChevronRight,
+  Sparkles,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import { fetchPublicSettings } from '@/lib/api';
 
 interface VerificationRow {
   id: string;
@@ -82,43 +84,50 @@ function getGreeting(name: string): string {
   return `${timeSalutation}, ${name}`;
 }
 
-export default async function DashboardOverviewPage() {
-  const session = await auth();
+export default function DashboardOverviewPage() {
+  const { data: session } = useSession();
   const userName = session?.user?.name || 'Citizen User';
   const userPlan = (session?.user as { plan?: string })?.plan || 'free';
 
-  // Load stats & verifications
-  let verificationsToday = 1;
-  let verificationsTotal = 5;
-  let recentVerifications: VerificationRow[] = defaultRecentVerifications;
+  const [verificationsToday, setVerificationsToday] = React.useState<number>(1);
+  const [verificationsTotal, setVerificationsTotal] = React.useState<number>(5);
+  const [recentVerifications, setRecentVerifications] = React.useState<VerificationRow[]>(defaultRecentVerifications);
 
-  try {
-    if (session?.user?.id) {
-      const { data: userData } = await supabase
-        .from('users')
-        .select('verification_count_today, verification_count_total, plan_expiry')
-        .eq('id', session.user.id)
-        .single();
+  React.useEffect(() => {
+    async function loadStats() {
+      if (!session?.user) return;
+      try {
+        const userEmail = session.user.email?.toLowerCase().trim();
+        const userId = session.user.id;
 
-      if (userData) {
-        verificationsToday = userData.verification_count_today ?? verificationsToday;
-        verificationsTotal = userData.verification_count_total ?? verificationsTotal;
-      }
+        let userQuery = supabase.from('users').select('verification_count_today, verification_count_total, plan_expiry');
+        if (userEmail) {
+          userQuery = userQuery.eq('email', userEmail);
+        } else if (userId) {
+          userQuery = userQuery.eq('id', userId);
+        }
+        const { data: userData } = await userQuery.maybeSingle();
 
-      const { data: vData } = await supabase
-        .from('verifications')
-        .select('*')
-        .eq('user_id', session.user.id)
-        .order('created_at', { ascending: false })
-        .limit(5);
+        if (userData) {
+          setVerificationsToday(userData.verification_count_today ?? 1);
+          setVerificationsTotal(userData.verification_count_total ?? 5);
+        }
 
-      if (vData && vData.length > 0) {
-        recentVerifications = vData as VerificationRow[];
+        const { data: vData } = await supabase
+          .from('verifications')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(5);
+
+        if (vData && vData.length > 0) {
+          setRecentVerifications(vData as VerificationRow[]);
+        }
+      } catch (err) {
+        console.debug('Using fallback overview stats:', err);
       }
     }
-  } catch (err) {
-    console.debug('Using fallback overview stats:', err);
-  }
+    loadStats();
+  }, [session]);
 
   const planExpiryFormatted = userPlan === 'free' ? 'No expiry' : 'Active (Dec 31, 2026)';
 
@@ -186,19 +195,36 @@ export default async function DashboardOverviewPage() {
         </div>
 
         {/* Card 3: Plan */}
-        <div className="bg-white border border-surface-darker/80 rounded-2xl p-5 shadow-sm hover:border-primary/40 transition-colors">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-text-main/60 uppercase tracking-wider">
-              Current Plan
-            </span>
-            <div className="p-2 rounded-xl bg-success-light text-success">
-              <ShieldCheck className="w-4 h-4" />
+        <div className="bg-white border border-surface-darker/80 rounded-2xl p-5 shadow-sm hover:border-primary/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold text-text-main/60 uppercase tracking-wider">
+                Current Plan
+              </span>
+              <div className="p-2 rounded-xl bg-success-light text-success">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
             </div>
+            <div className="text-3xl font-black text-text-main capitalize">{userPlan}</div>
+            <p className="text-[11px] text-success font-semibold mt-1">
+              {userPlan === 'business' ? '500 API calls/day' : 'National Public Tier'}
+            </p>
           </div>
-          <div className="text-3xl font-black text-text-main capitalize">{userPlan}</div>
-          <p className="text-[11px] text-success font-semibold mt-1">
-            {userPlan === 'business' ? '500 API calls/day' : 'National Public Tier'}
-          </p>
+
+          <div className="mt-3 pt-2.5 border-t border-surface-darker/60 flex items-center justify-between">
+            <Link
+              href="/dashboard/plan"
+              className="inline-flex items-center gap-1 text-xs font-bold text-primary hover:text-primary-hover hover:underline"
+            >
+              <span>{userPlan === 'business' ? 'Manage Plan' : 'Upgrade Plan'}</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+            {userPlan !== 'business' && (
+              <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary text-[10px] font-black uppercase">
+                Upgrade Available
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Card 4: Expiry */}
@@ -219,6 +245,49 @@ export default async function DashboardOverviewPage() {
           </p>
         </div>
       </div>
+
+      {/* Upgrade CTA Banner (For Free / Pro Users) */}
+      {userPlan !== 'business' && (
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary/15 via-surface to-primary/5 border-2 border-primary/25 rounded-3xl p-6 sm:p-8 shadow-sm">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-white text-[11px] font-extrabold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 fill-white" />
+                <span>Upgrade Recommendation</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-text-main tracking-tight">
+                Accelerate Verification with VeriSeal Pro Unlimited
+              </h2>
+              <p className="text-xs sm:text-sm text-text-main/75 leading-relaxed">
+                Unlock <strong>batch verification for up to 20 files</strong> simultaneously, dedicated RAM execution queues, tamper-proof audit certificates, and priority processing for advocates, chartered accountants, and institutions.
+              </p>
+              <div className="flex flex-wrap gap-4 pt-1 text-xs font-semibold text-text-main/80">
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-success" /> Unlimited Audits</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-success" /> Batch 20 PDFs</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-success" /> Priority RAM Queue</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="w-4 h-4 text-success" /> CSV Audit Logs</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
+              <Link
+                href="/dashboard/payment?plan=pro"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-primary text-white font-black text-xs hover:bg-primary-hover transition-all shadow-md shadow-primary/25 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <span>Upgrade to Pro — ₹199/mo</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/dashboard/plan"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-surface-darker text-text-main font-bold text-xs hover:bg-surface transition-colors shadow-sm text-center"
+              >
+                <span>Compare All Plans &amp; Business Tier</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Recent Verifications Table (Last 5) */}
       <div className="bg-white border border-surface-darker/80 rounded-3xl p-6 shadow-sm">

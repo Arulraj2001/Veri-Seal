@@ -1,6 +1,8 @@
+'use client';
+
 import * as React from 'react';
 import Link from 'next/link';
-import { auth } from '@/auth';
+import { useSession } from 'next-auth/react';
 import { fetchPublicSettings } from '@/lib/api';
 import {
   ShieldCheck,
@@ -14,11 +16,18 @@ import {
   Info,
 } from 'lucide-react';
 
-export default async function MyPlanPage() {
-  const session = await auth();
-  const settings = await fetchPublicSettings();
-  const paymentEnabled = settings.payment_enabled;
+export default function MyPlanPage() {
+  const { data: session } = useSession();
+  const [paymentEnabled, setPaymentEnabled] = React.useState<boolean>(true);
   const userPlan = (session?.user as { plan?: string })?.plan || 'free';
+
+  React.useEffect(() => {
+    fetchPublicSettings()
+      .then((s) => {
+        setPaymentEnabled(s.payment_enabled);
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="space-y-8 max-w-5xl">
@@ -32,99 +41,33 @@ export default async function MyPlanPage() {
         </p>
       </div>
 
-      {/* Case 1: Payment Toggle is OFF -> Show "Free unlimited access" card only */}
-      {!paymentEnabled ? (
-        <div className="bg-white border-2 border-primary/20 rounded-3xl p-8 sm:p-10 shadow-sm relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-6 border-b border-surface-darker">
-            <div className="flex items-center gap-4">
-              <div className="h-14 w-14 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20 shrink-0">
-                <ShieldCheck className="w-8 h-8" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-xl sm:text-2xl font-black text-text-main">
-                    Free Unlimited Citizen Access
-                  </h2>
-                  <span className="px-2.5 py-0.5 rounded-full bg-success-light text-success text-[11px] font-bold">
-                    Active
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-text-main/60 mt-0.5">
-                  Public Service Tier sponsored for Indian citizens under Digital India initiatives
-                </p>
-              </div>
+      {/* Plan Status Banner if paymentEnabled is false */}
+      {!paymentEnabled && (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-5 rounded-3xl bg-primary-light/40 border border-primary/25 shadow-sm">
+          <div className="flex items-center gap-3 text-xs text-text-main font-medium">
+            <div className="h-9 w-9 rounded-xl bg-primary-light text-primary flex items-center justify-center border border-primary/20 shrink-0">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-
-            <div className="text-left sm:text-right">
-              <div className="text-3xl font-black text-text-main">₹0</div>
-              <div className="text-xs font-semibold text-text-main/50">Completely Free Forever</div>
+            <div>
+              <span className="font-bold text-text-main">Public Free Citizen Tier Active:</span>
+              <p className="text-text-main/70 text-[11px] mt-0.5">
+                Standard digital signature verifications are unrestricted for Indian citizens. You can still review plans below and upgrade to Pro or Business for high-volume batch processing and API keys.
+              </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-surface/60">
-              <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
-              <div>
-                <div className="text-xs font-bold text-text-main">Unlimited PDF Verifications</div>
-                <div className="text-[11px] text-text-main/60 mt-0.5">
-                  Verify unlimited e-Aadhaar, e-PAN, caste, income, and state revenue certificates with no rate limits.
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-surface/60">
-              <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
-              <div>
-                <div className="text-xs font-bold text-text-main">Zero Document Storage</div>
-                <div className="text-[11px] text-text-main/60 mt-0.5">
-                  PDF files are verified purely in RAM and never written to disk or third-party servers.
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-surface/60">
-              <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
-              <div>
-                <div className="text-xs font-bold text-text-main">Authentic CCA India Root Trust</div>
-                <div className="text-[11px] text-text-main/60 mt-0.5">
-                  Full cryptographic trust chain validation against Controller of Certifying Authorities (CCA).
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-surface/60">
-              <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
-              <div>
-                <div className="text-xs font-bold text-text-main">LTV Stamping &amp; Download</div>
-                <div className="text-[11px] text-text-main/60 mt-0.5">
-                  Download green tick stamped PDFs with embedded Long-Term Validation (LTV) dictionaries.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-primary-light/40 border border-primary/20">
-            <div className="flex items-center gap-2 text-xs text-text-main font-medium">
-              <Info className="w-4 h-4 text-primary shrink-0" />
-              <span>
-                All commercial and paid upgrades are currently deactivated by administrator policy.
-              </span>
-            </div>
-
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-hover transition-colors shrink-0"
-            >
-              <span>Verify PDF Now</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-hover transition-colors shrink-0"
+          >
+            <span>Verify PDF</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
-      ) : (
-        /* Case 2: Payment Toggle is ON -> Show Plan Comparison + Upgrade Option */
-        <div className="space-y-6">
+      )}
+
+      {/* Plan Comparison + Upgrade Options (Always Visible) */}
+      <div className="space-y-6">
           {/* Current Active Plan Banner */}
           <div className="bg-white border border-surface-darker/80 rounded-2xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -329,9 +272,8 @@ export default async function MyPlanPage() {
                 )}
               </div>
             </div>
-          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

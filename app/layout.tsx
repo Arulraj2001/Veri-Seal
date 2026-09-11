@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { InstallPromptModal } from '@/components/pwa/InstallPromptModal';
 import { FAQ, SITE_CONFIG } from '@/lib/constants';
+import { AuthProvider } from '@/components/providers/AuthProvider';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -174,14 +175,16 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col font-sans bg-background text-text-main antialiased selection:bg-primary/20 selection:text-text-main">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
 
-        {/* Telemetry & PWA Prompts */}
-        <Analytics />
-        <GoogleAnalytics gaId={gaId} />
-        <InstallPromptModal />
+          {/* Telemetry & PWA Prompts */}
+          <Analytics />
+          <GoogleAnalytics gaId={gaId} />
+          <InstallPromptModal />
+        </AuthProvider>
       </body>
     </html>
   );

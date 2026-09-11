@@ -3,17 +3,31 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Languages, ArrowRight } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Languages,
+  ArrowRight,
+  LayoutDashboard,
+  LogOut,
+  ShieldAlert,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { SupportedLanguage } from '@/types';
 
 export function Header() {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [language, setLanguage] = React.useState<SupportedLanguage>('en');
+
+  const user = session?.user;
+  const userRole = (user as { role?: string })?.role || 'user';
+  const userPlan = (user as { plan?: string })?.plan || 'free';
 
   React.useEffect(() => {
     if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) return;
@@ -115,12 +129,71 @@ export function Header() {
             </span>
           </button>
 
-          {/* Login Button */}
-          <Link href="/login">
-            <Button variant="outline" size="sm" className="h-9 font-semibold">
-              Login
-            </Button>
-          </Link>
+          {/* Conditional Auth State */}
+          {status === 'authenticated' && user ? (
+            <div className="flex items-center gap-2">
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-surface hover:bg-primary-light/40 border border-surface-darker/80 transition-colors group shadow-sm"
+              >
+                <div className="h-7 w-7 rounded-lg bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                  {user.image ? (
+                    <img
+                      src={user.image}
+                      alt={user.name || 'User'}
+                      className="h-7 w-7 rounded-lg object-cover"
+                    />
+                  ) : (
+                    (user.name?.charAt(0) || user.email?.charAt(0) || 'U').toUpperCase()
+                  )}
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors max-w-[95px] truncate leading-tight">
+                    {user.name?.split(' ')[0] || user.email?.split('@')[0]}
+                  </span>
+                  <span className="text-[9px] font-black uppercase tracking-wider text-primary leading-tight">
+                    {userPlan}
+                  </span>
+                </div>
+              </Link>
+
+              {userRole === 'admin' && (
+                <Link href="/admin">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-9 font-bold text-xs border-amber-400/70 text-amber-800 bg-amber-50 hover:bg-amber-100 gap-1 px-2.5 shadow-sm"
+                  >
+                    <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Admin</span>
+                  </Button>
+                </Link>
+              )}
+
+              <Link href="/dashboard">
+                <Button variant="outline" size="sm" className="h-9 font-semibold text-xs gap-1.5 px-3">
+                  <LayoutDashboard className="w-3.5 h-3.5 text-primary" />
+                  <span>Dashboard</span>
+                </Button>
+              </Link>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="h-9 w-9 p-0 text-text-main/60 hover:text-error hover:bg-error-light rounded-xl"
+                title="Sign Out"
+              >
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </div>
+          ) : (
+            <Link href="/login">
+              <Button variant="outline" size="sm" className="h-9 font-semibold">
+                Login
+              </Button>
+            </Link>
+          )}
 
           {/* Quick CTA */}
           <a href="#upload-zone">
@@ -185,29 +258,114 @@ export function Header() {
             </div>
 
             <div className="mt-8 pt-6 border-t border-surface-darker flex flex-col gap-3">
-              <a
-                href="#upload-zone"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full"
-              >
-                <Button size="lg" className="w-full">
-                  Verify PDF Now
-                </Button>
-              </a>
+              {status === 'authenticated' && user ? (
+                <>
+                  <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-surface border border-surface-darker">
+                    <div className="h-11 w-11 rounded-xl bg-primary text-white text-base font-bold flex items-center justify-center shrink-0">
+                      {user.image ? (
+                        <img
+                          src={user.image}
+                          alt={user.name || 'User'}
+                          className="h-11 w-11 rounded-xl object-cover"
+                        />
+                      ) : (
+                        (user.name?.charAt(0) || user.email?.charAt(0) || 'U').toUpperCase()
+                      )}
+                    </div>
+                    <div className="truncate flex-1">
+                      <div className="text-sm font-black text-text-main truncate">
+                        {user.name || 'Citizen User'}
+                      </div>
+                      <div className="text-xs text-text-main/60 truncate">{user.email}</div>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary text-[10px] font-black uppercase">
+                      {userPlan}
+                    </span>
+                  </div>
 
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sign In to Portal
-              </Button>
+                  <Link
+                    href="/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full"
+                  >
+                    <Button size="lg" className="w-full gap-2 font-bold">
+                      <LayoutDashboard className="w-4 h-4" />
+                      <span>Go to User Dashboard</span>
+                    </Button>
+                  </Link>
+
+                  {userRole === 'admin' && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full"
+                    >
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="w-full gap-2 font-bold border-amber-400 text-amber-800 bg-amber-50"
+                      >
+                        <ShieldAlert className="w-4 h-4 text-amber-600" />
+                        <span>Admin Control Panel</span>
+                      </Button>
+                    </Link>
+                  )}
+
+                  <a
+                    href="#upload-zone"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full"
+                  >
+                    <Button variant="outline" size="lg" className="w-full font-bold">
+                      Verify PDF Now
+                    </Button>
+                  </a>
+
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="w-full gap-2 text-error border-error/30 hover:bg-error-light hover:border-error/50 font-bold"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      signOut({ callbackUrl: '/' });
+                    }}
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Sign Out</span>
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="#upload-zone"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full"
+                  >
+                    <Button size="lg" className="w-full">
+                      Verify PDF Now
+                    </Button>
+                  </a>
+
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full"
+                  >
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="w-full font-bold"
+                    >
+                      Sign In to Portal
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
 
             <div className="mt-auto pt-8 text-center text-xs text-text-main/60">
               <p>VeriSeal — India Government PKI Verification Tool</p>
-              <p className="mt-1">Free, Private & Secure. Files Never Leave Memory.</p>
+              <p className="mt-1">Free, Private &amp; Secure. Files Never Leave Memory.</p>
             </div>
           </motion.div>
         )}
@@ -215,3 +373,5 @@ export function Header() {
     </motion.header>
   );
 }
+
+

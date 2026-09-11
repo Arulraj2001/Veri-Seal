@@ -8,6 +8,10 @@ ALTER TABLE users
 ALTER TABLE users 
   ADD COLUMN IF NOT EXISTS banned BOOLEAN DEFAULT false;
 
+ALTER TABLE users 
+  ADD COLUMN IF NOT EXISTS welcome_sent BOOLEAN DEFAULT false;
+
+
 -- 2. Create Dynamic Site Content Table
 CREATE TABLE IF NOT EXISTS content (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

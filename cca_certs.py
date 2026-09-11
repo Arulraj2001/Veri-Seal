@@ -1,27 +1,24 @@
 """
 CCA India Certificate Management for VeriSeal.
-Downloads and embeds Root Certifying Authority of India (RCAI) and licensed Sub-CA certificates.
+Embeds Root Certifying Authority of India (RCAI) and licensed Sub-CA certificates.
+100% offline — zero runtime network calls to ensure resilience on Hugging Face Spaces.
 Constructs pyhanko-certvalidator ValidationContext with soft-fail revocation resilience.
 """
 
 import base64
 import logging
-from typing import List, Tuple, Set
-import requests
+from typing import List, Optional
 
 from asn1crypto import pem, x509
 from pyhanko_certvalidator import ValidationContext
 
 logger = logging.getLogger("veriseal.cca_certs")
 
-# Official CCA India Certificate URLs
-CCA_CERTS_URL = "https://cca.gov.in/certs"
-
 # --------------------------------------------------------------------------
 # Embedded Base64 PEM Certificates for Indian PKI Hierarchy
 # --------------------------------------------------------------------------
 # These certificates represent the Root Certifying Authority of India (RCAI)
-# and all licensed Certifying Authorities under the IT Act 2000.
+# and licensed Certifying Authorities under the IT Act 2000.
 
 EMBEDDED_CCA_CERTS_PEM = {
     "RCAI_2014": """-----BEGIN CERTIFICATE-----
@@ -328,7 +325,6 @@ WYNBPK2LKJulYpDWU2q8P0P3q6ykzRwhNTm47PoE3m7KubMHpCcFhNL7p7jTZCoL
 ENt4zaAOCNeq/OVcVr9yTRM231ciiDyt6c1OCfF693zuUkl1Y7nORkQgTQDT0wKY
 7lgMKmZJ7w9fzgx+R4HHQr1dhE7pf5uLMKVFd//gsNZ4bgFdHu47YlGX3rQXXlo=
 -----END CERTIFICATE-----""",
-
     "CCA_INDIA_2014": """-----BEGIN CERTIFICATE-----
 MIIDXjCCAkagAwIBAgIUQOc404Yj9MDFgNm5n3eFpZhQpA0wDQYJKoZIhvcNAQEL
 BQAwXjELMAkGA1UEBhMCSU4xLTArBgNVBAoMJENvbnRyb2xsZXIgb2YgQ2VydGlm
@@ -494,122 +490,132 @@ ECU9Fk+5T9w/lVszariYlKskMeeh2nA+pWwe37ITR0fFl1kpRTOPBNsibhw=
 -----END CERTIFICATE-----""",
 }
 
+# Cached parsed Certificate instances
+_CACHED_ROOTS: Optional[List[x509.Certificate]] = None
+_CACHED_INTERMEDIATES: Optional[List[x509.Certificate]] = None
 
+
+def _parse_pem_cert(pem_str: str) -> x509.Certificate:
+    """Parses a PEM string into an asn1crypto x509.Certificate."""
+    if pem.detect(pem_str.encode("ascii")):
+        _, _, der_bytes = pem.unarmor(pem_str.encode("ascii"))
+        return x509.Certificate.load(der_bytes)
+    raise ValueError("Invalid PEM certificate format")
+
+
+def _init_cert_stores() -> None:
+    """Initializes and caches root and intermediate certificates in memory."""
+    global _CACHED_ROOTS, _CACHED_INTERMEDIATES
+    if _CACHED_ROOTS is not None and _CACHED_INTERMEDIATES is not None:
+        return
+
+    roots: List[x509.Certificate] = []
+    intermediates: List[x509.Certificate] = []
+
+    for key, cert_pem in EMBEDDED_CCA_CERTS_PEM.items():
+        try:
+            cert = _parse_pem_cert(cert_pem)
+            # Root CAs and top-level CCA India anchors
+            if (
+                cert.subject == cert.issuer
+                or cert.self_signed in ("yes", "maybe")
+                or "RCAI" in key
+                or "Root" in cert.subject.human_friendly
+                or key in ("CCA_INDIA_2022", "CCA_INDIA_2022_SPL", "CCA_INDIA_2014")
+            ):
+                roots.append(cert)
+            else:
+                intermediates.append(cert)
+        except Exception as e:
+            logger.error("Failed to parse embedded certificate %s: %s", key, e)
+
+    # Also make sure CCA India certs are in intermediates so chains building up to RCAI succeed
+    for key in ("CCA_INDIA_2022", "CCA_INDIA_2022_SPL", "CCA_INDIA_2014"):
+        if key in EMBEDDED_CCA_CERTS_PEM:
+            try:
+                cert = _parse_pem_cert(EMBEDDED_CCA_CERTS_PEM[key])
+                if cert not in intermediates:
+                    intermediates.append(cert)
+            except Exception:
+                pass
+
+    _CACHED_ROOTS = roots
+    _CACHED_INTERMEDIATES = intermediates
+    logger.info(
+        "VeriSeal Trust Store initialized with %d root CAs and %d intermediate CAs.",
+        len(_CACHED_ROOTS),
+        len(_CACHED_INTERMEDIATES),
+    )
+
+
+def load_cca_trust_store() -> List[x509.Certificate]:
+    """Returns list of parsed trust root Certificate objects for ValidationContext."""
+    _init_cert_stores()
+    return list(_CACHED_ROOTS or [])
+
+
+def load_all_intermediates() -> List[x509.Certificate]:
+    """Returns list of all intermediate CA Certificate objects for complete chain validation."""
+    _init_cert_stores()
+    return list(_CACHED_INTERMEDIATES or [])
+
+
+def get_all_cert_bytes_der() -> list[bytes]:
+    """
+    Return all CCA India certificate chain certs 
+    as raw DER bytes list.
+    
+    This includes:
+    - RCAI root certificate
+    - CCA India 2014
+    - CCA India 2022
+    - NIC CA 2017
+    - NIC CA 2021
+    - eMudhra CA
+    - Capricorn CA
+    - nCode CA
+    - SafeScrypt CA
+    - Protean CA
+    
+    Used by Stage 3 to build complete DSS cert list.
+    All returned as raw DER bytes.
+    """
+    result = []
+    for key, cert_pem in EMBEDDED_CCA_CERTS_PEM.items():
+        try:
+            if pem.detect(cert_pem.encode("ascii")):
+                _, _, der_bytes = pem.unarmor(cert_pem.encode("ascii"))
+                result.append(der_bytes)
+        except Exception:
+            continue
+    return result
+
+
+# Backward compatibility classes & helpers
 class CCACertificateManager:
     """Manages the Root and Intermediate Certifying Authority certificates for India."""
 
     def __init__(self):
-        self._root_certs: List[x509.Certificate] = []
-        self._intermediate_certs: List[x509.Certificate] = []
-        self._validation_context: ValidationContext | None = None
-        self._initialized = False
-
-    def _parse_pem_cert(self, pem_str: str) -> x509.Certificate:
-        """Parses a PEM string into an asn1crypto x509.Certificate."""
-        if pem.detect(pem_str.encode("ascii")):
-            _, _, der_bytes = pem.unarmor(pem_str.encode("ascii"))
-            return x509.Certificate.load(der_bytes)
-        raise ValueError("Invalid PEM certificate format")
-
-    def download_latest_cca_certs(self) -> List[Tuple[str, bytes]]:
-        """
-        Attempts to fetch the latest certificates from cca.gov.in.
-        Returns a list of (cert_name, der_or_pem_bytes) if successful.
-        """
-        downloaded = []
-        try:
-            logger.info("Connecting to CCA India certificate portal at %s ...", CCA_CERTS_URL)
-            response = requests.get(
-                CCA_CERTS_URL,
-                timeout=3.5,
-                headers={"User-Agent": "VeriSeal-Engine/1.0 (CCA PKI Validator)"},
-            )
-            if response.status_code == 200:
-                logger.info("Successfully reached CCA India portal.")
-                # If the portal exposes certificate links or bundle:
-                # We extract any PEM blocks found in the response body
-                text = response.text
-                if "-----BEGIN CERTIFICATE-----" in text:
-                    for part in text.split("-----END CERTIFICATE-----"):
-                        if "-----BEGIN CERTIFICATE-----" in part:
-                            clean_pem = part[part.find("-----BEGIN CERTIFICATE-----"):] + "-----END CERTIFICATE-----\n"
-                            try:
-                                cert = self._parse_pem_cert(clean_pem)
-                                downloaded.append(("cca_online", cert.dump()))
-                            except Exception as parse_err:
-                                logger.debug("Could not parse cert snippet: %s", parse_err)
-        except Exception as exc:
-            logger.info("Could not fetch remote CCA certs (%s). Falling back to embedded trust store.", exc)
-        return downloaded
+        self._validation_context: Optional[ValidationContext] = None
 
     def initialize(self) -> None:
-        """Initializes the trust store using embedded certificates and optional online sync."""
-        if self._initialized:
-            return
-
-        roots: List[x509.Certificate] = []
-        intermediates: List[x509.Certificate] = []
-
-        # 1. Load all embedded certificates
-        for key, cert_pem in EMBEDDED_CCA_CERTS_PEM.items():
-            try:
-                cert = self._parse_pem_cert(cert_pem)
-                # Check if Root (Self-Signed)
-                if (
-                    cert.subject == cert.issuer
-                    or cert.self_signed in ("yes", "maybe")
-                    or "RCAI" in key
-                    or "Root" in cert.subject.human_friendly
-                    or key in ("CCA_INDIA_2022", "CCA_INDIA_2022_SPL")
-                ):
-                    roots.append(cert)
-                else:
-                    intermediates.append(cert)
-            except Exception as e:
-                logger.error("Failed to load embedded certificate %s: %s", key, e)
-
-        # 2. Try online sync from cca.gov.in (graceful fallback)
-        try:
-            online_certs = self.download_latest_cca_certs()
-            for name, der_data in online_certs:
-                try:
-                    c = x509.Certificate.load(der_data)
-                    if c.subject == c.issuer or c.self_signed in ("yes", "maybe"):
-                        roots.append(c)
-                    else:
-                        intermediates.append(c)
-                except Exception:
-                    pass
-        except Exception as e:
-            logger.warning("Online sync failed, proceeding with embedded trust store: %s", e)
-
-        self._root_certs = roots
-        self._intermediate_certs = intermediates
-
-        # 3. Construct the pyhanko-certvalidator ValidationContext
-        # Note: revocation_mode='soft-fail' ensures that if government CRL/OCSP servers
-        # are intermittently unreachable or down, valid government certs are not rejected.
+        """Initializes the trust store using embedded certificates (no network)."""
+        roots = load_cca_trust_store()
+        intermediates = load_all_intermediates()
         self._validation_context = ValidationContext(
-            trust_roots=self._root_certs,
-            other_certs=self._intermediate_certs,
-            allow_fetching=True,
+            trust_roots=roots,
+            other_certs=intermediates,
+            allow_fetching=False,
             revocation_mode="soft-fail",
-        )
-        self._initialized = True
-        logger.info(
-            "VeriSeal Trust Store initialized with %d root CAs and %d intermediate CAs.",
-            len(self._root_certs),
-            len(self._intermediate_certs),
         )
 
     def get_validation_context(self) -> ValidationContext:
         """Returns the configured pyhanko ValidationContext."""
-        if not self._initialized or self._validation_context is None:
+        if self._validation_context is None:
             self.initialize()
         return self._validation_context
 
 
-# Singleton instance
 cca_manager = CCACertificateManager()
 
 

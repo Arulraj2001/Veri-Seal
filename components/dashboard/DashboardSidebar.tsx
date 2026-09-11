@@ -14,6 +14,9 @@ import {
   LogOut,
   ShieldCheck,
   Zap,
+  ShieldAlert,
+  Sparkles,
+  ArrowRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -34,11 +37,12 @@ export function DashboardSidebar({ user, paymentEnabled }: SidebarProps) {
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
     { name: 'My Verifications', href: '/dashboard/verifications', icon: FileCheck2 },
     { name: 'My Plan', href: '/dashboard/plan', icon: CreditCard },
-    ...(paymentEnabled
-      ? [{ name: 'Payment Status', href: '/dashboard/payment', icon: Receipt }]
-      : []),
+    { name: 'Payment Status', href: '/dashboard/payment', icon: Receipt },
     ...(user.plan === 'business'
       ? [{ name: 'API Keys', href: '/dashboard/api-keys', icon: KeyRound }]
+      : []),
+    ...(user.role === 'admin'
+      ? [{ name: 'Admin Panel', href: '/admin', icon: ShieldAlert }]
       : []),
     { name: 'Profile', href: '/dashboard/profile', icon: User },
   ];
@@ -89,6 +93,26 @@ export function DashboardSidebar({ user, paymentEnabled }: SidebarProps) {
           );
         })}
       </nav>
+
+      {/* Mini Upgrade CTA for Free Users */}
+      {user.plan === 'free' && (
+        <div className="mx-3 mb-3 p-3 rounded-2xl bg-gradient-to-br from-primary/15 via-primary/5 to-surface border border-primary/20 text-left">
+          <div className="flex items-center gap-1.5 text-xs font-black text-text-main">
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <span>Upgrade to Pro</span>
+          </div>
+          <p className="text-[11px] text-text-main/60 mt-1 leading-snug">
+            Unlock 20-file batch verification and priority RAM queue.
+          </p>
+          <Link
+            href="/dashboard/payment?plan=pro"
+            className="mt-2.5 inline-flex items-center justify-center gap-1 w-full py-1.5 px-2.5 rounded-xl bg-primary text-white text-[11px] font-bold hover:bg-primary-hover transition-colors shadow-sm"
+          >
+            <span>Upgrade ₹199/mo</span>
+            <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+      )}
 
       {/* User Info & Sign Out Footer */}
       <div className="p-4 border-t border-surface-darker/70 bg-surface/30">

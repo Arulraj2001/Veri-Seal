@@ -20,15 +20,7 @@ from models import (
     SupportedDocCategory,
     VerificationResponse,
 )
-from verifier import (
-    InvalidPdfError,
-    NoSignatureFoundError,
-    VerificationEngineError,
-    VerificationFailedError,
-    WrongPasswordError,
-    async_verify_pdf,
-    verify_pdf,
-)
+from verifier import InvalidPdfError, VerificationEngineError, async_verify_pdf, verify_pdf
 
 # Configure structured logging (never log file bytes or passwords)
 logging.basicConfig(
@@ -112,10 +104,7 @@ async def health_check():
     summary="Verify PDF Digital Signature",
     responses={
         400: {"model": ErrorResponse},
-        401: {"model": ErrorResponse},
         413: {"model": ErrorResponse},
-        415: {"model": ErrorResponse},
-        422: {"model": ErrorResponse},
         429: {"model": ErrorResponse},
         500: {"model": ErrorResponse},
     },
@@ -138,11 +127,11 @@ async def verify_single_pdf(
     filename = file.filename or "uploaded.pdf"
     if not filename.lower().endswith(".pdf") and file.content_type != "application/pdf":
         return JSONResponse(
-            status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+            status_code=status.HTTP_400_BAD_REQUEST,
             content={
                 "error": True,
-                "code": "UNSUPPORTED_FORMAT",
-                "message": "Only PDF files (.pdf) are supported for digital signature verification.",
+                "code": "INVALID_PDF",
+                "message": "Invalid PDF format",
                 "detail": f"Received content type: {file.content_type}, filename: {filename}",
             },
         )
@@ -175,27 +164,17 @@ async def verify_single_pdf(
     # 3. Perform verification
     try:
         result = await async_verify_pdf(file_bytes=file_bytes, password=password)
-        return result
-    except NoSignatureFoundError as nsfe:
-        return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            content={
-                "error": True,
-                "code": nsfe.code,
-                "message": nsfe.message,
-                "detail": nsfe.detail,
-            },
-        )
-    except WrongPasswordError as wpe:
-        return JSONResponse(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            content={
-                "error": True,
-                "code": wpe.code,
-                "message": wpe.message,
-                "detail": wpe.detail,
-            },
-        )
+        if result.error_code == "INVALID_PDF":
+            return JSONResponse(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                content={
+                    "error": True,
+                    "code": "INVALID_PDF",
+                    "message": "Invalid PDF format",
+                    "detail": result.error_message,
+                },
+            )
+        return result.to_response() if hasattr(result, "to_response") else result
     except InvalidPdfError as ipe:
         return JSONResponse(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -280,30 +259,36 @@ async def verify_batch_pdfs(
             if len(content) > MAX_FILE_SIZE_BYTES:
                 results.append(
                     VerificationResponse(
-                        status="INVALID",
+                        status="ERROR",
                         signatures=[],
                         document_type="Unknown",
-                        error="File exceeded 25MB limit",
+                        error_code="FILE_TOO_LARGE",
+                        error_message="The uploaded PDF exceeds the 25MB file size limit.",
+                        error="The uploaded PDF exceeds the 25MB file size limit.",
                     )
                 )
                 continue
             res = await async_verify_pdf(file_bytes=content)
-            results.append(res)
+            results.append(res.to_response() if hasattr(res, "to_response") else res)
         except VerificationEngineError as vee:
             results.append(
                 VerificationResponse(
-                    status="INVALID",
+                    status="ERROR",
                     signatures=[],
                     document_type="Unknown",
+                    error_code=vee.code,
+                    error_message=vee.message,
                     error=f"{vee.code}: {vee.message}",
                 )
             )
         except Exception as exc:
             results.append(
                 VerificationResponse(
-                    status="INVALID",
+                    status="ERROR",
                     signatures=[],
                     document_type="Unknown",
+                    error_code="VERIFICATION_FAILED",
+                    error_message=str(exc),
                     error=str(exc),
                 )
             )

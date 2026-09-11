@@ -30,9 +30,9 @@ interface PaymentRecord {
   updated_at?: string;
 }
 
-export default function PaymentStatusPage() {
+function PaymentStatusContent() {
   const searchParams = useSearchParams();
-  const initialPlan = searchParams.get('plan') || 'pro';
+  const initialPlan = searchParams?.get('plan') || 'pro';
 
   const [paymentEnabled, setPaymentEnabled] = React.useState<boolean>(true);
   const [loadingSettings, setLoadingSettings] = React.useState<boolean>(true);
@@ -122,31 +122,6 @@ export default function PaymentStatusPage() {
     }
   };
 
-  if (!loadingSettings && !paymentEnabled) {
-    return (
-      <div className="bg-white border border-surface-darker/80 rounded-3xl p-8 sm:p-12 text-center max-w-xl mx-auto shadow-sm my-8">
-        <div className="h-16 w-16 bg-success-light text-success rounded-3xl flex items-center justify-center mx-auto mb-4 border border-success/20">
-          <ShieldCheck className="w-8 h-8" />
-        </div>
-        <h1 className="text-2xl font-black text-text-main">
-          Payments Currently Disabled
-        </h1>
-        <p className="text-sm text-text-main/70 mt-2">
-          VeriSeal is running in Public Free Tier mode. All citizens enjoy unlimited, unrestricted digital signature verification without requiring payment or subscription renewals.
-        </p>
-        <div className="mt-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-hover transition-colors shadow-sm"
-          >
-            <span>Return to Verification Engine</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-8 max-w-5xl">
       {/* Header */}
@@ -158,6 +133,18 @@ export default function PaymentStatusPage() {
           Review past UPI transactions, subscription activation approvals, or submit a new payment proof
         </p>
       </div>
+
+      {/* Info Notice when in Public Mode */}
+      {!loadingSettings && !paymentEnabled && (
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs">
+          <div className="flex items-center gap-2.5">
+            <ShieldCheck className="w-5 h-5 text-amber-600 shrink-0" />
+            <div>
+              <strong>Public Service Tier Active:</strong> Standard digital signature verification is currently free for all Indian citizens. Direct UPI submissions below are processed manually by accounts administration within 24 hours.
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Grid: Submit Payment & UPI Details */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -412,3 +399,19 @@ export default function PaymentStatusPage() {
     </div>
   );
 }
+
+export default function PaymentStatusPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="max-w-5xl space-y-6">
+          <div className="h-10 w-64 bg-surface-darker/40 rounded-xl animate-pulse" />
+          <div className="h-64 w-full bg-surface-darker/20 rounded-3xl animate-pulse" />
+        </div>
+      }
+    >
+      <PaymentStatusContent />
+    </React.Suspense>
+  );
+}
+

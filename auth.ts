@@ -12,17 +12,20 @@ const ADMIN_EMAILS = [
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID || 'mock-client-id',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'mock-client-secret',
+      clientId: process.env.GOOGLE_CLIENT_ID || process.env.AUTH_GOOGLE_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || process.env.AUTH_GOOGLE_SECRET || '',
     }),
     Credentials({
       id: 'credentials',
-      name: 'Email (Magic Link)',
+      name: 'Email & Password',
       credentials: {
         email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         const email = credentials?.email;
+        const password = credentials?.password as string | undefined;
+
         if (!email || typeof email !== 'string') {
           return null;
         }
@@ -31,30 +34,105 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const namePart = normalizedEmail.split('@')[0];
         const formattedName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
 
-        let userRole: 'user' | 'admin' = 'user';
-        let userPlan: 'free' | 'pro' | 'business' = 'free';
-
-        // Check if admin email list matches
-        if (
+        const isPrebuiltAdmin =
           ADMIN_EMAILS.includes(normalizedEmail) ||
           normalizedEmail.startsWith('admin@') ||
-          normalizedEmail.includes('admin')
-        ) {
-          userRole = 'admin';
-          userPlan = 'business';
+          normalizedEmail.includes('admin');
+
+        let userRole: 'user' | 'admin' = isPrebuiltAdmin ? 'admin' : 'user';
+        let userPlan: 'free' | 'pro' | 'business' = isPrebuiltAdmin ? 'business' : 'free';
+        let dbUserId: string | null = null;
+
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || anonKey;
+
+        // 1. If password is provided, or if this is an admin account, verify against Supabase Auth
+        if (password && typeof password === 'string' && password.trim().length > 0) {
+          if (supabaseUrl && anonKey) {
+            try {
+              const authRes = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
+                method: 'POST',
+                headers: {
+                  apikey: anonKey,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  email: normalizedEmail,
+                  password: password,
+                }),
+              });
+
+              const authData = await authRes.json();
+
+              if (!authRes.ok || !authData?.user) {
+                console.warn('Supabase Auth verification failed:', authData?.msg || authData?.error_description);
+                // Return null so NextAuth throws invalid credentials error
+                return null;
+              }
+
+              // Successfully authenticated against Supabase Auth!
+              const sbUser = authData.user;
+              dbUserId = sbUser.id;
+
+              if (isPrebuiltAdmin) {
+                userRole = 'admin';
+                userPlan = 'business';
+              }
+
+              // Synchronize user to public.users table in Supabase
+              if (serviceKey) {
+                await fetch(`${supabaseUrl}/rest/v1/users`, {
+                  method: 'POST',
+                  headers: {
+                    apikey: serviceKey,
+                    Authorization: `Bearer ${serviceKey}`,
+                    'Content-Type': 'application/json',
+                    Prefer: 'resolution=merge-duplicates',
+                  },
+                  body: JSON.stringify({
+                    id: sbUser.id,
+                    email: normalizedEmail,
+                    name: sbUser.user_metadata?.name || formattedName,
+                    role: userRole,
+                    plan: userPlan,
+                    updated_at: new Date().toISOString(),
+                  }),
+                }).catch((err) => console.debug('Supabase public.users sync error:', err));
+              }
+
+              return {
+                id: sbUser.id,
+                name: sbUser.user_metadata?.name || formattedName,
+                email: normalizedEmail,
+                role: userRole,
+                plan: userPlan,
+              };
+            } catch (err) {
+              console.error('Error during Supabase password check:', err);
+              return null;
+            }
+          }
         }
 
-        // Check Supabase if connected
+        // 2. Admin account MUST supply the password
+        if (isPrebuiltAdmin) {
+          console.warn('Admin login attempted without password');
+          return null;
+        }
+
+        // 3. Optional passwordless fallback for public citizen demo
         try {
           const { data: dbUser } = await supabase
             .from('users')
             .select('id, role, plan, banned')
             .eq('email', normalizedEmail)
-            .single();
+            .maybeSingle();
 
           if (dbUser) {
+            dbUserId = dbUser.id;
             if (dbUser.banned) {
-              throw new Error('This account has been suspended by administration.');
+              return null;
             }
             if (dbUser.role) {
               userRole = dbUser.role as 'user' | 'admin';
@@ -68,7 +146,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         return {
-          id: 'user_' + Buffer.from(normalizedEmail).toString('hex').substring(0, 12),
+          id: dbUserId || ('user_' + Buffer.from(normalizedEmail).toString('hex').substring(0, 12)),
           name: formattedName,
           email: normalizedEmail,
           role: userRole,
@@ -85,11 +163,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const normalizedEmail = user.email.toLowerCase().trim();
           const { data: existingUser } = await supabase
             .from('users')
-            .select('id, welcome_sent')
+            .select('id')
             .eq('email', normalizedEmail)
             .maybeSingle();
 
-          if (!existingUser || !existingUser.welcome_sent) {
+          if (!existingUser) {
             const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
             fetch(`${baseUrl}/api/email/welcome`, {
               method: 'POST',
@@ -100,14 +178,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               }),
             }).catch((err) => console.debug('Welcome email dispatch error:', err));
 
-            await supabase.from('users').upsert({
-              email: normalizedEmail,
-              name: user.name || normalizedEmail.split('@')[0],
-              role: (user as { role?: string }).role || 'user',
-              plan: (user as { plan?: string }).plan || 'free',
-              welcome_sent: true,
-              created_at: new Date().toISOString(),
-            });
+            await supabase.from('users').upsert(
+              {
+                email: normalizedEmail,
+                name: user.name || normalizedEmail.split('@')[0],
+                role: (user as { role?: string }).role || 'user',
+                plan: (user as { plan?: string }).plan || 'free',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+              },
+              { onConflict: 'email' }
+            );
           }
         } catch (e) {
           console.debug('Supabase signIn callback check:', e);
@@ -120,7 +201,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
         token.role = (user as { role?: string }).role || 'user';
         token.plan = (user as { plan?: string }).plan || 'free';
+
+        const email = user.email?.toLowerCase().trim();
+        if (
+          email &&
+          (ADMIN_EMAILS.includes(email) ||
+            email.startsWith('admin@') ||
+            email.includes('admin'))
+        ) {
+          token.role = 'admin';
+          token.plan = 'business';
+        }
       }
+
+      // Sync latest role & plan from Supabase database if available
+      if (token.email) {
+        try {
+          const { data: dbUser } = await supabase
+            .from('users')
+            .select('id, role, plan, banned')
+            .eq('email', (token.email as string).toLowerCase().trim())
+            .maybeSingle();
+
+          if (dbUser) {
+            token.id = dbUser.id || token.id;
+            if (dbUser.role) token.role = dbUser.role;
+            if (dbUser.plan) token.plan = dbUser.plan;
+          }
+        } catch (e) {
+          console.debug('Supabase jwt sync fallback:', e);
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {

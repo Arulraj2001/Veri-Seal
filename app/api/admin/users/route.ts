@@ -117,6 +117,32 @@ export async function GET(req: Request) {
 
     let list = [...mockUsers];
 
+    try {
+      const { data: dbUsers } = await supabase.from('users').select('*');
+      if (dbUsers && dbUsers.length > 0) {
+        const existingEmails = new Set(list.map((u) => u.email.toLowerCase()));
+        dbUsers.forEach((u: any) => {
+          if (!existingEmails.has(u.email.toLowerCase())) {
+            list.unshift({
+              id: u.id,
+              name: u.name || u.email.split('@')[0],
+              email: u.email,
+              plan: (u.plan || 'free') as 'free' | 'pro' | 'business',
+              role: (u.role || 'user') as 'user' | 'admin',
+              banned: !!u.banned,
+              joined: u.created_at || new Date().toISOString(),
+              verifications: u.verification_count_total || 0,
+              last_active: u.updated_at || u.created_at || new Date().toISOString(),
+              verification_count_today: u.verification_count_today || 0,
+            });
+            existingEmails.add(u.email.toLowerCase());
+          }
+        });
+      }
+    } catch (e) {
+      console.debug('Failed to query users from Supabase:', e);
+    }
+
     // Filter by search
     if (search) {
       list = list.filter(
@@ -155,7 +181,30 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { action, userId } = body;
 
-    const targetUser = mockUsers.find((u) => u.id === userId);
+    let targetUser = mockUsers.find((u) => u.id === userId);
+    if (!targetUser) {
+      try {
+        const { data: u } = await supabase.from('users').select('*').eq('id', userId).maybeSingle();
+        if (u) {
+          targetUser = {
+            id: u.id,
+            name: u.name || u.email.split('@')[0],
+            email: u.email,
+            plan: (u.plan || 'free') as 'free' | 'pro' | 'business',
+            role: (u.role || 'user') as 'user' | 'admin',
+            banned: !!u.banned,
+            joined: u.created_at || new Date().toISOString(),
+            verifications: u.verification_count_total || 0,
+            last_active: u.updated_at || u.created_at || new Date().toISOString(),
+            verification_count_today: u.verification_count_today || 0,
+          };
+          mockUsers.unshift(targetUser);
+        }
+      } catch (e) {
+        console.debug('Failed to query user by id from Supabase:', e);
+      }
+    }
+
     if (!targetUser) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
@@ -163,26 +212,51 @@ export async function POST(req: Request) {
     if (action === 'upgrade_plan') {
       const { plan } = body;
       targetUser.plan = plan;
+      try {
+        await supabase.from('users').update({ plan, updated_at: new Date().toISOString() }).eq('email', targetUser.email);
+      } catch (e) {
+        console.debug('Supabase user plan sync:', e);
+      }
       return NextResponse.json({ success: true, user: targetUser });
     }
 
     if (action === 'downgrade_free') {
       targetUser.plan = 'free';
+      try {
+        await supabase.from('users').update({ plan: 'free', updated_at: new Date().toISOString() }).eq('email', targetUser.email);
+      } catch (e) {
+        console.debug('Supabase user downgrade sync:', e);
+      }
       return NextResponse.json({ success: true, user: targetUser });
     }
 
     if (action === 'reset_daily') {
       targetUser.verification_count_today = 0;
+      try {
+        await supabase.from('users').update({ verification_count_today: 0, updated_at: new Date().toISOString() }).eq('email', targetUser.email);
+      } catch (e) {
+        console.debug('Supabase reset daily sync:', e);
+      }
       return NextResponse.json({ success: true, user: targetUser });
     }
 
     if (action === 'ban_user') {
       targetUser.banned = true;
+      try {
+        await supabase.from('users').update({ banned: true, updated_at: new Date().toISOString() }).eq('email', targetUser.email);
+      } catch (e) {
+        console.debug('Supabase user ban sync:', e);
+      }
       return NextResponse.json({ success: true, user: targetUser });
     }
 
     if (action === 'unban_user') {
       targetUser.banned = false;
+      try {
+        await supabase.from('users').update({ banned: false, updated_at: new Date().toISOString() }).eq('email', targetUser.email);
+      } catch (e) {
+        console.debug('Supabase user unban sync:', e);
+      }
       return NextResponse.json({ success: true, user: targetUser });
     }
 

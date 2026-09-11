@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar';
 import { DashboardBottomNav } from '@/components/dashboard/DashboardBottomNav';
-import { fetchPublicSettings } from '@/lib/api';
+import { getMergedSettings } from '@/lib/settings-store';
 
 export default async function DashboardLayout({
   children,
@@ -37,7 +37,7 @@ export default async function DashboardLayout({
     plan: (session.user as { plan?: string }).plan || 'free',
   };
 
-  const settings = await fetchPublicSettings();
+  const settings = await getMergedSettings();
 
   return (
     <div className="min-h-screen bg-background flex flex-col md:flex-row">

@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   FileUp,
@@ -47,6 +48,11 @@ import { captureVerificationError, ErrorBoundary } from '@/components/ui/ErrorBo
 import { processPdfWithWorker } from '@/lib/pdf-worker-client';
 
 export function UploadZone() {
+  const { data: session } = useSession();
+  const user = session?.user;
+  const userPlan = (user as { plan?: string })?.plan || 'guest';
+  const isPaidUser = userPlan === 'pro' || userPlan === 'business';
+
   const [state, setState] = React.useState<VerificationState>('idle');
   const [file, setFile] = React.useState<File | null>(null);
   const [isPasswordProtected, setIsPasswordProtected] = React.useState(false);
@@ -166,10 +172,13 @@ export function UploadZone() {
     if (!file) return;
 
     // Daily Limit check: If payment toggle is ON and guest has verified 3 PDFs today
-    const usage = getGuestVerificationUsage();
-    if (publicSettings?.payment_enabled && usage.count >= (publicSettings.free_daily_limit || 3)) {
-      setShowUpgradeModal(true);
-      return;
+    // (Paid users on Pro or Business tier have unlimited verifications)
+    if (!isPaidUser) {
+      const usage = getGuestVerificationUsage();
+      if (publicSettings?.payment_enabled && usage.count >= (publicSettings.free_daily_limit || 3)) {
+        setShowUpgradeModal(true);
+        return;
+      }
     }
 
     setState('processing');
@@ -637,6 +646,22 @@ export function UploadZone() {
                 </div>
               </div>
 
+              {/* In-Place Signature Transformation Visual Callout */}
+              <div className="p-4 rounded-2xl bg-surface/70 border border-success/30 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-100/80 border border-amber-300 text-amber-900 text-xs font-semibold">
+                    <span>❓ Unverified</span>
+                  </div>
+                  <span className="text-text-main/40 font-bold">➔</span>
+                  <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-success-light border border-success/40 text-success-dark text-xs font-bold">
+                    <span>✔ Signature valid</span>
+                  </div>
+                </div>
+                <p className="text-xs text-text-main/70 text-center sm:text-right">
+                  Yellow <strong>?</strong> on certificate replaced with Adobe&apos;s verified green tick in-place.
+                </p>
+              </div>
+
               {/* Download Verified Button */}
               <div className="flex flex-col sm:flex-row items-center gap-3">
                 <Button
@@ -658,6 +683,23 @@ export function UploadZone() {
                   Verify Another
                 </Button>
               </div>
+
+              {/* Logged in User Quick Audit Link */}
+              {user && (
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-surface/60 border border-surface-darker text-xs text-text-main/70">
+                  <span className="flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4 text-success" />
+                    <span>Cryptographic audit recorded under account <strong>{user.email}</strong></span>
+                  </span>
+                  <Link
+                    href="/dashboard/verifications"
+                    className="inline-flex items-center gap-1 font-bold text-primary hover:text-primary-hover hover:underline"
+                  >
+                    <span>View in Dashboard Audit Log</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              )}
 
               {/* Internal Link to matching SEO Landing Page Guide */}
               {result.docType && (

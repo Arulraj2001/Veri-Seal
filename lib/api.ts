@@ -23,10 +23,13 @@ export interface BackendSignatureDetail {
 }
 
 export interface BackendVerificationResponse {
-  status: 'VALID' | 'INVALID' | 'UNKNOWN';
+  status: 'VALID' | 'INVALID' | 'UNKNOWN' | 'ERROR' | 'NO_SIGNATURE';
   signatures: BackendSignatureDetail[];
   document_type: string;
   error?: string | null;
+  error_code?: string | null;
+  error_message?: string | null;
+  verified_pdf_b64?: string | null;
   verified_pdf_base64?: string | null;
 }
 
@@ -77,7 +80,19 @@ export function verifyPdf(
         const json = JSON.parse(xhr.responseText);
 
         if (xhr.status >= 200 && xhr.status < 300) {
-          const resp = json as BackendVerificationResponse;
+          const resp = json as BackendVerificationResponse & { error_code?: string; error_message?: string; verified_pdf_b64?: string };
+
+          if (resp.status === 'ERROR' || resp.status === 'NO_SIGNATURE' || resp.error_code) {
+            const errCode = resp.error_code || (resp.status === 'NO_SIGNATURE' ? 'NO_SIGNATURE_FOUND' : 'VERIFICATION_FAILED');
+            const errMsg = resp.error_message || resp.error || 'Verification failed';
+            const errorObj = new Error(errMsg) as Error & { code?: string; detail?: string; status?: number };
+            errorObj.code = errCode;
+            errorObj.detail = errMsg;
+            errorObj.status = xhr.status;
+            reject(errorObj);
+            return;
+          }
+
           const primarySig = resp.signatures[0];
 
           const formattedResult: VerificationResult = {
@@ -113,7 +128,7 @@ export function verifyPdf(
 
           resolve({
             result: formattedResult,
-            rawBase64: resp.verified_pdf_base64 || undefined,
+            rawBase64: resp.verified_pdf_b64 || resp.verified_pdf_base64 || undefined,
           });
         } else {
           // Handled backend error codes
@@ -234,7 +249,7 @@ export async function fetchPublicSettings(): Promise<PublicSettings> {
   }
 
   return {
-    payment_enabled: false,
+    payment_enabled: true,
     site_name: 'VeriSeal',
     verification_counter: 421847,
     language_tamil_enabled: true,

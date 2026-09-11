@@ -14,17 +14,27 @@ class SignatureDetail(BaseModel):
     covers_whole_document: bool = Field(..., description="True if signature byte range covers EOF")
     hash_valid: bool = Field(..., description="True if cryptographic digest matches unmodified PDF bytes")
     chain_valid: bool = Field(..., description="True if validated against India CCA/RCAI trust hierarchy")
+    intact: bool = Field(default=False, description="True if the PDF signature container is cryptographically intact")
     ltv_added: bool = Field(default=False, description="True if Document Security Store (DSS) LTV information was added")
 
 
 class VerificationResponse(BaseModel):
-    status: Literal["VALID", "INVALID", "UNKNOWN"]
+    status: Literal["VALID", "INVALID", "UNKNOWN", "ERROR", "NO_SIGNATURE"]
     signatures: List[SignatureDetail] = Field(default_factory=list)
     document_type: str = Field(default="Government Document")
+    doc_source: str = Field(default="State Portal")
+    is_aadhaar: bool = Field(default=False)
+    ltv_embedded: bool = Field(default=False)
+    verified_pdf_b64: Optional[str] = Field(
+        default=None,
+        description="Base64 encoded stamped clean PDF without file-level encryption",
+    )
+    error_code: Optional[str] = None
+    error_message: Optional[str] = None
     error: Optional[str] = None
     verified_pdf_base64: Optional[str] = Field(
         default=None,
-        description="Base64 encoded PDF with embedded LTV validation information and verified state",
+        description="Backward-compatible alias for verified_pdf_b64",
     )
 
 

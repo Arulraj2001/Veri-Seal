@@ -49,7 +49,30 @@ export async function POST(req: Request) {
     // 2. Approve payment request
     if (action === 'approve') {
       const { id, expiry_date } = body;
-      const item = inMemoryPayments.find((p) => p.id === id);
+      let item = inMemoryPayments.find((p) => p.id === id);
+      if (!item) {
+        try {
+          const { data } = await supabase.from('payment_requests').select('*').eq('id', id).maybeSingle();
+          if (data) {
+            item = {
+              id: data.id,
+              user_id: data.user_id,
+              name: data.name || 'Citizen User',
+              email: data.email,
+              plan: data.plan,
+              amount: data.amount,
+              upi_txn_id: data.upi_txn_id,
+              screenshot_url: data.screenshot_url,
+              submitted: data.created_at || new Date().toISOString(),
+              status: data.status,
+            };
+            inMemoryPayments.unshift(item);
+          }
+        } catch (e) {
+          console.debug('Failed to lookup payment in Supabase:', e);
+        }
+      }
+
       if (!item) {
         return NextResponse.json({ error: 'Payment request not found' }, { status: 404 });
       }
@@ -93,7 +116,30 @@ export async function POST(req: Request) {
     // 3. Reject payment request
     if (action === 'reject') {
       const { id, reason } = body;
-      const item = inMemoryPayments.find((p) => p.id === id);
+      let item = inMemoryPayments.find((p) => p.id === id);
+      if (!item) {
+        try {
+          const { data } = await supabase.from('payment_requests').select('*').eq('id', id).maybeSingle();
+          if (data) {
+            item = {
+              id: data.id,
+              user_id: data.user_id,
+              name: data.name || 'Citizen User',
+              email: data.email,
+              plan: data.plan,
+              amount: data.amount,
+              upi_txn_id: data.upi_txn_id,
+              screenshot_url: data.screenshot_url,
+              submitted: data.created_at || new Date().toISOString(),
+              status: data.status,
+            };
+            inMemoryPayments.unshift(item);
+          }
+        } catch (e) {
+          console.debug('Failed to lookup payment in Supabase:', e);
+        }
+      }
+
       if (!item) {
         return NextResponse.json({ error: 'Payment request not found' }, { status: 404 });
       }
