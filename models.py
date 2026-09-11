@@ -56,3 +56,19 @@ class SupportedDocCategory(BaseModel):
     portal: str
     sample_authority: str
     detection_keywords: List[str]
+
+
+class CompressionResponse(BaseModel):
+    success: bool = True
+    original_size_kb: float
+    compressed_size_kb: float
+    reduction_percent: float
+    target_kb: int
+    fits_target: bool
+    page_count: int
+    preset: str
+    greyscale: bool
+    compliance_badges: List[str]
+    preview_image_b64: str
+    compressed_pdf_b64: str
+

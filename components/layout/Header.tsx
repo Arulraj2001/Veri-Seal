@@ -90,6 +90,7 @@ export function Header() {
 
   const navLinks = [
     { label: t.nav.home, href: '/#hero' },
+    { label: 'Exam PDF Compressor (100% Free)', href: '/tools/government-exam-pdf-compressor' },
     { label: t.nav.documents, href: '/#supported-docs' },
     { label: t.nav.howItWorks, href: '/#how-it-works' },
     { label: t.nav.security, href: '/#trust-section' },
@@ -142,6 +143,15 @@ export function Header() {
 
         {/* Desktop Nav Center (Perfect geometric center of the website) */}
         <nav className="hidden md:flex items-center gap-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/85 px-4 py-1.5 rounded-full border border-surface-darker/70 backdrop-blur-md shadow-2xs z-10">
+          <Link
+            href="/tools/pdf-compressor"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold text-text-main hover:text-primary rounded-full hover:bg-white/60 transition-colors"
+          >
+            <span>PDF Compressor</span>
+            <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-600 rounded-full border border-emerald-500/30">
+              FREE
+            </span>
+          </Link>
           <a
             href="/#how-it-works"
             className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"

@@ -14,8 +14,10 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
 from cca_certs import cca_manager
+from compressor import batch_compress_pdfs, compress_pdf_to_target, inspect_pdf_pages
 from models import (
     BatchVerificationResponse,
+    CompressionResponse,
     ErrorResponse,
     SupportedDocCategory,
     VerificationResponse,
@@ -300,6 +302,134 @@ async def verify_batch_pdfs(
             )
 
     return BatchVerificationResponse(results=results, total_processed=len(results))
+
+
+@app.post(
+    "/compress",
+    response_model=CompressionResponse,
+    summary="Compress PDF for Government Exam Portals",
+    description="100% Free unmonetized public utility. Compresses PDF to exact target limits (TNPSC 200KB, UPSC 300KB, SSC, NEET, etc.) with in-memory processing.",
+)
+@limiter.limit("30/minute")
+async def compress_pdf_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="PDF certificate or document to compress"),
+    target_kb: int = Form(default=200, description="Target max file size in KB (e.g. 180, 200, 250, 300)"),
+    preset: str = Form(default="custom", description="Exam preset identifier (tnpsc, upsc, neet, ssc, bank, passport, 200kb, 100kb, custom)"),
+    greyscale: bool = Form(default=False, description="Convert color scans to high-contrast monochrome/greyscale"),
+    pages_to_keep: Optional[str] = Form(default=None, description="Comma-separated 1-indexed page numbers to keep (e.g. '1,2')"),
+):
+    """Compresses uploaded PDF in-memory to strictly comply with exam portal upload rules."""
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only PDF files are supported for government exam portal compression.",
+        )
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail="Uploaded file exceeds maximum allowed limit of 25MB.",
+        )
+
+    # Sanity checks on target_kb
+    if target_kb < 10 or target_kb > 10000:
+        target_kb = 200
+
+    parsed_pages = None
+    if pages_to_keep and pages_to_keep.strip():
+        try:
+            parsed_pages = [int(p.strip()) for p in pages_to_keep.split(",") if p.strip().isdigit()]
+        except Exception:
+            parsed_pages = None
+
+    try:
+        result = compress_pdf_to_target(
+            file_bytes=content,
+            target_kb=target_kb,
+            preset=preset,
+            greyscale=greyscale,
+            pages_to_keep=parsed_pages,
+        )
+        return CompressionResponse(**result)
+    except ValueError as ve:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(ve),
+        )
+    except Exception as exc:
+        logger.error(f"Compression failed unexpectedly: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Compression processing failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/compress-batch",
+    summary="Batch Compress Multiple PDFs for Portals",
+    description="100% Free multi-file PDF compressor. Compresses up to 10 certificate PDFs at once and packages them into a downloadable ZIP archive.",
+)
+@limiter.limit("15/minute")
+async def compress_batch_endpoint(
+    request: Request,
+    files: List[UploadFile] = File(..., description="Multiple PDF certificates to compress"),
+    target_kb: int = Form(default=200),
+    preset: str = Form(default="custom"),
+    greyscale: bool = Form(default=False),
+):
+    if not files or len(files) == 0:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No files uploaded.")
+
+    if len(files) > 10:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Batch limit is 10 files at a time to ensure instant in-memory processing.",
+        )
+
+    file_tuples = []
+    for f in files:
+        if f.filename and f.filename.lower().endswith(".pdf"):
+            data = await f.read()
+            if len(data) <= MAX_FILE_SIZE_BYTES:
+                file_tuples.append((f.filename, data))
+
+    if not file_tuples:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No valid PDF files found.")
+
+    try:
+        batch_result = batch_compress_pdfs(
+            files=file_tuples,
+            target_kb=target_kb,
+            preset=preset,
+            greyscale=greyscale,
+        )
+        return JSONResponse(content=batch_result)
+    except Exception as exc:
+        logger.error(f"Batch compression failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Batch compression failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/inspect-pdf",
+    summary="Inspect PDF Pages and Generate Preview Thumbnails",
+)
+@limiter.limit("30/minute")
+async def inspect_pdf_endpoint(
+    request: Request,
+    file: UploadFile = File(...),
+):
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only PDF files supported.")
+
+    content = await file.read()
+    pages = inspect_pdf_pages(content)
+    return JSONResponse(content={"pages": pages, "total_pages": len(pages)})
+
 
 
 @app.get("/supported-docs", response_model=List[SupportedDocCategory], summary="Supported Document Categories")

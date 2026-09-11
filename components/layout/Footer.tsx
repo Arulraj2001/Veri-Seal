@@ -88,10 +88,64 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Tools Links */}
+          {/* Free Tools Links */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/90 flex items-center gap-1.5">
+              <span>Free Public Tools</span>
+              <span className="text-[9px] font-black px-1.5 py-0.5 bg-emerald-500/15 text-emerald-600 rounded-full">
+                100% FREE
+              </span>
+            </h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link
+                  href="/tools/compress-pdf-to-200kb"
+                  className="text-text-main/90 font-semibold hover:text-primary transition-colors flex items-center justify-between"
+                >
+                  <span>Compress PDF to 200KB</span>
+                  <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.2 rounded">POPULAR</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/compress-pdf-to-100kb"
+                  className="text-text-main/75 hover:text-primary transition-colors"
+                >
+                  Compress PDF to 100KB
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/tnpsc-pdf-compressor"
+                  className="text-text-main/75 hover:text-primary transition-colors"
+                >
+                  TNPSC PDF Compressor (200KB)
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/upsc-pdf-compressor"
+                  className="text-text-main/75 hover:text-primary transition-colors"
+                >
+                  UPSC PDF Compressor (300KB)
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/pdf-compressor"
+                  className="text-primary font-bold hover:underline transition-colors flex items-center gap-1"
+                >
+                  <span>All PDF Tools Hub</span>
+                  <span>&rarr;</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Verification Tools Links */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/90">
-              Document Guides
+              Verify Signatures
             </h4>
             <ul className="space-y-2 text-sm">
               <li>

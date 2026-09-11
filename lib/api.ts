@@ -310,8 +310,175 @@ export async function recordVerificationEvent(docType: string, status: string, s
 export function prewarmBackend(): void {
   if (typeof window === 'undefined') return;
   try {
-    fetch(`${API_URL}/health`, { method: 'GET', cache: 'no-store' }).catch(() => {});
+    fetch(`${getApiUrl()}/health`, { method: 'GET', cache: 'no-store' }).catch(() => {});
   } catch {
     // Ignore silent pre-warm failures
   }
 }
+
+export interface CompressionResponseData {
+  success: boolean;
+  original_size_kb: number;
+  compressed_size_kb: number;
+  reduction_percent: number;
+  target_kb: number;
+  fits_target: boolean;
+  page_count: number;
+  preset: string;
+  greyscale: boolean;
+  compliance_badges: string[];
+  preview_image_b64: string;
+  compressed_pdf_b64: string;
+}
+
+export interface BatchItemResult {
+  filename: string;
+  success: boolean;
+  original_size_kb?: number;
+  compressed_size_kb?: number;
+  reduction_percent?: number;
+  fits_target?: boolean;
+  compliance_badges?: string[];
+  preview_image_b64?: string;
+  compressed_pdf_b64?: string;
+  download_name?: string;
+  error?: string;
+}
+
+export interface BatchCompressionResponseData {
+  success: boolean;
+  total_files: number;
+  successful_files: number;
+  total_original_size_kb: number;
+  total_compressed_size_kb: number;
+  overall_reduction_percent: number;
+  results: BatchItemResult[];
+  zip_archive_b64?: string | null;
+}
+
+export interface PdfPageInfo {
+  page_number: number;
+  width: number;
+  height: number;
+  thumbnail_b64: string;
+}
+
+export function compressPdf(
+  file: File,
+  options?: {
+    targetKb?: number;
+    preset?: string;
+    greyscale?: boolean;
+    pagesToKeep?: number[];
+    onProgress?: (percent: number) => void;
+  }
+): Promise<CompressionResponseData> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('target_kb', String(options?.targetKb || 200));
+    formData.append('preset', options?.preset || 'custom');
+    formData.append('greyscale', String(Boolean(options?.greyscale)));
+    if (options?.pagesToKeep && options.pagesToKeep.length > 0) {
+      formData.append('pages_to_keep', options.pagesToKeep.join(','));
+    }
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as CompressionResponseData);
+        } else {
+          const errMsg = json.detail || json.message || 'Compression failed';
+          reject(new Error(errMsg));
+        }
+      } catch {
+        reject(new Error(`Failed to parse response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during PDF compression upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/compress`, true);
+    xhr.send(formData);
+  });
+}
+
+export function compressBatchPdfs(
+  files: File[],
+  options?: {
+    targetKb?: number;
+    preset?: string;
+    greyscale?: boolean;
+    onProgress?: (percent: number) => void;
+  }
+): Promise<BatchCompressionResponseData> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    files.forEach((f) => formData.append('files', f));
+    formData.append('target_kb', String(options?.targetKb || 200));
+    formData.append('preset', options?.preset || 'custom');
+    formData.append('greyscale', String(Boolean(options?.greyscale)));
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as BatchCompressionResponseData);
+        } else {
+          const errMsg = json.detail || json.message || 'Batch compression failed';
+          reject(new Error(errMsg));
+        }
+      } catch {
+        reject(new Error(`Failed to parse batch response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during batch upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/compress-batch`, true);
+    xhr.send(formData);
+  });
+}
+
+export async function inspectPdf(file: File): Promise<PdfPageInfo[]> {
+  const formData = new FormData();
+  formData.append('file', file);
+  try {
+    const res = await fetch(`${getApiUrl()}/inspect-pdf`, {
+      method: 'POST',
+      body: formData,
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.pages || [];
+    }
+  } catch (e) {
+    console.warn('Could not inspect PDF pages:', e);
+  }
+  return [];
+}
+
+
