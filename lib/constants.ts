@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   upiId: 'veriseal@upi',
   supportEmail: 'support@veriseal.in',
   author: 'VeriSeal Team',
-  verifiedCountDefault: 421847,
+  verifiedCountDefault: 4215,
   maxFileSizeMB: 25,
 };
 

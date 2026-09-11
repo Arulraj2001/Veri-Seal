@@ -98,6 +98,7 @@ export function Header() {
     { label: 'Blog', href: '/blog' },
     { label: 'Security', href: '/#trust-section' },
     { label: 'FAQ', href: '/#faq-section' },
+    { label: 'Contact', href: '/contact' },
   ];
 
   return (

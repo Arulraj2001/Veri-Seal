@@ -15,6 +15,8 @@ import {
   ShieldCheck,
   ArrowUpRight,
   Sparkles,
+  MessageSquare,
+  ArrowRight,
 } from 'lucide-react';
 import {
   BarChart,
@@ -210,6 +212,30 @@ export default function AdminOverviewPage() {
             Requires manual UTR validation
           </p>
         </div>
+      </div>
+
+      {/* Support Inquiries Quick Access Banner */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-gradient-to-r from-primary-light/60 via-primary-light/20 to-white border border-primary/20 shadow-2xs">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-primary text-white shrink-0 shadow-sm">
+            <MessageSquare className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="text-sm font-black text-text-main">
+              Citizen &amp; Enterprise Support Inquiries
+            </div>
+            <div className="text-xs text-text-main/70">
+              Review and respond to messages submitted via the public /contact desk.
+            </div>
+          </div>
+        </div>
+        <Link
+          href="/admin/messages"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-hover transition-colors shrink-0 shadow-sm"
+        >
+          <span>Open Support Inbox</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
 
       {/* Row 2: 2 Charts */}

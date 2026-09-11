@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   Accordion,
   AccordionItem,
@@ -45,12 +46,13 @@ export function FaqSection() {
         {/* Help footer */}
         <div className="mt-10 text-center text-xs text-text-main/60">
           Still have questions regarding your specific certificate or signature?{' '}
-          <a
-            href="mailto:support@veriseal.in"
-            className="text-primary font-bold hover:underline"
+          <Link
+            href="/contact"
+            className="text-primary font-bold hover:underline inline-flex items-center gap-1"
           >
-            Contact our technical team
-          </a>
+            <span>Contact our technical desk</span>
+            <span>&rarr;</span>
+          </Link>
         </div>
       </div>
     </section>

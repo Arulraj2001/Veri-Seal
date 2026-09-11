@@ -14,6 +14,7 @@ import {
   Settings,
   LineChart,
   ShieldCheck,
+  MessageSquare,
   X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -28,6 +29,7 @@ export function AdminSidebar({ isOpenMobile, onCloseMobile }: AdminSidebarProps)
 
   const navigation = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+    { name: 'Inquiries', href: '/admin/messages', icon: MessageSquare },
     { name: 'Payments', href: '/admin/payments', icon: CreditCard },
     { name: 'Users', href: '/admin/users', icon: Users },
     { name: 'Content', href: '/admin/content', icon: FileEdit },
