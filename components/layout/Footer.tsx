@@ -139,8 +139,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/blog/legal-status-digital-signatures-it-act-india" className="text-text-main/75 hover:text-primary transition-colors">
-                  IT Act 2000 Legal Status
+                <Link href="/blog/verify-tamil-nadu-community-nativity-certificate" className="text-text-main/75 hover:text-primary transition-colors">
+                  TN Revenue Certificate Guide
                 </Link>
               </li>
               <li>

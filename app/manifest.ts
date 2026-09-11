@@ -2,11 +2,14 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'VeriSeal',
+    name: 'VeriSeal — Indian Government PDF Digital Signature Verification',
     short_name: 'VeriSeal',
-    description: 'Verify Indian govt PDF signatures',
+    description:
+      'Instantly verify digital signatures on e-Aadhaar, community certificate, nativity certificate, PAN card, and DigiLocker PDFs free.',
     start_url: '/',
     display: 'standalone',
+    lang: 'en-IN',
+    categories: ['utilities', 'productivity', 'government'],
     background_color: '#FBFAF9',
     theme_color: '#E6570B',
     icons: [

@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     siteName: 'VeriSeal India',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og',
         width: 1200,
         height: 630,
         alt: 'VeriSeal - Indian Government PDF Digital Signature Verification',
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     title: 'VeriSeal — Verify Indian Government PDF Digital Signature Online Free',
     description:
       'Fix the yellow question mark on e-Aadhaar, community, and government certificates. Free, instant, 100% in-memory.',
-    images: ['/og-image.png'],
+    images: ['/og'],
     creator: '@veriseal_in',
   },
   robots: {
