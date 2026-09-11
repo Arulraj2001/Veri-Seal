@@ -109,6 +109,7 @@ export function Header() {
   const navLinks = [
     { label: t.nav.home, href: '/#hero' },
     { label: 'All Free Tools (36)', href: '/tools' },
+    { label: 'Home Cost & Savings ⚡', href: '/home-cost' },
     { label: t.nav.documents, href: '/#supported-docs' },
     { label: t.nav.howItWorks, href: '/#how-it-works' },
     { label: t.nav.security, href: '/#trust-section' },
