@@ -695,7 +695,338 @@ export async function convertPdfToImages(
   });
 }
 
+export interface UnlockPdfResponse {
+  status: string;
+  was_encrypted: boolean;
+  is_unlocked: boolean;
+  total_pages: number;
+  input_size_kb: number;
+  output_size_kb: number;
+  pdf_base64: string;
+  preview_base64?: string;
+  error_code?: string;
+  message?: string;
+}
 
+export interface UnlockPdfOptions {
+  password?: string;
+  namePrefix?: string;
+  birthYear?: string;
+  onProgress?: (percent: number) => void;
+}
 
+export async function unlockPdf(
+  file: File,
+  options?: UnlockPdfOptions
+): Promise<UnlockPdfResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    if (options?.password) formData.append('password', options.password);
+    if (options?.namePrefix) formData.append('name_prefix', options.namePrefix);
+    if (options?.birthYear) formData.append('birth_year', options.birthYear);
 
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as UnlockPdfResponse);
+        } else {
+          const errMsg = json.message || json.detail || 'Failed to unlock PDF. Please verify password.';
+          const err = new Error(errMsg) as Error & { code?: string };
+          err.code = json.error_code;
+          reject(err);
+        }
+      } catch {
+        reject(new Error(`Failed to parse unlock PDF response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/unlock-pdf`, true);
+    xhr.send(formData);
+  });
+}
+
+export interface MaskAadhaarResponse {
+  status: string;
+  file_type: 'pdf' | 'image';
+  redactions_applied: number;
+  input_size_kb: number;
+  output_size_kb: number;
+  data_base64: string;
+  preview_base64?: string;
+  error_code?: string;
+  message?: string;
+}
+
+export interface MaskAadhaarOptions {
+  maskFirst8?: boolean;
+  maskQr?: boolean;
+  customBoxes?: Array<{ x: number; y: number; width: number; height: number }>;
+  onProgress?: (percent: number) => void;
+}
+
+export async function maskAadhaar(
+  file: File,
+  options?: MaskAadhaarOptions
+): Promise<MaskAadhaarResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('mask_first_8', String(options?.maskFirst8 ?? true));
+    formData.append('mask_qr', String(Boolean(options?.maskQr)));
+    if (options?.customBoxes && options.customBoxes.length > 0) {
+      formData.append('custom_boxes_json', JSON.stringify(options.customBoxes));
+    }
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as MaskAadhaarResponse);
+        } else {
+          const errMsg = json.message || json.detail || 'Failed to mask Aadhaar document.';
+          const err = new Error(errMsg) as Error & { code?: string };
+          err.code = json.error_code;
+          reject(err);
+        }
+      } catch {
+        reject(new Error(`Failed to parse mask Aadhaar response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/mask-aadhaar`, true);
+    xhr.send(formData);
+  });
+}
+
+export interface MergeMarksheetsOptions {
+  targetKb?: number;
+  preset?: 'color' | 'greyscale' | 'xerox';
+  pageFormat?: 'A4' | 'fit_image';
+  onProgress?: (percent: number) => void;
+}
+
+export interface MergeMarksheetsResponse {
+  status: string;
+  total_pages: number;
+  target_kb: number;
+  output_size_kb: number;
+  is_under_target: boolean;
+  pdf_base64: string;
+  preview_base64: string;
+}
+
+export async function mergeMarksheets(
+  files: File[],
+  options?: MergeMarksheetsOptions
+): Promise<MergeMarksheetsResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    files.forEach((f) => formData.append('files', f));
+    formData.append('target_kb', String(options?.targetKb ?? 1000));
+    formData.append('preset', options?.preset || 'color');
+    formData.append('page_format', options?.pageFormat || 'A4');
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as MergeMarksheetsResponse);
+        } else {
+          const errMsg = json.detail || json.message || 'Marksheet merge failed';
+          reject(new Error(errMsg));
+        }
+      } catch {
+        reject(new Error(`Failed to parse marksheet merge response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during marksheet upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/merge-marksheets`, true);
+    xhr.send(formData);
+  });
+}
+
+// --------------------------------------------------------------------------
+// Tool 6: Passport Photo Sheet Maker Client API
+// --------------------------------------------------------------------------
+
+export interface PhotoSheetOptions {
+  sheetFormat?: '4x6_8photos' | '4x6_6photos' | 'A4_32photos' | 'A4_30photos' | 'single_35x45' | 'single_51x51';
+  addNameDate?: boolean;
+  candidateName?: string;
+  dateOfPhoto?: string;
+  addCuttingGuides?: boolean;
+  outputFormat?: 'image' | 'pdf' | 'both';
+  onProgress?: (percent: number) => void;
+}
+
+export interface PhotoSheetResponse {
+  status: string;
+  sheet_format: string;
+  total_photos: number;
+  sheet_width_px: number;
+  sheet_height_px: number;
+  dpi: number;
+  image_size_kb: number;
+  image_base64: string;
+  pdf_base64?: string | null;
+  preview_base64: string;
+}
+
+export async function generatePhotoSheet(
+  file: File,
+  options?: PhotoSheetOptions
+): Promise<PhotoSheetResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('sheet_format', options?.sheetFormat || '4x6_8photos');
+    formData.append('add_name_date', String(Boolean(options?.addNameDate)));
+    if (options?.candidateName) formData.append('candidate_name', options.candidateName);
+    if (options?.dateOfPhoto) formData.append('date_of_photo', options.dateOfPhoto);
+    formData.append('add_cutting_guides', String(options?.addCuttingGuides ?? true));
+    formData.append('output_format', options?.outputFormat || 'both');
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as PhotoSheetResponse);
+        } else {
+          const errMsg = json.detail || json.message || 'Photo sheet generation failed';
+          reject(new Error(errMsg));
+        }
+      } catch {
+        reject(new Error(`Failed to parse photo sheet response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during photo sheet upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/generate-photo-sheet`, true);
+    xhr.send(formData);
+  });
+}
+
+// --------------------------------------------------------------------------
+// Tool 7: Clean Document Scanner & Xerox Binarizer Client API
+// --------------------------------------------------------------------------
+
+export interface CleanScannerOptions {
+  mode?: 'magic_color' | 'xerox_bw' | 'greyscale';
+  rotation?: 0 | 90 | 180 | 270;
+  brightness?: number;
+  contrast?: number;
+  targetKb?: number;
+  outputType?: 'image' | 'pdf' | 'both';
+  onProgress?: (percent: number) => void;
+}
+
+export interface CleanScannerResponse {
+  status: string;
+  mode: string;
+  width_px: number;
+  height_px: number;
+  output_size_kb: number;
+  image_base64: string;
+  pdf_base64?: string | null;
+  preview_base64: string;
+}
+
+export async function cleanDocumentScan(
+  file: File,
+  options?: CleanScannerOptions
+): Promise<CleanScannerResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('mode', options?.mode || 'magic_color');
+    formData.append('rotation', String(options?.rotation ?? 0));
+    formData.append('brightness', String(options?.brightness ?? 1.0));
+    formData.append('contrast', String(options?.contrast ?? 1.0));
+    if (options?.targetKb) formData.append('target_kb', String(options.targetKb));
+    formData.append('output_type', options?.outputType || 'both');
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as CleanScannerResponse);
+        } else {
+          const errMsg = json.detail || json.message || 'Clean scanner processing failed';
+          reject(new Error(errMsg));
+        }
+      } catch {
+        reject(new Error(`Failed to parse clean scanner response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during scan upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/clean-scanner`, true);
+    xhr.send(formData);
+  });
+}
 

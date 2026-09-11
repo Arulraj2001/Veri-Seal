@@ -99,43 +99,59 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/tools/compress-pdf-to-200kb"
+                  href="/tools/merge-marksheets-pdf"
                   className="text-text-main/90 font-semibold hover:text-primary transition-colors flex items-center justify-between"
                 >
-                  <span>Compress PDF to 200KB</span>
-                  <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.2 rounded">POPULAR</span>
+                  <span>Merge Marksheets (&lt;1MB)</span>
+                  <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.2 rounded">NEW</span>
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/tools/compress-pdf-to-100kb"
+                  href="/tools/unlock-pdf"
                   className="text-text-main/75 hover:text-primary transition-colors"
                 >
-                  Compress PDF to 100KB
+                  Unlock e-Aadhaar &amp; PDF
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/tools/tnpsc-pdf-compressor"
+                  href="/tools/mask-aadhaar"
                   className="text-text-main/75 hover:text-primary transition-colors"
                 >
-                  TNPSC PDF Compressor (200KB)
+                  Mask Aadhaar First 8 Digits
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/tools/upsc-pdf-compressor"
+                  href="/tools/clean-document-scanner"
                   className="text-text-main/75 hover:text-primary transition-colors"
                 >
-                  UPSC PDF Compressor (300KB)
+                  Clean Document Scanner
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/passport-photo-sheet-maker"
+                  className="text-text-main/75 hover:text-primary transition-colors"
+                >
+                  Passport Photo Sheet Maker
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/compress-pdf-to-200kb"
+                  className="text-text-main/75 hover:text-primary transition-colors"
+                >
+                  Compress PDF to 200KB
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/pdf-compressor"
-                  className="text-primary font-bold hover:underline transition-colors flex items-center gap-1"
+                  className="text-primary font-bold hover:underline transition-colors flex items-center gap-1 text-xs"
                 >
-                  <span>All PDF Tools Hub</span>
+                  <span>View All 20+ Free Exam Tools</span>
                   <span>&rarr;</span>
                 </Link>
               </li>

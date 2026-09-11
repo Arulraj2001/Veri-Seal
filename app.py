@@ -19,6 +19,11 @@ from compressor import batch_compress_pdfs, compress_pdf_to_target, inspect_pdf_
 from image_resizer import resize_image_bidirectional
 from image_to_pdf import convert_images_to_pdf_target
 from pdf_to_image import convert_pdf_to_images
+from pdf_unlocker import unlock_pdf_document
+from aadhaar_masker import mask_aadhaar_pdf, mask_aadhaar_image
+from marksheet_merger import merge_marksheets_to_pdf_target
+from photo_sheet_generator import generate_passport_photo_sheet
+from clean_scanner import process_clean_document
 from models import (
     BatchVerificationResponse,
     CompressionResponse,
@@ -606,8 +611,246 @@ async def pdf_to_image_endpoint(
         )
 
 
+@app.post(
+    "/unlock-pdf",
+    summary="In-Memory PDF Decryption & e-Aadhaar Password Remover",
+    description="Permanently decrypts password-protected PDFs (e-Aadhaar, Form 16, bank statements) in volatile RAM memory so government recruitment portals can accept them.",
+)
+@limiter.limit("20/minute")
+async def unlock_pdf_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="Encrypted PDF to unlock"),
+    password: str = Form(default=""),
+    name_prefix: Optional[str] = Form(default=None),
+    birth_year: Optional[str] = Form(default=None),
+):
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only PDF files are supported for password removal.",
+        )
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail="Uploaded PDF exceeds the 25MB limit.",
+        )
+
+    # If e-Aadhaar name prefix and birth year are provided, construct Aadhaar password
+    final_password = password
+    if name_prefix and birth_year and len(name_prefix.strip()) >= 4 and len(birth_year.strip()) == 4:
+        clean_name = "".join(ch for ch in name_prefix.strip().upper() if ch.isalpha())[:4]
+        clean_year = birth_year.strip()
+        final_password = f"{clean_name}{clean_year}"
+
+    try:
+        result = unlock_pdf_document(
+            pdf_bytes=content,
+            password=final_password,
+            generate_preview=True,
+        )
+        if result.get("status") == "error":
+            return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=result)
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"PDF unlock failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"PDF unlock failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/mask-aadhaar",
+    summary="Official Aadhaar Masking & Redaction Engine",
+    description="Permanently redacts the first 8 digits of Aadhaar (XXXX-XXXX-1234) and QR codes from PDFs and images for RBI/UIDAI compliance.",
+)
+@limiter.limit("20/minute")
+async def mask_aadhaar_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="Aadhaar PDF or Image to mask"),
+    mask_first_8: bool = Form(default=True),
+    mask_qr: bool = Form(default=False),
+    custom_boxes_json: Optional[str] = Form(default=None),
+):
+    if not file.filename:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No file provided.")
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail="Uploaded file exceeds 25MB limit.",
+        )
+
+    custom_boxes = None
+    if custom_boxes_json and custom_boxes_json.strip():
+        try:
+            custom_boxes = json.loads(custom_boxes_json)
+        except Exception:
+            custom_boxes = None
+
+    is_pdf = file.filename.lower().endswith(".pdf")
+    try:
+        if is_pdf:
+            result = mask_aadhaar_pdf(
+                pdf_bytes=content,
+                mask_first_8=mask_first_8,
+                mask_qr=mask_qr,
+                custom_boxes=custom_boxes,
+            )
+        else:
+            result = mask_aadhaar_image(
+                image_bytes=content,
+                custom_boxes=custom_boxes,
+            )
+        if result.get("status") == "error":
+            return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=result)
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Aadhaar masking failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Aadhaar masking failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/merge-marksheets",
+    summary="Multi-Marksheet to Single PDF Budget Optimizer",
+    description="Merges up to 12 marksheet scans or PDFs into a single continuous PDF strictly under target KB (<500KB or <1MB) for exam portal document verification.",
+)
+@limiter.limit("20/minute")
+async def merge_marksheets_endpoint(
+    request: Request,
+    files: List[UploadFile] = File(..., description="Marksheet images or PDFs in order"),
+    target_kb: int = Form(default=1000),
+    preset: str = Form(default="color"),
+    page_format: str = Form(default="A4"),
+):
+    if not files or len(files) == 0:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No files uploaded.")
+
+    if len(files) > 15:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Maximum 15 marksheet files can be merged in a single document.",
+        )
+
+    file_items = []
+    for f in files:
+        if f.filename:
+            content = await f.read()
+            if len(content) <= MAX_FILE_SIZE_BYTES:
+                file_items.append((f.filename, content))
+
+    if not file_items:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No valid files received.")
+
+    try:
+        result = merge_marksheets_to_pdf_target(
+            file_items=file_items,
+            target_kb=target_kb,
+            preset=preset,
+            page_format=page_format,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Marksheet merge failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Marksheet merge failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/generate-photo-sheet",
+    summary="Cyber Cafe 300 DPI Passport Photo Sheet Maker (4x6 & A4)",
+    description="Tiles 1 passport photo into 4x6 inch (8 photos) or A4 (32 photos) sheets at 300 DPI with cutting guides and optional name/date strip.",
+)
+@limiter.limit("25/minute")
+async def generate_photo_sheet_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="Passport photo image (JPG/PNG)"),
+    sheet_format: str = Form(default="4x6_8photos"),
+    add_name_date: bool = Form(default=False),
+    candidate_name: str = Form(default=""),
+    date_of_photo: str = Form(default=""),
+    add_cutting_guides: bool = Form(default=True),
+    output_format: str = Form(default="both"),
+):
+    if not file.filename:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No photo uploaded.")
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="Photo exceeds 25MB.")
+
+    try:
+        result = generate_passport_photo_sheet(
+            image_bytes=content,
+            sheet_format=sheet_format,
+            add_name_date=add_name_date,
+            candidate_name=candidate_name,
+            date_of_photo=date_of_photo,
+            add_cutting_guides=add_cutting_guides,
+            output_format=output_format,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Photo sheet generation failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Photo sheet generation failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/clean-scanner",
+    summary="Clean Document Scanner & Xerox Binarizer",
+    description="Removes shadows, yellow tint, and desk backgrounds from certificate photos, producing crisp Magic Color, High-Contrast Xerox, or Greyscale scans.",
+)
+@limiter.limit("25/minute")
+async def clean_scanner_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="Certificate photo or PDF to clean"),
+    mode: str = Form(default="magic_color"),
+    rotation: int = Form(default=0),
+    brightness: float = Form(default=1.0),
+    contrast: float = Form(default=1.0),
+    target_kb: Optional[int] = Form(default=None),
+    output_type: str = Form(default="both"),
+):
+    if not file.filename:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No document uploaded.")
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="Document exceeds 25MB.")
+
+    try:
+        result = process_clean_document(
+            file_bytes=content,
+            mode=mode,
+            rotation=rotation,
+            brightness=brightness,
+            contrast=contrast,
+            target_kb=target_kb,
+            output_type=output_type,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Clean scanner processing failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Document cleaning failed: {str(exc)}",
+        )
+
+
 @app.get("/supported-docs", response_model=List[SupportedDocCategory], summary="Supported Document Categories")
 async def get_supported_documents():
+
     """Returns the list of all supported Indian government documents and their issuing portals."""
     return [
         SupportedDocCategory(

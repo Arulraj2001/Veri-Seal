@@ -192,10 +192,10 @@ export function Header() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.98 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[780px] bg-white/95 backdrop-blur-xl border border-surface-darker rounded-3xl shadow-2xl p-6 z-50 text-left grid grid-cols-4 gap-6"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[860px] max-h-[82vh] overflow-y-auto bg-white/95 backdrop-blur-xl border border-surface-darker rounded-3xl shadow-2xl p-6 z-50 text-left grid grid-cols-4 gap-5"
                 >
                   {/* Column 1: PDF Compressors */}
-                  <div className="space-y-2.5">
+                  <div className="space-y-2">
                     <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
                       <FileText className="w-3.5 h-3.5 text-primary" />
                       <span>PDF Compressors</span>
@@ -204,7 +204,7 @@ export function Header() {
                       <Link
                         href="/tools/compress-pdf-to-200kb"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">Compress to 200KB</div>
                         <div className="text-[10px] text-text-main/60">TNPSC, UPSC, SSC</div>
@@ -212,7 +212,7 @@ export function Header() {
                       <Link
                         href="/tools/compress-pdf-to-100kb"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">Compress to 100KB</div>
                         <div className="text-[10px] text-text-main/60">Strict Portal Rules</div>
@@ -220,7 +220,7 @@ export function Header() {
                       <Link
                         href="/tools/compress-pdf-to-300kb"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">Compress to 300KB</div>
                         <div className="text-[10px] text-text-main/60">State PSCs &amp; Courts</div>
@@ -228,15 +228,23 @@ export function Header() {
                       <Link
                         href="/tools/compress-pdf-to-500kb"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">Compress to 500KB</div>
                         <div className="text-[10px] text-text-main/60">Certificates &amp; Marksheets</div>
                       </Link>
                       <Link
+                        href="/tools/government-exam-pdf-compressor"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Govt Exam PDF Compressor</div>
+                        <div className="text-[10px] text-text-main/60">All India Exam Presets</div>
+                      </Link>
+                      <Link
                         href="/tools/pdf-compressor"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-primary font-extrabold transition-colors text-[11px]"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-primary font-extrabold transition-colors text-[11px]"
                       >
                         View Master Tool →
                       </Link>
@@ -244,7 +252,7 @@ export function Header() {
                   </div>
 
                   {/* Column 2: Exam Photo & Sig Resizers */}
-                  <div className="space-y-2.5">
+                  <div className="space-y-2">
                     <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
                       <Camera className="w-3.5 h-3.5 text-primary" />
                       <span>Exam Photo &amp; Sig</span>
@@ -253,7 +261,7 @@ export function Header() {
                       <Link
                         href="/tools/ssc-photo-signature-resizer"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">SSC Photo &amp; Signature</div>
                         <div className="text-[10px] text-text-main/60">20-50KB Photo, 10-20KB Sig</div>
@@ -261,7 +269,7 @@ export function Header() {
                       <Link
                         href="/tools/upsc-photo-signature-resizer"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">UPSC Photo &amp; Sig</div>
                         <div className="text-[10px] text-text-main/60">350x350px 10-day DOP rule</div>
@@ -269,15 +277,31 @@ export function Header() {
                       <Link
                         href="/tools/neet-photo-signature-resizer"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">NEET Postcard (4"×6")</div>
                         <div className="text-[10px] text-text-main/60">Postcard, Photo &amp; Signature</div>
                       </Link>
                       <Link
+                        href="/tools/rrb-photo-signature-resizer"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Railway RRB NTPC/Group D</div>
+                        <div className="text-[10px] text-text-main/60">320×240px &amp; 160×80px</div>
+                      </Link>
+                      <Link
+                        href="/tools/gate-photo-signature-resizer"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">GATE &amp; JAM GOAPS</div>
+                        <div className="text-[10px] text-text-main/60">3.15–3.95 Aspect Ratio Lock</div>
+                      </Link>
+                      <Link
                         href="/tools/ibps-photo-signature-resizer"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">IBPS / Bank Exams</div>
                         <div className="text-[10px] text-text-main/60">Photo, Sig, Thumb &amp; Decl.</div>
@@ -285,7 +309,7 @@ export function Header() {
                       <Link
                         href="/tools/tnpsc-photo-signature-resizer"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">TNPSC Resizer</div>
                         <div className="text-[10px] text-text-main/60">Name &amp; DOP Banner</div>
@@ -293,17 +317,33 @@ export function Header() {
                     </div>
                   </div>
 
-                  {/* Column 3: Image & PDF Utilities */}
-                  <div className="space-y-2.5">
+                  {/* Column 3: Marksheets & Scanners */}
+                  <div className="space-y-2">
                     <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
                       <Image className="w-3.5 h-3.5 text-primary" />
-                      <span>Image &amp; PDF Tools</span>
+                      <span>Marksheets &amp; Scans</span>
                     </div>
                     <div className="space-y-1 text-xs">
                       <Link
+                        href="/tools/merge-marksheets-pdf"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold text-emerald-700">Merge Marksheets (&lt;1MB)</div>
+                        <div className="text-[10px] text-text-main/60">Combine All Semesters in 1 PDF</div>
+                      </Link>
+                      <Link
+                        href="/tools/clean-document-scanner"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold text-emerald-700">Clean Document Scanner</div>
+                        <div className="text-[10px] text-text-main/60">Purge Shadows &amp; Xerox Binarize</div>
+                      </Link>
+                      <Link
                         href="/tools/image-to-pdf-200kb"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">Marksheet to PDF (&lt;200KB)</div>
                         <div className="text-[10px] text-text-main/60">1-click A4 Marks/Certificates</div>
@@ -311,7 +351,7 @@ export function Header() {
                       <Link
                         href="/tools/pdf-to-image"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">PDF to Image (300 DPI)</div>
                         <div className="text-[10px] text-text-main/60">e-Aadhaar &amp; PDF Extractor</div>
@@ -319,7 +359,7 @@ export function Header() {
                       <Link
                         href="/tools/compress-image-to-20kb"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">Compress to 20KB</div>
                         <div className="text-[10px] text-text-main/60">Strict 10-20KB Signature</div>
@@ -327,52 +367,52 @@ export function Header() {
                       <Link
                         href="/tools/compress-image-to-50kb"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
                       >
                         <div className="font-bold">Compress to 50KB</div>
                         <div className="text-[10px] text-text-main/60">20-50KB Passport Photo</div>
                       </Link>
-                      <Link
-                        href="/tools/image-to-pdf-300kb"
-                        onClick={() => setToolsMenuOpen(false)}
-                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
-                      >
-                        <div className="font-bold">Image to PDF (&lt;300KB)</div>
-                        <div className="text-[10px] text-text-main/60">State PSCs &amp; High Courts</div>
-                      </Link>
                     </div>
                   </div>
 
-                  {/* Column 4: Verification */}
-                  <div className="space-y-2.5 bg-surface/50 p-3.5 rounded-2xl border border-surface-darker/60">
+                  {/* Column 4: Security & Cyber Cafe Tools */}
+                  <div className="space-y-2 bg-surface/50 p-3.5 rounded-2xl border border-surface-darker/60">
                     <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
                       <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-                      <span>Verification</span>
+                      <span>Security &amp; Studio</span>
                     </div>
                     <div className="space-y-1 text-xs">
                       <Link
-                        href="/#supported-docs"
+                        href="/tools/unlock-pdf"
                         onClick={() => setToolsMenuOpen(false)}
                         className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
                       >
-                        <div className="font-bold">e-Aadhaar Verify</div>
-                        <div className="text-[10px] text-text-main/60">UIDAI Digital Signature</div>
+                        <div className="font-bold text-emerald-700">Unlock e-Aadhaar PDF</div>
+                        <div className="text-[10px] text-text-main/60">RAM-based Password Remover</div>
+                      </Link>
+                      <Link
+                        href="/tools/mask-aadhaar"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
+                      >
+                        <div className="font-bold text-emerald-700">Mask Aadhaar (8 Digits)</div>
+                        <div className="text-[10px] text-text-main/60">True Stream Text Purge &amp; QR</div>
+                      </Link>
+                      <Link
+                        href="/tools/passport-photo-sheet-maker"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
+                      >
+                        <div className="font-bold text-emerald-700">Photo Sheet Maker</div>
+                        <div className="text-[10px] text-text-main/60">4x6" &amp; A4 at 300 DPI Print</div>
                       </Link>
                       <Link
                         href="/#supported-docs"
                         onClick={() => setToolsMenuOpen(false)}
                         className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
                       >
-                        <div className="font-bold">Community Certificate</div>
-                        <div className="text-[10px] text-text-main/60">e-District Tamil Nadu</div>
-                      </Link>
-                      <Link
-                        href="/#supported-docs"
-                        onClick={() => setToolsMenuOpen(false)}
-                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
-                      >
-                        <div className="font-bold">PAN &amp; ITR-V</div>
-                        <div className="text-[10px] text-text-main/60">Income Tax Department</div>
+                        <div className="font-bold">Digital Signature Verify</div>
+                        <div className="text-[10px] text-text-main/60">NIC / CCA Trusted Root</div>
                       </Link>
                     </div>
                   </div>
