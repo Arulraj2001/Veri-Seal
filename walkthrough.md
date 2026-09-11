@@ -121,4 +121,23 @@ Result: 28 / 28 Routes Returned HTTP 200 OK!
 ## Git Commit & Deployment History
 - **Phase 1 Commit**: `487f15d` ("feat: complete comprehensive Indian exam tools suite & monetization engine")
 - **Phase 2 Commit**: `cca1cff` ("feat: complete Phase 2 advanced exam & cyber cafe tools suite")
+- **Phase 3 Commit**: `dd2742e` ("feat: central All-Tools Directory (/tools) with live search and scalable registry")
 - **Branch**: `main` synced with `origin/main` on GitHub.
+
+---
+
+## Phase 3: Central All-Tools Directory & Scalable Registry (`/tools`)
+- **Single Source of Truth (`lib/tools-data.ts`)**: Structured master catalog of all 28 tools with categories, tags, and metadata.
+- **Dedicated Directory Page (`/tools`)**:
+  - Live client search filtering across title, description, exam tags, and file limits.
+  - Category filter pills with dynamic count badges.
+  - Segregated category sections with high-contrast emerald cards and direct CTA buttons.
+  - Structured SEO metadata and JSON-LD `CollectionPage` schema.
+- **Navbar Mega-Menu Integration (`Header.tsx`)**:
+  - Direct top banner: *"Explore All 28+ Free Public Tools Directory →"*
+  - Bottom directory callout: *"View Complete Tools Directory (28 Tools) →"*
+  - Mobile drawer includes direct link to `/tools`.
+- **Automated Verification**:
+  - `npx tsc --noEmit` &rarr; 0 errors.
+  - `GET /tools` &rarr; HTTP 200 OK.
+
