@@ -46,6 +46,10 @@ export interface PublicSettings {
   verification_counter: number;
   language_tamil_enabled: boolean;
   free_daily_limit: number;
+  pro_price?: number;
+  business_price?: number;
+  upi_id?: string;
+  upi_qr_url?: string;
 }
 
 // --------------------------------------------------------------------------
@@ -254,6 +258,10 @@ export async function fetchPublicSettings(): Promise<PublicSettings> {
     verification_counter: 421847,
     language_tamil_enabled: true,
     free_daily_limit: 3,
+    pro_price: 199,
+    business_price: 2499,
+    upi_id: 'veriseal.pay@icici',
+    upi_qr_url: '',
   };
 }
 

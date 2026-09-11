@@ -18,6 +18,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { fetchPublicSettings } from '@/lib/api';
 
 interface VerificationRow {
   id: string;
@@ -92,6 +93,13 @@ export default function DashboardOverviewPage() {
   const [verificationsToday, setVerificationsToday] = React.useState<number>(1);
   const [verificationsTotal, setVerificationsTotal] = React.useState<number>(5);
   const [recentVerifications, setRecentVerifications] = React.useState<VerificationRow[]>(defaultRecentVerifications);
+  const [proPrice, setProPrice] = React.useState<number>(199);
+
+  React.useEffect(() => {
+    fetchPublicSettings().then((s) => {
+      if (s.pro_price) setProPrice(Number(s.pro_price));
+    });
+  }, []);
 
   React.useEffect(() => {
     async function loadStats() {
@@ -275,7 +283,7 @@ export default function DashboardOverviewPage() {
                 href="/dashboard/payment?plan=pro"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-primary text-white font-black text-xs hover:bg-primary-hover transition-all shadow-md shadow-primary/25 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <span>Upgrade to Pro — ₹199/mo</span>
+                <span>Upgrade to Pro — ₹{proPrice}/mo</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link

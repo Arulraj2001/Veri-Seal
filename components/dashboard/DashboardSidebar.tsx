@@ -19,6 +19,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { fetchPublicSettings } from '@/lib/api';
 
 interface SidebarProps {
   user: {
@@ -32,6 +33,13 @@ interface SidebarProps {
 
 export function DashboardSidebar({ user, paymentEnabled }: SidebarProps) {
   const pathname = usePathname();
+  const [proPrice, setProPrice] = React.useState<number>(199);
+
+  React.useEffect(() => {
+    fetchPublicSettings().then((s) => {
+      if (s.pro_price) setProPrice(Number(s.pro_price));
+    });
+  }, []);
 
   const navigation = [
     { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
@@ -108,7 +116,7 @@ export function DashboardSidebar({ user, paymentEnabled }: SidebarProps) {
             href="/dashboard/payment?plan=pro"
             className="mt-2.5 inline-flex items-center justify-center gap-1 w-full py-1.5 px-2.5 rounded-xl bg-primary text-white text-[11px] font-bold hover:bg-primary-hover transition-colors shadow-sm"
           >
-            <span>Upgrade ₹199/mo</span>
+            <span>Upgrade ₹{proPrice}/mo</span>
             <ArrowRight className="w-3 h-3" />
           </Link>
         </div>

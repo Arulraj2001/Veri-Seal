@@ -55,6 +55,8 @@ export default function AdminPaymentsPage() {
   const [manualEmail, setManualEmail] = React.useState<string>('');
   const [manualPlan, setManualPlan] = React.useState<'pro' | 'business'>('pro');
   const [manualExpiry, setManualExpiry] = React.useState<string>('2027-12-31');
+  const [proPrice, setProPrice] = React.useState<number>(199);
+  const [businessPrice, setBusinessPrice] = React.useState<number>(2499);
   const [isManualUpgrading, setIsManualUpgrading] = React.useState<boolean>(false);
 
   const showToast = (msg: string) => {
@@ -71,6 +73,16 @@ export default function AdminPaymentsPage() {
         setPaymentEnabled(json.payment_enabled);
         setToggleState(json.payment_enabled);
         setPayments(json.payments || []);
+      }
+      try {
+        const sRes = await fetch('/api/settings');
+        if (sRes.ok) {
+          const sJson = await sRes.json();
+          if (sJson.pro_price) setProPrice(Number(sJson.pro_price));
+          if (sJson.business_price) setBusinessPrice(Number(sJson.business_price));
+        }
+      } catch (e) {
+        console.debug('Failed to load settings in admin payments:', e);
       }
     } catch (err) {
       console.error('Failed to load payments:', err);
@@ -494,8 +506,8 @@ export default function AdminPaymentsPage() {
               onChange={(e) => setManualPlan(e.target.value as 'pro' | 'business')}
               className="w-full px-3 py-2 text-xs bg-surface/50 border border-surface-darker rounded-xl text-text-main font-semibold focus:outline-none focus:border-primary"
             >
-              <option value="pro">Pro Unlimited (₹199)</option>
-              <option value="business">Business Enterprise (₹2,499)</option>
+              <option value="pro">Pro Unlimited (₹{proPrice})</option>
+              <option value="business">Business Enterprise (₹{businessPrice.toLocaleString('en-IN')})</option>
             </select>
           </div>
 

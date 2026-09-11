@@ -19,12 +19,16 @@ import {
 export default function MyPlanPage() {
   const { data: session } = useSession();
   const [paymentEnabled, setPaymentEnabled] = React.useState<boolean>(true);
+  const [proPrice, setProPrice] = React.useState<number>(199);
+  const [businessPrice, setBusinessPrice] = React.useState<number>(2499);
   const userPlan = (session?.user as { plan?: string })?.plan || 'free';
 
   React.useEffect(() => {
     fetchPublicSettings()
       .then((s) => {
         setPaymentEnabled(s.payment_enabled);
+        if (s.pro_price) setProPrice(Number(s.pro_price));
+        if (s.business_price) setBusinessPrice(Number(s.business_price));
       })
       .catch(() => {});
   }, []);
@@ -167,7 +171,7 @@ export default function MyPlanPage() {
                 <p className="text-xs text-text-main/60 mt-1">For advocates, chartered accountants &amp; CSC centers</p>
 
                 <div className="my-5">
-                  <span className="text-3xl font-black text-text-main">₹199</span>
+                  <span className="text-3xl font-black text-text-main">₹{proPrice}</span>
                   <span className="text-xs text-text-main/50 font-medium ml-1">/ month</span>
                 </div>
 
@@ -225,7 +229,7 @@ export default function MyPlanPage() {
                 <p className="text-xs text-text-main/60 mt-1">For fintechs, banks, universities &amp; verification portals</p>
 
                 <div className="my-5">
-                  <span className="text-3xl font-black text-text-main">₹2,499</span>
+                  <span className="text-3xl font-black text-text-main">₹{businessPrice.toLocaleString('en-IN')}</span>
                   <span className="text-xs text-text-main/50 font-medium ml-1">/ month</span>
                 </div>
 

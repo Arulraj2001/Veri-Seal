@@ -15,6 +15,9 @@ export async function GET() {
       verification_counter: 421847,
       language_tamil_enabled: true,
       free_daily_limit: 3,
+      pro_price: 199,
+      business_price: 2499,
+      upi_id: 'veriseal.pay@icici',
     });
   }
 }

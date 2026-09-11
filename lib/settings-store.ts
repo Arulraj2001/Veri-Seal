@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase, supabaseAdmin } from '@/lib/supabase';
 
 export interface SiteSettings {
   payment_enabled: boolean;
@@ -91,7 +91,7 @@ export async function updateSiteSettings(values: Record<string, string>): Promis
 
   try {
     for (const [k, v] of Object.entries(values)) {
-      await supabase
+      await supabaseAdmin
         .from('site_settings')
         .upsert({
           key: k,

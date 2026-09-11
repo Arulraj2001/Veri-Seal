@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 import { supabase } from '@/lib/supabase';
+import { getMergedSettings } from '@/lib/settings-store';
 
 interface AdminUser {
   id: string;
@@ -261,12 +262,14 @@ export async function POST(req: Request) {
     }
 
     if (action === 'get_details') {
+      const settings = await getMergedSettings();
+
       return NextResponse.json({
         user: targetUser,
         verifications: [
           {
             id: 'vf-hist-1',
-            doc_type: 'UIDAI e-Aadhaar Letter',
+            doc_type: 'Unique Identification Authority of India (UIDAI) e-Aadhaar',
             status: 'VALID',
             date: new Date(Date.now() - 3600 * 1000).toISOString(),
           },
@@ -281,7 +284,7 @@ export async function POST(req: Request) {
           {
             id: 'pay-hist-1',
             plan: targetUser.plan,
-            amount: targetUser.plan === 'business' ? 2499 : 199,
+            amount: targetUser.plan === 'business' ? settings.business_price : settings.pro_price,
             status: 'approved',
             date: targetUser.joined,
           },

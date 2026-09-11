@@ -58,6 +58,19 @@ export default function AdminUsersPage() {
   const [downgradeUser, setDowngradeUser] = React.useState<AdminUser | null>(null);
   const [banUserConfirm, setBanUserConfirm] = React.useState<AdminUser | null>(null);
 
+  const [proPrice, setProPrice] = React.useState<number>(199);
+  const [businessPrice, setBusinessPrice] = React.useState<number>(2499);
+
+  React.useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.pro_price) setProPrice(Number(data.pro_price));
+        if (data.business_price) setBusinessPrice(Number(data.business_price));
+      })
+      .catch((err) => console.debug('Failed to fetch settings for users page:', err));
+  }, []);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
@@ -524,7 +537,7 @@ export default function AdminUsersPage() {
                 )}
               >
                 <div className="text-xs font-bold text-text-main">Pro Unlimited</div>
-                <div className="text-sm font-black text-primary">₹199 / mo</div>
+                <div className="text-sm font-black text-primary">₹{proPrice} / mo</div>
               </button>
 
               <button
@@ -538,7 +551,7 @@ export default function AdminUsersPage() {
                 )}
               >
                 <div className="text-xs font-bold text-text-main">Business Enterprise</div>
-                <div className="text-sm font-black text-primary">₹2,499 / mo</div>
+                <div className="text-sm font-black text-primary">₹{businessPrice.toLocaleString('en-IN')} / mo</div>
               </button>
             </div>
 

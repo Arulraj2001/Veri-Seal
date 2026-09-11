@@ -181,12 +181,15 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Email and plan are required.' }, { status: 400 });
       }
 
+      const settings = await getMergedSettings();
+      const planAmount = plan === 'business' ? settings.business_price : settings.pro_price;
+
       const newRecord: PaymentItem = {
         id: `PR-MANUAL-${Date.now().toString().slice(-4)}`,
         name: email.split('@')[0],
         email: email.toLowerCase().trim(),
         plan: plan as 'pro' | 'business',
-        amount: plan === 'business' ? 2499 : 199,
+        amount: planAmount,
         upi_txn_id: 'ADMIN_MANUAL_GRANT',
         screenshot_url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80',
         submitted: new Date().toISOString(),

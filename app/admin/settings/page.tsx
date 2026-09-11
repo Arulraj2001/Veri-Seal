@@ -65,9 +65,13 @@ export default function AdminSettingsPage() {
           [`${cardName}_updated_at`]: json.updated_at,
         }));
         showToast(`Saved ${cardName.replace('_', ' ')} settings successfully.`);
+      } else {
+        const errJson = await res.json().catch(() => ({}));
+        showToast(`Failed: ${errJson.error || res.statusText || 'Unable to save settings'}`);
       }
     } catch (e) {
       console.error('Failed to save settings card:', e);
+      showToast('Network error while saving settings.');
     } finally {
       setSavingCard(null);
     }

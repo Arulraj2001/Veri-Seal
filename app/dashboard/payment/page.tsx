@@ -46,7 +46,9 @@ function PaymentStatusContent() {
   const [submitSuccess, setSubmitSuccess] = React.useState<boolean>(false);
   const [submitError, setSubmitError] = React.useState<string>('');
 
-  const upiId = 'veriseal.pay@icici';
+  const [upiId, setUpiId] = React.useState<string>('veriseal.pay@icici');
+  const [proPrice, setProPrice] = React.useState<number>(199);
+  const [businessPrice, setBusinessPrice] = React.useState<number>(2499);
 
   // Load public settings & existing payment requests
   React.useEffect(() => {
@@ -54,6 +56,9 @@ function PaymentStatusContent() {
       try {
         const s = await fetchPublicSettings();
         setPaymentEnabled(s.payment_enabled);
+        if (s.pro_price) setProPrice(Number(s.pro_price));
+        if (s.business_price) setBusinessPrice(Number(s.business_price));
+        if (s.upi_id) setUpiId(s.upi_id);
       } catch (e) {
         console.debug('Failed to load settings in payment page:', e);
       } finally {
@@ -82,8 +87,8 @@ function PaymentStatusContent() {
   };
 
   const getAmountForPlan = (plan: string) => {
-    if (plan === 'business') return 2499;
-    return 199;
+    if (plan === 'business') return businessPrice;
+    return proPrice;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -251,7 +256,7 @@ function PaymentStatusContent() {
                   }`}
                 >
                   <div className="text-xs font-bold text-text-main">Pro Unlimited</div>
-                  <div className="text-sm font-black text-primary mt-0.5">₹199 / mo</div>
+                  <div className="text-sm font-black text-primary mt-0.5">₹{proPrice} / mo</div>
                 </button>
 
                 <button
@@ -264,7 +269,7 @@ function PaymentStatusContent() {
                   }`}
                 >
                   <div className="text-xs font-bold text-text-main">Business Enterprise</div>
-                  <div className="text-sm font-black text-primary mt-0.5">₹2,499 / mo</div>
+                  <div className="text-sm font-black text-primary mt-0.5">₹{businessPrice.toLocaleString('en-IN')} / mo</div>
                 </button>
               </div>
             </div>
