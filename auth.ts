@@ -240,6 +240,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = (token.id as string) || session.user.id;
         (session.user as { role?: string }).role = (token.role as string) || 'user';
         (session.user as { plan?: string }).plan = (token.plan as string) || 'free';
+
+        // Sanitize profile picture to prevent broken image tags
+        const rawImage = (token.picture as string) || session.user.image;
+        if (rawImage && typeof rawImage === 'string' && (rawImage.startsWith('http://') || rawImage.startsWith('https://'))) {
+          session.user.image = rawImage;
+        } else {
+          session.user.image = undefined;
+        }
       }
       return session;
     },

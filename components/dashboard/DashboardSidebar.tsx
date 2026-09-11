@@ -118,7 +118,7 @@ export function DashboardSidebar({ user, paymentEnabled }: SidebarProps) {
       <div className="p-4 border-t border-surface-darker/70 bg-surface/30">
         <div className="flex items-center gap-3 mb-3 px-1">
           <div className="h-9 w-9 rounded-xl bg-primary-light text-primary font-bold text-sm flex items-center justify-center border border-primary/20">
-            {user.name.charAt(0).toUpperCase()}
+            {(user.name?.charAt(0) || user.email?.charAt(0) || 'U').toUpperCase()}
           </div>
           <div className="truncate flex-1">
             <div className="text-xs font-bold text-text-main truncate">{user.name}</div>

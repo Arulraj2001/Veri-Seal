@@ -18,6 +18,51 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { SupportedLanguage } from '@/types';
 
+function UserAvatar({
+  src,
+  name,
+  email,
+  className = 'h-7 w-7 rounded-lg text-xs',
+}: {
+  src?: string | null;
+  name?: string | null;
+  email?: string | null;
+  className?: string;
+}) {
+  const [hasError, setHasError] = React.useState(false);
+  const initial = (name?.trim()?.charAt(0) || email?.trim()?.charAt(0) || 'U').toUpperCase();
+
+  const isValidUrl =
+    src &&
+    typeof src === 'string' &&
+    src.trim().length > 0 &&
+    (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('data:'));
+
+  if (isValidUrl && !hasError) {
+    return (
+      <img
+        src={src}
+        alt={name || 'User Profile'}
+        referrerPolicy="no-referrer"
+        crossOrigin="anonymous"
+        onError={() => setHasError(true)}
+        className={cn('object-cover shrink-0 overflow-hidden', className)}
+      />
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        'bg-primary text-white font-bold flex items-center justify-center shrink-0 select-none shadow-xs',
+        className
+      )}
+    >
+      {initial}
+    </div>
+  );
+}
+
 export function Header() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
@@ -61,19 +106,19 @@ export function Header() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-200',
         isScrolled
-          ? 'bg-background/90 shadow-md border-b border-surface-darker/60 py-3'
-          : 'bg-background/70 border-b border-transparent py-4'
+          ? 'bg-background/90 backdrop-blur-md border-b border-surface-darker/80 shadow-2xs py-3'
+          : 'bg-transparent py-5'
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Logo Left */}
+        {/* Brand Logo */}
         <Link
           href="/"
           className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
         >
-          <div className="h-10 w-10 rounded-xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+          <div className="h-10 w-10 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
             <svg
               className="w-6 h-6 text-primary fill-primary/15 stroke-primary"
               viewBox="0 0 24 24"
@@ -136,17 +181,12 @@ export function Header() {
                 href="/dashboard"
                 className="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-surface hover:bg-primary-light/40 border border-surface-darker/80 transition-colors group shadow-sm"
               >
-                <div className="h-7 w-7 rounded-lg bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                  {user.image ? (
-                    <img
-                      src={user.image}
-                      alt={user.name || 'User'}
-                      className="h-7 w-7 rounded-lg object-cover"
-                    />
-                  ) : (
-                    (user.name?.charAt(0) || user.email?.charAt(0) || 'U').toUpperCase()
-                  )}
-                </div>
+                <UserAvatar
+                  src={user.image}
+                  name={user.name}
+                  email={user.email}
+                  className="h-7 w-7 rounded-lg text-xs"
+                />
                 <div className="flex flex-col text-left">
                   <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors max-w-[95px] truncate leading-tight">
                     {user.name?.split(' ')[0] || user.email?.split('@')[0]}
@@ -261,17 +301,12 @@ export function Header() {
               {status === 'authenticated' && user ? (
                 <>
                   <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-surface border border-surface-darker">
-                    <div className="h-11 w-11 rounded-xl bg-primary text-white text-base font-bold flex items-center justify-center shrink-0">
-                      {user.image ? (
-                        <img
-                          src={user.image}
-                          alt={user.name || 'User'}
-                          className="h-11 w-11 rounded-xl object-cover"
-                        />
-                      ) : (
-                        (user.name?.charAt(0) || user.email?.charAt(0) || 'U').toUpperCase()
-                      )}
-                    </div>
+                    <UserAvatar
+                      src={user.image}
+                      name={user.name}
+                      email={user.email}
+                      className="h-11 w-11 rounded-xl text-base"
+                    />
                     <div className="truncate flex-1">
                       <div className="text-sm font-black text-text-main truncate">
                         {user.name || 'Citizen User'}
