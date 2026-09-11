@@ -6,7 +6,29 @@
 
 import type { VerificationResult } from '@/types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:7860';
+export function getApiUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_API_URL?.trim();
+  if (
+    !envUrl ||
+    envUrl === 'NEXT_PUBLIC_API_URL' ||
+    (!envUrl.startsWith('http://') && !envUrl.startsWith('https://'))
+  ) {
+    if (typeof window !== 'undefined') {
+      if (
+        window.location.hostname.includes('vercel.app') ||
+        window.location.hostname.includes('veriseal.in')
+      ) {
+        return 'https://veri-seal.onrender.com';
+      }
+    }
+    return process.env.NODE_ENV === 'production'
+      ? 'https://veri-seal.onrender.com'
+      : 'http://127.0.0.1:7860';
+  }
+  return envUrl;
+}
+
+const API_URL = getApiUrl();
 
 export interface BackendSignatureDetail {
   field_name: string;
