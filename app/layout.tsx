@@ -52,10 +52,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png' },
       { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
       { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
     apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
+    shortcut: ['/favicon.ico'],
   },
   alternates: {
     canonical: SITE_URL,
@@ -97,7 +99,10 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google-site-verification-veriseal',
+    google: '03r5QiL7AV8mYg3EA27FgE4YCVKgIkB03M4y-usjb5U',
+  },
+  other: {
+    'revisit-after': '1 day',
   },
 };
 
@@ -187,6 +192,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${notoSansTamil.variable}`}>
       <head>
+        {/* Google Site Verification & Search Engine Auto-Crawling */}
+        <meta name="google-site-verification" content="03r5QiL7AV8mYg3EA27FgE4YCVKgIkB03M4y-usjb5U" />
+        <meta name="revisit-after" content="1 day" />
+
         {/* Preconnect for Google Fonts and Supabase */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

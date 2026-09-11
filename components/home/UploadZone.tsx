@@ -26,6 +26,10 @@ import {
   Zap,
   FileCheck,
   ArrowRight,
+  Printer,
+  Scissors,
+  Camera,
+  HelpCircle,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Button } from '@/components/ui/button';
@@ -66,6 +70,7 @@ export function UploadZone() {
   const [result, setResult] = React.useState<VerificationResult | null>(null);
   const [rawBase64, setRawBase64] = React.useState<string | null>(null);
   const [errorMessage, setErrorMessage] = React.useState('');
+  const [errorCode, setErrorCode] = React.useState('');
   const [whatDoesThisMeanOpen, setWhatDoesThisMeanOpen] = React.useState(false);
   const [verifiedCount, setVerifiedCount] = React.useState(SITE_CONFIG.verifiedCountDefault);
   const [publicSettings, setPublicSettings] = React.useState<PublicSettings | null>(null);
@@ -104,6 +109,7 @@ export function UploadZone() {
     setResult(null);
     setRawBase64(null);
     setErrorMessage('');
+    setErrorCode('');
     setWhatDoesThisMeanOpen(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -129,7 +135,10 @@ export function UploadZone() {
   const processSelectedFile = (selectedFile: File) => {
     // Validate file type
     if (!selectedFile.name.toLowerCase().endsWith('.pdf') && selectedFile.type !== 'application/pdf') {
-      setErrorMessage('Please upload a valid PDF file. Other file formats are not supported.');
+      setErrorCode('INVALID_FORMAT');
+      setErrorMessage(
+        'Please upload a valid PDF document (.pdf). Image files, scanned photos, and Word documents do not contain official cryptographic digital signatures.'
+      );
       setState('error');
       return;
     }
@@ -137,6 +146,7 @@ export function UploadZone() {
     // Validate size (max 25MB)
     const maxBytes = SITE_CONFIG.maxFileSizeMB * 1024 * 1024;
     if (selectedFile.size > maxBytes) {
+      setErrorCode('FILE_TOO_LARGE');
       setErrorMessage(`File exceeds the maximum limit of ${SITE_CONFIG.maxFileSizeMB}MB. Please upload a smaller file.`);
       setState('error');
       return;
@@ -247,6 +257,7 @@ export function UploadZone() {
     } catch (err: unknown) {
       const errorObj = err as { code?: string; message?: string };
       const code = errorObj?.code || '';
+      setErrorCode(code);
 
       // Sentry: Capture verification error with safe context (no PII or PDF bytes)
       captureVerificationError({
@@ -881,22 +892,182 @@ export function UploadZone() {
           {/* STATE 9: ERROR */}
           {state === 'error' && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="py-8 flex flex-col items-center text-center space-y-4"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="py-4 space-y-6"
             >
-              <div className="h-16 w-16 rounded-2xl bg-error-light text-error flex items-center justify-center">
-                <XCircle className="w-9 h-9" />
-              </div>
-              <h3 className="text-xl font-bold text-text-main">
-                Verification Failed
-              </h3>
-              <p className="text-sm text-text-main/70 max-w-md">
-                {errorMessage || 'An error occurred while inspecting the PDF digital signature. Please verify the file is not corrupted.'}
-              </p>
-              <Button variant="primary" size="md" onClick={resetAll} className="mt-2">
-                Try Again
-              </Button>
+              {/* Specialized view for NO_SIGNATURE_FOUND */}
+              {errorCode === 'NO_SIGNATURE_FOUND' || errorMessage.toLowerCase().includes('no digital signature') ? (
+                <div className="space-y-6">
+                  {/* Top Notice */}
+                  <div className="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+                    <div className="h-14 w-14 shrink-0 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-sm">
+                      <AlertTriangle className="w-8 h-8" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-900 mb-1.5">
+                        Verification Failed
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-black text-text-main">
+                        No Digital Signatures Detected
+                      </h3>
+                      <p className="text-sm text-text-main/80 mt-1 leading-relaxed">
+                        No digital signatures were detected in this PDF. Please ensure you are uploading the official government digitally signed document.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Common Reasons / Issues */}
+                  <div className="rounded-2xl border border-surface-darker bg-surface/30 p-5 sm:p-6 space-y-4">
+                    <div className="flex items-center gap-2">
+                      <HelpCircle className="w-4 h-4 text-primary" />
+                      <h4 className="text-xs sm:text-sm font-bold text-text-main uppercase tracking-wider">
+                        Why did this happen? Common issues with downloaded files:
+                      </h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                      <div className="p-4 rounded-xl bg-white border border-surface-darker/80 shadow-xs flex items-start gap-3.5">
+                        <div className="p-2.5 rounded-xl bg-amber-50 text-amber-700 shrink-0">
+                          <Printer className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h5 className="text-sm font-bold text-text-main">
+                            Saved via &quot;Print to PDF&quot; / &quot;Save as PDF&quot;
+                          </h5>
+                          <p className="text-xs text-text-main/70 mt-1 leading-relaxed">
+                            Using Chrome, Edge, or mobile &quot;Print to PDF&quot; flattens the file, permanently stripping the cryptographic digital signature dictionary (<code className="text-[11px] bg-surface px-1 py-0.5 rounded">/ByteRange</code>).
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-white border border-surface-darker/80 shadow-xs flex items-start gap-3.5">
+                        <div className="p-2.5 rounded-xl bg-rose-50 text-rose-600 shrink-0">
+                          <Scissors className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h5 className="text-sm font-bold text-text-main">
+                            Modified or Compressed Online
+                          </h5>
+                          <p className="text-xs text-text-main/70 mt-1 leading-relaxed">
+                            Editing or compressing with tools like iLovePDF, SmallPDF, or CamScanner alters the byte stream and breaks the digital signature.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-white border border-surface-darker/80 shadow-xs flex items-start gap-3.5">
+                        <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 shrink-0">
+                          <Camera className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h5 className="text-sm font-bold text-text-main">
+                            Scanned Paper Copy or Photo
+                          </h5>
+                          <p className="text-xs text-text-main/70 mt-1 leading-relaxed">
+                            Taking a phone photo or scanning a paper printout creates flat visual pixels. It does not carry the cryptographic PKCS#7 signature certificate.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-white border border-surface-darker/80 shadow-xs flex items-start gap-3.5">
+                        <div className="p-2.5 rounded-xl bg-purple-50 text-purple-600 shrink-0">
+                          <FileText className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h5 className="text-sm font-bold text-text-main">
+                            Application Slip or Draft Receipt
+                          </h5>
+                          <p className="text-xs text-text-main/70 mt-1 leading-relaxed">
+                            Acknowledgment slips or payment receipts are not digitally signed. Only the final approved government certificate carries a digital signature.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* How to Fix Section */}
+                  <div className="p-5 sm:p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-3">
+                    <h4 className="text-sm font-bold text-emerald-900 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      How to Fix &amp; Verify Successfully:
+                    </h4>
+                    <ol className="text-xs sm:text-sm text-text-main/80 space-y-2 list-decimal list-inside leading-relaxed pl-1">
+                      <li>
+                        Log in directly to your official government issuing portal (e.g.{' '}
+                        <strong>UIDAI myAadhaar</strong>,{' '}
+                        <strong>TNeGA e-District</strong>,{' '}
+                        <strong>DigiLocker</strong>,{' '}
+                        <strong>TRACES</strong>, or{' '}
+                        <strong>MeeSeva</strong>).
+                      </li>
+                      <li>
+                        Download the original PDF file directly onto your device.
+                      </li>
+                      <li>
+                        <strong>Important:</strong> Do not open and re-save or &quot;Print to PDF&quot;.
+                      </li>
+                      <li>
+                        Upload the fresh downloaded PDF directly here for instant validation and permanent Green Tick seal.
+                      </li>
+                    </ol>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                    <Button variant="primary" size="lg" onClick={resetAll} className="w-full sm:flex-1 font-bold gap-2">
+                      <RotateCcw className="w-4 h-4" />
+                      <span>Upload Fresh Government PDF</span>
+                    </Button>
+                  </div>
+                </div>
+              ) : errorCode === 'INVALID_FORMAT' ? (
+                /* Specialized view for INVALID_FORMAT */
+                <div className="space-y-6 text-center sm:text-left">
+                  <div className="p-6 rounded-2xl bg-error-light/40 border border-error/30 flex flex-col sm:flex-row items-center sm:items-start gap-4">
+                    <div className="h-14 w-14 shrink-0 rounded-2xl bg-error text-white flex items-center justify-center shadow-sm">
+                      <XCircle className="w-8 h-8" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black text-error-dark">
+                        Unsupported File Format
+                      </h3>
+                      <p className="text-sm text-text-main/80 mt-1 leading-relaxed">
+                        {errorMessage}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-surface-darker bg-surface/30 p-5 space-y-3">
+                    <h4 className="text-sm font-bold text-text-main">
+                      Supported Official Document Formats:
+                    </h4>
+                    <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
+                      Only original ISO 32000 PDF documents (.pdf) containing government PKCS#7 digital signature dictionaries can be verified. Supported: e-Aadhaar (UIDAI), Community &amp; Nativity Certificates (TNeGA), PAN Card (NSDL/Protean), DigiLocker PDFs, and TRACES Form 16.
+                    </p>
+                  </div>
+
+                  <Button variant="primary" size="lg" onClick={resetAll} className="w-full font-bold gap-2">
+                    <RotateCcw className="w-4 h-4" />
+                    <span>Upload Official PDF Certificate</span>
+                  </Button>
+                </div>
+              ) : (
+                /* Fallback generic error view */
+                <div className="py-6 flex flex-col items-center text-center space-y-4">
+                  <div className="h-16 w-16 rounded-2xl bg-error-light text-error flex items-center justify-center">
+                    <XCircle className="w-9 h-9" />
+                  </div>
+                  <h3 className="text-xl font-bold text-text-main">
+                    Verification Failed
+                  </h3>
+                  <p className="text-sm text-text-main/70 max-w-md">
+                    {errorMessage || 'An error occurred while inspecting the PDF digital signature. Please verify the file is not corrupted.'}
+                  </p>
+                  <Button variant="primary" size="md" onClick={resetAll} className="mt-2 font-bold gap-2">
+                    <RotateCcw className="w-4 h-4" />
+                    <span>Try Again</span>
+                  </Button>
+                </div>
+              )}
             </motion.div>
           )}
 
