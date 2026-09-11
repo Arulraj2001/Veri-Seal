@@ -20,6 +20,7 @@ import {
   Sparkles,
   Zap,
   Briefcase,
+  Car,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -112,6 +113,7 @@ export function Header() {
     { label: t.nav.freeTools, href: '/tools' },
     { label: t.nav.homeCost, href: '/home-cost' },
     { label: t.nav.businessOs, href: '/business-os' },
+    { label: 'Vehicle OS 🚗', href: '/vehicle-os' },
     { label: t.nav.documents, href: '/#supported-docs' },
     { label: t.nav.security, href: '/#trust-section' },
     { label: t.nav.faq, href: '/#faq-section' },
@@ -507,6 +509,18 @@ export function Header() {
                       >
                         Pricing Sizer
                       </Link>
+                      <span className="text-slate-300">•</span>
+                      <span className="font-extrabold text-amber-700 flex items-center gap-1">
+                        <Car className="w-3.5 h-3.5" />
+                        <span>Vehicle OS:</span>
+                      </span>
+                      <Link
+                        href="/vehicle-os"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="text-slate-600 hover:text-amber-700 font-semibold underline"
+                      >
+                        Car &amp; Bike Decisions
+                      </Link>
                     </div>
                     <Link
                       href="/tools"
@@ -540,6 +554,17 @@ export function Header() {
             <span>{t.nav.businessOs}</span>
             <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-indigo-500/15 text-indigo-700 rounded-full border border-indigo-500/30">
               HOT
+            </span>
+          </Link>
+
+          {/* Vehicle Decision OS Direct Link */}
+          <Link
+            href="/vehicle-os"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full text-text-main hover:text-amber-700 hover:bg-amber-50/80 transition-all cursor-pointer select-none"
+          >
+            <span>Vehicle OS</span>
+            <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-amber-500/15 text-amber-700 rounded-full border border-amber-500/30">
+              NEW
             </span>
           </Link>
 
