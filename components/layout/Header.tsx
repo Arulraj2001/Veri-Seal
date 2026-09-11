@@ -162,13 +162,13 @@ export function Header() {
           </Link>
         </nav>
 
-        {/* Right Actions */}
-        <div className="hidden md:flex items-center gap-3 z-20">
+        {/* Right Actions - Adjusted to right end without overlap */}
+        <div className="hidden md:flex items-center justify-end gap-2 ml-auto z-20 shrink-0">
           {/* Real-time Language Toggle */}
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-surface-darker/80 bg-white hover:border-primary/40 text-xs font-semibold text-text-main transition-all shadow-sm active:scale-95"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-surface-darker/80 bg-white hover:border-primary/40 text-xs font-semibold text-text-main transition-all shadow-2xs active:scale-95 shrink-0"
             title="Toggle Language (EN / தமிழ்)"
           >
             <Languages className="w-3.5 h-3.5 text-primary" />
@@ -183,10 +183,11 @@ export function Header() {
 
           {/* Conditional Auth State */}
           {status === 'authenticated' && user ? (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 shrink-0">
               <Link
                 href="/dashboard"
-                className="flex items-center gap-2 px-2.5 py-1 rounded-xl bg-surface hover:bg-primary-light/40 border border-surface-darker/80 transition-colors group shadow-sm"
+                className="flex items-center gap-2 px-2 py-1 rounded-xl bg-surface hover:bg-primary-light/40 border border-surface-darker/80 transition-colors group shadow-2xs"
+                title="User Profile & Settings"
               >
                 <UserAvatar
                   src={user.image}
@@ -195,7 +196,7 @@ export function Header() {
                   className="h-7 w-7 rounded-lg text-xs"
                 />
                 <div className="flex flex-col text-left">
-                  <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors max-w-[95px] truncate leading-tight">
+                  <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors max-w-[75px] truncate leading-tight">
                     {user.name?.split(' ')[0] || user.email?.split('@')[0]}
                   </span>
                   <span className="text-[9px] font-black uppercase tracking-wider text-primary leading-tight">
@@ -205,22 +206,27 @@ export function Header() {
               </Link>
 
               {userRole === 'admin' && (
-                <Link href="/admin">
+                <Link href="/admin" title={t.nav.adminPanel}>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9 font-bold text-xs border-amber-400/70 text-amber-800 bg-amber-50 hover:bg-amber-100 gap-1 px-2.5 shadow-sm"
+                    className="h-9 w-9 p-0 flex items-center justify-center border-amber-400/70 text-amber-800 bg-amber-50 hover:bg-amber-100 rounded-xl shadow-2xs"
+                    aria-label={t.nav.adminPanel}
                   >
-                    <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
-                    <span>{t.nav.adminPanel}</span>
+                    <ShieldAlert className="w-4 h-4 text-amber-600" />
                   </Button>
                 </Link>
               )}
 
-              <Link href="/dashboard">
-                <Button variant="outline" size="sm" className="h-9 font-semibold text-xs gap-1.5 px-3">
-                  <LayoutDashboard className="w-3.5 h-3.5 text-primary" />
-                  <span>{t.nav.dashboard}</span>
+              {/* Dashboard: Icon Only */}
+              <Link href="/dashboard" title={t.nav.dashboard}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 w-9 p-0 flex items-center justify-center rounded-xl border border-surface-darker/80 hover:border-primary/40 hover:bg-primary-light/40 shadow-2xs transition-colors"
+                  aria-label={t.nav.dashboard}
+                >
+                  <LayoutDashboard className="w-4 h-4 text-primary" />
                 </Button>
               </Link>
 
@@ -235,19 +241,21 @@ export function Header() {
               </Button>
             </div>
           ) : (
-            <Link href="/login">
-              <Button variant="outline" size="sm" className="h-9 font-semibold">
-                {t.nav.signIn}
-              </Button>
-            </Link>
-          )}
+            <div className="flex items-center gap-2 shrink-0">
+              <Link href="/login">
+                <Button variant="outline" size="sm" className="h-9 px-3 font-semibold text-xs rounded-xl shadow-2xs">
+                  {t.nav.signIn}
+                </Button>
+              </Link>
 
-          {/* Quick CTA */}
-          <a href="#upload-zone">
-            <Button size="sm" className="h-9 font-semibold shadow-sm">
-              {language === 'ta' ? 'இலவசமாக சரிபார்க்க' : 'Verify PDF Free'}
-            </Button>
-          </a>
+              {/* Quick CTA */}
+              <a href="#upload-zone">
+                <Button size="sm" className="h-9 px-3.5 font-semibold text-xs shadow-sm rounded-xl">
+                  {language === 'ta' ? 'இலவச சரிபார்ப்பு' : 'Verify PDF'}
+                </Button>
+              </a>
+            </div>
+          )}
         </div>
 
         {/* Mobile Hamburger Button */}
