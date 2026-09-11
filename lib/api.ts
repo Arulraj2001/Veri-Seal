@@ -280,3 +280,16 @@ export async function recordVerificationEvent(docType: string, status: string, s
     console.debug('Failed to record verification event:', e);
   }
 }
+
+/**
+ * Pre-warms sleeping backend instances (e.g. Render free tier cold-starts)
+ * as soon as the user opens the page.
+ */
+export function prewarmBackend(): void {
+  if (typeof window === 'undefined') return;
+  try {
+    fetch(`${API_URL}/health`, { method: 'GET', cache: 'no-store' }).catch(() => {});
+  } catch {
+    // Ignore silent pre-warm failures
+  }
+}

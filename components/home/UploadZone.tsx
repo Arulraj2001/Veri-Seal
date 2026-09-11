@@ -39,6 +39,7 @@ import {
   incrementGuestVerificationCount,
   fetchPublicSettings,
   recordVerificationEvent,
+  prewarmBackend,
   type PublicSettings,
 } from '@/lib/api';
 import { UpiPaymentFlowModal } from '@/components/payment/UpiPaymentFlowModal';
@@ -73,8 +74,10 @@ export function UploadZone() {
   const [isCounterLive, setIsCounterLive] = React.useState(false);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
-  // Fetch real public settings and verification stats
+  // Fetch real public settings, pre-warm backend, and verification stats
   React.useEffect(() => {
+    prewarmBackend();
+
     fetchPublicSettings().then((settings) => {
       setPublicSettings(settings);
     });
