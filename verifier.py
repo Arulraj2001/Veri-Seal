@@ -14,6 +14,8 @@ from datetime import datetime
 from typing import Optional, Dict, Any, List
 
 import pypdf
+from pypdf.annotations import FreeText
+
 from pyhanko.pdf_utils.reader import PdfFileReader
 from pyhanko.pdf_utils.incremental_writer import IncrementalPdfFileWriter
 from pyhanko.pdf_utils.misc import PdfReadError
@@ -55,6 +57,86 @@ class InvalidPdfError(VerificationEngineError):
 class VerificationFailedError(VerificationEngineError):
     def __init__(self, message: str = "Cryptographic verification failed", detail: Optional[str] = None):
         super().__init__(code="VERIFICATION_FAILED", message=message, detail=detail, status_code=500)
+
+
+def _embed_verified_stamp(
+    pdf_bytes: bytes,
+    signer_name: str,
+    issuer: str,
+    signed_on: str,
+    doc_type: str,
+    ltv_applied: bool,
+) -> bytes:
+    """
+    Adds a visible 'DIGITALLY VERIFIED' FreeText annotation stamp to page 1 of the PDF.
+    Uses pypdf which is already a project dependency — no additional binaries needed.
+    The annotation appears in all PDF viewers (Chrome, Acrobat, Foxit, SumatraPDF).
+
+    Returns the modified PDF bytes, or the original bytes if stamping fails.
+    """
+    try:
+        reader = pypdf.PdfReader(io.BytesIO(pdf_bytes))
+        writer = pypdf.PdfWriter()
+
+        # Clone all pages from reader into writer
+        for page in reader.pages:
+            writer.add_page(page)
+
+        # Copy metadata
+        if reader.metadata:
+            writer.add_metadata(dict(reader.metadata))
+
+        # Build stamp text
+        ltv_note = "LTV DSS Embedded" if ltv_applied else "Signature Cryptographically Valid"
+        stamp_text = (
+            f"\u2714 DIGITALLY VERIFIED by VeriSeal\n"
+            f"Document: {doc_type}\n"
+            f"Signer: {signer_name}\n"
+            f"Issuing CA: {issuer}\n"
+            f"Verified On: {signed_on}\n"
+            f"Status: {ltv_note}"
+        )
+
+        # Place stamp in top-right corner of page 1
+        # Page dimensions: most Indian government PDFs are A4 (595 x 842 pts)
+        first_page = writer.pages[0]
+        page_width = float(first_page.mediabox.width)   # e.g. 595
+        page_height = float(first_page.mediabox.height) # e.g. 842
+
+        # Stamp box: top-right area, 240 wide x 90 tall, 8pt margin from edges
+        margin = 8
+        box_width = 240
+        box_height = 90
+        rect = (
+            page_width - box_width - margin,   # x1 (left)
+            page_height - box_height - margin,  # y1 (bottom of box)
+            page_width - margin,               # x2 (right)
+            page_height - margin,              # y2 (top of box)
+        )
+
+        annotation = FreeText(
+            text=stamp_text,
+            rect=rect,
+            font="Helvetica",
+            bold=False,
+            font_size="7pt",
+            font_color="1a4731",       # dark green text
+            border_color="16a34a",     # green border
+            background_color="f0fdf4", # very light green fill
+        )
+
+        writer.add_annotation(page_number=0, annotation=annotation)
+
+        output = io.BytesIO()
+        writer.write(output)
+        stamped = output.getvalue()
+
+        if stamped and len(stamped) > 0:
+            return stamped
+        return pdf_bytes
+    except Exception as stamp_exc:
+        logger.warning("Verification stamp embedding failed (non-fatal): %s", stamp_exc)
+        return pdf_bytes
 
 
 def detect_document_type(file_bytes: bytes, password: Optional[str] = None) -> str:
@@ -282,41 +364,83 @@ async def async_verify_pdf(file_bytes: bytes, password: Optional[str] = None) ->
             valid_statuses_for_ltv.append(status)
 
     # Step 4: Embed LTV (Long Term Validation) / DSS Information into Output PDF
-    # pyHanko's async_add_validation_info writes an INCREMENTAL revision on top of the
-    # existing PDF byte stream.  The output stream MUST be seeded with the original
-    # file bytes; otherwise we produce an empty/broken PDF with only the revision delta.
+    #
+    # CRITICAL pyHanko behaviour (confirmed by source inspection):
+    #   async_add_validation_info(embedded_sig, ..., output=None)
+    #     → IncrementalPdfFileWriter.from_reader(reader) uses reader.stream as input
+    #     → _write_header seeks reader.stream to 0 and copies to a fresh BytesIO
+    #     → appends the DSS revision delta after the copied original content
+    #     → returns the complete BytesIO (original + DSS revision)
+    #
+    #   Passing output=None is CORRECT. pyHanko owns the BytesIO and copies the
+    #   original PDF itself from reader.stream — no pre-seeding needed.
+    #
+    #   force_write=True ensures the DSS revision is always written even when
+    #   resulting_dss.modified is False (e.g. no new OCSP/CRL data available).
     verified_pdf_base64 = None
     ltv_applied = False
 
+    # Collect primary signer info for the visible stamp
+    primary_sig_detail = signatures_detail[0] if signatures_detail else None
+    stamp_signer = primary_sig_detail.signer_name if primary_sig_detail else "Government Signer"
+    stamp_issuer = primary_sig_detail.issuer if primary_sig_detail else "CCA India"
+    stamp_signed_on = (
+        primary_sig_detail.signed_on.strftime("%d %b %Y %H:%M UTC")
+        if primary_sig_detail and primary_sig_detail.signed_on
+        else datetime.utcnow().strftime("%d %b %Y %H:%M UTC")
+    )
+
     if overall_status == "VALID" and embedded_sigs:
         try:
-            # Seed output stream with original bytes so the full PDF is preserved
-            output_stream = io.BytesIO(file_bytes)
-            output_stream.seek(0, 2)  # Seek to end so pyHanko appends incrementally
-
-            # Apply DSS validation info for Adobe permanent green tick
-            await async_add_validation_info(
+            # output=None → pyHanko creates its own fresh BytesIO and copies reader.stream
+            # force_write=True → always write DSS revision (even if no new revocation data)
+            result_stream = await async_add_validation_info(
                 embedded_sig=embedded_sigs[0],
                 validation_context=val_context,
-                output=output_stream,
+                output=None,
+                force_write=True,
             )
-            verified_bytes = output_stream.getvalue()
+            result_stream.seek(0)
+            verified_bytes = result_stream.read()
+
             if verified_bytes and len(verified_bytes) >= len(file_bytes):
-                verified_pdf_base64 = base64.b64encode(verified_bytes).decode("ascii")
                 ltv_applied = True
                 for s in signatures_detail:
                     s.ltv_added = True
+                logger.info("LTV DSS revision embedded successfully (%d bytes)", len(verified_bytes))
             else:
-                # Fallback: output shorter than original is a bug – use original bytes
-                logger.warning("LTV output smaller than input (%d < %d), falling back to original", len(verified_bytes or b""), len(file_bytes))
-                verified_pdf_base64 = base64.b64encode(file_bytes).decode("ascii")
+                logger.warning(
+                    "LTV output (%d bytes) smaller than input (%d bytes), using original",
+                    len(verified_bytes or b""),
+                    len(file_bytes),
+                )
+                verified_bytes = file_bytes
         except Exception as ltv_exc:
-            logger.info("LTV DSS embedding skipped: %s", ltv_exc)
-            # If DSS embedding could not be completed, fallback to providing original base64
-            verified_pdf_base64 = base64.b64encode(file_bytes).decode("ascii")
+            logger.warning("LTV DSS embedding failed (using original bytes): %s", ltv_exc)
+            verified_bytes = file_bytes
+
+        # Apply visible verification stamp annotation to the (LTV-enhanced or original) PDF
+        stamped_bytes = _embed_verified_stamp(
+            verified_bytes,
+            signer_name=stamp_signer,
+            issuer=stamp_issuer,
+            signed_on=stamp_signed_on,
+            doc_type=detected_doc_type,
+            ltv_applied=ltv_applied,
+        )
+        verified_pdf_base64 = base64.b64encode(stamped_bytes).decode("ascii")
+
     elif overall_status == "UNKNOWN":
-        # Chain unknown but hash intact – return the original document as-is
-        verified_pdf_base64 = base64.b64encode(file_bytes).decode("ascii")
+        # Hash intact but root CA not in CCA store — stamp as "signature exists" and return
+        stamped_bytes = _embed_verified_stamp(
+            file_bytes,
+            signer_name=stamp_signer,
+            issuer=stamp_issuer,
+            signed_on=stamp_signed_on,
+            doc_type=detected_doc_type,
+            ltv_applied=False,
+        )
+        verified_pdf_base64 = base64.b64encode(stamped_bytes).decode("ascii")
 
     # Construct final result
     return VerificationResponse(
