@@ -81,7 +81,10 @@ const COST_COMPARISON = [
 
 export default function PassportPhotoSheetPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground pb-20">
+    <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
@@ -105,25 +108,21 @@ export default function PassportPhotoSheetPage() {
         }}
       />
 
-      {/* Breadcrumb Navigation */}
-      <div className="bg-surface-lighter/60 border-b border-surface-darker/40 py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-            <Link href="/" className="hover:text-foreground transition-colors">
-              Home
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/50" />
-            <Link href="/tools" className="hover:text-foreground transition-colors">
-              Exam Tools
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/50" />
-            <span className="text-foreground font-medium truncate">Passport Photo Sheet Maker</span>
-          </div>
-        </div>
-      </div>
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
+          <Link href="/" className="hover:text-primary transition-colors font-medium">
+            Home
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Exam Tools
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <span className="text-primary font-bold truncate">Passport Photo Sheet Maker</span>
+        </nav>
 
-      {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column (68%) */}
           <div className="lg:col-span-8 space-y-10">

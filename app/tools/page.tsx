@@ -57,7 +57,10 @@ const FAQS = [
 
 export default function ToolsDirectoryPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground pb-20">
+    <div className="min-h-screen bg-background bg-dot-grid text-foreground pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
@@ -95,22 +98,16 @@ export default function ToolsDirectoryPage() {
         }}
       />
 
-      {/* Breadcrumb Navigation */}
-      <div className="bg-surface-lighter/60 border-b border-surface-darker/40 py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-            <Link href="/" className="hover:text-foreground transition-colors">
-              Home
-            </Link>
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/50" />
-            <span className="text-foreground font-medium truncate">
-              Exam &amp; Document Tools Directory
-            </span>
-          </div>
-        </div>
-      </div>
+      <div className="max-w-7xl mx-auto space-y-10">
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
+          <Link href="/" className="hover:text-primary transition-colors font-medium">
+            Home
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <span className="text-primary font-bold">Exam &amp; Document Tools Directory</span>
+        </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 space-y-12">
         {/* Page Header Hero */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-xs">
