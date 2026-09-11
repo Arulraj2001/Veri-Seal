@@ -66,21 +66,32 @@ def _embed_verified_stamp(
     signed_on: str,
     doc_type: str,
     ltv_applied: bool,
+    password: Optional[str] = None,
 ) -> bytes:
     """
     Adds a visible 'DIGITALLY VERIFIED' FreeText annotation stamp to page 1 of the PDF.
     Uses pypdf which is already a project dependency — no additional binaries needed.
     The annotation appears in all PDF viewers (Chrome, Acrobat, Foxit, SumatraPDF).
 
-    Returns the modified PDF bytes, or the original bytes if stamping fails.
+    KEY FIX: Accepts 'password' for encrypted PDFs (e.g. e-Aadhaar).
+    Without the password, pypdf raises 'File has not been decrypted' and the stamp
+    silently falls back to the original unchanged bytes. Passing the password allows
+    pypdf to decrypt the PDF in-memory before adding the annotation.
+
+    Uses clone_reader_document_root() instead of add_page() so that AcroForm fields
+    and digital signature dictionary references in the document catalogue are preserved.
+
+    Returns the modified (unencrypted, stamped) PDF bytes, or the original bytes if
+    stamping fails for any reason (safe fallback).
     """
     try:
-        reader = pypdf.PdfReader(io.BytesIO(pdf_bytes))
-        writer = pypdf.PdfWriter()
+        # Pass password so encrypted PDFs (e.g. Aadhaar) are decrypted before reading
+        reader = pypdf.PdfReader(io.BytesIO(pdf_bytes), password=password)
 
-        # Clone all pages from reader into writer
-        for page in reader.pages:
-            writer.add_page(page)
+        writer = pypdf.PdfWriter()
+        # clone_reader_document_root preserves AcroForm / signature catalogue entries
+        # that add_page() silently drops.
+        writer.clone_reader_document_root(reader)
 
         # Copy metadata
         if reader.metadata:
@@ -97,21 +108,24 @@ def _embed_verified_stamp(
             f"Status: {ltv_note}"
         )
 
-        # Place stamp in top-right corner of page 1
-        # Page dimensions: most Indian government PDFs are A4 (595 x 842 pts)
-        first_page = writer.pages[0]
-        page_width = float(first_page.mediabox.width)   # e.g. 595
-        page_height = float(first_page.mediabox.height) # e.g. 842
+        # Place stamp in top-right corner of page 1.
+        # Fallback to A4 dimensions if page mediabox is unavailable.
+        try:
+            first_page = writer.pages[0]
+            page_width = float(first_page.mediabox.width)
+            page_height = float(first_page.mediabox.height)
+        except Exception:
+            page_width, page_height = 595.0, 842.0  # A4 default
 
-        # Stamp box: top-right area, 240 wide x 90 tall, 8pt margin from edges
+        # Stamp box: top-right corner, 240 pt wide x 90 pt tall, 8 pt margin
         margin = 8
         box_width = 240
         box_height = 90
         rect = (
-            page_width - box_width - margin,   # x1 (left)
-            page_height - box_height - margin,  # y1 (bottom of box)
-            page_width - margin,               # x2 (right)
-            page_height - margin,              # y2 (top of box)
+            page_width - box_width - margin,   # x1 left
+            page_height - box_height - margin,  # y1 bottom of box
+            page_width - margin,               # x2 right
+            page_height - margin,              # y2 top of box
         )
 
         annotation = FreeText(
@@ -122,7 +136,7 @@ def _embed_verified_stamp(
             font_size="7pt",
             font_color="1a4731",       # dark green text
             border_color="16a34a",     # green border
-            background_color="f0fdf4", # very light green fill
+            background_color="f0fdf4", # very light green background
         )
 
         writer.add_annotation(page_number=0, annotation=annotation)
@@ -132,6 +146,7 @@ def _embed_verified_stamp(
         stamped = output.getvalue()
 
         if stamped and len(stamped) > 0:
+            logger.info("Verification stamp embedded: %d bytes (was %d)", len(stamped), len(pdf_bytes))
             return stamped
         return pdf_bytes
     except Exception as stamp_exc:
@@ -419,7 +434,10 @@ async def async_verify_pdf(file_bytes: bytes, password: Optional[str] = None) ->
             logger.warning("LTV DSS embedding failed (using original bytes): %s", ltv_exc)
             verified_bytes = file_bytes
 
-        # Apply visible verification stamp annotation to the (LTV-enhanced or original) PDF
+        # Apply visible verification stamp annotation to the (LTV-enhanced or original) PDF.
+        # CRITICAL: pass 'password' so encrypted Aadhaar PDFs can be decrypted by pypdf
+        # before the annotation is added. Without this, pypdf raises
+        # 'File has not been decrypted' and returns the original bytes unchanged.
         stamped_bytes = _embed_verified_stamp(
             verified_bytes,
             signer_name=stamp_signer,
@@ -427,6 +445,7 @@ async def async_verify_pdf(file_bytes: bytes, password: Optional[str] = None) ->
             signed_on=stamp_signed_on,
             doc_type=detected_doc_type,
             ltv_applied=ltv_applied,
+            password=password,
         )
         verified_pdf_base64 = base64.b64encode(stamped_bytes).decode("ascii")
 
@@ -439,6 +458,7 @@ async def async_verify_pdf(file_bytes: bytes, password: Optional[str] = None) ->
             signed_on=stamp_signed_on,
             doc_type=detected_doc_type,
             ltv_applied=False,
+            password=password,
         )
         verified_pdf_base64 = base64.b64encode(stamped_bytes).decode("ascii")
 
