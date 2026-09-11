@@ -113,7 +113,7 @@ export function Header() {
     { label: t.nav.freeTools, href: '/tools' },
     { label: t.nav.homeCost, href: '/home-cost' },
     { label: t.nav.businessOs, href: '/business-os' },
-    { label: 'Vehicle OS 🚗', href: '/vehicle-os' },
+    { label: 'Vehicle OS', href: '/vehicle-os' },
     { label: t.nav.documents, href: '/#supported-docs' },
     { label: t.nav.security, href: '/#trust-section' },
     { label: t.nav.faq, href: '/#faq-section' },
@@ -133,11 +133,11 @@ export function Header() {
           : 'bg-transparent py-5'
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center justify-between">
+      <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center justify-between">
         {/* Brand Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg z-20"
+          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg z-20 shrink-0"
         >
           <div className="h-10 w-10 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
             <svg
@@ -163,24 +163,21 @@ export function Header() {
           </div>
         </Link>
 
-        {/* Desktop Nav Center (Perfect geometric center of the website) */}
-        <nav className="hidden md:flex items-center gap-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/85 px-4 py-1.5 rounded-full border border-surface-darker/70 backdrop-blur-md shadow-2xs z-30">
+        {/* Desktop Nav Center (Elongated, spacious, perfectly centered) */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/90 px-4 xl:px-6 py-2 rounded-full border border-surface-darker/80 backdrop-blur-md shadow-xs z-30 transition-all">
           {/* Tools Mega-Menu Trigger */}
           <div ref={toolsRef} className="relative">
             <button
               type="button"
               onClick={() => setToolsMenuOpen(!toolsMenuOpen)}
               className={cn(
-                'flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full transition-all cursor-pointer select-none',
+                'flex items-center gap-1.5 px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-semibold rounded-full transition-all cursor-pointer select-none shrink-0 whitespace-nowrap',
                 toolsMenuOpen
                   ? 'bg-white text-primary shadow-2xs'
                   : 'text-text-main hover:text-primary hover:bg-white/60'
               )}
             >
               <span>{t.nav.freeTools}</span>
-              <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-600 rounded-full border border-emerald-500/30">
-                NEW
-              </span>
               <ChevronDown
                 className={cn(
                   'w-3.5 h-3.5 text-text-main/60 transition-transform duration-200',
@@ -428,25 +425,41 @@ export function Header() {
                   {/* Column 4: Security & Cyber Cafe Tools */}
                   <div className="space-y-2 bg-surface/50 p-3.5 rounded-2xl border border-surface-darker/60">
                     <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
-                      <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-                      <span>Security &amp; Studio</span>
+                      <Camera className="w-3.5 h-3.5 text-primary" />
+                      <span>Studio &amp; Cyber Cafe</span>
                     </div>
                     <div className="space-y-1 text-xs">
                       <Link
-                        href="/tools/unlock-pdf"
+                        href="/tools/formal-attire-changer"
                         onClick={() => setToolsMenuOpen(false)}
                         className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
                       >
-                        <div className="font-bold text-emerald-700">Unlock e-Aadhaar PDF</div>
-                        <div className="text-[10px] text-text-main/60">RAM-based Password Remover</div>
+                        <div className="font-bold text-emerald-700">Formal Suit Changer</div>
+                        <div className="text-[10px] text-text-main/60">Blazers &amp; Ties for Casual Selfies</div>
                       </Link>
                       <Link
-                        href="/tools/mask-aadhaar"
+                        href="/tools/passport-photo-sheet-maker"
                         onClick={() => setToolsMenuOpen(false)}
                         className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
                       >
-                        <div className="font-bold text-emerald-700">Mask Aadhaar (8 Digits)</div>
-                        <div className="text-[10px] text-text-main/60">True Stream Text Purge &amp; QR</div>
+                        <div className="font-bold text-emerald-700">Photo Sheet Maker (4×6)</div>
+                        <div className="text-[10px] text-text-main/60">₹5 Lab Print • 300 DPI Grid</div>
+                      </Link>
+                      <Link
+                        href="/tools/photo-date-name-stamper"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
+                      >
+                        <div className="font-bold text-emerald-700">Name &amp; DOP Stamper</div>
+                        <div className="text-[10px] text-text-main/60">Official 90-Day Validity Stamp</div>
+                      </Link>
+                      <Link
+                        href="/tools/biometric-face-aligner"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
+                      >
+                        <div className="font-bold text-emerald-700">Biometric Face Aligner</div>
+                        <div className="text-[10px] text-text-main/60">ICAO 70%–80% Head Rule</div>
                       </Link>
                       <Link
                         href="/tools/photo-signature-joiner"
@@ -457,20 +470,12 @@ export function Header() {
                         <div className="text-[10px] text-text-main/60">MP PEB, UPSSSC &amp; Kerala PSC</div>
                       </Link>
                       <Link
-                        href="/tools/passport-photo-sheet-maker"
+                        href="/tools/mask-aadhaar"
                         onClick={() => setToolsMenuOpen(false)}
                         className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
                       >
-                        <div className="font-bold text-emerald-700">Photo Sheet Maker</div>
-                        <div className="text-[10px] text-text-main/60">4x6" &amp; A4 at 300 DPI Print</div>
-                      </Link>
-                      <Link
-                        href="/#supported-docs"
-                        onClick={() => setToolsMenuOpen(false)}
-                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
-                      >
-                        <div className="font-bold">Digital Signature Verify</div>
-                        <div className="text-[10px] text-text-main/60">NIC / CCA Trusted Root</div>
+                        <div className="font-bold">Mask Aadhaar (8 Digits)</div>
+                        <div className="text-[10px] text-text-main/60">True Stream Text Purge &amp; QR</div>
                       </Link>
                     </div>
                   </div>
@@ -538,45 +543,55 @@ export function Header() {
           {/* Home Cost & Savings Direct Link */}
           <Link
             href="/home-cost"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full text-text-main hover:text-emerald-700 hover:bg-emerald-50/80 transition-all cursor-pointer select-none"
+            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-emerald-700 hover:bg-emerald-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
           >
-            <span>{t.nav.homeCost}</span>
-            <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-700 rounded-full border border-emerald-500/30">
-              NEW
-            </span>
+            {t.nav.homeCost}
           </Link>
 
           {/* Business Profit OS Direct Link */}
           <Link
             href="/business-os"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full text-text-main hover:text-indigo-700 hover:bg-indigo-50/80 transition-all cursor-pointer select-none"
+            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-indigo-700 hover:bg-indigo-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
           >
-            <span>{t.nav.businessOs}</span>
-            <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-indigo-500/15 text-indigo-700 rounded-full border border-indigo-500/30">
-              HOT
-            </span>
+            {t.nav.businessOs}
           </Link>
 
           {/* Vehicle Decision OS Direct Link */}
           <Link
             href="/vehicle-os"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full text-text-main hover:text-amber-700 hover:bg-amber-50/80 transition-all cursor-pointer select-none"
+            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-amber-700 hover:bg-amber-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
           >
-            <span>Vehicle OS</span>
-            <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-amber-500/15 text-amber-700 rounded-full border border-amber-500/30">
-              NEW
-            </span>
+            Vehicle OS
           </Link>
 
+          {/* Documents Section Link */}
+          <Link
+            href="/#supported-docs"
+            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
+          >
+            {t.nav.documents}
+          </Link>
+
+          {/* Trust & Security Link (visible on 2xl displays) */}
+          <Link
+            href="/#trust-section"
+            className="hidden 2xl:block px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
+          >
+            {t.nav.security}
+          </Link>
+
+          {/* Blog Link */}
           <Link
             href="/blog"
-            className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
+            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
           >
             {t.nav.blog}
           </Link>
+
+          {/* Contact Link */}
           <Link
             href="/contact"
-            className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
+            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
           >
             {t.nav.contact}
           </Link>
