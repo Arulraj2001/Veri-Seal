@@ -110,11 +110,11 @@ export function Header() {
           : 'bg-transparent py-5'
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center justify-between">
         {/* Brand Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
+          className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg z-20"
         >
           <div className="h-10 w-10 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
             <svg
@@ -140,10 +140,30 @@ export function Header() {
           </div>
         </Link>
 
-        {/* Desktop Nav Center has been removed per user instruction. Replaced with Draggable Sticky Note Navigation on left. */}
+        {/* Desktop Nav Center (Perfect geometric center of the website) */}
+        <nav className="hidden md:flex items-center gap-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/85 px-4 py-1.5 rounded-full border border-surface-darker/70 backdrop-blur-md shadow-2xs z-10">
+          <a
+            href="/#how-it-works"
+            className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
+          >
+            {t.nav.howItWorks}
+          </a>
+          <Link
+            href="/blog"
+            className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
+          >
+            {t.nav.blog}
+          </Link>
+          <Link
+            href="/contact"
+            className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
+          >
+            {t.nav.contact}
+          </Link>
+        </nav>
 
         {/* Right Actions */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3 z-20">
           {/* Real-time Language Toggle */}
           <button
             type="button"
