@@ -232,3 +232,108 @@ export interface BusinessHealthScores {
   gradeLabel: 'EXCELLENT' | 'GOOD' | 'NEEDS ATTENTION' | 'CRITICAL LEAK';
   topFixes: string[];
 }
+
+// ----------------------------------------------------
+// Phase 2: Operational SMB OS & SaaS Habit Loops Types
+// ----------------------------------------------------
+
+export interface QuoteLineItem {
+  id: string;
+  name: string;
+  quantity: number;
+  rate: number;
+  amount: number;
+}
+
+export interface WhatsAppQuoteData {
+  businessName: string;
+  businessPhone: string;
+  customerName: string;
+  customerPhone: string;
+  quoteNumber: string;
+  items: QuoteLineItem[];
+  deliveryCharge: number;
+  discountRupees: number;
+  upiId: string;
+  paymentTerms: string;
+  validDays: number;
+}
+
+export type UdhaarTone = 'friendly' | 'polite_formal' | 'firm' | 'urgent';
+
+export interface UdhaarCustomerRecord {
+  id: string;
+  customerName: string;
+  customerPhone: string;
+  amountDue: number;
+  daysOverdue: number;
+  lastPurchaseDate: string;
+  notes: string;
+}
+
+export type OrderPaymentStatus = 'paid_online' | 'cod_pending' | 'credit_udhaar';
+export type OrderFulfillmentStatus = 'new' | 'packed' | 'shipped' | 'delivered' | 'rto_returned';
+
+export interface WhatsAppOrderItem {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  customerPhone: string;
+  itemsSummary: string;
+  totalSellingPrice: number;
+  productCost: number;
+  shippingCharge: number;
+  paymentStatus: OrderPaymentStatus;
+  fulfillmentStatus: OrderFulfillmentStatus;
+  dateCreated: string;
+}
+
+export interface DeadStockItem {
+  id: string;
+  name: string;
+  category: string;
+  unitsInStock: number;
+  unitPurchaseCost: number;
+  totalTrappedCapital: number;
+  daysInStorage: number;
+  liquidationAction: 'clearance_discount' | 'bundle_deal' | 'vendor_return' | 'urgent_writeoff';
+  suggestedLiquidationPrice: number;
+}
+
+export interface CashCalendarEvent {
+  id: string;
+  date: string;
+  description: string;
+  amount: number;
+  type: 'inflow' | 'outflow';
+  category: 'customer_payment' | 'rent' | 'staff_salary' | 'gst_tax' | 'supplier_bill' | 'loan_emi';
+  isConfirmed: boolean;
+}
+
+export interface DayEndReconciliationInput {
+  date: string;
+  openingCashFloat: number;
+  systemCashSales: number;
+  physicalDrawerCashCount: number;
+  systemUpiSales: number;
+  bankAppUpiReceived: number;
+  cashPaidOutForExpenses: number;
+}
+
+export interface EmployeeTrueCostInput {
+  baseMonthlySalary: number;
+  monthlyPerformanceBonus: number;
+  employerPfEsiPercent: number; // typically 12% + 3.25% or 0%
+  dailyTeaLunchExpense: number; // e.g. ₹60/day
+  uniformToolDepreciationMonthly: number;
+  workingDaysPerMonth: number;
+  workingHoursPerDay: number;
+}
+
+export interface MinimumOrderValueInput {
+  averageProductCostPercent: number; // e.g. 45%
+  fixedPackagingCost: number; // e.g. ₹35
+  fixedCourierFreight: number; // e.g. ₹70
+  desiredNetProfitPerOrder: number; // e.g. ₹150
+}
+

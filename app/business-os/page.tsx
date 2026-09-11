@@ -16,6 +16,12 @@ import {
   Zap,
   Building,
   HelpCircle,
+  Smartphone,
+  CreditCard,
+  ShoppingBag,
+  Archive,
+  Calendar,
+  Users,
 } from 'lucide-react';
 import BusinessHealthScoreCard from '@/components/business-os/BusinessHealthScoreCard';
 
@@ -29,9 +35,9 @@ export const metadata: Metadata = {
     'instagram seller profit margin calculator',
     'break even calculator indian rupees',
     'ecommerce rto cost calculator india',
-    'amazon flipkart seller pricing calculator',
-    'business health score calculator',
-    'cash flow runway calculator smb',
+    'whatsapp quote generator free',
+    'udhaar reminder message generator',
+    'small business cash flow calendar',
   ],
   openGraph: {
     title: 'Small Business Cash-Flow & Profitability OS for Indian SMBs',
@@ -42,7 +48,7 @@ export const metadata: Metadata = {
   },
 };
 
-const OS_TOOLS = [
+const PROFIT_INTELLIGENCE_TOOLS = [
   {
     href: '/business-os/daily-profit-calculator',
     title: 'Daily Profit & Rupee Breakdown',
@@ -125,6 +131,99 @@ const OS_TOOLS = [
   },
 ];
 
+const OPERATIONAL_TOOLS = [
+  {
+    href: '/business-os/quote-generator',
+    title: '1-Click WhatsApp Quote Generator',
+    icon: Smartphone,
+    badge: 'Chat Commerce',
+    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    description:
+      'Generate professional estimates for WhatsApp with itemized line items, delivery, discount, and direct UPI payment ID.',
+    metrics: ['1-Click WhatsApp Share', 'UPI QR Ready', '7-Day Validity'],
+  },
+  {
+    href: '/business-os/payment-follow-up',
+    title: 'Udhaar Ledger & Payment Reminders',
+    icon: CreditCard,
+    badge: 'Cash Recovery',
+    badgeColor: 'bg-amber-50 text-amber-800 border-amber-200',
+    description:
+      'Never feel awkward collecting pending money. Select from 4 tones (Friendly, Formal, Firm, Urgent) and dispatch reminders in 1 click.',
+    metrics: ['4 Polite Tones', 'Direct UPI Link', 'Overdue Days Tracker'],
+  },
+  {
+    href: '/business-os/order-manager',
+    title: 'WhatsApp & DM Order Manager',
+    icon: ShoppingBag,
+    badge: 'Order Log',
+    badgeColor: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    description:
+      'Log customer chat orders, track prepaid vs COD delivery status, and calculate live gross profit on every sale.',
+    metrics: ['Live Profit / Order', 'COD Transit Tracker', '100% In-Browser'],
+  },
+  {
+    href: '/business-os/inventory-profit-calculator',
+    title: 'Dead Stock & Capital Auditor',
+    icon: Archive,
+    badge: 'Frozen Cash',
+    badgeColor: 'bg-rose-50 text-rose-700 border-rose-200',
+    description:
+      'Uncover money trapped in stock not sold for >90 days. Get actionable flash liquidation pricing to unlock working capital.',
+    metrics: ['Trapped Capital ₹', 'Flash Sale Pricing', 'Storage Age Audit'],
+  },
+  {
+    href: '/business-os/cash-calendar',
+    title: '30-Day Business Cash Calendar',
+    icon: Calendar,
+    badge: 'Forecaster',
+    badgeColor: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    description:
+      'Forecast your bank balance over the next 30 days after rent, staff wages, GST taxes, and supplier cheques clear.',
+    metrics: ['Crunch Day Alert', 'Payable Timeline', 'Balance Trajectory'],
+  },
+  {
+    href: '/business-os/reconciliation',
+    title: 'Day-End Cash & UPI Reconciliation',
+    icon: Coins,
+    badge: 'Register Closing',
+    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    description:
+      'Close your shop register in 90 seconds. Tally drawer cash count against expected sales and verify digital PhonePe/GPay settlements.',
+    metrics: ['Cash Shortage Alert', 'Fake UPI Detection', 'Closing Summary'],
+  },
+  {
+    href: '/business-os/employee-cost-calculator',
+    title: 'Employee True Cost & Hourly Rate',
+    icon: Users,
+    badge: 'Payroll Reality',
+    badgeColor: 'bg-cyan-50 text-cyan-800 border-cyan-200',
+    description:
+      'A ₹18k salary costs ~₹23k in real cash. Factor bonuses, daily tea allowances, uniform wear, and PF/ESI to calculate true hourly costs.',
+    metrics: ['Multiplier Ratio', 'Productive Hourly Rate', 'Full-time vs Freelance'],
+  },
+  {
+    href: '/business-os/minimum-order-calculator',
+    title: 'Minimum Order Value (MOV) Sizer',
+    icon: Truck,
+    badge: 'Free Shipping',
+    badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+    description:
+      'Stop losing money on small ₹299 free delivery orders. Calculate your exact profitable minimum cart threshold.',
+    metrics: ['Break-Even Threshold', 'Recommended Free Delivery', 'Test Cart Simulator'],
+  },
+  {
+    href: '/business-os/ai-advisor',
+    title: 'AI Business Diagnostic & Advisor',
+    icon: Sparkles,
+    badge: 'Strategic AI',
+    badgeColor: 'bg-purple-50 text-purple-700 border-purple-200',
+    description:
+      'Heuristic financial intelligence pinpointing root causes of declining margins, with 3 high-ROI weekly action items.',
+    metrics: ['Root Cause Diagnostic', 'Weekly Levers', 'Annual Impact ₹'],
+  },
+];
+
 const FAQS = [
   {
     q: 'Why do Indian small businesses confuse turnover with real profit?',
@@ -139,8 +238,8 @@ const FAQS = [
     a: 'Unlike Khatabook or Vyapar which lock you behind mobile OTP walls and app downloads, VeriSeal is 100% web-first and runs all financial formulas client-side inside your browser. Your sensitive daily sales numbers never touch our servers.',
   },
   {
-    q: 'How does Return to Origin (RTO) secretly destroy e-commerce profit?',
-    a: 'When an Indian customer rejects a Cash on Delivery (COD) order, you earn ₹0 revenue, but you still pay forward shipping freight (~₹65), reverse return courier (~₹60), and write off destroyed packaging (~₹35). This ₹160 dead loss must be absorbed by your successfully delivered orders, creating an invisible ₹30–₹40 loss on every parcel shipped.',
+    q: 'How do the WhatsApp tools work?',
+    a: 'Both the WhatsApp Quote Generator and Udhaar Reminder tool run directly in your browser. When you click "Send via WhatsApp", they automatically format your text and open official WhatsApp Web or the WhatsApp mobile app using secure WhatsApp Deep Links (`https://wa.me/...`). Zero third-party API tokens or access permissions required.',
   },
 ];
 
@@ -211,7 +310,7 @@ export default function BusinessOsHubPage() {
           </span>
           <span className="flex items-center gap-1.5">
             <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-            Real Indian Marketplace Slabs
+            17 Free Web Tools
           </span>
         </div>
       </div>
@@ -235,22 +334,26 @@ export default function BusinessOsHubPage() {
         <BusinessHealthScoreCard />
       </section>
 
-      {/* 8 Core Profit Intelligence Tools Grid */}
-      <section aria-label="Profit Intelligence Tools" className="space-y-6">
+      {/* Section 1: Operational SMB Utilities & WhatsApp Tools */}
+      <section aria-label="Operational Utilities" className="space-y-6">
         <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
           <div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-black text-indigo-700 uppercase tracking-wider mb-1">
+              <Smartphone className="w-3.5 h-3.5" />
+              <span>Phase 2 Operational OS</span>
+            </div>
             <h2 className="text-xl sm:text-2xl font-black text-slate-900">
-              8 Profit Intelligence Engines
+              Operational Utilities &amp; WhatsApp Tools
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Select any calculator to model today&apos;s cash flow, marketplace pricing, or survival runway.
+              Daily habit loops: generate estimates, send polite payment reminders, track DM orders, and forecast cash flow.
             </p>
           </div>
-          <span className="text-xs font-bold text-slate-500">8 Web Tools</span>
+          <span className="text-xs font-bold text-slate-500 hidden sm:inline">9 Daily Utilities</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {OS_TOOLS.map((tool) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {OPERATIONAL_TOOLS.map((tool) => {
             const Icon = tool.icon;
             return (
               <Link
@@ -261,6 +364,78 @@ export default function BusinessOsHubPage() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="p-3 bg-indigo-50 rounded-2xl text-indigo-700 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span
+                      className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border ${tool.badgeColor}`}
+                    >
+                      {tool.badge}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                      {tool.title}
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-1.5 line-clamp-3 leading-relaxed">
+                      {tool.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-4 border-t border-slate-100 space-y-3">
+                  <div className="flex flex-wrap gap-1.5">
+                    {tool.metrics.map((m) => (
+                      <span
+                        key={m}
+                        className="text-[10px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md"
+                      >
+                        {m}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs font-bold text-indigo-600 pt-1 group-hover:translate-x-0.5 transition-transform">
+                    <span>Open Tool</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Section 2: 8 Profit Intelligence Engines */}
+      <section aria-label="Profit Intelligence Tools" className="space-y-6">
+        <div className="flex items-center justify-between border-b border-slate-200/80 pb-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-black text-emerald-700 uppercase tracking-wider mb-1">
+              <Coins className="w-3.5 h-3.5" />
+              <span>Phase 1 Core Intelligence</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              Profit Intelligence &amp; Margin Sizing
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Reverse-engineer your pricing, stop profit leaks, protect margins against discounts, and size delivery RTO losses.
+            </p>
+          </div>
+          <span className="text-xs font-bold text-slate-500 hidden sm:inline">8 Sizing Engines</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {PROFIT_INTELLIGENCE_TOOLS.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <Link
+                key={tool.href}
+                href={tool.href}
+                className="group bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="p-3 bg-emerald-50 rounded-2xl text-emerald-700 group-hover:bg-emerald-600 group-hover:text-white transition-all">
                       <Icon className="w-5 h-5" />
                     </div>
                     <span
