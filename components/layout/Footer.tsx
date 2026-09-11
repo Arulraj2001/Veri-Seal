@@ -108,6 +108,23 @@ export function Footer() {
               </li>
               <li>
                 <Link
+                  href="/business-os"
+                  className="text-indigo-800 font-bold hover:text-indigo-700 transition-colors flex items-center justify-between"
+                >
+                  <span>Business Profit OS 💼</span>
+                  <span className="text-[10px] text-indigo-700 font-extrabold bg-indigo-100 px-1.5 py-0.5 rounded">HOT</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/business-os/daily-profit-calculator"
+                  className="text-text-main/75 hover:text-indigo-700 transition-colors"
+                >
+                  Daily Profit &amp; Rupee Breakdown
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/home-cost/solar-calculator"
                   className="text-text-main/75 hover:text-emerald-700 transition-colors"
                 >

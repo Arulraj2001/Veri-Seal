@@ -20,6 +20,7 @@ import {
   ShieldCheck,
   Sparkles,
   Zap,
+  Briefcase,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -111,6 +112,7 @@ export function Header() {
     { label: t.nav.home, href: '/#hero' },
     { label: 'All Free Tools (36)', href: '/tools' },
     { label: 'Home Cost & Savings ⚡', href: '/home-cost' },
+    { label: 'Business Profit OS 💼', href: '/business-os' },
     { label: t.nav.documents, href: '/#supported-docs' },
     { label: t.nav.howItWorks, href: '/#how-it-works' },
     { label: t.nav.security, href: '/#trust-section' },
@@ -478,30 +480,34 @@ export function Header() {
                     <div className="flex items-center gap-2">
                       <span className="font-extrabold text-emerald-700 flex items-center gap-1">
                         <Zap className="w-3.5 h-3.5" />
-                        <span>Home Cost Platform:</span>
+                        <span>Home Cost:</span>
                       </span>
                       <Link
                         href="/home-cost"
                         onClick={() => setToolsMenuOpen(false)}
                         className="text-slate-600 hover:text-emerald-700 font-semibold underline"
                       >
-                        Digital Twin Hub
+                        Digital Twin
+                      </Link>
+                      <span className="text-slate-300">•</span>
+                      <span className="font-extrabold text-indigo-700 flex items-center gap-1">
+                        <Briefcase className="w-3.5 h-3.5" />
+                        <span>Business OS:</span>
+                      </span>
+                      <Link
+                        href="/business-os"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="text-slate-600 hover:text-indigo-700 font-semibold underline"
+                      >
+                        Profit &amp; Cash Flow
                       </Link>
                       <span className="text-slate-300">•</span>
                       <Link
-                        href="/home-cost/solar-calculator"
+                        href="/business-os/product-pricing-calculator"
                         onClick={() => setToolsMenuOpen(false)}
-                        className="text-slate-600 hover:text-emerald-700 font-semibold underline"
+                        className="text-slate-600 hover:text-indigo-700 font-semibold underline"
                       >
-                        PM Surya Ghar Solar
-                      </Link>
-                      <span className="text-slate-300">•</span>
-                      <Link
-                        href="/home-cost/ac-cost-calculator"
-                        onClick={() => setToolsMenuOpen(false)}
-                        className="text-slate-600 hover:text-emerald-700 font-semibold underline"
-                      >
-                        Inverter AC ROI
+                        Pricing Sizer
                       </Link>
                     </div>
                     <Link
@@ -525,6 +531,17 @@ export function Header() {
             <span>Home Cost</span>
             <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-700 rounded-full border border-emerald-500/30">
               NEW
+            </span>
+          </Link>
+
+          {/* Business Profit OS Direct Link */}
+          <Link
+            href="/business-os"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full text-text-main hover:text-indigo-700 hover:bg-indigo-50/80 transition-all cursor-pointer select-none"
+          >
+            <span>Business OS</span>
+            <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-indigo-500/15 text-indigo-700 rounded-full border border-indigo-500/30">
+              HOT
             </span>
           </Link>
 
