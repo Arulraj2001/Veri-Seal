@@ -481,6 +481,58 @@ export const TOOLS_CATALOG: ToolItem[] = [
     featuredInNav: true,
     priorityOrder: 32,
   },
+  {
+    id: 'batch-photo-resizer',
+    slug: '/tools/batch-photo-resizer',
+    name: 'Bulk Batch Photo Resizer & ZIP Downloader',
+    category: 'cyber_cafe',
+    categoryLabel: 'Cyber Cafe & Studio',
+    shortDesc:
+      'Resize, crop, and compress up to 50 applicant photos & signatures in 1 click with instant structured ZIP download. Perfect for cyber cafes and CSC centres.',
+    badge: 'NEW • BATCH 50 FILES',
+    examTags: ['Cyber Cafe', 'CSC Centre', 'SSC Batch', 'UPSC', 'IBPS', 'ZIP Stream'],
+    featuredInNav: true,
+    priorityOrder: 33,
+  },
+  {
+    id: 'pvc-id-card-maker',
+    slug: '/tools/pvc-id-card-maker',
+    name: 'PVC Smart ID Card Tray Print Studio',
+    category: 'cyber_cafe',
+    categoryLabel: 'Cyber Cafe & Studio',
+    shortDesc:
+      'Extract Front & Back Aadhaar, PAN, Voter, and College ID cards into exact CR-80 plastic card dimensions (85.6mm × 53.98mm) at 300 DPI for Epson L805 trays.',
+    badge: 'NEW • CR-80 EPSON L805',
+    examTags: ['Epson L805', 'PVC Card', 'Aadhaar Smart Card', 'PAN Card', '300 DPI', 'A4 Lamination'],
+    featuredInNav: true,
+    priorityOrder: 34,
+  },
+  {
+    id: 'self-attest-pdf',
+    slug: '/tools/self-attest-pdf',
+    name: 'Digital Self-Attestation & Date Stamper',
+    category: 'marksheet_scanner',
+    categoryLabel: 'Marksheet & Scanners',
+    shortDesc:
+      'Overlay official handwritten signature, candidate name, and attestation date directly onto certificate & marksheet PDFs without flattening vector text.',
+    badge: 'NEW • VECTOR PRESERVE',
+    examTags: ['Marksheet', 'Caste Certificate', 'UPSC OTR', 'SSC DV', 'Self Attested', '<200KB'],
+    featuredInNav: true,
+    priorityOrder: 35,
+  },
+  {
+    id: 'exam-specifications-radar',
+    slug: '/tools/specifications',
+    name: 'Exam Photo & Signature Specifications Radar',
+    category: 'photo_signature',
+    categoryLabel: 'Exam Photo & Signature',
+    shortDesc:
+      'Interactive radar with official dimensions, file size budgets (KB), background color requirements, and signature rules across 40+ Indian recruitment exams.',
+    badge: '2026 OFFICIAL RULES',
+    examTags: ['UPSC', 'SSC', 'IBPS', 'NEET', 'JEE', 'RRB', 'TNPSC', 'State PSC', 'Guidelines'],
+    featuredInNav: true,
+    priorityOrder: 36,
+  },
 ];
 
 /** Helper to get all categories */

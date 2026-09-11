@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Free Indian Exam & Document Tools Directory | VeriSeal',
     description:
-      'Explore 32+ free tools for government exams, marksheet merging, photo resizing, and e-Aadhaar decryption. Fast, free, and completely client-safe.',
+      'Explore 36+ free tools for government exams, marksheet merging, photo resizing, and e-Aadhaar decryption. Fast, free, and completely client-safe.',
     url: 'https://veriseal.in/tools',
     siteName: 'VeriSeal',
     type: 'website',

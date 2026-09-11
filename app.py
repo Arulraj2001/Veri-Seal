@@ -28,6 +28,9 @@ from signature_extractor import process_signature
 from thumb_impression_engine import process_thumb_impression
 from card_merger import merge_smart_card_sides
 from photo_signature_joiner import create_composite_slip
+from batch_processor import process_image_batch
+from pvc_card_engine import generate_pvc_card_tray
+from self_attestation_engine import apply_self_attestation
 from models import (
     BatchVerificationResponse,
     CompressionResponse,
@@ -1033,6 +1036,125 @@ async def join_photo_signature_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Composite slip generation failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/batch-process-photos",
+    summary="Bulk Batch Image Resizer & ZIP Streamer",
+    description="Processes up to 50 photos or signatures concurrently in RAM and streams a structured ZIP.",
+)
+@limiter.limit("20/minute")
+async def batch_process_photos_endpoint(
+    request: Request,
+    files: List[UploadFile] = File(..., description="List of images to process (up to 50)"),
+    preset: str = Form(default="ssc_photo"),
+    custom_width: int = Form(default=350),
+    custom_height: int = Form(default=450),
+    custom_min_kb: int = Form(default=20),
+    custom_max_kb: int = Form(default=50),
+):
+    if not files:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No files uploaded.")
+    if len(files) > 50:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Maximum 50 files allowed per batch.")
+
+    file_tuples = []
+    for f in files:
+        b = await f.read()
+        file_tuples.append((f.filename or "photo.jpg", b))
+
+    try:
+        result = process_image_batch(
+            files=file_tuples,
+            preset=preset,
+            custom_width=custom_width,
+            custom_height=custom_height,
+            custom_min_kb=custom_min_kb,
+            custom_max_kb=custom_max_kb,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Batch processing failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Batch processing failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/generate-pvc-card-sheet",
+    summary="PVC Smart Card Tray Print Studio",
+    description="Aligns Front and Back of ID cards onto exact Epson L805 / Canon inkjet PVC dual-tray templates at 300 DPI.",
+)
+@limiter.limit("25/minute")
+async def generate_pvc_card_endpoint(
+    request: Request,
+    front_file: UploadFile = File(..., description="Front side of ID card"),
+    back_file: UploadFile = File(..., description="Back side of ID card"),
+    tray_format: str = Form(default="epson_tray"),
+    include_cutting_guides: bool = Form(default=True),
+    card_title: Optional[str] = Form(default=None),
+):
+    front_b = await front_file.read()
+    back_b = await back_file.read()
+
+    try:
+        result = generate_pvc_card_tray(
+            front_bytes=front_b,
+            back_bytes=back_b,
+            tray_format=tray_format,
+            include_cutting_guides=include_cutting_guides,
+            card_title=card_title,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"PVC card generation failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"PVC card generation failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/apply-self-attestation",
+    summary="Digital Self-Attestation & Date Stamper",
+    description="Injects candidate signature and 'Self Attested' stamp onto certificate PDF without raster quality loss.",
+)
+@limiter.limit("25/minute")
+async def apply_self_attestation_endpoint(
+    request: Request,
+    document_file: UploadFile = File(..., description="Certificate PDF or image"),
+    signature_file: UploadFile = File(..., description="Signature image"),
+    candidate_name: str = Form(...),
+    attest_date: str = Form(...),
+    attest_heading: str = Form(default="Self Attested"),
+    ink_color: str = Form(default="blue"),
+    position: str = Form(default="bottom_right"),
+    target_kb: int = Form(default=300),
+    page_number: int = Form(default=0),
+):
+    doc_b = await document_file.read()
+    sig_b = await signature_file.read()
+
+    try:
+        result = apply_self_attestation(
+            document_bytes=doc_b,
+            signature_bytes=sig_b,
+            candidate_name=candidate_name,
+            attest_date=attest_date,
+            attest_heading=attest_heading,
+            ink_color=ink_color,
+            position=position,
+            target_kb=target_kb,
+            page_number=page_number,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Self-attestation failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Self-attestation failed: {str(exc)}",
         )
 
 

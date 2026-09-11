@@ -1337,4 +1337,217 @@ export async function joinPhotoSignature(
   });
 }
 
+// --------------------------------------------------------------------------
+// 5. Bulk Batch Image Resizer & ZIP Streamer
+// --------------------------------------------------------------------------
+
+export interface BatchProcessItemSummary {
+  original_name: string;
+  output_name: string | null;
+  original_size_kb: number;
+  output_size_kb: number;
+  width: number;
+  height: number;
+  is_compliant: boolean;
+  status: string;
+}
+
+export interface BatchProcessResponse {
+  status: string;
+  preset: string;
+  total_files: number;
+  success_count: number;
+  error_count: number;
+  total_zip_size_kb: number;
+  zip_base64: string;
+  files_summary: BatchProcessItemSummary[];
+}
+
+export interface BatchProcessOptions {
+  preset?: string;
+  customWidth?: number;
+  customHeight?: number;
+  customMinKb?: number;
+  customMaxKb?: number;
+  onProgress?: (percent: number) => void;
+}
+
+export async function batchProcessPhotos(
+  files: File[],
+  options?: BatchProcessOptions
+): Promise<BatchProcessResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    files.forEach((f) => formData.append('files', f));
+    formData.append('preset', options?.preset || 'ssc_photo');
+    if (options?.customWidth) formData.append('custom_width', String(options.customWidth));
+    if (options?.customHeight) formData.append('custom_height', String(options.customHeight));
+    if (options?.customMinKb) formData.append('custom_min_kb', String(options.customMinKb));
+    if (options?.customMaxKb) formData.append('custom_max_kb', String(options.customMaxKb));
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as BatchProcessResponse);
+        } else {
+          reject(new Error(json.detail || json.message || 'Batch processing failed.'));
+        }
+      } catch {
+        reject(new Error(`Failed to parse batch response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error during batch upload.'));
+    xhr.open('POST', `${getApiUrl()}/batch-process-photos`, true);
+    xhr.send(formData);
+  });
+}
+
+// --------------------------------------------------------------------------
+// 6. PVC Smart Card Tray Print Studio
+// --------------------------------------------------------------------------
+
+export interface PvcCardResponse {
+  status: string;
+  tray_format: string;
+  width_px: number;
+  height_px: number;
+  dpi: number;
+  output_size_kb: number;
+  pdf_size_kb: number;
+  image_base64: string;
+  pdf_base64?: string | null;
+  preview_base64: string;
+}
+
+export interface PvcCardOptions {
+  trayFormat?: 'epson_tray' | 'a4_sheet';
+  includeCuttingGuides?: boolean;
+  cardTitle?: string;
+  onProgress?: (percent: number) => void;
+}
+
+export async function generatePvcCardSheet(
+  frontFile: File,
+  backFile: File,
+  options?: PvcCardOptions
+): Promise<PvcCardResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('front_file', frontFile);
+    formData.append('back_file', backFile);
+    formData.append('tray_format', options?.trayFormat || 'epson_tray');
+    formData.append('include_cutting_guides', String(options?.includeCuttingGuides ?? true));
+    if (options?.cardTitle) formData.append('card_title', options.cardTitle);
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as PvcCardResponse);
+        } else {
+          reject(new Error(json.detail || json.message || 'PVC card generation failed.'));
+        }
+      } catch {
+        reject(new Error(`Failed to parse PVC response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error during PVC card upload.'));
+    xhr.open('POST', `${getApiUrl()}/generate-pvc-card-sheet`, true);
+    xhr.send(formData);
+  });
+}
+
+// --------------------------------------------------------------------------
+// 7. Digital Self-Attestation & Date Stamper
+// --------------------------------------------------------------------------
+
+export interface SelfAttestationResponse {
+  status: string;
+  position: string;
+  total_pages: number;
+  output_size_kb: number;
+  target_kb: number;
+  is_under_limit: boolean;
+  pdf_base64: string;
+  preview_base64: string;
+}
+
+export interface SelfAttestationOptions {
+  candidateName: string;
+  attestDate: string;
+  attestHeading?: string;
+  inkColor?: 'blue' | 'black';
+  position?: 'bottom_right' | 'bottom_left' | 'bottom_center';
+  targetKb?: number;
+  pageNumber?: number;
+  onProgress?: (percent: number) => void;
+}
+
+export async function applySelfAttestation(
+  documentFile: File,
+  signatureFile: File,
+  options: SelfAttestationOptions
+): Promise<SelfAttestationResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('document_file', documentFile);
+    formData.append('signature_file', signatureFile);
+    formData.append('candidate_name', options.candidateName);
+    formData.append('attest_date', options.attestDate);
+    formData.append('attest_heading', options.attestHeading || 'Self Attested');
+    formData.append('ink_color', options.inkColor || 'blue');
+    formData.append('position', options.position || 'bottom_right');
+    formData.append('target_kb', String(options.targetKb ?? 300));
+    formData.append('page_number', String(options.pageNumber ?? 0));
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as SelfAttestationResponse);
+        } else {
+          reject(new Error(json.detail || json.message || 'Self attestation failed.'));
+        }
+      } catch {
+        reject(new Error(`Failed to parse self attestation response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error during self attestation upload.'));
+    xhr.open('POST', `${getApiUrl()}/apply-self-attestation`, true);
+    xhr.send(formData);
+  });
+}
+
+
 
