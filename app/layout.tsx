@@ -51,13 +51,14 @@ export const metadata: Metadata = {
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon.png', type: 'image/png' },
-      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+      { url: '/favicon-32x32.png?v=3', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png?v=3', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.ico?v=3' },
+      { url: '/icon-192.png?v=3', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png?v=3', sizes: '512x512', type: 'image/png' },
     ],
-    apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
-    shortcut: ['/favicon.ico'],
+    apple: [{ url: '/apple-touch-icon.png?v=3', sizes: '180x180' }],
+    shortcut: ['/favicon.ico?v=3'],
   },
   alternates: {
     canonical: SITE_URL,
@@ -192,6 +193,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${notoSansTamil.variable}`}>
       <head>
+        {/* Brand Favicon & Cache-Busting Icons */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3" />
+        <link rel="shortcut icon" href="/favicon.ico?v=3" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
+
         {/* Google Site Verification & Search Engine Auto-Crawling */}
         <meta name="google-site-verification" content="03r5QiL7AV8mYg3EA27FgE4YCVKgIkB03M4y-usjb5U" />
         <meta name="revisit-after" content="1 day" />
