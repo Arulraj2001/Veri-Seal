@@ -481,4 +481,221 @@ export async function inspectPdf(file: File): Promise<PdfPageInfo[]> {
   return [];
 }
 
+export interface ImageResizeOptions {
+  targetMinKb?: number;
+  targetMaxKb?: number;
+  widthCm?: number;
+  heightCm?: number;
+  widthPx?: number;
+  heightPx?: number;
+  dpi?: number;
+  maintainAspectRatio?: boolean;
+  addNameDate?: boolean;
+  candidateName?: string;
+  dateOfPhoto?: string;
+  xeroxFilter?: boolean;
+  onProgress?: (percent: number) => void;
+}
+
+export interface ImageResizeResponse {
+  input_size_kb: number;
+  output_size_kb: number;
+  target_min_kb: number;
+  target_max_kb: number;
+  width_px: number;
+  height_px: number;
+  dpi: number;
+  is_compliant: boolean;
+  quality_used: number;
+  filename: string;
+  data_base64: string;
+}
+
+export async function resizeImage(file: File, options?: ImageResizeOptions): Promise<ImageResizeResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('target_min_kb', String(options?.targetMinKb ?? 10.0));
+    formData.append('target_max_kb', String(options?.targetMaxKb ?? 20.0));
+    if (options?.widthCm) formData.append('width_cm', String(options.widthCm));
+    if (options?.heightCm) formData.append('height_cm', String(options.heightCm));
+    if (options?.widthPx) formData.append('width_px', String(options.widthPx));
+    if (options?.heightPx) formData.append('height_px', String(options.heightPx));
+    formData.append('dpi', String(options?.dpi ?? 300));
+    formData.append('maintain_aspect_ratio', String(options?.maintainAspectRatio ?? true));
+    formData.append('add_name_date', String(Boolean(options?.addNameDate)));
+    if (options?.candidateName) formData.append('candidate_name', options.candidateName);
+    if (options?.dateOfPhoto) formData.append('date_of_photo', options.dateOfPhoto);
+    formData.append('xerox_filter', String(Boolean(options?.xeroxFilter)));
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as ImageResizeResponse);
+        } else {
+          const errMsg = json.detail || json.message || 'Image resizing failed';
+          reject(new Error(errMsg));
+        }
+      } catch {
+        reject(new Error(`Failed to parse image resize response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during image upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/resize-image`, true);
+    xhr.send(formData);
+  });
+}
+
+export interface ImageToPdfOptions {
+  targetKb?: number;
+  preset?: 'color' | 'greyscale' | 'xerox';
+  pageFormat?: 'A4' | 'fit_image';
+  onProgress?: (percent: number) => void;
+}
+
+export interface ImageToPdfResponse {
+  pdf_base64: string;
+  preview_base64: string;
+  input_size_kb: number;
+  output_size_kb: number;
+  target_kb: number;
+  is_under_target: boolean;
+  total_pages: number;
+  page_format: string;
+  filename: string;
+}
+
+export async function convertImagesToPdf(
+  files: File[],
+  options?: ImageToPdfOptions
+): Promise<ImageToPdfResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    files.forEach((f) => formData.append('files', f));
+    formData.append('target_kb', String(options?.targetKb ?? 200));
+    formData.append('preset', options?.preset || 'color');
+    formData.append('page_format', options?.pageFormat || 'A4');
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as ImageToPdfResponse);
+        } else {
+          const errMsg = json.detail || json.message || 'Image to PDF conversion failed';
+          reject(new Error(errMsg));
+        }
+      } catch {
+        reject(new Error(`Failed to parse Image to PDF response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/image-to-pdf`, true);
+    xhr.send(formData);
+  });
+}
+
+export interface PdfPageImage {
+  page_number: number;
+  width_px: number;
+  height_px: number;
+  size_kb: number;
+  mime_type: string;
+  data_base64: string;
+}
+
+export interface PdfToImageResponse {
+  status: string;
+  total_pdf_pages: number;
+  converted_pages_count: number;
+  input_size_kb: number;
+  dpi: number;
+  format: string;
+  pages: PdfPageImage[];
+}
+
+export interface PdfToImageOptions {
+  dpi?: number;
+  imageFormat?: 'jpeg' | 'png';
+  xeroxFilter?: boolean;
+  targetMaxKb?: number;
+  onProgress?: (percent: number) => void;
+}
+
+export async function convertPdfToImages(
+  file: File,
+  options?: PdfToImageOptions
+): Promise<PdfToImageResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('dpi', String(options?.dpi ?? 300));
+    formData.append('image_format', options?.imageFormat || 'jpeg');
+    formData.append('xerox_filter', String(Boolean(options?.xeroxFilter)));
+    if (options?.targetMaxKb) {
+      formData.append('target_max_kb', String(options.targetMaxKb));
+    }
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as PdfToImageResponse);
+        } else {
+          const errMsg = json.detail || json.message || 'PDF to Image conversion failed';
+          reject(new Error(errMsg));
+        }
+      } catch {
+        reject(new Error(`Failed to parse PDF to Image response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => {
+      reject(new Error('Network error during upload. Please check your connection.'));
+    };
+
+    xhr.open('POST', `${getApiUrl()}/pdf-to-image`, true);
+    xhr.send(formData);
+  });
+}
+
+
+
+
 

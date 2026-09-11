@@ -4,6 +4,7 @@ Designed for Hugging Face Spaces (Docker) and production API gateways.
 Features IP rate limiting (slowapi), CORS, 25MB limits, in-memory validation, and standardized error schemas.
 """
 
+import base64
 import logging
 from typing import List, Optional
 from fastapi import FastAPI, File, Form, Header, HTTPException, Request, UploadFile, status
@@ -15,6 +16,9 @@ from slowapi.errors import RateLimitExceeded
 
 from cca_certs import cca_manager
 from compressor import batch_compress_pdfs, compress_pdf_to_target, inspect_pdf_pages
+from image_resizer import resize_image_bidirectional
+from image_to_pdf import convert_images_to_pdf_target
+from pdf_to_image import convert_pdf_to_images
 from models import (
     BatchVerificationResponse,
     CompressionResponse,
@@ -430,6 +434,176 @@ async def inspect_pdf_endpoint(
     pages = inspect_pdf_pages(content)
     return JSONResponse(content={"pages": pages, "total_pages": len(pages)})
 
+
+@app.post(
+    "/resize-image",
+    summary="Bi-Directional Auto-Enhance Photo & Signature Resizer",
+    description="Resizes photos and signatures ensuring both under-size padding and over-size capping for government portals.",
+)
+@limiter.limit("30/minute")
+async def resize_image_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="Image file (JPG/PNG) to resize"),
+    target_min_kb: float = Form(default=10.0),
+    target_max_kb: float = Form(default=20.0),
+    width_cm: Optional[float] = Form(default=None),
+    height_cm: Optional[float] = Form(default=None),
+    width_px: Optional[int] = Form(default=None),
+    height_px: Optional[int] = Form(default=None),
+    dpi: int = Form(default=300),
+    maintain_aspect_ratio: bool = Form(default=True),
+    add_name_date: bool = Form(default=False),
+    candidate_name: str = Form(default=""),
+    date_of_photo: str = Form(default=""),
+    xerox_filter: bool = Form(default=False),
+):
+    if not file.filename:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No file uploaded.")
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="File exceeds 25MB.")
+
+    try:
+        result = resize_image_bidirectional(
+            image_bytes=content,
+            target_min_kb=target_min_kb,
+            target_max_kb=target_max_kb,
+            target_width_px=width_px,
+            target_height_px=height_px,
+            target_width_cm=width_cm,
+            target_height_cm=height_cm,
+            dpi=dpi,
+            maintain_aspect_ratio=maintain_aspect_ratio,
+            add_name_date=add_name_date,
+            candidate_name=candidate_name,
+            date_of_photo=date_of_photo,
+            xerox_filter=xerox_filter,
+        )
+        b64_output = base64.b64encode(result["output_bytes"]).decode("utf-8")
+        return JSONResponse(
+            content={
+                "input_size_kb": result["input_size_kb"],
+                "output_size_kb": result["output_size_kb"],
+                "target_min_kb": result["target_min_kb"],
+                "target_max_kb": result["target_max_kb"],
+                "width_px": result["width_px"],
+                "height_px": result["height_px"],
+                "dpi": result["dpi"],
+                "is_compliant": result["is_compliant"],
+                "quality_used": result["quality_used"],
+                "filename": file.filename,
+                "data_base64": f"data:image/jpeg;base64,{b64_output}",
+            }
+        )
+    except Exception as exc:
+        logger.error(f"Image resize failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Image processing failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/image-to-pdf",
+    summary="1-Click Marksheet & Certificate Image to PDF Converter",
+    description="Directly converts smartphone marksheet photos into a compliant PDF guaranteed strictly under target KB (e.g. 200KB or 300KB).",
+)
+@limiter.limit("20/minute")
+async def image_to_pdf_endpoint(
+    request: Request,
+    files: List[UploadFile] = File(..., description="1 or more images to convert into a single PDF"),
+    target_kb: int = Form(default=200),
+    preset: str = Form(default="color"),
+    page_format: str = Form(default="A4"),
+):
+    if not files or len(files) == 0:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No images uploaded.")
+
+    if len(files) > 10:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Maximum 10 images at once.")
+
+    image_tuples = []
+    for f in files:
+        if f.filename:
+            content = await f.read()
+            if len(content) <= MAX_FILE_SIZE_BYTES:
+                image_tuples.append((f.filename, content))
+
+    if not image_tuples:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No valid images found.")
+
+    try:
+        result = convert_images_to_pdf_target(
+            image_files=image_tuples,
+            target_kb=target_kb,
+            preset=preset,
+            page_format=page_format,
+        )
+        return JSONResponse(
+            content={
+                "pdf_base64": result["pdf_base64"],
+                "preview_base64": result["preview_base64"],
+                "input_size_kb": result["input_size_kb"],
+                "output_size_kb": result["output_size_kb"],
+                "target_kb": result["target_kb"],
+                "is_under_target": result["is_under_target"],
+                "total_pages": result["total_pages"],
+                "page_format": result["page_format"],
+                "filename": "document_converted.pdf",
+            }
+        )
+    except Exception as exc:
+        logger.error(f"Image to PDF conversion failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Image to PDF conversion failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/pdf-to-image",
+    summary="High-Resolution PDF to Image Extractor (300 DPI)",
+    description="Converts PDF pages into crisp 300 DPI JPEG or PNG images for exam portal uploads (e-Aadhaar, admit cards, marksheets).",
+)
+@limiter.limit("20/minute")
+async def pdf_to_image_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="PDF document to convert to images"),
+    dpi: int = Form(default=300),
+    image_format: str = Form(default="jpeg"),
+    xerox_filter: bool = Form(default=False),
+    target_max_kb: Optional[float] = Form(default=None),
+):
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only PDF files are supported for PDF to Image conversion.",
+        )
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail="Uploaded PDF exceeds the 25MB limit.",
+        )
+
+    try:
+        result = convert_pdf_to_images(
+            pdf_bytes=content,
+            dpi=dpi,
+            image_format=image_format,
+            max_pages=10,
+            xerox_filter=xerox_filter,
+            target_max_kb=target_max_kb,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"PDF to Image conversion failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"PDF to Image conversion failed: {str(exc)}",
+        )
 
 
 @app.get("/supported-docs", response_model=List[SupportedDocCategory], summary="Supported Document Categories")

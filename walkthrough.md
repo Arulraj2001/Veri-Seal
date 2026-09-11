@@ -1,8 +1,29 @@
-# VeriSeal Verification Enhancements & Brand Growth Walkthrough
+# VeriSeal Verification Enhancements, Growth Ads & Brand Favicon Cache-Bust
 
 ## Summary of Completed Tasks
 
-### 1. Free Limit Architecture & Auth Lifecycle
+### 1. Browser Tab Favicon Cache-Bust & Multi-Resolution PNGs
+- **Problem**: In Microsoft Edge / Chrome, the browser tab still displayed the old cached Vercel black triangle `▲` icon because Chromium browsers cache `/favicon.ico` in a persistent local SQLite database and do not re-fetch it unless the icon URL changes.
+- **Solution**:
+  - Generated dedicated high-definition PNG icons directly from your brand logo (`public/logo.png`):
+    - `public/favicon-32x32.png` (32x32 crisp PNG — preferred format for desktop browser tabs)
+    - `public/favicon-16x16.png` (16x16 crisp PNG)
+    - `public/apple-touch-icon.png` (180x180 PNG)
+  - Re-packaged `public/favicon.ico` with multi-frame resolution (16x16, 32x32, 48x48, 64x64).
+  - In [layout.tsx](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/layout.tsx):
+    - Added explicit cache-busting query parameter `?v=3` in `<head>`:
+      ```html
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=3" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=3" />
+      <link rel="shortcut icon" href="/favicon.ico?v=3" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
+      ```
+    - Synced `metadata.icons` with the versioned paths.
+  - **Result**: Forces Microsoft Edge, Chrome, Safari, and Firefox to bypass their local SQLite favicon cache and fetch your orange shield brand logo immediately.
+
+---
+
+### 2. Free Limit Lifecycle & Auth Flow
 - **Files**:
   - [GuestLimitModal.tsx](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/home/GuestLimitModal.tsx) `[NEW]`
   - [UploadZone.tsx](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/home/UploadZone.tsx) `[MODIFIED]`
@@ -19,17 +40,17 @@
 
 ---
 
-### 2. Remove Sticky Quick-Nav Drawer for Mobile Devices Only
+### 3. Remove Sticky Quick-Nav Drawer for Mobile Devices Only
 - **File**:
   - [DraggableStickyNav.tsx](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/navigation/DraggableStickyNav.tsx) `[MODIFIED]`
 - **Implementation**:
   - Updated the `<aside>` root container to use `hidden md:flex`.
   - **Mobile (< 768px)**: The sticky drawer is completely removed from the viewport, leaving mobile screens clean, full-width, and free of accidental touch triggers.
-  - **Desktop / Tablet (>= 768px)**: The quick-nav index tab remains available and interactive on hover.
+  - **Desktop / Tablet (>= 768px)**: The quick-nav index tab remains available on hover.
 
 ---
 
-### 3. Developer API Offering Banner & Ostrune Agency Ad
+### 4. Developer API Offering Banner & Ostrune Agency Ad
 - **Files**:
   - [ApiOfferingBanner.tsx](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/home/ApiOfferingBanner.tsx) `[NEW]`
   - [OstruneAgencyBanner.tsx](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/home/OstruneAgencyBanner.tsx) `[NEW]`
@@ -48,13 +69,14 @@
 
 ---
 
-## Verification Results
+## Verification Summary
 
-| Requirement | Implementation | Status |
+| Item | Expected | Result |
 |---|---|---|
-| **Free Limit Flow** | Free use for guests & free users; guest limit triggers Sign In / Sign Up modal; signed-in users trigger prefilled UPI modal | **Verified & Deployed** |
-| **Mobile Sticky** | `hidden md:flex` applied on `DraggableStickyNav` | **Hidden on mobile (< 768px), active on desktop** |
-| **API Offering Ad** | `ApiOfferingBanner.tsx` mounted on Homepage with interactive code samples & contact CTA | **Verified & Deployed** |
-| **Ostrune Agency Ad** | `OstruneAgencyBanner.tsx` mounted on Homepage and Footer partner bar linking to `https://ostrune.netlify.app/` | **Verified & Deployed (5 active links)** |
-| **Type Check** | `npx tsc --noEmit` | **0 errors (Clean exit 0)** |
-| **Git Deployment** | Commit `c7856a6` pushed to `origin main` | **Live on GitHub & Vercel** |
+| `GET /favicon-32x32.png?v=3` | 200 OK, `image/png` | **200 OK** (1,950 bytes) |
+| `GET /favicon-16x16.png?v=3` | 200 OK, `image/png` | **200 OK** (748 bytes) |
+| `GET /favicon.ico?v=3` | 200 OK, `image/x-icon` | **200 OK** (11,945 bytes) |
+| `GET /apple-touch-icon.png?v=3` | 200 OK, `image/png` | **200 OK** (28,929 bytes) |
+| HTML `<head>` links | Explicit versioned `?v=3` tags | **Rendered** |
+| `npx tsc --noEmit` | 0 TypeScript errors | **Passed (Code 0)** |
+| Deployment | Synced to `origin main` | **Commit `454a6d2` Pushed** |

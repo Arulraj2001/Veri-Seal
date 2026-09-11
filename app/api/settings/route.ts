@@ -18,6 +18,17 @@ export async function GET() {
       pro_price: 199,
       business_price: 2499,
       upi_id: 'veriseal.pay@icici',
+      ads_enabled: true,
+      ads_provider: 'custom_sponsor',
+      ad_slot_sidebar: true,
+      ad_slot_post_download: true,
+      ad_slot_in_content: true,
+      ad_slot_mobile: true,
+      sponsor_title: 'Ostrune Agency & Exam Prep Hub',
+      sponsor_desc: 'Professional web development & free government recruitment study kits for Tamil Nadu and Central exams.',
+      sponsor_cta_text: 'Explore Free Resources',
+      sponsor_cta_url: 'https://veriseal.in/blog',
+      sponsor_badge: 'Verified Partner',
     });
   }
 }

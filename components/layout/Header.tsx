@@ -13,6 +13,11 @@ import {
   LayoutDashboard,
   LogOut,
   ShieldAlert,
+  ChevronDown,
+  FileText,
+  Camera,
+  Image,
+  ShieldCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -69,11 +74,23 @@ export function Header() {
   const { data: session, status } = useSession();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [toolsMenuOpen, setToolsMenuOpen] = React.useState(false);
+  const toolsRef = React.useRef<HTMLDivElement>(null);
   const { language, toggleLanguage, t } = useLanguage();
 
   const user = session?.user;
   const userRole = (user as { role?: string })?.role || 'user';
   const userPlan = (user as { plan?: string })?.plan || 'free';
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
+        setToolsMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   React.useEffect(() => {
     if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) return;
@@ -142,16 +159,228 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav Center (Perfect geometric center of the website) */}
-        <nav className="hidden md:flex items-center gap-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/85 px-4 py-1.5 rounded-full border border-surface-darker/70 backdrop-blur-md shadow-2xs z-10">
-          <Link
-            href="/tools/pdf-compressor"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold text-text-main hover:text-primary rounded-full hover:bg-white/60 transition-colors"
-          >
-            <span>PDF Compressor</span>
-            <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-600 rounded-full border border-emerald-500/30">
-              FREE
-            </span>
-          </Link>
+        <nav className="hidden md:flex items-center gap-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/85 px-4 py-1.5 rounded-full border border-surface-darker/70 backdrop-blur-md shadow-2xs z-30">
+          {/* Tools Mega-Menu Trigger */}
+          <div ref={toolsRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setToolsMenuOpen(!toolsMenuOpen)}
+              className={cn(
+                'flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full transition-all cursor-pointer select-none',
+                toolsMenuOpen
+                  ? 'bg-white text-primary shadow-2xs'
+                  : 'text-text-main hover:text-primary hover:bg-white/60'
+              )}
+            >
+              <span>Free Tools</span>
+              <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-600 rounded-full border border-emerald-500/30">
+                NEW
+              </span>
+              <ChevronDown
+                className={cn(
+                  'w-3.5 h-3.5 text-text-main/60 transition-transform duration-200',
+                  toolsMenuOpen && 'rotate-180 text-primary'
+                )}
+              />
+            </button>
+
+            {/* Mega-Menu Dropdown Panel */}
+            <AnimatePresence>
+              {toolsMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[780px] bg-white/95 backdrop-blur-xl border border-surface-darker rounded-3xl shadow-2xl p-6 z-50 text-left grid grid-cols-4 gap-6"
+                >
+                  {/* Column 1: PDF Compressors */}
+                  <div className="space-y-2.5">
+                    <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
+                      <FileText className="w-3.5 h-3.5 text-primary" />
+                      <span>PDF Compressors</span>
+                    </div>
+                    <div className="space-y-1 text-xs">
+                      <Link
+                        href="/tools/compress-pdf-to-200kb"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Compress to 200KB</div>
+                        <div className="text-[10px] text-text-main/60">TNPSC, UPSC, SSC</div>
+                      </Link>
+                      <Link
+                        href="/tools/compress-pdf-to-100kb"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Compress to 100KB</div>
+                        <div className="text-[10px] text-text-main/60">Strict Portal Rules</div>
+                      </Link>
+                      <Link
+                        href="/tools/compress-pdf-to-300kb"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Compress to 300KB</div>
+                        <div className="text-[10px] text-text-main/60">State PSCs &amp; Courts</div>
+                      </Link>
+                      <Link
+                        href="/tools/compress-pdf-to-500kb"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Compress to 500KB</div>
+                        <div className="text-[10px] text-text-main/60">Certificates &amp; Marksheets</div>
+                      </Link>
+                      <Link
+                        href="/tools/pdf-compressor"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-primary font-extrabold transition-colors text-[11px]"
+                      >
+                        View Master Tool →
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Column 2: Exam Photo & Sig Resizers */}
+                  <div className="space-y-2.5">
+                    <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
+                      <Camera className="w-3.5 h-3.5 text-primary" />
+                      <span>Exam Photo &amp; Sig</span>
+                    </div>
+                    <div className="space-y-1 text-xs">
+                      <Link
+                        href="/tools/ssc-photo-signature-resizer"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">SSC Photo &amp; Signature</div>
+                        <div className="text-[10px] text-text-main/60">20-50KB Photo, 10-20KB Sig</div>
+                      </Link>
+                      <Link
+                        href="/tools/upsc-photo-signature-resizer"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">UPSC Photo &amp; Sig</div>
+                        <div className="text-[10px] text-text-main/60">350x350px 10-day DOP rule</div>
+                      </Link>
+                      <Link
+                        href="/tools/neet-photo-signature-resizer"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">NEET Postcard (4"×6")</div>
+                        <div className="text-[10px] text-text-main/60">Postcard, Photo &amp; Signature</div>
+                      </Link>
+                      <Link
+                        href="/tools/ibps-photo-signature-resizer"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">IBPS / Bank Exams</div>
+                        <div className="text-[10px] text-text-main/60">Photo, Sig, Thumb &amp; Decl.</div>
+                      </Link>
+                      <Link
+                        href="/tools/tnpsc-photo-signature-resizer"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">TNPSC Resizer</div>
+                        <div className="text-[10px] text-text-main/60">Name &amp; DOP Banner</div>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Column 3: Image & PDF Utilities */}
+                  <div className="space-y-2.5">
+                    <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
+                      <Image className="w-3.5 h-3.5 text-primary" />
+                      <span>Image &amp; PDF Tools</span>
+                    </div>
+                    <div className="space-y-1 text-xs">
+                      <Link
+                        href="/tools/image-to-pdf-200kb"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Marksheet to PDF (&lt;200KB)</div>
+                        <div className="text-[10px] text-text-main/60">1-click A4 Marks/Certificates</div>
+                      </Link>
+                      <Link
+                        href="/tools/pdf-to-image"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">PDF to Image (300 DPI)</div>
+                        <div className="text-[10px] text-text-main/60">e-Aadhaar &amp; PDF Extractor</div>
+                      </Link>
+                      <Link
+                        href="/tools/compress-image-to-20kb"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Compress to 20KB</div>
+                        <div className="text-[10px] text-text-main/60">Strict 10-20KB Signature</div>
+                      </Link>
+                      <Link
+                        href="/tools/compress-image-to-50kb"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Compress to 50KB</div>
+                        <div className="text-[10px] text-text-main/60">20-50KB Passport Photo</div>
+                      </Link>
+                      <Link
+                        href="/tools/image-to-pdf-300kb"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-2 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold">Image to PDF (&lt;300KB)</div>
+                        <div className="text-[10px] text-text-main/60">State PSCs &amp; High Courts</div>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Column 4: Verification */}
+                  <div className="space-y-2.5 bg-surface/50 p-3.5 rounded-2xl border border-surface-darker/60">
+                    <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
+                      <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+                      <span>Verification</span>
+                    </div>
+                    <div className="space-y-1 text-xs">
+                      <Link
+                        href="/#supported-docs"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
+                      >
+                        <div className="font-bold">e-Aadhaar Verify</div>
+                        <div className="text-[10px] text-text-main/60">UIDAI Digital Signature</div>
+                      </Link>
+                      <Link
+                        href="/#supported-docs"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
+                      >
+                        <div className="font-bold">Community Certificate</div>
+                        <div className="text-[10px] text-text-main/60">e-District Tamil Nadu</div>
+                      </Link>
+                      <Link
+                        href="/#supported-docs"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
+                      >
+                        <div className="font-bold">PAN &amp; ITR-V</div>
+                        <div className="text-[10px] text-text-main/60">Income Tax Department</div>
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <a
             href="/#how-it-works"
             className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
