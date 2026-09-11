@@ -58,8 +58,8 @@ export default function ApplianceCostEngine() {
   return (
     <div className="space-y-8">
       {/* Quick Appliance Pills */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-xl space-y-4">
-        <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm space-y-4">
+        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider block">
           Select an Appliance Preset
         </label>
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
@@ -68,10 +68,10 @@ export default function ApplianceCostEngine() {
               key={a.id}
               type="button"
               onClick={() => handleSelectPreset(a.id)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap border transition-all ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap border transition-all cursor-pointer ${
                 selectedApplianceId === a.id
-                  ? 'bg-sky-500/20 border-sky-500 text-sky-300 shadow-sm'
-                  : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                  ? 'bg-sky-50 border-sky-400 text-sky-800 shadow-xs'
+                  : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
               }`}
             >
               {a.name}
@@ -81,9 +81,9 @@ export default function ApplianceCostEngine() {
       </div>
 
       {/* Input Adjusters */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-900/60 border border-slate-800 rounded-2xl p-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs">
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-2">
+          <label className="block text-xs font-bold text-slate-700 mb-2">
             Appliance Wattage (Watts)
           </label>
           <div className="relative">
@@ -93,15 +93,15 @@ export default function ApplianceCostEngine() {
               max={10000}
               value={wattage}
               onChange={(e) => setWattage(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white font-bold focus:outline-none focus:border-sky-500"
+              className="w-full bg-slate-50 hover:bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 font-bold focus:outline-none focus:border-sky-500 transition-colors"
             />
-            <span className="absolute right-4 top-3 text-xs text-slate-500">Watts</span>
+            <span className="absolute right-4 top-3 text-xs text-slate-400 font-medium">Watts</span>
           </div>
           <p className="text-[11px] text-slate-500 mt-1">Check the sticker on the back of the device.</p>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-2">
+          <label className="block text-xs font-bold text-slate-700 mb-2">
             Daily Usage (Hours/Day)
           </label>
           <div className="relative">
@@ -112,14 +112,14 @@ export default function ApplianceCostEngine() {
               max={24}
               value={hoursPerDay}
               onChange={(e) => setHoursPerDay(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white font-bold focus:outline-none focus:border-sky-500"
+              className="w-full bg-slate-50 hover:bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 font-bold focus:outline-none focus:border-sky-500 transition-colors"
             />
-            <span className="absolute right-4 top-3 text-xs text-slate-500">Hours</span>
+            <span className="absolute right-4 top-3 text-xs text-slate-400 font-medium">Hours</span>
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-2">
+          <label className="block text-xs font-bold text-slate-700 mb-2">
             Electricity Tariff (₹/Unit)
           </label>
           <div className="relative">
@@ -130,18 +130,18 @@ export default function ApplianceCostEngine() {
               max={25}
               value={tariff}
               onChange={(e) => setTariff(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white font-bold focus:outline-none focus:border-sky-500"
+              className="w-full bg-slate-50 hover:bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 font-bold focus:outline-none focus:border-sky-500 transition-colors"
             />
-            <span className="absolute right-4 top-3 text-xs text-slate-500">₹/kWh</span>
+            <span className="absolute right-4 top-3 text-xs text-slate-400 font-medium">₹/kWh</span>
           </div>
         </div>
       </div>
 
       {/* Primary Running Cost Outputs */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5">
-          <span className="text-xs text-slate-400 font-medium block">Daily Cost</span>
-          <div className="text-3xl font-black text-white mt-1">
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs">
+          <span className="text-xs text-slate-500 font-medium block">Daily Cost</span>
+          <div className="text-3xl font-black text-slate-900 mt-1">
             ₹{cost.dailyCost}
           </div>
           <span className="text-xs text-slate-500 mt-1 block">
@@ -149,19 +149,19 @@ export default function ApplianceCostEngine() {
           </span>
         </div>
 
-        <div className="bg-slate-900/70 border border-sky-500/30 rounded-2xl p-5">
-          <span className="text-xs text-sky-400 font-bold block">Monthly Running Cost</span>
-          <div className="text-3xl font-black text-sky-400 mt-1">
+        <div className="bg-white border border-sky-200/90 rounded-2xl p-5 shadow-xs">
+          <span className="text-xs text-sky-700 font-bold block">Monthly Running Cost</span>
+          <div className="text-3xl font-black text-sky-600 mt-1">
             ₹{cost.monthlyCost.toLocaleString('en-IN')}
           </div>
-          <span className="text-xs text-slate-400 mt-1 block">
+          <span className="text-xs text-slate-500 mt-1 block">
             {cost.monthlyKwh} kWh / month (30 days)
           </span>
         </div>
 
-        <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5">
-          <span className="text-xs text-slate-400 font-medium block">Annual Electricity Bill</span>
-          <div className="text-3xl font-black text-white mt-1">
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs">
+          <span className="text-xs text-slate-500 font-medium block">Annual Electricity Bill</span>
+          <div className="text-3xl font-black text-slate-900 mt-1">
             ₹{cost.annualCost.toLocaleString('en-IN')}
           </div>
           <span className="text-xs text-slate-500 mt-1 block">
@@ -172,15 +172,15 @@ export default function ApplianceCostEngine() {
 
       {/* Energy-Saving Alternative Callout */}
       {selectedDef?.efficientAlternative && (
-        <div className="bg-gradient-to-br from-emerald-950/30 to-slate-900 border border-emerald-500/30 rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="bg-gradient-to-br from-emerald-50/80 via-white to-teal-50/40 border border-emerald-200/90 rounded-2xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+            <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100 px-2 py-0.5 rounded border border-emerald-200">
               High-Efficiency Upgrade Available
             </span>
-            <h4 className="text-base font-bold text-white">
+            <h4 className="text-base font-bold text-slate-900">
               {selectedDef.efficientAlternative.name}
             </h4>
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-slate-600">
               {selectedDef.efficientAlternative.notes}
             </p>
           </div>
@@ -188,7 +188,7 @@ export default function ApplianceCostEngine() {
           <button
             type="button"
             onClick={handleAffiliateClick}
-            className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shrink-0 transition-all shadow-md active:scale-[0.99]"
+            className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shrink-0 transition-all shadow-md active:scale-[0.99] cursor-pointer"
           >
             <span>View on Amazon India</span>
             <ArrowUpRight className="w-4 h-4" />

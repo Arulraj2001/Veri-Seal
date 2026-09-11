@@ -19,6 +19,7 @@ import {
   Image,
   ShieldCheck,
   Sparkles,
+  Zap,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -473,22 +474,59 @@ export function Header() {
                   </div>
 
                   {/* Bottom Footer Bar */}
-                  <div className="col-span-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                    <span className="text-slate-500">
-                      100% In-Memory RAM Processing • Zero Watermarks • 28 Tools Active
-                    </span>
+                  <div className="col-span-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="font-extrabold text-emerald-700 flex items-center gap-1">
+                        <Zap className="w-3.5 h-3.5" />
+                        <span>Home Cost Platform:</span>
+                      </span>
+                      <Link
+                        href="/home-cost"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="text-slate-600 hover:text-emerald-700 font-semibold underline"
+                      >
+                        Digital Twin Hub
+                      </Link>
+                      <span className="text-slate-300">•</span>
+                      <Link
+                        href="/home-cost/solar-calculator"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="text-slate-600 hover:text-emerald-700 font-semibold underline"
+                      >
+                        PM Surya Ghar Solar
+                      </Link>
+                      <span className="text-slate-300">•</span>
+                      <Link
+                        href="/home-cost/ac-cost-calculator"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="text-slate-600 hover:text-emerald-700 font-semibold underline"
+                      >
+                        Inverter AC ROI
+                      </Link>
+                    </div>
                     <Link
                       href="/tools"
                       onClick={() => setToolsMenuOpen(false)}
-                      className="font-bold text-emerald-700 hover:underline flex items-center gap-1"
+                      className="font-bold text-emerald-700 hover:underline flex items-center gap-1 shrink-0"
                     >
-                      <span>View Complete Tools Directory (28 Tools) &rarr;</span>
+                      <span>All Exam Tools (32+) &rarr;</span>
                     </Link>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
+
+          {/* Home Cost & Savings Direct Link */}
+          <Link
+            href="/home-cost"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full text-text-main hover:text-emerald-700 hover:bg-emerald-50/80 transition-all cursor-pointer select-none"
+          >
+            <span>Home Cost</span>
+            <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-700 rounded-full border border-emerald-500/30">
+              NEW
+            </span>
+          </Link>
 
           <a
             href="/#how-it-works"

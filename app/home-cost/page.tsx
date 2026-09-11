@@ -159,8 +159,8 @@ export default function HomeCostLandingPage() {
       <div className="space-y-6 pt-6">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-xl font-bold text-white">Specialized Household Cost Intelligence Tools</h3>
-            <p className="text-xs text-slate-400">Deep-dive into specific appliances, utilities, and financial decisions.</p>
+            <h3 className="text-xl font-extrabold text-slate-900">Specialized Household Cost Intelligence Tools</h3>
+            <p className="text-xs text-slate-500">Deep-dive into specific appliances, utilities, and financial decisions.</p>
           </div>
         </div>
 
@@ -169,21 +169,21 @@ export default function HomeCostLandingPage() {
             <Link
               key={cat.href}
               href={cat.href}
-              className="bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 rounded-2xl p-6 backdrop-blur-xl transition-all duration-200 flex flex-col justify-between group"
+              className="bg-white border border-slate-200/90 hover:border-emerald-400 hover:shadow-md rounded-3xl p-6 transition-all duration-200 flex flex-col justify-between group shadow-xs"
             >
               <div>
-                <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                <span className="text-[10px] font-extrabold tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
                   {cat.badge}
                 </span>
-                <h4 className="text-base font-bold text-white mt-3 group-hover:text-emerald-400 transition-colors">
+                <h4 className="text-base font-bold text-slate-900 mt-3 group-hover:text-emerald-700 transition-colors">
                   {cat.title}
                 </h4>
-                <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                <p className="text-xs text-slate-600 mt-1 leading-relaxed">
                   {cat.desc}
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 mt-6 group-hover:translate-x-1 transition-transform">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 mt-6 group-hover:translate-x-1 transition-transform">
                 <span>Explore Tool</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>

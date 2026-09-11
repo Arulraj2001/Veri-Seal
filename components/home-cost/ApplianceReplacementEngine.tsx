@@ -90,9 +90,7 @@ export default function ApplianceReplacementEngine() {
     const paybackYears = totalAnnualSaving > 0 ? Number((newPrice / totalAnnualSaving).toFixed(1)) : 99;
 
     // 5-Year Total Cost of Ownership (TCO)
-    // Old: 5 years of running + maintenance
     const old5YearTco = (oldAnnualCost + selectedPreset.annualMaintenanceSaving) * 5;
-    // New: Purchase price + 5 years of running
     const new5YearTco = newPrice + (newAnnualCost * 5);
     const net5YearSavings = old5YearTco - new5YearTco;
 
@@ -119,8 +117,8 @@ export default function ApplianceReplacementEngine() {
   return (
     <div className="space-y-8">
       {/* Preset Selector */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 backdrop-blur-xl shadow-xl space-y-4">
-        <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm space-y-4">
+        <label className="text-xs font-bold text-slate-700 uppercase tracking-wider block">
           Choose an Appliance to Evaluate for Replacement
         </label>
 
@@ -130,15 +128,15 @@ export default function ApplianceReplacementEngine() {
               key={p.id}
               type="button"
               onClick={() => handleSelectPreset(p)}
-              className={`p-4 rounded-2xl text-left border transition-all ${
+              className={`p-4 rounded-2xl text-left border transition-all cursor-pointer ${
                 selectedPreset.id === p.id
-                  ? 'bg-emerald-500/10 border-emerald-500 text-white shadow-md'
-                  : 'bg-slate-950/80 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                  ? 'bg-emerald-50 border-emerald-500 text-emerald-950 shadow-xs'
+                  : 'bg-slate-50 hover:bg-slate-100 border-slate-200 text-slate-700'
               }`}
             >
               <div
                 className={`text-xs font-bold ${
-                  selectedPreset.id === p.id ? 'text-emerald-400' : 'text-slate-300'
+                  selectedPreset.id === p.id ? 'text-emerald-800' : 'text-slate-800'
                 }`}
                 dangerouslySetInnerHTML={{ __html: p.name }}
               />
@@ -148,9 +146,9 @@ export default function ApplianceReplacementEngine() {
       </div>
 
       {/* Interactive Customization Inputs */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-slate-900/60 border border-slate-800 rounded-2xl p-6 text-xs">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-white border border-slate-200/90 rounded-2xl p-6 text-xs shadow-xs">
         <div>
-          <label className="block text-slate-400 font-semibold mb-1.5">
+          <label className="block text-slate-700 font-bold mb-1.5">
             Old Appliance Consumption
           </label>
           <div className="flex items-center gap-1.5">
@@ -158,14 +156,14 @@ export default function ApplianceReplacementEngine() {
               type="number"
               value={oldAnnualUnits}
               onChange={(e) => setOldAnnualUnits(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold"
+              className="w-full bg-slate-50 hover:bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-900 font-bold"
             />
-            <span className="text-slate-500">units/yr</span>
+            <span className="text-slate-400 font-medium">units/yr</span>
           </div>
         </div>
 
         <div>
-          <label className="block text-slate-400 font-semibold mb-1.5">
+          <label className="block text-slate-700 font-bold mb-1.5">
             New 5-Star Consumption
           </label>
           <div className="flex items-center gap-1.5">
@@ -173,14 +171,14 @@ export default function ApplianceReplacementEngine() {
               type="number"
               value={newAnnualUnits}
               onChange={(e) => setNewAnnualUnits(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold"
+              className="w-full bg-slate-50 hover:bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-900 font-bold"
             />
-            <span className="text-slate-500">units/yr</span>
+            <span className="text-slate-400 font-medium">units/yr</span>
           </div>
         </div>
 
         <div>
-          <label className="block text-slate-400 font-semibold mb-1.5">
+          <label className="block text-slate-700 font-bold mb-1.5">
             New Appliance Purchase Price
           </label>
           <div className="flex items-center gap-1.5">
@@ -188,14 +186,14 @@ export default function ApplianceReplacementEngine() {
               type="number"
               value={newPrice}
               onChange={(e) => setNewPrice(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold"
+              className="w-full bg-slate-50 hover:bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-900 font-bold"
             />
-            <span className="text-slate-500">₹</span>
+            <span className="text-slate-400 font-medium">₹</span>
           </div>
         </div>
 
         <div>
-          <label className="block text-slate-400 font-semibold mb-1.5">
+          <label className="block text-slate-700 font-bold mb-1.5">
             Electricity Rate (₹/unit)
           </label>
           <div className="flex items-center gap-1.5">
@@ -204,28 +202,28 @@ export default function ApplianceReplacementEngine() {
               step={0.5}
               value={tariff}
               onChange={(e) => setTariff(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-bold"
+              className="w-full bg-slate-50 hover:bg-white border border-slate-200 rounded-xl px-3 py-2 text-slate-900 font-bold"
             />
-            <span className="text-slate-500">₹/kWh</span>
+            <span className="text-slate-400 font-medium">₹/kWh</span>
           </div>
         </div>
       </div>
 
       {/* Decision Verdict Card */}
-      <div className="bg-gradient-to-br from-slate-900/90 via-slate-900/70 to-emerald-950/20 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="bg-gradient-to-br from-emerald-50/70 via-white to-teal-50/30 border border-emerald-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-emerald-100 pb-5">
           <div>
-            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">
+            <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider block">
               Financial Decision Verdict
             </span>
-            <h3 className="text-xl font-extrabold text-white mt-1">
+            <h3 className="text-xl font-extrabold text-slate-900 mt-1">
               New Appliance Pays for Itself in Approximately ~{economics.paybackYears} Years
             </h3>
           </div>
 
-          <div className="text-right">
-            <span className="text-xs text-slate-400 block">5-Year Net Wealth Gain</span>
-            <span className="text-2xl font-black text-emerald-400">
+          <div className="sm:text-right">
+            <span className="text-xs text-slate-500 block font-medium">5-Year Net Wealth Gain</span>
+            <span className="text-2xl font-black text-emerald-700">
               ₹{economics.net5YearSavings.toLocaleString('en-IN')}
             </span>
           </div>
@@ -233,30 +231,30 @@ export default function ApplianceReplacementEngine() {
 
         {/* 5-Year Total Cost of Ownership (TCO) Head-to-Head */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-5 space-y-3">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-300">Option 1: Keep Old Appliance</span>
-              <span className="text-xs font-semibold text-red-400">Higher Bleed</span>
+              <span className="text-xs font-bold text-slate-700">Option 1: Keep Old Appliance</span>
+              <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded">Higher Bleed</span>
             </div>
-            <div className="text-2xl font-black text-white">
-              ₹{economics.old5YearTco.toLocaleString('en-IN')}<span className="text-xs font-normal text-slate-400"> / 5-yr cost</span>
+            <div className="text-2xl font-black text-slate-900">
+              ₹{economics.old5YearTco.toLocaleString('en-IN')}<span className="text-xs font-normal text-slate-500"> / 5-yr cost</span>
             </div>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed">
               Consumes ₹{economics.oldAnnualCost.toLocaleString('en-IN')}/year in electricity + ₹{selectedPreset.annualMaintenanceSaving}/year in frequent breakdowns and repairs.
             </p>
           </div>
 
-          <div className="bg-slate-950/70 border border-emerald-500/40 rounded-2xl p-5 space-y-3">
+          <div className="bg-white border border-emerald-200/90 rounded-2xl p-5 space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-emerald-400">Option 2: Replace with New 5-Star</span>
-              <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              <span className="text-xs font-bold text-emerald-700">Option 2: Replace with New 5-Star</span>
+              <span className="text-xs font-extrabold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
                 RECOMMENDED
               </span>
             </div>
-            <div className="text-2xl font-black text-emerald-400">
-              ₹{economics.new5YearTco.toLocaleString('en-IN')}<span className="text-xs font-normal text-slate-400"> / 5-yr cost</span>
+            <div className="text-2xl font-black text-emerald-700">
+              ₹{economics.new5YearTco.toLocaleString('en-IN')}<span className="text-xs font-normal text-slate-500"> / 5-yr cost</span>
             </div>
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className="text-xs text-slate-600 leading-relaxed">
               Includes full ₹{newPrice.toLocaleString('en-IN')} purchase price. Saves ₹{economics.totalAnnualSaving.toLocaleString('en-IN')} every year in electricity and repairs.
             </p>
           </div>
@@ -267,7 +265,7 @@ export default function ApplianceReplacementEngine() {
           <button
             type="button"
             onClick={handleAffiliateClick}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all active:scale-[0.99]"
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md shadow-emerald-600/20 transition-all active:scale-[0.99] cursor-pointer"
           >
             <span>Check Recommended 5-Star Models on Amazon</span>
             <ArrowUpRight className="w-4 h-4" />

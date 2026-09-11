@@ -27,24 +27,24 @@ export default function AiAdvisorCard({ recommendations }: Props) {
   };
 
   return (
-    <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
-      <div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-800 pb-5">
+    <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+      <div className="flex items-center justify-between flex-wrap gap-4 border-b border-slate-100 pb-5">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-1">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200 mb-1">
+            <Sparkles className="w-3.5 h-3.5 text-purple-600" />
             <span>AI Decision Intelligence</span>
           </div>
-          <h3 className="text-xl font-bold text-white tracking-tight">
+          <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
             Prioritized Home Upgrades &amp; Savings Roadmap
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5">
             Ranked by return-on-investment (ROI) and payback velocity.
           </p>
         </div>
 
         <div className="text-right">
-          <span className="text-[11px] text-slate-400 block font-medium">5-Year Net Wealth Gain</span>
-          <span className="text-lg font-black text-emerald-400">
+          <span className="text-[11px] text-slate-500 block font-medium">5-Year Net Wealth Gain</span>
+          <span className="text-xl font-black text-emerald-700">
             ₹{recommendations.reduce((sum, r) => sum + r.fiveYearNetProfit, 0).toLocaleString('en-IN')}
           </span>
         </div>
@@ -52,12 +52,10 @@ export default function AiAdvisorCard({ recommendations }: Props) {
 
       <div className="space-y-4">
         {recommendations.map((rec) => {
-          const isBehavior = rec.actionType === 'behavior';
-
           return (
             <div
               key={rec.id}
-              className="bg-slate-950/70 border border-slate-800/80 hover:border-slate-700/80 rounded-2xl p-5 transition-all duration-200 space-y-4 group"
+              className="bg-slate-50 hover:bg-slate-100/60 border border-slate-200/80 hover:border-emerald-300 rounded-2xl p-5 transition-all duration-200 space-y-4 group shadow-xs"
             >
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                 <div className="space-y-1">
@@ -65,58 +63,58 @@ export default function AiAdvisorCard({ recommendations }: Props) {
                     <span
                       className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
                         rec.impactLabel === 'HIGH IMPACT'
-                          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                          ? 'bg-emerald-100 text-emerald-800 border-emerald-200'
                           : rec.impactLabel === 'LOW HANGING FRUIT'
-                          ? 'bg-sky-500/10 text-sky-400 border-sky-500/20'
-                          : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                          ? 'bg-sky-100 text-sky-800 border-sky-200'
+                          : 'bg-amber-100 text-amber-800 border-amber-200'
                       }`}
                     >
                       {rec.impactLabel}
                     </span>
-                    <span className="text-xs text-slate-500">• {rec.category}</span>
+                    <span className="text-xs text-slate-500 font-medium">• {rec.category}</span>
                   </div>
 
-                  <h4 className="text-base font-bold text-white group-hover:text-emerald-400 transition-colors">
+                  <h4 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
                     {rec.title}
                   </h4>
                 </div>
 
                 <div className="text-left sm:text-right shrink-0">
-                  <span className="text-xs text-slate-400 block">Saves</span>
-                  <span className="text-base font-extrabold text-emerald-400">
-                    ₹{rec.annualSaving.toLocaleString('en-IN')}<span className="text-xs text-slate-400 font-normal">/year</span>
+                  <span className="text-xs text-slate-500 block font-medium">Saves</span>
+                  <span className="text-base font-black text-emerald-700">
+                    ₹{rec.annualSaving.toLocaleString('en-IN')}<span className="text-xs text-slate-500 font-normal">/year</span>
                   </span>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 {rec.description}
               </p>
 
               {/* Financial Metrics Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-900/60 p-3 rounded-xl border border-slate-800/80 text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white p-3 rounded-xl border border-slate-200 text-xs shadow-xs">
                 <div>
-                  <span className="text-[10px] text-slate-400 block">Est. Investment</span>
-                  <span className="font-bold text-white">
+                  <span className="text-[10px] text-slate-500 block font-medium">Est. Investment</span>
+                  <span className="font-bold text-slate-900">
                     {rec.estimatedInvestment === 0 ? '₹0 (Free)' : `₹${rec.estimatedInvestment.toLocaleString('en-IN')}`}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block">Monthly Savings</span>
-                  <span className="font-bold text-emerald-400">
+                  <span className="text-[10px] text-slate-500 block font-medium">Monthly Savings</span>
+                  <span className="font-bold text-emerald-700">
                     ₹{rec.monthlySaving.toLocaleString('en-IN')}/mo
                   </span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block">Break-even Payback</span>
-                  <span className="font-bold text-sky-400 flex items-center gap-1">
+                  <span className="text-[10px] text-slate-500 block font-medium">Break-even Payback</span>
+                  <span className="font-bold text-sky-700 flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5" />
                     {rec.paybackMonths === 0 ? 'Immediate' : `${(rec.paybackMonths / 12).toFixed(1)} Years`}
                   </span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block">5-Yr Net Profit</span>
-                  <span className="font-bold text-purple-400 flex items-center gap-1">
+                  <span className="text-[10px] text-slate-500 block font-medium">5-Yr Net Profit</span>
+                  <span className="font-bold text-purple-700 flex items-center gap-1">
                     <TrendingUp className="w-3.5 h-3.5" />
                     ₹{rec.fiveYearNetProfit.toLocaleString('en-IN')}
                   </span>
@@ -128,7 +126,7 @@ export default function AiAdvisorCard({ recommendations }: Props) {
                 <button
                   type="button"
                   onClick={() => handleAffiliateClick(rec.affiliateSearchQuery)}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-emerald-500 text-slate-200 hover:text-slate-950 text-xs font-bold transition-all duration-200 active:scale-[0.99]"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-600 text-emerald-800 hover:text-white text-xs font-bold border border-emerald-200 hover:border-emerald-600 transition-all duration-200 active:scale-[0.99] cursor-pointer shadow-xs"
                 >
                   <span>{rec.affiliateCtaText}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />

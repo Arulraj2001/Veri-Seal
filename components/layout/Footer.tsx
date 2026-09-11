@@ -99,6 +99,23 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
+                  href="/home-cost"
+                  className="text-emerald-800 font-bold hover:text-emerald-700 transition-colors flex items-center justify-between"
+                >
+                  <span>Home Cost Intelligence ⚡</span>
+                  <span className="text-[10px] text-emerald-700 font-extrabold bg-emerald-100 px-1.5 py-0.5 rounded">NEW</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/home-cost/solar-calculator"
+                  className="text-text-main/75 hover:text-emerald-700 transition-colors"
+                >
+                  PM Surya Ghar Solar ROI
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/tools/merge-marksheets-pdf"
                   className="text-text-main/90 font-semibold hover:text-primary transition-colors flex items-center justify-between"
                 >
