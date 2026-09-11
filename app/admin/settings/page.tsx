@@ -11,6 +11,7 @@ import {
   Save,
   RotateCcw,
   CheckCircle2,
+  Check,
   Clock,
   Sparkles,
 } from 'lucide-react';
@@ -190,9 +191,36 @@ export default function AdminSettingsPage() {
               <input
                 type="text"
                 value={settings.upi_qr_url || ''}
-                onChange={(e) => setSettings({ ...settings, upi_qr_url: e.target.value })}
-                className="w-full px-3 py-2 bg-surface/50 border border-surface-darker rounded-xl text-text-main"
+                onChange={(e) => setSettings({ ...settings, upi_qr_url: e.target.value.trim() })}
+                placeholder="https://your-domain.com/path/to/qr.png"
+                className="w-full px-3 py-2 bg-surface/50 border border-surface-darker rounded-xl text-text-main text-xs font-mono"
               />
+              {settings.upi_qr_url && (
+                <div className="mt-2.5 flex items-center gap-3 p-2.5 bg-surface/40 rounded-xl border border-surface-darker">
+                  <img
+                    src={settings.upi_qr_url}
+                    alt="QR Preview"
+                    className="w-14 h-14 object-contain bg-white rounded-lg border border-surface-darker p-1 shadow-2xs shrink-0"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                  <div className="text-[11px] text-text-main/70 min-w-0">
+                    <span className="font-bold text-success flex items-center gap-1">
+                      <Check className="w-3.5 h-3.5" />
+                      QR Preview Loaded
+                    </span>
+                    <a
+                      href={settings.upi_qr_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline font-semibold block truncate mt-0.5"
+                    >
+                      Open full image in new tab &rarr;
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div>

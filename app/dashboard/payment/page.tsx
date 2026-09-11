@@ -15,6 +15,7 @@ import {
   Upload,
   ArrowRight,
   ShieldCheck,
+  ExternalLink,
 } from 'lucide-react';
 import { fetchPublicSettings } from '@/lib/api';
 
@@ -47,6 +48,8 @@ function PaymentStatusContent() {
   const [submitError, setSubmitError] = React.useState<string>('');
 
   const [upiId, setUpiId] = React.useState<string>('veriseal.pay@icici');
+  const [upiQrUrl, setUpiQrUrl] = React.useState<string>('');
+  const [qrImageError, setQrImageError] = React.useState<boolean>(false);
   const [proPrice, setProPrice] = React.useState<number>(199);
   const [businessPrice, setBusinessPrice] = React.useState<number>(2499);
 
@@ -59,6 +62,7 @@ function PaymentStatusContent() {
         if (s.pro_price) setProPrice(Number(s.pro_price));
         if (s.business_price) setBusinessPrice(Number(s.business_price));
         if (s.upi_id) setUpiId(s.upi_id);
+        if (s.upi_qr_url) setUpiQrUrl(s.upi_qr_url);
       } catch (e) {
         console.debug('Failed to load settings in payment page:', e);
       } finally {
@@ -167,27 +171,47 @@ function PaymentStatusContent() {
               Pay securely via Google Pay, PhonePe, Paytm, or any BHIM-UPI application directly to VeriSeal Official Treasury.
             </p>
 
-            {/* UPI QR Mock Display */}
+            {/* Real UPI QR Display */}
             <div className="bg-surface/60 border border-surface-darker rounded-2xl p-6 flex flex-col items-center justify-center text-center">
-              <div className="w-36 h-36 bg-white border-2 border-text-main/10 rounded-xl flex items-center justify-center p-2 shadow-inner">
-                {/* SVG QR Visual */}
-                <svg
-                  className="w-full h-full text-text-main"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.75"
-                >
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
-                  <rect x="14" y="14" width="3" height="3" />
-                  <rect x="18" y="18" width="3" height="3" />
-                  <line x1="7" y1="7" x2="7.01" y2="7" />
-                  <line x1="17" y1="7" x2="17.01" y2="7" />
-                  <line x1="7" y1="17" x2="7.01" y2="17" />
-                </svg>
+              <div className="w-48 h-48 bg-white border-2 border-surface-darker rounded-2xl flex items-center justify-center p-2 shadow-sm relative overflow-hidden group">
+                {upiQrUrl && !qrImageError ? (
+                  <img
+                    src={upiQrUrl}
+                    alt="Official UPI QR Code"
+                    onError={() => setQrImageError(true)}
+                    className="w-full h-full object-contain rounded-xl"
+                  />
+                ) : (
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
+                      `upi://pay?pa=${upiId}&pn=VeriSeal&am=${getAmountForPlan(selectedPlan)}&cu=INR`
+                    )}`}
+                    alt="Generated UPI QR Code"
+                    className="w-full h-full object-contain rounded-xl"
+                  />
+                )}
               </div>
+
+              {upiQrUrl && !qrImageError && (
+                <a
+                  href={upiQrUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] text-primary hover:underline font-semibold mt-2 inline-flex items-center gap-1"
+                >
+                  <span>View Full Size QR</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+
+              {/* Quick Action: Open in UPI app for mobile users */}
+              <a
+                href={`upi://pay?pa=${upiId}&pn=VeriSeal&am=${getAmountForPlan(selectedPlan)}&cu=INR`}
+                className="mt-3 inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary-light text-primary text-xs font-bold rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary/20 shadow-2xs"
+              >
+                <span>Pay via UPI App (GPay / PhonePe)</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
 
               <div className="mt-4 w-full">
                 <div className="text-[11px] font-semibold text-text-main/50 mb-1">Official UPI ID:</div>

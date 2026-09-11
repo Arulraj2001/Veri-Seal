@@ -15,6 +15,7 @@ import {
   Zap,
   Lock,
   X,
+  ExternalLink,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { fetchPublicSettings } from '@/lib/api';
@@ -42,6 +43,7 @@ export function UpiPaymentFlowModal({
   // Settings
   const [upiId, setUpiId] = React.useState<string>('veriseal.pay@icici');
   const [upiQrUrl, setUpiQrUrl] = React.useState<string>('');
+  const [qrError, setQrError] = React.useState<boolean>(false);
   const [proPrice, setProPrice] = React.useState<number>(199);
   const [bizPrice, setBizPrice] = React.useState<number>(2499);
   const [copiedUpi, setCopiedUpi] = React.useState<boolean>(false);
@@ -58,24 +60,23 @@ export function UpiPaymentFlowModal({
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   // Load prices & UPI info from /api/settings
-  React.useEffect(() => {
-    async function loadSettings() {
-      try {
-        const res = await fetch('/api/settings');
-        if (res.ok) {
-          const s = await res.json();
-          if (s.upi_id) setUpiId(s.upi_id);
-          if (s.upi_qr_url) setUpiQrUrl(s.upi_qr_url);
-          if (s.pro_price) setProPrice(Number(s.pro_price));
-          if (s.business_price) setBizPrice(Number(s.business_price));
-        }
-      } catch (e) {
-        console.debug('Using fallback payment settings:', e);
+  const loadSettings = async () => {
+    try {
+      const res = await fetch('/api/settings');
+      if (res.ok) {
+        const s = await res.json();
+        if (s.upi_id) setUpiId(s.upi_id);
+        if (s.upi_qr_url) setUpiQrUrl(s.upi_qr_url);
+        if (s.pro_price) setProPrice(Number(s.pro_price));
+        if (s.business_price) setBizPrice(Number(s.business_price));
       }
+    } catch (e) {
+      console.debug('Using fallback payment settings:', e);
     }
-    if (isOpen) {
-      loadSettings();
-    }
+  };
+
+  React.useEffect(() => {
+    loadSettings();
   }, [isOpen]);
 
   React.useEffect(() => {
@@ -342,33 +343,45 @@ export function UpiPaymentFlowModal({
 
             {/* UPI QR Display */}
             <div className="p-5 bg-surface/60 border border-surface-darker rounded-2xl flex flex-col items-center justify-center text-center">
-              {upiQrUrl ? (
-                <img
-                  src={upiQrUrl}
-                  alt="UPI QR Code"
-                  className="w-40 h-40 object-contain rounded-xl border border-surface-darker bg-white p-2"
-                />
-              ) : (
-                <div className="w-40 h-40 bg-white border-2 border-text-main/10 rounded-2xl flex items-center justify-center p-3 shadow-inner">
-                  {/* SVG UPI QR representation */}
-                  <svg
-                    className="w-full h-full text-text-main"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                  >
-                    <rect x="3" y="3" width="7" height="7" />
-                    <rect x="14" y="3" width="7" height="7" />
-                    <rect x="3" y="14" width="7" height="7" />
-                    <rect x="14" y="14" width="3" height="3" />
-                    <rect x="18" y="18" width="3" height="3" />
-                    <line x1="7" y1="7" x2="7.01" y2="7" />
-                    <line x1="17" y1="7" x2="17.01" y2="7" />
-                    <line x1="7" y1="17" x2="7.01" y2="17" />
-                  </svg>
-                </div>
+              <div className="w-44 h-44 bg-white border-2 border-surface-darker rounded-2xl flex items-center justify-center p-2 shadow-xs relative overflow-hidden">
+                {upiQrUrl && !qrError ? (
+                  <img
+                    src={upiQrUrl}
+                    alt="Official UPI QR Code"
+                    onError={() => setQrError(true)}
+                    className="w-full h-full object-contain rounded-xl"
+                  />
+                ) : (
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
+                      `upi://pay?pa=${upiId}&pn=VeriSeal&am=${currentAmount}&cu=INR`
+                    )}`}
+                    alt="Generated Scannable UPI QR Code"
+                    className="w-full h-full object-contain rounded-xl"
+                  />
+                )}
+              </div>
+
+              {upiQrUrl && !qrError && (
+                <a
+                  href={upiQrUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] text-primary hover:underline font-semibold mt-2 inline-flex items-center gap-1"
+                >
+                  <span>View Full Size QR</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               )}
+
+              {/* Direct UPI app launch link */}
+              <a
+                href={`upi://pay?pa=${upiId}&pn=VeriSeal&am=${currentAmount}&cu=INR`}
+                className="mt-3 inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-primary-light text-primary text-xs font-bold rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary/20 shadow-2xs"
+              >
+                <span>Pay via UPI App (GPay / PhonePe)</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
 
               {/* UPI ID with copy button */}
               <div className="mt-4 w-full">
