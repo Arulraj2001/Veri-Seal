@@ -141,3 +141,16 @@ Result: 28 / 28 Routes Returned HTTP 200 OK!
   - `npx tsc --noEmit` &rarr; 0 errors.
   - `GET /tools` &rarr; HTTP 200 OK.
 
+---
+
+## Navbar Clearance & Breadcrumb Alignment Fix (Commit `bf3546e`)
+- **Issue**: On `/tools` and newly created tool pages (`/tools/passport-photo-sheet-maker`, `/tools/merge-marksheets-pdf`, `/tools/clean-document-scanner`), the breadcrumb was positioned at `y=0`, causing it to be hidden directly behind the fixed floating navbar.
+- **Resolution**:
+  1. Applied standard `pt-28 pb-20 px-4 sm:px-6 lg:px-8` root container padding across all 4 pages to provide 32–40px of clean breathing clearance below the floating navbar.
+  2. Aligned semantic `<nav aria-label="Breadcrumb">` directly inside the primary `max-w-7xl mx-auto space-y-8` layout grid.
+  3. Added dot grid background and ambient glow consistent with VeriSeal design system.
+- **Verification**:
+  - `npx tsc --noEmit` &rarr; 0 errors.
+  - HTTP 200 OK confirmed for all 4 updated routes.
+  - Verified `pt-28` and breadcrumb elements present in live server output.
+
