@@ -3,14 +3,15 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Zap, ShieldCheck, ArrowDown } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function HeroSection() {
-  const headlineWords = 'Verify Indian Government PDF Signature Instantly'.split(' ');
+  const { t, language } = useLanguage();
 
   const trustBadges = [
-    { icon: Lock, label: 'Files Never Stored', subtext: 'In-memory processing only' },
-    { icon: Zap, label: 'Instant Verification', subtext: 'Results in 2-3 seconds' },
-    { icon: ShieldCheck, label: 'CCA India Certified', subtext: 'RCAI root trust chain' },
+    { icon: Lock, label: t.hero.badge1Label, subtext: t.hero.badge1Subtext },
+    { icon: Zap, label: t.hero.badge2Label, subtext: t.hero.badge2Subtext },
+    { icon: ShieldCheck, label: t.hero.badge3Label, subtext: t.hero.badge3Subtext },
   ];
 
   return (
@@ -27,47 +28,46 @@ export function HeroSection() {
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary mb-6 shadow-2xs"
         >
           <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span>Free Online Verification Tool • IT Act 2000 Compliant</span>
+          <span>{t.hero.tag}</span>
         </motion.div>
 
-        {/* H1 Headline with word-by-word animation (80ms delay) */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-text-main tracking-tight leading-[1.15] mb-6">
-          {headlineWords.map((word, index) => (
-            <motion.span
-              key={index}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.4,
-                delay: index * 0.08,
-                ease: 'easeOut',
-              }}
-              className={word === 'Signature' || word === 'Instantly' ? 'text-primary inline-block' : 'inline-block'}
-            >
-              {word}&nbsp;
-            </motion.span>
-          ))}
+        {/* H1 Headline */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-text-main tracking-tight leading-[1.18] mb-6">
+          <span>{t.hero.titleStart} </span>
+          <span className="text-primary">{t.hero.titleHighlight}</span>
         </h1>
 
-        {/* Subheadline (fades in after H1 completes) */}
+        {/* Subheadline */}
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: headlineWords.length * 0.08 + 0.1,
+            delay: 0.2,
             ease: 'easeOut',
           }}
           className="text-lg sm:text-xl text-text-main/80 max-w-3xl mx-auto mb-10 leading-relaxed font-normal"
         >
-          Fix the yellow{' '}
-          <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-amber-100 text-amber-700 font-bold text-sm shadow-2xs mx-0.5">
-            ❓
-          </span>{' '}
-          on your Aadhaar, community certificate, nativity, PAN card or DigiLocker PDF. Free, instant, your file never leaves your device.
+          {language === 'ta' ? (
+            <>
+              உங்கள் ஆதார், சாதி சான்றிதழ், இருப்பிட சான்றிதழ், பான் கார்டு அல்லது டிஜிலாக்கர் PDF இல் உள்ள மஞ்சள்{' '}
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-amber-100 text-amber-700 font-bold text-sm shadow-2xs mx-0.5">
+                ❓
+              </span>{' '}
+              குறியை உடனே சரிசெய்யுங்கள். இலவசம், கோப்புகள் எங்கும் சேமிக்கப்படாது.
+            </>
+          ) : (
+            <>
+              Fix the yellow{' '}
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-amber-100 text-amber-700 font-bold text-sm shadow-2xs mx-0.5">
+                ❓
+              </span>{' '}
+              on your Aadhaar, community certificate, nativity, PAN card or DigiLocker PDF. Free, instant, your file never leaves your device.
+            </>
+          )}
         </motion.p>
 
-        {/* Trust Badges Row (stagger in from bottom, 100ms each) */}
+        {/* Trust Badges Row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 max-w-3xl mx-auto mb-12">
           {trustBadges.map((badge, idx) => {
             const Icon = badge.icon;
@@ -78,7 +78,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.4,
-                  delay: headlineWords.length * 0.08 + 0.3 + idx * 0.1,
+                  delay: 0.25 + idx * 0.1,
                   ease: 'easeOut',
                 }}
                 className="flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-surface-darker/70 shadow-soft hover:border-primary/30 transition-all text-left"

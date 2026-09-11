@@ -46,8 +46,10 @@ import { getSeoSlugForDocType } from '@/lib/seo-store';
 import { trackEvent } from '@/lib/analytics';
 import { captureVerificationError, ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { processPdfWithWorker } from '@/lib/pdf-worker-client';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function UploadZone() {
+  const { t, language } = useLanguage();
   const { data: session } = useSession();
   const user = session?.user;
   const userPlan = (user as { plan?: string })?.plan || 'guest';
@@ -948,7 +950,7 @@ export function UploadZone() {
                     {verifiedCount.toLocaleString('en-IN')}
                   </div>
                   <div className="text-[10px] font-bold uppercase tracking-wider text-text-main/60 mt-0.5">
-                    PDFs verified and counting
+                    {t.upload.counterSuffix}
                   </div>
                 </div>
               </div>
@@ -957,10 +959,8 @@ export function UploadZone() {
 
               <div className="flex items-center gap-2 text-[11px] text-text-main/70 font-medium">
                 <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60 font-semibold">
-                  <span>✓ 100% In-Memory RAM</span>
+                  <span>✓ {t.upload.trustTag}</span>
                 </span>
-                <span className="text-text-main/40 hidden sm:inline">•</span>
-                <span className="hidden sm:inline">IT Act 2000 Section 35</span>
               </div>
             </div>
           </div>

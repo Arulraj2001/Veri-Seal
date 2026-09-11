@@ -3,10 +3,32 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
 import { UploadCloud, ShieldCheck, Download, ArrowRight } from 'lucide-react';
-import { HOW_IT_WORKS } from '@/lib/constants';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function HowItWorks() {
+  const { t } = useLanguage();
   const stepIcons = [UploadCloud, ShieldCheck, Download];
+
+  const steps = [
+    {
+      step: 1,
+      badge: t.howItWorks.step1Badge,
+      title: t.howItWorks.step1Title,
+      description: t.howItWorks.step1Desc,
+    },
+    {
+      step: 2,
+      badge: t.howItWorks.step2Badge,
+      title: t.howItWorks.step2Title,
+      description: t.howItWorks.step2Desc,
+    },
+    {
+      step: 3,
+      badge: t.howItWorks.step3Badge,
+      title: t.howItWorks.step3Title,
+      description: t.howItWorks.step3Desc,
+    },
+  ];
 
   return (
     <section id="how-it-works" className="py-20 bg-background relative overflow-hidden">
@@ -14,13 +36,13 @@ export function HowItWorks() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary-light px-3 py-1 rounded-full border border-primary/20">
-            Simple 3-Step Process
+            {t.howItWorks.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-text-main mt-4 tracking-tight">
-            How VeriSeal Works
+            {t.howItWorks.heading}
           </h2>
           <p className="text-base sm:text-lg text-text-main/70 mt-3">
-            Instant PKI verification compliant with the IT Act 2000. Zero software installation required.
+            {t.howItWorks.subheading}
           </p>
         </div>
 
@@ -29,7 +51,7 @@ export function HowItWorks() {
           {/* Connector line for desktop */}
           <div className="hidden md:block absolute top-1/2 left-[18%] right-[18%] -translate-y-8 h-0.5 border-t-2 border-dashed border-primary/30 -z-0" />
 
-          {HOW_IT_WORKS.map((step, idx) => {
+          {steps.map((step, idx) => {
             const Icon = stepIcons[idx];
             return (
               <motion.div
@@ -77,16 +99,16 @@ export function HowItWorks() {
         >
           <div>
             <h4 className="font-bold text-text-main">
-              Ready to fix the yellow question mark on your PDF?
+              {t.howItWorks.ctaHeading}
             </h4>
             <p className="text-xs text-text-main/60 mt-0.5">
-              Takes less than 3 seconds. Free and completely private.
+              {t.howItWorks.ctaSubtext}
             </p>
           </div>
 
           <a href="#upload-zone" className="shrink-0">
             <span className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors">
-              <span>Go to Verification Tool</span>
+              <span>{t.howItWorks.ctaBtn}</span>
               <ArrowRight className="w-4 h-4" />
             </span>
           </a>

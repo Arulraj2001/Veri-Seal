@@ -7,8 +7,10 @@ import { ArrowUpRight, Lock, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { SUPPORTED_DOCS, STATES } from '@/lib/constants';
 import { getSeoSlugForDocType } from '@/lib/seo-store';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function SupportedDocs() {
+  const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = React.useState<string>('all-india');
 
   const filteredDocs = SUPPORTED_DOCS.filter((doc) => doc.category === activeTab);
@@ -34,13 +36,13 @@ export function SupportedDocs() {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary-light px-3 py-1 rounded-full border border-primary/20">
-            Official Indian Certificate Registry
+            {t.supportedDocs.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-text-main mt-4 tracking-tight">
-            Documents We Support
+            {t.supportedDocs.heading}
           </h2>
           <p className="text-base sm:text-lg text-text-main/70 mt-3">
-            All PDFs digitally signed under India&apos;s CCA certificate hierarchy
+            {t.supportedDocs.subheading}
           </p>
         </div>
 

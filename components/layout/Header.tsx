@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { SupportedLanguage } from '@/types';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 function UserAvatar({
   src,
@@ -68,7 +69,7 @@ export function Header() {
   const { data: session, status } = useSession();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-  const [language, setLanguage] = React.useState<SupportedLanguage>('en');
+  const { language, toggleLanguage, t } = useLanguage();
 
   const user = session?.user;
   const userRole = (user as { role?: string })?.role || 'user';
@@ -87,18 +88,14 @@ export function Header() {
     return null;
   }
 
-  const toggleLanguage = () => {
-    setLanguage((prev) => (prev === 'en' ? 'ta' : 'en'));
-  };
-
   const navLinks = [
-    { label: 'Home', href: '/#hero' },
-    { label: 'Documents', href: '/#supported-docs' },
-    { label: 'How It Works', href: '/#how-it-works' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Security', href: '/#trust-section' },
-    { label: 'FAQ', href: '/#faq-section' },
-    { label: 'Contact', href: '/contact' },
+    { label: t.nav.home, href: '/#hero' },
+    { label: t.nav.documents, href: '/#supported-docs' },
+    { label: t.nav.howItWorks, href: '/#how-it-works' },
+    { label: t.nav.security, href: '/#trust-section' },
+    { label: t.nav.faq, href: '/#faq-section' },
+    { label: t.nav.blog, href: '/blog' },
+    { label: t.nav.contact, href: '/contact' },
   ];
 
   return (
@@ -138,39 +135,28 @@ export function Header() {
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary mb-1"></span>
             </span>
             <span className="text-[10px] -mt-1 font-semibold text-text-main/60 tracking-wider uppercase">
-              India PKI Verify
+              {t.common.brandSubtitle}
             </span>
           </div>
         </Link>
 
-        {/* Desktop Nav Center */}
-        <nav className="hidden md:flex items-center gap-1 bg-surface/80 px-4 py-1.5 rounded-full border border-surface-darker/60">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+        {/* Desktop Nav Center has been removed per user instruction. Replaced with Draggable Sticky Note Navigation on left. */}
 
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-3">
-          {/* Language Toggle */}
+          {/* Real-time Language Toggle */}
           <button
             type="button"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-surface-darker/80 bg-white hover:border-primary/40 text-xs font-semibold text-text-main transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-surface-darker/80 bg-white hover:border-primary/40 text-xs font-semibold text-text-main transition-all shadow-sm active:scale-95"
             title="Toggle Language (EN / தமிழ்)"
           >
             <Languages className="w-3.5 h-3.5 text-primary" />
-            <span className={language === 'en' ? 'text-primary font-bold' : 'text-text-main/70'}>
+            <span className={language === 'en' ? 'text-primary font-bold' : 'text-text-main/60 font-medium'}>
               EN
             </span>
-            <span className="text-text-main/40">|</span>
-            <span className={language === 'ta' ? 'text-primary font-bold font-tamil' : 'text-text-main/70 font-tamil'}>
+            <span className="text-text-main/30">|</span>
+            <span className={language === 'ta' ? 'text-primary font-bold font-tamil' : 'text-text-main/60 font-tamil font-medium'}>
               தமிழ்
             </span>
           </button>
@@ -206,7 +192,7 @@ export function Header() {
                     className="h-9 font-bold text-xs border-amber-400/70 text-amber-800 bg-amber-50 hover:bg-amber-100 gap-1 px-2.5 shadow-sm"
                   >
                     <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
-                    <span>Admin</span>
+                    <span>{t.nav.adminPanel}</span>
                   </Button>
                 </Link>
               )}
@@ -214,7 +200,7 @@ export function Header() {
               <Link href="/dashboard">
                 <Button variant="outline" size="sm" className="h-9 font-semibold text-xs gap-1.5 px-3">
                   <LayoutDashboard className="w-3.5 h-3.5 text-primary" />
-                  <span>Dashboard</span>
+                  <span>{t.nav.dashboard}</span>
                 </Button>
               </Link>
 
@@ -223,7 +209,7 @@ export function Header() {
                 size="sm"
                 onClick={() => signOut({ callbackUrl: '/' })}
                 className="h-9 w-9 p-0 text-text-main/60 hover:text-error hover:bg-error-light rounded-xl"
-                title="Sign Out"
+                title={t.nav.logout}
               >
                 <LogOut className="w-4 h-4" />
               </Button>
@@ -231,7 +217,7 @@ export function Header() {
           ) : (
             <Link href="/login">
               <Button variant="outline" size="sm" className="h-9 font-semibold">
-                Login
+                {t.nav.signIn}
               </Button>
             </Link>
           )}
@@ -239,7 +225,7 @@ export function Header() {
           {/* Quick CTA */}
           <a href="#upload-zone">
             <Button size="sm" className="h-9 font-semibold shadow-sm">
-              Verify PDF Free
+              {language === 'ta' ? 'இலவசமாக சரிபார்க்க' : 'Verify PDF Free'}
             </Button>
           </a>
         </div>

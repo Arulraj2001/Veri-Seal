@@ -9,21 +9,24 @@ import {
   AccordionContent,
 } from '@/components/ui/accordion';
 import { FAQ } from '@/lib/constants';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function FaqSection() {
+  const { t, language } = useLanguage();
+
   return (
     <section id="faq-section" className="py-20 bg-background relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
           <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary-light px-3 py-1 rounded-full border border-primary/20">
-            Clear Answers
+            {t.faq.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-text-main mt-4 tracking-tight">
-            Frequently Asked Questions
+            {t.faq.heading}
           </h2>
           <p className="text-base sm:text-lg text-text-main/70 mt-3">
-            Everything you need to know about Indian government digital signatures and PKI certificates.
+            {t.faq.subheading}
           </p>
         </div>
 
@@ -45,12 +48,12 @@ export function FaqSection() {
 
         {/* Help footer */}
         <div className="mt-10 text-center text-xs text-text-main/60">
-          Still have questions regarding your specific certificate or signature?{' '}
+          {t.faq.contactNote}{' '}
           <Link
             href="/contact"
             className="text-primary font-bold hover:underline inline-flex items-center gap-1"
           >
-            <span>Contact our technical desk</span>
+            <span>{t.faq.contactLink}</span>
             <span>&rarr;</span>
           </Link>
         </div>

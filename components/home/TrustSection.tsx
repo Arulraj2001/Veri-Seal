@@ -4,8 +4,10 @@ import * as React from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Zap, ShieldCheck, Smartphone, CheckCircle, Award } from 'lucide-react';
 import { TRUST_BADGES } from '@/lib/constants';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function TrustSection() {
+  const { t, language } = useLanguage();
   const icons = [Lock, Zap, ShieldCheck, Smartphone];
 
   return (
@@ -14,13 +16,13 @@ export function TrustSection() {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-xs font-bold uppercase tracking-wider text-primary bg-white px-3 py-1 rounded-full border border-surface-darker shadow-2xs">
-            Security & Privacy First
+            {t.trust.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-text-main mt-4 tracking-tight">
-            Why Citizens & Enterprises Trust VeriSeal
+            {t.trust.heading}
           </h2>
           <p className="text-base sm:text-lg text-text-main/70 mt-3">
-            Built with strict client privacy protocols and authentic CCA India Root Trust anchors.
+            {t.trust.subheading}
           </p>
         </div>
 
