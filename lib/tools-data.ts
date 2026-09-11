@@ -429,6 +429,58 @@ export const TOOLS_CATALOG: ToolItem[] = [
     featuredInNav: false,
     priorityOrder: 28,
   },
+  {
+    id: 'signature-cleaner-extractor',
+    slug: '/tools/signature-cleaner-extractor',
+    name: 'Black Ink Signature Extractor & Enhancer',
+    category: 'photo_signature',
+    categoryLabel: 'Exam Photo & Signature',
+    shortDesc:
+      'Remove ruled notebook lines, eliminate background shadows, and convert blue ballpoint ink to dense official India Black.',
+    badge: 'NEW • NO RULED LINES',
+    examTags: ['SSC CGL', 'UPSC CSE', 'IBPS PO', 'TNPSC', 'Black Ink', '140x60'],
+    featuredInNav: true,
+    priorityOrder: 29,
+  },
+  {
+    id: 'thumb-impression-resizer',
+    slug: '/tools/thumb-impression-resizer',
+    name: 'Left Thumb Impression (LTI) Resizer & Sharpener',
+    category: 'photo_signature',
+    categoryLabel: 'Exam Photo & Signature',
+    shortDesc:
+      'Sharpen friction ridges, eliminate ink smudges, and format strictly to 240×240 px (20KB–50KB) for bank & railway recruitment.',
+    badge: 'NEW • BIOMETRIC RIDGE',
+    examTags: ['IBPS Clerk', 'SBI PO', 'Railway RRB', 'SSC LTI', '240x240'],
+    featuredInNav: true,
+    priorityOrder: 30,
+  },
+  {
+    id: 'driving-license-card-merger',
+    slug: '/tools/driving-license-card-merger',
+    name: 'Driving License Front & Back Merger (<200KB)',
+    category: 'marksheet_scanner',
+    categoryLabel: 'Marksheet & Scanners',
+    shortDesc:
+      'Combine Front and Back sides of smart card DL or Vehicle RC onto single-page A4 PDF strictly under 200KB for Parivahan Sarathi.',
+    badge: 'NEW • SARATHI RTO',
+    examTags: ['Parivahan', 'Sarathi', 'Smart Card', 'RC', 'FASTag', '200KB'],
+    featuredInNav: true,
+    priorityOrder: 31,
+  },
+  {
+    id: 'photo-signature-joiner',
+    slug: '/tools/photo-signature-joiner',
+    name: 'Combined Photo & Signature Slip Maker',
+    category: 'cyber_cafe',
+    categoryLabel: 'Cyber Cafe & Studio',
+    shortDesc:
+      'Join passport photo, signature, and handwritten declaration into single template slip for MP Vyapam, UPSSSC, and Kerala PSC.',
+    badge: 'NEW • VYAPAM / UPSSSC',
+    examTags: ['MP PEB', 'UPSSSC', 'Rajasthan RSMSSB', 'Kerala PSC', 'DOP'],
+    featuredInNav: true,
+    priorityOrder: 32,
+  },
 ];
 
 /** Helper to get all categories */

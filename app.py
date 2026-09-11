@@ -24,6 +24,10 @@ from aadhaar_masker import mask_aadhaar_pdf, mask_aadhaar_image
 from marksheet_merger import merge_marksheets_to_pdf_target
 from photo_sheet_generator import generate_passport_photo_sheet
 from clean_scanner import process_clean_document
+from signature_extractor import process_signature
+from thumb_impression_engine import process_thumb_impression
+from card_merger import merge_smart_card_sides
+from photo_signature_joiner import create_composite_slip
 from models import (
     BatchVerificationResponse,
     CompressionResponse,
@@ -845,6 +849,190 @@ async def clean_scanner_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Document cleaning failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/extract-signature",
+    summary="Black Ink Signature Extractor & Contrast Enhancer",
+    description="Eliminates ruled notebook lines, whitens paper to pure #FFFFFF, and converts blue ink to dense India Black ink.",
+)
+@limiter.limit("30/minute")
+async def extract_signature_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="Signature photo or scan"),
+    ink_mode: str = Form(default="pure_black"),
+    remove_lines: bool = Form(default=True),
+    line_sensitivity: float = Form(default=1.0),
+    auto_crop: bool = Form(default=True),
+    target_preset: str = Form(default="ssc"),
+    custom_width: Optional[int] = Form(default=None),
+    custom_height: Optional[int] = Form(default=None),
+    target_min_kb: Optional[int] = Form(default=None),
+    target_max_kb: Optional[int] = Form(default=None),
+    rotation: int = Form(default=0),
+):
+    if not file.filename:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No signature uploaded.")
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="File exceeds 25MB.")
+
+    try:
+        result = process_signature(
+            image_bytes=content,
+            ink_mode=ink_mode,
+            remove_lines=remove_lines,
+            line_sensitivity=line_sensitivity,
+            auto_crop=auto_crop,
+            target_preset=target_preset,
+            custom_width=custom_width,
+            custom_height=custom_height,
+            target_min_kb=target_min_kb,
+            target_max_kb=target_max_kb,
+            rotation=rotation,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Signature extraction failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Signature extraction failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/enhance-thumb-impression",
+    summary="Left Thumb Impression (LTI) Ridge Sharpener",
+    description="Sharpens biological friction ridges and normalizes ink darkness to 20KB-50KB for IBPS and Railway RRB.",
+)
+@limiter.limit("30/minute")
+async def enhance_thumb_endpoint(
+    request: Request,
+    file: UploadFile = File(..., description="Thumb impression image"),
+    rotation: int = Form(default=0),
+    ridge_sharpness: float = Form(default=1.0),
+    ink_density: float = Form(default=1.0),
+    paper_clean_strength: float = Form(default=1.0),
+    portal_preset: str = Form(default="ibps"),
+    target_width: int = Form(default=240),
+    target_height: int = Form(default=240),
+    min_kb: int = Form(default=20),
+    max_kb: int = Form(default=50),
+):
+    if not file.filename:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No thumb impression uploaded.")
+
+    content = await file.read()
+    if len(content) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="File exceeds 25MB.")
+
+    try:
+        result = process_thumb_impression(
+            image_bytes=content,
+            rotation=rotation,
+            ridge_sharpness=ridge_sharpness,
+            ink_density=ink_density,
+            paper_clean_strength=paper_clean_strength,
+            portal_preset=portal_preset,
+            target_width=target_width,
+            target_height=target_height,
+            min_kb=min_kb,
+            max_kb=max_kb,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Thumb impression enhancement failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Thumb impression enhancement failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/merge-id-cards",
+    summary="Driving License & Smart Card Front-Back Merger",
+    description="Merges Front and Back sides of smart card driving licenses onto single A4 PDF strictly under <200KB for Parivahan Sarathi.",
+)
+@limiter.limit("25/minute")
+async def merge_id_cards_endpoint(
+    request: Request,
+    front_file: UploadFile = File(..., description="Front side of smart card"),
+    back_file: UploadFile = File(..., description="Back side of smart card"),
+    layout: str = Form(default="stacked"),
+    front_rotation: int = Form(default=0),
+    back_rotation: int = Form(default=0),
+    card_title: str = Form(default="DRIVING LICENCE / VEHICLE REGISTRATION"),
+    target_kb: int = Form(default=200),
+    output_format: str = Form(default="both"),
+):
+    front_bytes = await front_file.read()
+    back_bytes = await back_file.read()
+
+    if len(front_bytes) > MAX_FILE_SIZE_BYTES or len(back_bytes) > MAX_FILE_SIZE_BYTES:
+        raise HTTPException(status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="A file exceeds 25MB.")
+
+    try:
+        result = merge_smart_card_sides(
+            front_bytes=front_bytes,
+            back_bytes=back_bytes,
+            layout=layout,
+            front_rotation=front_rotation,
+            back_rotation=back_rotation,
+            card_title=card_title,
+            target_kb=target_kb,
+            output_format=output_format,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Card merger failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Card merger failed: {str(exc)}",
+        )
+
+
+@app.post(
+    "/join-photo-signature",
+    summary="Combined Photo + Signature + Declaration Slip Generator",
+    description="Generates composite application slips for MP PEB / Vyapam, UPSSSC, and Kerala PSC.",
+)
+@limiter.limit("25/minute")
+async def join_photo_signature_endpoint(
+    request: Request,
+    photo_file: UploadFile = File(..., description="Passport photo"),
+    signature_file: UploadFile = File(..., description="Signature image"),
+    declaration_file: Optional[UploadFile] = File(default=None, description="Optional handwritten declaration"),
+    candidate_name: Optional[str] = Form(default=None),
+    date_of_photo: Optional[str] = Form(default=None),
+    preset: str = Form(default="mp_peb"),
+    target_width: int = Form(default=400),
+    target_height: int = Form(default=500),
+    target_max_kb: int = Form(default=100),
+):
+    photo_bytes = await photo_file.read()
+    sig_bytes = await signature_file.read()
+    decl_bytes = await declaration_file.read() if declaration_file and declaration_file.filename else None
+
+    try:
+        result = create_composite_slip(
+            photo_bytes=photo_bytes,
+            signature_bytes=sig_bytes,
+            declaration_bytes=decl_bytes,
+            candidate_name=candidate_name,
+            date_of_photo=date_of_photo,
+            preset=preset,
+            target_width=target_width,
+            target_height=target_height,
+            target_max_kb=target_max_kb,
+        )
+        return JSONResponse(content=result)
+    except Exception as exc:
+        logger.error(f"Composite slip generation failed: {exc}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Composite slip generation failed: {str(exc)}",
         )
 
 

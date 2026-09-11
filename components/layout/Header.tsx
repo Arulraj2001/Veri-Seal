@@ -108,7 +108,7 @@ export function Header() {
 
   const navLinks = [
     { label: t.nav.home, href: '/#hero' },
-    { label: 'All Free Tools (28)', href: '/tools' },
+    { label: 'All Free Tools (32)', href: '/tools' },
     { label: t.nav.documents, href: '/#supported-docs' },
     { label: t.nav.howItWorks, href: '/#how-it-works' },
     { label: t.nav.security, href: '/#trust-section' },
@@ -203,7 +203,7 @@ export function Header() {
                         Need all exam tools in one place?
                       </span>
                       <span className="text-[11px] text-slate-500 hidden sm:inline">
-                        Instant search across 28+ free tools by exam name or file limit.
+                        Instant search across 32+ free tools by exam name or file limit.
                       </span>
                     </div>
                     <Link
@@ -281,6 +281,22 @@ export function Header() {
                     </div>
                     <div className="space-y-1 text-xs">
                       <Link
+                        href="/tools/signature-cleaner-extractor"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold text-emerald-700">Signature Extractor</div>
+                        <div className="text-[10px] text-text-main/60">Line Removal &amp; India Black</div>
+                      </Link>
+                      <Link
+                        href="/tools/thumb-impression-resizer"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold text-emerald-700">Thumb Impression (LTI)</div>
+                        <div className="text-[10px] text-text-main/60">240×240px 20-50KB IBPS/RRB</div>
+                      </Link>
+                      <Link
                         href="/tools/ssc-photo-signature-resizer"
                         onClick={() => setToolsMenuOpen(false)}
                         className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
@@ -355,6 +371,14 @@ export function Header() {
                         <div className="text-[10px] text-text-main/60">Combine All Semesters in 1 PDF</div>
                       </Link>
                       <Link
+                        href="/tools/driving-license-card-merger"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
+                      >
+                        <div className="font-bold text-emerald-700">DL Front &amp; Back Merger</div>
+                        <div className="text-[10px] text-text-main/60">Single A4 PDF &lt;200KB Sarathi</div>
+                      </Link>
+                      <Link
                         href="/tools/clean-document-scanner"
                         onClick={() => setToolsMenuOpen(false)}
                         className="block p-1.5 rounded-xl hover:bg-primary-light hover:text-primary text-text-main transition-colors"
@@ -419,6 +443,14 @@ export function Header() {
                       >
                         <div className="font-bold text-emerald-700">Mask Aadhaar (8 Digits)</div>
                         <div className="text-[10px] text-text-main/60">True Stream Text Purge &amp; QR</div>
+                      </Link>
+                      <Link
+                        href="/tools/photo-signature-joiner"
+                        onClick={() => setToolsMenuOpen(false)}
+                        className="block p-1.5 rounded-lg hover:bg-white hover:text-primary text-text-main transition-colors font-medium"
+                      >
+                        <div className="font-bold text-emerald-700">Photo &amp; Sig Slip Maker</div>
+                        <div className="text-[10px] text-text-main/60">MP PEB, UPSSSC &amp; Kerala PSC</div>
                       </Link>
                       <Link
                         href="/tools/passport-photo-sheet-maker"

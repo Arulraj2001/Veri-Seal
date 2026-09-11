@@ -1030,3 +1030,311 @@ export async function cleanDocumentScan(
   });
 }
 
+// --------------------------------------------------------------------------
+// 1. Black Ink Signature Extractor & Contrast Enhancer
+// --------------------------------------------------------------------------
+
+export interface SignatureExtractorOptions {
+  inkMode?: 'pure_black' | 'deep_navy' | 'original';
+  removeLines?: boolean;
+  lineSensitivity?: number;
+  autoCrop?: boolean;
+  targetPreset?: 'ssc' | 'upsc' | 'ibps' | 'tnpsc' | 'custom';
+  customWidth?: number;
+  customHeight?: number;
+  targetMinKb?: number;
+  targetMaxKb?: number;
+  rotation?: number;
+  onProgress?: (percent: number) => void;
+}
+
+export interface SignatureExtractorResponse {
+  status: string;
+  preset: string;
+  width_px: number;
+  height_px: number;
+  aspect_ratio: number;
+  output_size_kb: number;
+  min_kb_target: number;
+  max_kb_target: number;
+  is_within_limits: boolean;
+  image_base64: string;
+  preview_base64: string;
+  format: string;
+  color_space: string;
+  dpi: number;
+}
+
+export async function extractSignature(
+  file: File,
+  options?: SignatureExtractorOptions
+): Promise<SignatureExtractorResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('ink_mode', options?.inkMode || 'pure_black');
+    formData.append('remove_lines', String(options?.removeLines ?? true));
+    formData.append('line_sensitivity', String(options?.lineSensitivity ?? 1.0));
+    formData.append('auto_crop', String(options?.autoCrop ?? true));
+    formData.append('target_preset', options?.targetPreset || 'ssc');
+    if (options?.customWidth) formData.append('custom_width', String(options.customWidth));
+    if (options?.customHeight) formData.append('custom_height', String(options.customHeight));
+    if (options?.targetMinKb) formData.append('target_min_kb', String(options.targetMinKb));
+    if (options?.targetMaxKb) formData.append('target_max_kb', String(options.targetMaxKb));
+    formData.append('rotation', String(options?.rotation ?? 0));
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as SignatureExtractorResponse);
+        } else {
+          reject(new Error(json.detail || json.message || 'Signature extraction failed.'));
+        }
+      } catch {
+        reject(new Error(`Failed to parse signature extraction response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error during signature upload.'));
+    xhr.open('POST', `${getApiUrl()}/extract-signature`, true);
+    xhr.send(formData);
+  });
+}
+
+// --------------------------------------------------------------------------
+// 2. Left Thumb Impression (LTI) Ridge Sharpener & Binarizer
+// --------------------------------------------------------------------------
+
+export interface ThumbImpressionOptions {
+  rotation?: number;
+  ridgeSharpness?: number;
+  inkDensity?: number;
+  paperCleanStrength?: number;
+  portalPreset?: 'ibps' | 'rrb' | 'ssc' | 'custom';
+  targetWidth?: number;
+  targetHeight?: number;
+  minKb?: number;
+  maxKb?: number;
+  onProgress?: (percent: number) => void;
+}
+
+export interface ThumbImpressionResponse {
+  status: string;
+  preset: string;
+  width_px: number;
+  height_px: number;
+  aspect_ratio: number;
+  output_size_kb: number;
+  min_kb_target: number;
+  max_kb_target: number;
+  is_within_limits: boolean;
+  image_base64: string;
+  preview_base64: string;
+  format: string;
+  color_space: string;
+  dpi: number;
+}
+
+export async function enhanceThumbImpression(
+  file: File,
+  options?: ThumbImpressionOptions
+): Promise<ThumbImpressionResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('rotation', String(options?.rotation ?? 0));
+    formData.append('ridge_sharpness', String(options?.ridgeSharpness ?? 1.0));
+    formData.append('ink_density', String(options?.inkDensity ?? 1.0));
+    formData.append('paper_clean_strength', String(options?.paperCleanStrength ?? 1.0));
+    formData.append('portal_preset', options?.portalPreset || 'ibps');
+    formData.append('target_width', String(options?.targetWidth ?? 240));
+    formData.append('target_height', String(options?.targetHeight ?? 240));
+    formData.append('min_kb', String(options?.minKb ?? 20));
+    formData.append('max_kb', String(options?.maxKb ?? 50));
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as ThumbImpressionResponse);
+        } else {
+          reject(new Error(json.detail || json.message || 'Thumb enhancement failed.'));
+        }
+      } catch {
+        reject(new Error(`Failed to parse thumb enhancement response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error during thumb impression upload.'));
+    xhr.open('POST', `${getApiUrl()}/enhance-thumb-impression`, true);
+    xhr.send(formData);
+  });
+}
+
+// --------------------------------------------------------------------------
+// 3. Driving License & Smart Card (RC / PAN) Front-Back Merger
+// --------------------------------------------------------------------------
+
+export interface CardMergerOptions {
+  layout?: 'stacked' | 'side_by_side';
+  frontRotation?: number;
+  backRotation?: number;
+  cardTitle?: string;
+  targetKb?: number;
+  outputFormat?: 'pdf' | 'image' | 'both';
+  onProgress?: (percent: number) => void;
+}
+
+export interface CardMergerResponse {
+  status: string;
+  layout: string;
+  width_px: number;
+  height_px: number;
+  output_size_kb: number;
+  target_kb: number;
+  is_under_limit: boolean;
+  image_base64: string;
+  pdf_base64?: string | null;
+  preview_base64: string;
+}
+
+export async function mergeIdCards(
+  frontFile: File,
+  backFile: File,
+  options?: CardMergerOptions
+): Promise<CardMergerResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('front_file', frontFile);
+    formData.append('back_file', backFile);
+    formData.append('layout', options?.layout || 'stacked');
+    formData.append('front_rotation', String(options?.frontRotation ?? 0));
+    formData.append('back_rotation', String(options?.backRotation ?? 0));
+    formData.append('card_title', options?.cardTitle || 'DRIVING LICENCE / VEHICLE REGISTRATION');
+    formData.append('target_kb', String(options?.targetKb ?? 200));
+    formData.append('output_format', options?.outputFormat || 'both');
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as CardMergerResponse);
+        } else {
+          reject(new Error(json.detail || json.message || 'Card merger failed.'));
+        }
+      } catch {
+        reject(new Error(`Failed to parse card merger response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error during card upload.'));
+    xhr.open('POST', `${getApiUrl()}/merge-id-cards`, true);
+    xhr.send(formData);
+  });
+}
+
+// --------------------------------------------------------------------------
+// 4. Combined Photo + Signature + Declaration Slip Generator
+// --------------------------------------------------------------------------
+
+export interface PhotoSignatureJoinerOptions {
+  declarationFile?: File | null;
+  candidateName?: string;
+  dateOfPhoto?: string;
+  preset?: 'mp_peb' | 'upsssc' | 'kerala_psc' | 'custom';
+  targetWidth?: number;
+  targetHeight?: number;
+  targetMaxKb?: number;
+  onProgress?: (percent: number) => void;
+}
+
+export interface PhotoSignatureJoinerResponse {
+  status: string;
+  preset: string;
+  width_px: number;
+  height_px: number;
+  aspect_ratio: number;
+  output_size_kb: number;
+  target_max_kb: number;
+  is_under_limit: boolean;
+  image_base64: string;
+  preview_base64: string;
+  format: string;
+}
+
+export async function joinPhotoSignature(
+  photoFile: File,
+  signatureFile: File,
+  options?: PhotoSignatureJoinerOptions
+): Promise<PhotoSignatureJoinerResponse> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData();
+    formData.append('photo_file', photoFile);
+    formData.append('signature_file', signatureFile);
+    if (options?.declarationFile) {
+      formData.append('declaration_file', options.declarationFile);
+    }
+    if (options?.candidateName) formData.append('candidate_name', options.candidateName);
+    if (options?.dateOfPhoto) formData.append('date_of_photo', options.dateOfPhoto);
+    formData.append('preset', options?.preset || 'mp_peb');
+    formData.append('target_width', String(options?.targetWidth ?? 400));
+    formData.append('target_height', String(options?.targetHeight ?? 500));
+    formData.append('target_max_kb', String(options?.targetMaxKb ?? 100));
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable && options?.onProgress) {
+        const percent = Math.min(Math.round((event.loaded / event.total) * 80), 80);
+        options.onProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      if (options?.onProgress) options.onProgress(100);
+      try {
+        const json = JSON.parse(xhr.responseText);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(json as PhotoSignatureJoinerResponse);
+        } else {
+          reject(new Error(json.detail || json.message || 'Composite slip generation failed.'));
+        }
+      } catch {
+        reject(new Error(`Failed to parse slip generation response: ${xhr.statusText}`));
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('Network error during slip upload.'));
+    xhr.open('POST', `${getApiUrl()}/join-photo-signature`, true);
+    xhr.send(formData);
+  });
+}
+
+

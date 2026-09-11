@@ -18,14 +18,14 @@ import ToolsDirectory from '@/components/tools/ToolsDirectory';
 export const metadata: Metadata = {
   title: 'All Free Exam & Document Tools Directory | VeriSeal India',
   description:
-    'Complete directory of 100% free Indian examination tools. PDF compressors (100KB, 200KB, 300KB), photo & signature resizers for UPSC, SSC, NEET, RRB, GATE, marksheet merger, and cyber cafe photo sheets. Zero watermarks, in-memory RAM privacy.',
+    'Complete directory of 100% free Indian examination tools. Signature extractor, thumb impression sharpener, DL merger, PDF compressors (100KB, 200KB, 300KB), photo & signature resizers for UPSC, SSC, NEET, RRB, GATE, and photo sheets. Zero watermarks, in-memory RAM privacy.',
   alternates: {
     canonical: 'https://veriseal.in/tools',
   },
   openGraph: {
     title: 'Free Indian Exam & Document Tools Directory | VeriSeal',
     description:
-      'Explore 28+ free tools for government exams, marksheet merging, photo resizing, and e-Aadhaar decryption. Fast, free, and completely client-safe.',
+      'Explore 32+ free tools for government exams, marksheet merging, photo resizing, and e-Aadhaar decryption. Fast, free, and completely client-safe.',
     url: 'https://veriseal.in/tools',
     siteName: 'VeriSeal',
     type: 'website',

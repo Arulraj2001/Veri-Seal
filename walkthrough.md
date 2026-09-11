@@ -154,3 +154,43 @@ Result: 28 / 28 Routes Returned HTTP 200 OK!
   - HTTP 200 OK confirmed for all 4 updated routes.
   - Verified `pt-28` and breadcrumb elements present in live server output.
 
+---
+
+## Phase 4: Advanced Custom Exam Tools & Zero-Rejection Engine (32 Tools Total)
+
+### 1. New Production Processing Engines
+1. **Black Ink Signature Extractor & Contrast Enhancer** (`/tools/signature-cleaner-extractor`)
+   - Removes ruled notebook lines via OpenCV morphological horizontal structuring elements.
+   - Remaps blue/violet ballpoint ink to dense official India Black (`#141414`).
+   - Pure white `#FFFFFF` background normalization and auto-crop to stroke boundaries.
+   - Built-in portal presets for SSC CGL (140×60, 10–20KB), UPSC (350×350, 20–50KB), and IBPS PO (140×60, 10–20KB).
+2. **Left Thumb Impression (LTI) Ridge Sharpener & Binarizer** (`/tools/thumb-impression-resizer`)
+   - CLAHE and unsharp masking to enhance papillary friction ridges.
+   - Normalizes uneven stamp ink density and eliminates paper smudges.
+   - Strictly budgeted to 240×240 px, 20KB–50KB for IBPS and Railway RRB.
+3. **Driving License Front & Back Merger (<200KB)** (`/tools/driving-license-card-merger`)
+   - ISO/IEC 7810 ID-1 CR-80 card ratio auto-standardization.
+   - Vertical stack and side-by-side A4 layout options with photorealistic outlines.
+   - Exports single-page PDF guaranteed strictly under 200KB for Parivahan Sarathi, RTO, and FASTag portals.
+4. **Combined Photo & Signature Slip Maker** (`/tools/photo-signature-joiner`)
+   - Compiles Passport Photo, Signature, and optional Declaration into a single composite slip.
+   - Calibrated presets for MP PEB / Vyapam (400×500 px, <100KB), UPSSSC (350×500 px, <50KB), and Kerala PSC (300×400 px, <40KB).
+   - Stamps Candidate Name & Date of Photo (DOP) strips below the photo.
+
+### 2. Universal Live Pre-Flight Compliance Card
+- Real-time scorecard verifying 6 critical parameters before download:
+  - File Size Weight (KB)
+  - Pixel Dimensions (width × height)
+  - Aspect Ratio tolerance
+  - Standard sRGB Color Profile (prevents CMYK portal upload errors)
+  - Clean JPEG / PDF format (eliminates `.webp` extension rejection bugs)
+  - 200 / 300 DPI Resolution
+
+### 3. Verification & SEO Deployment
+- `npx tsc --noEmit` &rarr; **0 errors**.
+- All 4 new tool routes verified returning **HTTP 200 OK**.
+- Python in-memory test suite verified with **100% success**.
+- Catalog expanded to **32 Free Indian Exam & Document Tools**.
+- Sitemaps updated with priority 0.95 and daily revalidation.
+
+
