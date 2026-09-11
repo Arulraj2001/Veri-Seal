@@ -6,6 +6,8 @@ import { HowItWorks } from '@/components/home/HowItWorks';
 import { SupportedDocs } from '@/components/home/SupportedDocs';
 import { TrustSection } from '@/components/home/TrustSection';
 import { FaqSection } from '@/components/home/FaqSection';
+import { ApiOfferingBanner } from '@/components/home/ApiOfferingBanner';
+import { OstruneAgencyBanner } from '@/components/home/OstruneAgencyBanner';
 
 export default function HomePage() {
   return (
@@ -26,6 +28,12 @@ export default function HomePage() {
 
       {/* Trust & RCAI Security Cards */}
       <TrustSection />
+
+      {/* Developer & Enterprise REST API Offering Ad */}
+      <ApiOfferingBanner />
+
+      {/* Ostrune Agency Engineering & SEO Showcase */}
+      <OstruneAgencyBanner />
 
       {/* FAQ Accordion Section */}
       <FaqSection />

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, ExternalLink, Sparkles } from 'lucide-react';
 
 export function Footer() {
   const pathname = usePathname();
@@ -189,6 +189,42 @@ export function Footer() {
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* Ostrune Agency Partner & Engineering Showcase */}
+        <div className="py-5 my-8 px-6 rounded-2xl bg-white border border-surface-darker/80 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 text-center md:text-left">
+            <div className="h-10 w-10 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
+              <Sparkles className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs sm:text-sm font-bold text-text-main">
+                Engineered for Speed &amp; Performance by{' '}
+                <a
+                  href="https://ostrune.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline font-black inline-flex items-center gap-1"
+                >
+                  <span>Ostrune Agency</span>
+                  <ExternalLink className="w-3.5 h-3.5 inline" />
+                </a>
+              </p>
+              <p className="text-xs text-text-main/70 mt-0.5">
+                Web Development, High-Conversion SEO &amp; Performance Growth. Free site audit with 12h reply guarantee.
+              </p>
+            </div>
+          </div>
+
+          <a
+            href="https://ostrune.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-text-main hover:bg-black text-white text-xs font-bold shrink-0 transition-colors shadow-xs"
+          >
+            <span>Visit Ostrune</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
         </div>
 
         {/* Bottom Bar */}

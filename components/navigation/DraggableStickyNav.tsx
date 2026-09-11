@@ -75,7 +75,7 @@ export function DraggableStickyNav() {
       aria-label="Quick Page Navigation"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
-      className="fixed left-0 top-1/2 -translate-y-1/2 z-40 select-none flex items-center"
+      className="hidden md:flex fixed left-0 top-1/2 -translate-y-1/2 z-40 select-none items-center"
     >
       {/* 1. Attached Vertical Tab (Visible on left edge when closed) */}
       <motion.button

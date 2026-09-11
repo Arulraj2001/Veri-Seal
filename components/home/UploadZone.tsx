@@ -47,6 +47,7 @@ import {
   type PublicSettings,
 } from '@/lib/api';
 import { UpiPaymentFlowModal } from '@/components/payment/UpiPaymentFlowModal';
+import { GuestLimitModal } from '@/components/home/GuestLimitModal';
 import { getSeoSlugForDocType } from '@/lib/seo-store';
 import { trackEvent } from '@/lib/analytics';
 import { captureVerificationError, ErrorBoundary } from '@/components/ui/ErrorBoundary';
@@ -75,6 +76,7 @@ export function UploadZone() {
   const [verifiedCount, setVerifiedCount] = React.useState(SITE_CONFIG.verifiedCountDefault);
   const [publicSettings, setPublicSettings] = React.useState<PublicSettings | null>(null);
   const [showUpgradeModal, setShowUpgradeModal] = React.useState(false);
+  const [showGuestLimitModal, setShowGuestLimitModal] = React.useState(false);
 
   const [isCounterLive, setIsCounterLive] = React.useState(false);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
@@ -110,6 +112,8 @@ export function UploadZone() {
     setRawBase64(null);
     setErrorMessage('');
     setErrorCode('');
+    setShowGuestLimitModal(false);
+    setShowUpgradeModal(false);
     setWhatDoesThisMeanOpen(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -191,13 +195,21 @@ export function UploadZone() {
   const startVerification = async () => {
     if (!file) return;
 
-    // Daily Limit check: If payment toggle is ON and guest has verified 3 PDFs today
-    // (Paid users on Pro or Business tier have unlimited verifications)
-    if (!isPaidUser) {
+    // Daily Limit check: If payment toggle is ON and user is NOT a paid user (Pro/Business)
+    // Guests can verify freely up to the daily limit, then must sign up / sign in before upgrading.
+    // Logged-in free users can upgrade directly to Pro/Business.
+    if (!isPaidUser && publicSettings?.payment_enabled) {
+      const freeLimit = publicSettings.free_daily_limit || 3;
       const usage = getGuestVerificationUsage();
-      if (publicSettings?.payment_enabled && usage.count >= (publicSettings.free_daily_limit || 3)) {
-        setShowUpgradeModal(true);
-        return;
+
+      if (usage.count >= freeLimit) {
+        if (!user) {
+          setShowGuestLimitModal(true);
+          return;
+        } else {
+          setShowUpgradeModal(true);
+          return;
+        }
       }
     }
 
@@ -266,6 +278,16 @@ export function UploadZone() {
         error_code: code,
         message: errorObj?.message,
       });
+
+      if (code === 'DAILY_LIMIT_REACHED' || code === 'GUEST_LIMIT_REACHED') {
+        if (!user) {
+          setShowGuestLimitModal(true);
+        } else {
+          setShowUpgradeModal(true);
+        }
+        setState('file-selected');
+        return;
+      }
 
       if (code === 'WRONG_PASSWORD') {
         setErrorMessage(
@@ -1141,11 +1163,21 @@ export function UploadZone() {
         </div>
       </div>
 
+      {/* Guest Limit Reached Modal - Prompts Sign Up / Sign In First */}
+      <GuestLimitModal
+        isOpen={showGuestLimitModal}
+        onClose={() => setShowGuestLimitModal(false)}
+        freeLimit={publicSettings?.free_daily_limit || 3}
+        onViewPlans={() => setShowUpgradeModal(true)}
+      />
+
       {/* Complete UPI Payment Flow 3-Step Modal */}
       <UpiPaymentFlowModal
         isOpen={showUpgradeModal}
-        canDismiss={false}
+        canDismiss={true}
         onClose={() => setShowUpgradeModal(false)}
+        userEmail={user?.email || ''}
+        userName={user?.name || ''}
       />
       </section>
     </ErrorBoundary>
