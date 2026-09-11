@@ -8,7 +8,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Menu,
   X,
-  Languages,
   ArrowRight,
   LayoutDashboard,
   LogOut,
@@ -79,7 +78,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [toolsMenuOpen, setToolsMenuOpen] = React.useState(false);
   const toolsRef = React.useRef<HTMLDivElement>(null);
-  const { language, toggleLanguage, t } = useLanguage();
+  const { t } = useLanguage();
 
   const user = session?.user;
   const userRole = (user as { role?: string })?.role || 'user';
@@ -110,11 +109,10 @@ export function Header() {
 
   const navLinks = [
     { label: t.nav.home, href: '/#hero' },
-    { label: 'All Free Tools (36)', href: '/tools' },
-    { label: 'Home Cost & Savings ⚡', href: '/home-cost' },
-    { label: 'Business Profit OS 💼', href: '/business-os' },
+    { label: t.nav.freeTools, href: '/tools' },
+    { label: t.nav.homeCost, href: '/home-cost' },
+    { label: t.nav.businessOs, href: '/business-os' },
     { label: t.nav.documents, href: '/#supported-docs' },
-    { label: t.nav.howItWorks, href: '/#how-it-works' },
     { label: t.nav.security, href: '/#trust-section' },
     { label: t.nav.faq, href: '/#faq-section' },
     { label: t.nav.blog, href: '/blog' },
@@ -177,7 +175,7 @@ export function Header() {
                   : 'text-text-main hover:text-primary hover:bg-white/60'
               )}
             >
-              <span>Free Tools</span>
+              <span>{t.nav.freeTools}</span>
               <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-600 rounded-full border border-emerald-500/30">
                 NEW
               </span>
@@ -528,7 +526,7 @@ export function Header() {
             href="/home-cost"
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full text-text-main hover:text-emerald-700 hover:bg-emerald-50/80 transition-all cursor-pointer select-none"
           >
-            <span>Home Cost</span>
+            <span>{t.nav.homeCost}</span>
             <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-emerald-500/15 text-emerald-700 rounded-full border border-emerald-500/30">
               NEW
             </span>
@@ -539,18 +537,12 @@ export function Header() {
             href="/business-os"
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold rounded-full text-text-main hover:text-indigo-700 hover:bg-indigo-50/80 transition-all cursor-pointer select-none"
           >
-            <span>Business OS</span>
+            <span>{t.nav.businessOs}</span>
             <span className="text-[10px] font-extrabold px-1.5 py-0.5 bg-indigo-500/15 text-indigo-700 rounded-full border border-indigo-500/30">
               HOT
             </span>
           </Link>
 
-          <a
-            href="/#how-it-works"
-            className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
-          >
-            {t.nav.howItWorks}
-          </a>
           <Link
             href="/blog"
             className="px-3.5 py-1.5 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors"
@@ -567,23 +559,6 @@ export function Header() {
 
         {/* Right Actions - Adjusted to right end without overlap */}
         <div className="hidden md:flex items-center justify-end gap-2 ml-auto z-20 shrink-0">
-          {/* Real-time Language Toggle */}
-          <button
-            type="button"
-            onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-surface-darker/80 bg-white hover:border-primary/40 text-xs font-semibold text-text-main transition-all shadow-2xs active:scale-95 shrink-0"
-            title="Toggle Language (EN / தமிழ்)"
-          >
-            <Languages className="w-3.5 h-3.5 text-primary" />
-            <span className={language === 'en' ? 'text-primary font-bold' : 'text-text-main/60 font-medium'}>
-              EN
-            </span>
-            <span className="text-text-main/30">|</span>
-            <span className={language === 'ta' ? 'text-primary font-bold font-tamil' : 'text-text-main/60 font-tamil font-medium'}>
-              தமிழ்
-            </span>
-          </button>
-
           {/* Conditional Auth State */}
           {status === 'authenticated' && user ? (
             <div className="flex items-center gap-1.5 shrink-0">
@@ -654,7 +629,7 @@ export function Header() {
               {/* Quick CTA */}
               <a href="#upload-zone">
                 <Button size="sm" className="h-9 px-3.5 font-semibold text-xs shadow-sm rounded-xl">
-                  {language === 'ta' ? 'இலவச சரிபார்ப்பு' : 'Verify PDF'}
+                  Verify PDF
                 </Button>
               </a>
             </div>
@@ -663,20 +638,6 @@ export function Header() {
 
         {/* Mobile Hamburger Button */}
         <div className="flex md:hidden items-center gap-2">
-          <button
-            type="button"
-            onClick={toggleLanguage}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-lg border border-surface-darker text-xs font-semibold text-text-main bg-white"
-          >
-            <span className={language === 'en' ? 'text-primary font-bold' : 'text-text-main/70'}>
-              EN
-            </span>
-            <span>|</span>
-            <span className={language === 'ta' ? 'text-primary font-bold font-tamil' : 'text-text-main/70 font-tamil'}>
-              தமிழ்
-            </span>
-          </button>
-
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -759,7 +720,7 @@ export function Header() {
                         className="w-full gap-2 font-bold border-amber-400 text-amber-800 bg-amber-50"
                       >
                         <ShieldAlert className="w-4 h-4 text-amber-600" />
-                        <span>Admin Control Panel</span>
+                        <span>{t.nav.adminPanel}</span>
                       </Button>
                     </Link>
                   )}
@@ -784,7 +745,7 @@ export function Header() {
                     }}
                   >
                     <LogOut className="w-4 h-4" />
-                    <span>Sign Out</span>
+                    <span>{t.nav.logout}</span>
                   </Button>
                 </>
               ) : (

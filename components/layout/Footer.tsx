@@ -4,8 +4,10 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MessageSquare, ExternalLink, Sparkles } from 'lucide-react';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function Footer() {
+  const { language } = useLanguage();
   const pathname = usePathname();
 
   if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) {
@@ -37,10 +39,14 @@ export function Footer() {
             </Link>
 
             <p className="text-sm text-text-main/80 max-w-sm leading-relaxed">
-              Verify government PDFs instantly. Made for India.
+              {language === 'ta'
+                ? 'அரசு PDF ஆவணங்களை உடனடியாக சரிபார்க்கவும். இந்தியாவிற்காக உருவாக்கப்பட்டது.'
+                : 'Verify government PDFs instantly. Made for India.'}
             </p>
             <p className="text-xs text-text-main/60 max-w-sm leading-relaxed">
-              Fix the yellow question mark on e-Aadhaar, community, nativity, income certificates, PAN cards, and DigiLocker PDFs.
+              {language === 'ta'
+                ? 'இ-ஆதார், சாதி, இருப்பிடம், வருமான சான்றிதழ், பான் கார்டு மற்றும் டிஜிலாக்கர் PDF-ல் உள்ள மஞ்சள் கேள்விக்குறியை உடனே சரிசெய்யுங்கள்.'
+                : 'Fix the yellow question mark on e-Aadhaar, community, nativity, income certificates, PAN cards, and DigiLocker PDFs.'}
             </p>
 
             <div className="pt-2 flex items-center gap-3 text-text-main/70">
@@ -91,7 +97,7 @@ export function Footer() {
           {/* Free Tools Links */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/90 flex items-center gap-1.5">
-              <span>Free Public Tools</span>
+              <span>{language === 'ta' ? 'இலவச பொது கருவிகள்' : 'Free Public Tools'}</span>
               <span className="text-[9px] font-black px-1.5 py-0.5 bg-emerald-500/15 text-emerald-600 rounded-full">
                 100% FREE
               </span>
@@ -229,7 +235,7 @@ export function Footer() {
           {/* Company Links */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/90">
-              Resources
+              {language === 'ta' ? 'வளங்கள் & வழிகாட்டிகள்' : 'Resources'}
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
@@ -263,7 +269,7 @@ export function Footer() {
           {/* States Links */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/90">
-              State Portals
+              {language === 'ta' ? 'மாநில அரசு தளங்கள்' : 'State Portals'}
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
@@ -334,13 +340,15 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-main/70">
           <p className="text-center sm:text-left leading-relaxed">
-            &copy; 2024 VeriSeal. Free tool to verify Indian government PDF digital signatures. Not affiliated with UIDAI, NIC or any government body.
+            {language === 'ta'
+              ? '© 2024 வெரிசீல். இந்திய அரசு PDF டிஜிட்டல் கையொப்பங்களை சரிபார்க்கும் இலவச தளம். UIDAI அல்லது NIC உடன் இணைக்கப்படவில்லை.'
+              : '© 2024 VeriSeal. Free tool to verify Indian government PDF digital signatures. Not affiliated with UIDAI, NIC or any government body.'}
           </p>
 
           <div className="flex items-center gap-1.5 shrink-0 bg-white/70 border border-surface-darker px-3 py-1.5 rounded-full font-medium shadow-2xs">
-            <span>Made with</span>
+            <span>{language === 'ta' ? 'இந்தியாவிற்காக' : 'Made with'}</span>
             <span className="text-red-500 font-bold animate-pulse">❤️</span>
-            <span>for India</span>
+            <span>{language === 'ta' ? 'உருவாக்கப்பட்டது' : 'for India'}</span>
             <span className="text-base leading-none">🇮🇳</span>
           </div>
         </div>

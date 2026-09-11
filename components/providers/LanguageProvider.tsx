@@ -16,48 +16,33 @@ const LanguageContext = React.createContext<LanguageContextType | undefined>(und
 const STORAGE_KEY = 'veriseal_selected_language';
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = React.useState<SupportedLanguage>('en');
-  const [isMounted, setIsMounted] = React.useState(false);
+  const language: SupportedLanguage = 'en';
 
   React.useEffect(() => {
-    setIsMounted(true);
     try {
-      const saved = localStorage.getItem(STORAGE_KEY) as SupportedLanguage | null;
-      if (saved === 'en' || saved === 'ta') {
-        setLanguageState(saved);
-        document.documentElement.lang = saved;
-      }
+      localStorage.removeItem(STORAGE_KEY);
+      document.documentElement.lang = 'en';
     } catch {
       // localStorage may be disabled
     }
   }, []);
 
-  const setLanguage = React.useCallback((lang: SupportedLanguage) => {
-    setLanguageState(lang);
+  const setLanguage = React.useCallback((_lang: SupportedLanguage) => {
     try {
-      localStorage.setItem(STORAGE_KEY, lang);
-      document.documentElement.lang = lang;
+      localStorage.removeItem(STORAGE_KEY);
+      document.documentElement.lang = 'en';
     } catch {
       // ignore
     }
   }, []);
 
   const toggleLanguage = React.useCallback(() => {
-    setLanguageState((prev) => {
-      const next = prev === 'en' ? 'ta' : 'en';
-      try {
-        localStorage.setItem(STORAGE_KEY, next);
-        document.documentElement.lang = next;
-      } catch {
-        // ignore
-      }
-      return next;
-    });
+    // Keep strictly English
   }, []);
 
   const currentTranslations = React.useMemo(() => {
-    return translations[language] || translations.en;
-  }, [language]);
+    return translations.en;
+  }, []);
 
   const value = React.useMemo(
     () => ({

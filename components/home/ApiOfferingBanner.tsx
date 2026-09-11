@@ -16,8 +16,10 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function ApiOfferingBanner() {
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = React.useState<'curl' | 'node' | 'python'>('curl');
   const [copied, setCopied] = React.useState(false);
 
@@ -65,15 +67,19 @@ print(response.json())`,
           <div className="lg:col-span-6 space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 text-primary-light border border-white/15 backdrop-blur-md">
               <Cpu className="w-3.5 h-3.5 text-primary" />
-              <span>Developer &amp; Enterprise REST API</span>
+              <span>{language === 'ta' ? 'டெவலப்பர் & கார்ப்பரேட் REST API' : 'Developer & Enterprise REST API'}</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-              Automate Government PDF Verification in Your Platform
+              {language === 'ta'
+                ? 'உங்கள் தளத்தில் அரசு PDF சரிபார்ப்பை தானியங்குபடுத்துங்கள்'
+                : 'Automate Government PDF Verification in Your Platform'}
             </h2>
 
             <p className="text-sm sm:text-base text-white/80 leading-relaxed max-w-xl">
-              Integrate instant digital signature validation into your FinTech onboarding, HRMS background checks, or legal workflows. Validates e-Aadhaar, TNeGA community certificates, and PAN cards with CCA India root authority compliance.
+              {language === 'ta'
+                ? 'உங்கள் FinTech, HRMS அல்லது சட்டப் பணிகளில் உடனடி டிஜிட்டல் கையொப்ப சரிபார்ப்பை இணைக்கவும். இ-ஆதார், சாதி சான்றிதழ்கள், பான் கார்டுகளை CCA இந்திய விதிமுறைகளின்படி நொடிகளில் சரிபார்க்கலாம்.'
+                : 'Integrate instant digital signature validation into your FinTech onboarding, HRMS background checks, or legal workflows. Validates e-Aadhaar, TNeGA community certificates, and PAN cards with CCA India root authority compliance.'}
             </p>
 
             {/* Guarantees List */}
@@ -81,25 +87,29 @@ print(response.json())`,
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm text-white/90">
-                  <strong>Sub-500ms Response:</strong> High-throughput asynchronous parsing.
+                  <strong>{language === 'ta' ? '500ms-க்குள் விரைவு பதில்:' : 'Sub-500ms Response:'}</strong>{' '}
+                  {language === 'ta' ? 'உயர் திறன் கொண்ட கட்டமைப்பு.' : 'High-throughput asynchronous parsing.'}
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm text-white/90">
-                  <strong>100% In-Memory:</strong> Zero disk storage, DPDP &amp; IT Act compliant.
+                  <strong>{language === 'ta' ? '100% நினைவக செயலாக்கம்:' : '100% In-Memory:'}</strong>{' '}
+                  {language === 'ta' ? 'சேமிப்பகம் இல்லை, DPDP & IT சட்டம் இணக்கமானது.' : 'Zero disk storage, DPDP & IT Act compliant.'}
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm text-white/90">
-                  <strong>Permanent Green Tick:</strong> Automatic LTV DSS certificate embedding.
+                  <strong>{language === 'ta' ? 'நிரந்தர பச்சை டிக்:' : 'Permanent Green Tick:'}</strong>{' '}
+                  {language === 'ta' ? 'LTV DSS சான்றிதழ் தானாக இணைக்கப்படும்.' : 'Automatic LTV DSS certificate embedding.'}
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <span className="text-xs sm:text-sm text-white/90">
-                  <strong>99.9% Uptime SLA:</strong> Dedicated API keys and webhook callbacks.
+                  <strong>{language === 'ta' ? '99.9% இயக்க உத்தரவாதம்:' : '99.9% Uptime SLA:'}</strong>{' '}
+                  {language === 'ta' ? 'பிரத்யேக API சாவி மற்றும் Webhook ஆதரவு.' : 'Dedicated API keys and webhook callbacks.'}
                 </span>
               </div>
             </div>
@@ -110,14 +120,14 @@ print(response.json())`,
                 href="/contact?subject=api_access"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-primary hover:bg-primary-hover text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all"
               >
-                <span>Request API Access &amp; Keys</span>
+                <span>{language === 'ta' ? 'API அணுகல் கோரிக்கை' : 'Request API Access & Keys'}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/#how-it-works"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-bold text-sm border border-white/20 transition-colors"
               >
-                <span>Explore Architecture</span>
+                <span>{language === 'ta' ? 'கட்டமைப்பை அறிக' : 'Explore Architecture'}</span>
               </Link>
             </div>
           </div>

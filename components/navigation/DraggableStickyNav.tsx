@@ -9,13 +9,12 @@ import {
   ChevronRight,
   Sparkles,
   Layers,
-  ArrowUpRight
+  ArrowUpRight,
+  Zap,
 } from 'lucide-react';
-import { useLanguage } from '@/components/providers/LanguageProvider';
 import { usePathname, useRouter } from 'next/navigation';
 
 export function DraggableStickyNav() {
-  const { t, language } = useLanguage();
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
@@ -34,26 +33,33 @@ export function DraggableStickyNav() {
     return null;
   }
 
-  // 3 items requested (How it works removed from sticky as it is in top nav)
+  // 4 items on left sticky nav (How it works placed here, removed from top nav)
   const navItems = [
     {
+      id: 'how-it-works',
+      label: 'How It Works',
+      desc: '3-Step Verification Process',
+      icon: Zap,
+      badge: '3 Steps',
+    },
+    {
       id: 'supported-docs',
-      label: t.nav.documents,
-      desc: language === 'ta' ? 'அனைத்து அரசு ஆவணங்கள்' : 'Central & State PDFs',
+      label: 'Documents',
+      desc: 'Central & State PDFs',
       icon: FileText,
       badge: 'PDFs',
     },
     {
       id: 'trust-section',
-      label: t.nav.security,
-      desc: language === 'ta' ? '100% நினைவக பாதுகாப்பு' : 'RAM Privacy & RCAI',
+      label: 'Security',
+      desc: 'RAM Privacy & RCAI',
       icon: ShieldCheck,
       badge: '100% RAM',
     },
     {
       id: 'faq-section',
-      label: t.nav.faq,
-      desc: language === 'ta' ? 'அடிக்கடி கேட்கப்படும் கேள்விகள்' : 'Questions & Answers',
+      label: 'FAQ',
+      desc: 'Questions & Answers',
       icon: HelpCircle,
       badge: 'Q&A',
     },
@@ -96,7 +102,7 @@ export function DraggableStickyNav() {
 
         {/* Vertical text label matching website typography */}
         <span className="text-[11px] font-bold uppercase tracking-widest text-text-main/80 group-hover:text-primary [writing-mode:vertical-rl] rotate-180 py-1 font-sans">
-          {language === 'ta' ? 'வழிகாட்டி' : 'Index'}
+          Index
         </span>
 
         <ChevronRight
@@ -128,7 +134,7 @@ export function DraggableStickyNav() {
                     <span className="text-text-main/50 font-semibold">• Quick Index</span>
                   </span>
                   <span className="text-[10px] text-text-main/60 block mt-0.5 font-medium">
-                    {language === 'ta' ? 'விரைவு வழிசெலுத்தல்' : 'Page Navigation'}
+                    Page Navigation
                   </span>
                 </div>
               </div>
@@ -136,7 +142,7 @@ export function DraggableStickyNav() {
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
             </div>
 
-            {/* Navigation Items: Documents, Security, FAQ */}
+            {/* Navigation Items: How it works, Documents, Security, FAQ */}
             <div className="space-y-2">
               {navItems.map((item) => {
                 const Icon = item.icon;

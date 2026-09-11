@@ -23,6 +23,9 @@ export interface TranslationDictionary {
     dashboard: string;
     adminPanel: string;
     logout: string;
+    freeTools: string;
+    homeCost: string;
+    businessOs: string;
   };
   hero: {
     tag: string;
@@ -39,16 +42,42 @@ export interface TranslationDictionary {
   upload: {
     counterSuffix: string;
     trustTag: string;
+    cardHeading: string;
+    cardSubheading: string;
+    liveEngine: string;
+    uploadAnother: string;
     dropTitle: string;
     dropSubtitle: string;
+    dropHint: string;
     browseBtn: string;
+    releaseToUpload: string;
+    releaseHint: string;
+    selectPdfBtn: string;
     passwordLabel: string;
     passwordPlaceholder: string;
     passwordHint: string;
+    passwordCheckbox: string;
+    passwordDecryptionTitle: string;
+    inMemoryOnly: string;
+    passwordRuleDetail: string;
     verifyBtn: string;
     verifyingBtn: string;
+    cancelBtn: string;
+    verifyingTitle: string;
+    pkiEngineProgress: string;
     verifiedHeading: string;
     verifiedSubheading: string;
+    signatureValid: string;
+    ccaVerified: string;
+    legallyValid: string;
+    certDetailsHeading: string;
+    docNameLabel: string;
+    signerLabel: string;
+    issuedByLabel: string;
+    signedOnLabel: string;
+    scopeLabel: string;
+    hashLabel: string;
+    inPlaceNote: string;
     downloadBtn: string;
     verifyAnother: string;
     validSeal: string;
@@ -129,6 +158,9 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       dashboard: 'Dashboard',
       adminPanel: 'Admin Panel',
       logout: 'Sign Out',
+      freeTools: 'Free Tools',
+      homeCost: 'Home Cost',
+      businessOs: 'Business OS',
     },
     hero: {
       tag: 'Free Online Verification Tool • IT Act 2000 Compliant',
@@ -146,17 +178,43 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
     upload: {
       counterSuffix: 'PDFs verified and counting',
       trustTag: '100% In-Memory RAM • IT Act 2000 Section 35',
-      dropTitle: 'Drop your government PDF here',
+      cardHeading: 'Verify Digital Signature',
+      cardSubheading: 'Connected to official India CCA Root Certifying Authority trust hierarchy.',
+      liveEngine: 'Live Engine',
+      uploadAnother: 'Upload Another File',
+      dropTitle: 'Drop your PDF here or click to upload',
       dropSubtitle: 'or click to browse from your device (Max 25MB)',
+      dropHint: 'Accepts official Indian government PDFs up to 25MB. Files are verified in memory and never stored on any server.',
       browseBtn: 'Choose PDF File',
+      releaseToUpload: 'Release to Upload PDF',
+      releaseHint: 'VeriSeal will immediately inspect the digital signature hierarchy',
+      selectPdfBtn: 'Select Government PDF',
       passwordLabel: 'PDF Password (Optional)',
       passwordPlaceholder: 'e.g. RAMA1995 for e-Aadhaar',
       passwordHint: 'For e-Aadhaar: First 4 letters of name in CAPITALS + Year of Birth',
-      verifyBtn: 'Verify PDF Signature Now',
+      passwordCheckbox: 'This PDF is password-protected (e.g. e-Aadhaar)',
+      passwordDecryptionTitle: 'PDF Decryption Password',
+      inMemoryOnly: 'Processed in-memory only',
+      passwordRuleDetail: 'Aadhaar Password Rule: First 4 letters of your name in CAPITAL LETTERS followed by your 4-digit Year of Birth (e.g., if name is SURESH KUMAR born in 1992, password is SURE1992).',
+      verifyBtn: 'Verify Digital Signature Now',
       verifyingBtn: 'Verifying Cryptographic Chain...',
+      cancelBtn: 'Cancel',
+      verifyingTitle: 'Verifying Digital Signature...',
+      pkiEngineProgress: 'PKI Engine Progress',
       verifiedHeading: 'Signature Valid & Verified',
       verifiedSubheading: 'Government digital signature confirmed authentic under IT Act 2000',
-      downloadBtn: 'Download Verified PDF (Green Tick)',
+      signatureValid: 'Signature Valid',
+      ccaVerified: 'CCA India Verified',
+      legallyValid: 'Legally Valid (IT Act 2000)',
+      certDetailsHeading: 'Certificate Verification Details',
+      docNameLabel: 'Document Name',
+      signerLabel: 'Signer Identity',
+      issuedByLabel: 'Issued By (CA)',
+      signedOnLabel: 'Document Signed On',
+      scopeLabel: 'Signature Scope',
+      hashLabel: 'Cryptographic Hash',
+      inPlaceNote: 'Yellow ? on certificate replaced with Adobe verified green tick in-place.',
+      downloadBtn: 'Download Verified PDF (With Permanent Green Tick)',
       verifyAnother: 'Verify Another Document',
       validSeal: 'VALID SIGNATURE',
       invalidSeal: 'INVALID SIGNATURE',
@@ -234,6 +292,9 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       dashboard: 'டாஷ்போர்டு',
       adminPanel: 'நிர்வாக பலகை',
       logout: 'வெளியேறு',
+      freeTools: 'இலவச கருவிகள்',
+      homeCost: 'வீட்டு செலவு',
+      businessOs: 'வணிக OS',
     },
     hero: {
       tag: 'இலவச ஆன்லைன் சரிபார்ப்பு • தகவல் தொழில்நுட்ப சட்டம் 2000 இணக்கமானது',
@@ -251,17 +312,43 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
     upload: {
       counterSuffix: 'PDFகள் சரிபார்க்கப்பட்டு தொடர்ந்து உயர்கிறது',
       trustTag: '100% நினைவகம் • IT சட்டம் 2000 பிரிவு 35',
-      dropTitle: 'உங்கள் அரசு PDF கோப்பை இங்கே இழுத்துவிடவும்',
+      cardHeading: 'டிஜிட்டல் கையொப்பத்தை சரிபார்க்கவும்',
+      cardSubheading: 'அதிகாரப்பூர்வ இந்திய CCA மூல சான்றளிப்பு கட்டமைப்புடன் இணைக்கப்பட்டுள்ளது.',
+      liveEngine: 'நேரலை தளம்',
+      uploadAnother: 'மற்றொரு கோப்பை பதிவேற்றவும்',
+      dropTitle: 'உங்கள் PDF கோப்பை இங்கே இழுத்துவிடவும் அல்லது கிளிக் செய்யவும்',
       dropSubtitle: 'அல்லது உங்கள் சாதனத்திலிருந்து கோப்பைத் தேர்ந்தெடுக்கவும் (அதிகபட்சம் 25MB)',
+      dropHint: '25MB வரையிலான இந்திய அரசு PDF கோப்புகள். கோப்புகள் நினைவகத்தில் மட்டுமே சரிபார்க்கப்படும், எங்கும் சேமிக்கப்படாது.',
       browseBtn: 'PDF கோப்பைத் தேர்ந்தெடுக்கவும்',
+      releaseToUpload: 'PDF-ஐ பதிவேற்ற விடுங்கள்',
+      releaseHint: 'வெரிசீல் உடனடியாக கையொப்பத்தின் கட்டமைப்பை சரிபார்க்கும்',
+      selectPdfBtn: 'அரசு PDF-ஐத் தேர்ந்தெடுக்கவும்',
       passwordLabel: 'PDF கடவுச்சொல் (தேவைப்பட்டால்)',
       passwordPlaceholder: 'எ.கா: RAMA1995 (இ-ஆதாருக்கு)',
       passwordHint: 'இ-ஆதாருக்கு: பெயரின் முதல் 4 ஆங்கில எழுத்துக்கள் (CAPS) + பிறந்த வருடம்',
-      verifyBtn: 'PDF கையொப்பத்தை இப்போது சரிபார்க்கவும்',
+      passwordCheckbox: 'இந்த PDF கடவுச்சொல் பாதுகாக்கப்பட்டது (எ.கா. இ-ஆதார்)',
+      passwordDecryptionTitle: 'PDF திறக்கும் கடவுச்சொல்',
+      inMemoryOnly: 'நினைவகத்தில் (RAM) மட்டுமே செயலாக்கப்படுகிறது',
+      passwordRuleDetail: 'ஆதார் கடவுச்சொல் விதிமுறை: உங்கள் பெயரின் முதல் 4 ஆங்கில பெரிய எழுத்துக்கள் (CAPITALS) + உங்கள் பிறந்த வருடம் (எ.கா: சுரேஷ் குமார் 1992-ல் பிறந்திருந்தால் கடவுச்சொல் SURE1992).',
+      verifyBtn: 'டிஜிட்டல் கையொப்பத்தை இப்போது சரிபார்க்கவும்',
       verifyingBtn: 'கையொப்பம் சரிபார்க்கப்படுகிறது...',
+      cancelBtn: 'ரத்துசெய்',
+      verifyingTitle: 'டிஜிட்டல் கையொப்பம் சரிபார்க்கப்படுகிறது...',
+      pkiEngineProgress: 'PKI என்ஜின் முன்னேற்றம்',
       verifiedHeading: 'கையொப்பம் உறுதியானது & சரிபார்க்கப்பட்டது',
       verifiedSubheading: 'தகவல் தொழில்நுட்ப சட்டம் 2000 இன் கீழ் அரசு டிஜிட்டல் கையொப்பம் உறுதிசெய்யப்பட்டது',
-      downloadBtn: 'சரிபார்க்கப்பட்ட PDF-ஐப் பதிவிறக்கவும் (பச்சை டிக் உடன்)',
+      signatureValid: 'உண்மையான கையொப்பம் (Valid)',
+      ccaVerified: 'CCA இந்தியா சரிபார்க்கப்பட்டது',
+      legallyValid: 'சட்டப்பூர்வ செல்லுபடியாகும் (IT சட்டம் 2000)',
+      certDetailsHeading: 'சான்றிதழ் சரிபார்ப்பு விவரங்கள்',
+      docNameLabel: 'ஆவணப் பெயர்',
+      signerLabel: 'கையொப்பமிட்டவர் அடையாளம்',
+      issuedByLabel: 'வழங்கிய அமைப்பு (CA)',
+      signedOnLabel: 'கையொப்பமிடப்பட்ட தேதி & நேரம்',
+      scopeLabel: 'கையொப்பத்தின் பரப்பு',
+      hashLabel: 'கிரிப்டோகிராஃபிக் ஹாஷ்',
+      inPlaceNote: 'சான்றிதழில் உள்ள மஞ்சள் ? குறி நிரந்தர பச்சை டிக் குறியாக மாற்றப்பட்டது.',
+      downloadBtn: 'சரிபார்க்கப்பட்ட PDF-ஐப் பதிவிறக்கவும் (நிரந்தர பச்சை டிக் உடன்)',
       verifyAnother: 'மற்றொரு ஆவணத்தை சரிபார்க்கவும்',
       validSeal: 'உண்மையான கையொப்பம்',
       invalidSeal: 'செல்லாத கையொப்பம்',
@@ -317,3 +404,4 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
     },
   },
 };
+

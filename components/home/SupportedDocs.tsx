@@ -30,6 +30,18 @@ export function SupportedDocs() {
     show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
   };
 
+  const getStateLabel = (stateId: string, defaultName: string) => {
+    switch (stateId) {
+      case 'all-india': return t.supportedDocs.allIndia;
+      case 'tamil-nadu': return t.supportedDocs.tamilNadu;
+      case 'ap-telangana': return t.supportedDocs.apTelangana;
+      case 'karnataka': return t.supportedDocs.karnataka;
+      case 'kerala': return t.supportedDocs.kerala;
+      case 'more-states': return t.supportedDocs.moreStates;
+      default: return defaultName;
+    }
+  };
+
   return (
     <section id="supported-docs" className="py-20 bg-surface/50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,7 +81,7 @@ export function SupportedDocs() {
                       transition={{ type: 'spring', stiffness: 450, damping: 35 }}
                     />
                   )}
-                  <span>{state.name}</span>
+                  <span>{getStateLabel(state.id, state.name)}</span>
                 </button>
               );
             })}
@@ -120,12 +132,12 @@ export function SupportedDocs() {
                   {doc.isPasswordProtectedSupported ? (
                     <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
                       <Lock className="w-3 h-3 text-amber-600" />
-                      <span>Password Ready</span>
+                      <span>{language === 'ta' ? 'கடவுச்சொல் ஆதரிக்கப்படும்' : 'Password Ready'}</span>
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 text-[11px] font-medium text-text-main/50">
                       <ShieldCheck className="w-3.5 h-3.5 text-success" />
-                      <span>Digital PKI</span>
+                      <span>{language === 'ta' ? 'டிஜிட்டல் PKI' : 'Digital PKI'}</span>
                     </span>
                   )}
 
@@ -133,7 +145,7 @@ export function SupportedDocs() {
                     href={`/${getSeoSlugForDocType(doc.name)}`}
                     className="inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-primary-hover group-hover:translate-x-0.5 transition-all"
                   >
-                    <span>Verify Guide</span>
+                    <span>{language === 'ta' ? 'சரிபார்ப்பு வழிகாட்டி' : 'Verify Guide'}</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -145,7 +157,9 @@ export function SupportedDocs() {
         {/* Note below grid */}
         <div className="mt-12 text-center">
           <p className="text-xs text-text-main/60">
-            Have a government PDF issued by an unlisted state? If it is signed under the Indian CCA hierarchy (eMudhra, NIC, Capricorn, Pantasign, IDsign), it is 100% supported.
+            {language === 'ta'
+              ? 'பட்டியலிடப்படாத மாநிலத்தின் அரசு PDF உள்ளதா? அது இந்திய CCA கட்டமைப்பின் கீழ் கையொப்பமிடப்பட்டிருந்தால் (eMudhra, NIC, Capricorn போன்றவை), அது 100% ஆதரிக்கப்படும்.'
+              : 'Have a government PDF issued by an unlisted state? If it is signed under the Indian CCA hierarchy (eMudhra, NIC, Capricorn, Pantasign, IDsign), it is 100% supported.'}
           </p>
         </div>
       </div>

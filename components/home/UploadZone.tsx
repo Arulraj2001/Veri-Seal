@@ -344,13 +344,13 @@ export function UploadZone() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-surface-darker/60">
             <div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-2">
-                <span>Verify Digital Signature</span>
+                <span>{t.upload.cardHeading}</span>
                 <span className="inline-flex items-center gap-1 text-[11px] font-bold text-primary bg-primary-light px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                  Live Engine
+                  {t.upload.liveEngine}
                 </span>
               </h2>
               <p className="text-sm text-text-main/70 mt-1">
-                Connected to official India CCA Root Certifying Authority trust hierarchy.
+                {t.upload.cardSubheading}
               </p>
             </div>
 
@@ -363,7 +363,7 @@ export function UploadZone() {
                 className="text-xs text-text-main/70 hover:text-primary gap-1.5 self-start sm:self-auto"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Upload Another File</span>
+                <span>{t.upload.uploadAnother}</span>
               </Button>
             )}
           </div>
@@ -392,14 +392,11 @@ export function UploadZone() {
               </div>
 
               <h3 className="text-lg sm:text-xl font-bold text-text-main mb-2">
-                Drop your PDF here or{' '}
-                <span className="text-primary underline decoration-2 underline-offset-4 font-extrabold">
-                  click to upload
-                </span>
+                {t.upload.dropTitle}
               </h3>
 
               <p className="text-xs sm:text-sm text-text-main/60 max-w-md mb-6 leading-relaxed">
-                Accepts official Indian government PDFs up to 25MB. Files are verified in memory and never stored on any server.
+                {t.upload.dropHint}
               </p>
 
               <Button
@@ -408,7 +405,7 @@ export function UploadZone() {
                 size="md"
                 className="pointer-events-none group-hover:bg-primary-hover shadow-md"
               >
-                Select Government PDF
+                {t.upload.selectPdfBtn}
               </Button>
             </div>
           )}
@@ -429,10 +426,10 @@ export function UploadZone() {
               </div>
 
               <h3 className="text-2xl font-black text-primary mb-2">
-                Release to Upload PDF
+                {t.upload.releaseToUpload}
               </h3>
               <p className="text-sm font-medium text-text-main/80">
-                VeriSeal will immediately inspect the digital signature hierarchy
+                {t.upload.releaseHint}
               </p>
             </motion.div>
           )}
@@ -486,7 +483,7 @@ export function UploadZone() {
                   className="text-sm font-semibold text-text-main cursor-pointer flex items-center gap-1.5"
                 >
                   <Lock className="w-3.5 h-3.5 text-primary" />
-                  <span>This PDF is password-protected (e.g. e-Aadhaar)</span>
+                  <span>{t.upload.passwordCheckbox}</span>
                 </label>
               </div>
 
@@ -504,17 +501,17 @@ export function UploadZone() {
                       <div className="flex items-center justify-between">
                         <label className="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
                           <Lock className="w-3.5 h-3.5 text-primary" />
-                          <span>PDF Decryption Password</span>
+                          <span>{t.upload.passwordDecryptionTitle}</span>
                         </label>
                         <span className="text-[11px] font-medium text-amber-800/80">
-                          Processed in-memory only
+                          {t.upload.inMemoryOnly}
                         </span>
                       </div>
 
                       <div className="relative">
                         <input
                           type={showPassword ? 'text' : 'password'}
-                          placeholder="e.g. RAMA1995 (Name First 4 letters + Birth Year)"
+                          placeholder={t.upload.passwordPlaceholder}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           className="w-full bg-white border border-amber-200 rounded-xl px-4 py-3 text-sm text-text-main font-mono placeholder:text-text-main/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-11"
@@ -529,7 +526,7 @@ export function UploadZone() {
                       </div>
 
                       <p className="text-xs text-amber-800 leading-relaxed">
-                        <strong>Aadhaar Password Rule:</strong> First 4 letters of your name in CAPITAL LETTERS followed by your 4-digit Year of Birth (e.g., if name is SURESH KUMAR born in 1992, password is <code>SURE1992</code>).
+                        {t.upload.passwordRuleDetail}
                       </p>
                     </div>
                   </motion.div>
@@ -544,7 +541,7 @@ export function UploadZone() {
                   onClick={() => startVerification()}
                   className="w-full sm:flex-1 text-base font-bold shadow-md"
                 >
-                  Verify Digital Signature Now
+                  {t.upload.verifyBtn}
                 </Button>
                 <Button
                   variant="secondary"
@@ -552,7 +549,7 @@ export function UploadZone() {
                   onClick={resetAll}
                   className="w-full sm:w-auto"
                 >
-                  Cancel
+                  {t.upload.cancelBtn}
                 </Button>
               </div>
             </motion.div>
@@ -574,7 +571,7 @@ export function UploadZone() {
 
               <div>
                 <h3 className="text-xl font-bold text-text-main">
-                  Verifying Digital Signature...
+                  {t.upload.verifyingTitle}
                 </h3>
                 <p className="text-sm text-text-main/70 mt-1 font-mono">
                   {progressStage}
@@ -590,7 +587,7 @@ export function UploadZone() {
                   />
                 </div>
                 <div className="flex justify-between text-xs text-text-main/60 mt-2">
-                  <span>PKI Engine Progress</span>
+                  <span>{t.upload.pkiEngineProgress}</span>
                   <span>{progress}%</span>
                 </div>
               </div>
@@ -635,12 +632,12 @@ export function UploadZone() {
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1">
                     <h3 className="text-2xl font-black text-success-dark">
-                      Signature Valid
+                      {t.upload.signatureValid}
                     </h3>
-                    <Badge variant="success">CCA India Verified</Badge>
+                    <Badge variant="success">{t.upload.ccaVerified}</Badge>
                   </div>
                   <p className="text-sm text-text-main/80 leading-relaxed">
-                    The digital signature on this document is cryptographically verified against the official Controller of Certifying Authorities (CCA) India root trust hierarchy.
+                    {t.upload.verifiedSubheading}
                   </p>
                 </div>
               </div>
@@ -649,43 +646,43 @@ export function UploadZone() {
               <div className="rounded-2xl border border-surface-darker overflow-hidden bg-white">
                 <div className="bg-surface px-5 py-3 border-b border-surface-darker flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-text-main/80">
-                    Certificate Verification Details
+                    {t.upload.certDetailsHeading}
                   </span>
                   <span className="text-xs font-semibold text-success flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Legally Valid (IT Act 2000)
+                    <CheckCircle2 className="w-3.5 h-3.5" /> {t.upload.legallyValid}
                   </span>
                 </div>
 
                 <div className="divide-y divide-surface-darker/60 text-sm">
                   <div className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-1">
-                    <span className="text-text-main/60 font-medium">Document Name</span>
+                    <span className="text-text-main/60 font-medium">{t.upload.docNameLabel}</span>
                     <span className="sm:col-span-2 font-bold text-text-main break-all">{result.fileName}</span>
                   </div>
 
                   <div className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-1">
-                    <span className="text-text-main/60 font-medium">Signer Identity</span>
+                    <span className="text-text-main/60 font-medium">{t.upload.signerLabel}</span>
                     <span className="sm:col-span-2 font-bold text-text-main">{result.signerName}</span>
                   </div>
 
                   <div className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-1">
-                    <span className="text-text-main/60 font-medium">Issued By (CA)</span>
+                    <span className="text-text-main/60 font-medium">{t.upload.issuedByLabel}</span>
                     <span className="sm:col-span-2 text-text-main">{result.issuer}</span>
                   </div>
 
                   <div className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-1">
-                    <span className="text-text-main/60 font-medium">Document Signed On</span>
+                    <span className="text-text-main/60 font-medium">{t.upload.signedOnLabel}</span>
                     <span className="sm:col-span-2 text-text-main">{result.signedAt}</span>
                   </div>
 
                   <div className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-1">
-                    <span className="text-text-main/60 font-medium">Signature Scope</span>
+                    <span className="text-text-main/60 font-medium">{t.upload.scopeLabel}</span>
                     <span className="sm:col-span-2 text-success font-semibold flex items-center gap-1">
                       <Check className="w-4 h-4" /> {result.signatureCovers}
                     </span>
                   </div>
 
                   <div className="p-4 grid grid-cols-1 sm:grid-cols-3 gap-1">
-                    <span className="text-text-main/60 font-medium">Cryptographic Hash</span>
+                    <span className="text-text-main/60 font-medium">{t.upload.hashLabel}</span>
                     <span className="sm:col-span-2 text-xs font-mono text-text-main/70">{result.algorithm}</span>
                   </div>
                 </div>
@@ -695,15 +692,15 @@ export function UploadZone() {
               <div className="p-4 rounded-2xl bg-surface/70 border border-success/30 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
                   <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-100/80 border border-amber-300 text-amber-900 text-xs font-semibold">
-                    <span>❓ Unverified</span>
+                    <span>{language === 'ta' ? '❓ சரிபார்க்கப்படவில்லை' : '❓ Unverified'}</span>
                   </div>
                   <span className="text-text-main/40 font-bold">➔</span>
                   <div className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-success-light border border-success/40 text-success-dark text-xs font-bold">
-                    <span>✔ Signature valid</span>
+                    <span>{language === 'ta' ? '✔ உண்மையான கையொப்பம்' : '✔ Signature valid'}</span>
                   </div>
                 </div>
                 <p className="text-xs text-text-main/70 text-center sm:text-right">
-                  Yellow <strong>?</strong> on certificate replaced with Adobe&apos;s verified green tick in-place.
+                  {t.upload.inPlaceNote}
                 </p>
               </div>
 
@@ -716,7 +713,7 @@ export function UploadZone() {
                   className="w-full sm:flex-1 text-base font-bold shadow-md gap-2"
                 >
                   <Download className="w-5 h-5" />
-                  <span>Download Verified PDF (With Permanent Green Tick)</span>
+                  <span>{t.upload.downloadBtn}</span>
                 </Button>
 
                 <Button
@@ -725,7 +722,7 @@ export function UploadZone() {
                   onClick={resetAll}
                   className="w-full sm:w-auto"
                 >
-                  Verify Another
+                  {t.upload.verifyAnother}
                 </Button>
               </div>
 
@@ -777,7 +774,7 @@ export function UploadZone() {
                 >
                   <span className="flex items-center gap-2">
                     <Info className="w-4 h-4 text-primary" />
-                    What does this mean for your certificate?
+                    {language === 'ta' ? 'உங்கள் சான்றிதழுக்கு இதன் அர்த்தம் என்ன?' : 'What does this mean for your certificate?'}
                   </span>
                   {whatDoesThisMeanOpen ? (
                     <ChevronUp className="w-4 h-4 text-text-main/70" />
@@ -795,13 +792,22 @@ export function UploadZone() {
                       className="mt-3 text-xs sm:text-sm text-text-main/80 space-y-2 pt-3 border-t border-surface-darker/60"
                     >
                       <p>
-                        1. <strong>Authenticity:</strong> This document was genuinely produced and signed by the designated government department.
+                        1. <strong>{language === 'ta' ? 'நம்பகத்தன்மை:' : 'Authenticity:'}</strong>{' '}
+                        {language === 'ta'
+                          ? 'இந்த ஆவணம் சம்பந்தப்பட்ட அரசுத் துறையினால் உண்மையாக வழங்கப்பட்டு கையொப்பமிடப்பட்டுள்ளது.'
+                          : 'This document was genuinely produced and signed by the designated government department.'}
                       </p>
                       <p>
-                        2. <strong>Integrity:</strong> The PDF content has not been altered, modified, or tampered with since the cryptographic signature was applied.
+                        2. <strong>{language === 'ta' ? 'ஒருமைப்பாடு:' : 'Integrity:'}</strong>{' '}
+                        {language === 'ta'
+                          ? 'டிஜிட்டல் கையொப்பமிட்ட பிறகு இந்த PDF கோப்பில் எந்த மாற்றமும் செய்யப்படவில்லை.'
+                          : 'The PDF content has not been altered, modified, or tampered with since the cryptographic signature was applied.'}
                       </p>
                       <p>
-                        3. <strong>Legal Status:</strong> Under Section 5 of India&apos;s Information Technology Act 2000, digital signatures generated under the CCA hierarchy carry the exact same legal validity as handwritten signatures.
+                        3. <strong>{language === 'ta' ? 'சட்டப்பூர்வ நிலை:' : 'Legal Status:'}</strong>{' '}
+                        {language === 'ta'
+                          ? 'இந்திய தகவல் தொழில்நுட்ப சட்டம் 2000 பிரிவு 5-இன் கீழ், இந்த கையொப்பம் கையால் இடப்பட்ட கையொப்பத்திற்கு இணையான சட்ட மதிப்பைக் கொண்டுள்ளது.'
+                          : "Under Section 5 of India's Information Technology Act 2000, digital signatures generated under the CCA hierarchy carry the exact same legal validity as handwritten signatures."}
                       </p>
                     </motion.div>
                   )}
@@ -823,10 +829,12 @@ export function UploadZone() {
                 </div>
                 <div>
                   <h3 className="text-2xl font-black text-error-dark">
-                    Signature Invalid
+                    {language === 'ta' ? 'செல்லாத கையொப்பம் (Invalid)' : 'Signature Invalid'}
                   </h3>
                   <p className="text-sm text-text-main/80 mt-1 leading-relaxed">
-                    Warning: The digital signature cannot be validated or the document may have been modified after signing.
+                    {language === 'ta'
+                      ? 'எச்சரிக்கை: டிஜிட்டல் கையொப்பத்தை சரிபார்க்க முடியவில்லை அல்லது கையொப்பமிட்ட பிறகு ஆவணம் மாற்றப்பட்டிருக்கலாம்.'
+                      : 'Warning: The digital signature cannot be validated or the document may have been modified after signing.'}
                   </p>
                 </div>
               </div>
@@ -834,19 +842,19 @@ export function UploadZone() {
               <div className="rounded-2xl border border-surface-darker bg-white p-6 space-y-4">
                 <div>
                   <h4 className="text-sm font-bold text-error uppercase tracking-wider">
-                    Reason for Failure
+                    {language === 'ta' ? 'தோல்விக்கான காரணம்' : 'Reason for Failure'}
                   </h4>
                   <p className="text-sm text-text-main/80 mt-1">
-                    {result.reason || 'Document byte stream modified after digital signature application.'}
+                    {result.reason || (language === 'ta' ? 'கையொப்பமிட்ட பிறகு PDF ஆவணம் மாற்றப்பட்டுள்ளது.' : 'Document byte stream modified after digital signature application.')}
                   </p>
                 </div>
 
                 <div className="pt-3 border-t border-surface-darker">
                   <h4 className="text-sm font-bold text-text-main uppercase tracking-wider">
-                    What You Should Do Next
+                    {language === 'ta' ? 'அடுத்து நீங்கள் செய்ய வேண்டியது' : 'What You Should Do Next'}
                   </h4>
                   <p className="text-sm text-text-main/80 mt-1">
-                    {result.remedy || 'Download a fresh original copy directly from the official portal.'}
+                    {result.remedy || (language === 'ta' ? 'அதிகாரப்பூர்வ அரசு தளத்திலிருந்து புதிய அசல் கோப்பைப் பதிவிறக்கவும்.' : 'Download a fresh original copy directly from the official portal.')}
                   </p>
                 </div>
 
@@ -858,7 +866,7 @@ export function UploadZone() {
                       rel="noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:underline"
                     >
-                      <span>Visit {result.officialPortalName || 'Official Government Portal'}</span>
+                      <span>{language === 'ta' ? 'அரசு தளத்தை பார்வையிடவும்' : `Visit ${result.officialPortalName || 'Official Government Portal'}`}</span>
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   </div>
@@ -867,7 +875,7 @@ export function UploadZone() {
 
               <div className="flex gap-3">
                 <Button variant="primary" size="lg" onClick={resetAll} className="w-full">
-                  Try Another PDF
+                  {language === 'ta' ? 'மற்றொரு PDF-ஐ முயற்சிக்கவும்' : 'Try Another PDF'}
                 </Button>
               </div>
             </motion.div>
@@ -886,26 +894,30 @@ export function UploadZone() {
                 </div>
                 <div>
                   <h3 className="text-2xl font-black text-warning-dark">
-                    Signature Unknown (Issuer Not in Root Store)
+                    {language === 'ta' ? 'தெரியாத கையொப்பம் (Unknown Root)' : 'Signature Unknown (Issuer Not in Root Store)'}
                   </h3>
                   <p className="text-sm text-text-main/80 mt-1 leading-relaxed">
-                    The document signature exists, but the certificate chain terminates at a root authority not recognized in the standard CCA hierarchy.
+                    {language === 'ta'
+                      ? 'ஆவணத்தில் கையொப்பம் உள்ளது, ஆனால் சான்றிதழ் சங்கிலி அங்கீகரிக்கப்பட்ட அதிகாரப்பூர்வ CCA அமைப்பில் முடியவில்லை.'
+                      : 'The document signature exists, but the certificate chain terminates at a root authority not recognized in the standard CCA hierarchy.'}
                   </p>
                 </div>
               </div>
 
               <div className="rounded-2xl border border-surface-darker bg-white p-6 space-y-3">
                 <h4 className="text-sm font-bold text-text-main">
-                  Technical Explanation
+                  {language === 'ta' ? 'தொழில்நுட்ப விளக்கம்' : 'Technical Explanation'}
                 </h4>
                 <p className="text-sm text-text-main/80 leading-relaxed">
-                  The cryptographic hash integrity is intact, but the root CA is not in the official Root Certifying Authority of India (RCAI) store.
+                  {language === 'ta'
+                    ? 'கிரிப்டோகிராஃபிக் ஹாஷ் ஒருமைப்பாடு சரியாக உள்ளது, ஆனால் வழங்கிய அமைப்பு இந்தியாவின் RCAI அங்கீகரிக்கப்பட்ட பட்டியலில் இல்லை.'
+                    : 'The cryptographic hash integrity is intact, but the root CA is not in the official Root Certifying Authority of India (RCAI) store.'}
                 </p>
               </div>
 
               <div className="flex gap-3">
                 <Button variant="primary" size="lg" onClick={resetAll} className="w-full">
-                  Upload Another Document
+                  {language === 'ta' ? 'மற்றொரு ஆவணத்தை பதிவேற்றவும்' : 'Upload Another Document'}
                 </Button>
               </div>
             </motion.div>
@@ -1127,10 +1139,10 @@ export function UploadZone() {
         {/* Footer info below upload zone */}
         <div className="mt-6 text-center space-y-2">
           <p className="text-xs text-text-main/60">
-            Accepts PDF only, max 25MB • Files processed 100% in memory
+            {language === 'ta' ? 'PDF கோப்புகள் மட்டுமே, அதிகபட்சம் 25MB • 100% நினைவகத்தில் இயங்கும்' : 'Accepts PDF only, max 25MB • Files processed 100% in memory'}
           </p>
           <p className="text-xs font-semibold text-text-main/80">
-            Supports: e-Aadhaar • Community Cert • Nativity • PAN • DigiLocker • ITR-V
+            {language === 'ta' ? 'ஆதரிக்கும் ஆவணங்கள்: இ-ஆதார் • சாதி சான்றிதழ் • இருப்பிடம் • பான் • டிஜிலாக்கர் • ITR-V' : 'Supports: e-Aadhaar • Community Cert • Nativity • PAN • DigiLocker • ITR-V'}
           </p>
 
           {/* Live Trust Counter UI */}
