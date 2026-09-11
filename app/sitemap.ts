@@ -1,11 +1,12 @@
 import { MetadataRoute } from 'next';
 import { getPublishedBlogPosts } from '@/lib/blog-store';
 import { getPublishedSeoPages } from '@/lib/seo-store';
+import { SITE_URL } from '@/lib/constants';
 
 export const revalidate = 86400; // 24 hours
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://veriseal.in';
+  const baseUrl = SITE_URL;
   const now = new Date();
 
   // Core static routes

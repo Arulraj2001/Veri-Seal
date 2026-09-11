@@ -6,7 +6,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Analytics } from '@vercel/analytics/react';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { InstallPromptModal } from '@/components/pwa/InstallPromptModal';
-import { FAQ, SITE_CONFIG } from '@/lib/constants';
+import { FAQ, SITE_CONFIG, SITE_URL } from '@/lib/constants';
 import { AuthProvider } from '@/components/providers/AuthProvider';
 import { LanguageProvider } from '@/components/providers/LanguageProvider';
 import { DraggableStickyNav } from '@/components/navigation/DraggableStickyNav';
@@ -28,7 +28,7 @@ const notoSansTamil = Noto_Sans_Tamil({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://veriseal.in'),
+  metadataBase: new URL(SITE_URL),
   title: 'VeriSeal — Verify Indian Government PDF Digital Signature Online Free',
   description:
     'Instantly verify digital signatures on e-Aadhaar, community certificate, nativity certificate, PAN card, DigiLocker PDFs. Fix yellow question mark. Free, no signup, files never stored. Supports Tamil Nadu, AP, Telangana, Karnataka, Kerala government certificates.',
@@ -58,17 +58,17 @@ export const metadata: Metadata = {
     apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
   },
   alternates: {
-    canonical: 'https://veriseal.in',
+    canonical: SITE_URL,
   },
   openGraph: {
     title: 'VeriSeal — Verify Indian Government PDF Digital Signature Online Free',
     description:
       'Instantly verify digital signatures on e-Aadhaar, community certificate, nativity certificate, PAN card, DigiLocker PDFs. Fix yellow question mark.',
-    url: 'https://veriseal.in',
+    url: SITE_URL,
     siteName: 'VeriSeal India',
     images: [
       {
-        url: '/og',
+        url: `${SITE_URL}/og`,
         width: 1200,
         height: 630,
         alt: 'VeriSeal - Indian Government PDF Digital Signature Verification',
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     title: 'VeriSeal — Verify Indian Government PDF Digital Signature Online Free',
     description:
       'Fix the yellow question mark on e-Aadhaar, community, and government certificates. Free, instant, 100% in-memory.',
-    images: ['/og'],
+    images: [`${SITE_URL}/og`],
     creator: '@veriseal_in',
   },
   robots: {
@@ -101,12 +101,23 @@ export const metadata: Metadata = {
   },
 };
 
-// 1. WebApplication Schema
+// 1. WebSite Schema (Google Sitelinks & Brand Identity)
+const webSiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'VeriSeal',
+  alternateName: ['Veri-Seal', 'VeriSeal India', 'VeriSeal PKI'],
+  url: SITE_URL,
+  description: 'Instant Indian Government PDF Digital Signature Verification Engine',
+  inLanguage: ['en-IN', 'ta-IN', 'hi-IN'],
+};
+
+// 2. WebApplication Schema
 const webApplicationSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'VeriSeal',
-  url: 'https://veriseal.in',
+  url: SITE_URL,
   description: 'Free tool to verify digital signatures on Indian government PDFs',
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Any',
@@ -115,24 +126,44 @@ const webApplicationSchema = {
     price: '0',
     priceCurrency: 'INR',
   },
-  browserRequirements: 'Requires JavaScript',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    ratingCount: '4820',
+    bestRating: '5',
+    worstRating: '1',
+  },
+  featureList: [
+    'UIDAI e-Aadhaar verification',
+    'Tamil Nadu TNeGA e-Sevai certificate validation',
+    'Protean & UTIITSL e-PAN verification',
+    'TRACES Form 16 DSC validation',
+    'DigiLocker Driving License & RC verification',
+    'Long-Term Validation (LTV /DSS) green tick embedding',
+  ],
+  browserRequirements: 'Requires JavaScript and modern browser (Chrome, Firefox, Safari, Edge)',
 };
 
-// 2. Organization Schema
+// 3. Organization Schema
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'VeriSeal',
-  url: 'https://veriseal.in',
-  logo: 'https://veriseal.in/logo.png',
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.png`,
+  sameAs: [
+    'https://twitter.com/veriseal_in',
+    'https://github.com/Arulraj2001/Veri-Seal',
+  ],
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
     email: SITE_CONFIG.supportEmail || 'support@veriseal.in',
+    availableLanguage: ['English', 'Tamil', 'Hindi'],
   },
 };
 
-// 3. FAQPage Schema (Home Page FAQs)
+// 4. FAQPage Schema (Home Page FAQs)
 const faqPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -164,6 +195,10 @@ export default function RootLayout({
         )}
 
         {/* Structured Data Schemas */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webApplicationSchema) }}

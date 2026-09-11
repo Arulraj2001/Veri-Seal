@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { Calendar, Clock, ArrowRight, BookOpen, ShieldCheck, Tag } from 'lucide-react';
 import { getPublishedBlogPosts, calculateReadTime } from '@/lib/blog-store';
 
+import { SITE_URL } from '@/lib/constants';
+
 export const revalidate = 3600; // ISR 1 hour
 
 export const metadata: Metadata = {
@@ -12,17 +14,17 @@ export const metadata: Metadata = {
   description:
     'Step-by-step guides to verify Aadhaar, community certificate, PAN card and all Indian government PDF digital signatures. Fix yellow question mark free.',
   alternates: {
-    canonical: 'https://veriseal.in/blog',
+    canonical: `${SITE_URL}/blog`,
   },
   openGraph: {
     title: 'VeriSeal Blog — Indian Government PDF & Digital Signature Guides',
     description:
       'Step-by-step guides to verify Aadhaar, community certificate, PAN card and all Indian government PDF digital signatures. Fix yellow question mark free.',
-    url: 'https://veriseal.in/blog',
+    url: `${SITE_URL}/blog`,
     siteName: 'VeriSeal',
     images: [
       {
-        url: 'https://veriseal.in/og?title=' + encodeURIComponent('VeriSeal Blog — Guides & Tutorials'),
+        url: `${SITE_URL}/og?title=` + encodeURIComponent('VeriSeal Blog — Guides & Tutorials'),
         width: 1200,
         height: 630,
         alt: 'VeriSeal Blog — Indian Government PDF & Digital Signature Guides',
@@ -36,7 +38,7 @@ export const metadata: Metadata = {
     title: 'VeriSeal Blog — Indian Government PDF & Digital Signature Guides',
     description:
       'Step-by-step guides to verify Aadhaar, community certificate, PAN card and all Indian government PDF digital signatures. Fix yellow question mark free.',
-    images: ['https://veriseal.in/og?title=' + encodeURIComponent('VeriSeal Blog — Guides & Tutorials')],
+    images: [`${SITE_URL}/og?title=` + encodeURIComponent('VeriSeal Blog — Guides & Tutorials')],
   },
 };
 

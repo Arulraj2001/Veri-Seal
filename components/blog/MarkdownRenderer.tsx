@@ -99,7 +99,12 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             );
           },
           a: ({ href, children }) => {
-            if (href && (href.startsWith('/') || href.startsWith('https://veriseal.in'))) {
+            if (
+              href &&
+              (href.startsWith('/') ||
+                href.startsWith('https://veriseal.in') ||
+                href.startsWith('https://veri-seal.vercel.app'))
+            ) {
               return (
                 <Link href={href} className="text-primary hover:text-primary-hover font-bold underline decoration-primary/30 hover:decoration-primary">
                   {children}

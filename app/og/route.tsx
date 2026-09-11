@@ -7,6 +7,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const title = searchParams.get('title') || 'Indian Government PDF Digital Signature Verification Engine';
     const subtitle = searchParams.get('subtitle') || 'Free Cryptographic Verification • Fix Yellow Question Mark • CCA India Verified';
+    const host = request.headers.get('host') || 'veri-seal.vercel.app';
 
     return new ImageResponse(
       (
@@ -167,7 +168,7 @@ export async function GET(request: Request) {
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <span style={{ fontSize: '16px', fontWeight: '800', color: '#E6570B' }}>
-                veriseal.in
+                {host}
               </span>
             </div>
           </div>

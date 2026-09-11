@@ -2,27 +2,28 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ShieldCheck, Lock, EyeOff, Server, HardDrive, CheckCircle2, ArrowRight } from 'lucide-react';
+import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy & Zero-Retention Architecture — VeriSeal',
   description:
     'VeriSeal strictly operates on a Zero-Retention Architecture. Your Indian government PDF documents are processed 100% in volatile RAM and never saved to disk.',
   alternates: {
-    canonical: 'https://veriseal.in/privacy',
+    canonical: `${SITE_URL}/privacy`,
   },
   openGraph: {
     title: 'Privacy Policy & Zero-Retention Architecture — VeriSeal',
     description:
       'Zero storage, RAM-only processing, zero logs of personal identity data. VeriSeal privacy policy.',
-    url: 'https://veriseal.in/privacy',
+    url: `${SITE_URL}/privacy`,
     siteName: 'VeriSeal',
-    images: [{ url: '/og', width: 1200, height: 630, alt: 'VeriSeal Privacy' }],
+    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'VeriSeal Privacy' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Privacy Policy & Zero-Retention Architecture — VeriSeal',
     description: 'Zero storage, RAM-only processing. Full DPDP Act 2023 compliance.',
-    images: ['/og'],
+    images: [`${SITE_URL}/og`],
   },
 };
 

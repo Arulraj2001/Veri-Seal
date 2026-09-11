@@ -1,11 +1,13 @@
 import { FaqItem, HowItWorksStep, SupportedDocItem, TrustBadgeItem } from '@/types';
 
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://veri-seal.vercel.app';
+
 export const SITE_CONFIG = {
   name: 'VeriSeal',
   tagline: 'Verify government PDFs instantly. Made for India.',
   description:
     'Instantly verify digital signatures on e-Aadhaar, community certificate, nativity certificate, PAN card, DigiLocker PDFs. Fix yellow question mark. Free, no signup, files never stored. Supports Tamil Nadu, AP, Telangana, Karnataka, Kerala government certificates.',
-  url: 'https://veriseal.in',
+  url: SITE_URL,
   upiId: 'veriseal@upi',
   supportEmail: 'support@veriseal.in',
   author: 'VeriSeal Team',

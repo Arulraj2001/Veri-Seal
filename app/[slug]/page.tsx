@@ -21,6 +21,7 @@ import {
   getSeoPageBySlug,
   getAllSeoPageSlugs,
 } from '@/lib/seo-store';
+import { SITE_URL } from '@/lib/constants';
 import { UploadZone } from '@/components/home/UploadZone';
 import { FaqAccordion } from '@/components/seo/FaqAccordion';
 
@@ -45,8 +46,8 @@ export async function generateMetadata({ params }: SeoLandingPageProps): Promise
     };
   }
 
-  const pageUrl = `https://veriseal.in/${page.slug}`;
-  const ogImage = `https://veriseal.in/og?title=${encodeURIComponent(page.title)}&subtitle=${encodeURIComponent(page.h1)}`;
+  const pageUrl = `${SITE_URL}/${page.slug}`;
+  const ogImage = `${SITE_URL}/og?title=${encodeURIComponent(page.title)}&subtitle=${encodeURIComponent(page.h1)}`;
 
   return {
     title: page.title,
@@ -88,7 +89,7 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
 
   const allPages = await getPublishedSeoPages();
   const relatedPages = allPages.filter((p) => p.slug !== page.slug).slice(0, 4);
-  const pageUrl = `https://veriseal.in/${page.slug}`;
+  const pageUrl = `${SITE_URL}/${page.slug}`;
 
   // 1. FAQPage Schema (JSON-LD)
   const faqSchema = {
@@ -114,7 +115,7 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
       {
         '@type': 'HowToStep',
         position: 1,
-        name: 'Go to veriseal.in',
+        name: 'Go to VeriSeal',
         text: 'Access the free VeriSeal Indian Government digital signature verification engine.',
       },
       {
@@ -153,7 +154,7 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://veriseal.in',
+        item: SITE_URL,
       },
       {
         '@type': 'ListItem',

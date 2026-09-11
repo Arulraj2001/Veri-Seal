@@ -2,27 +2,28 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ShieldCheck, Award, Flag, Cpu, CheckCircle2, ArrowRight } from 'lucide-react';
+import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'About VeriSeal — India\'s Premier Sovereign PKI Verification Platform',
   description:
     'VeriSeal was created to help Indian citizens and businesses verify digital signatures on government PDFs instantly without expensive proprietary software.',
   alternates: {
-    canonical: 'https://veriseal.in/about',
+    canonical: `${SITE_URL}/about`,
   },
   openGraph: {
     title: 'About VeriSeal — India\'s Premier Sovereign PKI Verification Platform',
     description:
       'Empowering citizens with instant, free, and in-memory cryptographic verification for e-Aadhaar, state certificates, PAN, and DigiLocker documents.',
-    url: 'https://veriseal.in/about',
+    url: `${SITE_URL}/about`,
     siteName: 'VeriSeal',
-    images: [{ url: '/og', width: 1200, height: 630, alt: 'About VeriSeal' }],
+    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'About VeriSeal' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'About VeriSeal — Sovereign PKI Verification for India',
     description: 'Empowering citizens with instant cryptographic verification for Indian government PDFs.',
-    images: ['/og'],
+    images: [`${SITE_URL}/og`],
   },
 };
 

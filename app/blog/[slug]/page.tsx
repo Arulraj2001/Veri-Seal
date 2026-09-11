@@ -19,6 +19,7 @@ import {
   getRelatedBlogPosts,
   calculateReadTime,
 } from '@/lib/blog-store';
+import { SITE_URL } from '@/lib/constants';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { ShareButtons } from '@/components/blog/ShareButtons';
 import { MarkdownRenderer } from '@/components/blog/MarkdownRenderer';
@@ -46,10 +47,10 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  const pageUrl = `https://veriseal.in/blog/${post.slug}`;
+  const pageUrl = `${SITE_URL}/blog/${post.slug}`;
   const ogImage =
     post.featured_image_url ||
-    `https://veriseal.in/og?title=${encodeURIComponent(post.title)}`;
+    `${SITE_URL}/og?title=${encodeURIComponent(post.title)}`;
 
   return {
     title: `${post.title} — VeriSeal`,
@@ -93,7 +94,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const relatedPosts = await getRelatedBlogPosts(post.category, post.slug);
   const readTime = calculateReadTime(post.content);
-  const postUrl = `https://veriseal.in/blog/${post.slug}`;
+  const postUrl = `${SITE_URL}/blog/${post.slug}`;
 
   // Article structured data schema (JSON-LD)
   const articleSchema = {
@@ -101,19 +102,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     '@type': 'Article',
     headline: post.title,
     description: post.meta_description,
-    image: post.featured_image_url || `https://veriseal.in/og?title=${encodeURIComponent(post.title)}`,
+    image: post.featured_image_url || `${SITE_URL}/og?title=${encodeURIComponent(post.title)}`,
     author: {
       '@type': 'Organization',
       name: 'VeriSeal',
-      url: 'https://veriseal.in',
+      url: SITE_URL,
     },
     publisher: {
       '@type': 'Organization',
       name: 'VeriSeal',
-      url: 'https://veriseal.in',
+      url: SITE_URL,
       logo: {
         '@type': 'ImageObject',
-        url: 'https://veriseal.in/favicon.ico',
+        url: `${SITE_URL}/favicon.ico`,
       },
     },
     datePublished: post.published_at,
@@ -133,13 +134,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://veriseal.in',
+        item: SITE_URL,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Blog',
-        item: 'https://veriseal.in/blog',
+        item: `${SITE_URL}/blog`,
       },
       {
         '@type': 'ListItem',

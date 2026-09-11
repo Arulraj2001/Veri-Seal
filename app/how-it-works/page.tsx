@@ -2,27 +2,28 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Upload, Cpu, CheckCircle2, ShieldCheck, FileCheck2, ArrowRight } from 'lucide-react';
+import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'How It Works — Digital Signature Verification Architecture | VeriSeal',
   description:
     'Learn how VeriSeal verifies Indian government PDF digital signatures using SHA-256 byte range hashing, CCA India root trust anchors, and ISO 32000-1 LTV dictionaries.',
   alternates: {
-    canonical: 'https://veriseal.in/how-it-works',
+    canonical: `${SITE_URL}/how-it-works`,
   },
   openGraph: {
     title: 'How It Works — Digital Signature Verification Architecture | VeriSeal',
     description:
       'Learn how VeriSeal audits PDF byte ranges, validates against RCAI root certificates, and embeds Long-Term Validation (LTV) dictionaries.',
-    url: 'https://veriseal.in/how-it-works',
+    url: `${SITE_URL}/how-it-works`,
     siteName: 'VeriSeal',
-    images: [{ url: '/og', width: 1200, height: 630, alt: 'How VeriSeal Works' }],
+    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'How VeriSeal Works' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'How VeriSeal Works — Cryptographic PDF Verification',
     description: 'Learn how VeriSeal validates signatures against CCA India root certificates.',
-    images: ['/og'],
+    images: [`${SITE_URL}/og`],
   },
 };
 

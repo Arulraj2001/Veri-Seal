@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import * as React from 'react';
+import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: 'Contact VeriSeal — Support & Enterprise Digital Signature Verification',
@@ -14,17 +15,17 @@ export const metadata: Metadata = {
     'veriseal customer care',
   ],
   alternates: {
-    canonical: 'https://veriseal.in/contact',
+    canonical: `${SITE_URL}/contact`,
   },
   openGraph: {
     title: 'Contact VeriSeal — Support & Enterprise Digital Signature Verification',
     description:
       'Need help verifying your Indian government PDF signature or have enterprise bulk verification questions? Contact our team.',
-    url: 'https://veriseal.in/contact',
+    url: `${SITE_URL}/contact`,
     siteName: 'VeriSeal',
     images: [
       {
-        url: 'https://veriseal.in/og?title=' + encodeURIComponent('Contact VeriSeal — Support & Verification Assistance'),
+        url: `${SITE_URL}/og?title=` + encodeURIComponent('Contact VeriSeal — Support & Verification Assistance'),
         width: 1200,
         height: 630,
         alt: 'Contact VeriSeal',
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     title: 'Contact VeriSeal — Support & Enterprise Digital Signature Verification',
     description:
       'Contact VeriSeal for technical support on Indian government PDF signatures or enterprise API integrations.',
-    images: ['https://veriseal.in/og?title=' + encodeURIComponent('Contact VeriSeal — Support & Verification Assistance')],
+    images: [`${SITE_URL}/og?title=` + encodeURIComponent('Contact VeriSeal — Support & Verification Assistance')],
   },
 };
 
@@ -51,13 +52,13 @@ export default function ContactLayout({
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
     name: 'Contact VeriSeal',
-    url: 'https://veriseal.in/contact',
+    url: `${SITE_URL}/contact`,
     description:
       'Get in touch with the VeriSeal team for digital signature verification assistance, technical inquiries, and enterprise integration.',
     mainEntity: {
       '@type': 'Organization',
       name: 'VeriSeal',
-      url: 'https://veriseal.in',
+      url: SITE_URL,
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'customer service',
