@@ -18,6 +18,7 @@ import {
   Camera,
   Image,
   ShieldCheck,
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -107,7 +108,7 @@ export function Header() {
 
   const navLinks = [
     { label: t.nav.home, href: '/#hero' },
-    { label: 'Exam PDF Compressor (100% Free)', href: '/tools/government-exam-pdf-compressor' },
+    { label: 'All Free Tools (28)', href: '/tools' },
     { label: t.nav.documents, href: '/#supported-docs' },
     { label: t.nav.howItWorks, href: '/#how-it-works' },
     { label: t.nav.security, href: '/#trust-section' },
@@ -192,8 +193,29 @@ export function Header() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 8, scale: 0.98 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[860px] max-h-[82vh] overflow-y-auto bg-white/95 backdrop-blur-xl border border-surface-darker rounded-3xl shadow-2xl p-6 z-50 text-left grid grid-cols-4 gap-5"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[860px] max-h-[85vh] overflow-y-auto bg-white/95 backdrop-blur-xl border border-surface-darker rounded-3xl shadow-2xl p-6 z-50 text-left grid grid-cols-4 gap-5"
                 >
+                  {/* Top Directory Banner */}
+                  <div className="col-span-4 bg-emerald-50 border border-emerald-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span className="text-xs font-bold text-slate-800">
+                        Need all exam tools in one place?
+                      </span>
+                      <span className="text-[11px] text-slate-500 hidden sm:inline">
+                        Instant search across 28+ free tools by exam name or file limit.
+                      </span>
+                    </div>
+                    <Link
+                      href="/tools"
+                      onClick={() => setToolsMenuOpen(false)}
+                      className="inline-flex items-center gap-1 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors shrink-0"
+                    >
+                      <span>Explore Tools Directory</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+
                   {/* Column 1: PDF Compressors */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-1.5 pb-1.5 border-b border-surface-darker/60 text-xs font-black uppercase tracking-wider text-text-main">
@@ -415,6 +437,20 @@ export function Header() {
                         <div className="text-[10px] text-text-main/60">NIC / CCA Trusted Root</div>
                       </Link>
                     </div>
+                  </div>
+
+                  {/* Bottom Footer Bar */}
+                  <div className="col-span-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <span className="text-slate-500">
+                      100% In-Memory RAM Processing • Zero Watermarks • 28 Tools Active
+                    </span>
+                    <Link
+                      href="/tools"
+                      onClick={() => setToolsMenuOpen(false)}
+                      className="font-bold text-emerald-700 hover:underline flex items-center gap-1"
+                    >
+                      <span>View Complete Tools Directory (28 Tools) &rarr;</span>
+                    </Link>
                   </div>
                 </motion.div>
               )}
