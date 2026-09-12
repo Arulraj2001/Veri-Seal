@@ -36,7 +36,7 @@ export default function ProductPricingEngine() {
   const platform = INDIAN_MARKETPLACES[marketplaceId];
 
   const handleAffiliateClick = () => {
-    window.open('https://www.shiprocket.in/?utm_source=veriseal&utm_medium=pricing_tool', '_blank', 'noopener,noreferrer');
+    window.open('https://www.shiprocket.in/?utm_source=kagazo&utm_medium=pricing_tool', '_blank', 'noopener,noreferrer');
   };
 
   return (

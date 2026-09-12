@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: config.title,
     description: config.metaDescription,
     url: config.canonicalUrl,
-    siteName: 'VeriSeal',
+    siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
   },

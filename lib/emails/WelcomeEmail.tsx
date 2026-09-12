@@ -11,13 +11,13 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
         {/* Header */}
         <div style={{ borderBottom: '2px solid #F1EFEE', paddingBottom: '20px', marginBottom: '24px' }}>
           <span style={{ backgroundColor: '#FFF0EA', border: '1px solid #E6570B', color: '#E6570B', borderRadius: '8px', padding: '6px 12px', fontWeight: 'bold', fontSize: '18px' }}>
-            VeriSeal
+            Kagazo
           </span>
         </div>
 
         {/* Hero */}
         <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2E241F', margin: '0 0 12px 0' }}>
-          Welcome to VeriSeal 🇮🇳
+          Welcome to Kagazo 🇮🇳
         </h2>
 
         <p style={{ fontSize: '14px', lineHeight: '1.6', margin: '0 0 16px 0' }}>
@@ -25,7 +25,7 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
         </p>
 
         <p style={{ fontSize: '14px', lineHeight: '1.6', margin: '0 0 24px 0' }}>
-          VeriSeal enables citizens, advocates, and institutions to verify cryptographic digital signatures on UIDAI e-Aadhaar letters, e-PAN cards, state revenue certificates (caste, income, nativity), and court orders directly against the <strong>Controller of Certifying Authorities (CCA)</strong> root PKI.
+          Kagazo enables citizens, advocates, and institutions to verify cryptographic digital signatures on UIDAI e-Aadhaar letters, e-PAN cards, state revenue certificates (caste, income, nativity), and court orders directly against the <strong>Controller of Certifying Authorities (CCA)</strong> root PKI.
         </p>
 
         {/* 3 Steps */}
@@ -53,7 +53,7 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
         {/* CTA */}
         <div style={{ textAlign: 'center', margin: '32px 0' }}>
           <a
-            href="https://veriseal.in"
+            href="https://Kagazo.in"
             style={{
               backgroundColor: '#E6570B',
               color: '#FFFFFF',
@@ -71,7 +71,7 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
         </div>
 
         <div style={{ borderTop: '1px solid #F1EFEE', paddingTop: '16px', fontSize: '11px', color: '#9C9189', textAlign: 'center' }}>
-          VeriSeal &bull; Protecting the cryptographic integrity of Digital India
+          Kagazo &bull; Protecting the cryptographic integrity of Digital India
           <br />
           No document retention &bull; 100% Client Privacy
         </div>

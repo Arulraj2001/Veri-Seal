@@ -19,18 +19,18 @@ import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageR
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Compress Image to 20KB Online Free | Exact 10-20KB Signature & Photo | VeriSeal',
+  title: 'Compress Image to 20KB Online Free | Exact 10-20KB Signature & Photo | Kagazo',
   description:
     'Compress image and signature to strictly under 20 KB (10-20 KB) online free. Bi-directional auto-enhance prevents under-size rejection. Zero watermark, in-memory processing.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/compress-image-to-20kb',
+    canonical: 'https://Kagazo.in/tools/compress-image-to-20kb',
   },
   openGraph: {
-    title: 'Compress Image to 20KB Online Free | VeriSeal',
+    title: 'Compress Image to 20KB Online Free | Kagazo',
     description:
       'Compress photos and signatures strictly between 10 KB and 20 KB. Never rejected by government recruitment portals.',
-    url: 'https://veriseal.in/tools/compress-image-to-20kb',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/compress-image-to-20kb',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -67,12 +67,12 @@ const FAQS = [
   {
     question: 'How do I compress an image to strictly 20 KB without dropping below 10 KB?',
     answer:
-      'Ordinary compressors only shrink images downwards, often turning cropped signatures into 4–8 KB files that get rejected by government exam portals with "File size less than 10 KB". VeriSeal is bi-directional: it compresses images over 20 KB and safely pads images under 10 KB, ensuring the output strictly lands in the 12–18 KB safe zone.',
+      'Ordinary compressors only shrink images downwards, often turning cropped signatures into 4–8 KB files that get rejected by government exam portals with "File size less than 10 KB". Kagazo is bi-directional: it compresses images over 20 KB and safely pads images under 10 KB, ensuring the output strictly lands in the 12–18 KB safe zone.',
   },
   {
     question: 'Will my signature remain sharp and clear at 20 KB?',
     answer:
-      'Yes. VeriSeal applies our Xerox Ink Boost algorithm that washes background paper to pure white (#FFFFFF) while preserving high-contrast dark pen strokes, preventing the blurry pixelation typical of other tools.',
+      'Yes. Kagazo applies our Xerox Ink Boost algorithm that washes background paper to pure white (#FFFFFF) while preserving high-contrast dark pen strokes, preventing the blurry pixelation typical of other tools.',
   },
   {
     question: 'Which portals require 10-20 KB files?',
@@ -95,7 +95,7 @@ export default function CompressImageTo20KbPage() {
         name: 'Compress Image to 20KB Online',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/compress-image-to-20kb',
+        url: 'https://Kagazo.in/tools/compress-image-to-20kb',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -116,7 +116,7 @@ export default function CompressImageTo20KbPage() {
           {
             '@type': 'HowToStep',
             name: 'Automatic Bi-Directional Calibration',
-            text: 'VeriSeal locks the file size between 10 KB and 20 KB.',
+            text: 'Kagazo locks the file size between 10 KB and 20 KB.',
           },
           {
             '@type': 'HowToStep',
@@ -211,10 +211,10 @@ export default function CompressImageTo20KbPage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
                   <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    The VeriSeal Solution
+                    The Kagazo Solution
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    VeriSeal super-samples the signature at 300 DPI and injects a standard, safe JFIF comment structure that pads the binary size to comfortably sit between 12 KB and 18 KB without degrading visual clarity.
+                    Kagazo super-samples the signature at 300 DPI and injects a standard, safe JFIF comment structure that pads the binary size to comfortably sit between 12 KB and 18 KB without degrading visual clarity.
                   </p>
                 </div>
               </div>

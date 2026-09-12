@@ -19,18 +19,18 @@ import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageR
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'GATE & JAM Photo & Signature Resizer Online Free | IIT GOAPS Portal | VeriSeal',
+  title: 'GATE & JAM Photo & Signature Resizer Online Free | IIT GOAPS Portal | Kagazo',
   description:
     'Resize photo (5-200KB, ratio 0.66-0.89) and signature (5-100KB, strict 3.15 to 3.95 aspect ratio) for IIT GATE & JAM online application (GOAPS). Solves aspect ratio upload errors.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/gate-photo-signature-resizer',
+    canonical: 'https://Kagazo.in/tools/gate-photo-signature-resizer',
   },
   openGraph: {
-    title: 'GATE & JAM Photo & Signature Resizer Online Free | VeriSeal',
+    title: 'GATE & JAM Photo & Signature Resizer Online Free | Kagazo',
     description:
       'Strict 3.15 to 3.95 aspect ratio compliance for IIT GATE GOAPS. In-memory processing, zero watermark.',
-    url: 'https://veriseal.in/tools/gate-photo-signature-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/gate-photo-signature-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -60,7 +60,7 @@ const GATE_FAQS = [
   {
     question: 'Why does IIT GOAPS show the error: "Aspect ratio of signature not between 3.15 and 3.95"?',
     answer:
-      'The IIT GATE Online Application Processing System (GOAPS) runs an automated mathematical validation on signature dimensions: Width divided by Height must strictly fall between 3.15 and 3.95. If you upload a square or tall signature (e.g. 2:1 ratio), GOAPS automatically blocks the upload. VeriSeal fixes this by centering your signature on a calibrated 3.55:1 canvas, guaranteeing zero rejection.',
+      'The IIT GATE Online Application Processing System (GOAPS) runs an automated mathematical validation on signature dimensions: Width divided by Height must strictly fall between 3.15 and 3.95. If you upload a square or tall signature (e.g. 2:1 ratio), GOAPS automatically blocks the upload. Kagazo fixes this by centering your signature on a calibrated 3.55:1 canvas, guaranteeing zero rejection.',
   },
   {
     question: 'What are the official photo requirements for GATE & JAM?',
@@ -70,12 +70,12 @@ const GATE_FAQS = [
   {
     question: 'What ink color is permitted for the GATE signature?',
     answer:
-      'Signatures must be signed in black or dark blue ink within a rectangular box on clean white paper. VeriSeal includes our Xerox ink boost filter to sharpen blue and black pen strokes while removing grey shadows.',
+      'Signatures must be signed in black or dark blue ink within a rectangular box on clean white paper. Kagazo includes our Xerox ink boost filter to sharpen blue and black pen strokes while removing grey shadows.',
   },
   {
     question: 'Is this GATE GOAPS Resizer 100% free with no watermark?',
     answer:
-      'Yes, VeriSeal is completely free forever. No watermarks, no signups, and your images are processed purely in volatile RAM memory without saving to server disks.',
+      'Yes, Kagazo is completely free forever. No watermarks, no signups, and your images are processed purely in volatile RAM memory without saving to server disks.',
   },
 ];
 
@@ -88,7 +88,7 @@ export default function GatePhotoSignatureResizerPage() {
         name: 'GATE & JAM Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/gate-photo-signature-resizer',
+        url: 'https://Kagazo.in/tools/gate-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -114,7 +114,7 @@ export default function GatePhotoSignatureResizerPage() {
           {
             '@type': 'HowToStep',
             name: 'Mathematical Aspect Ratio Locking',
-            text: 'VeriSeal sets exact dimensions (e.g. 532x150 px) to satisfy the 3.15-3.95 GOAPS rule.',
+            text: 'Kagazo sets exact dimensions (e.g. 532x150 px) to satisfy the 3.15-3.95 GOAPS rule.',
           },
           {
             '@type': 'HowToStep',
@@ -252,7 +252,7 @@ export default function GatePhotoSignatureResizerPage() {
                   Aspect Ratio = Pixel Width ÷ Pixel Height &rarr; Must be between 3.15 and 3.95
                 </div>
                 <p>
-                  VeriSeal sets your canvas to exactly <strong>532 × 150 pixels</strong> (<span className="font-mono text-primary font-bold">532 ÷ 150 = 3.55</span>), perfectly centered in the permissible window, ensuring 100% first-time portal acceptance.
+                  Kagazo sets your canvas to exactly <strong>532 × 150 pixels</strong> (<span className="font-mono text-primary font-bold">532 ÷ 150 = 3.55</span>), perfectly centered in the permissible window, ensuring 100% first-time portal acceptance.
                 </p>
               </div>
             </section>

@@ -1,5 +1,5 @@
 """
-VeriSeal In-Memory Government Exam PDF Compressor & Batch Engine.
+Kagazo In-Memory Government Exam PDF Compressor & Batch Engine.
 Zero-monetization, 100% free public utility suite for Indian applicant portals.
 Optimized for:
 - TNPSC (100KB - 200KB)
@@ -25,7 +25,7 @@ except ImportError:
 from PIL import Image
 import pikepdf
 
-logger = logging.getLogger("veriseal.compressor")
+logger = logging.getLogger("kagazo.compressor")
 
 # Preset target limits in KB
 EXAM_PRESETS = {

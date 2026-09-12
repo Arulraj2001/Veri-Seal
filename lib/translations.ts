@@ -223,7 +223,7 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       dropHint: 'Accepts official Indian government PDFs up to 25MB. Files are verified in memory and never stored on any server.',
       browseBtn: 'Choose PDF File',
       releaseToUpload: 'Release to Upload PDF',
-      releaseHint: 'VeriSeal will immediately inspect the digital signature hierarchy',
+      releaseHint: 'Kagazo will immediately inspect the digital signature hierarchy',
       selectPdfBtn: 'Select Government PDF',
       passwordLabel: 'PDF Password (Optional)',
       passwordPlaceholder: 'e.g. RAMA1995 for e-Aadhaar',
@@ -262,7 +262,7 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
     },
     howItWorks: {
       badge: 'Simple 3-Step Process',
-      heading: 'How VeriSeal Works',
+      heading: 'How Kagazo Works',
       subheading: 'Instant PKI verification compliant with the IT Act 2000. Zero software installation required.',
       step1Badge: 'Step 1 • Upload',
       step1Title: 'Upload Government PDF',
@@ -280,7 +280,7 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
     supportedDocs: {
       badge: 'Wide Portal Coverage',
       heading: 'Supported Government Documents',
-      subheading: 'VeriSeal verifies digitally signed PDFs across Central ministries and all State revenue portals.',
+      subheading: 'Kagazo verifies digitally signed PDFs across Central ministries and all State revenue portals.',
       allIndia: 'All India',
       tamilNadu: 'Tamil Nadu',
       apTelangana: 'AP & Telangana',
@@ -296,9 +296,9 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
     faq: {
       badge: 'Clear Answers',
       heading: 'Frequently Asked Questions',
-      subheading: 'Everything you need to know about digital signatures, validity, and how VeriSeal works.',
+      subheading: 'Everything you need to know about digital signatures, validity, and how Kagazo works.',
       contactNote: 'Still have questions or need technical support?',
-      contactLink: 'Contact VeriSeal Support',
+      contactLink: 'Contact Kagazo Support',
     },
     contactFloating: {
       tooltip: 'Need Help? Contact Admin',

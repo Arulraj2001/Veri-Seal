@@ -9,7 +9,7 @@ interface PaymentRejectedEmailProps {
 export function PaymentRejectedEmail({
   name,
   admin_note = 'The submitted UPI reference (UTR) could not be matched against our banking statement ledger.',
-  contact_email = 'support@veriseal.in',
+  contact_email = 'support@Kagazo.in',
 }: PaymentRejectedEmailProps) {
   return (
     <div style={{ fontFamily: 'Helvetica, Arial, sans-serif', backgroundColor: '#FBFAF9', padding: '32px 16px', color: '#2E241F' }}>
@@ -17,13 +17,13 @@ export function PaymentRejectedEmail({
         {/* Header */}
         <div style={{ borderBottom: '2px solid #F1EFEE', paddingBottom: '20px', marginBottom: '24px' }}>
           <span style={{ backgroundColor: '#FFF0EA', border: '1px solid #E6570B', color: '#E6570B', borderRadius: '8px', padding: '6px 12px', fontWeight: 'bold', fontSize: '18px' }}>
-            VeriSeal
+            Kagazo
           </span>
         </div>
 
         {/* Content */}
         <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#2E241F', margin: '0 0 16px 0' }}>
-          VeriSeal Payment Request Update
+          Kagazo Payment Request Update
         </h2>
 
         <p style={{ fontSize: '14px', lineHeight: '1.6', margin: '0 0 16px 0' }}>
@@ -48,7 +48,7 @@ export function PaymentRejectedEmail({
 
         <div style={{ textAlign: 'center', margin: '32px 0' }}>
           <a
-            href="https://veriseal.in/dashboard/payment"
+            href="https://Kagazo.in/dashboard/payment"
             style={{
               backgroundColor: '#E6570B',
               color: '#FFFFFF',
@@ -70,7 +70,7 @@ export function PaymentRejectedEmail({
         </p>
 
         <div style={{ borderTop: '1px solid #F1EFEE', paddingTop: '16px', fontSize: '11px', color: '#9C9189', textAlign: 'center' }}>
-          VeriSeal Support Desk &bull; 100% In-Memory RAM Verification
+          Kagazo Support Desk &bull; 100% In-Memory RAM Verification
         </div>
       </div>
     </div>

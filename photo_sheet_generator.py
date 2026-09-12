@@ -1,5 +1,5 @@
 """
-VeriSeal Cyber Cafe Passport Photo Sheet Maker Engine.
+Kagazo Cyber Cafe Passport Photo Sheet Maker Engine.
 Generates printable 4"x6" (8 photos) and A4 (32 photos) sheets at crisp 300 DPI
 complete with scissor cutting guidelines, candidate Name & Date of Photo captions,
 and white/blue background options.
@@ -15,7 +15,7 @@ try:
 except ImportError:
     import fitz
 
-logger = logging.getLogger("veriseal.photo_sheet_generator")
+logger = logging.getLogger("kagazo.photo_sheet_generator")
 
 
 def get_system_font(size: int = 24):
@@ -232,7 +232,7 @@ def generate_passport_photo_sheet(
                 draw_dashed_rectangle(draw, guide_rect, dash_length=6, space_length=5, color=(170, 170, 170), width=1)
 
     # Header / Footer watermark instruction for cyber cafe operator
-    footer_text = "VeriSeal 300 DPI Passport Photo Sheet • Print at 100% Scale / Actual Size (Do not scale)"
+    footer_text = "Kagazo 300 DPI Passport Photo Sheet • Print at 100% Scale / Actual Size (Do not scale)"
     f_font = get_system_font(18)
     f_bbox = draw.textbbox((0, 0), footer_text, font=f_font)
     draw.text(

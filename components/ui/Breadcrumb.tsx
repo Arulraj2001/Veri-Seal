@@ -21,7 +21,7 @@ export function Breadcrumb({
 }: BreadcrumbProps) {
   if (!items || items.length === 0) return null;
 
-  const baseUrl = SITE_URL || 'https://veriseal.in';
+  const baseUrl = SITE_URL || 'https://kagazo.in';
 
   // Generate Schema.org BreadcrumbList JSON-LD
   const breadcrumbListSchema = {

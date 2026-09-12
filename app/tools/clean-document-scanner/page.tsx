@@ -19,18 +19,18 @@ import CleanScannerEngine from '@/components/tools/CleanScannerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Clean Document Scanner Online Free | Remove Shadows & Xerox Binarize | VeriSeal',
+  title: 'Clean Document Scanner Online Free | Remove Shadows & Xerox Binarize | Kagazo',
   description:
     'Convert phone camera photos of certificates and marksheets into flatbed-quality scans online free. Remove phone shadows, yellow incandescent tint, and desk backgrounds for UPSC, SSC, and TNPSC portals.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/clean-document-scanner',
+    canonical: 'https://Kagazo.in/tools/clean-document-scanner',
   },
   openGraph: {
-    title: 'Clean Document Scanner & Xerox Binarizer Free | VeriSeal',
+    title: 'Clean Document Scanner & Xerox Binarizer Free | Kagazo',
     description:
       'Remove phone shadows, clean yellow tints, and binarize photocopy scans into crisp PDF and JPEG documents with zero watermark.',
-    url: 'https://veriseal.in/tools/clean-document-scanner',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/clean-document-scanner',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -52,7 +52,7 @@ const FAQS = [
       'No. Our engine cleans optical shadows and enhances contrast without altering or interpolating any printed text, numbers, signatures, or seal shapes. It produces a cleaner representation of your original document.',
   },
   {
-    question: 'Is it safe to upload sensitive certificates to VeriSeal?',
+    question: 'Is it safe to upload sensitive certificates to Kagazo?',
     answer:
       'Yes, 100% safe. Processing happens exclusively in volatile RAM memory. Documents are never saved to disk, stored in databases, or used for AI training. Everything is automatically destroyed upon download.',
   },
@@ -90,8 +90,8 @@ export default function CleanDocumentScannerPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'VeriSeal Clean Document Scanner & Xerox Binarizer',
-            url: 'https://veriseal.in/tools/clean-document-scanner',
+            name: 'Kagazo Clean Document Scanner & Xerox Binarizer',
+            url: 'https://Kagazo.in/tools/clean-document-scanner',
             applicationCategory: 'UtilityApplication',
             operatingSystem: 'All',
             browserRequirements: 'Requires JavaScript. Requires HTML5.',
@@ -172,7 +172,7 @@ export default function CleanDocumentScannerPage() {
                 <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-100 space-y-2">
                   <h3 className="font-bold text-emerald-800 flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    VeriSeal Clean Scan
+                    Kagazo Clean Scan
                   </h3>
                   <ul className="text-xs text-emerald-800/90 space-y-1.5 list-disc list-inside leading-relaxed">
                     <li>Shadow division produces pure crisp white paper</li>

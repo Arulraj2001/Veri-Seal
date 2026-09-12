@@ -23,14 +23,14 @@ export const metadata: Metadata = {
   description:
     'Purge blue ruled notebook lines, whiten camera shadows, and strictly lock declaration file size between 50KB and 100KB for IBPS PO, Clerk, SBI, and Railway RRB 2026. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/handwritten-declaration-scanner',
+    canonical: 'https://Kagazo.in/tools/handwritten-declaration-scanner',
   },
   openGraph: {
-    title: 'Exam Handwritten Declaration Scanner (50KB–100KB) | VeriSeal',
+    title: 'Exam Handwritten Declaration Scanner (50KB–100KB) | Kagazo',
     description:
       'Eliminate ruled lines and lock image strictly between 50KB and 100KB for IBPS, SBI, and Railway recruitment portals.',
-    url: 'https://veriseal.in/tools/handwritten-declaration-scanner',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/handwritten-declaration-scanner',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 const DECLARATION_RULES = [
   { rule: 'Mandatory Black Ink', desc: 'IBPS & SBI strictly require black ink on white paper. Blue ink or pencil declarations are rejected by TCS iON document filters.' },
   { rule: 'No CAPITAL / Block Letters', desc: 'Writing the whole declaration in CAPITAL LETTERS will cause automatic application rejection. Write in normal cursive/running handwriting.' },
-  { rule: '50 KB to 100 KB Strict Boundary', desc: 'The upload portal throws an error if file is 49KB or 101KB. VeriSeal automatically locks your image inside the safe 65KB-85KB zone.' },
+  { rule: '50 KB to 100 KB Strict Boundary', desc: 'The upload portal throws an error if file is 49KB or 101KB. Kagazo automatically locks your image inside the safe 65KB-85KB zone.' },
   { rule: 'Plain White Unlined Paper', desc: 'Ruled notebook lines confuse biometric character analyzers. Our AI filter strips horizontal blue lines automatically.' },
 ];
 
@@ -51,7 +51,7 @@ const FAQS = [
   {
     question: 'Why was my handwritten declaration rejected for file size?',
     answer:
-      'Banking portals (IBPS, SBI, RRB) enforce both a floor limit and a ceiling limit: the file must be strictly between 50 KB and 100 KB. Ordinary photo resizers often compress images down to 30KB or leave them above 120KB. VeriSeal uses an intelligent padding and compression engine to guarantee your image is locked between 50KB and 100KB.',
+      'Banking portals (IBPS, SBI, RRB) enforce both a floor limit and a ceiling limit: the file must be strictly between 50 KB and 100 KB. Ordinary photo resizers often compress images down to 30KB or leave them above 120KB. Kagazo uses an intelligent padding and compression engine to guarantee your image is locked between 50KB and 100KB.',
   },
   {
     question: 'Can I write the declaration in CAPITAL / BLOCK letters?',
@@ -59,7 +59,7 @@ const FAQS = [
       'NO! The official notification explicitly states: "The applicant has to write the declaration in English clearly in their running handwriting; if it is written and uploaded by anybody else or in CAPITAL LETTERS, it will be considered invalid and rejected."',
   },
   {
-    question: 'How does VeriSeal remove notebook ruled lines?',
+    question: 'How does Kagazo remove notebook ruled lines?',
     answer:
       'Our intelligent client-side canvas algorithm analyzes color channel differentials. Because notebook ruling lines consist of cyan/light-blue inks while candidate writing is black or dark, the filter neutralizes the blue frequency and normalizes paper luminance to 255 pure white without touching your handwritten strokes.',
   },
@@ -76,8 +76,8 @@ export default function HandwrittenDeclarationPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Exam Handwritten Declaration Scanner & Resizer',
-        url: 'https://veriseal.in/tools/handwritten-declaration-scanner',
+        name: 'Kagazo Exam Handwritten Declaration Scanner & Resizer',
+        url: 'https://Kagazo.in/tools/handwritten-declaration-scanner',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

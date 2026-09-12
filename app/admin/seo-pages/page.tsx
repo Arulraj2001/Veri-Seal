@@ -227,7 +227,7 @@ export default function AdminSeoPagesPage() {
                   Canonical URL Slug
                 </label>
                 <div className="flex items-center bg-surface/50 border border-surface-darker rounded-xl px-3 py-2 font-mono text-xs text-text-main">
-                  <span className="text-text-main/40">https://veriseal.in/</span>
+                  <span className="text-text-main/40">https://Kagazo.in/</span>
                   <input
                     type="text"
                     value={currentPage.slug || ''}
@@ -424,7 +424,7 @@ export default function AdminSeoPagesPage() {
 
                 <div className="p-3 bg-surface/40 rounded-xl border border-surface-darker text-left space-y-1">
                   <div className="text-[11px] text-text-main/60 truncate">
-                    https://veriseal.in &rsaquo; {currentPage.slug}
+                    https://Kagazo.in &rsaquo; {currentPage.slug}
                   </div>
                   <div className="text-sm font-semibold text-[#1a0dab] line-clamp-1 leading-snug">
                     {currentPage.title || 'Page Title'}

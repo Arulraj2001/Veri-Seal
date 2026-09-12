@@ -29,7 +29,7 @@ const notoSansTamil = Noto_Sans_Tamil({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'VeriSeal — Verify Indian Government PDF Digital Signature Online Free',
+  title: 'Kagazo — Verify Indian Government PDF Digital Signature Online Free',
   description:
     'Instantly verify digital signatures on e-Aadhaar, community certificate, nativity certificate, PAN card, DigiLocker PDFs. Fix yellow question mark. Free, no signup, files never stored. Supports Tamil Nadu, AP, Telangana, Karnataka, Kerala government certificates.',
   keywords: [
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     'nadakacheri caste certificate signature',
     'sevana kerala birth certificate verify',
   ],
-  authors: [{ name: 'VeriSeal Team' }],
-  creator: 'VeriSeal',
-  publisher: 'VeriSeal',
+  authors: [{ name: 'Kagazo Team' }],
+  creator: 'Kagazo',
+  publisher: 'Kagazo',
   manifest: '/manifest.webmanifest',
   icons: {
     icon: [
@@ -64,17 +64,17 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: 'VeriSeal — Verify Indian Government PDF Digital Signature Online Free',
+    title: 'Kagazo — Verify Indian Government PDF Digital Signature Online Free',
     description:
       'Instantly verify digital signatures on e-Aadhaar, community certificate, nativity certificate, PAN card, DigiLocker PDFs. Fix yellow question mark.',
     url: SITE_URL,
-    siteName: 'VeriSeal India',
+    siteName: 'Kagazo India',
     images: [
       {
-        url: `${SITE_URL}/api/og?title=${encodeURIComponent('VeriSeal — Verify Indian Government PDF Digital Signature')}&subtitle=${encodeURIComponent('Free · Instant · 100% In-Memory RAM · DPDP Act 2023 Compliant')}&type=verify`,
+        url: `${SITE_URL}/api/og?title=${encodeURIComponent('Kagazo — Verify Indian Government PDF Digital Signature')}&subtitle=${encodeURIComponent('Free · Instant · 100% In-Memory RAM · DPDP Act 2023 Compliant')}&type=verify`,
         width: 1200,
         height: 630,
-        alt: 'VeriSeal - Indian Government PDF Digital Signature Verification',
+        alt: 'Kagazo - Indian Government PDF Digital Signature Verification',
       },
     ],
     locale: 'en_IN',
@@ -82,13 +82,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VeriSeal — Verify Indian Government PDF Digital Signature Online Free',
+    title: 'Kagazo — Verify Indian Government PDF Digital Signature Online Free',
     description:
       'Fix the yellow question mark on e-Aadhaar, community, and government certificates. Free, instant, 100% in-memory.',
     images: [
-      `${SITE_URL}/api/og?title=${encodeURIComponent('VeriSeal — Verify Indian Government PDF Digital Signature')}&subtitle=${encodeURIComponent('Free · Instant · 100% In-Memory RAM · DPDP Act 2023 Compliant')}&type=verify`,
+      `${SITE_URL}/api/og?title=${encodeURIComponent('Kagazo — Verify Indian Government PDF Digital Signature')}&subtitle=${encodeURIComponent('Free · Instant · 100% In-Memory RAM · DPDP Act 2023 Compliant')}&type=verify`,
     ],
-    creator: '@veriseal_in',
+    creator: '@Kagazo_in',
   },
   robots: {
     index: true,
@@ -102,7 +102,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '03r5QiL7AV8mYg3EA27FgE4YCVKgIkB03M4y-usjb5U',
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '7hCnl0uBreoGPe1TQgNlojWQ2YMEbBUtQ5m842qDYD8',
   },
   other: {
     'revisit-after': '1 day',
@@ -113,8 +113,8 @@ export const metadata: Metadata = {
 const webSiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'VeriSeal',
-  alternateName: ['Veri-Seal', 'VeriSeal India', 'VeriSeal PKI'],
+  name: 'Kagazo',
+  alternateName: ['Kagazo India', 'Kagazo PDF Tools', 'Kagazo Document Verification'],
   url: SITE_URL,
   description: 'Instant Indian Government PDF Digital Signature Verification Engine',
   inLanguage: ['en-IN', 'ta-IN', 'hi-IN'],
@@ -124,7 +124,7 @@ const webSiteSchema = {
 const webApplicationSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
-  name: 'VeriSeal',
+  name: 'Kagazo',
   url: SITE_URL,
   description: 'Free tool to verify digital signatures on Indian government PDFs',
   applicationCategory: 'UtilitiesApplication',
@@ -156,17 +156,14 @@ const webApplicationSchema = {
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'VeriSeal',
+  name: 'Kagazo',
   url: SITE_URL,
   logo: `${SITE_URL}/logo.png`,
-  sameAs: [
-    'https://twitter.com/veriseal_in',
-    'https://github.com/Arulraj2001/Veri-Seal',
-  ],
+  sameAs: [],
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
-    email: SITE_CONFIG.supportEmail || 'support@veriseal.in',
+    email: SITE_CONFIG.supportEmail || 'support@kagazo.in',
     availableLanguage: ['English', 'Tamil', 'Hindi'],
   },
 };
@@ -190,7 +187,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-VERISEAL01';
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-Kagazo01';
 
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${notoSansTamil.variable}`}>
@@ -202,7 +199,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
 
         {/* Google Site Verification & Search Engine Auto-Crawling */}
-        <meta name="google-site-verification" content="03r5QiL7AV8mYg3EA27FgE4YCVKgIkB03M4y-usjb5U" />
+        <meta name="google-site-verification" content="7hCnl0uBreoGPe1TQgNlojWQ2YMEbBUtQ5m842qDYD8" />
         <meta name="revisit-after" content="1 day" />
 
         {/* Preconnect for Google Fonts and Supabase */}

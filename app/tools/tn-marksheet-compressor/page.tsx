@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   description:
     'Compress Tamil Nadu SSLC (10th) and HSC (12th) marksheets to strictly between 100KB and 200KB. State Board seal and QR code clarity shield. Dual-side front & back merge for TNEA, TNGASA, and TNPSC. 100% In-RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/tn-marksheet-compressor',
+    canonical: 'https://Kagazo.in/tools/tn-marksheet-compressor',
   },
   openGraph: {
-    title: 'TN Marksheet to PDF Compressor (<200KB) | VeriSeal',
+    title: 'TN Marksheet to PDF Compressor (<200KB) | Kagazo',
     description:
       'Compress Tamil Nadu 10th & 12th marksheets strictly between 100KB and 200KB without blur for TNEA, TNPSC, and college admission.',
-    url: 'https://veriseal.in/tools/tn-marksheet-compressor',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/tn-marksheet-compressor',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -34,12 +34,12 @@ const FAQS = [
   {
     question: 'Why do Tamil Nadu portals reject marksheets that are under 100 KB?',
     answer:
-      'Portals like TNEA (Tamil Nadu Engineering Admissions) and TNPSC enforce a minimum threshold (typically 100 KB) because overly compressed PDFs under 100 KB often turn subject marks, student registration numbers, and official signatures illegible. VeriSeal calibrates compression strictly within the 100 KB – 200 KB safe target zone.',
+      'Portals like TNEA (Tamil Nadu Engineering Admissions) and TNPSC enforce a minimum threshold (typically 100 KB) because overly compressed PDFs under 100 KB often turn subject marks, student registration numbers, and official signatures illegible. Kagazo calibrates compression strictly within the 100 KB – 200 KB safe target zone.',
   },
   {
     question: 'How do I combine the front marks table and back side of my marksheet?',
     answer:
-      'Simply check the "Include Back Side" box. You can upload both the front marks scan and back instruction page. VeriSeal automatically combines them onto a single A4 page or a multi-page PDF while keeping the total file size below 200 KB.',
+      'Simply check the "Include Back Side" box. You can upload both the front marks scan and back instruction page. Kagazo automatically combines them onto a single A4 page or a multi-page PDF while keeping the total file size below 200 KB.',
   },
   {
     question: 'Will the State Board hologram, round seal, and QR code remain readable?',
@@ -49,7 +49,7 @@ const FAQS = [
   {
     question: 'Can I add self-attestation to my marksheet PDF?',
     answer:
-      'Yes. Enable the "Add Self-Attestation Footer" toggle and enter your name. VeriSeal will stamp an official "TRUE COPY ATTESTED" banner with today’s date and signature line at the bottom of the A4 page.',
+      'Yes. Enable the "Add Self-Attestation Footer" toggle and enter your name. Kagazo will stamp an official "TRUE COPY ATTESTED" banner with today’s date and signature line at the bottom of the A4 page.',
   },
 ];
 
@@ -58,7 +58,7 @@ export default function TnMarksheetCompressorPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Tamil Nadu Marksheet to PDF Compressor',
-    url: 'https://veriseal.in/tools/tn-marksheet-compressor',
+    url: 'https://Kagazo.in/tools/tn-marksheet-compressor',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'All',
     offers: {

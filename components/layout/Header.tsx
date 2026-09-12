@@ -154,7 +154,7 @@ export function Header() {
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-extrabold tracking-tight text-text-main flex items-center gap-1">
-              Veri<span className="text-primary">Seal</span>
+              Kaga<span className="text-primary">zo</span>
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary mb-1"></span>
             </span>
             <span className="text-[10px] -mt-1 font-semibold text-text-main/60 tracking-wider uppercase">
@@ -838,7 +838,7 @@ export function Header() {
             </div>
 
             <div className="mt-auto pt-8 text-center text-xs text-text-main/60">
-              <p>VeriSeal — India Government PKI Verification Tool</p>
+              <p>Kagazo — India Government PKI Verification Tool</p>
               <p className="mt-1">Free, Private &amp; Secure. Files Never Leave Memory.</p>
             </div>
           </motion.div>

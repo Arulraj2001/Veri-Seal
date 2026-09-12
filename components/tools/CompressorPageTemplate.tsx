@@ -201,7 +201,7 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
                       <th className="py-3.5 px-3.5 font-bold">Exam / Commission</th>
                       <th className="py-3.5 px-3.5 font-bold">Applicable Posts</th>
                       <th className="py-3.5 px-3.5 font-bold">Strict Ceiling</th>
-                      <th className="py-3.5 px-3.5 font-bold">VeriSeal Safe Target</th>
+                      <th className="py-3.5 px-3.5 font-bold">Kagazo Safe Target</th>
                       <th className="py-3.5 px-3.5 font-bold hidden md:table-cell">Key Upload Rule</th>
                     </tr>
                   </thead>
@@ -233,7 +233,7 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
             {/* In-Content Native Sponsor Card (Slot C) */}
             <AdSlot slot="in_content" />
 
-            {/* Why Choose VeriSeal */}
+            {/* Why Choose Kagazo */}
             <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
                 <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
@@ -314,7 +314,7 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
               </section>
             )}
 
-            {/* Cross-Link to VeriSeal Digital Signature Verifier */}
+            {/* Cross-Link to Kagazo Digital Signature Verifier */}
             <aside className="p-6 sm:p-8 rounded-3xl bg-surface border border-primary/30 shadow-card flex flex-col sm:flex-row items-center justify-between gap-6">
               <div className="space-y-1.5 text-center sm:text-left">
                 <h3 className="text-base sm:text-lg font-extrabold text-text-main flex items-center gap-2 justify-center sm:justify-start">
@@ -416,7 +416,7 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
                 <span>100% In-Memory Privacy</span>
               </div>
               <p className="text-[11px] text-text-main/70 leading-relaxed">
-                VeriSeal processes certificates entirely in memory (RAM). Documents are never saved to permanent disk storage, ensuring 100% data privacy for candidates.
+                Kagazo processes certificates entirely in memory (RAM). Documents are never saved to permanent disk storage, ensuring 100% data privacy for candidates.
               </p>
             </div>
           </aside>

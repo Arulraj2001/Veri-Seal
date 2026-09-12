@@ -21,18 +21,18 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'SSC Photo & Signature Resizer Online Free | 20-50KB & 10-20KB | VeriSeal',
+  title: 'SSC Photo & Signature Resizer Online Free | 20-50KB & 10-20KB | Kagazo',
   description:
     'Resize photo (20-50 KB, 3.5x4.5 cm) and signature (10-20 KB, 4.0x2.0 cm) for SSC CGL, CHSL, MTS, CPO, GD Constable. 100% compliant with Staff Selection Commission portal specifications.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/ssc-photo-signature-resizer',
+    canonical: 'https://Kagazo.in/tools/ssc-photo-signature-resizer',
   },
   openGraph: {
-    title: 'SSC Photo & Signature Resizer Online Free | VeriSeal',
+    title: 'SSC Photo & Signature Resizer Online Free | Kagazo',
     description:
       'Resize photograph and signature for SSC CGL, CHSL, MTS, GD Constable online. Strict 20-50KB and 10-20KB limits guaranteed. No blur, no watermark.',
-    url: 'https://veriseal.in/tools/ssc-photo-signature-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/ssc-photo-signature-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -67,7 +67,7 @@ const SSC_FAQS = [
   {
     question: 'Why does the SSC portal reject my signature with "File size less than 10 KB"?',
     answer:
-      'When students crop signatures tightly, ordinary mobile tools compress the JPEG to 4 KB - 8 KB. The SSC online application portal instantly flags any file below 10.0 KB as invalid. VeriSeal uses 300 DPI super-sampling and safe JFIF structure padding to ensure your signature strictly lands in the safe 12 KB - 18 KB range.',
+      'When students crop signatures tightly, ordinary mobile tools compress the JPEG to 4 KB - 8 KB. The SSC online application portal instantly flags any file below 10.0 KB as invalid. Kagazo uses 300 DPI super-sampling and safe JFIF structure padding to ensure your signature strictly lands in the safe 12 KB - 18 KB range.',
   },
   {
     question: 'What are the main reasons for SSC photo rejection?',
@@ -77,7 +77,7 @@ const SSC_FAQS = [
   {
     question: 'Is this SSC Resizer 100% free with no watermark?',
     answer:
-      'Yes, VeriSeal is 100% free forever for all applicants and cyber cafe operators. We never stamp watermarks, never require signups, and process files in volatile RAM memory so your personal documents are never stored on server storage.',
+      'Yes, Kagazo is 100% free forever for all applicants and cyber cafe operators. We never stamp watermarks, never require signups, and process files in volatile RAM memory so your personal documents are never stored on server storage.',
   },
 ];
 
@@ -90,7 +90,7 @@ export default function SscPhotoSignatureResizerPage() {
         name: 'SSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/ssc-photo-signature-resizer',
+        url: 'https://Kagazo.in/tools/ssc-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -116,7 +116,7 @@ export default function SscPhotoSignatureResizerPage() {
           {
             '@type': 'HowToStep',
             name: 'Automatic Enhancement',
-            text: 'VeriSeal centers the image, boosts contrast, and calibrates file size to strict SSC limits.',
+            text: 'Kagazo centers the image, boosts contrast, and calibrates file size to strict SSC limits.',
           },
           {
             '@type': 'HowToStep',
@@ -242,7 +242,7 @@ export default function SscPhotoSignatureResizerPage() {
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Top Reasons SSC Applications Get Rejected (And How VeriSeal Fixes Them)
+                Top Reasons SSC Applications Get Rejected (And How Kagazo Fixes Them)
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
@@ -250,7 +250,7 @@ export default function SscPhotoSignatureResizerPage() {
                     Trap #1: Under 10 KB Signature
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    Cropping signatures tightly often results in 4–8 KB files. SSC servers immediately throw an error. VeriSeal applies super-sampling and safe JFIF padding to lock signatures securely at 12–18 KB.
+                    Cropping signatures tightly often results in 4–8 KB files. SSC servers immediately throw an error. Kagazo applies super-sampling and safe JFIF padding to lock signatures securely at 12–18 KB.
                   </p>
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
@@ -258,7 +258,7 @@ export default function SscPhotoSignatureResizerPage() {
                     Trap #2: Facial Distortion
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    Generic online resizers force images into rectangular boxes, stretching round faces into tall ovals. VeriSeal scales proportionally and centers on a pure white canvas without warping.
+                    Generic online resizers force images into rectangular boxes, stretching round faces into tall ovals. Kagazo scales proportionally and centers on a pure white canvas without warping.
                   </p>
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
@@ -274,7 +274,7 @@ export default function SscPhotoSignatureResizerPage() {
                     Trap #4: Wrong Aspect Ratio
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    SSC mandates a wide 4.0 cm × 2.0 cm (2:1 aspect ratio) for signatures. VeriSeal automatically frames your signature to prevent squished or truncated letters.
+                    SSC mandates a wide 4.0 cm × 2.0 cm (2:1 aspect ratio) for signatures. Kagazo automatically frames your signature to prevent squished or truncated letters.
                   </p>
                 </div>
               </div>

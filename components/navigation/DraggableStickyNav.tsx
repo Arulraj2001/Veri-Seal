@@ -122,7 +122,7 @@ export function DraggableStickyNav() {
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="w-72 sm:w-80 ml-1.5 rounded-3xl bg-white border border-surface-darker/90 shadow-2xl p-4 text-text-main backdrop-blur-md ring-1 ring-black/5"
           >
-            {/* Header with VeriSeal Brand Theme */}
+            {/* Header with Kagazo Brand Theme */}
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-surface-darker/70">
               <div className="flex items-center gap-2">
                 <div className="h-7 w-7 rounded-xl bg-primary-light flex items-center justify-center text-primary">
@@ -130,7 +130,7 @@ export function DraggableStickyNav() {
                 </div>
                 <div>
                   <span className="text-xs font-extrabold text-text-main flex items-center gap-1 leading-none">
-                    Veri<span className="text-primary">Seal</span>
+                    Kaga<span className="text-primary">zo</span>
                     <span className="text-text-main/50 font-semibold">• Quick Index</span>
                   </span>
                   <span className="text-[10px] text-text-main/60 block mt-0.5 font-medium">
@@ -182,7 +182,7 @@ export function DraggableStickyNav() {
             {/* Footer indicator */}
             <div className="mt-3 pt-2.5 border-t border-surface-darker/60 flex items-center justify-between text-[10px] text-text-main/50 font-medium">
               <span>Hover away to collapse</span>
-              <span className="text-primary font-bold">VeriSeal</span>
+              <span className="text-primary font-bold">Kagazo</span>
             </div>
           </motion.div>
         )}

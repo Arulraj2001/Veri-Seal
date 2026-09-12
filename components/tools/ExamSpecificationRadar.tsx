@@ -344,7 +344,7 @@ export default function ExamSpecificationRadar() {
 
   return (
     <div className="space-y-8">
-      {/* Search & Filter Header Bar - Matches VeriSeal UI Light/Clean Card System */}
+      {/* Search & Filter Header Bar - Matches Kagazo UI Light/Clean Card System */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl p-6 sm:p-7 shadow-sm space-y-5">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Search Input */}
@@ -386,7 +386,7 @@ export default function ExamSpecificationRadar() {
         </div>
       </div>
 
-      {/* Grid of Exam Cards - Clean VeriSeal UI Card System without Logo Distractions */}
+      {/* Grid of Exam Cards - Clean Kagazo UI Card System without Logo Distractions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredExams.map((item) => (
           <div

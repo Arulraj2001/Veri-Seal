@@ -44,25 +44,25 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const post = await getBlogPostBySlug(params.slug);
   if (!post) {
     return {
-      title: 'Post Not Found — VeriSeal',
+      title: 'Post Not Found — Kagazo',
     };
   }
 
   const pageUrl = `${SITE_URL}/blog/${post.slug}`;
-  const ogImage = `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.excerpt?.slice(0, 90) || 'Official VeriSeal Guide')}&type=blog`;
+  const ogImage = `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.excerpt?.slice(0, 90) || 'Official Kagazo Guide')}&type=blog`;
 
   return {
-    title: `${post.title} — VeriSeal`,
+    title: `${post.title} — Kagazo`,
     description: post.meta_description,
     keywords: post.meta_keywords,
     alternates: {
       canonical: pageUrl,
     },
     openGraph: {
-      title: `${post.title} — VeriSeal`,
+      title: `${post.title} — Kagazo`,
       description: post.meta_description,
       url: pageUrl,
-      siteName: 'VeriSeal',
+      siteName: 'Kagazo',
       images: [
         {
           url: ogImage,
@@ -74,11 +74,11 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       type: 'article',
       publishedTime: post.published_at || undefined,
       modifiedTime: post.updated_at || undefined,
-      authors: [post.author_name || 'VeriSeal'],
+      authors: [post.author_name || 'Kagazo'],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${post.title} — VeriSeal`,
+      title: `${post.title} — Kagazo`,
       description: post.meta_description,
       images: [ogImage],
     },
@@ -104,12 +104,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     image: post.featured_image_url || `${SITE_URL}/og?title=${encodeURIComponent(post.title)}`,
     author: {
       '@type': 'Organization',
-      name: 'VeriSeal',
+      name: 'Kagazo',
       url: SITE_URL,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'VeriSeal',
+      name: 'Kagazo',
       url: SITE_URL,
       logo: {
         '@type': 'ImageObject',
@@ -271,7 +271,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               Need Instant Digital Signature Verification?
             </h3>
             <p className="text-sm sm:text-base text-white/70 max-w-xl mb-6">
-              VeriSeal operates directly in your browser with CCA India root validation. No Adobe certificate downloads, no software installation, completely private.
+              Kagazo operates directly in your browser with CCA India root validation. No Adobe certificate downloads, no software installation, completely private.
             </p>
 
             <Link

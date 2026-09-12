@@ -47,7 +47,7 @@ function PaymentStatusContent() {
   const [submitSuccess, setSubmitSuccess] = React.useState<boolean>(false);
   const [submitError, setSubmitError] = React.useState<string>('');
 
-  const [upiId, setUpiId] = React.useState<string>('veriseal.pay@icici');
+  const [upiId, setUpiId] = React.useState<string>('Kagazo.pay@icici');
   const [upiQrUrl, setUpiQrUrl] = React.useState<string>('');
   const [qrImageError, setQrImageError] = React.useState<boolean>(false);
   const [proPrice, setProPrice] = React.useState<number>(199);
@@ -168,7 +168,7 @@ function PaymentStatusContent() {
             </div>
 
             <p className="text-xs text-text-main/70 mb-4">
-              Pay securely via Google Pay, PhonePe, Paytm, or any BHIM-UPI application directly to VeriSeal Official Treasury.
+              Pay securely via Google Pay, PhonePe, Paytm, or any BHIM-UPI application directly to Kagazo Official Treasury.
             </p>
 
             {/* Real UPI QR Display */}
@@ -184,7 +184,7 @@ function PaymentStatusContent() {
                 ) : (
                   <img
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
-                      `upi://pay?pa=${upiId}&pn=VeriSeal&am=${getAmountForPlan(selectedPlan)}&cu=INR`
+                      `upi://pay?pa=${upiId}&pn=Kagazo&am=${getAmountForPlan(selectedPlan)}&cu=INR`
                     )}`}
                     alt="Generated UPI QR Code"
                     className="w-full h-full object-contain rounded-xl"
@@ -206,7 +206,7 @@ function PaymentStatusContent() {
 
               {/* Quick Action: Open in UPI app for mobile users */}
               <a
-                href={`upi://pay?pa=${upiId}&pn=VeriSeal&am=${getAmountForPlan(selectedPlan)}&cu=INR`}
+                href={`upi://pay?pa=${upiId}&pn=Kagazo&am=${getAmountForPlan(selectedPlan)}&cu=INR`}
                 className="mt-3 inline-flex items-center gap-1.5 px-3.5 py-2 bg-primary-light text-primary text-xs font-bold rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary/20 shadow-2xs"
               >
                 <span>Pay via UPI App (GPay / PhonePe)</span>

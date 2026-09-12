@@ -103,6 +103,7 @@ body {
   }
 
   /* When printing an isolated container directly */
+  .kagazo-print-document,
   .veriseal-print-document {
     width: 100% !important;
     max-width: 100% !important;
@@ -115,16 +116,18 @@ body {
 }
 
 /* =========================================================
-   VERISEAL RESUME PRODUCTION PRINT ENGINE
+   KAGAZO RESUME PRODUCTION PRINT ENGINE
    ========================================================= */
+.kagazo-resume-print-portal,
 .veriseal-resume-print-portal {
   display: none !important;
 }
 
 @media print {
   /* When the resume print portal is mounted or body is printing resume */
+  body:has(#kagazo-resume-print-mount) > *:not(#kagazo-resume-print-mount),
   body:has(#veriseal-resume-print-mount) > *:not(#veriseal-resume-print-mount),
-  body.printing-resume > *:not(#veriseal-resume-print-mount) {
+  body.printing-resume > *:not(#kagazo-resume-print-mount):not(#veriseal-resume-print-mount) {
     display: none !important;
   }
 
@@ -140,6 +143,7 @@ body {
     print-color-adjust: exact !important;
   }
 
+  #kagazo-resume-print-mount,
   #veriseal-resume-print-mount {
     display: block !important;
     position: static !important;
@@ -151,6 +155,7 @@ body {
     border: none !important;
   }
 
+  #kagazo-resume-print-mount .kagazo-resume-print-sheet,
   #veriseal-resume-print-mount .veriseal-resume-print-sheet {
     width: 210mm !important;
     min-height: 297mm !important;

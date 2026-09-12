@@ -74,7 +74,7 @@ export function GuestLimitModal({
             {/* Value Highlights */}
             <div className="rounded-2xl bg-surface/50 border border-surface-darker p-4 space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/70">
-                Why Sign In with VeriSeal?
+                Why Sign In with Kagazo?
               </h4>
 
               <div className="space-y-2 text-xs sm:text-sm text-text-main/90">

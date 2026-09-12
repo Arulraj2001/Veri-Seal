@@ -52,7 +52,7 @@ export default function ApplianceCostEngine() {
   const handleAffiliateClick = () => {
     if (!selectedDef?.efficientAlternative) return;
     const query = encodeURIComponent(selectedDef.efficientAlternative.affiliateKeyword);
-    window.open(`https://www.amazon.in/s?k=${query}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${query}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

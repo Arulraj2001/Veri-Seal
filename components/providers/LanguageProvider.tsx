@@ -13,14 +13,14 @@ interface LanguageContextType {
 
 const LanguageContext = React.createContext<LanguageContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'veriseal_selected_language';
+const STORAGE_KEY = 'kagazo_selected_language';
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = React.useState<SupportedLanguage>('en');
 
   React.useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY) as SupportedLanguage;
+      const saved = (localStorage.getItem(STORAGE_KEY) || localStorage.getItem('veriseal_selected_language')) as SupportedLanguage;
       if (saved === 'ta' || saved === 'en') {
         setLanguageState(saved);
         document.documentElement.lang = saved;

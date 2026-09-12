@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   description:
     'Join Passport Photo, Signature, and Declaration into a single official application slip for MP PEB / Vyapam (400x500px, <100KB), UPSSSC, Rajasthan RSMSSB, and Kerala PSC with Name & Date (DOP) strips. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/photo-signature-joiner',
+    canonical: 'https://Kagazo.in/tools/photo-signature-joiner',
   },
   openGraph: {
-    title: 'Free Combined Photo & Signature Slip Maker | VeriSeal',
+    title: 'Free Combined Photo & Signature Slip Maker | Kagazo',
     description:
       'Combine passport photo and signature into a single image slip for MP Vyapam, UPSSSC, and state recruitment portals.',
-    url: 'https://veriseal.in/tools/photo-signature-joiner',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/photo-signature-joiner',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -59,8 +59,8 @@ export default function PhotoSignatureJoinerPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Combined Photo & Signature Slip Maker',
-        url: 'https://veriseal.in/tools/photo-signature-joiner',
+        name: 'Kagazo Combined Photo & Signature Slip Maker',
+        url: 'https://Kagazo.in/tools/photo-signature-joiner',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

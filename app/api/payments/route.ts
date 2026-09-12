@@ -52,7 +52,7 @@ export async function POST(req: Request) {
       plan: plan.toLowerCase() as 'pro' | 'business',
       amount: Number(amount),
       upi_txn_id: String(upi_txn_id).trim(),
-      screenshot_url: screenshot_url || 'https://veriseal.in/proofs/default.png',
+      screenshot_url: screenshot_url || 'https://Kagazo.in/proofs/default.png',
     });
 
     return NextResponse.json({ success: true, payment: newPayment });

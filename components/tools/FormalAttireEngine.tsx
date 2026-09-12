@@ -719,7 +719,7 @@ export default function FormalAttireEngine() {
                 <div className="space-y-0.5">
                   <div className="font-bold">100% Exam Portal &amp; Visa Acceptance Guaranteed:</div>
                   <div className="text-emerald-800/90 leading-relaxed">
-                    Recruitment portals (SSC, UPSC, IBPS, State PSCs) and visa consulates strongly prefer formal attire with clear shoulder contours. Photos exported from VeriSeal adhere to the standard 3.5×4.5 cm geometry at 300 DPI.
+                    Recruitment portals (SSC, UPSC, IBPS, State PSCs) and visa consulates strongly prefer formal attire with clear shoulder contours. Photos exported from Kagazo adhere to the standard 3.5×4.5 cm geometry at 300 DPI.
                   </div>
                 </div>
               </div>

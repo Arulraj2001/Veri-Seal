@@ -13,7 +13,7 @@ export function PaymentRequestReceivedEmail({
   plan,
   amount,
   txn_id,
-  contact_email = 'support@veriseal.in',
+  contact_email = 'support@Kagazo.in',
 }: PaymentRequestReceivedEmailProps) {
   return (
     <div style={{ fontFamily: 'Helvetica, Arial, sans-serif', backgroundColor: '#FBFAF9', padding: '32px 16px', color: '#2E241F' }}>
@@ -22,7 +22,7 @@ export function PaymentRequestReceivedEmail({
         <div style={{ borderBottom: '2px solid #F1EFEE', paddingBottom: '20px', marginBottom: '24px' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ backgroundColor: '#FFF0EA', border: '1px solid #E6570B', color: '#E6570B', borderRadius: '8px', padding: '6px 12px', fontWeight: 'bold', fontSize: '18px' }}>
-              VeriSeal
+              Kagazo
             </span>
           </div>
           <p style={{ fontSize: '12px', color: '#786C65', margin: '8px 0 0 0' }}>
@@ -40,7 +40,7 @@ export function PaymentRequestReceivedEmail({
         </p>
 
         <p style={{ fontSize: '14px', lineHeight: '1.6', margin: '0 0 20px 0' }}>
-          We received your payment verification request for the VeriSeal <strong>{plan.toUpperCase()}</strong> subscription tier.
+          We received your payment verification request for the Kagazo <strong>{plan.toUpperCase()}</strong> subscription tier.
         </p>
 
         {/* Receipt Box */}
@@ -69,8 +69,8 @@ export function PaymentRequestReceivedEmail({
 
         <p style={{ fontSize: '14px', lineHeight: '1.6', margin: '0 0 24px 0' }}>
           You can check your payment status anytime at{' '}
-          <a href="https://veriseal.in/dashboard/payment" style={{ color: '#E6570B', fontWeight: 'bold', textDecoration: 'underline' }}>
-            veriseal.in/dashboard/payment
+          <a href="https://Kagazo.in/dashboard/payment" style={{ color: '#E6570B', fontWeight: 'bold', textDecoration: 'underline' }}>
+            Kagazo.in/dashboard/payment
           </a>.
         </p>
 
@@ -81,10 +81,10 @@ export function PaymentRequestReceivedEmail({
 
         {/* Footer */}
         <div style={{ borderTop: '1px solid #F1EFEE', paddingTop: '16px', fontSize: '11px', color: '#9C9189', textAlign: 'center' }}>
-          &copy; {new Date().getFullYear()} VeriSeal India. All rights reserved. Processing exclusively in volatile RAM.
+          &copy; {new Date().getFullYear()} Kagazo India. All rights reserved. Processing exclusively in volatile RAM.
           <br />
-          <a href="https://veriseal.in/privacy" style={{ color: '#786C65', textDecoration: 'underline' }}>Privacy Policy</a> &bull;{' '}
-          <a href="https://veriseal.in/terms" style={{ color: '#786C65', textDecoration: 'underline' }}>Terms of Service</a>
+          <a href="https://Kagazo.in/privacy" style={{ color: '#786C65', textDecoration: 'underline' }}>Privacy Policy</a> &bull;{' '}
+          <a href="https://Kagazo.in/terms" style={{ color: '#786C65', textDecoration: 'underline' }}>Terms of Service</a>
         </div>
       </div>
     </div>

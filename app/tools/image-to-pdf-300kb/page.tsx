@@ -17,18 +17,18 @@ import { ImageToPdfEngine } from '@/components/tools/ImageToPdfEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Image to PDF Converter under 300KB Free | State PSC & Court Forms | VeriSeal',
+  title: 'Image to PDF Converter under 300KB Free | State PSC & Court Forms | Kagazo',
   description:
     'Convert marksheet photos and certificates directly to PDF strictly under 300 KB online free. 1-click in-memory conversion with Xerox ink boost and A4 formatting. Ideal for State PSCs, High Court recruitment, and university portals.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/image-to-pdf-300kb',
+    canonical: 'https://Kagazo.in/tools/image-to-pdf-300kb',
   },
   openGraph: {
-    title: 'Image to PDF Converter under 300KB Online Free | VeriSeal',
+    title: 'Image to PDF Converter under 300KB Online Free | Kagazo',
     description:
       'Directly convert marksheet photos and certificates to PDF under 300 KB in 1 click. Zero watermark, 100% RAM privacy.',
-    url: 'https://veriseal.in/tools/image-to-pdf-300kb',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/image-to-pdf-300kb',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -42,12 +42,12 @@ const FAQS = [
   {
     question: 'Can I combine Front and Back pages into a single 300 KB PDF?',
     answer:
-      'Yes! Upload both Front and Back photos of your diploma or degree certificate. VeriSeal combines them into a multi-page A4 PDF while ensuring the combined file size stays strictly below 300 KB.',
+      'Yes! Upload both Front and Back photos of your diploma or degree certificate. Kagazo combines them into a multi-page A4 PDF while ensuring the combined file size stays strictly below 300 KB.',
   },
   {
     question: 'Will text and stamps remain clear after compression to 300 KB?',
     answer:
-      '300 KB allows even higher visual resolution than 200 KB. VeriSeal preserves high-contrast text edges, university seals, and signatures with crisp readability.',
+      '300 KB allows even higher visual resolution than 200 KB. Kagazo preserves high-contrast text edges, university seals, and signatures with crisp readability.',
   },
   {
     question: 'Is this conversion safe and private?',
@@ -65,7 +65,7 @@ export default function ImageToPdf300KbPage() {
         name: 'Image to PDF Converter under 300KB',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/image-to-pdf-300kb',
+        url: 'https://Kagazo.in/tools/image-to-pdf-300kb',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -177,7 +177,7 @@ export default function ImageToPdf300KbPage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
                   <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    VeriSeal (1-Pass Direct Optimization)
+                    Kagazo (1-Pass Direct Optimization)
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
                     Calculates target image JPEG quantization directly during PDF page assembly. The result lands comfortably between 220 KB and 290 KB with sharp, readable stamps and text.

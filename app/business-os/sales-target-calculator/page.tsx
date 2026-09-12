@@ -3,7 +3,7 @@ import SalesTargetEngine from '@/components/business-os/SalesTargetEngine';
 import { Trophy, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Reverse Sales Target Calculator (Pocket ₹1 Lakh Net Profit) | VeriSeal',
+  title: 'Reverse Sales Target Calculator (Pocket ₹1 Lakh Net Profit) | Kagazo',
   description:
     'Reverse-engineer your monthly turnover and daily order quotas. Set your desired personal salary (e.g. ₹1 Lakh) and let math calculate required daily sales after all costs.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Reverse Sales Target Calculator | Pocket ₹1 Lakh Net Profit',
     description:
       'Start from your dream take-home pay and reverse-engineer your required daily sales pace and order volume.',
-    url: 'https://veriseal.org/business-os/sales-target-calculator',
+    url: 'https://Kagazo.org/business-os/sales-target-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function SalesTargetPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Reverse Sales Target Calculator',
-    url: 'https://veriseal.org/business-os/sales-target-calculator',
+    url: 'https://Kagazo.org/business-os/sales-target-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

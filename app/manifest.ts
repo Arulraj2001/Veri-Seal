@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'VeriSeal — Indian Government PDF Digital Signature Verification',
-    short_name: 'VeriSeal',
+    name: 'Kagazo — Indian Government PDF Digital Signature Verification',
+    short_name: 'Kagazo',
     description:
       'Instantly verify digital signatures on e-Aadhaar, community certificate, nativity certificate, PAN card, and DigiLocker PDFs free.',
     start_url: '/',

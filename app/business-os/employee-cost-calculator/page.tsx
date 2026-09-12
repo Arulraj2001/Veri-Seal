@@ -3,7 +3,7 @@ import EmployeeTrueCostEngine from '@/components/business-os/EmployeeTrueCostEng
 import { Users, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Employee True Cost & Productivity Calculator for Indian SMBs | VeriSeal',
+  title: 'Employee True Cost & Productivity Calculator for Indian SMBs | Kagazo',
   description:
     'Calculate the true employer cost of hiring staff in India. Factor festival bonuses, daily tea/food allowances, PF/ESI, uniform wear, and calculate real cost per productive working hour.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Employee True Cost & Productivity Calculator for Indian SMBs',
     description:
       'A ₹18k salary costs ~₹23k in real cash. Calculate bonuses, tea, PF/ESI, and true hourly cost.',
-    url: 'https://veriseal.org/business-os/employee-cost-calculator',
+    url: 'https://Kagazo.org/business-os/employee-cost-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function EmployeeCostPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Employee True Cost & Productivity Calculator',
-    url: 'https://veriseal.org/business-os/employee-cost-calculator',
+    url: 'https://Kagazo.org/business-os/employee-cost-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

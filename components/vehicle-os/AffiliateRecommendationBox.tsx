@@ -83,7 +83,7 @@ export function AffiliateRecommendationBox({
       </div>
 
       <div className="text-[10px] text-slate-500 italic pt-1 text-center sm:text-left">
-        * VeriSeal curates independent, high-reputation automotive suppliers. Prices and exchange scrap discounts are updated weekly.
+        * Kagazo curates independent, high-reputation automotive suppliers. Prices and exchange scrap discounts are updated weekly.
       </div>
     </div>
   );

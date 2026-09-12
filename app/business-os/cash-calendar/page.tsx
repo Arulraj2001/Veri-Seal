@@ -3,7 +3,7 @@ import CashCalendarEngine from '@/components/business-os/CashCalendarEngine';
 import { Calendar, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: '30-Day Business Cash Flow Calendar & Liquidity Forecaster | VeriSeal',
+  title: '30-Day Business Cash Flow Calendar & Liquidity Forecaster | Kagazo',
   description:
     'Forecast your bank balance over the next 30 days. Model incoming customer receivables against shop rent, staff wages, GST taxes, and supplier cheques to detect cash shortages early.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: '30-Day Business Cash Flow Calendar & Liquidity Forecaster',
     description:
       'Predict your bank balance on every upcoming date after rent, salaries, GST, and supplier dues clear.',
-    url: 'https://veriseal.org/business-os/cash-calendar',
+    url: 'https://Kagazo.org/business-os/cash-calendar',
   },
 };
 
@@ -26,7 +26,7 @@ export default function CashCalendarPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: '30-Day Business Cash Flow Calendar & Liquidity Forecaster',
-    url: 'https://veriseal.org/business-os/cash-calendar',
+    url: 'https://Kagazo.org/business-os/cash-calendar',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

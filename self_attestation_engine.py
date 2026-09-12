@@ -1,5 +1,5 @@
 """
-VeriSeal Digital Self-Attestation & Date Stamper Engine.
+Kagazo Digital Self-Attestation & Date Stamper Engine.
 Applies candidate signature and 'Self Attested - [Name] - [Date]' stamp
 directly onto certificate & marksheet PDFs without raster degradation,
 strictly budgeting file size under portal limits (<200KB or <500KB).
@@ -15,7 +15,7 @@ except ImportError:
     import fitz
 from PIL import Image, ImageOps, ImageDraw, ImageFont
 
-logger = logging.getLogger("veriseal.self_attestation_engine")
+logger = logging.getLogger("kagazo.self_attestation_engine")
 
 
 def create_attestation_stamp(

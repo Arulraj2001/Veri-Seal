@@ -152,7 +152,7 @@ export default function DashboardOverviewPage() {
             {getGreeting(userName)}
           </h1>
           <p className="text-sm text-text-main/70 mt-1 max-w-xl">
-            Welcome to your VeriSeal portal. Check past digital signature integrity audits, manage verification quota, and verify government certificates.
+            Welcome to your Kagazo portal. Check past digital signature integrity audits, manage verification quota, and verify government certificates.
           </p>
         </div>
 
@@ -265,7 +265,7 @@ export default function DashboardOverviewPage() {
                 <span>Upgrade Recommendation</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-text-main tracking-tight">
-                Accelerate Verification with VeriSeal Pro Unlimited
+                Accelerate Verification with Kagazo Pro Unlimited
               </h2>
               <p className="text-xs sm:text-sm text-text-main/75 leading-relaxed">
                 Unlock <strong>batch verification for up to 20 files</strong> simultaneously, dedicated RAM execution queues, tamper-proof audit certificates, and priority processing for advocates, chartered accountants, and institutions.

@@ -13,18 +13,18 @@ import {
 import BiometricFaceEngine from '@/components/tools/BiometricFaceEngine';
 
 export const metadata: Metadata = {
-  title: 'ICAO Biometric Passport Face & Head Aligner Online | VeriSeal',
+  title: 'ICAO Biometric Passport Face & Head Aligner Online | Kagazo',
   description:
     'Align face and head height strictly within 70%–80% biometric boundary for Indian Passport Seva, US Visa (DS-160), and Schengen visas. Prevents embassy photo rejections.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/biometric-face-aligner',
+    canonical: 'https://Kagazo.in/tools/biometric-face-aligner',
   },
   openGraph: {
-    title: 'Biometric Passport Face Aligner (70-80% Head Rule) | VeriSeal',
+    title: 'Biometric Passport Face Aligner (70-80% Head Rule) | Kagazo',
     description:
       'Ensure your passport and visa photo complies with ICAO 9303 biometric head height and eye-line guidelines.',
-    url: 'https://veriseal.in/tools/biometric-face-aligner',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/biometric-face-aligner',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -65,8 +65,8 @@ export default function BiometricFaceAlignerPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'VeriSeal ICAO Biometric Passport Face Aligner',
-            url: 'https://veriseal.in/tools/biometric-face-aligner',
+            name: 'Kagazo ICAO Biometric Passport Face Aligner',
+            url: 'https://Kagazo.in/tools/biometric-face-aligner',
             applicationCategory: 'UtilityApplication',
             operatingSystem: 'All',
             browserRequirements: 'Requires JavaScript. Requires HTML5.',

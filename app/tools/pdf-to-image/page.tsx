@@ -18,18 +18,18 @@ import { PdfToImageEngine } from '@/components/tools/PdfToImageEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'PDF to Image Converter (300 DPI) Online Free | Extract JPG from PDF | VeriSeal',
+  title: 'PDF to Image Converter (300 DPI) Online Free | Extract JPG from PDF | Kagazo',
   description:
     'Convert PDF documents, e-Aadhaar, admit cards, and marksheets into crisp 300 DPI JPEG or PNG images online free. 100% in-memory processing, zero watermark, instant page download.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/pdf-to-image',
+    canonical: 'https://Kagazo.in/tools/pdf-to-image',
   },
   openGraph: {
-    title: 'PDF to Image Converter (300 DPI) Online Free | VeriSeal',
+    title: 'PDF to Image Converter (300 DPI) Online Free | Kagazo',
     description:
       'Extract high-resolution 300 DPI images from any PDF document. Zero watermark, 100% RAM privacy.',
-    url: 'https://veriseal.in/tools/pdf-to-image',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/pdf-to-image',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -43,17 +43,17 @@ const FAQS = [
   {
     question: 'How do I convert my e-Aadhaar PDF into a JPG image?',
     answer:
-      'Upload your e-Aadhaar PDF into the VeriSeal upload box, select 300 DPI and JPEG format, and click "Extract 300 DPI Images". You can preview the extracted high-resolution image with our clarity loupe and download it immediately.',
+      'Upload your e-Aadhaar PDF into the Kagazo upload box, select 300 DPI and JPEG format, and click "Extract 300 DPI Images". You can preview the extracted high-resolution image with our clarity loupe and download it immediately.',
   },
   {
     question: 'Will converting a multi-page PDF generate images for all pages?',
     answer:
-      'Yes! VeriSeal converts all pages of your PDF document. You can preview each page individually using the tab selector and download individual pages or batch-download all pages in one click.',
+      'Yes! Kagazo converts all pages of your PDF document. You can preview each page individually using the tab selector and download individual pages or batch-download all pages in one click.',
   },
   {
     question: 'Are my confidential identity PDFs stored on your server?',
     answer:
-      'Never. VeriSeal operates entirely in ephemeral volatile memory (RAM). Your PDF and the extracted images are immediately wiped once downloaded. We never save files to disk or databases.',
+      'Never. Kagazo operates entirely in ephemeral volatile memory (RAM). Your PDF and the extracted images are immediately wiped once downloaded. We never save files to disk or databases.',
   },
 ];
 
@@ -66,7 +66,7 @@ export default function PdfToImagePage() {
         name: 'PDF to Image Converter (300 DPI)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/pdf-to-image',
+        url: 'https://Kagazo.in/tools/pdf-to-image',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -179,10 +179,10 @@ export default function PdfToImagePage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
                   <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    VeriSeal Engine (300 DPI Official Scan)
+                    Kagazo Engine (300 DPI Official Scan)
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    VeriSeal renders pages at a full 2480 × 3509 pixels (standard 300 DPI print-ready resolution). Every watermark, signature stroke, and barcode remains tack-sharp.
+                    Kagazo renders pages at a full 2480 × 3509 pixels (standard 300 DPI print-ready resolution). Every watermark, signature stroke, and barcode remains tack-sharp.
                   </p>
                 </div>
               </div>

@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json({
           success: true,
-          url: publicData.publicUrl || `https://veriseal.in/storage/payment-screenshots/${fileName}`,
+          url: publicData.publicUrl || `https://Kagazo.in/storage/payment-screenshots/${fileName}`,
           fileName,
         });
       }

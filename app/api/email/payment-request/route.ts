@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       plan: plan || 'pro',
       amount: Number(amount),
       txn_id: String(txn_id),
-      screenshot_url: screenshot_url || 'https://veriseal.in/proofs/default.png',
+      screenshot_url: screenshot_url || 'https://Kagazo.in/proofs/default.png',
     });
 
     return NextResponse.json(result);

@@ -32,7 +32,7 @@ export default function SolarPaybackEngine() {
 
   const handleAffiliateClick = () => {
     const query = encodeURIComponent(`rooftop solar panel installation tata power luminous ${solar.recommendedKw}kw`);
-    window.open(`https://www.amazon.in/s?k=${query}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${query}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

@@ -3,7 +3,7 @@ import DailyProfitEngine from '@/components/business-os/DailyProfitEngine';
 import { Coins, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Daily Profit & Rupee Breakdown Calculator for Indian Shops | VeriSeal',
+  title: 'Daily Profit & Rupee Breakdown Calculator for Indian Shops | Kagazo',
   description:
     'Calculate your exact daily business profit in India. Separate Cash, UPI, and Udhaar credit sales. See where every ₹100 earned goes across COGS, staff wages, rent, and packaging.',
   keywords: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: 'Daily Profit & Rupee Breakdown Calculator for Indian Small Business',
     description:
       'Enter today’s Cash, UPI, and Credit sales to see your real daily profit and interactive ₹100 anatomy breakdown. Free and private.',
-    url: 'https://veriseal.org/business-os/daily-profit-calculator',
+    url: 'https://Kagazo.org/business-os/daily-profit-calculator',
   },
 };
 
@@ -27,7 +27,7 @@ export default function DailyProfitPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Daily Profit & Rupee Breakdown Calculator',
-    url: 'https://veriseal.org/business-os/daily-profit-calculator',
+    url: 'https://Kagazo.org/business-os/daily-profit-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

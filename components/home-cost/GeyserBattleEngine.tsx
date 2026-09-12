@@ -32,7 +32,7 @@ export default function GeyserBattleEngine() {
     const query = type === 'solar'
       ? 'solar water heater 150 lpd racold supreme'
       : '5 star storage water geyser 15 litre 25 litre crompton havells';
-    window.open(`https://www.amazon.in/s?k=${encodeURIComponent(query)}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${encodeURIComponent(query)}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

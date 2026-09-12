@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   description:
     'Free online TNEA engineering cutoff calculator for Tamil Nadu Class 12 students. Exact Anna University formula: Maths + (Physics/2) + (Chemistry/2) out of 200. Check 7.5% Govt school quota, First Graduate fee waiver, and college tier cutoff benchmarks.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/tnea-cutoff-calculator',
+    canonical: 'https://Kagazo.in/tools/tnea-cutoff-calculator',
   },
   openGraph: {
-    title: 'TNEA Engineering Cutoff Calculator 2025–26 | VeriSeal',
+    title: 'TNEA Engineering Cutoff Calculator 2025–26 | Kagazo',
     description:
       'Calculate Anna University 200 engineering cutoff score with college tier benchmarks and fee waiver estimator.',
-    url: 'https://veriseal.in/tools/tnea-cutoff-calculator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/tnea-cutoff-calculator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -58,7 +58,7 @@ export default function TneaCutoffCalculatorPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'TNEA Engineering Cutoff Calculator 2025–26',
-    url: 'https://veriseal.in/tools/tnea-cutoff-calculator',
+    url: 'https://Kagazo.in/tools/tnea-cutoff-calculator',
     applicationCategory: 'EducationalApplication',
     operatingSystem: 'All',
     offers: {

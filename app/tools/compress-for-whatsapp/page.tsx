@@ -20,21 +20,21 @@ export const metadata: Metadata = {
   description:
     'Compress heavy marksheet scans, certificates, and ID cards strictly under 500KB or 200KB for fast WhatsApp forwarding. Prevents text blurring on mobile 4G/5G networks. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/compress-for-whatsapp',
+    canonical: 'https://Kagazo.in/tools/compress-for-whatsapp',
   },
   openGraph: {
-    title: 'Compress PDF & Documents for WhatsApp | VeriSeal',
+    title: 'Compress PDF & Documents for WhatsApp | Kagazo',
     description:
       'Compress certificates and marksheets for fast, crystal-clear WhatsApp sharing.',
-    url: 'https://veriseal.in/tools/compress-for-whatsapp',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/compress-for-whatsapp',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
 
 const SHARING_COMPARISON = [
   { mode: 'Standard WhatsApp Photo', maxLimit: 'Aggressive Blur', textReadability: 'Poor (Roll numbers unreadable)' },
-  { mode: 'VeriSeal Document Optimizer', maxLimit: '< 500 KB / < 200 KB', textReadability: 'Ultra Sharp (100% Legible)' },
+  { mode: 'Kagazo Document Optimizer', maxLimit: '< 500 KB / < 200 KB', textReadability: 'Ultra Sharp (100% Legible)' },
   { mode: 'Uncompressed Flatbed Scan', maxLimit: '8 MB to 15 MB', textReadability: 'Fails to download on weak mobile networks' },
 ];
 
@@ -42,7 +42,7 @@ const FAQS = [
   {
     question: 'Why does WhatsApp blur marksheet photos and certificates?',
     answer:
-      'When you send an image as a standard photo on WhatsApp, the app aggressively recompresses the image, reducing resolution and blurring fine registration numbers, student roll numbers, and stamp seals. VeriSeal applies adaptive contrast boosting and downscales intelligently so your document remains 100% sharp even when sent on mobile data.',
+      'When you send an image as a standard photo on WhatsApp, the app aggressively recompresses the image, reducing resolution and blurring fine registration numbers, student roll numbers, and stamp seals. Kagazo applies adaptive contrast boosting and downscales intelligently so your document remains 100% sharp even when sent on mobile data.',
   },
   {
     question: 'Should I send files as "Document" or "Gallery Photo" on WhatsApp?',
@@ -62,8 +62,8 @@ export default function WhatsAppCompressorPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal WhatsApp Document & Photo Compressor',
-        url: 'https://veriseal.in/tools/compress-for-whatsapp',
+        name: 'Kagazo WhatsApp Document & Photo Compressor',
+        url: 'https://Kagazo.in/tools/compress-for-whatsapp',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

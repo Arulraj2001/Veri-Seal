@@ -1,5 +1,5 @@
 """
-VeriSeal Multi-Marksheet to Single PDF Budget Optimizer Engine.
+Kagazo Multi-Marksheet to Single PDF Budget Optimizer Engine.
 Merges 1 to 12 semester marksheets, degrees, and certificates into a SINGLE PDF
 guaranteed strictly below user target (e.g. <500KB or <1MB) while preserving legible text and stamps.
 """
@@ -14,7 +14,7 @@ except ImportError:
     import fitz
 from PIL import Image, ImageEnhance
 
-logger = logging.getLogger("veriseal.marksheet_merger")
+logger = logging.getLogger("kagazo.marksheet_merger")
 
 
 def apply_xerox_ink_boost(img: Image.Image) -> Image.Image:

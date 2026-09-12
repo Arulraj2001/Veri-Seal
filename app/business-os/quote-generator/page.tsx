@@ -3,7 +3,7 @@ import WhatsAppQuoteEngine from '@/components/business-os/WhatsAppQuoteEngine';
 import { Smartphone, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'WhatsApp Estimate & Quotation Generator for Indian Sellers | VeriSeal',
+  title: 'WhatsApp Estimate & Quotation Generator for Indian Sellers | Kagazo',
   description:
     'Generate professional price quotes and estimates for WhatsApp. Add itemized pricing, delivery fees, special discounts, and 1-click UPI payment details. 100% free with zero login.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'WhatsApp Estimate & Quotation Generator for Indian Sellers',
     description:
       'Send beautiful itemized estimates with 1-click WhatsApp share and UPI QR payment details.',
-    url: 'https://veriseal.org/business-os/quote-generator',
+    url: 'https://Kagazo.org/business-os/quote-generator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function QuoteGeneratorPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'WhatsApp Estimate & Quotation Generator',
-    url: 'https://veriseal.org/business-os/quote-generator',
+    url: 'https://Kagazo.org/business-os/quote-generator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

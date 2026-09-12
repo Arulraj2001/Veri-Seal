@@ -1,5 +1,5 @@
 """
-VeriSeal Left Thumb Impression (LTI) Ridge Sharpener & Binarizer Engine.
+Kagazo Left Thumb Impression (LTI) Ridge Sharpener & Binarizer Engine.
 Enhances biological friction ridges, normalizes uneven ink darkness,
 eliminates paper smudges, and budgets strictly to 20KB-50KB for IBPS, SBI, and Railway RRB portals.
 """
@@ -17,7 +17,7 @@ except ImportError:
     np = None
 from PIL import Image
 
-logger = logging.getLogger("veriseal.thumb_impression_engine")
+logger = logging.getLogger("kagazo.thumb_impression_engine")
 
 
 def enhance_friction_ridges(gray: np.ndarray, ridge_boost: float = 1.2) -> np.ndarray:

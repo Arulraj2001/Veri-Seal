@@ -41,7 +41,7 @@ export function UpiPaymentFlowModal({
   const [selectedPlan, setSelectedPlan] = React.useState<'pro' | 'business'>(initialPlan);
 
   // Settings
-  const [upiId, setUpiId] = React.useState<string>('veriseal.pay@icici');
+  const [upiId, setUpiId] = React.useState<string>('kagazo.pay@icici');
   const [upiQrUrl, setUpiQrUrl] = React.useState<string>('');
   const [qrError, setQrError] = React.useState<boolean>(false);
   const [proPrice, setProPrice] = React.useState<number>(199);
@@ -144,7 +144,7 @@ export function UpiPaymentFlowModal({
       });
 
       const uploadJson = await uploadRes.json();
-      const uploadedScreenshotUrl = uploadJson.url || 'https://veriseal.in/proofs/default.png';
+      const uploadedScreenshotUrl = uploadJson.url || 'https://kagazo.in/proofs/default.png';
 
       // 2. Insert to payment_requests table
       const paymentRes = await fetch('/api/payments', {
@@ -354,7 +354,7 @@ export function UpiPaymentFlowModal({
                 ) : (
                   <img
                     src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
-                      `upi://pay?pa=${upiId}&pn=VeriSeal&am=${currentAmount}&cu=INR`
+                      `upi://pay?pa=${upiId}&pn=Kagazo&am=${currentAmount}&cu=INR`
                     )}`}
                     alt="Generated Scannable UPI QR Code"
                     className="w-full h-full object-contain rounded-xl"
@@ -376,7 +376,7 @@ export function UpiPaymentFlowModal({
 
               {/* Direct UPI app launch link */}
               <a
-                href={`upi://pay?pa=${upiId}&pn=VeriSeal&am=${currentAmount}&cu=INR`}
+                href={`upi://pay?pa=${upiId}&pn=Kagazo&am=${currentAmount}&cu=INR`}
                 className="mt-3 inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-primary-light text-primary text-xs font-bold rounded-xl hover:bg-primary hover:text-white transition-colors border border-primary/20 shadow-2xs"
               >
                 <span>Pay via UPI App (GPay / PhonePe)</span>

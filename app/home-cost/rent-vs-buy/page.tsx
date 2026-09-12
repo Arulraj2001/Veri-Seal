@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Should you buy a home or rent and invest the difference in mutual funds? Indian real estate financial model calculating 10-year net worth, home loan EMI, property appreciation, and SIP compounding.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/rent-vs-buy',
+    canonical: 'https://Kagazo.in/home-cost/rent-vs-buy',
   },
   openGraph: {
-    title: 'Indian 10-Year Rent vs Buy Financial Calculator | VeriSeal',
+    title: 'Indian 10-Year Rent vs Buy Financial Calculator | Kagazo',
     description:
       'Compare buying a house with an 8.5% home loan vs renting and investing the down payment in a Nifty 50 equity SIP.',
-    url: 'https://veriseal.in/home-cost/rent-vs-buy',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/rent-vs-buy',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

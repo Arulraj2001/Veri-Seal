@@ -1,16 +1,16 @@
 import { FaqItem, HowItWorksStep, SupportedDocItem, TrustBadgeItem } from '@/types';
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://veri-seal.vercel.app';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://kagazo.in';
 
 export const SITE_CONFIG = {
-  name: 'VeriSeal',
+  name: 'Kagazo',
   tagline: 'Verify government PDFs instantly. Made for India.',
   description:
     'Instantly verify digital signatures on e-Aadhaar, community certificate, nativity certificate, PAN card, DigiLocker PDFs. Fix yellow question mark. Free, no signup, files never stored. Supports Tamil Nadu, AP, Telangana, Karnataka, Kerala government certificates.',
   url: SITE_URL,
-  upiId: 'veriseal@upi',
-  supportEmail: 'support@veriseal.in',
-  author: 'VeriSeal Team',
+  upiId: 'kagazo@upi',
+  supportEmail: 'support@kagazo.in',
+  author: 'Kagazo Team',
   verifiedCountDefault: 4215,
   maxFileSizeMB: 25,
 };
@@ -467,7 +467,7 @@ export const FAQ: FaqItem[] = [
   {
     question: 'Why does my government PDF show a yellow question mark?',
     answer:
-      "Indian government PDFs are digitally signed using certificates from NIC, eMudhra, or other CCA India licensed authorities. Adobe Acrobat and most PDF viewers don't include India's Root Certifying Authority (RCAI) in their default trusted certificate store. So even though the signature is completely valid and legally recognised under the Information Technology Act 2000, your PDF viewer shows a yellow question mark because it cannot automatically verify the issuer. VeriSeal checks your PDF against the actual CCA India trust hierarchy and gives you a copy with a permanent green tick visible on any device.",
+      "Indian government PDFs are digitally signed using certificates from NIC, eMudhra, or other CCA India licensed authorities. Adobe Acrobat and most PDF viewers don't include India's Root Certifying Authority (RCAI) in their default trusted certificate store. So even though the signature is completely valid and legally recognised under the Information Technology Act 2000, your PDF viewer shows a yellow question mark because it cannot automatically verify the issuer. Kagazo checks your PDF against the actual CCA India trust hierarchy and gives you a copy with a permanent green tick visible on any device.",
   },
   {
     question: 'Is my document safe? Do you store my PDF?',
@@ -475,9 +475,9 @@ export const FAQ: FaqItem[] = [
       'Your PDF is processed entirely in memory during verification. We never write your file to disk, never store it on our servers, and never share it with any third party. The file is deleted from memory immediately after verification is complete. You can also verify this by checking our open source backend code.',
   },
   {
-    question: 'Which documents does VeriSeal support?',
+    question: 'Which documents does Kagazo support?',
     answer:
-      'VeriSeal supports any PDF digitally signed under India’s CCA certificate hierarchy. This includes e-Aadhaar, PAN card, DigiLocker documents, ITR-V, Form 16, and all state government certificates from Tamil Nadu e-District, AP and Telangana MeeSeva, Karnataka Nadakacheri and eJanma, Kerala Sevana portal, and more.',
+      'Kagazo supports any PDF digitally signed under India\'s CCA certificate hierarchy. This includes e-Aadhaar, PAN card, DigiLocker documents, ITR-V, Form 16, and all state government certificates from Tamil Nadu e-District, AP and Telangana MeeSeva, Karnataka Nadakacheri and eJanma, Kerala Sevana portal, and more.',
   },
   {
     question: 'My Aadhaar PDF is password protected. Will it work?',
@@ -492,6 +492,6 @@ export const FAQ: FaqItem[] = [
   {
     question: 'Does this work on mobile?',
     answer:
-      'Yes. VeriSeal is fully mobile responsive and works on any Android or iOS browser. No app installation required. Simply open veriseal.in on your phone browser, upload your PDF and verify instantly.',
+      'Yes. Kagazo is fully mobile responsive and works on any Android or iOS browser. No app installation required. Simply open kagazo.in on your phone browser, upload your PDF and verify instantly.',
   },
 ];

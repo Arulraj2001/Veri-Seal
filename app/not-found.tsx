@@ -26,7 +26,7 @@ export default function NotFound() {
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-hover transition-colors shadow-md shadow-primary/20"
           >
             <Home className="w-4 h-4" />
-            <span>Go to VeriSeal Home</span>
+            <span>Go to Kagazo Home</span>
           </Link>
 
           <Link
@@ -40,7 +40,7 @@ export default function NotFound() {
 
         <div className="mt-12 pt-8 border-t border-surface-darker flex items-center justify-center gap-2 text-xs text-text-main/60">
           <ShieldCheck className="w-4 h-4 text-primary" />
-          <span>VeriSeal • Sovereign Indian PKI Signature Verification</span>
+          <span>Kagazo • Sovereign Indian PKI Signature Verification</span>
         </div>
       </div>
     </div>

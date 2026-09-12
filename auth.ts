@@ -4,8 +4,8 @@ import Credentials from 'next-auth/providers/credentials';
 import { supabase } from '@/lib/supabase';
 
 const ADMIN_EMAILS = [
-  'admin@veriseal.in',
-  'samuel@veriseal.in',
+  'admin@kagazo.in',
+  'samuel@kagazo.in',
   process.env.ADMIN_EMAIL?.toLowerCase(),
 ].filter(Boolean) as string[];
 
@@ -166,7 +166,7 @@ authProviders.push(
 
   export const { handlers, signIn, signOut, auth } = NextAuth({
     trustHost: true,
-    secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'veriseal_super_secret_auth_key_prod_32chars_minimum_length',
+    secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'kagazo_super_secret_auth_key_prod_32chars_minimum_length',
     providers: authProviders,
     session: { strategy: 'jwt' },
   callbacks: {

@@ -13,7 +13,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   React.useEffect(() => {
-    console.error('VeriSeal application error:', error);
+    console.error('Kagazo application error:', error);
   }, [error]);
 
   return (

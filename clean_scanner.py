@@ -1,5 +1,5 @@
 """
-VeriSeal Clean Document Scanner & Xerox Binarizer Engine.
+Kagazo Clean Document Scanner & Xerox Binarizer Engine.
 Removes phone shadows, yellow incandescent tint, and desk backgrounds from certificate photos.
 Produces crisp, portal-ready documents (Magic Color, High-Contrast Xerox, or Greyscale).
 """
@@ -18,7 +18,7 @@ try:
 except ImportError:
     import fitz
 
-logger = logging.getLogger("veriseal.clean_scanner")
+logger = logging.getLogger("kagazo.clean_scanner")
 
 
 def remove_shadows_magic_color(img: Image.Image) -> Image.Image:

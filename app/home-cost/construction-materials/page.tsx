@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Calculate exact quantities of Cement bags, TMT Steel (kg), M-Sand, Coarse Aggregate, and AAC blocks or red clay bricks per square foot of built-up area in India.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/construction-materials',
+    canonical: 'https://Kagazo.in/home-cost/construction-materials',
   },
   openGraph: {
-    title: 'House Construction Material Quantity Calculator | VeriSeal',
+    title: 'House Construction Material Quantity Calculator | Kagazo',
     description:
       'Estimate civil engineering material quantities and total turnkey house building budget in India.',
-    url: 'https://veriseal.in/home-cost/construction-materials',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/construction-materials',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

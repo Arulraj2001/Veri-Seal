@@ -168,9 +168,9 @@ export const TECH_LEAD_SAMPLE_DATA: ResumeData = {
   projects: [
     {
       id: 'proj-1',
-      title: 'VeriSeal Core: In-Browser Cryptographic PDF Verifier',
-      liveUrl: 'https://veriseal.in',
-      githubUrl: 'https://github.com/veriseal/core',
+      title: 'Kagazo Core: In-Browser Cryptographic PDF Verifier',
+      liveUrl: 'https://kagazo.in',
+      githubUrl: 'https://github.com/Arulraj2001/kagazo',
       technologies: ['TypeScript', 'Web Crypto API', 'Next.js', 'Tailwind CSS'],
       bullets: [
         'Engineered pure in-memory client-side PKI digital signature parser verifying X.509 certificates and SHA-256 digests in under 120ms with 0 byte server transmission.',

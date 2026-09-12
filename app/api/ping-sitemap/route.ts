@@ -3,14 +3,14 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const sitemapUrl = 'https://veriseal.in/sitemap.xml';
+  const sitemapUrl = 'https://Kagazo.in/sitemap.xml';
   const pingGoogleUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`;
 
   try {
     const response = await fetch(pingGoogleUrl, {
       method: 'GET',
       headers: {
-        'User-Agent': 'VeriSeal-SitemapPinger/1.0',
+        'User-Agent': 'Kagazo-SitemapPinger/1.0',
       },
     });
 

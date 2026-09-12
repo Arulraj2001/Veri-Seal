@@ -12,18 +12,18 @@ import {
 import PhotoDateNameEngine from '@/components/tools/PhotoDateNameEngine';
 
 export const metadata: Metadata = {
-  title: 'Exam Photo Name & Date (DOP) Stamper Online Free | VeriSeal',
+  title: 'Exam Photo Name & Date (DOP) Stamper Online Free | Kagazo',
   description:
     'Add Candidate Name and Date of Photograph (DOP) on passport photos for SSC CGL, CHSL, MTS, UPSC Civil Services, and State Police recruitment portals with 90-day validity verification.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/photo-date-name-stamper',
+    canonical: 'https://Kagazo.in/tools/photo-date-name-stamper',
   },
   openGraph: {
-    title: 'Exam Photo Name & Date (DOP) Stamper | VeriSeal',
+    title: 'Exam Photo Name & Date (DOP) Stamper | Kagazo',
     description:
       'Online tool to print candidate name and photo date strip on passport photos for SSC and UPSC exams.',
-    url: 'https://veriseal.in/tools/photo-date-name-stamper',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/photo-date-name-stamper',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -64,8 +64,8 @@ export default function PhotoDateNameStamperPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'VeriSeal Exam Photo Name & Date Stamper',
-            url: 'https://veriseal.in/tools/photo-date-name-stamper',
+            name: 'Kagazo Exam Photo Name & Date Stamper',
+            url: 'https://Kagazo.in/tools/photo-date-name-stamper',
             applicationCategory: 'UtilityApplication',
             operatingSystem: 'All',
             browserRequirements: 'Requires JavaScript. Requires HTML5.',

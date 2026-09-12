@@ -1,5 +1,5 @@
 """
-VeriSeal High-Resolution PDF to Image (300 DPI) Extractor Engine.
+Kagazo High-Resolution PDF to Image (300 DPI) Extractor Engine.
 Converts PDF documents, e-Aadhaars, admit cards, and marksheets into crisp,
 high-resolution JPEG/PNG images with optional Xerox ink boost and size capping.
 """
@@ -14,7 +14,7 @@ except ImportError:
     import fitz
 from PIL import Image, ImageEnhance
 
-logger = logging.getLogger("veriseal.pdf_to_image")
+logger = logging.getLogger("kagazo.pdf_to_image")
 
 
 def apply_xerox_ink_boost(img: Image.Image) -> Image.Image:

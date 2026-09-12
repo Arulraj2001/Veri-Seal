@@ -1,5 +1,5 @@
 """
-VeriSeal In-Memory Image to PDF Converter & Optimizer.
+Kagazo In-Memory Image to PDF Converter & Optimizer.
 1-Click conversion of smartphone marksheet captures and certificate photos
 directly into a compliant PDF strictly under 200 KB (or custom target KB).
 
@@ -20,7 +20,7 @@ import logging
 from typing import List, Tuple, Dict, Any, Optional
 from PIL import Image, ImageOps, ImageEnhance
 
-logger = logging.getLogger("veriseal.image_to_pdf")
+logger = logging.getLogger("kagazo.image_to_pdf")
 
 # Standard A4 dimensions in points (72 points = 1 inch)
 A4_WIDTH_PTS = 595.28

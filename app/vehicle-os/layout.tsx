@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react';
 import { VehicleSubNav } from '@/components/vehicle-os/VehicleSubNav';
 
 export const metadata = {
-  title: 'Vehicle Decision & Ownership Intelligence — VeriSeal',
+  title: 'Vehicle Decision & Ownership Intelligence — Kagazo',
   description:
     'The cheapest and smartest way to own and operate your vehicle in India. Realistic 5-year cost calculator, service quote fairness checker, invoice analyzer, tyre & battery decision tools, and dynamic vehicle comparisons.',
 };

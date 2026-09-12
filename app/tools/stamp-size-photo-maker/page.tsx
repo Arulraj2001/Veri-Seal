@@ -11,18 +11,18 @@ import {
 import StampPhotoEngine from '@/components/tools/StampPhotoEngine';
 
 export const metadata: Metadata = {
-  title: 'Stamp Size Photo Maker (20x25mm) & NEET Postcard (4x6") | VeriSeal',
+  title: 'Stamp Size Photo Maker (20x25mm) & NEET Postcard (4x6") | Kagazo',
   description:
     'Tile 16 to 24 stamp size photos (2x2.5cm) on 4x6" card for railway passes, college forms, or generate 4x6" NTA NEET UG postcard photos with candidate name, roll number, and DOP.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/stamp-size-photo-maker',
+    canonical: 'https://Kagazo.in/tools/stamp-size-photo-maker',
   },
   openGraph: {
-    title: 'Stamp Size & NEET Postcard Photo Maker Online Free | VeriSeal',
+    title: 'Stamp Size & NEET Postcard Photo Maker Online Free | Kagazo',
     description:
       'Print 16 stamp size photos or 4x6 NEET admit card postcard photos for ₹5 at your local lab.',
-    url: 'https://veriseal.in/tools/stamp-size-photo-maker',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/stamp-size-photo-maker',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -57,8 +57,8 @@ export default function StampSizePhotoPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'VeriSeal Stamp Size & NEET Postcard Photo Maker',
-            url: 'https://veriseal.in/tools/stamp-size-photo-maker',
+            name: 'Kagazo Stamp Size & NEET Postcard Photo Maker',
+            url: 'https://Kagazo.in/tools/stamp-size-photo-maker',
             applicationCategory: 'UtilityApplication',
             operatingSystem: 'All',
             browserRequirements: 'Requires JavaScript. Requires HTML5.',

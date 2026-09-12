@@ -47,7 +47,7 @@ export default function InverterBatteryEngine() {
 
   const handleAffiliateClick = () => {
     const query = encodeURIComponent(`pure sine wave inverter ${sizing.recommendedKva}kva ${sizing.recommendedBatteryAh}ah battery luminous microtek`);
-    window.open(`https://www.amazon.in/s?k=${query}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${query}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

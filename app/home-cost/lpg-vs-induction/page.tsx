@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Compare monthly cooking costs between a 14.2 kg domestic LPG cylinder and an 1800W induction cooktop in India. Thermal efficiency, fuel economics, and solar cooking synergy.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/lpg-vs-induction',
+    canonical: 'https://Kagazo.in/home-cost/lpg-vs-induction',
   },
   openGraph: {
-    title: 'LPG Cylinder vs Induction Cooking Cost Comparison | VeriSeal',
+    title: 'LPG Cylinder vs Induction Cooking Cost Comparison | Kagazo',
     description:
       'Discover whether cooking with an LPG cylinder or an electric induction cooktop is cheaper in Indian households.',
-    url: 'https://veriseal.in/home-cost/lpg-vs-induction',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/lpg-vs-induction',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

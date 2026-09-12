@@ -22,18 +22,18 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'IBPS Photo, Signature, Thumb & Declaration Resizer Online Free | VeriSeal',
+  title: 'IBPS Photo, Signature, Thumb & Declaration Resizer Online Free | Kagazo',
   description:
     'Resize IBPS Photo (20-50KB, 200x230px), Signature (10-20KB, 140x60px), Left Thumb Impression (20-50KB, 240x240px), and Handwritten Declaration (50-100KB, 800x400px) for IBPS PO, Clerk, SO, RRB, and SBI online forms.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/ibps-photo-signature-resizer',
+    canonical: 'https://Kagazo.in/tools/ibps-photo-signature-resizer',
   },
   openGraph: {
-    title: 'IBPS Photo, Signature, Thumb & Declaration Resizer Online Free | VeriSeal',
+    title: 'IBPS Photo, Signature, Thumb & Declaration Resizer Online Free | Kagazo',
     description:
       'All-in-one free image resizer for IBPS PO, Clerk, SO, RRB and SBI bank examinations. Exact pixels, zero watermark, 100% compliant.',
-    url: 'https://veriseal.in/tools/ibps-photo-signature-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/ibps-photo-signature-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -109,7 +109,7 @@ export default function IbpsPhotoSignatureResizerPage() {
         name: 'IBPS Photo, Signature, Thumb & Declaration Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/ibps-photo-signature-resizer',
+        url: 'https://Kagazo.in/tools/ibps-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -135,7 +135,7 @@ export default function IbpsPhotoSignatureResizerPage() {
           {
             '@type': 'HowToStep',
             name: 'Automatic Pixel & Size Calibration',
-            text: 'VeriSeal sets exact pixels (e.g. 200x230 or 800x400) and locks the file in the accepted KB range.',
+            text: 'Kagazo sets exact pixels (e.g. 200x230 or 800x400) and locks the file in the accepted KB range.',
           },
           {
             '@type': 'HowToStep',

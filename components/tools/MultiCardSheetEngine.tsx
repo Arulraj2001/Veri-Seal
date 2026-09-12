@@ -400,7 +400,7 @@ export default function MultiCardSheetEngine() {
       ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
       ctx.textAlign = 'left';
       ctx.fillText(
-        `VeriSeal Cyber Cafe Pro — A4 Gang Sheet Studio (300 DPI • CR-80 ISO 7810 Standard: 85.60 × 53.98 mm • Pouch Gutter: ${laminationGutterMm}mm)`,
+        `Kagazo Cyber Cafe Pro — A4 Gang Sheet Studio (300 DPI • CR-80 ISO 7810 Standard: 85.60 × 53.98 mm • Pouch Gutter: ${laminationGutterMm}mm)`,
         Math.round((12 / 25.4) * dpi),
         Math.round((8 / 25.4) * dpi)
       );
@@ -531,7 +531,7 @@ export default function MultiCardSheetEngine() {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>VeriSeal Multi-Card Gang Sheet 300 DPI</title>
+          <title>Kagazo Multi-Card Gang Sheet 300 DPI</title>
           <style>
             @page {
               size: ${pageCssSize};
@@ -576,7 +576,7 @@ export default function MultiCardSheetEngine() {
     if (!renderedImageUrl) return;
     const link = document.createElement('a');
     link.href = renderedImageUrl;
-    link.download = `veriseal_multicard_a4_sheet_300dpi.jpg`;
+    link.download = `kagazo_multicard_a4_sheet_300dpi.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -595,7 +595,7 @@ export default function MultiCardSheetEngine() {
     const pdfUrl = URL.createObjectURL(pdfBlob);
     const link = document.createElement('a');
     link.href = pdfUrl;
-    link.download = `veriseal_multicard_a4_sheet_print_ready.pdf`;
+    link.download = `kagazo_multicard_a4_sheet_print_ready.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

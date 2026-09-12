@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Calculate whether upgrading your 10-year-old refrigerator, 75W ceiling fans, or older AC pays for itself through electricity savings. Accurate 5-year total cost of ownership (TCO) and break-even payback.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/appliance-replacement',
+    canonical: 'https://Kagazo.in/home-cost/appliance-replacement',
   },
   openGraph: {
-    title: 'Appliance Replacement ROI & Payback Calculator | VeriSeal',
+    title: 'Appliance Replacement ROI & Payback Calculator | Kagazo',
     description:
       'Answer the critical buying question: Will a new 5-Star appliance save enough electricity to pay for its purchase price?',
-    url: 'https://veriseal.in/home-cost/appliance-replacement',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/appliance-replacement',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

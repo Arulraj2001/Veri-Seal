@@ -3,7 +3,7 @@ import RealProfitLeakEngine from '@/components/business-os/RealProfitLeakEngine'
 import { TrendingUp, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Monthly P&L & Profit Leak Detector for Small Business | VeriSeal',
+  title: 'Monthly P&L & Profit Leak Detector for Small Business | Kagazo',
   description:
     'Free monthly Profit & Loss (P&L) calculator for Indian SMBs and D2C brands. Autodetects hidden leaks across marketplace commissions, courier freight, commercial rent, and ad spend.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Monthly P&L & Profit Leak Detector for Small Business',
     description:
       'Uncover where your business is silently bleeding cash. Autodetects hidden leaks in marketplace cuts, courier freight, and rent.',
-    url: 'https://veriseal.org/business-os/real-profit-calculator',
+    url: 'https://Kagazo.org/business-os/real-profit-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function RealProfitPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Monthly P&L & Profit Leak Detector',
-    url: 'https://veriseal.org/business-os/real-profit-calculator',
+    url: 'https://Kagazo.org/business-os/real-profit-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

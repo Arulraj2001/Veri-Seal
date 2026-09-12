@@ -23,7 +23,7 @@ export default function AiAdvisorCard({ recommendations }: Props) {
 
   const handleAffiliateClick = (query: string) => {
     const encoded = encodeURIComponent(query);
-    window.open(`https://www.amazon.in/s?k=${encoded}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${encoded}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

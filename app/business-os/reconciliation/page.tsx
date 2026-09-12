@@ -3,7 +3,7 @@ import ReconciliationEngine from '@/components/business-os/ReconciliationEngine'
 import { Coins, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Day-End Cash & UPI Register Reconciliation Tool for Indian Shops | VeriSeal',
+  title: 'Day-End Cash & UPI Register Reconciliation Tool for Indian Shops | Kagazo',
   description:
     'Free evening register closing tool for retail shops and restaurants. Tally physical cash drawer count against expected sales and verify digital UPI payments to spot shortages in 90 seconds.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Day-End Cash & UPI Register Reconciliation Tool for Indian Shops',
     description:
       'Tally drawer cash against sales, verify PhonePe/GPay settlements, and detect register shortages instantly.',
-    url: 'https://veriseal.org/business-os/reconciliation',
+    url: 'https://Kagazo.org/business-os/reconciliation',
   },
 };
 
@@ -26,7 +26,7 @@ export default function ReconciliationPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Day-End Cash & UPI Register Reconciliation Tool',
-    url: 'https://veriseal.org/business-os/reconciliation',
+    url: 'https://Kagazo.org/business-os/reconciliation',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

@@ -6,7 +6,7 @@ export const runtime = 'edge';
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
-  const title = searchParams.get('title') || 'VeriSeal — Indian Document Tools';
+  const title = searchParams.get('title') || 'Kagazo — Indian Document Tools';
   const subtitle = searchParams.get('subtitle') || 'Verify · Resize · Convert · Generate';
   const type = searchParams.get('type') || 'tool';
 
@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
             flex: 1,
           }}
         >
-          {/* VeriSeal logo row */}
+          {/* Kagazo logo row */}
           <div
             style={{
               display: 'flex',
@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
                 color: '#2E241F',
               }}
             >
-              VeriSeal
+              Kagazo
             </span>
             <span
               style={{
@@ -97,7 +97,7 @@ export async function GET(req: NextRequest) {
                 marginLeft: '8px',
               }}
             >
-              veriseal.in
+              Kagazo.in
             </span>
           </div>
 

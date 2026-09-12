@@ -1,5 +1,5 @@
 """
-VeriSeal Combined Photo + Signature + Declaration Slip Generator.
+Kagazo Combined Photo + Signature + Declaration Slip Generator.
 Combines Passport Photo, Signature, and Handwritten Declaration/DOP into a single official
 composite slip for MP PEB / Vyapam, UPSSSC, Rajasthan RSMSSB, and Kerala PSC.
 """
@@ -10,7 +10,7 @@ import logging
 from typing import Dict, Any, Optional
 from PIL import Image, ImageOps, ImageDraw, ImageFont
 
-logger = logging.getLogger("veriseal.photo_signature_joiner")
+logger = logging.getLogger("kagazo.photo_signature_joiner")
 
 
 def create_composite_slip(

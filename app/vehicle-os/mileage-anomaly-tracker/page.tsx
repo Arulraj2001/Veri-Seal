@@ -281,7 +281,7 @@ export default function MileageAnomalyTrackerPage() {
             <div className="flex items-start gap-1.5 text-[10px] text-slate-400 pt-1">
               <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
               <span>
-                * VeriSeal Mileage Tracker provides statistical variance detection based on user fill logs. It does not perform internal mechanical engine diagnosis.
+                * Kagazo Mileage Tracker provides statistical variance detection based on user fill logs. It does not perform internal mechanical engine diagnosis.
               </span>
             </div>
           </div>

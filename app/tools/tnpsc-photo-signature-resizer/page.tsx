@@ -23,14 +23,14 @@ export const metadata: Metadata = {
   description:
     'Resize and compress your TNPSC photograph (20KB - 50KB with Name & Date) and signature (10KB - 20KB) online free. Strict size guarantee so TNPSC One Time Registration (OTR) never rejects your upload.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/tnpsc-photo-signature-resizer',
+    canonical: 'https://Kagazo.in/tools/tnpsc-photo-signature-resizer',
   },
   openGraph: {
-    title: 'TNPSC Photo & Signature Resizer - Exact Size Guarantee | VeriSeal',
+    title: 'TNPSC Photo & Signature Resizer - Exact Size Guarantee | Kagazo',
     description:
       'Free online tool to resize TNPSC photo (20-50KB with Name/Date) and signature (10-20KB). In-memory processing, zero ads, no watermark.',
-    url: 'https://veriseal.in/tools/tnpsc-photo-signature-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/tnpsc-photo-signature-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -44,7 +44,7 @@ const TNPSC_FAQS = [
   {
     question: 'Why does TNPSC reject my signature with "File size less than 10 KB"?',
     answer:
-      'When students crop their signature to 3.5cm x 1.5cm, standard compressors reduce the file to 3–6 KB. TNPSC servers reject any signature under 10 KB. VeriSeal solves this by applying 300 DPI super-sampling and safe JFIF padding to guarantee the output is strictly between 12 KB and 18 KB.',
+      'When students crop their signature to 3.5cm x 1.5cm, standard compressors reduce the file to 3–6 KB. TNPSC servers reject any signature under 10 KB. Kagazo solves this by applying 300 DPI super-sampling and safe JFIF padding to guarantee the output is strictly between 12 KB and 18 KB.',
   },
   {
     question: 'Is it mandatory to print Name and Date on the TNPSC photograph?',
@@ -52,9 +52,9 @@ const TNPSC_FAQS = [
       'Yes, as per TNPSC notification guidelines, the applicant photograph must have a clear white rectangular strip at the bottom containing the candidate full name in block letters and the date on which the photograph was taken.',
   },
   {
-    question: 'Does VeriSeal store my uploaded photograph or signature?',
+    question: 'Does Kagazo store my uploaded photograph or signature?',
     answer:
-      'No. VeriSeal processes all files completely in system memory (RAM). Neither your photo nor your signature is ever saved to permanent disk storage, ensuring 100% privacy and security.',
+      'No. Kagazo processes all files completely in system memory (RAM). Neither your photo nor your signature is ever saved to permanent disk storage, ensuring 100% privacy and security.',
   },
 ];
 
@@ -67,7 +67,7 @@ export default function TnpscPhotoSignatureResizerPage() {
         name: 'TNPSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/tnpsc-photo-signature-resizer',
+        url: 'https://Kagazo.in/tools/tnpsc-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -242,7 +242,7 @@ export default function TnpscPhotoSignatureResizerPage() {
             {/* In-Content Native AdSlot */}
             <AdSlot slot="in_content" />
 
-            {/* Why VeriSeal is Better for Students */}
+            {/* Why Kagazo is Better for Students */}
             <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
                 <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">

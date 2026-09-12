@@ -3,7 +3,7 @@ import UdhaarReminderEngine from '@/components/business-os/UdhaarReminderEngine'
 import { CreditCard, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Udhaar Ledger & Polite WhatsApp Payment Reminder Generator | VeriSeal',
+  title: 'Udhaar Ledger & Polite WhatsApp Payment Reminder Generator | Kagazo',
   description:
     'Free Udhaar (credit) ledger for Indian shopkeepers and freelancers. Generate polite, non-awkward WhatsApp payment reminder messages in 4 distinct tones with UPI payment links.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Udhaar Ledger & Polite WhatsApp Payment Reminder Generator',
     description:
       'Never feel awkward asking for pending money. Pick your tone and send polite WhatsApp reminders in 1 click.',
-    url: 'https://veriseal.org/business-os/payment-follow-up',
+    url: 'https://Kagazo.org/business-os/payment-follow-up',
   },
 };
 
@@ -26,7 +26,7 @@ export default function PaymentFollowUpPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Udhaar Ledger & Polite WhatsApp Payment Reminder Generator',
-    url: 'https://veriseal.org/business-os/payment-follow-up',
+    url: 'https://Kagazo.org/business-os/payment-follow-up',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

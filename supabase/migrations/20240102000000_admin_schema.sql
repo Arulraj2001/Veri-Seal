@@ -1,4 +1,4 @@
--- VeriSeal Phase 4 Admin Dashboard Schema Migration
+-- Kagazo Phase 4 Admin Dashboard Schema Migration
 
 -- 1. Update Users Table with Role and Banned columns
 ALTER TABLE users 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   featured_image_url TEXT,
   published BOOLEAN DEFAULT false,
   published_at TIMESTAMP WITH TIME ZONE,
-  author_name TEXT DEFAULT 'VeriSeal Team',
+  author_name TEXT DEFAULT 'Kagazo Team',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -62,7 +62,7 @@ INSERT INTO seo_pages (slug, title, h1, meta_description, meta_keywords, intro_t
 VALUES
 (
   'verify-aadhaar-pdf',
-  'Verify e-Aadhaar PDF Digital Signature Online | VeriSeal',
+  'Verify e-Aadhaar PDF Digital Signature Online | Kagazo',
   'Verify UIDAI e-Aadhaar Digital Signature Online',
   'Verify the digital signature on your downloaded e-Aadhaar PDF. Fix yellow question mark into green tick verified by CCA India.',
   'verify aadhaar signature, aadhaar digital signature verify, uidai green tick, aadhaar yellow question mark fix',
@@ -70,12 +70,12 @@ VALUES
   'e-Aadhaar Letter',
   'All India',
   'UIDAI myAadhaar Portal',
-  '[{"q":"Why does my Aadhaar PDF show a yellow question mark?","a":"Adobe Reader does not automatically trust the CCA India root certificate. VeriSeal verifies the signature against the official RCAI trust chain."},{"q":"Is it safe to upload my Aadhaar card?","a":"Yes. VeriSeal processes all files strictly in-memory (RAM) and immediately purges data after cryptographic verification."}]'::jsonb,
+  '[{"q":"Why does my Aadhaar PDF show a yellow question mark?","a":"Adobe Reader does not automatically trust the CCA India root certificate. Kagazo verifies the signature against the official RCAI trust chain."},{"q":"Is it safe to upload my Aadhaar card?","a":"Yes. Kagazo processes all files strictly in-memory (RAM) and immediately purges data after cryptographic verification."}]'::jsonb,
   true
 ),
 (
   'verify-community-certificate-tamil-nadu',
-  'Verify Tamil Nadu Community Certificate Signature | VeriSeal',
+  'Verify Tamil Nadu Community Certificate Signature | Kagazo',
   'Verify Tamil Nadu Community Certificate Digital Signature',
   'Verify digital signature on Tamil Nadu revenue department community certificate issued via e-Sevai / TNeGA portal.',
   'tamil nadu community certificate verify, tnega digital signature, esevai certificate verification',
@@ -83,12 +83,12 @@ VALUES
   'Community Certificate',
   'Tamil Nadu',
   'Tamil Nadu e-District / TNeGA',
-  '[{"q":"How to verify TNeGA certificate signature?","a":"Upload the digital certificate PDF downloaded from e-Sevai. VeriSeal validates the signature of the Zonal Deputy Tahsildar against CCA India roots."}]'::jsonb,
+  '[{"q":"How to verify TNeGA certificate signature?","a":"Upload the digital certificate PDF downloaded from e-Sevai. Kagazo validates the signature of the Zonal Deputy Tahsildar against CCA India roots."}]'::jsonb,
   true
 ),
 (
   'verify-nativity-certificate-tamil-nadu',
-  'Verify Tamil Nadu Nativity Certificate Signature | VeriSeal',
+  'Verify Tamil Nadu Nativity Certificate Signature | Kagazo',
   'Verify Tamil Nadu Nativity Certificate Digital Signature',
   'Check digital signature authenticity on Tamil Nadu nativity and residence certificates issued via TNeGA.',
   'tamil nadu nativity certificate signature, verify esevai residence certificate',
@@ -101,7 +101,7 @@ VALUES
 ),
 (
   'verify-income-certificate',
-  'Verify Income Certificate Digital Signature Online | VeriSeal',
+  'Verify Income Certificate Digital Signature Online | Kagazo',
   'Verify Income Certificate Digital Signature',
   'Verify government income certificate digital signature across Tamil Nadu, Karnataka, AP, Telangana and other states.',
   'income certificate verify online, revenue income certificate signature, tahsildar dsc verification',
@@ -109,12 +109,12 @@ VALUES
   'Income Certificate',
   'All India',
   'State Revenue e-District Portals',
-  '[{"q":"Can I submit VeriSeal verified income certificate for scholarships?","a":"Yes. VeriSeal embeds LTV (Long-Term Validation) ensuring all PDF viewers display the verified green checkmark."}]'::jsonb,
+  '[{"q":"Can I submit Kagazo verified income certificate for scholarships?","a":"Yes. Kagazo embeds LTV (Long-Term Validation) ensuring all PDF viewers display the verified green checkmark."}]'::jsonb,
   true
 ),
 (
   'verify-pan-card-pdf',
-  'Verify e-PAN Card Digital Signature Online | VeriSeal',
+  'Verify e-PAN Card Digital Signature Online | Kagazo',
   'Verify Income Tax Department e-PAN Card Digital Signature',
   'Verify digital signature on NSDL / UTIITSL / Income Tax portal e-PAN cards instantly.',
   'verify pan card signature, e-pan digital signature verify, protean nsdl pan signature',
@@ -122,12 +122,12 @@ VALUES
   'e-PAN Card',
   'All India',
   'Income Tax e-Filing / Protean',
-  '[{"q":"How do I know my e-PAN signature is valid?","a":"VeriSeal checks the e-Mudhra or (n)Code CA certificate hierarchy under CCA India."}]'::jsonb,
+  '[{"q":"How do I know my e-PAN signature is valid?","a":"Kagazo checks the e-Mudhra or (n)Code CA certificate hierarchy under CCA India."}]'::jsonb,
   true
 ),
 (
   'verify-birth-certificate',
-  'Verify Digital Birth Certificate Signature Online | VeriSeal',
+  'Verify Digital Birth Certificate Signature Online | Kagazo',
   'Verify Municipal Birth Certificate Digital Signature',
   'Check validity of digital signatures on municipal corporation and state registrar birth certificates.',
   'birth certificate signature check, civil registration system birth certificate verify',
@@ -135,12 +135,12 @@ VALUES
   'Birth Certificate',
   'All India',
   'Civil Registration System (CRS India)',
-  '[{"q":"Does VeriSeal support state municipal certificates?","a":"Yes, certificates signed using CCA-licensed CAs (e-Mudhra, NIC, Sify, Capricorn) are supported."}]'::jsonb,
+  '[{"q":"Does Kagazo support state municipal certificates?","a":"Yes, certificates signed using CCA-licensed CAs (e-Mudhra, NIC, Sify, Capricorn) are supported."}]'::jsonb,
   true
 ),
 (
   'verify-digilocker-pdf',
-  'Verify DigiLocker PDF Digital Signature | VeriSeal',
+  'Verify DigiLocker PDF Digital Signature | Kagazo',
   'Verify DigiLocker Issued Document Digital Signature',
   'Verify digital signatures on documents issued by DigiLocker National Digital Locker System.',
   'digilocker signature verify, verify digilocker green tick, digilocker pdf valid',
@@ -148,12 +148,12 @@ VALUES
   'DigiLocker Issued Document',
   'All India',
   'National DigiLocker Portal',
-  '[{"q":"Are DigiLocker documents legally valid?","a":"Yes, under Rule 9A of the IT Rules 2016. VeriSeal confirms the document has not been altered."}]'::jsonb,
+  '[{"q":"Are DigiLocker documents legally valid?","a":"Yes, under Rule 9A of the IT Rules 2016. Kagazo confirms the document has not been altered."}]'::jsonb,
   true
 ),
 (
   'verify-itr-v',
-  'Verify Income Tax ITR-V Acknowledgment Signature | VeriSeal',
+  'Verify Income Tax ITR-V Acknowledgment Signature | Kagazo',
   'Verify ITR-V Income Tax Return Acknowledgment Signature',
   'Verify digital signature on Income Tax Return (ITR-V) acknowledgment receipts.',
   'verify itr-v signature, income tax return acknowledgment signature, cpc bengaluru signature',
@@ -166,7 +166,7 @@ VALUES
 ),
 (
   'aadhaar-pdf-yellow-question-mark-fix',
-  'Fix Yellow Question Mark on Aadhaar PDF | VeriSeal',
+  'Fix Yellow Question Mark on Aadhaar PDF | Kagazo',
   'Fix Aadhaar Card Yellow Question Mark into Green Tick',
   'Learn how to fix signature validity unknown and convert yellow question mark into green tick permanently.',
   'aadhaar yellow question mark fix, signature not verified aadhaar, convert yellow question mark to green tick',
@@ -179,7 +179,7 @@ VALUES
 ),
 (
   'meeseva-certificate-verify',
-  'Verify MeeSeva Certificate Digital Signature Online | VeriSeal',
+  'Verify MeeSeva Certificate Digital Signature Online | Kagazo',
   'Verify Andhra Pradesh & Telangana MeeSeva Certificate Signature',
   'Verify digital signatures on caste, income, residence, and land certificates issued through MeeSeva portal.',
   'meeseva certificate verify, ap meeseva digital signature, ts meeseva certificate check',

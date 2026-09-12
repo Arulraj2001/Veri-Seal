@@ -5,23 +5,23 @@ import { ShieldCheck, Lock, EyeOff, Server, HardDrive, CheckCircle2, ArrowRight 
 import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy & Zero-Retention Architecture — VeriSeal',
+  title: 'Privacy Policy & Zero-Retention Architecture — Kagazo',
   description:
-    'VeriSeal strictly operates on a Zero-Retention Architecture. Your Indian government PDF documents are processed 100% in volatile RAM and never saved to disk.',
+    'Kagazo strictly operates on a Zero-Retention Architecture. Your Indian government PDF documents are processed 100% in volatile RAM and never saved to disk.',
   alternates: {
     canonical: `${SITE_URL}/privacy`,
   },
   openGraph: {
-    title: 'Privacy Policy & Zero-Retention Architecture — VeriSeal',
+    title: 'Privacy Policy & Zero-Retention Architecture — Kagazo',
     description:
-      'Zero storage, RAM-only processing, zero logs of personal identity data. VeriSeal privacy policy.',
+      'Zero storage, RAM-only processing, zero logs of personal identity data. Kagazo privacy policy.',
     url: `${SITE_URL}/privacy`,
-    siteName: 'VeriSeal',
-    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'VeriSeal Privacy' }],
+    siteName: 'Kagazo',
+    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'Kagazo Privacy' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Privacy Policy & Zero-Retention Architecture — VeriSeal',
+    title: 'Privacy Policy & Zero-Retention Architecture — Kagazo',
     description: 'Zero storage, RAM-only processing. Full DPDP Act 2023 compliance.',
     images: [`${SITE_URL}/og`],
   },
@@ -41,7 +41,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="mt-4 text-base sm:text-lg text-text-main/70 leading-relaxed">
-            How VeriSeal protects your identity data with our Zero-Retention cryptographic architecture.
+            How Kagazo protects your identity data with our Zero-Retention cryptographic architecture.
           </p>
         </div>
 
@@ -83,14 +83,14 @@ export default function PrivacyPage() {
           <section className="bg-white p-6 sm:p-8 rounded-3xl border border-surface-darker">
             <h2 className="text-xl font-bold text-text-main mb-4">1. Scope of Privacy Architecture</h2>
             <p>
-              VeriSeal provides online cryptographic digital signature verification for Indian government PDF documents, including e-Aadhaar, state revenue certificates, PAN cards, and DigiLocker files. We recognize that these documents contain highly sensitive Personally Identifiable Information (PII). This policy outlines our absolute commitment to zero persistent data storage.
+              Kagazo provides online cryptographic digital signature verification for Indian government PDF documents, including e-Aadhaar, state revenue certificates, PAN cards, and DigiLocker files. We recognize that these documents contain highly sensitive Personally Identifiable Information (PII). This policy outlines our absolute commitment to zero persistent data storage.
             </p>
           </section>
 
           <section className="bg-white p-6 sm:p-8 rounded-3xl border border-surface-darker">
             <h2 className="text-xl font-bold text-text-main mb-4">2. Zero-Retention File Processing</h2>
             <p>
-              When you upload a PDF to VeriSeal for verification:
+              When you upload a PDF to Kagazo for verification:
             </p>
             <ul className="list-disc pl-5 space-y-2 mt-3">
               <li><strong>Temporary Volatile RAM:</strong> The file buffer is received into isolated container memory (RAM) via an encrypted TLS 1.3 tunnel.</li>
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
           <section className="bg-white p-6 sm:p-8 rounded-3xl border border-surface-darker">
             <h2 className="text-xl font-bold text-text-main mb-4">5. Contact Data Privacy Desk</h2>
             <p>
-              If you have any questions regarding VeriSeal&apos;s cryptographic security or privacy practices, please contact our privacy compliance desk at <a href="mailto:privacy@veriseal.in" className="text-primary font-bold hover:underline">privacy@veriseal.in</a> or visit our <Link href="/contact" className="text-primary font-bold hover:underline">Contact Desk</Link>.
+              If you have any questions regarding Kagazo&apos;s cryptographic security or privacy practices, please contact our privacy compliance desk at <a href="mailto:privacy@Kagazo.in" className="text-primary font-bold hover:underline">privacy@Kagazo.in</a> or visit our <Link href="/contact" className="text-primary font-bold hover:underline">Contact Desk</Link>.
             </p>
           </section>
         </div>

@@ -24,14 +24,14 @@ export function ApiOfferingBanner() {
   const [copied, setCopied] = React.useState(false);
 
   const codeSnippets = {
-    curl: `curl -X POST https://veri-seal.onrender.com/verify \\
-  -H "Authorization: Bearer veriseal_live_api_key" \\
+    curl: `curl -X POST https://kagazo-api.onrender.com/verify \\
+  -H "Authorization: Bearer kagazo_live_api_key" \\
   -F "file=@eAadhaar_document.pdf" \\
   -F "password=RAMA1995"`,
-    node: `import { VeriSealClient } from '@veriseal/sdk';
+    node: `import { KagazoClient } from '@kagazo/sdk';
 
-const veriseal = new VeriSealClient({ apiKey: process.env.VERISEAL_API_KEY });
-const result = await veriseal.verifyPdf({
+const kagazo = new KagazoClient({ apiKey: process.env.KAGAZO_API_KEY });
+const result = await kagazo.verifyPdf({
   fileBuffer,
   password: 'RAMA1995',
 });
@@ -40,8 +40,8 @@ console.log(result.status); // 'VALID'
 console.log(result.signerName); // 'National Informatics Centre'`,
     python: `import requests
 
-url = "https://veri-seal.onrender.com/verify"
-headers = {"Authorization": "Bearer veriseal_live_api_key"}
+url = "https://kagazo-api.onrender.com/verify"
+headers = {"Authorization": "Bearer kagazo_live_api_key"}
 files = {"file": open("eAadhaar.pdf", "rb")}
 data = {"password": "RAMA1995"}
 

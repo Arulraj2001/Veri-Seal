@@ -6,8 +6,8 @@ import { AdminNewPaymentAlertEmail } from './emails/AdminNewPaymentAlertEmail';
 import { WelcomeEmail } from './emails/WelcomeEmail';
 
 const resendApiKey = process.env.RESEND_API_KEY || '';
-const resendFromEmail = process.env.RESEND_FROM_EMAIL || 'VeriSeal <notifications@veriseal.in>';
-const adminNotificationEmail = process.env.ADMIN_EMAIL || 'admin@veriseal.in';
+const resendFromEmail = process.env.RESEND_FROM_EMAIL || 'Kagazo <notifications@kagazo.in>';
+const adminNotificationEmail = process.env.ADMIN_EMAIL || 'admin@kagazo.in';
 
 export const resend = new Resend(resendApiKey || 'dummy_resend_init_key');
 
@@ -28,7 +28,7 @@ export async function sendPaymentRequestEmails(params: {
       await resend.emails.send({
         from: resendFromEmail,
         to: params.email,
-        subject: `Payment request received — VeriSeal ${params.plan.toUpperCase()}`,
+        subject: `Payment request received — Kagazo ${params.plan.toUpperCase()}`,
         react: PaymentRequestReceivedEmail({
           name: params.name,
           plan: params.plan,
@@ -75,7 +75,7 @@ export async function sendPaymentApprovedEmail(params: {
       await resend.emails.send({
         from: resendFromEmail,
         to: params.email,
-        subject: `Your VeriSeal ${params.plan.toUpperCase()} access is now active 🎉`,
+        subject: `Your Kagazo ${params.plan.toUpperCase()} access is now active 🎉`,
         react: PaymentApprovedEmail({
           name: params.name,
           plan: params.plan,
@@ -105,7 +105,7 @@ export async function sendPaymentRejectedEmail(params: {
       await resend.emails.send({
         from: resendFromEmail,
         to: params.email,
-        subject: 'VeriSeal payment request update',
+        subject: 'Kagazo payment request update',
         react: PaymentRejectedEmail({
           name: params.name,
           admin_note: params.admin_note,
@@ -133,7 +133,7 @@ export async function sendWelcomeEmail(params: {
       await resend.emails.send({
         from: resendFromEmail,
         to: params.email,
-        subject: 'Welcome to VeriSeal 🇮🇳',
+        subject: 'Welcome to Kagazo 🇮🇳',
         react: WelcomeEmail({
           name: params.name,
         }),
@@ -164,16 +164,16 @@ export async function sendContactInquiryEmail(params: {
       await resend.emails.send({
         from: resendFromEmail,
         to: adminNotificationEmail,
-        subject: `[VeriSeal Contact] ${params.subject} — ${params.name}`,
-        text: `New contact inquiry received on VeriSeal:\n\nName: ${params.name}\nEmail: ${params.email}\nPhone: ${params.phone || 'Not provided'}\nSubject: ${params.subject}\n\nMessage:\n${params.message}\n\n---\nVeriSeal Sovereign Document Operations Desk`,
+        subject: `[Kagazo Contact] ${params.subject} — ${params.name}`,
+        text: `New contact inquiry received on Kagazo:\n\nName: ${params.name}\nEmail: ${params.email}\nPhone: ${params.phone || 'Not provided'}\nSubject: ${params.subject}\n\nMessage:\n${params.message}\n\n---\nKagazo Sovereign Document Operations Desk`,
       });
 
       // 2. Receipt to Citizen
       await resend.emails.send({
         from: resendFromEmail,
         to: params.email,
-        subject: `Inquiry Received: ${params.subject} — VeriSeal Support Desk`,
-        text: `Dear ${params.name},\n\nThank you for reaching out to VeriSeal Sovereign Document Operations Desk. We have received your inquiry regarding "${params.subject}".\n\nOur administration desk will review your details and respond directly to this email.\n\nYour message:\n"${params.message}"\n\nWarm regards,\nVeriSeal Operations Desk\nhttps://veri-seal.vercel.app`,
+        subject: `Inquiry Received: ${params.subject} — Kagazo Support Desk`,
+        text: `Dear ${params.name},\n\nThank you for reaching out to Kagazo Sovereign Document Operations Desk. We have received your inquiry regarding "${params.subject}".\n\nOur administration desk will review your details and respond directly to this email.\n\nYour message:\n"${params.message}"\n\nWarm regards,\nKagazo Operations Desk\nhttps://kagazo.in`,
       });
     } else {
       console.info(`[Resend Mock] Dispatched contact inquiry alert for ${params.name} (${params.email}) to ${adminNotificationEmail}`);

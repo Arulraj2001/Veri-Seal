@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   description:
     'Combine Front and Back sides of your Aadhaar card onto a single A4 page or PDF strictly under 200KB. 1-click UIDAI 8-digit masking, photocopy Xerox ink saver mode, and self-attestation box. 100% In-RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/aadhaar-front-back-pdf',
+    canonical: 'https://Kagazo.in/tools/aadhaar-front-back-pdf',
   },
   openGraph: {
-    title: 'Aadhaar Front & Back Single Page PDF Merger (<200KB) | VeriSeal',
+    title: 'Aadhaar Front & Back Single Page PDF Merger (<200KB) | Kagazo',
     description:
       'Merge Aadhaar Front and Back onto 1 clean A4 sheet with UIDAI masking and Xerox mode.',
-    url: 'https://veriseal.in/tools/aadhaar-front-back-pdf',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/aadhaar-front-back-pdf',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -58,7 +58,7 @@ export default function AadhaarFrontBackPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Aadhaar Front and Back Single Page PDF Merger',
-    url: 'https://veriseal.in/tools/aadhaar-front-back-pdf',
+    url: 'https://Kagazo.in/tools/aadhaar-front-back-pdf',
     applicationCategory: 'SecurityApplication',
     operatingSystem: 'All',
     offers: {

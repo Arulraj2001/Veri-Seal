@@ -173,7 +173,7 @@ export default function PvcCardStudioEngine() {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Print PVC Smart ID Card - VeriSeal</title>
+          <title>Print PVC Smart ID Card - Kagazo</title>
           <style>
             @page { size: auto; margin: 0mm; }
             @media print {

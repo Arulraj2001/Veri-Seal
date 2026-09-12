@@ -596,7 +596,7 @@ export default function PhotoSheetEngine() {
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
     ctx.fillText(
-      `VeriSeal Studio • ${activePaper.id} (${paperWMm}×${paperHMm}mm) • ${dpi} DPI • 100% Actual Size Print`,
+      `Kagazo Studio • ${activePaper.id} (${paperWMm}×${paperHMm}mm) • ${dpi} DPI • 100% Actual Size Print`,
       sheetPxW - 20,
       sheetPxH - 12
     );
@@ -686,7 +686,7 @@ export default function PhotoSheetEngine() {
     if (!renderedImageUrl) return;
     const is4x6 = paperSizeId === '4R';
     printIsolatedDocument({
-      title: 'Passport Photo Sheet - VeriSeal Studio',
+      title: 'Passport Photo Sheet - Kagazo Studio',
       bodyHtml: `<div style="width: ${paperWMm}mm; height: ${paperHMm}mm; margin: 0 auto; padding: 0; display: flex; align-items: center; justify-content: center; background: #ffffff;">
         <img src="${renderedImageUrl}" style="width: 100%; height: 100%; object-fit: contain; display: block;" alt="Passport Photo Sheet Print" />
       </div>`,

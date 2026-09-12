@@ -1,5 +1,5 @@
 """
-Automated Integration and Unit Test Suite for VeriSeal Backend Engine.
+Automated Integration and Unit Test Suite for Kagazo Backend Engine.
 Tests all 7 checklist items specified in the production prompt:
 1. Real / simulated e-Aadhaar PDF with correct password -> VALID, clean PDF downloads, opens without password
 2. Real / simulated e-Aadhaar PDF with wrong password -> ERROR, error_code=WRONG_PASSWORD, helpful message shown
@@ -122,7 +122,7 @@ def _generate_test_pki():
     return ca_asn1, ee_asn1, ee_priv
 
 
-class TestVeriSealBackend(unittest.TestCase):
+class TestKagazoBackend(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

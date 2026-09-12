@@ -50,7 +50,7 @@ export function AdminSidebar({ isOpenMobile, onCloseMobile }: AdminSidebarProps)
           </div>
           <div>
             <div className="text-base font-black tracking-tight text-text-main flex items-center gap-1.5">
-              <span>Veri<span className="text-primary">Seal</span></span>
+              <span>Kaga<span className="text-primary">zo</span></span>
               <span className="px-1.5 py-0.5 rounded bg-primary text-white text-[9px] font-black uppercase tracking-wider">
                 Admin
               </span>
@@ -104,7 +104,7 @@ export function AdminSidebar({ isOpenMobile, onCloseMobile }: AdminSidebarProps)
 
       {/* Footer Info */}
       <div className="p-4 border-t border-surface-darker/70 bg-surface/30 text-[11px] text-text-main/50 font-medium">
-        <div>VeriSeal Engine v2.4</div>
+        <div>Kagazo Engine v2.4</div>
         <div>CCA Root Synchronized</div>
       </div>
     </div>

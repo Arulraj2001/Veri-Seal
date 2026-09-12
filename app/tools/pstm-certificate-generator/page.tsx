@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   description:
     'Generate official bilingual (Tamil & English) Persons Studied in Tamil Medium (PSTM) certificate format as prescribed by Tamil Nadu G.O. (Ms.) No. 82. Pre-printed school letterhead margin clearance, multi-school periods, and isolated A4 legal print.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/pstm-certificate-generator',
+    canonical: 'https://Kagazo.in/tools/pstm-certificate-generator',
   },
   openGraph: {
-    title: 'Official PSTM Certificate Generator (G.O. Ms. No. 82) | VeriSeal',
+    title: 'Official PSTM Certificate Generator (G.O. Ms. No. 82) | Kagazo',
     description:
       'Generate authorized Tamil Nadu PSTM certificate format in Tamil & English for 20% TNPSC government job reservation.',
-    url: 'https://veriseal.in/tools/pstm-certificate-generator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/pstm-certificate-generator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -58,7 +58,7 @@ export default function PstmCertificatePage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Official PSTM Certificate Generator (G.O. Ms. No. 82)',
-    url: 'https://veriseal.in/tools/pstm-certificate-generator',
+    url: 'https://Kagazo.in/tools/pstm-certificate-generator',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'All',
     offers: {

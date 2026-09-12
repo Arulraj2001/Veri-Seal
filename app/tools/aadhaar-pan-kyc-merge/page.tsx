@@ -24,14 +24,14 @@ export const metadata: Metadata = {
   description:
     'Combine Aadhaar card (front & back) and PAN card into a single A4 PDF strictly under 200KB or 500KB. 1-click RBI first-8-digit masking for SBI, HDFC, ICICI, and telecom SIM KYC. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/aadhaar-pan-kyc-merge',
+    canonical: 'https://Kagazo.in/tools/aadhaar-pan-kyc-merge',
   },
   openGraph: {
-    title: 'Aadhaar + PAN Single PDF KYC Merger (<200KB) | VeriSeal',
+    title: 'Aadhaar + PAN Single PDF KYC Merger (<200KB) | Kagazo',
     description:
       'Merge Aadhaar Front, Back, and PAN into one bank-compliant A4 PDF with optional RBI masking.',
-    url: 'https://veriseal.in/tools/aadhaar-pan-kyc-merge',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/aadhaar-pan-kyc-merge',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -58,12 +58,12 @@ const FAQS = [
   {
     question: 'How do I ensure the combined PDF stays strictly under 200 KB?',
     answer:
-      'VeriSeal includes a dedicated "< 200 KB" preset. Our intelligent canvas compressor calibrates the JPEG compression matrix and removes bloated metadata so the final A4 PDF stays comfortably between 140 KB and 195 KB without sacrificing the legibility of micro-text or card numbers.',
+      'Kagazo includes a dedicated "< 200 KB" preset. Our intelligent canvas compressor calibrates the JPEG compression matrix and removes bloated metadata so the final A4 PDF stays comfortably between 140 KB and 195 KB without sacrificing the legibility of micro-text or card numbers.',
   },
   {
     question: 'Are my sensitive Aadhaar and PAN numbers saved on your server?',
     answer:
-      'Never. VeriSeal executes 100% of the image cropping, layout assembly, and vector PDF encoding directly inside your local browser’s RAM memory. Zero bytes are uploaded to our servers or stored in any database.',
+      'Never. Kagazo executes 100% of the image cropping, layout assembly, and vector PDF encoding directly inside your local browser’s RAM memory. Zero bytes are uploaded to our servers or stored in any database.',
   },
 ];
 
@@ -73,8 +73,8 @@ export default function AadhaarPanKycPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Aadhaar + PAN Single PDF KYC Merger',
-        url: 'https://veriseal.in/tools/aadhaar-pan-kyc-merge',
+        name: 'Kagazo Aadhaar + PAN Single PDF KYC Merger',
+        url: 'https://Kagazo.in/tools/aadhaar-pan-kyc-merge',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

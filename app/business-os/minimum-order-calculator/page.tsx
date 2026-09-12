@@ -3,7 +3,7 @@ import MinimumOrderValueEngine from '@/components/business-os/MinimumOrderValueE
 import { Truck, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Minimum Order Value (MOV) & Free Delivery Sizer for D2C Brands | VeriSeal',
+  title: 'Minimum Order Value (MOV) & Free Delivery Sizer for D2C Brands | Kagazo',
   description:
     'Calculate the exact Minimum Order Value (MOV) threshold required for profitable free shipping. Avoid bleeding money on small ₹299 cart sizes in India.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Minimum Order Value (MOV) & Free Delivery Sizer for D2C Brands',
     description:
       'Avoid shipping orders that lose money. Calculate your profitable free delivery threshold.',
-    url: 'https://veriseal.org/business-os/minimum-order-calculator',
+    url: 'https://Kagazo.org/business-os/minimum-order-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function MinimumOrderPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Minimum Order Value (MOV) & Free Delivery Sizer',
-    url: 'https://veriseal.org/business-os/minimum-order-calculator',
+    url: 'https://Kagazo.org/business-os/minimum-order-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

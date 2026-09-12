@@ -1,5 +1,5 @@
 """
-VeriSeal Official Aadhaar Masking & Redaction Engine.
+Kagazo Official Aadhaar Masking & Redaction Engine.
 Permanently redacts the first 8 digits of Aadhaar numbers (XXXX-XXXX-1234)
 and optional QR codes from PDFs and images in volatile RAM memory.
 Compliant with UIDAI and RBI KYC guidelines.
@@ -17,7 +17,7 @@ except ImportError:
     import fitz
 from PIL import Image, ImageDraw
 
-logger = logging.getLogger("veriseal.aadhaar_masker")
+logger = logging.getLogger("kagazo.aadhaar_masker")
 
 
 def mask_aadhaar_pdf(

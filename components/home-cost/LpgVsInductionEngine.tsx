@@ -28,7 +28,7 @@ export default function LpgVsInductionEngine() {
 
   const handleAffiliateClick = () => {
     const query = encodeURIComponent('induction cooktop 2000w prestige philips pigeon');
-    window.open(`https://www.amazon.in/s?k=${query}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${query}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

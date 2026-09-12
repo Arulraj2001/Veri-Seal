@@ -3,7 +3,7 @@ import AiAdvisorEngine from '@/components/business-os/AiAdvisorEngine';
 import { Sparkles, HelpCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'AI Business Diagnostic & Margin Advisor for Indian SMBs | VeriSeal',
+  title: 'AI Business Diagnostic & Margin Advisor for Indian SMBs | Kagazo',
   description:
     'Free heuristic financial diagnostic advisor for Indian small business owners. Diagnoses root causes of cash crunches, high marketplace cuts, and slow inventory, with 3 high-ROI weekly action items.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'AI Business Diagnostic & Margin Advisor for Indian SMBs',
     description:
       'Pinpoint the exact operational leaks dragging your profit down and get 3 high-ROI fixes for this week.',
-    url: 'https://veriseal.org/business-os/ai-advisor',
+    url: 'https://Kagazo.org/business-os/ai-advisor',
   },
 };
 
@@ -26,7 +26,7 @@ export default function AiAdvisorPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'AI Business Diagnostic & Margin Advisor',
-    url: 'https://veriseal.org/business-os/ai-advisor',
+    url: 'https://Kagazo.org/business-os/ai-advisor',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

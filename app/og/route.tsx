@@ -7,7 +7,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const title = searchParams.get('title') || 'Indian Government PDF Digital Signature Verification Engine';
     const subtitle = searchParams.get('subtitle') || 'Free Cryptographic Verification • Fix Yellow Question Mark • CCA India Verified';
-    const host = request.headers.get('host') || 'veri-seal.vercel.app';
+    const host = request.headers.get('host') || 'kagazo.in';
 
     return new ImageResponse(
       (
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
             }}
           />
 
-          {/* Header with VeriSeal Brand Badge */}
+          {/* Header with Kagazo Brand Badge */}
           <div
             style={{
               display: 'flex',
@@ -61,7 +61,7 @@ export async function GET(request: Request) {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: '32px', fontWeight: '900', color: '#2E241F', letterSpacing: '-0.5px' }}>
-                  Veri<span style={{ color: '#E6570B' }}>Seal</span>
+                  Kaga<span style={{ color: '#E6570B' }}>zo</span>
                 </span>
                 <span style={{ fontSize: '13px', fontWeight: '700', color: '#665C54', letterSpacing: '1px', textTransform: 'uppercase' }}>
                   Official National PKI Verification

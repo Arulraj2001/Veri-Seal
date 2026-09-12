@@ -1,4 +1,4 @@
--- VeriSeal Phase 5 Contact & Support System Schema Migration
+-- Kagazo Phase 5 Contact & Support System Schema Migration
 
 CREATE TABLE IF NOT EXISTS contact_messages (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

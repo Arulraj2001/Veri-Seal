@@ -3,7 +3,7 @@ import ProductPricingEngine from '@/components/business-os/ProductPricingEngine'
 import { Tag, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Indian Marketplace Product Pricing Calculator | Amazon, Flipkart, Meesho | VeriSeal',
+  title: 'Indian Marketplace Product Pricing Calculator | Amazon, Flipkart, Meesho | Kagazo',
   description:
     'Free product pricing calculator for Indian sellers. Reverse-engineers your selling price with authentic Amazon India, Flipkart, Meesho, and Shopify fee slabs, closing fees, and GST.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Indian Marketplace Product Pricing Calculator | Amazon, Flipkart, Meesho',
     description:
       'Reverse-engineer your exact selling price to guarantee your desired net profit after platform cuts and courier fees.',
-    url: 'https://veriseal.org/business-os/product-pricing-calculator',
+    url: 'https://Kagazo.org/business-os/product-pricing-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function ProductPricingPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Indian Marketplace Product Pricing Calculator',
-    url: 'https://veriseal.org/business-os/product-pricing-calculator',
+    url: 'https://Kagazo.org/business-os/product-pricing-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

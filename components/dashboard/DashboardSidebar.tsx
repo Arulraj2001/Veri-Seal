@@ -74,7 +74,7 @@ export function DashboardSidebar({ user, paymentEnabled }: SidebarProps) {
             </svg>
           </div>
           <span className="text-xl font-black tracking-tight text-text-main">
-            Veri<span className="text-primary">Seal</span>
+            Kaga<span className="text-primary">zo</span>
           </span>
         </Link>
       </div>

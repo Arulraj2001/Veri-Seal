@@ -23,14 +23,14 @@ export const metadata: Metadata = {
   description:
     'Tile 1 to 5 Front & Back ID cards (Aadhaar, PAN, Voter, Driving License) onto a single A4 glossy sheet at exact CR-80 wallet dimensions (85.60 × 53.98 mm). Instant 1-click 300 DPI print and vector PDF for Epson & Canon printers.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/a4-multi-card-sheet',
+    canonical: 'https://Kagazo.in/tools/a4-multi-card-sheet',
   },
   openGraph: {
-    title: 'Multi-Card A4 Gang Sheet Studio (5-in-1 ID Cards) | VeriSeal',
+    title: 'Multi-Card A4 Gang Sheet Studio (5-in-1 ID Cards) | Kagazo',
     description:
       'Zero-Photoshop A4 gang sheet maker for cyber cafes & CSC centres. Print 5 dual-sided ID cards with cutting lines & lamination gutters at 300 DPI.',
-    url: 'https://veriseal.in/tools/a4-multi-card-sheet',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/a4-multi-card-sheet',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -67,7 +67,7 @@ const FAQS = [
   {
     question: 'Are uploaded Aadhaar or PAN card scans uploaded to your cloud servers?',
     answer:
-      'No! VeriSeal performs 100% of the image cropping, layout calculation, and 300 DPI canvas rendering strictly in your local browser’s RAM. Not a single byte of your citizen identity documents is transmitted over the internet or saved to disk.',
+      'No! Kagazo performs 100% of the image cropping, layout calculation, and 300 DPI canvas rendering strictly in your local browser’s RAM. Not a single byte of your citizen identity documents is transmitted over the internet or saved to disk.',
   },
 ];
 
@@ -77,8 +77,8 @@ export default function MultiCardSheetPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Multi-Card A4 Gang Sheet Studio',
-        url: 'https://veriseal.in/tools/a4-multi-card-sheet',
+        name: 'Kagazo Multi-Card A4 Gang Sheet Studio',
+        url: 'https://Kagazo.in/tools/a4-multi-card-sheet',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

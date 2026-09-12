@@ -1,7 +1,7 @@
 import { StoredGarageVehicle } from './types';
 export type { StoredGarageVehicle };
 
-const STORAGE_KEY = 'veriseal_vehicle_garage_v1';
+const STORAGE_KEY = 'Kagazo_vehicle_garage_v1';
 
 export const DEFAULT_GARAGE_VEHICLES: StoredGarageVehicle[] = [
   {

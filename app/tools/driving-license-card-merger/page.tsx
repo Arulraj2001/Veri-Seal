@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   description:
     'Merge Front and Back sides of smart card Driving License (DL) or Vehicle RC onto a single A4 page PDF strictly under 200KB for Parivahan Sarathi, State RTOs, FASTag KYC, and Passport Seva. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/driving-license-card-merger',
+    canonical: 'https://Kagazo.in/tools/driving-license-card-merger',
   },
   openGraph: {
-    title: 'Free Driving License Front & Back Merger to PDF (<200KB) | VeriSeal',
+    title: 'Free Driving License Front & Back Merger to PDF (<200KB) | Kagazo',
     description:
       'Combine both sides of smart card DL onto a single A4 page strictly under 200KB for Parivahan Sarathi uploads.',
-    url: 'https://veriseal.in/tools/driving-license-card-merger',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/driving-license-card-merger',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -47,7 +47,7 @@ const FAQS = [
       'Yes! All Indian smart cards follow the ISO/IEC 7810 ID-1 CR-80 standard. This tool works perfectly for Driving Licenses, Vehicle RC smart cards, Voter ID (EPIC), and PAN cards.',
   },
   {
-    question: 'Are my Driving License details or photos saved on VeriSeal servers?',
+    question: 'Are my Driving License details or photos saved on Kagazo servers?',
     answer:
       'Never. All card merging and compression operations are conducted strictly in temporary computer memory (RAM) and immediately purged after download.',
   },
@@ -59,8 +59,8 @@ export default function CardMergerPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Driving License Front & Back Merger',
-        url: 'https://veriseal.in/tools/driving-license-card-merger',
+        name: 'Kagazo Driving License Front & Back Merger',
+        url: 'https://Kagazo.in/tools/driving-license-card-merger',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

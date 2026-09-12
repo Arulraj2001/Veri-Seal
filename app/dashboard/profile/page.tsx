@@ -29,7 +29,7 @@ export default function ProfilePage() {
   React.useEffect(() => {
     if (session?.user) {
       setName(session.user.name || 'Citizen User');
-      setEmail(session.user.email || 'citizen@veriseal.in');
+      setEmail(session.user.email || 'citizen@Kagazo.in');
     }
   }, [session]);
 
@@ -200,7 +200,7 @@ export default function ProfilePage() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-error/40 text-error hover:bg-error-light text-xs font-bold transition-colors"
           >
             <Trash2 className="w-4 h-4" />
-            <span>Delete VeriSeal Account</span>
+            <span>Delete Kagazo Account</span>
           </button>
         </div>
       </div>

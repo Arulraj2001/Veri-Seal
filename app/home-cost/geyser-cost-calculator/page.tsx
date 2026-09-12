@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Compare annual running costs for Electric Storage Geysers, Instant LPG Gas Geysers, and Rooftop Solar Water Heaters in India. Calculate 5-year savings and solar water heater payback period.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/geyser-cost-calculator',
+    canonical: 'https://Kagazo.in/home-cost/geyser-cost-calculator',
   },
   openGraph: {
-    title: 'Electric vs Gas vs Solar Water Heater Cost Comparison | VeriSeal',
+    title: 'Electric vs Gas vs Solar Water Heater Cost Comparison | Kagazo',
     description:
       'Discover whether a solar water heater or 5-Star electric geyser saves the most money for your Indian family.',
-    url: 'https://veriseal.in/home-cost/geyser-cost-calculator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/geyser-cost-calculator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

@@ -52,7 +52,7 @@ export default function AdminBlogPage() {
     meta_keywords: '',
     featured_image_url: '',
     published: false,
-    author_name: 'VeriSeal Team',
+    author_name: 'Kagazo Team',
   });
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
@@ -104,7 +104,7 @@ export default function AdminBlogPage() {
       meta_keywords: '',
       featured_image_url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80',
       published: false,
-      author_name: 'VeriSeal Team',
+      author_name: 'Kagazo Team',
     });
     setIsEditing(true);
   };
@@ -334,7 +334,7 @@ export default function AdminBlogPage() {
                     Permalink Slug
                   </label>
                   <div className="flex items-center bg-surface/50 border border-surface-darker rounded-xl px-3 py-1.5 font-mono text-xs text-text-main/80">
-                    <span className="text-text-main/40">https://veriseal.in/blog/</span>
+                    <span className="text-text-main/40">https://Kagazo.in/blog/</span>
                     <input
                       type="text"
                       value={currentPost.slug || ''}
@@ -387,7 +387,7 @@ export default function AdminBlogPage() {
 
                 <div className="p-3 bg-surface/40 rounded-xl border border-surface-darker text-left space-y-1">
                   <div className="text-[11px] text-text-main/60 truncate">
-                    veriseal.in &rsaquo; blog &rsaquo; {currentPost.slug || 'slug'}
+                    Kagazo.in &rsaquo; blog &rsaquo; {currentPost.slug || 'slug'}
                   </div>
                   <div className="text-sm font-semibold text-[#1a0dab] hover:underline line-clamp-1 leading-snug cursor-pointer">
                     {currentPost.title || 'Your Article Title Appears Here'}

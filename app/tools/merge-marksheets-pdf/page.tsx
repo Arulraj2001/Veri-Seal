@@ -21,18 +21,18 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'Merge Marksheets to Single PDF Online Free (<500KB or <1MB) | VeriSeal',
+  title: 'Merge Marksheets to Single PDF Online Free (<500KB or <1MB) | Kagazo',
   description:
     'Combine 1 to 12 semester marksheets, provisional degree, and consolidated certificates into one single PDF strictly under 500KB or 1MB for UPSC, SSC, and TNPSC portal document verification.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/merge-marksheets-pdf',
+    canonical: 'https://Kagazo.in/tools/merge-marksheets-pdf',
   },
   openGraph: {
-    title: 'Merge Marksheets into Single PDF Under 500KB / 1MB | VeriSeal',
+    title: 'Merge Marksheets into Single PDF Under 500KB / 1MB | Kagazo',
     description:
       'Multi-marksheet budget optimizer. Combines degree and semester certificates into 1 compliant PDF with sharp text and zero watermark.',
-    url: 'https://veriseal.in/tools/merge-marksheets-pdf',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/merge-marksheets-pdf',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -46,7 +46,7 @@ const FAQS = [
   {
     question: 'Why do other PDF merger tools fail on government portals?',
     answer:
-      'Standard online PDF mergers simply concatenate pages without dynamic byte budget compression. A 6-semester document often ends up at 4MB to 8MB, causing portals with strict 500KB or 1MB limits to reject the upload. VeriSeal uses a dynamic byte-budget optimizer that allocates optimal compression per page so the final PDF is guaranteed under your target limit while keeping marks and serial numbers crisp.',
+      'Standard online PDF mergers simply concatenate pages without dynamic byte budget compression. A 6-semester document often ends up at 4MB to 8MB, causing portals with strict 500KB or 1MB limits to reject the upload. Kagazo uses a dynamic byte-budget optimizer that allocates optimal compression per page so the final PDF is guaranteed under your target limit while keeping marks and serial numbers crisp.',
   },
   {
     question: 'Can I upload photos of my marksheets taken with a mobile camera?',
@@ -54,9 +54,9 @@ const FAQS = [
       'Yes! You can upload JPG, PNG, or existing PDF scans. Our built-in Xerox Clean filter automatically removes desk shadows, compensates for uneven camera lighting, and boosts ink contrast so small font subjects and grades remain 100% legible during verification.',
   },
   {
-    question: 'Are my educational certificates safe on VeriSeal?',
+    question: 'Are my educational certificates safe on Kagazo?',
     answer:
-      '100% safe. All file processing occurs inside volatile RAM memory. VeriSeal never saves your marksheets, roll numbers, or university certificates to any disk, cloud storage, or database. Everything is purged immediately upon download.',
+      '100% safe. All file processing occurs inside volatile RAM memory. Kagazo never saves your marksheets, roll numbers, or university certificates to any disk, cloud storage, or database. Everything is purged immediately upon download.',
   },
 ];
 
@@ -100,8 +100,8 @@ export default function MergeMarksheetsPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'VeriSeal Multi-Marksheet to Single PDF Budget Optimizer',
-            url: 'https://veriseal.in/tools/merge-marksheets-pdf',
+            name: 'Kagazo Multi-Marksheet to Single PDF Budget Optimizer',
+            url: 'https://Kagazo.in/tools/merge-marksheets-pdf',
             applicationCategory: 'UtilityApplication',
             operatingSystem: 'All',
             browserRequirements: 'Requires JavaScript. Requires HTML5.',
@@ -179,7 +179,7 @@ export default function MergeMarksheetsPage() {
                 <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-100 space-y-2">
                   <h3 className="font-bold text-emerald-800 flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    VeriSeal Budget Optimizer
+                    Kagazo Budget Optimizer
                   </h3>
                   <ul className="text-xs text-emerald-800/90 space-y-1.5 list-disc list-inside leading-relaxed">
                     <li>Calculates optimal byte budget per semester page</li>

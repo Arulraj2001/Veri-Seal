@@ -21,14 +21,14 @@ export const metadata: Metadata = {
   description:
     'Stamp handwritten signature, candidate name, and attestation date directly onto marksheet, caste, and degree PDFs without blurry raster degradation. Auto-compress to <200KB or <500KB for UPSC, SSC, and College admissions. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/self-attest-pdf',
+    canonical: 'https://Kagazo.in/tools/self-attest-pdf',
   },
   openGraph: {
-    title: 'Free Digital Self-Attestation & Date Stamper | VeriSeal',
+    title: 'Free Digital Self-Attestation & Date Stamper | Kagazo',
     description:
       'Add self-attestation stamp, signature, and date to certificates and marksheets while keeping vector text sharp.',
-    url: 'https://veriseal.in/tools/self-attest-pdf',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/self-attest-pdf',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -42,7 +42,7 @@ const FAQS = [
   {
     question: 'Will stamping blur my certificate or marksheet text?',
     answer:
-      'No! Unlike generic image editors that re-rasterize PDFs into low-resolution JPEGs, VeriSeal overlays the stamp layer directly onto the existing PDF vector structure. Your grades, roll numbers, and board watermarks stay razor sharp.',
+      'No! Unlike generic image editors that re-rasterize PDFs into low-resolution JPEGs, Kagazo overlays the stamp layer directly onto the existing PDF vector structure. Your grades, roll numbers, and board watermarks stay razor sharp.',
   },
   {
     question: 'Can I choose between blue ballpoint and black ink?',
@@ -50,7 +50,7 @@ const FAQS = [
       'Yes. You can switch between Royal Blue (#0C2D8C) and Black (#121212) ink depending on your board requirement. Both options feature transparent backgrounds that blend naturally onto white certificates.',
   },
   {
-    question: 'Is my uploaded certificate or marksheet saved on VeriSeal servers?',
+    question: 'Is my uploaded certificate or marksheet saved on Kagazo servers?',
     answer:
       'Never. All documents and signatures are processed exclusively in volatile RAM memory with zero server disk persistence. Everything is purged immediately once your stamped PDF is generated.',
   },
@@ -62,8 +62,8 @@ export default function SelfAttestPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Digital Self-Attestation & Date Stamper',
-        url: 'https://veriseal.in/tools/self-attest-pdf',
+        name: 'Kagazo Digital Self-Attestation & Date Stamper',
+        url: 'https://Kagazo.in/tools/self-attest-pdf',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

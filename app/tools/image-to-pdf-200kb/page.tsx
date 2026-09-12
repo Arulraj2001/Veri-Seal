@@ -17,18 +17,18 @@ import { ImageToPdfEngine } from '@/components/tools/ImageToPdfEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Image to PDF Converter under 200KB Free | Exact Size Guarantee | VeriSeal',
+  title: 'Image to PDF Converter under 200KB Free | Exact Size Guarantee | Kagazo',
   description:
     'Convert marksheet photos, certificates, and ID cards directly to PDF strictly under 200 KB online free. 1-click in-memory conversion with Xerox ink boost and A4 formatting. Guaranteed compliance for TNPSC, UPSC, and SSC.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/image-to-pdf-200kb',
+    canonical: 'https://Kagazo.in/tools/image-to-pdf-200kb',
   },
   openGraph: {
-    title: 'Image to PDF Converter under 200KB Online Free | VeriSeal',
+    title: 'Image to PDF Converter under 200KB Online Free | Kagazo',
     description:
       'Directly convert smartphone marksheet photos to PDF under 200 KB in 1 click. Zero paywalls, no watermarks, RAM-only processing.',
-    url: 'https://veriseal.in/tools/image-to-pdf-200kb',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/image-to-pdf-200kb',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -37,12 +37,12 @@ const FAQS = [
   {
     question: 'How do I convert a marksheet photo directly to a PDF under 200 KB?',
     answer:
-      'Simply drag and drop your smartphone photo or scanned certificate into the VeriSeal upload box. Our engine automatically crops the borders, enhances ink contrast, and compresses the PDF to strictly under 200 KB in a single pass.',
+      'Simply drag and drop your smartphone photo or scanned certificate into the Kagazo upload box. Our engine automatically crops the borders, enhances ink contrast, and compresses the PDF to strictly under 200 KB in a single pass.',
   },
   {
     question: 'Can I combine Front and Back pages of a marksheet into one PDF?',
     answer:
-      'Yes! You can upload multiple images (e.g. Front and Back of your Degree certificate or 10th marksheet). VeriSeal combines them into a multi-page A4 PDF while ensuring the total file size remains strictly under 200 KB.',
+      'Yes! You can upload multiple images (e.g. Front and Back of your Degree certificate or 10th marksheet). Kagazo combines them into a multi-page A4 PDF while ensuring the total file size remains strictly under 200 KB.',
   },
   {
     question: 'Why do recruitment portals mandate PDF format under 200 KB?',
@@ -57,7 +57,7 @@ const FAQS = [
   {
     question: 'Are my uploaded certificates saved on your servers?',
     answer:
-      'No. VeriSeal operates entirely in system memory (RAM). Your certificates, marksheets, and ID proofs are never written to permanent disk storage, ensuring 100% privacy and security.',
+      'No. Kagazo operates entirely in system memory (RAM). Your certificates, marksheets, and ID proofs are never written to permanent disk storage, ensuring 100% privacy and security.',
   },
 ];
 
@@ -70,7 +70,7 @@ export default function ImageToPdf200KbPage() {
         name: 'Image to PDF Converter under 200KB',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/image-to-pdf-200kb',
+        url: 'https://Kagazo.in/tools/image-to-pdf-200kb',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -246,7 +246,7 @@ export default function ImageToPdf200KbPage() {
             {/* In-Content Native AdSlot */}
             <AdSlot slot="in_content" />
 
-            {/* Why VeriSeal is Better */}
+            {/* Why Kagazo is Better */}
             <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
                 <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">

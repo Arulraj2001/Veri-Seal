@@ -218,7 +218,7 @@ export default function StampPhotoEngine() {
       ctx.font = '12px sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText(
-        `VeriSeal Studio • 16 Stamp Photos (20×25mm) • 4×6" 300 DPI • 100% Actual Size`,
+        `Kagazo Studio • 16 Stamp Photos (20×25mm) • 4×6" 300 DPI • 100% Actual Size`,
         sheetWPx - 20,
         sheetHPx - 12
       );
@@ -244,7 +244,7 @@ export default function StampPhotoEngine() {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Print Stamp / NEET Postcard Photo - VeriSeal Studio</title>
+          <title>Print Stamp / NEET Postcard Photo - Kagazo Studio</title>
           <style>
             @page {
               size: 4in 6in;
@@ -285,7 +285,7 @@ export default function StampPhotoEngine() {
     if (!renderedImageUrl) return;
     const link = document.createElement('a');
     link.href = renderedImageUrl;
-    link.download = `veriseal_${mode}_300dpi.jpg`;
+    link.download = `kagazo_${mode}_300dpi.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

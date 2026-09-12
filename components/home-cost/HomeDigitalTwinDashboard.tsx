@@ -32,7 +32,7 @@ import ApplianceBreakdownChart from './ApplianceBreakdownChart';
 import WhatIfSimulator from './WhatIfSimulator';
 import AiAdvisorCard from './AiAdvisorCard';
 
-const STORAGE_KEY = 'veriseal_home_twin_v1';
+const STORAGE_KEY = 'kagazo_home_twin_v1';
 
 export default function HomeDigitalTwinDashboard() {
   const [selectedPresetId, setSelectedPresetId] = useState<string>('preset_2bhk_chennai');

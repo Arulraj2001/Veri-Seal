@@ -25,7 +25,7 @@ export function AdminNewPaymentAlertEmail({
           <span style={{ backgroundColor: '#E6570B', color: '#FFFFFF', borderRadius: '8px', padding: '4px 10px', fontWeight: 'bold', fontSize: '14px', textTransform: 'uppercase' }}>
             Admin Alert
           </span>
-          <span style={{ fontSize: '12px', color: '#786C65' }}>VeriSeal Treasury</span>
+          <span style={{ fontSize: '12px', color: '#786C65' }}>Kagazo Treasury</span>
         </div>
 
         <h2 style={{ fontSize: '18px', fontWeight: '800', color: '#2E241F', margin: '0 0 16px 0' }}>
@@ -74,7 +74,7 @@ export function AdminNewPaymentAlertEmail({
 
         <div style={{ textAlign: 'center', margin: '32px 0' }}>
           <a
-            href="https://veriseal.in/admin/payments"
+            href="https://Kagazo.in/admin/payments"
             style={{
               backgroundColor: '#2E241F',
               color: '#FFFFFF',

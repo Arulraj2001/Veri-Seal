@@ -58,7 +58,7 @@ export default function ConstructionMaterialEngine() {
 
   const handleAffiliateClick = () => {
     const query = encodeURIComponent('bosch power drill angle grinder construction tools');
-    window.open(`https://www.amazon.in/s?k=${query}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${query}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

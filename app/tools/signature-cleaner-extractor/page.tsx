@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   description:
     'Remove ruled notebook lines, whiten paper backgrounds to pure #FFFFFF, and convert blue/faint pen strokes to dense India Black ink. Auto-crop to exact SSC 140x60, UPSC 350x350, and IBPS portal limits. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/signature-cleaner-extractor',
+    canonical: 'https://Kagazo.in/tools/signature-cleaner-extractor',
   },
   openGraph: {
-    title: 'Free Black Ink Signature Extractor & Contrast Enhancer | VeriSeal',
+    title: 'Free Black Ink Signature Extractor & Contrast Enhancer | Kagazo',
     description:
       'Eliminate lined notebook lines and convert blue ink to official black ink for SSC, UPSC, and Bank PO recruitment forms.',
-    url: 'https://veriseal.in/tools/signature-cleaner-extractor',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/signature-cleaner-extractor',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -48,9 +48,9 @@ const FAQS = [
       'SSC requires 140 × 60 pixels strictly between 10KB and 20KB in JPEG format. UPSC requires a square 350 × 350 pixels between 20KB and 50KB. Our presets automatically apply these exact specifications.',
   },
   {
-    question: 'Is my handwritten signature stored on VeriSeal servers?',
+    question: 'Is my handwritten signature stored on Kagazo servers?',
     answer:
-      'Never. VeriSeal processes all signatures strictly inside temporary RAM memory. Your signature is instantly wiped upon download. Zero images are saved to disk or databases.',
+      'Never. Kagazo processes all signatures strictly inside temporary RAM memory. Your signature is instantly wiped upon download. Zero images are saved to disk or databases.',
   },
 ];
 
@@ -60,8 +60,8 @@ export default function SignatureExtractorPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Black Ink Signature Extractor',
-        url: 'https://veriseal.in/tools/signature-cleaner-extractor',
+        name: 'Kagazo Black Ink Signature Extractor',
+        url: 'https://Kagazo.in/tools/signature-cleaner-extractor',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

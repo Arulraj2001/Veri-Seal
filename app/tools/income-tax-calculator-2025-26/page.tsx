@@ -23,14 +23,14 @@ export const metadata: Metadata = {
   description:
     'Calculate income tax for FY 2025-26 (Assessment Year 2026-27). Compare New vs Old Tax Regime with ₹75,000 standard deduction, revised Union Budget slabs, and Section 87A zero-tax rebate up to ₹7.75 Lakhs.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/income-tax-calculator-2025-26',
+    canonical: 'https://Kagazo.in/tools/income-tax-calculator-2025-26',
   },
   openGraph: {
-    title: 'Income Tax Calculator FY 2025-26 (New vs Old Regime) | VeriSeal',
+    title: 'Income Tax Calculator FY 2025-26 (New vs Old Regime) | Kagazo',
     description:
       'Compare New vs Old Tax Regime with revised budget slabs & ₹75k standard deduction.',
-    url: 'https://veriseal.in/tools/income-tax-calculator-2025-26',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/income-tax-calculator-2025-26',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -73,8 +73,8 @@ export default function IncomeTaxCalculatorPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Income Tax Calculator FY 2025-26',
-        url: 'https://veriseal.in/tools/income-tax-calculator-2025-26',
+        name: 'Kagazo Income Tax Calculator FY 2025-26',
+        url: 'https://Kagazo.in/tools/income-tax-calculator-2025-26',
         applicationCategory: 'FinanceApplication',
         operatingSystem: 'All',
         offers: {

@@ -21,18 +21,18 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'Unlock e-Aadhaar PDF Online Free | Remove Password from PDF | VeriSeal',
+  title: 'Unlock e-Aadhaar PDF Online Free | Remove Password from PDF | Kagazo',
   description:
     'Permanently remove password encryption from e-Aadhaar, Form 16, and bank statement PDFs online free. 100% in-memory processing. Prepare unencrypted PDFs for UPSC, SSC, and TNPSC upload portals.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/unlock-pdf',
+    canonical: 'https://Kagazo.in/tools/unlock-pdf',
   },
   openGraph: {
-    title: 'Unlock e-Aadhaar PDF Online Free | VeriSeal',
+    title: 'Unlock e-Aadhaar PDF Online Free | Kagazo',
     description:
       'Remove password protection from e-Aadhaar and certificates. Zero watermark, 100% RAM privacy.',
-    url: 'https://veriseal.in/tools/unlock-pdf',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/unlock-pdf',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -49,9 +49,9 @@ const FAQS = [
       'According to UIDAI guidelines, the default password for an e-Aadhaar PDF is an 8-character combination: The first 4 letters of your name in CAPITAL letters (as printed on your Aadhaar card) followed by your 4-digit Year of Birth (YYYY). For example, if your name is SURESH and birth year is 1998, your password is SURE1998.',
   },
   {
-    question: 'Is it safe to unlock my e-Aadhaar PDF on VeriSeal?',
+    question: 'Is it safe to unlock my e-Aadhaar PDF on Kagazo?',
     answer:
-      'Yes, 100% safe. VeriSeal processes your PDF exclusively in volatile RAM memory. Your document, password, and personal details are immediately wiped from memory after download. We never save your files to disk or databases.',
+      'Yes, 100% safe. Kagazo processes your PDF exclusively in volatile RAM memory. Your document, password, and personal details are immediately wiped from memory after download. We never save your files to disk or databases.',
   },
   {
     question: 'Will unlocking the PDF affect its validity or digital signature?',
@@ -69,7 +69,7 @@ export default function UnlockPdfPage() {
         name: 'Unlock e-Aadhaar & Encrypted PDF Online',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/unlock-pdf',
+        url: 'https://Kagazo.in/tools/unlock-pdf',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -179,10 +179,10 @@ export default function UnlockPdfPage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
                   <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    The VeriSeal Fix
+                    The Kagazo Fix
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    VeriSeal authenticates your password and generates a completely decrypted PDF stream in RAM memory. The resulting file has zero password locks and uploads seamlessly on any portal.
+                    Kagazo authenticates your password and generates a completely decrypted PDF stream in RAM memory. The resulting file has zero password locks and uploads seamlessly on any portal.
                   </p>
                 </div>
               </div>

@@ -3,7 +3,7 @@ import DiscountProfitCrashEngine from '@/components/business-os/DiscountProfitCr
 import { Percent, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Discount Profit Crash Simulator | How Discounts Kill SMB Margins | VeriSeal',
+  title: 'Discount Profit Crash Simulator | How Discounts Kill SMB Margins | Kagazo',
   description:
     'Simulate how price discounts slash your net profits. Discover why a 20% discount requires selling 2x to 3x more units just to take home the same income.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Discount Profit Crash Simulator | How Discounts Kill SMB Margins',
     description:
       'A 20% discount does not cost 20% profit. Calculate your exact profit destruction and required volume jump.',
-    url: 'https://veriseal.org/business-os/discount-profit-calculator',
+    url: 'https://Kagazo.org/business-os/discount-profit-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function DiscountProfitPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Discount Profit Crash Simulator',
-    url: 'https://veriseal.org/business-os/discount-profit-calculator',
+    url: 'https://Kagazo.org/business-os/discount-profit-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

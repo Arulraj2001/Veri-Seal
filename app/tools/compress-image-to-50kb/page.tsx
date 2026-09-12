@@ -19,18 +19,18 @@ import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageR
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Compress Image to 50KB Online Free | Exact 20-50KB Passport Photo | VeriSeal',
+  title: 'Compress Image to 50KB Online Free | Exact 20-50KB Passport Photo | Kagazo',
   description:
     'Compress photo and image to strictly between 20 KB and 50 KB online free. Perfect for passport photos, SSC, TNPSC, and IBPS online application forms. Zero blur, zero watermark.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/compress-image-to-50kb',
+    canonical: 'https://Kagazo.in/tools/compress-image-to-50kb',
   },
   openGraph: {
-    title: 'Compress Image to 50KB Online Free | VeriSeal',
+    title: 'Compress Image to 50KB Online Free | Kagazo',
     description:
       'Compress photos to 50KB online with exact dimension and size guarantee. Zero watermark, instant in-memory processing.',
-    url: 'https://veriseal.in/tools/compress-image-to-50kb',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/compress-image-to-50kb',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -65,7 +65,7 @@ const FAQS = [
   {
     question: 'How do I compress my photo to 50 KB without facial distortion?',
     answer:
-      'Standard compressors often stretch or squash candidate faces when fitting strict dimensions. VeriSeal scales proportionally and automatically centers your photo on a pure white (#FFFFFF) canvas, maintaining your true facial proportions while locking the file size strictly between 20 KB and 50 KB.',
+      'Standard compressors often stretch or squash candidate faces when fitting strict dimensions. Kagazo scales proportionally and automatically centers your photo on a pure white (#FFFFFF) canvas, maintaining your true facial proportions while locking the file size strictly between 20 KB and 50 KB.',
   },
   {
     question: 'Why do so many government portals ask for 20-50 KB photos?',
@@ -75,7 +75,7 @@ const FAQS = [
   {
     question: 'Can I add my Name and Date of Photo (DOP) to the photo?',
     answer:
-      'Yes! Check the "Add Name & Date strip" toggle. VeriSeal will automatically generate the official white bottom banner with your candidate name and date of photo capture.',
+      'Yes! Check the "Add Name & Date strip" toggle. Kagazo will automatically generate the official white bottom banner with your candidate name and date of photo capture.',
   },
   {
     question: 'Is this 50 KB compressor free to use for cyber cafes and applicants?',
@@ -93,7 +93,7 @@ export default function CompressImageTo50KbPage() {
         name: 'Compress Image to 50KB Online',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/compress-image-to-50kb',
+        url: 'https://Kagazo.in/tools/compress-image-to-50kb',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -210,10 +210,10 @@ export default function CompressImageTo50KbPage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
                   <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    VeriSeal Proportional Canvas
+                    Kagazo Proportional Canvas
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    VeriSeal calculates the exact proportional scale, centers your head and shoulders, and pads edges with pure #FFFFFF background, guaranteeing zero facial distortion.
+                    Kagazo calculates the exact proportional scale, centers your head and shoulders, and pads edges with pure #FFFFFF background, guaranteeing zero facial distortion.
                   </p>
                 </div>
               </div>

@@ -53,7 +53,7 @@ const initialKeys: AdminApiKey[] = [
   },
   {
     id: 'k-3',
-    user_email: 'samuel@veriseal.in',
+    user_email: 'samuel@Kagazo.in',
     key: 'vs_live_99887766554433221100aabbccddeeff',
     name: 'Admin Telemetry Key',
     plan: 'business',

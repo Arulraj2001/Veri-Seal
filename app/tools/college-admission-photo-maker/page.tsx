@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   description:
     'Generate 4x6" (8 photos), Combo (Passport + Stamp size), or A4 30-copy photo sheets online free. Studio white background normalizer, candidate name & DOP strip, and dashed cut guides at 300 DPI for college admissions and exams.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/college-admission-photo-maker',
+    canonical: 'https://Kagazo.in/tools/college-admission-photo-maker',
   },
   openGraph: {
-    title: 'College Admission & Exam Photo Sheet Studio | VeriSeal',
+    title: 'College Admission & Exam Photo Sheet Studio | Kagazo',
     description:
       'Turn 1 selfie into a 4x6" 8-photo sheet or combo passport + stamp sheet. Print at any studio for ₹5 instead of ₹120.',
-    url: 'https://veriseal.in/tools/college-admission-photo-maker',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/college-admission-photo-maker',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -34,7 +34,7 @@ const FAQS = [
   {
     question: 'How does this tool save me ₹100+ compared to photo studios?',
     answer:
-      'Traditional photo studios charge ₹100 to ₹150 for 8 passport photos. With VeriSeal, you upload 1 smartphone photo, customize your name/DOP banner, download a high-resolution 300 DPI 4x6" sheet, and print it at any local color printer or studio as a standard 4x6" photo print for only ₹5 to ₹10!',
+      'Traditional photo studios charge ₹100 to ₹150 for 8 passport photos. With Kagazo, you upload 1 smartphone photo, customize your name/DOP banner, download a high-resolution 300 DPI 4x6" sheet, and print it at any local color printer or studio as a standard 4x6" photo print for only ₹5 to ₹10!',
   },
   {
     question: 'What is a "Combo Sheet"?',
@@ -49,7 +49,7 @@ const FAQS = [
   {
     question: 'Are there cut guide lines for easy cutting?',
     answer:
-      'Yes. When enabled, VeriSeal renders subtle 0.5pt dashed scissors cut lines between photos so you can slice them cleanly with a pair of scissors or paper cutter.',
+      'Yes. When enabled, Kagazo renders subtle 0.5pt dashed scissors cut lines between photos so you can slice them cleanly with a pair of scissors or paper cutter.',
   },
 ];
 
@@ -58,7 +58,7 @@ export default function CollegePhotoMakerPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'College Admission & Exam Photo Sheet Studio',
-    url: 'https://veriseal.in/tools/college-admission-photo-maker',
+    url: 'https://Kagazo.in/tools/college-admission-photo-maker',
     applicationCategory: 'MultimediaApplication',
     operatingSystem: 'All',
     offers: {

@@ -21,18 +21,18 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'Mask Aadhaar Card Online Free | Redact First 8 Digits (XXXX-XXXX-1234) | VeriSeal',
+  title: 'Mask Aadhaar Card Online Free | Redact First 8 Digits (XXXX-XXXX-1234) | Kagazo',
   description:
     'Permanently mask the first 8 digits of your Aadhaar card (PDF & image files) online free. 100% in-memory processing. UIDAI and RBI KYC compliant. Prevents identity theft for private job and exam submissions.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/mask-aadhaar',
+    canonical: 'https://Kagazo.in/tools/mask-aadhaar',
   },
   openGraph: {
-    title: 'Mask Aadhaar Card Online Free | VeriSeal',
+    title: 'Mask Aadhaar Card Online Free | Kagazo',
     description:
       'Permanently redact the first 8 digits of Aadhaar. 100% RAM privacy, UIDAI compliant, zero watermark.',
-    url: 'https://veriseal.in/tools/mask-aadhaar',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/mask-aadhaar',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -46,17 +46,17 @@ const FAQS = [
   {
     question: 'Is blacking out the numbers with an image editor safe?',
     answer:
-      'Drawing black boxes in basic phone photo apps or PDF viewers is often unsafe because the underlying digital text layer is not erased—anyone who copies the text can still read your full 12 digits! VeriSeal physically wipes the underlying character stream from the PDF and burns solid pixels into images, making the redaction 100% irreversible.',
+      'Drawing black boxes in basic phone photo apps or PDF viewers is often unsafe because the underlying digital text layer is not erased—anyone who copies the text can still read your full 12 digits! Kagazo physically wipes the underlying character stream from the PDF and burns solid pixels into images, making the redaction 100% irreversible.',
   },
   {
     question: 'Can I upload a smartphone photo of my Aadhaar card or only PDF?',
     answer:
-      'VeriSeal supports both! You can upload an official e-Aadhaar PDF or a smartphone camera photo (JPEG/PNG/WEBP) of your PVC or printed Aadhaar card. Our engine redacts the sensitive numbers cleanly across both formats.',
+      'Kagazo supports both! You can upload an official e-Aadhaar PDF or a smartphone camera photo (JPEG/PNG/WEBP) of your PVC or printed Aadhaar card. Our engine redacts the sensitive numbers cleanly across both formats.',
   },
   {
     question: 'Are my Aadhaar details or documents stored on your server?',
     answer:
-      'Never. VeriSeal operates entirely in ephemeral volatile RAM memory. Your Aadhaar document is processed in memory and wiped immediately upon download. We never store personal data, identity numbers, or files on server disks or databases.',
+      'Never. Kagazo operates entirely in ephemeral volatile RAM memory. Your Aadhaar document is processed in memory and wiped immediately upon download. We never store personal data, identity numbers, or files on server disks or databases.',
   },
 ];
 
@@ -69,7 +69,7 @@ export default function MaskAadhaarPage() {
         name: 'Official Masked Aadhaar Redactor',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/mask-aadhaar',
+        url: 'https://Kagazo.in/tools/mask-aadhaar',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -166,7 +166,7 @@ export default function MaskAadhaarPage() {
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-primary" />
-                Why Visual Paint Overlays Are Insecure (And How VeriSeal Protects You)
+                Why Visual Paint Overlays Are Insecure (And How Kagazo Protects You)
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
@@ -179,10 +179,10 @@ export default function MaskAadhaarPage() {
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
                   <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    VeriSeal True Stream Redaction
+                    Kagazo True Stream Redaction
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    VeriSeal executes cryptographic PDF stream redactions. The first 8 digits are physically purged from the PDF dictionary and replaced with solid opaque pixels, making recovery technically impossible.
+                    Kagazo executes cryptographic PDF stream redactions. The first 8 digits are physically purged from the PDF dictionary and replaced with solid opaque pixels, making recovery technically impossible.
                   </p>
                 </div>
               </div>

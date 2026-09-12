@@ -407,7 +407,7 @@ export default function ResumeBuilderEngine() {
     const link = document.createElement('a');
     link.href = url;
     const cleanName = data.fullName.trim() ? data.fullName.toLowerCase().replace(/\s+/g, '_') : 'profile';
-    link.download = `${cleanName}_veriseal_resume_backup.json`;
+    link.download = `${cleanName}_kagazo_resume_backup.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -583,7 +583,7 @@ export default function ResumeBuilderEngine() {
         ? data.fullName.toLowerCase().replace(/[^a-z0-9]+/g, '_')
         : 'resume';
 
-      pdf.save(`${safeName}_veriseal_resume.pdf`);
+      pdf.save(`${safeName}_kagazo_resume.pdf`);
     } catch (err) {
       console.error('PDF error:', err);
       alert('Could not generate PDF image. Please click "Print A4" and select "Save as PDF" for instant vector output.');
@@ -1736,7 +1736,7 @@ export default function ResumeBuilderEngine() {
 
               {/* Scrollable preview (scaled for screen) */}
               <div
-                id="veriseal-print-resume-canvas"
+                id="kagazo-print-resume-canvas"
                 className="max-h-[680px] overflow-y-auto rounded-xl border border-slate-300 dark:border-slate-800 bg-slate-300 dark:bg-slate-900 p-2 sm:p-4 flex justify-center shadow-inner"
               >
                 <div
@@ -1758,8 +1758,8 @@ export default function ResumeBuilderEngine() {
       {/* Dedicated Clean Print Portal — direct child of document.body for 100% pure A4 printing */}
       {mounted &&
         createPortal(
-          <div id="veriseal-resume-print-mount" className="veriseal-resume-print-portal" aria-hidden="true">
-            <div className="veriseal-resume-print-sheet">
+          <div id="kagazo-resume-print-mount" className="kagazo-resume-print-portal" aria-hidden="true">
+            <div className="kagazo-resume-print-sheet">
               <ResumeMasterRenderer data={data} />
             </div>
           </div>,

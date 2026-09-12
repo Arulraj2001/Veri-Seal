@@ -20,14 +20,14 @@ export const metadata: Metadata = {
   description:
     'Resize up to 50 candidate passport photos and signatures in 1 click for SSC, UPSC, and Banking exams. In-memory parallel batch compression with automatic structured ZIP download. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/batch-photo-resizer',
+    canonical: 'https://Kagazo.in/tools/batch-photo-resizer',
   },
   openGraph: {
-    title: 'Free Bulk Batch Photo Resizer & ZIP Downloader | VeriSeal',
+    title: 'Free Bulk Batch Photo Resizer & ZIP Downloader | Kagazo',
     description:
       'High-speed batch photo and signature resizer for Cyber Cafe and CSC operators. Process up to 50 applicant photos instantly.',
-    url: 'https://veriseal.in/tools/batch-photo-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/batch-photo-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -39,7 +39,7 @@ const FAQS = [
       'You can upload and compress up to 50 candidate photos or signatures at once. The engine automatically processes each image in parallel and packs them into a single clean ZIP archive.',
   },
   {
-    question: 'Are applicant photos saved on VeriSeal servers?',
+    question: 'Are applicant photos saved on Kagazo servers?',
     answer:
       'Never. All photos are processed in volatile RAM memory with zero server disk persistence. Once your ZIP file is downloaded, all in-memory buffers are instantly purged.',
   },
@@ -61,8 +61,8 @@ export default function BatchResizerPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Bulk Batch Photo Resizer & ZIP Downloader',
-        url: 'https://veriseal.in/tools/batch-photo-resizer',
+        name: 'Kagazo Bulk Batch Photo Resizer & ZIP Downloader',
+        url: 'https://Kagazo.in/tools/batch-photo-resizer',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

@@ -80,7 +80,7 @@ export async function POST(req: Request) {
       if (published && !existing.published_at) {
         existing.published_at = nowIso;
       }
-      existing.author_name = author_name || 'VeriSeal Team';
+      existing.author_name = author_name || 'Kagazo Team';
       existing.updated_at = nowIso;
 
       return NextResponse.json({ success: true, post: existing });
@@ -98,7 +98,7 @@ export async function POST(req: Request) {
         category: category || 'Guides & Tutorials',
         published: Boolean(published),
         published_at: published ? nowIso : null,
-        author_name: author_name || 'VeriSeal Team',
+        author_name: author_name || 'Kagazo Team',
         created_at: nowIso,
         updated_at: nowIso,
       };

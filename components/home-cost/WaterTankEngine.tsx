@@ -29,7 +29,7 @@ export default function WaterTankEngine() {
 
   const handleAffiliateClick = () => {
     const query = encodeURIComponent(`water tank ${tank.recommendedOverhead} litres sintex plastek 4 layer`);
-    window.open(`https://www.amazon.in/s?k=${query}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${query}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

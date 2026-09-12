@@ -21,14 +21,14 @@ export const metadata: Metadata = {
   description:
     'Complete interactive database of official photo, signature, and thumb impression specifications for UPSC, SSC, IBPS, NEET, JEE, RRB, and State PSC portals. 1-click calibrate and resize. 100% updated guidelines.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/specifications',
+    canonical: 'https://Kagazo.in/tools/specifications',
   },
   openGraph: {
-    title: 'Exam Photo & Signature Specification Radar | VeriSeal',
+    title: 'Exam Photo & Signature Specification Radar | Kagazo',
     description:
       'Search official dimensions, file size limits, and ink rules across 40+ Indian recruitment exams.',
-    url: 'https://veriseal.in/tools/specifications',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/specifications',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -47,7 +47,7 @@ const FAQS = [
   {
     question: 'Can I directly resize my photo from this radar?',
     answer:
-      'Yes! Every exam card in the radar features a direct "Pre-Calibrated Tool" button that instantly loads the exact dimension and byte limits into our VeriSeal processing engine.',
+      'Yes! Every exam card in the radar features a direct "Pre-Calibrated Tool" button that instantly loads the exact dimension and byte limits into our Kagazo processing engine.',
   },
   {
     question: 'What is the most common reason for online application form rejection?',
@@ -62,8 +62,8 @@ export default function ExamSpecificationRadarPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Exam Recruitment Specification Radar',
-        url: 'https://veriseal.in/tools/specifications',
+        name: 'Kagazo Exam Recruitment Specification Radar',
+        url: 'https://Kagazo.in/tools/specifications',
         applicationCategory: 'EducationalApplication',
         operatingSystem: 'All',
         offers: {

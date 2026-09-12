@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Calculate the recommended overhead water tank and underground sump capacity in Litres for Indian homes, independent houses, and apartments based on Bureau of Indian Standards (IS 1172).',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/water-tank-calculator',
+    canonical: 'https://Kagazo.in/home-cost/water-tank-calculator',
   },
   openGraph: {
-    title: 'Home Water Tank Size Calculator (IS 1172) | VeriSeal',
+    title: 'Home Water Tank Size Calculator (IS 1172) | Kagazo',
     description:
       'Size your rooftop overhead tank (500L, 1000L, 1500L, 2000L) and underground sump based on family members and municipal buffer days.',
-    url: 'https://veriseal.in/home-cost/water-tank-calculator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/water-tank-calculator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

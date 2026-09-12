@@ -19,18 +19,18 @@ import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageR
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'NEET Postcard (4x6) & Photo Signature Resizer Online Free | VeriSeal',
+  title: 'NEET Postcard (4x6) & Photo Signature Resizer Online Free | Kagazo',
   description:
     'Resize Postcard Photo (4x6 inch, 10-200KB with Name & Date), Passport Photo (10-200KB, 80% face), Signature (4-30KB), and Finger Impressions for NEET UG online application and admit card.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/neet-photo-signature-resizer',
+    canonical: 'https://Kagazo.in/tools/neet-photo-signature-resizer',
   },
   openGraph: {
-    title: 'NEET Postcard (4x6) & Photo Signature Resizer Online Free | VeriSeal',
+    title: 'NEET Postcard (4x6) & Photo Signature Resizer Online Free | Kagazo',
     description:
       'Free NTA NEET UG image resizer. 4"x6" Postcard photo, passport photo, running signature, and finger impressions resized to exact NTA specifications.',
-    url: 'https://veriseal.in/tools/neet-photo-signature-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/neet-photo-signature-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -93,7 +93,7 @@ const NEET_FAQS = [
   {
     question: 'How do I add Candidate Name and Date of Photo for NEET?',
     answer:
-      'VeriSeal automatically generates the official white bottom strip. Simply type your Name and the Date the photo was taken (e.g., 01-09-2026), and our engine seamlessly mounts it with correct contrast and font proportion.',
+      'Kagazo automatically generates the official white bottom strip. Simply type your Name and the Date the photo was taken (e.g., 01-09-2026), and our engine seamlessly mounts it with correct contrast and font proportion.',
   },
 ];
 
@@ -106,7 +106,7 @@ export default function NeetPhotoSignatureResizerPage() {
         name: 'NEET Postcard & Photo Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/neet-photo-signature-resizer',
+        url: 'https://Kagazo.in/tools/neet-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',

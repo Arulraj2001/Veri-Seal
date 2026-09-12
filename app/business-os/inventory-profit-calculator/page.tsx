@@ -3,7 +3,7 @@ import DeadStockEngine from '@/components/business-os/DeadStockEngine';
 import { Archive, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Dead Stock & Trapped Working Capital Auditor for Retailers | VeriSeal',
+  title: 'Dead Stock & Trapped Working Capital Auditor for Retailers | Kagazo',
   description:
     'Calculate how much cash is trapped in unsold inventory sitting in your godown or shop for >90 days. Get actionable clearance liquidation pricing to unlock working capital today.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Dead Stock & Trapped Working Capital Auditor for Retailers',
     description:
       'Unsold stock is frozen cash. Calculate your total trapped money and see flash liquidation pricing to unlock bank balance today.',
-    url: 'https://veriseal.org/business-os/inventory-profit-calculator',
+    url: 'https://Kagazo.org/business-os/inventory-profit-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function InventoryProfitPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Dead Stock & Trapped Working Capital Auditor',
-    url: 'https://veriseal.org/business-os/inventory-profit-calculator',
+    url: 'https://Kagazo.org/business-os/inventory-profit-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

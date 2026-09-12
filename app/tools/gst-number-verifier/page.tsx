@@ -22,14 +22,14 @@ export const metadata: Metadata = {
   description:
     'Mathematically verify 15-digit Indian GST numbers online for free. Decode state codes, embedded business PAN, and entity registration numbers with official MOD 36 checksum calculation to detect fake GST bills.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/gst-number-verifier',
+    canonical: 'https://Kagazo.in/tools/gst-number-verifier',
   },
   openGraph: {
-    title: 'Free GST Number (GSTIN) Verifier | VeriSeal',
+    title: 'Free GST Number (GSTIN) Verifier | Kagazo',
     description:
       'Verify Indian GSTIN numbers, decode State & PAN, and validate MOD 36 checksum instantly.',
-    url: 'https://veriseal.in/tools/gst-number-verifier',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/gst-number-verifier',
+    siteName: 'Kagazo',
     type: 'website',
     images: [
       {
@@ -58,7 +58,7 @@ const FAQS = [
   {
     question: 'How do I know if a GST number on an invoice is genuine or fake?',
     answer:
-      'A valid GSTIN must strictly follow the 15-character statutory format: 2 state digits + 10 PAN characters + 1 entity count + "Z" + 1 MOD 36 checksum character. Fake or forged GST numbers almost always fail the mathematical ISO/IEC 7064 MOD 36 algorithm. VeriSeal computes this check instantly in your browser.',
+      'A valid GSTIN must strictly follow the 15-character statutory format: 2 state digits + 10 PAN characters + 1 entity count + "Z" + 1 MOD 36 checksum character. Fake or forged GST numbers almost always fail the mathematical ISO/IEC 7064 MOD 36 algorithm. Kagazo computes this check instantly in your browser.',
   },
   {
     question: 'What is the consequence of accepting a fake GST invoice?',
@@ -71,7 +71,7 @@ const FAQS = [
       'The first 2 digits represent the State Code (e.g., 33 for Tamil Nadu). The next 10 characters (digits 3 to 12) represent the Permanent Account Number (PAN) of the taxpayer. The 13th character represents the number of business vertical registrations in that state. The 14th character is always "Z" by default, and the 15th is an error-detecting checksum.',
   },
   {
-    question: 'Is any searched GSTIN stored or tracked by VeriSeal?',
+    question: 'Is any searched GSTIN stored or tracked by Kagazo?',
     answer:
       'No. All validation algorithms, state mappings, and checksum calculations execute strictly in client-side JavaScript inside your browser. No taxpayer or vendor numbers are logged on our servers.',
   },
@@ -83,8 +83,8 @@ export default function GstinVerifierPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal GST Number (GSTIN) Instant Verifier',
-        url: 'https://veriseal.in/tools/gst-number-verifier',
+        name: 'Kagazo GST Number (GSTIN) Instant Verifier',
+        url: 'https://Kagazo.in/tools/gst-number-verifier',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

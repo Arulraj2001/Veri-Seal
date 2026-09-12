@@ -102,8 +102,7 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             if (
               href &&
               (href.startsWith('/') ||
-                href.startsWith('https://veriseal.in') ||
-                href.startsWith('https://veri-seal.vercel.app'))
+                href.startsWith('https://kagazo.in'))
             ) {
               return (
                 <Link href={href} className="text-primary hover:text-primary-hover font-bold underline decoration-primary/30 hover:decoration-primary">

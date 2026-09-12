@@ -29,7 +29,7 @@ export function AdminTopNav({ adminName, onOpenMobileMenu }: AdminTopNavProps) {
             <ShieldCheck className="w-4 h-4" />
           </span>
           <span className="font-extrabold text-sm sm:text-base text-text-main">
-            VeriSeal <span className="text-primary font-black">Admin</span>
+            Kagazo <span className="text-primary font-black">Admin</span>
           </span>
         </div>
       </div>

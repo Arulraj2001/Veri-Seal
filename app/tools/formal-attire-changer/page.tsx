@@ -16,18 +16,18 @@ import {
 import FormalAttireEngine from '@/components/tools/FormalAttireEngine';
 
 export const metadata: Metadata = {
-  title: 'Instant Formal Suit & Blazer Changer for Passport Photo | VeriSeal',
+  title: 'Instant Formal Suit & Blazer Changer for Passport Photo | Kagazo',
   description:
     'Change casual clothes into formal dark blazers, suits, neckties, and collared shirts online free for passport photos and exam forms. Zero Photoshop skills required.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/formal-attire-changer',
+    canonical: 'https://Kagazo.in/tools/formal-attire-changer',
   },
   openGraph: {
-    title: 'Formal Suit & Attire Changer for Passport Photo Online | VeriSeal',
+    title: 'Formal Suit & Attire Changer for Passport Photo Online | Kagazo',
     description:
       'Add formal dark suits, blazers, and ties to casual selfies for UPSC, SSC, and Passport applications in 1 click.',
-    url: 'https://veriseal.in/tools/formal-attire-changer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/formal-attire-changer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -39,9 +39,9 @@ const FAQS = [
       'Official guidelines from SSC, UPSC, IBPS, and the Ministry of External Affairs mandate that passport and admit card photographs have clear contrast against the background with professional presentation. Round-neck T-shirts and hooded sweatshirts are frequently flagged during document verification (DV).',
   },
   {
-    question: 'How does VeriSeal fit the suit over my casual clothes?',
+    question: 'How does Kagazo fit the suit over my casual clothes?',
     answer:
-      'VeriSeal uses an interactive vector-snapping canvas that accurately positions realistic formal suit lapels, necklines, and ties over your neck and shoulders. You can fine-tune the neckline position, scale, and horizontal centering in real-time.',
+      'Kagazo uses an interactive vector-snapping canvas that accurately positions realistic formal suit lapels, necklines, and ties over your neck and shoulders. You can fine-tune the neckline position, scale, and horizontal centering in real-time.',
   },
   {
     question: 'Are my private photos stored or uploaded to any server?',
@@ -68,8 +68,8 @@ export default function FormalAttireChangerPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'VeriSeal Formal Suit & Attire Changer',
-            url: 'https://veriseal.in/tools/formal-attire-changer',
+            name: 'Kagazo Formal Suit & Attire Changer',
+            url: 'https://Kagazo.in/tools/formal-attire-changer',
             applicationCategory: 'PhotoEditorApplication',
             operatingSystem: 'All',
             browserRequirements: 'Requires JavaScript. Requires HTML5.',

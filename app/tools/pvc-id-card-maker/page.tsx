@@ -20,14 +20,14 @@ export const metadata: Metadata = {
   description:
     'Format front & back Aadhaar, PAN, Voter ID, and College Cards into exact ISO CR-80 dimensions (85.6mm x 53.98mm). Export 300 DPI ready-to-print PDFs for Epson L805 / Canon PVC trays and A4 laminating sheets. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/pvc-id-card-maker',
+    canonical: 'https://Kagazo.in/tools/pvc-id-card-maker',
   },
   openGraph: {
-    title: 'Free PVC Smart Card Tray Print Studio | VeriSeal',
+    title: 'Free PVC Smart Card Tray Print Studio | Kagazo',
     description:
       'Format ID cards for Epson L805 PVC tray printing and A4 thermal lamination with cutting guides.',
-    url: 'https://veriseal.in/tools/pvc-id-card-maker',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/pvc-id-card-maker',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -51,7 +51,7 @@ const FAQS = [
   {
     question: 'Are my identity documents stored or uploaded anywhere?',
     answer:
-      'No. VeriSeal guarantees 100% in-memory RAM processing. Your Aadhaar, PAN, or voter IDs are processed strictly in volatile server RAM and purged immediately upon export.',
+      'No. Kagazo guarantees 100% in-memory RAM processing. Your Aadhaar, PAN, or voter IDs are processed strictly in volatile server RAM and purged immediately upon export.',
   },
 ];
 
@@ -61,8 +61,8 @@ export default function PvcCardStudioPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal PVC Smart ID Card Tray Print Studio',
-        url: 'https://veriseal.in/tools/pvc-id-card-maker',
+        name: 'Kagazo PVC Smart ID Card Tray Print Studio',
+        url: 'https://Kagazo.in/tools/pvc-id-card-maker',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

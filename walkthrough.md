@@ -321,3 +321,39 @@ Subject: CN=MURUGAN P,2.5.4.5=0b21fdee2c6c81fee3cb539e8251b282cb4ceb48f3fc500ffb
 - **Global Footer**: All 7 routes cross-linked with priority stars in [`components/layout/Footer.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/layout/Footer.tsx).
 - **Tools Catalog**: Expanded to 45 tools in [`lib/tools-data.ts`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/lib/tools-data.ts).
 
+---
+
+## 5. Complete Sovereign Platform Rebranding: VeriSeal → Kagazo (kagazo.in)
+
+A nationwide rebrand from **VeriSeal** to **Kagazo** (`kagazo.in`) was executed across the entire full-stack platform:
+
+### Brand & Domain Matrix
+| Component / Layer | Previous Identity | New Sovereign Identity |
+| :--- | :--- | :--- |
+| **Brand Name** | VeriSeal | **Kagazo** (Tamil: காகாசோ / சரிபார்) |
+| **Primary Domain** | `veriseal.in` / `veri-seal.vercel.app` | **`kagazo.in`** |
+| **Backend API Host** | `veri-seal.onrender.com` | **`kagazo-api.onrender.com`** |
+| **Service Worker Cache** | `veriseal-v2` | **`kagazo-v1`** |
+| **Amazon Associates Tag** | `veriseal-21` | **`kagazo-21`** |
+| **Admin & Support Email**| `admin@veriseal.in`, `support@veriseal.in` | **`admin@kagazo.in`**, **`support@kagazo.in`** |
+| **UPI ID Fallbacks** | `veriseal.pay@icici`, `veriseal@upi` | **`kagazo.pay@icici`**, **`kagazo@upi`** |
+| **Client Storage Keys** | `veriseal_selected_language`, `veriseal_home_twin_v1`, etc. | **`kagazo_selected_language`**, **`kagazo_home_twin_v1`** (with seamless backwards compatibility) |
+| **Export Filenames** | `veriseal_*.zip`, `veriseal_resume.pdf`, etc. | **`kagazo_*.zip`**, **`kagazo_resume.pdf`** |
+| **Python Backend Loggers**| `veriseal.*` | **`kagazo.*`** |
+| **User-Agent** | `VeriSeal/1.0` | **`Kagazo/1.0`** |
+
+### Verified Subsystems
+1. **Next.js Frontend & Metadata**:
+   - `app/layout.tsx`: OpenGraph, Twitter meta (`@kagazo_in`), Schema.org structured data, and organization identifiers.
+   - `app/manifest.ts`: PWA metadata updated to **Kagazo**.
+   - `app/robots.ts` & `app/sitemap.ts`: All canonical URLs point to `https://kagazo.in`.
+   - All 45+ tool pages, calculators, home cost engines, and Business OS tools updated.
+2. **Python Verification Backend**:
+   - `verifier.py`, `app.py`, and all 18 auxiliary engine scripts updated.
+   - All 13 cryptographic unit and integration tests passed (`python -m unittest discover -s tests`).
+3. **Database Seed Migrations**:
+   - `supabase/migrations/` schemas updated to default to `Kagazo` and `support@kagazo.in`.
+4. **TypeScript & Static Build**:
+   - `npx tsc --noEmit` &rarr; **0 errors**.
+
+

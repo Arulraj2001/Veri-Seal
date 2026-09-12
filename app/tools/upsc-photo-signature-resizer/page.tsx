@@ -19,18 +19,18 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'UPSC Photo & Signature Resizer Online Free | 20-300KB 350x350px | VeriSeal',
+  title: 'UPSC Photo & Signature Resizer Online Free | 20-300KB 350x350px | Kagazo',
   description:
     'Resize photo (20-300KB with Name & Date, 3/4th face) and signature (20-300KB, Min 350x350px) for UPSC Civil Services, NDA, CDS, and OTR. Strictly compliant with UPSC 10-day photo rule.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/upsc-photo-signature-resizer',
+    canonical: 'https://Kagazo.in/tools/upsc-photo-signature-resizer',
   },
   openGraph: {
-    title: 'UPSC Photo & Signature Resizer Online Free | VeriSeal',
+    title: 'UPSC Photo & Signature Resizer Online Free | Kagazo',
     description:
       'Resize photo and signature for UPSC OTR. Strict 20-300KB and 350x350px guarantee. In-memory processing, zero watermark.',
-    url: 'https://veriseal.in/tools/upsc-photo-signature-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/upsc-photo-signature-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -70,12 +70,12 @@ const UPSC_FAQS = [
   {
     question: 'Why does UPSC OTR show "Resolution less than 350x350" error?',
     answer:
-      'Standard image compressors reduce pixel dimensions to shrink the file size, dropping it below 350x350 pixels. VeriSeal enforces a safe 500x500 pixel canvas while keeping the file comfortably between 40 KB and 150 KB, completely preventing resolution errors.',
+      'Standard image compressors reduce pixel dimensions to shrink the file size, dropping it below 350x350 pixels. Kagazo enforces a safe 500x500 pixel canvas while keeping the file comfortably between 40 KB and 150 KB, completely preventing resolution errors.',
   },
   {
     question: 'Is this UPSC tool 100% free with no watermark?',
     answer:
-      'Yes, 100% free forever. VeriSeal does not add any watermarks, does not require sign-up, and processes your photo and signature completely in RAM memory without storing them on server disks.',
+      'Yes, 100% free forever. Kagazo does not add any watermarks, does not require sign-up, and processes your photo and signature completely in RAM memory without storing them on server disks.',
   },
 ];
 
@@ -88,7 +88,7 @@ export default function UpscPhotoSignatureResizerPage() {
         name: 'UPSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/upsc-photo-signature-resizer',
+        url: 'https://Kagazo.in/tools/upsc-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -264,7 +264,7 @@ export default function UpscPhotoSignatureResizerPage() {
             {/* In-Content Native AdSlot */}
             <AdSlot slot="in_content" />
 
-            {/* Why VeriSeal is Better for UPSC Aspirants */}
+            {/* Why Kagazo is Better for UPSC Aspirants */}
             <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
                 <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
@@ -272,7 +272,7 @@ export default function UpscPhotoSignatureResizerPage() {
                 </div>
                 <h3 className="font-extrabold text-text-main text-base sm:text-lg">350x350 Resolution Guard</h3>
                 <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Never get rejected with &quot;Pixel dimensions less than 350x350&quot;. VeriSeal enforces the exact square geometry required by UPSC OTR.
+                  Never get rejected with &quot;Pixel dimensions less than 350x350&quot;. Kagazo enforces the exact square geometry required by UPSC OTR.
                 </p>
               </div>
 

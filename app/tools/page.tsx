@@ -17,42 +17,42 @@ import ToolsDirectory from '@/components/tools/ToolsDirectory';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'All Free Exam & Document Tools Directory | VeriSeal India',
+  title: 'All Free Exam & Document Tools Directory | Kagazo India',
   description:
     'Complete directory of 100% free Indian examination tools. Signature extractor, thumb impression sharpener, DL merger, PDF compressors (100KB, 200KB, 300KB), photo & signature resizers for UPSC, SSC, NEET, RRB, GATE, and photo sheets. Zero watermarks, in-memory RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools',
+    canonical: 'https://Kagazo.in/tools',
   },
   openGraph: {
-    title: 'Free Indian Exam & Document Tools Directory | VeriSeal',
+    title: 'Free Indian Exam & Document Tools Directory | Kagazo',
     description:
       'Explore 36+ free tools for government exams, marksheet merging, photo resizing, and e-Aadhaar decryption. Fast, free, and completely client-safe.',
-    url: 'https://veriseal.in/tools',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
 
 const FAQS = [
   {
-    question: 'Are all tools on VeriSeal completely free to use?',
+    question: 'Are all tools on Kagazo completely free to use?',
     answer:
-      'Yes, 100% free forever. VeriSeal was built as a dedicated public utility platform for competitive examination aspirants and cyber cafe operators. There are no hidden paywalls, no watermark additions, and no mandatory account sign-up requirements for document processing.',
+      'Yes, 100% free forever. Kagazo was built as a dedicated public utility platform for competitive examination aspirants and cyber cafe operators. There are no hidden paywalls, no watermark additions, and no mandatory account sign-up requirements for document processing.',
   },
   {
-    question: 'How does VeriSeal protect candidate privacy and sensitive marksheet data?',
+    question: 'How does Kagazo protect candidate privacy and sensitive marksheet data?',
     answer:
-      'VeriSeal processes all files strictly inside volatile computer RAM memory. Your degree marksheets, photos, signatures, roll numbers, and Aadhaar documents are never saved to disk, cloud storage, or databases. Everything is automatically purged from memory immediately upon completion.',
+      'Kagazo processes all files strictly inside volatile computer RAM memory. Your degree marksheets, photos, signatures, roll numbers, and Aadhaar documents are never saved to disk, cloud storage, or databases. Everything is automatically purged from memory immediately upon completion.',
   },
   {
-    question: 'Which examination portals are supported by VeriSeal resizers and compressors?',
+    question: 'Which examination portals are supported by Kagazo resizers and compressors?',
     answer:
       'We support all major central and state recruitment portals including Union Public Service Commission (UPSC Civil Services, NDA, CDS), Staff Selection Commission (SSC CGL, CHSL, MTS, GD), National Testing Agency (NTA NEET UG, JEE), Institute of Banking Personnel Selection (IBPS PO, Clerk), Railway Recruitment Boards (RRB NTPC, Group D), IIT GOAPS (GATE, JAM), and State PSCs like TNPSC, UPPSC, BPSC, KPSC, and APPSC.',
   },
   {
-    question: 'Can cyber cafes and computer centres use VeriSeal commercially for student applications?',
+    question: 'Can cyber cafes and computer centres use Kagazo commercially for student applications?',
     answer:
-      'Yes! Thousands of cyber cafes, CSC centers, and DTP operators across India use VeriSeal daily to batch compress student marksheets, format 4x6" passport photo sheets, and verify digital signatures for clients.',
+      'Yes! Thousands of cyber cafes, CSC centers, and DTP operators across India use Kagazo daily to batch compress student marksheets, format 4x6" passport photo sheets, and verify digital signatures for clients.',
   },
 ];
 
@@ -69,30 +69,30 @@ export default function ToolsDirectoryPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
-            name: 'VeriSeal Free Indian Exam & Document Tools Directory',
-            url: 'https://veriseal.in/tools',
+            name: 'Kagazo Free Indian Exam & Document Tools Directory',
+            url: 'https://Kagazo.in/tools',
             description:
               'Complete suite of 100% free tools for competitive exam applicants, student document verification, and cyber cafe operators.',
             hasPart: [
               {
                 '@type': 'WebApplication',
                 name: 'Compress PDF to 200KB',
-                url: 'https://veriseal.in/tools/compress-pdf-to-200kb',
+                url: 'https://Kagazo.in/tools/compress-pdf-to-200kb',
               },
               {
                 '@type': 'WebApplication',
                 name: 'UPSC Photo & Signature Resizer',
-                url: 'https://veriseal.in/tools/upsc-photo-signature-resizer',
+                url: 'https://Kagazo.in/tools/upsc-photo-signature-resizer',
               },
               {
                 '@type': 'WebApplication',
                 name: 'Multi-Marksheet to Single PDF Budget Optimizer',
-                url: 'https://veriseal.in/tools/merge-marksheets-pdf',
+                url: 'https://Kagazo.in/tools/merge-marksheets-pdf',
               },
               {
                 '@type': 'WebApplication',
                 name: 'Cyber Cafe Passport Photo Sheet Maker',
-                url: 'https://veriseal.in/tools/passport-photo-sheet-maker',
+                url: 'https://Kagazo.in/tools/passport-photo-sheet-maker',
               },
             ],
           }),

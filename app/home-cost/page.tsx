@@ -23,14 +23,14 @@ export const metadata: Metadata = {
   description:
     'Calculate and reduce your Indian household operating expenses. Live home electricity bill calculator with state tariff slabs, Inverter AC 3★ vs 5★ simulator, PM Surya Ghar solar rooftop sizing, BLDC fan ROI, and AI savings roadmap.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost',
+    canonical: 'https://Kagazo.in/home-cost',
   },
   openGraph: {
-    title: 'Home Cost & Savings Intelligence Platform | VeriSeal India',
+    title: 'Home Cost & Savings Intelligence Platform | Kagazo India',
     description:
       'Answer the ultimate homeowner question: What is costing me money at home, and what should I change to save money?',
-    url: 'https://veriseal.in/home-cost',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -103,8 +103,8 @@ export default function HomeCostLandingPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Home Cost & Savings Intelligence Platform',
-        url: 'https://veriseal.in/home-cost',
+        name: 'Kagazo Home Cost & Savings Intelligence Platform',
+        url: 'https://Kagazo.in/home-cost',
         applicationCategory: 'FinanceApplication',
         operatingSystem: 'All',
         offers: {

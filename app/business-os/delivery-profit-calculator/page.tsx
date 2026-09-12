@@ -3,7 +3,7 @@ import DeliveryProfitEngine from '@/components/business-os/DeliveryProfitEngine'
 import { Truck, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'E-Commerce Courier Delivery & RTO Profit Sizer | VeriSeal',
+  title: 'E-Commerce Courier Delivery & RTO Profit Sizer | Kagazo',
   description:
     'Free COD return and courier profit calculator for Indian D2C and Instagram sellers. Calculate the hidden RTO tax per delivered order and protect e-commerce margins.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'E-Commerce Courier Delivery & RTO Profit Sizer',
     description:
       'Cash on Delivery (COD) returns can wipe out small brand margins. Calculate your true net profit after absorbing courier RTO losses.',
-    url: 'https://veriseal.org/business-os/delivery-profit-calculator',
+    url: 'https://Kagazo.org/business-os/delivery-profit-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function DeliveryProfitPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'E-Commerce Courier Delivery & RTO Profit Sizer',
-    url: 'https://veriseal.org/business-os/delivery-profit-calculator',
+    url: 'https://Kagazo.org/business-os/delivery-profit-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

@@ -26,7 +26,7 @@ import {
 import BusinessHealthScoreCard from '@/components/business-os/BusinessHealthScoreCard';
 
 export const metadata: Metadata = {
-  title: 'Small Business Cash-Flow & Profitability OS for Indian SMBs | VeriSeal',
+  title: 'Small Business Cash-Flow & Profitability OS for Indian SMBs | Kagazo',
   description:
     'Free, zero-login cash-flow and profit intelligence for Indian small businesses, retail shops, Instagram/WhatsApp sellers, home bakeries, and freelancers. Answer: Am I actually making money?',
   keywords: [
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     description:
       'Answer the #1 small business question: Am I actually making money, and where is my money going? 100% Free, zero-login tools with authentic Indian marketplace slabs.',
     type: 'website',
-    url: 'https://veriseal.org/business-os',
+    url: 'https://Kagazo.org/business-os',
   },
 };
 
@@ -227,7 +227,7 @@ const OPERATIONAL_TOOLS = [
 const FAQS = [
   {
     q: 'Why do Indian small businesses confuse turnover with real profit?',
-    a: 'Most small business owners look at their UPI collections or bank credits and assume high sales equal high profits. In reality, product purchase costs (COGS), marketplace commission fees (12–18%), packaging, 500g shipping freight, shop rent, staff wages, and electricity quietly eat up 80%–90% of revenue. VeriSeal breaks down every single rupee so you know your true take-home pay.',
+    a: 'Most small business owners look at their UPI collections or bank credits and assume high sales equal high profits. In reality, product purchase costs (COGS), marketplace commission fees (12–18%), packaging, 500g shipping freight, shop rent, staff wages, and electricity quietly eat up 80%–90% of revenue. Kagazo breaks down every single rupee so you know your true take-home pay.',
   },
   {
     q: 'How does the 0–100 Business Health Score work?',
@@ -235,7 +235,7 @@ const FAQS = [
   },
   {
     q: 'Why is there no login or phone number required?',
-    a: 'Unlike Khatabook or Vyapar which lock you behind mobile OTP walls and app downloads, VeriSeal is 100% web-first and runs all financial formulas client-side inside your browser. Your sensitive daily sales numbers never touch our servers.',
+    a: 'Unlike Khatabook or Vyapar which lock you behind mobile OTP walls and app downloads, Kagazo is 100% web-first and runs all financial formulas client-side inside your browser. Your sensitive daily sales numbers never touch our servers.',
   },
   {
     q: 'How do the WhatsApp tools work?',
@@ -248,7 +248,7 @@ export default function BusinessOsHubPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Small Business Cash-Flow & Profitability OS',
-    url: 'https://veriseal.org/business-os',
+    url: 'https://Kagazo.org/business-os',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All modern web browsers',
     offers: {

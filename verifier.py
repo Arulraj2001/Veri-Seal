@@ -1,5 +1,5 @@
 """
-Production PDF verification engine for VeriSeal.
+Production PDF verification engine for Kagazo.
 
 Architectural Guarantees:
 1. Complete separation of cryptographic verification (pyHanko) from PDF clean output generation (pikepdf).
@@ -51,7 +51,7 @@ from cca_certs import (
     load_cca_trust_store,
 )
 
-logger = logging.getLogger("veriseal.verifier")
+logger = logging.getLogger("kagazo.verifier")
 
 NO_SIGNATURE_MESSAGE = (
     "No digital signature found. This PDF may have been re-saved, printed-to-PDF, "
@@ -562,7 +562,7 @@ def fetch_crl(crl_url: str, timeout: int = 8) -> Optional[bytes]:
     try:
         req = urllib.request.Request(
             crl_url,
-            headers={"User-Agent": "VeriSeal/1.0"},
+            headers={"User-Agent": "Kagazo/1.0"},
         )
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             if resp.status == 200:

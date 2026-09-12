@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ VeriSeal (சரிபார்)
+# 🛡️ Kagazo (சரிபார்)
 ### Official Indian Government PDF Digital Signature Verification & LTV Stamping Platform
 
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
@@ -14,7 +14,7 @@
 
 **Instant verification of digital signatures on Indian Government e-certificates with permanent LTV green-tick embedding. 100% In-Memory & Privacy-Guaranteed.**
 
-[Live Demo](https://veriseal.in) • [API Documentation](#-api-endpoints) • [Quickstart](#-quick-start) • [Deployment](#-production-deployment)
+[Live Demo](https://kagazo.in) • [API Documentation](#-api-endpoints) • [Quickstart](#-quick-start) • [Deployment](#-production-deployment)
 
 </div>
 
@@ -24,7 +24,7 @@
 
 In India, millions of citizens receive digitally signed government PDFs (e-Aadhaar, Community certificates, Income certificates, e-PAN cards, DigiLocker records) displaying an alarming **yellow question mark (`?`)** instead of a verified green tick (`✓`).
 
-**VeriSeal** resolves this nationwide challenge:
+**Kagazo** resolves this nationwide challenge:
 1. Cryptographically validates digital signatures against the **official Controller of Certifying Authorities (CCA India) PKI Root Trust Stores**.
 2. Embeds standard Adobe Acrobat **LTV (Long-Term Validation) DSS structures** so the document retains a permanent green checkmark in Adobe Acrobat Reader and all standard PDF viewers.
 3. Operates on a **100% Zero-Storage Privacy Architecture** — documents and passwords are processed entirely in ephemeral RAM (`io.BytesIO`) and never written to disk.
@@ -93,8 +93,8 @@ flowchart TD
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Arulraj2001/Veri-Seal.git
-cd Veri-Seal
+git clone https://github.com/Arulraj2001/kagazo.git
+cd kagazo
 ```
 
 ### 2. Configure Environment Variables
@@ -110,7 +110,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 AUTH_SECRET=your_32_character_auth_secret
-ADMIN_EMAIL=admin@veriseal.in
+ADMIN_EMAIL=admin@kagazo.in
 ```
 
 ### 3. Start Python Verification Backend
@@ -197,7 +197,7 @@ GET /supported-docs
 4. Add a free 10-minute HTTP ping on [UptimeRobot](https://uptimerobot.com) to `https://your-backend.onrender.com/health` to keep the free instance active 24/7 without cold-starts.
 
 ### Frontend (Vercel)
-1. Import `Arulraj2001/Veri-Seal` into [vercel.com](https://vercel.com).
+1. Import repository into [vercel.com](https://vercel.com).
 2. Set Environment Variables (`NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `AUTH_SECRET`, `ADMIN_EMAIL`).
 3. Click **Deploy**.
 

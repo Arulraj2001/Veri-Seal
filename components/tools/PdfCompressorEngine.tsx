@@ -295,7 +295,7 @@ export function PdfCompressorEngine({ config }: PdfCompressorEngineProps) {
 
       const link = document.createElement('a');
       link.href = url;
-      link.download = `veriseal_compressed_certificates_${targetKb}KB.zip`;
+      link.download = `kagazo_compressed_certificates_${targetKb}KB.zip`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

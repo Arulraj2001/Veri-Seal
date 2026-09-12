@@ -1,5 +1,5 @@
 """
-VeriSeal FastAPI Backend Verification Engine.
+Kagazo FastAPI Backend Verification Engine.
 Designed for Hugging Face Spaces (Docker) and production API gateways.
 Features IP rate limiting (slowapi), CORS, 25MB limits, in-memory validation, and standardized error schemas.
 """
@@ -45,7 +45,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
-logger = logging.getLogger("veriseal.api")
+logger = logging.getLogger("kagazo.api")
 
 # Max file size: 25MB
 MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
@@ -54,7 +54,7 @@ MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024
 limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI(
-    title="VeriSeal Engine",
+    title="Kagazo Engine",
     description="Production-grade Indian Government PDF Digital Signature Verification Engine",
     version="1.0.0",
     docs_url="/docs",
@@ -79,12 +79,12 @@ async def custom_rate_limit_exceeded_handler(request: Request, exc: RateLimitExc
     )
 
 
-# Configure CORS for production veriseal.in and local development (supports any localhost/127.0.0.1 port)
+# Configure CORS for production kagazo.in and local development (supports any localhost/127.0.0.1 port)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://veriseal.in",
-        "https://www.veriseal.in",
+        "https://kagazo.in",
+        "https://www.kagazo.in",
         "http://localhost:3000",
         "http://localhost:3001",
         "http://localhost:3002",
@@ -92,7 +92,7 @@ app.add_middleware(
         "http://127.0.0.1:3001",
         "http://127.0.0.1:3002",
     ],
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$|^https://.*\.vercel\.app$|^https://.*\.onrender\.com$|^https://.*\.veriseal\.in$",
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$|^https://.*\.vercel\.app$|^https://.*\.onrender\.com$|^https://.*\.kagazo\.in$",
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
@@ -102,7 +102,7 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup_event():
     """Initializes the CCA India root trust store on server boot."""
-    logger.info("Initializing VeriSeal CCA India PKI Trust Store...")
+    logger.info("Initializing Kagazo CCA India PKI Trust Store...")
     try:
         cca_manager.initialize()
         logger.info("CCA India PKI Trust Store ready.")
@@ -113,7 +113,7 @@ async def startup_event():
 @app.api_route("/", methods=["GET", "HEAD"], summary="Service Root / Health Check")
 async def root():
     """Returns the operational status and engine info for root health checks (e.g. Render / Cloud Run probes)."""
-    return {"status": "ok", "service": "VeriSeal Engine", "version": "1.0.0"}
+    return {"status": "ok", "service": "Kagazo Engine", "version": "1.0.0"}
 
 
 @app.api_route("/health", methods=["GET", "HEAD"], summary="Service Health Check")

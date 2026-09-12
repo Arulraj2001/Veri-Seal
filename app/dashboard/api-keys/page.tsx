@@ -323,7 +323,7 @@ export default function ApiKeysPage() {
 
         <div className="bg-text-main text-white p-4 rounded-2xl font-mono text-xs overflow-x-auto">
           <code>
-            curl -X POST &quot;https://veriseal.in/verify&quot; \<br />
+            curl -X POST &quot;https://Kagazo.in/verify&quot; \<br />
             &nbsp;&nbsp;-H &quot;Authorization: Bearer vs_live_your_api_key_here&quot; \<br />
             &nbsp;&nbsp;-F &quot;file=@/path/to/certificate.pdf&quot;
           </code>

@@ -32,7 +32,7 @@ export default async function DashboardLayout({
 
   const user = {
     name: session.user.name || 'Citizen User',
-    email: session.user.email || 'user@veriseal.in',
+    email: session.user.email || 'user@Kagazo.in',
     role: (session.user as { role?: string }).role || 'user',
     plan: (session.user as { plan?: string }).plan || 'free',
   };
@@ -53,7 +53,7 @@ export default async function DashboardLayout({
               <span className="h-8 w-8 rounded-lg bg-primary-light text-primary flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5" />
               </span>
-              <span>VeriSeal</span>
+              <span>Kagazo</span>
             </Link>
             <span className="hidden sm:inline-block text-xs font-semibold text-text-main/50">
               Citizen Digital Signature Portal

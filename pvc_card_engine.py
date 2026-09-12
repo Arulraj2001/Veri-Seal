@@ -1,5 +1,5 @@
 """
-VeriSeal PVC Smart Card Tray Print Studio Engine.
+Kagazo PVC Smart Card Tray Print Studio Engine.
 Aligns Front and Back of ID cards (e-Aadhaar, Voter ID, PAN, Ayushman Bharat)
 onto exact Epson L805 / Canon inkjet PVC dual-tray templates or A4 photo sheets at 300 DPI.
 """
@@ -14,7 +14,7 @@ except ImportError:
     import fitz
 from PIL import Image, ImageOps, ImageDraw
 
-logger = logging.getLogger("veriseal.pvc_card_engine")
+logger = logging.getLogger("kagazo.pvc_card_engine")
 
 # ISO/IEC 7810 ID-1 (CR-80) at 300 DPI
 # 85.60 mm * (300 / 25.4) = 1011 px

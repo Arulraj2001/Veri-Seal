@@ -29,7 +29,7 @@ export const mockBlogPosts: BlogPost[] = [
     featured_image_url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-01T10:00:00Z',
-    author_name: 'VeriSeal PKI Security Desk',
+    author_name: 'Kagazo PKI Security Desk',
     created_at: '2026-09-01T10:00:00Z',
     updated_at: '2026-09-11T10:00:00Z',
     content: `# How to Fix the Yellow Question Mark on e-Aadhaar PDFs Permanently
@@ -40,7 +40,7 @@ When you download your electronic Aadhaar letter (**e-Aadhaar**) from the offici
 
 For millions of citizens across India submitting documents for **passport applications, bank account KYC, visa processing, property registration, or university admissions**, this yellow icon triggers panic. Frontline verification clerks, HR executives, and bank branch managers frequently reject the file, insisting: *"Bring a copy with the valid green tick mark."*
 
-In this comprehensive guide, we unpack why this cryptographic error occurs, explain why traditional desktop workarounds fail on smartphones, and demonstrate how you can achieve a permanent, tamper-evident green checkmark using VeriSeal.
+In this comprehensive guide, we unpack why this cryptographic error occurs, explain why traditional desktop workarounds fail on smartphones, and demonstrate how you can achieve a permanent, tamper-evident green checkmark using Kagazo.
 
 ---
 
@@ -48,7 +48,7 @@ In this comprehensive guide, we unpack why this cryptographic error occurs, expl
 
 - **The Problem:** The yellow question mark does **not** indicate a forged or invalid Aadhaar. It simply means your local PDF reader does not possess the **Root Certifying Authority of India (RCAI)** root certificate in its internal trust repository.
 - **Why It Happens:** Adobe maintains its own proprietary Adobe Approved Trust List (AATL). Sovereign Indian government certifying authorities (licensed under the Information Technology Act 2000) are not bundled into standard Western operating system trust stores by default.
-- **The Solution:** VeriSeal cryptographically audits the SHA-256 byte range against the CCA India root hierarchy and embeds a **Document Security Store (/DSS)** dictionary into the PDF. This establishes **Long-Term Validation (LTV)**, rendering the green tick permanent across any modern device without requiring manual software configuration.
+- **The Solution:** Kagazo cryptographically audits the SHA-256 byte range against the CCA India root hierarchy and embeds a **Document Security Store (/DSS)** dictionary into the PDF. This establishes **Long-Term Validation (LTV)**, rendering the green tick permanent across any modern device without requiring manual software configuration.
 
 ---
 
@@ -93,9 +93,9 @@ While this turns the icon green on **that specific computer**, it creates three 
 
 ---
 
-## Step-by-Step: Verifying Your e-Aadhaar Digital Signature with VeriSeal
+## Step-by-Step: Verifying Your e-Aadhaar Digital Signature with Kagazo
 
-VeriSeal provides a 100% private, browser-based verification engine powered by **pyHanko** and national PKI root anchors. Here is the exact workflow:
+Kagazo provides a 100% private, browser-based verification engine powered by **pyHanko** and national PKI root anchors. Here is the exact workflow:
 
 ### Step 1: Download Your Fresh e-Aadhaar PDF
 Ensure you download your official electronic Aadhaar directly from the official portal:
@@ -115,26 +115,26 @@ Every e-Aadhaar document issued by UIDAI is protected by an industry-standard 12
 | **RIA** (3-letter name) | 2002 | \`RIA2002\` |
 | **MD IMRAN** | 1987 | \`MDIM1987\` |
 
-### Step 3: Run In-Memory Verification on VeriSeal
-1. Navigate to **[VeriSeal Home](/#upload-zone)**.
+### Step 3: Run In-Memory Verification on Kagazo
+1. Navigate to **[Kagazo Home](/#upload-zone)**.
 2. Drag and drop your downloaded e-Aadhaar PDF into the secure upload area.
 3. If your document is password-protected, enter your 8-character password. Your password is processed strictly in temporary volatile memory and is never logged or transmitted to third parties.
 4. Click **Verify Digital Signature**.
-5. Within 2 seconds, VeriSeal's backend cryptographic engine executes:
+5. Within 2 seconds, Kagazo's backend cryptographic engine executes:
    - **ByteRange Integrity Audit:** Calculates the exact SHA-256 hash of the signed byte segments to guarantee zero post-signing tampering.
    - **RCAI Trust Chain Resolution:** Maps the signature back to the CCA India Root Certifying Authority.
    - **Revocation Check:** Inspects Certificate Revocation Lists (CRLs) and Online Certificate Status Protocol (OCSP) responders.
 
 ### Step 4: Download Your LTV-Stamped PDF with Permanent Green Tick
-Once verification succeeds, click **Download Verified PDF**. VeriSeal injects standard **Long-Term Validation (/DSS)** dictionaries directly into the PDF. When opened in any PDF viewer on any laptop, tablet, or smartphone worldwide, it immediately displays the universally recognized:
+Once verification succeeds, click **Download Verified PDF**. Kagazo injects standard **Long-Term Validation (/DSS)** dictionaries directly into the PDF. When opened in any PDF viewer on any laptop, tablet, or smartphone worldwide, it immediately displays the universally recognized:
 
 > **"Signature is VALID, certified by Unique Identification Authority of India (UIDAI)."**
 
 ---
 
-## Comparison: Manual Adobe Acrobat Method vs. VeriSeal
+## Comparison: Manual Adobe Acrobat Method vs. Kagazo
 
-| Feature / Capability | Adobe Acrobat Manual Import | VeriSeal Online Engine |
+| Feature / Capability | Adobe Acrobat Manual Import | Kagazo Online Engine |
 | :--- | :--- | :--- |
 | **Setup Required** | Requires Adobe Reader DC desktop software | Zero installation; runs directly in any browser |
 | **Mobile Compatibility** | ❌ Fails on iOS & Android Acrobat apps | ✅ Fully compatible with all smartphones & tablets |
@@ -149,14 +149,14 @@ Once verification succeeds, click **Download Verified PDF**. VeriSeal injects st
 ## Troubleshooting Common e-Aadhaar Signature Errors
 
 ### Error 1: "At least one signature has problems"
-This message arises when the signature contains an unrecognized signing time format or when the certificate's validity interval appears ambiguous to the local PDF parser. VeriSeal cleanses the timestamp metadata and embeds an RFC 3161 compliant time token.
+This message arises when the signature contains an unrecognized signing time format or when the certificate's validity interval appears ambiguous to the local PDF parser. Kagazo cleanses the timestamp metadata and embeds an RFC 3161 compliant time token.
 
 ### Error 2: "Document has been altered or corrupted since it was signed"
 > [!CAUTION]
 > If your PDF viewer states that the document has been altered or modified, do **not** use the file. This occurs when a user edits text with an online PDF editor, compresses the PDF using third-party tools, or converts it to an image and back to PDF. Any modification invalidates the cryptographic hash. Always re-download a pristine copy from UIDAI.
 
 ### Error 3: "Signer's identity is invalid"
-This occurs if the intermediate certificate authority certificate has expired. Because VeriSeal applies Long-Term Validation (LTV), it validates the certificate against the historical timestamp valid when UIDAI originally signed the document.
+This occurs if the intermediate certificate authority certificate has expired. Because Kagazo applies Long-Term Validation (LTV), it validates the certificate against the historical timestamp valid when UIDAI originally signed the document.
 
 ---
 
@@ -171,13 +171,13 @@ Digital signatures affixed to e-Aadhaar documents are legally binding across Ind
 
 ## Frequently Asked Questions (FAQ)
 
-### Q1: Is it safe to upload my Aadhaar card to VeriSeal?
-Yes, absolutely. VeriSeal is built on a zero-retention security architecture. Files are processed entirely in ephemeral system memory during the verification session and are instantly destroyed once the response is returned. Your identity data is never indexed, stored on disk, or shared.
+### Q1: Is it safe to upload my Aadhaar card to Kagazo?
+Yes, absolutely. Kagazo is built on a zero-retention security architecture. Files are processed entirely in ephemeral system memory during the verification session and are instantly destroyed once the response is returned. Your identity data is never indexed, stored on disk, or shared.
 
 ### Q2: Why does the printout still show a question mark?
-If you print a PDF from a computer where the signature status is unresolved, the physical printer simply prints the yellow question mark graphic. By verifying your PDF on VeriSeal first and downloading the LTV-enabled version, the document displays the official green tick mark and prints cleanly.
+If you print a PDF from a computer where the signature status is unresolved, the physical printer simply prints the yellow question mark graphic. By verifying your PDF on Kagazo first and downloading the LTV-enabled version, the document displays the official green tick mark and prints cleanly.
 
-### Q3: Does VeriSeal work for masked Aadhaar cards?
+### Q3: Does Kagazo work for masked Aadhaar cards?
 Yes. Both standard e-Aadhaar and Masked Aadhaar (where only the last 4 digits are visible) utilize identical UIDAI digital signature certificates and are fully supported.
 
 ---
@@ -186,7 +186,7 @@ Yes. Both standard e-Aadhaar and Masked Aadhaar (where only the last 4 digits ar
 
 Do not let an unresolved yellow question mark delay your admissions, passport appointments, or bank account approvals. 
 
-**[Click here to verify your e-Aadhaar digital signature on VeriSeal now](/#upload-zone)** — fast, free, and secure.`,
+**[Click here to verify your e-Aadhaar digital signature on Kagazo now](/#upload-zone)** — fast, free, and secure.`,
   },
   {
     id: 'post-2',
@@ -199,7 +199,7 @@ Do not let an unresolved yellow question mark delay your admissions, passport ap
     featured_image_url: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-04T09:00:00Z',
-    author_name: 'VeriSeal Tamil Nadu Desk',
+    author_name: 'Kagazo Tamil Nadu Desk',
     created_at: '2026-09-04T09:00:00Z',
     updated_at: '2026-09-11T10:00:00Z',
     content: `# How to Verify Tamil Nadu Community, Nativity & Income Certificates (TNeGA e-Sevai Guide for TNEA & NEET)
@@ -259,28 +259,28 @@ The digital signature captures:
 
 ---
 
-## Step-by-Step: Verifying Tamil Nadu Revenue Certificates on VeriSeal
+## Step-by-Step: Verifying Tamil Nadu Revenue Certificates on Kagazo
 
 ### Step 1: Download Original PDF from Official Source
 Obtain your certificate directly from the **Tamil Nadu Citizen Portal** (\`tnesevai.tn.gov.in\` or \`edistricts.tn.gov.in\`) or request the clean original PDF from your local e-Sevai operator. Avoid scanning a printed paper copy back into PDF; you must use the original digital file containing the cryptographic layer.
 
-### Step 2: Upload to VeriSeal Verification Engine
-1. Go to **[VeriSeal.in](/#upload-zone)**.
+### Step 2: Upload to Kagazo Verification Engine
+1. Go to **[Kagazo.in](/#upload-zone)**.
 2. Select your Tamil Nadu certificate PDF and drop it into the upload box.
 3. Most Tamil Nadu revenue certificates are **not password protected**; click **Verify Digital Signature**.
 
 ### Step 3: Instant Cryptographic Inspection
-In under 2 seconds, VeriSeal connects to the national root anchors:
+In under 2 seconds, Kagazo connects to the national root anchors:
 - Validates the public key against **NIC Sub-CA** and **RCAI Root 2014/2022**.
 - Verifies that the Zonal Deputy Tahsildar's certificate was unrevoked at the exact time of signing.
 - Audits the PDF byte segments to ensure zero data corruption.
 
 ### Step 4: Download the LTV-Enabled PDF
-Click **Download Verified PDF**. VeriSeal embeds a cryptographically sealed **Document Security Store (/DSS)** into the document. Now, when uploaded to TNEA, NEET, or TNPSC candidate portals, the verification officers' systems instantly recognize the valid green tick mark.
+Click **Download Verified PDF**. Kagazo embeds a cryptographically sealed **Document Security Store (/DSS)** into the document. Now, when uploaded to TNEA, NEET, or TNPSC candidate portals, the verification officers' systems instantly recognize the valid green tick mark.
 
 ---
 
-## Tamil Nadu Revenue Certificates Supported by VeriSeal
+## Tamil Nadu Revenue Certificates Supported by Kagazo
 
 | Certificate Type | G.O. / Department Reference | Issuing Authority | Common Signing Certificate |
 | :--- | :--- | :--- | :--- |
@@ -311,10 +311,10 @@ Every Tamil Nadu e-District certificate features a 2D matrix QR code in the lowe
 Yes. As per Tamil Nadu Government Order **G.O. (Ms) No. 28**, revenue certificates issued digitally through e-Sevai bearing an electronic signature and QR code are valid public documents and do not require manual physical ink signatures or office rubber stamps.
 
 ### Q2: What if the Tahsildar's certificate has expired since my certificate was issued?
-Certificates of revenue officials are often renewed annually. If you obtained your Community Certificate in 2022 and the officer's digital token expired in 2024, the certificate remains 100% legally valid because it was signed when the token was active. VeriSeal's LTV engine preserves the historical validity state.
+Certificates of revenue officials are often renewed annually. If you obtained your Community Certificate in 2022 and the officer's digital token expired in 2024, the certificate remains 100% legally valid because it was signed when the token was active. Kagazo's LTV engine preserves the historical validity state.
 
 ### Q3: My certificate shows "Signature Not Verified" on my Android smartphone. Why?
-Mobile operating systems (Android, iOS) lack desktop certificate trust management utilities. VeriSeal fixes this by baking the validation data directly into the file, enabling mobile viewers to display the green checkmark without local certificate installation.
+Mobile operating systems (Android, iOS) lack desktop certificate trust management utilities. Kagazo fixes this by baking the validation data directly into the file, enabling mobile viewers to display the green checkmark without local certificate installation.
 
 ---
 
@@ -322,7 +322,7 @@ Mobile operating systems (Android, iOS) lack desktop certificate trust managemen
 
 Never submit an unverified revenue certificate for competitive examinations or college counseling. 
 
-**[Verify your Tamil Nadu Revenue Certificate on VeriSeal now](/#upload-zone)** and secure your admission with confidence.`,
+**[Verify your Tamil Nadu Revenue Certificate on Kagazo now](/#upload-zone)** and secure your admission with confidence.`,
   },
   {
     id: 'post-3',
@@ -335,7 +335,7 @@ Never submit an unverified revenue certificate for competitive examinations or c
     featured_image_url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-06T11:00:00Z',
-    author_name: 'VeriSeal Tax & Compliance Desk',
+    author_name: 'Kagazo Tax & Compliance Desk',
     created_at: '2026-09-06T11:00:00Z',
     updated_at: '2026-09-11T10:00:00Z',
     content: `# Complete Guide to Verifying Form 16, e-PAN Card & Income Tax PDF Digital Signatures
@@ -406,14 +406,14 @@ Indian tax and revenue documents are signed under strict protocols mandated by t
 ### Step 1: Gather Your Original PDF Files
 Obtain the authentic electronic PDF from your employer's HRMS portal (for Form 16) or the download link from Protean / UTIITSL (for e-PAN). 
 
-### Step 2: Upload to VeriSeal Verification Portal
-1. Navigate to **[VeriSeal Home](/#upload-zone)**.
+### Step 2: Upload to Kagazo Verification Portal
+1. Navigate to **[Kagazo Home](/#upload-zone)**.
 2. Drag and drop your Form 16 or e-PAN file into the upload zone.
 3. If checking an e-PAN, input your 8-digit birth date password (e.g., \`15081995\`).
 4. Click **Verify Digital Signature**.
 
 ### Step 3: Automated Cryptographic Audit
-VeriSeal performs a comprehensive 4-point check:
+Kagazo performs a comprehensive 4-point check:
 1. **Hash Verification:** Audits the PDF's \`/ByteRange\` to confirm no salary numbers or deductions were altered after signing.
 2. **CA Root Chain:** Maps intermediate CAs (*eMudhra*, *Capricorn*, *NIC*, *(n)Code*, *Sify*) to the Root Certifying Authority of India.
 3. **CRL & OCSP Revocation Status:** Confirms the signing certificate was active and untainted on the date of signing.
@@ -446,20 +446,20 @@ This is one of the most common questions raised by taxpayers:
 
 Under the international **PAdES (PDF Advanced Electronic Signatures)** standard and Indian law, a digital signature remains permanently valid if it was signed while the certificate was active, provided an authentic timestamp was embedded. 
 
-Without **Long-Term Validation (LTV)**, however, modern PDF viewers attempt to validate the expired certificate against current time and fail. VeriSeal solves this by freezing and sealing the historical validation path in the \`/DSS\` dictionary, guaranteeing that past tax documents remain valid for 20+ years.
+Without **Long-Term Validation (LTV)**, however, modern PDF viewers attempt to validate the expired certificate against current time and fail. Kagazo solves this by freezing and sealing the historical validation path in the \`/DSS\` dictionary, guaranteeing that past tax documents remain valid for 20+ years.
 
 ---
 
 ## Frequently Asked Questions (FAQ)
 
 ### Q1: Can I verify multiple Form 16 parts together?
-Yes. Form 16 Part A and Part B are frequently separate files. You can upload each part individually to VeriSeal to verify and stamp each document for loan applications.
+Yes. Form 16 Part A and Part B are frequently separate files. You can upload each part individually to Kagazo to verify and stamp each document for loan applications.
 
-### Q2: Does VeriSeal see my salary details or PAN number?
-No. VeriSeal is designed with strict data privacy protocols. The verification runs in isolated memory environments without logging your financial numbers, employer details, or salary data to persistent storage.
+### Q2: Does Kagazo see my salary details or PAN number?
+No. Kagazo is designed with strict data privacy protocols. The verification runs in isolated memory environments without logging your financial numbers, employer details, or salary data to persistent storage.
 
 ### Q3: Why did my bank loan officer say my e-PAN signature is "Not Verified"?
-Most bank branch staff open PDF documents in standard web browsers (like Chrome or Edge) rather than professional Adobe Acrobat configurations. Web browsers do not have built-in Indian PKI trust stores. Passing your e-PAN through VeriSeal embeds universal LTV metadata so that any browser or viewer recognizes the green tick.
+Most bank branch staff open PDF documents in standard web browsers (like Chrome or Edge) rather than professional Adobe Acrobat configurations. Web browsers do not have built-in Indian PKI trust stores. Passing your e-PAN through Kagazo embeds universal LTV metadata so that any browser or viewer recognizes the green tick.
 
 ---
 
@@ -467,7 +467,7 @@ Most bank branch staff open PDF documents in standard web browsers (like Chrome 
 
 Avoid costly loan processing delays or visa application rejections caused by unverified PDF signatures.
 
-**[Verify your Form 16 and e-PAN signatures on VeriSeal now](/#upload-zone)** — fast, free, and secure.`,
+**[Verify your Form 16 and e-PAN signatures on Kagazo now](/#upload-zone)** — fast, free, and secure.`,
   },
   {
     id: 'post-4',
@@ -480,7 +480,7 @@ Avoid costly loan processing delays or visa application rejections caused by unv
     featured_image_url: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-08T14:00:00Z',
-    author_name: 'VeriSeal Citizen Services Desk',
+    author_name: 'Kagazo Citizen Services Desk',
     created_at: '2026-09-08T14:00:00Z',
     updated_at: '2026-09-11T10:00:00Z',
     content: `# How to Verify DigiLocker Digital Signatures on Driving License, Vehicle RC & CBSE Marksheets
@@ -546,20 +546,20 @@ However, when you **download or export the document as a standalone PDF file**, 
 
 ---
 
-## Step-by-Step: Verifying Your DigiLocker Documents on VeriSeal
+## Step-by-Step: Verifying Your DigiLocker Documents on Kagazo
 
 ### Step 1: Export Original PDF from DigiLocker
 - Open the DigiLocker app or log in to **[digilocker.gov.in](https://digilocker.gov.in)**.
 - Navigate to your **Issued Documents** tab.
 - Click the download icon next to your Driving License, RC, or CBSE Marksheet and select **PDF**.
 
-### Step 2: Upload to VeriSeal
-1. Go to **[VeriSeal Home](/#upload-zone)**.
+### Step 2: Upload to Kagazo
+1. Go to **[Kagazo Home](/#upload-zone)**.
 2. Drag and drop your DigiLocker PDF file into the upload zone.
 3. DigiLocker PDF downloads are **unprotected by passwords**; simply click **Verify Digital Signature**.
 
 ### Step 3: Instant Cryptographic Audit
-VeriSeal inspects the cryptographic envelope:
+Kagazo inspects the cryptographic envelope:
 - **DigiLocker Sub-CA Validation:** Resolves the certificate back to MeitY / NIC root authorities under CCA India.
 - **ByteRange Integrity Audit:** Calculates SHA-256 hashes to guarantee that document parameters (name, license class, registration numbers) were unaltered.
 - **LTV Stamping:** Synthesizes and injects a Document Security Store dictionary.
@@ -571,7 +571,7 @@ Click **Download Verified PDF**. Your file now features the verified green tick 
 
 ---
 
-## Comparison: DigiLocker Documents Supported by VeriSeal
+## Comparison: DigiLocker Documents Supported by Kagazo
 
 | Document | Issuing Agency / Authority | Common Signer CN | Verification Use Case |
 | :--- | :--- | :--- | :--- |
@@ -589,11 +589,11 @@ Click **Download Verified PDF**. Your file now features the verified green tick 
 ### Q1: Can traffic police fine me if my DigiLocker Driving License has a question mark?
 No, legally they cannot, provided the document is presented through the official DigiLocker app or contains a verifiable digital signature. However, to prevent unnecessary roadside disputes with traffic officers, having an LTV-verified PDF copy with the green tick downloaded on your phone ensures instant acceptance.
 
-### Q2: Does VeriSeal alter the academic grades on my CBSE marksheet?
-Never. Digital signatures are mathematically tamper-evident. If VeriSeal or anyone attempted to modify a single character or mark, the cryptographic hash check would fail immediately. VeriSeal solely appends validation trust metadata (/DSS), leaving the underlying document bytes completely pristine.
+### Q2: Does Kagazo alter the academic grades on my CBSE marksheet?
+Never. Digital signatures are mathematically tamper-evident. If Kagazo or anyone attempted to modify a single character or mark, the cryptographic hash check would fail immediately. Kagazo solely appends validation trust metadata (/DSS), leaving the underlying document bytes completely pristine.
 
 ### Q3: How do RTO officers verify the digital signature on vehicle RCs?
-RTO officers use automated document readers that check the public key against the National Informatics Centre (NIC) e-Transport sub-CA. VeriSeal's LTV stamping guarantees that this check passes cleanly every time.
+RTO officers use automated document readers that check the public key against the National Informatics Centre (NIC) e-Transport sub-CA. Kagazo's LTV stamping guarantees that this check passes cleanly every time.
 
 ---
 
@@ -601,20 +601,20 @@ RTO officers use automated document readers that check the public key against th
 
 Ensure your driving licenses, vehicle registrations, and academic marksheets are immediately accepted anywhere across India without friction.
 
-**[Verify your DigiLocker PDF on VeriSeal now](/#upload-zone)** — fast, free, and secure.`,
+**[Verify your DigiLocker PDF on Kagazo now](/#upload-zone)** — fast, free, and secure.`,
   },
   {
     id: 'post-5',
     title: 'How to Fix Yellow Question Mark on Aadhaar PDF — Complete 2026 Guide',
     slug: 'fix-aadhaar-pdf-yellow-question-mark',
-    excerpt: 'Comprehensive 2026 guide explaining why your e-Aadhaar PDF displays a yellow question mark, what LTV cryptographic embedding means, and how to get a verified green tick using VeriSeal free online tool.',
+    excerpt: 'Comprehensive 2026 guide explaining why your e-Aadhaar PDF displays a yellow question mark, what LTV cryptographic embedding means, and how to get a verified green tick using Kagazo free online tool.',
     category: 'Aadhaar & Identity',
-    meta_description: 'Learn why your e-Aadhaar PDF shows a yellow question mark and how to fix it to get a green tick using VeriSeal free online tool.',
+    meta_description: 'Learn why your e-Aadhaar PDF shows a yellow question mark and how to fix it to get a green tick using Kagazo free online tool.',
     meta_keywords: 'fix aadhaar pdf yellow question mark, aadhaar green tick online, verify eaadhaar digital signature, uidai signature not verified, cca root cert adobe, ltv embedding aadhaar pdf, it act 2000 digital signature',
     featured_image_url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-12T10:00:00Z',
-    author_name: 'VeriSeal PKI Security Desk',
+    author_name: 'Kagazo PKI Security Desk',
     created_at: '2026-09-12T10:00:00Z',
     updated_at: '2026-09-12T10:00:00Z',
     content: `# How to Fix Yellow Question Mark on Aadhaar PDF — Complete 2026 Guide
@@ -625,7 +625,7 @@ When you download your electronic Aadhaar (**e-Aadhaar**) from the official **my
 
 For millions of citizens across India submitting documents for bank account opening, passport appointments, property registration, loan processing, or college admissions, this yellow question mark creates needless friction. Bank officers and administrative staff frequently reject the printout, requesting a version displaying the official **green checkmark**.
 
-In this detailed guide, we explain the exact technical reason why this error happens, what Long-Term Validation (LTV) is, how to use VeriSeal to fix it in seconds without installing any desktop software, and what the verified signature means under the Information Technology Act, 2000.
+In this detailed guide, we explain the exact technical reason why this error happens, what Long-Term Validation (LTV) is, how to use Kagazo to fix it in seconds without installing any desktop software, and what the verified signature means under the Information Technology Act, 2000.
 
 ---
 
@@ -658,21 +658,21 @@ Once an e-Aadhaar PDF has LTV embedded, any modern PDF viewer recognizes the tru
 
 ---
 
-## Step-by-Step: How to Fix the Aadhaar Question Mark on VeriSeal
+## Step-by-Step: How to Fix the Aadhaar Question Mark on Kagazo
 
-VeriSeal provides a private, zero-retention web verification engine that validates your Aadhaar PDF against official CCA India root certificates and embeds the LTV /DSS dictionary instantly.
+Kagazo provides a private, zero-retention web verification engine that validates your Aadhaar PDF against official CCA India root certificates and embeds the LTV /DSS dictionary instantly.
 
 ### Step 1: Download Your Fresh e-Aadhaar PDF
 Log in to **[myaadhaar.uidai.gov.in](https://myaadhaar.uidai.gov.in)** using your Aadhaar number and OTP. Download your electronic Aadhaar PDF.
 
-### Step 2: Upload to VeriSeal
-1. Navigate to the **[VeriSeal Home Page](/#upload-zone)**.
+### Step 2: Upload to Kagazo
+1. Navigate to the **[Kagazo Home Page](/#upload-zone)**.
 2. Drag and drop your downloaded e-Aadhaar PDF into the upload zone.
 3. Because e-Aadhaar files are password protected by UIDAI, enter your PDF password. 
    - **Password Format:** The first 4 letters of your name in CAPITAL letters followed by your 4-digit birth year (e.g., if your name is SURESH KUMAR and your birth year is 1990, enter \`SURE1990\`).
 
 ### Step 3: Instant Ephemeral Verification
-Click **Verify Signature**. In less than two seconds, VeriSeal's backend engine:
+Click **Verify Signature**. In less than two seconds, Kagazo's backend engine:
 - Decrypts the PDF in ephemeral RAM memory without ever saving bytes to disk.
 - Audits the SHA-256 byte-range digest against UIDAI's public key.
 - Validates the certificate chain against the National Informatics Centre (NIC Sub-CA) and RCAI.
@@ -687,7 +687,7 @@ Click **Download Verified PDF**. Open the file in any PDF viewer on Android, iOS
 
 Under **Section 35 and Section 4 of the Information Technology Act, 2000**, electronic records authenticated through digital signatures issued by licensed Certifying Authorities hold identical legal standing to physical ink signatures.
 
-Furthermore, under **Section 85B of the Indian Evidence Act, 1872**, courts and government authorities presume that a secure digital signature has not been altered since the specific point in time it was affixed. VeriSeal preserves the full cryptographic integrity of the document, ensuring that your verified e-Aadhaar is 100% compliant and legally undeniable across all Indian banking, judicial, and administrative institutions.`,
+Furthermore, under **Section 85B of the Indian Evidence Act, 1872**, courts and government authorities presume that a secure digital signature has not been altered since the specific point in time it was affixed. Kagazo preserves the full cryptographic integrity of the document, ensuring that your verified e-Aadhaar is 100% compliant and legally undeniable across all Indian banking, judicial, and administrative institutions.`,
   },
   {
     id: 'post-6',
@@ -700,7 +700,7 @@ Furthermore, under **Section 85B of the Indian Evidence Act, 1872**, courts and 
     featured_image_url: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-12T10:00:00Z',
-    author_name: 'VeriSeal Tamil Nadu Desk',
+    author_name: 'Kagazo Tamil Nadu Desk',
     created_at: '2026-09-12T10:00:00Z',
     updated_at: '2026-09-12T10:00:00Z',
     content: `# Community Certificate Tamil Nadu — How to Verify Digital Signature Online Free
@@ -746,14 +746,14 @@ The signing payload contains:
 
 ---
 
-## How to Verify the Digital Signature with VeriSeal
+## How to Verify the Digital Signature with Kagazo
 
 Follow these simple steps to verify your Tamil Nadu Community Certificate online:
 
 1. **Obtain Original PDF:** Download the digital PDF directly from the TNeGA portal or retrieve the original PDF file from your e-Sevai center. (Do not scan a printed photocopy, as scanning destroys cryptographic data).
-2. **Visit VeriSeal:** Open **[VeriSeal.in](/#upload-zone)** in your web browser.
+2. **Visit Kagazo:** Open **[Kagazo.in](/#upload-zone)** in your web browser.
 3. **Upload File:** Drop your Tamil Nadu Community Certificate PDF into the upload container. (Tamil Nadu revenue certificates do not require a password).
-4. **Instant Verification:** Click **Verify Signature**. VeriSeal verifies the certificate against NIC Sub-CA and RCAI root anchors.
+4. **Instant Verification:** Click **Verify Signature**. Kagazo verifies the certificate against NIC Sub-CA and RCAI root anchors.
 5. **Download Verified Certificate:** Click **Download Verified PDF**. Your certificate will now display a permanent green checkmark recognized across all online document scrutiny portals.
 
 ---
@@ -762,7 +762,7 @@ Follow these simple steps to verify your Tamil Nadu Community Certificate online
 
 | Error | Root Cause | Solution |
 | :--- | :--- | :--- |
-| **Yellow Question Mark** | Adobe Reader lacks NIC root cert | Verify with VeriSeal to embed LTV /DSS |
+| **Yellow Question Mark** | Adobe Reader lacks NIC root cert | Verify with Kagazo to embed LTV /DSS |
 | **"Signature Invalid"** | Document was edited or compressed incorrectly | Re-download pristine PDF from e-Sevai portal |
 | **Unreadable QR Code** | Low-resolution scanning of physical paper | Always submit original electronic PDF directly |
 | **Expired Officer Certificate** | Signing officer DSC expired after issuance | LTV stamping verifies signing-time validity |
@@ -795,7 +795,7 @@ A verified Tamil Nadu Community Certificate is legally recognized across:
     featured_image_url: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-12T10:00:00Z',
-    author_name: 'VeriSeal Exam Compliance Desk',
+    author_name: 'Kagazo Exam Compliance Desk',
     created_at: '2026-09-12T10:00:00Z',
     updated_at: '2026-09-12T10:00:00Z',
     content: `# TNPSC OTR Document Size Requirements 2026 — Complete Checklist
@@ -860,9 +860,9 @@ All supporting certificates (SSLC marksheet, Degree certificates, Community Cert
 
 ---
 
-## How VeriSeal Free Tools Solve TNPSC OTR Requirements
+## How Kagazo Free Tools Solve TNPSC OTR Requirements
 
-VeriSeal offers specialized, privacy-first browser tools engineered specifically for Indian government exam candidates:
+Kagazo offers specialized, privacy-first browser tools engineered specifically for Indian government exam candidates:
 - **[TNPSC Photo & Signature Resizer](/tools/tnpsc-photo-signature-resizer):** Instantly crops, resizes, adds candidate name and date stamp, and locks file sizes to exactly 20-50 KB and 10-20 KB.
 - **[Govt Exam PDF Compressor](/tools/government-exam-pdf-compressor):** Compresses community and educational marksheets to the exact 100-200 KB target without degrading text sharpness or invalidating digital signatures.
 - **[PSTM Certificate Generator](/tools/pstm-certificate-generator):** Generates compliant bilingual PSTM certificate formats ready for school/college institutional sign-off.`,
@@ -878,7 +878,7 @@ VeriSeal offers specialized, privacy-first browser tools engineered specifically
     featured_image_url: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-12T10:00:00Z',
-    author_name: 'VeriSeal Cryptography Research Desk',
+    author_name: 'Kagazo Cryptography Research Desk',
     created_at: '2026-09-12T10:00:00Z',
     updated_at: '2026-09-12T10:00:00Z',
     content: `# What is CCA India Digital Signature — Why Indian Government PDFs Need It
@@ -968,9 +968,9 @@ Digital signatures executed through licensed Certifying Authorities under CCA In
 
 ---
 
-## 6. How VeriSeal Ephemerally Verifies CCA India Signatures
+## 6. How Kagazo Ephemerally Verifies CCA India Signatures
 
-VeriSeal operates an in-RAM cryptographic validation pipeline:
+Kagazo operates an in-RAM cryptographic validation pipeline:
 - Calculates SHA-256 byte-range hashes across PDF segments.
 - Traverses the certificate path up to the RCAI root.
 - Confirms OCSP/CRL revocation status.
@@ -980,14 +980,14 @@ VeriSeal operates an in-RAM cryptographic validation pipeline:
     id: 'post-9',
     title: 'DigiLocker PDF Signature Not Verified — How to Fix in 2026',
     slug: 'digilocker-pdf-signature-not-verified-fix',
-    excerpt: 'Fix DigiLocker PDF certificates showing "signature not verified" or "validity unknown". Download an LTV-verified copy with permanent green checkmark using VeriSeal free online tool.',
+    excerpt: 'Fix DigiLocker PDF certificates showing "signature not verified" or "validity unknown". Download an LTV-verified copy with permanent green checkmark using Kagazo free online tool.',
     category: 'Identity & DigiLocker',
-    meta_description: 'Fix DigiLocker PDF showing signature not verified or unknown. Download verified copy with green tick using VeriSeal free online tool.',
+    meta_description: 'Fix DigiLocker PDF showing signature not verified or unknown. Download verified copy with green tick using Kagazo free online tool.',
     meta_keywords: 'digilocker pdf signature not verified fix, digilocker green tick download, driving license digilocker signature unknown, cbse marksheet digital signature, verify digilocker pdf online',
     featured_image_url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-12T10:00:00Z',
-    author_name: 'VeriSeal Security Desk',
+    author_name: 'Kagazo Security Desk',
     created_at: '2026-09-12T10:00:00Z',
     updated_at: '2026-09-12T10:00:00Z',
     content: `# DigiLocker PDF Signature Not Verified — How to Fix in 2026
@@ -998,7 +998,7 @@ However, a frequent point of confusion arises when users **download the PDF vers
 
 > **"Signature validity is UNKNOWN" or "The certificate is untrusted."**
 
-Many administrative officials, police officers, and college clerks mistakenly believe that a document showing a yellow question mark is unverified or invalid. This guide explains why this occurs, the crucial difference between the DigiLocker app and downloaded PDFs, and how to obtain an authentic green checkmark using VeriSeal.
+Many administrative officials, police officers, and college clerks mistakenly believe that a document showing a yellow question mark is unverified or invalid. This guide explains why this occurs, the crucial difference between the DigiLocker app and downloaded PDFs, and how to obtain an authentic green checkmark using Kagazo.
 
 ---
 
@@ -1038,15 +1038,15 @@ There is a fundamental difference between viewing a credential inside the DigiLo
 | **Trust Mechanism** | In-app API database check | Cryptographic X.509 signature audit |
 | **Offline Access** | Requires active internet connection | Self-contained, works offline |
 | **Common Issue** | Some portals do not accept links | Yellow question mark in external viewers |
-| **Solution** | Use for instant in-person verification | Validate with VeriSeal to embed green tick |
+| **Solution** | Use for instant in-person verification | Validate with Kagazo to embed green tick |
 
 ---
 
-## How to Verify DigiLocker PDFs with VeriSeal
+## How to Verify DigiLocker PDFs with Kagazo
 
 1. **Download Document:** Open DigiLocker, go to **Issued Documents**, and download the PDF version of your Driving License, RC, or Marksheet.
-2. **Upload to VeriSeal:** Navigate to **[VeriSeal.in](/#upload-zone)** and upload your downloaded file.
-3. **Automatic Verification:** VeriSeal validates the signature against the NIC/MeitY root hierarchy in ephemeral memory.
+2. **Upload to Kagazo:** Navigate to **[Kagazo.in](/#upload-zone)** and upload your downloaded file.
+3. **Automatic Verification:** Kagazo validates the signature against the NIC/MeitY root hierarchy in ephemeral memory.
 4. **Download Verified PDF:** Download your PDF with an embedded Document Security Store (DSS). It now opens with a verified green checkmark across all platforms.
 
 ---
@@ -1065,12 +1065,12 @@ Furthermore, the **Ministry of Road Transport and Highways (MoRTH)** issued circ
     slug: 'gstin-verification-online-free',
     excerpt: 'Step-by-step guide to verifying any GSTIN number online free. Learn how to parse the 15-digit GST structure, verify registration status (Active, Cancelled, Suspended), and prevent input tax credit (ITC) fraud before vendor payment.',
     category: 'Tax & Compliance',
-    meta_description: 'Verify any GSTIN number online free. Check if GST registration is active, cancelled or suspended instantly using VeriSeal GST verifier.',
-    meta_keywords: 'gstin verification online free, check gst number active or cancelled, verify gst status, 15 digit gst number format, gst search by pan, input tax credit itc fraud prevention, veriseal gst verifier',
+    meta_description: 'Verify any GSTIN number online free. Check if GST registration is active, cancelled or suspended instantly using Kagazo GST verifier.',
+    meta_keywords: 'gstin verification online free, check gst number active or cancelled, verify gst status, 15 digit gst number format, gst search by pan, input tax credit itc fraud prevention, Kagazo gst verifier',
     featured_image_url: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80',
     published: true,
     published_at: '2026-09-12T10:00:00Z',
-    author_name: 'VeriSeal Tax Research Desk',
+    author_name: 'Kagazo Tax Research Desk',
     created_at: '2026-09-12T10:00:00Z',
     updated_at: '2026-09-12T10:00:00Z',
     content: `# GSTIN Verification Online — How to Check if a GST Number is Valid and Active
@@ -1082,7 +1082,7 @@ Failing to verify a GSTIN before processing vendor invoices or making payments c
 - **Tax Penalties & Interest:** Claiming ineligible ITC results in 18% to 24% mandatory interest penalties and tax demand notices under Section 73/74.
 - **Invoice Fraud:** Unscrupulous entities frequently print fabricated 15-digit GST numbers on fake invoices.
 
-This comprehensive guide breaks down the 15-digit structure of a GSTIN, explains the difference between Active, Suspended, and Cancelled statuses, and demonstrates how to check any GSTIN instantly using the free VeriSeal GST Verifier.
+This comprehensive guide breaks down the 15-digit structure of a GSTIN, explains the difference between Active, Suspended, and Cancelled statuses, and demonstrates how to check any GSTIN instantly using the free Kagazo GST Verifier.
 
 ---
 
@@ -1138,7 +1138,7 @@ The 15th character is a calculated checksum code (alphanumeric) used by automate
 
 ## Understanding Registration Statuses: Active vs. Suspended vs. Cancelled
 
-When verifying a vendor on the GST portal or VeriSeal, you will encounter one of three primary statuses:
+When verifying a vendor on the GST portal or Kagazo, you will encounter one of three primary statuses:
 
 ### 1. Active
 The taxpayer is in full compliance. Their registration is valid, and they are authorized to collect GST on tax invoices and pass on Input Tax Credit (ITC). You can safely pay GST on their invoices.
@@ -1161,10 +1161,10 @@ The registration has been terminated either voluntarily by the business or suo-m
 
 ---
 
-## How to Verify Any GSTIN on VeriSeal Free
+## How to Verify Any GSTIN on Kagazo Free
 
-VeriSeal provides a lightning-fast GST verification engine:
-1. Open the **[VeriSeal GST Verifier](/tools/gst-verifier)**.
+Kagazo provides a lightning-fast GST verification engine:
+1. Open the **[Kagazo GST Verifier](/tools/gst-verifier)**.
 2. Enter the 15-digit GSTIN number.
 3. Instantly review:
    - **Legal Business Name & Trade Name**
@@ -1205,7 +1205,7 @@ export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
         category: d.category || 'Guides & Tutorials',
         published: Boolean(d.published),
         published_at: d.published_at,
-        author_name: d.author_name || 'VeriSeal Desk',
+        author_name: d.author_name || 'Kagazo Desk',
         created_at: d.created_at,
         updated_at: d.updated_at,
       }));
@@ -1239,7 +1239,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
         category: data.category || 'Guides & Tutorials',
         published: Boolean(data.published),
         published_at: data.published_at,
-        author_name: data.author_name || 'VeriSeal Desk',
+        author_name: data.author_name || 'Kagazo Desk',
         created_at: data.created_at,
         updated_at: data.updated_at,
       };

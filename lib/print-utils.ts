@@ -1,5 +1,5 @@
 /**
- * VeriSeal Universal Isolated Print Engine.
+ * Kagazo Universal Isolated Print Engine.
  * Guarantees 100% isolation from host webpage chrome, floating navigation,
  * form inputs, ads, and footers. Only the clean document prints.
  */

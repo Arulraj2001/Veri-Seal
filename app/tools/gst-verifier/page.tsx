@@ -9,14 +9,14 @@ export const metadata: Metadata = {
   description:
     'Mathematically verify 15-digit Indian GST numbers online for free. Decode state codes, embedded business PAN, and entity registration numbers with official MOD 36 checksum calculation.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/gst-verifier',
+    canonical: 'https://Kagazo.in/tools/gst-verifier',
   },
   openGraph: {
-    title: 'Free GST Number Verifier | VeriSeal',
+    title: 'Free GST Number Verifier | Kagazo',
     description:
       'Verify Indian GSTIN numbers, decode State & PAN, and validate MOD 36 checksum instantly.',
-    url: 'https://veriseal.in/tools/gst-verifier',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/gst-verifier',
+    siteName: 'Kagazo',
     type: 'website',
     images: [
       {

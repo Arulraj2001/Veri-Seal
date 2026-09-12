@@ -1,4 +1,4 @@
-const CACHE_NAME = 'veriseal-v2';
+const CACHE_NAME = 'kagazo-v1';
 const STATIC_ASSETS = [
   '/favicon.ico',
   '/manifest.webmanifest',

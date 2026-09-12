@@ -43,7 +43,7 @@ let memoryMessages: ContactMessage[] = [
     email: 'anand.k@outlook.com',
     phone: null,
     subject: 'Add New State Certificate',
-    message: 'I have a domicile certificate from Uttar Pradesh e-District (edistrict.up.gov.in). Does VeriSeal verify signatures issued by UP CeG Sub-CA?',
+    message: 'I have a domicile certificate from Uttar Pradesh e-District (edistrict.up.gov.in). Does Kagazo verify signatures issued by UP CeG Sub-CA?',
     status: 'read',
     admin_notes: 'Confirmed UP CeG uses NIC CA 2014, verified working.',
     created_at: new Date(Date.now() - 36 * 3600 * 1000).toISOString(),

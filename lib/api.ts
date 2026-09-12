@@ -1,5 +1,5 @@
 /**
- * VeriSeal Client API Utilities.
+ * Kagazo Client API Utilities.
  * Handles communication with the FastAPI backend verification engine,
  * guest rate-limiting tracking in localStorage, settings retrieval, and PDF downloads.
  */
@@ -16,13 +16,13 @@ export function getApiUrl(): string {
     if (typeof window !== 'undefined') {
       if (
         window.location.hostname.includes('vercel.app') ||
-        window.location.hostname.includes('veriseal.in')
+        window.location.hostname.includes('kagazo.in')
       ) {
-        return 'https://veri-seal.onrender.com';
+        return 'https://kagazo-api.onrender.com';
       }
     }
     return process.env.NODE_ENV === 'production'
-      ? 'https://veri-seal.onrender.com'
+      ? 'https://kagazo-api.onrender.com'
       : 'http://127.0.0.1:7860';
   }
   return envUrl;
@@ -198,7 +198,7 @@ export function downloadVerifiedPdf(base64Data: string, originalFilename: string
     const link = document.createElement('a');
     link.href = blobUrl;
     const baseName = originalFilename.replace(/\.pdf$/i, '');
-    link.download = `${baseName}_verified_veriseal.pdf`;
+    link.download = `${baseName}_verified_kagazo.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -213,7 +213,7 @@ export function downloadVerifiedPdf(base64Data: string, originalFilename: string
 // Guest Daily Limit Tracking in LocalStorage (Midnight Reset)
 // --------------------------------------------------------------------------
 
-const GUEST_STORAGE_KEY = 'veriseal_guest_verifications';
+const GUEST_STORAGE_KEY = 'kagazo_guest_verifications';
 
 interface GuestUsageRecord {
   count: number;
@@ -276,13 +276,13 @@ export async function fetchPublicSettings(): Promise<PublicSettings> {
 
   return {
     payment_enabled: true,
-    site_name: 'VeriSeal',
+    site_name: 'Kagazo',
     verification_counter: 421847,
     language_tamil_enabled: true,
     free_daily_limit: 3,
     pro_price: 199,
     business_price: 2499,
-    upi_id: 'veriseal.pay@icici',
+    upi_id: 'kagazo.pay@icici',
     upi_qr_url: '',
   };
 }

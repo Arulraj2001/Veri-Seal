@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Calculate exact running costs for 1 Ton, 1.5 Ton, and 2 Ton Inverter ACs in India. Discover why setting temperature to 24°C saves 24% electricity and compare 3-Star vs 5-Star payback timelines.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/ac-cost-calculator',
+    canonical: 'https://Kagazo.in/home-cost/ac-cost-calculator',
   },
   openGraph: {
-    title: 'AC Running Cost & 3-Star vs 5-Star Payback Calculator | VeriSeal',
+    title: 'AC Running Cost & 3-Star vs 5-Star Payback Calculator | Kagazo',
     description:
       'Compare 1.5 Ton Inverter AC electricity cost per hour, per night, and per month with Indian ambient summer temperatures.',
-    url: 'https://veriseal.in/home-cost/ac-cost-calculator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/ac-cost-calculator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

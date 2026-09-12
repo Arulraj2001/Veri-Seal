@@ -1,4 +1,4 @@
--- VeriSeal Phase 5 Storage Bucket & Policies for Payment Proofs
+-- Kagazo Phase 5 Storage Bucket & Policies for Payment Proofs
 
 -- 1. Create storage bucket for payment screenshots
 INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)

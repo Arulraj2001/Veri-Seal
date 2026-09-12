@@ -1,5 +1,5 @@
 """
-VeriSeal In-Memory PDF Decryption & e-Aadhaar Password Remover.
+Kagazo In-Memory PDF Decryption & e-Aadhaar Password Remover.
 Permanently decrypts password-protected PDFs (e-Aadhaar, Form 16, bank statements)
 in volatile RAM memory so government recruitment portals can accept them without errors.
 """
@@ -14,7 +14,7 @@ except ImportError:
     import fitz
 from PIL import Image
 
-logger = logging.getLogger("veriseal.pdf_unlocker")
+logger = logging.getLogger("kagazo.pdf_unlocker")
 
 
 def unlock_pdf_document(

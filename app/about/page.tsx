@@ -5,23 +5,23 @@ import { ShieldCheck, Award, Flag, Cpu, CheckCircle2, ArrowRight } from 'lucide-
 import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'About VeriSeal — India\'s Premier Sovereign PKI Verification Platform',
+  title: 'About Kagazo — India\'s Premier Sovereign PKI Verification Platform',
   description:
-    'VeriSeal was created to help Indian citizens and businesses verify digital signatures on government PDFs instantly without expensive proprietary software.',
+    'Kagazo was created to help Indian citizens and businesses verify digital signatures on government PDFs instantly without expensive proprietary software.',
   alternates: {
     canonical: `${SITE_URL}/about`,
   },
   openGraph: {
-    title: 'About VeriSeal — India\'s Premier Sovereign PKI Verification Platform',
+    title: 'About Kagazo — India\'s Premier Sovereign PKI Verification Platform',
     description:
       'Empowering citizens with instant, free, and in-memory cryptographic verification for e-Aadhaar, state certificates, PAN, and DigiLocker documents.',
     url: `${SITE_URL}/about`,
-    siteName: 'VeriSeal',
-    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'About VeriSeal' }],
+    siteName: 'Kagazo',
+    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'About Kagazo' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About VeriSeal — Sovereign PKI Verification for India',
+    title: 'About Kagazo — Sovereign PKI Verification for India',
     description: 'Empowering citizens with instant cryptographic verification for Indian government PDFs.',
     images: [`${SITE_URL}/og`],
   },
@@ -38,7 +38,7 @@ export default function AboutPage() {
             <span>Built for Digital India</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-text-main tracking-tight">
-            About VeriSeal
+            About Kagazo
           </h1>
           <p className="mt-4 text-base sm:text-lg text-text-main/70 leading-relaxed">
             Democratizing digital document authenticity for over 1.4 billion Indian citizens.
@@ -53,7 +53,7 @@ export default function AboutPage() {
             </div>
             <h3 className="text-xl font-black text-text-main mb-3">Our Mission</h3>
             <p className="text-text-main/70 text-sm leading-relaxed">
-              Every month, thousands of Indian citizens have college counseling admissions delayed, bank loans deferred, or visa applications questioned simply because of a missing green checkmark on their digital PDFs. VeriSeal was built to solve this challenge once and for all.
+              Every month, thousands of Indian citizens have college counseling admissions delayed, bank loans deferred, or visa applications questioned simply because of a missing green checkmark on their digital PDFs. Kagazo was built to solve this challenge once and for all.
             </p>
           </div>
 
@@ -63,7 +63,7 @@ export default function AboutPage() {
             </div>
             <h3 className="text-xl font-black text-text-main mb-3">Cryptographic Engine</h3>
             <p className="text-text-main/70 text-sm leading-relaxed">
-              VeriSeal runs on high-performance open-source cryptography (pyHanko) combined with verified root trust anchors from the Controller of Certifying Authorities (CCA India). We deliver instant, standards-compliant verification directly in your browser.
+              Kagazo runs on high-performance open-source cryptography (pyHanko) combined with verified root trust anchors from the Controller of Certifying Authorities (CCA India). We deliver instant, standards-compliant verification directly in your browser.
             </p>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function AboutPage() {
             Under the <strong>Information Technology Act, 2000</strong>, India established the <strong>Root Certifying Authority of India (RCAI)</strong> to oversee all government and commercial digital certificates. Because India operates its own independent national PKI trust root rather than paying commercial fees to Western operating system vendors, mainstream PDF software frequently labels genuine Indian government certificates with an unverified yellow question mark.
           </p>
           <p>
-            VeriSeal bridges this gap. By reconciling document byte ranges with India&apos;s national certificate stores and embedding standards-compliant <strong>Long-Term Validation (/DSS)</strong> dictionaries, VeriSeal gives citizens submissible, verifiable proof of their documents.
+            Kagazo bridges this gap. By reconciling document byte ranges with India&apos;s national certificate stores and embedding standards-compliant <strong>Long-Term Validation (/DSS)</strong> dictionaries, Kagazo gives citizens submissible, verifiable proof of their documents.
           </p>
 
           <h3 className="text-xl font-bold text-text-main pt-4">Supported Document Ecosystems</h3>

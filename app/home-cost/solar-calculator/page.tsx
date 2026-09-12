@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Calculate rooftop solar capacity (kW), panel count, roof area, and government subsidy under PM Surya Ghar Muft Bijli Yojana (up to ₹78,000). 25-year return on investment (ROI) & break-even payback.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/solar-calculator',
+    canonical: 'https://Kagazo.in/home-cost/solar-calculator',
   },
   openGraph: {
-    title: 'Rooftop Solar Size & PM Surya Ghar Subsidy Calculator | VeriSeal',
+    title: 'Rooftop Solar Size & PM Surya Ghar Subsidy Calculator | Kagazo',
     description:
       'Determine the perfect solar kW system for your Indian home, net-metering savings, and central government subsidy.',
-    url: 'https://veriseal.in/home-cost/solar-calculator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/solar-calculator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

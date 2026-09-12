@@ -19,18 +19,18 @@ import PhotoSheetEngine from '@/components/tools/PhotoSheetEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Passport Photo Sheet Maker Online Free (4x6" & A4) | VeriSeal',
+  title: 'Passport Photo Sheet Maker Online Free (4x6" & A4) | Kagazo',
   description:
     'Create printable 4x6" (8 photos) and A4 (32 photos) passport photo sheets online free at 300 DPI. Add candidate name & date of photo with scissor cutting guides. Save Rs. 100 on photo studio prints.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/passport-photo-sheet-maker',
+    canonical: 'https://Kagazo.in/tools/passport-photo-sheet-maker',
   },
   openGraph: {
-    title: 'Passport Photo Sheet Maker Free (4x6" & A4) | VeriSeal',
+    title: 'Passport Photo Sheet Maker Free (4x6" & A4) | Kagazo',
     description:
       'Tile passport photos onto 4x6" photo card or A4 paper with cutting guides. Ready for instant 300 DPI printing at home or cyber cafe.',
-    url: 'https://veriseal.in/tools/passport-photo-sheet-maker',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/passport-photo-sheet-maker',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -39,7 +39,7 @@ const FAQS = [
   {
     question: 'How does printing a 4x6" passport photo sheet save money?',
     answer:
-      'Photo studios typically charge ₹80 to ₹150 for 8 passport photos. When you generate a 4x6" (10x15 cm) photo sheet on VeriSeal, you can print it at any local photo lab, studio, or color inkjet printer for just ₹5 to ₹10 as a standard 4x6 photo print, saving up to 90% of the cost!',
+      'Photo studios typically charge ₹80 to ₹150 for 8 passport photos. When you generate a 4x6" (10x15 cm) photo sheet on Kagazo, you can print it at any local photo lab, studio, or color inkjet printer for just ₹5 to ₹10 as a standard 4x6 photo print, saving up to 90% of the cost!',
   },
   {
     question: 'What is the correct printer scaling setting for exact 3.5×4.5 cm photos?',
@@ -72,7 +72,7 @@ const COST_COMPARISON = [
     control: 'Subscription or paywalls',
   },
   {
-    item: 'VeriSeal 4x6" Sheet + Local Print',
+    item: 'Kagazo 4x6" Sheet + Local Print',
     cost: '₹5 - ₹10 (Standard 4x6 print cost)',
     time: 'Instant (10 Seconds)',
     control: '100% Free, custom Name/Date & cutting lines',
@@ -92,8 +92,8 @@ export default function PassportPhotoSheetPage() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'WebApplication',
-            name: 'VeriSeal Passport Photo Sheet Maker',
-            url: 'https://veriseal.in/tools/passport-photo-sheet-maker',
+            name: 'Kagazo Passport Photo Sheet Maker',
+            url: 'https://Kagazo.in/tools/passport-photo-sheet-maker',
             applicationCategory: 'UtilityApplication',
             operatingSystem: 'All',
             browserRequirements: 'Requires JavaScript. Requires HTML5.',
@@ -155,7 +155,7 @@ export default function PassportPhotoSheetPage() {
           <div className="lg:col-span-2 bg-white rounded-2xl border border-surface-darker/80 p-5 sm:p-6 space-y-4 shadow-2xs">
             <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
               <Award className="w-4 h-4 text-purple-600" />
-              <span>Why Studios &amp; Candidates Use VeriSeal Photo Sheet Maker</span>
+              <span>Why Studios &amp; Candidates Use Kagazo Photo Sheet Maker</span>
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">

@@ -1,5 +1,5 @@
 """
-CCA India Certificate Management for VeriSeal.
+CCA India Certificate Management for Kagazo.
 Embeds Root Certifying Authority of India (RCAI) and licensed Sub-CA certificates.
 100% offline — zero runtime network calls to ensure resilience on Hugging Face Spaces.
 Constructs pyhanko-certvalidator ValidationContext with soft-fail revocation resilience.
@@ -12,7 +12,7 @@ from typing import List, Optional
 from asn1crypto import pem, x509
 from pyhanko_certvalidator import ValidationContext
 
-logger = logging.getLogger("veriseal.cca_certs")
+logger = logging.getLogger("kagazo.cca_certs")
 
 # --------------------------------------------------------------------------
 # Embedded Base64 PEM Certificates for Indian PKI Hierarchy
@@ -542,7 +542,7 @@ def _init_cert_stores() -> None:
     _CACHED_ROOTS = roots
     _CACHED_INTERMEDIATES = intermediates
     logger.info(
-        "VeriSeal Trust Store initialized with %d root CAs and %d intermediate CAs.",
+        "Kagazo Trust Store initialized with %d root CAs and %d intermediate CAs.",
         len(_CACHED_ROOTS),
         len(_CACHED_INTERMEDIATES),
     )

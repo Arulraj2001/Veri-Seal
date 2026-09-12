@@ -3,7 +3,7 @@ import WhatsAppOrderEngine from '@/components/business-os/WhatsAppOrderEngine';
 import { ShoppingBag, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'WhatsApp Business Order & Profit Manager for D2C Sellers | VeriSeal',
+  title: 'WhatsApp Business Order & Profit Manager for D2C Sellers | Kagazo',
   description:
     'Free lightweight order log for Instagram and WhatsApp sellers. Track customer orders, prepaid vs COD status, shipping costs, and live net profit. 100% private in-browser memory.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'WhatsApp Business Order & Profit Manager for D2C Sellers',
     description:
       'Track orders from Instagram DMs and WhatsApp with automatic COGS, shipping deduction, and net profit calculations.',
-    url: 'https://veriseal.org/business-os/order-manager',
+    url: 'https://Kagazo.org/business-os/order-manager',
   },
 };
 
@@ -26,7 +26,7 @@ export default function OrderManagerPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'WhatsApp Business Order & Profit Manager',
-    url: 'https://veriseal.org/business-os/order-manager',
+    url: 'https://Kagazo.org/business-os/order-manager',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {
@@ -91,7 +91,7 @@ export default function OrderManagerPage() {
           <div className="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl space-y-2">
             <h3 className="text-sm font-extrabold text-slate-900">3. In-Browser Privacy Protection</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Unlike cloud apps that store your customer phone numbers and sales data on remote servers, VeriSeal saves your active session securely in your own browser with zero third-party data tracking.
+              Unlike cloud apps that store your customer phone numbers and sales data on remote servers, Kagazo saves your active session securely in your own browser with zero third-party data tracking.
             </p>
           </div>
         </div>

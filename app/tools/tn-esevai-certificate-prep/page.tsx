@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   description:
     'Optimize Tamil Nadu revenue certificates (Community, Nativity, Income, First Graduate) to strictly under 200KB. Protects Tahsildar digital signature QR code and barcode clarity. 100% In-RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/tn-esevai-certificate-prep',
+    canonical: 'https://Kagazo.in/tools/tn-esevai-certificate-prep',
   },
   openGraph: {
-    title: 'TN e-Sevai Revenue Certificate PDF Optimizer (<200KB) | VeriSeal',
+    title: 'TN e-Sevai Revenue Certificate PDF Optimizer (<200KB) | Kagazo',
     description:
       'Compress Community, Nativity, and First Graduate certificates under 200KB with QR code sharpness lock for government portals.',
-    url: 'https://veriseal.in/tools/tn-esevai-certificate-prep',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/tn-esevai-certificate-prep',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -58,7 +58,7 @@ export default function TnEsevaiCertificatePage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'TN e-Sevai Revenue Certificate PDF Optimizer',
-    url: 'https://veriseal.in/tools/tn-esevai-certificate-prep',
+    url: 'https://Kagazo.in/tools/tn-esevai-certificate-prep',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'All',
     offers: {

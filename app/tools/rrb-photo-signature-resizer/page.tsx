@@ -19,18 +19,18 @@ import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageR
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Railway RRB Photo & Signature Resizer Online Free | NTPC, Group D, ALP | VeriSeal',
+  title: 'Railway RRB Photo & Signature Resizer Online Free | NTPC, Group D, ALP | Kagazo',
   description:
     'Resize photo (20-50KB, 320x240px with plain white background) and signature (10-40KB, 160x80px) for Railway RRB NTPC, Group D, ALP, Technician, and RPF Constable online application forms.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/rrb-photo-signature-resizer',
+    canonical: 'https://Kagazo.in/tools/rrb-photo-signature-resizer',
   },
   openGraph: {
-    title: 'Railway RRB Photo & Signature Resizer Online Free | VeriSeal',
+    title: 'Railway RRB Photo & Signature Resizer Online Free | Kagazo',
     description:
       'Exact 320x240 px and 160x80 px dimensions guaranteed. Avoid mass RRB application rejection. 100% free forever.',
-    url: 'https://veriseal.in/tools/rrb-photo-signature-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/rrb-photo-signature-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -68,14 +68,14 @@ const RRB_FAQS = [
       'In past RRB recruitments, over 500,000 candidate forms were rejected due to: (1) Background not being plain white (e.g. blue wall, outdoor backdrop, shadows), (2) Signatures written in CAPITAL / BLOCK letters instead of running handwriting, (3) Selfie photos or photos wearing caps/sunglasses, and (4) Incorrect pixel dimensions (not 320x240 or 160x80).',
   },
   {
-    question: 'Does VeriSeal ensure my RRB signature is in running handwriting?',
+    question: 'Does Kagazo ensure my RRB signature is in running handwriting?',
     answer:
-      'VeriSeal preserves your genuine running handwriting strokes and applies our Xerox ink boost to darken faint ballpoint pen ink. Remember: never sign in block/capital letters when signing for Railway applications.',
+      'Kagazo preserves your genuine running handwriting strokes and applies our Xerox ink boost to darken faint ballpoint pen ink. Remember: never sign in block/capital letters when signing for Railway applications.',
   },
   {
     question: 'Is this RRB Resizer tool free with no watermark?',
     answer:
-      'Yes, 100% free forever for all railway aspirants and cyber cafe operators. VeriSeal never stamps watermarks, never requires payment or signups, and processes images in volatile RAM memory.',
+      'Yes, 100% free forever for all railway aspirants and cyber cafe operators. Kagazo never stamps watermarks, never requires payment or signups, and processes images in volatile RAM memory.',
   },
 ];
 
@@ -88,7 +88,7 @@ export default function RrbPhotoSignatureResizerPage() {
         name: 'Railway RRB Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://veriseal.in/tools/rrb-photo-signature-resizer',
+        url: 'https://Kagazo.in/tools/rrb-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
@@ -114,7 +114,7 @@ export default function RrbPhotoSignatureResizerPage() {
           {
             '@type': 'HowToStep',
             name: 'Automatic Pixel Calibration',
-            text: 'VeriSeal locks exact pixel dimensions and balances file size within strict RRB rules.',
+            text: 'Kagazo locks exact pixel dimensions and balances file size within strict RRB rules.',
           },
           {
             '@type': 'HowToStep',

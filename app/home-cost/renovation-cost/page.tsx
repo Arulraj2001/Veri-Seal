@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Calculate wall painting litres, coats, paint cost, and labor alongside vitrified floor tiles count with 10% wastage. Turnkey room renovation budget for Indian homes.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/renovation-cost',
+    canonical: 'https://Kagazo.in/home-cost/renovation-cost',
   },
   openGraph: {
-    title: 'Home Renovation Painting & Tile Cost Calculator | VeriSeal',
+    title: 'Home Renovation Painting & Tile Cost Calculator | Kagazo',
     description:
       'Estimate exact paint litres, labor charges, and vitrified floor tile boxes for room makeovers in India.',
-    url: 'https://veriseal.in/home-cost/renovation-cost',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/renovation-cost',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

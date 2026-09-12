@@ -5,24 +5,24 @@ import { Upload, Cpu, CheckCircle2, ShieldCheck, FileCheck2, ArrowRight } from '
 import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'How It Works — Digital Signature Verification Architecture | VeriSeal',
+  title: 'How It Works — Digital Signature Verification Architecture | Kagazo',
   description:
-    'Learn how VeriSeal verifies Indian government PDF digital signatures using SHA-256 byte range hashing, CCA India root trust anchors, and ISO 32000-1 LTV dictionaries.',
+    'Learn how Kagazo verifies Indian government PDF digital signatures using SHA-256 byte range hashing, CCA India root trust anchors, and ISO 32000-1 LTV dictionaries.',
   alternates: {
     canonical: `${SITE_URL}/how-it-works`,
   },
   openGraph: {
-    title: 'How It Works — Digital Signature Verification Architecture | VeriSeal',
+    title: 'How It Works — Digital Signature Verification Architecture | Kagazo',
     description:
-      'Learn how VeriSeal audits PDF byte ranges, validates against RCAI root certificates, and embeds Long-Term Validation (LTV) dictionaries.',
+      'Learn how Kagazo audits PDF byte ranges, validates against RCAI root certificates, and embeds Long-Term Validation (LTV) dictionaries.',
     url: `${SITE_URL}/how-it-works`,
-    siteName: 'VeriSeal',
-    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'How VeriSeal Works' }],
+    siteName: 'Kagazo',
+    images: [{ url: `${SITE_URL}/og`, width: 1200, height: 630, alt: 'How Kagazo Works' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'How VeriSeal Works — Cryptographic PDF Verification',
-    description: 'Learn how VeriSeal validates signatures against CCA India root certificates.',
+    title: 'How Kagazo Works — Cryptographic PDF Verification',
+    description: 'Learn how Kagazo validates signatures against CCA India root certificates.',
     images: [`${SITE_URL}/og`],
   },
 };
@@ -38,7 +38,7 @@ export default function HowItWorksPage() {
             <span>Cryptographic Workflow</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-text-main tracking-tight">
-            How VeriSeal Works
+            How Kagazo Works
           </h1>
           <p className="mt-4 text-base sm:text-lg text-text-main/70 leading-relaxed">
             From an unverified yellow question mark to a tamper-evident green checkmark in 3 simple steps.
@@ -57,7 +57,7 @@ export default function HowItWorksPage() {
                 1. Upload PDF to Ephemeral Memory
               </h3>
               <p className="text-text-main/70 text-sm leading-relaxed">
-                Drag and drop your e-Aadhaar, community certificate, or PAN card into VeriSeal. The file is uploaded through an encrypted TLS 1.3 tunnel directly into volatile RAM. If password-protected, the password is used in-memory solely for decryption and is never retained.
+                Drag and drop your e-Aadhaar, community certificate, or PAN card into Kagazo. The file is uploaded through an encrypted TLS 1.3 tunnel directly into volatile RAM. If password-protected, the password is used in-memory solely for decryption and is never retained.
               </p>
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function HowItWorksPage() {
                 3. Long-Term Validation (/DSS) Stamping
               </h3>
               <p className="text-text-main/70 text-sm leading-relaxed">
-                VeriSeal constructs and embeds an ISO 32000-1 compliant <strong>Document Security Store (/DSS)</strong> dictionary containing all necessary certificate paths, CRLs, and OCSP tokens into the document via an incremental update. The resulting PDF displays a permanent green tick mark across all PDF viewers globally.
+                Kagazo constructs and embeds an ISO 32000-1 compliant <strong>Document Security Store (/DSS)</strong> dictionary containing all necessary certificate paths, CRLs, and OCSP tokens into the document via an incremental update. The resulting PDF displays a permanent green tick mark across all PDF viewers globally.
               </p>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function HowItWorksPage() {
             Unlike physical ink signatures, a PDF digital signature is an encrypted cryptographic digest. The signer&apos;s private key encrypts the document hash. When opened, the viewer decrypts the digest using the public key and compares it to the calculated hash.
           </p>
           <p>
-            Adobe Acrobat displays a yellow question mark because it cannot confirm that the public key originates from a trusted root. By connecting the dots back to the Indian Ministry of Electronics &amp; Information Technology&apos;s sovereign root certificates, VeriSeal provides mathematical certainty of authenticity.
+            Adobe Acrobat displays a yellow question mark because it cannot confirm that the public key originates from a trusted root. By connecting the dots back to the Indian Ministry of Electronics &amp; Information Technology&apos;s sovereign root certificates, Kagazo provides mathematical certainty of authenticity.
           </p>
         </div>
 

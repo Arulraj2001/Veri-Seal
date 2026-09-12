@@ -3,7 +3,7 @@ import CashFlowSurvivalEngine from '@/components/business-os/CashFlowSurvivalEng
 import { Clock, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Cash-Flow Survival Runway Calculator for Small Business | VeriSeal',
+  title: 'Cash-Flow Survival Runway Calculator for Small Business | Kagazo',
   description:
     'Calculate your exact cash runway in days and months. Uncover when your bank balance will hit zero if collections or sales slow down.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Cash-Flow Survival Runway Calculator for Small Business',
     description:
       'Profit on paper does not pay suppliers. Calculate your exact days of cash buffer before default.',
-    url: 'https://veriseal.org/business-os/cash-flow-survival-calculator',
+    url: 'https://Kagazo.org/business-os/cash-flow-survival-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function CashFlowSurvivalPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Cash-Flow Survival Runway Calculator',
-    url: 'https://veriseal.org/business-os/cash-flow-survival-calculator',
+    url: 'https://Kagazo.org/business-os/cash-flow-survival-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

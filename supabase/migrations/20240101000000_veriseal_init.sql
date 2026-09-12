@@ -1,4 +1,4 @@
--- VeriSeal Initial Supabase Schema Migration
+-- Kagazo Initial Supabase Schema Migration
 
 CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -47,9 +47,9 @@ INSERT INTO site_settings (key, value) VALUES
 ('adsense_publisher_id', ''),
 ('upi_id', 'YOUR_UPI_ID'),
 ('upi_qr_url', ''),
-('site_name', 'VeriSeal'),
+('site_name', 'Kagazo'),
 ('site_tagline', 'Verify Indian Government PDF Signatures'),
-('contact_email', 'support@veriseal.in'),
+('contact_email', 'support@kagazo.in'),
 ('whatsapp_number', ''),
 ('verification_counter', '421847'),
 ('language_tamil_enabled', 'true'),

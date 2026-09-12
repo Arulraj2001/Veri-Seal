@@ -22,7 +22,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-1',
     slug: 'verify-aadhaar-pdf',
-    title: 'Verify e-Aadhaar PDF Digital Signature Online | VeriSeal',
+    title: 'Verify e-Aadhaar PDF Digital Signature Online | Kagazo',
     h1: 'Verify UIDAI e-Aadhaar Digital Signature Online',
     meta_description: 'Verify the digital signature on your downloaded e-Aadhaar PDF. Fix yellow question mark into green tick verified by CCA India.',
     meta_keywords: 'verify aadhaar signature, aadhaar digital signature verify, uidai green tick, aadhaar yellow question mark fix',
@@ -31,8 +31,8 @@ let mockSeoPages: SeoPage[] = [
     state: 'All India',
     portal: 'UIDAI myAadhaar Portal',
     faq: [
-      { q: 'Why does my Aadhaar PDF show a yellow question mark?', a: 'Adobe Reader does not automatically trust the CCA India root certificate. VeriSeal verifies the signature against the official RCAI trust chain.' },
-      { q: 'Is it safe to upload my Aadhaar card?', a: 'Yes. VeriSeal processes all files strictly in-memory (RAM) and immediately purges data after cryptographic verification.' }
+      { q: 'Why does my Aadhaar PDF show a yellow question mark?', a: 'Adobe Reader does not automatically trust the CCA India root certificate. Kagazo verifies the signature against the official RCAI trust chain.' },
+      { q: 'Is it safe to upload my Aadhaar card?', a: 'Yes. Kagazo processes all files strictly in-memory (RAM) and immediately purges data after cryptographic verification.' }
     ],
     published: true,
     updated_at: '2026-09-01T10:00:00Z',
@@ -40,7 +40,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-2',
     slug: 'verify-community-certificate-tamil-nadu',
-    title: 'Verify Tamil Nadu Community Certificate Signature | VeriSeal',
+    title: 'Verify Tamil Nadu Community Certificate Signature | Kagazo',
     h1: 'Verify Tamil Nadu Community Certificate Digital Signature',
     meta_description: 'Verify digital signature on Tamil Nadu revenue department community certificate issued via e-Sevai / TNeGA portal.',
     meta_keywords: 'tamil nadu community certificate verify, tnega digital signature, esevai certificate verification',
@@ -49,7 +49,7 @@ let mockSeoPages: SeoPage[] = [
     state: 'Tamil Nadu',
     portal: 'Tamil Nadu e-District / TNeGA',
     faq: [
-      { q: 'How to verify TNeGA certificate signature?', a: 'Upload the digital certificate PDF downloaded from e-Sevai. VeriSeal validates the signature of the Zonal Deputy Tahsildar against CCA India roots.' }
+      { q: 'How to verify TNeGA certificate signature?', a: 'Upload the digital certificate PDF downloaded from e-Sevai. Kagazo validates the signature of the Zonal Deputy Tahsildar against CCA India roots.' }
     ],
     published: true,
     updated_at: '2026-09-02T11:00:00Z',
@@ -57,7 +57,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-3',
     slug: 'verify-nativity-certificate-tamil-nadu',
-    title: 'Verify Tamil Nadu Nativity Certificate Signature | VeriSeal',
+    title: 'Verify Tamil Nadu Nativity Certificate Signature | Kagazo',
     h1: 'Verify Tamil Nadu Nativity Certificate Digital Signature',
     meta_description: 'Check digital signature authenticity on Tamil Nadu nativity and residence certificates issued via TNeGA.',
     meta_keywords: 'tamil nadu nativity certificate signature, verify esevai residence certificate',
@@ -74,7 +74,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-4',
     slug: 'verify-income-certificate',
-    title: 'Verify Income Certificate Digital Signature Online | VeriSeal',
+    title: 'Verify Income Certificate Digital Signature Online | Kagazo',
     h1: 'Verify Income Certificate Digital Signature',
     meta_description: 'Verify government income certificate digital signature across Tamil Nadu, Karnataka, AP, Telangana and other states.',
     meta_keywords: 'income certificate verify online, revenue income certificate signature, tahsildar dsc verification',
@@ -83,7 +83,7 @@ let mockSeoPages: SeoPage[] = [
     state: 'All India',
     portal: 'State Revenue e-District Portals',
     faq: [
-      { q: 'Can I submit VeriSeal verified income certificate for scholarships?', a: 'Yes. VeriSeal embeds LTV (Long-Term Validation) ensuring all PDF viewers display the verified green checkmark.' }
+      { q: 'Can I submit Kagazo verified income certificate for scholarships?', a: 'Yes. Kagazo embeds LTV (Long-Term Validation) ensuring all PDF viewers display the verified green checkmark.' }
     ],
     published: true,
     updated_at: '2026-09-04T13:00:00Z',
@@ -91,7 +91,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-5',
     slug: 'verify-pan-card-pdf',
-    title: 'Verify e-PAN Card Digital Signature Online | VeriSeal',
+    title: 'Verify e-PAN Card Digital Signature Online | Kagazo',
     h1: 'Verify Income Tax Department e-PAN Card Digital Signature',
     meta_description: 'Verify digital signature on NSDL / UTIITSL / Income Tax portal e-PAN cards instantly.',
     meta_keywords: 'verify pan card signature, e-pan digital signature verify, protean nsdl pan signature',
@@ -100,7 +100,7 @@ let mockSeoPages: SeoPage[] = [
     state: 'All India',
     portal: 'Income Tax e-Filing / Protean',
     faq: [
-      { q: 'How do I know my e-PAN signature is valid?', a: 'VeriSeal checks the e-Mudhra or (n)Code CA certificate hierarchy under CCA India.' }
+      { q: 'How do I know my e-PAN signature is valid?', a: 'Kagazo checks the e-Mudhra or (n)Code CA certificate hierarchy under CCA India.' }
     ],
     published: true,
     updated_at: '2026-09-05T14:00:00Z',
@@ -108,7 +108,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-6',
     slug: 'verify-birth-certificate',
-    title: 'Verify Digital Birth Certificate Signature Online | VeriSeal',
+    title: 'Verify Digital Birth Certificate Signature Online | Kagazo',
     h1: 'Verify Municipal Birth Certificate Digital Signature',
     meta_description: 'Check validity of digital signatures on municipal corporation and state registrar birth certificates.',
     meta_keywords: 'birth certificate signature check, civil registration system birth certificate verify',
@@ -117,7 +117,7 @@ let mockSeoPages: SeoPage[] = [
     state: 'All India',
     portal: 'Civil Registration System (CRS India)',
     faq: [
-      { q: 'Does VeriSeal support state municipal certificates?', a: 'Yes, certificates signed using CCA-licensed CAs (e-Mudhra, NIC, Sify, Capricorn) are supported.' }
+      { q: 'Does Kagazo support state municipal certificates?', a: 'Yes, certificates signed using CCA-licensed CAs (e-Mudhra, NIC, Sify, Capricorn) are supported.' }
     ],
     published: true,
     updated_at: '2026-09-06T15:00:00Z',
@@ -125,7 +125,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-7',
     slug: 'verify-digilocker-pdf',
-    title: 'Verify DigiLocker PDF Digital Signature | VeriSeal',
+    title: 'Verify DigiLocker PDF Digital Signature | Kagazo',
     h1: 'Verify DigiLocker Issued Document Digital Signature',
     meta_description: 'Verify digital signatures on documents issued by DigiLocker National Digital Locker System.',
     meta_keywords: 'digilocker signature verify, verify digilocker green tick, digilocker pdf valid',
@@ -134,7 +134,7 @@ let mockSeoPages: SeoPage[] = [
     state: 'All India',
     portal: 'National DigiLocker Portal',
     faq: [
-      { q: 'Are DigiLocker documents legally valid?', a: 'Yes, under Rule 9A of the IT Rules 2016. VeriSeal confirms the document has not been altered.' }
+      { q: 'Are DigiLocker documents legally valid?', a: 'Yes, under Rule 9A of the IT Rules 2016. Kagazo confirms the document has not been altered.' }
     ],
     published: true,
     updated_at: '2026-09-07T16:00:00Z',
@@ -142,7 +142,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-8',
     slug: 'verify-itr-v',
-    title: 'Verify Income Tax ITR-V Acknowledgment Signature | VeriSeal',
+    title: 'Verify Income Tax ITR-V Acknowledgment Signature | Kagazo',
     h1: 'Verify ITR-V Income Tax Return Acknowledgment Signature',
     meta_description: 'Verify digital signature on Income Tax Return (ITR-V) acknowledgment receipts.',
     meta_keywords: 'verify itr-v signature, income tax return acknowledgment signature, cpc bengaluru signature',
@@ -159,7 +159,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-9',
     slug: 'aadhaar-pdf-yellow-question-mark-fix',
-    title: 'Fix Yellow Question Mark on Aadhaar PDF | VeriSeal',
+    title: 'Fix Yellow Question Mark on Aadhaar PDF | Kagazo',
     h1: 'Fix Aadhaar Card Yellow Question Mark into Green Tick',
     meta_description: 'Learn how to fix signature validity unknown and convert yellow question mark into green tick permanently.',
     meta_keywords: 'aadhaar yellow question mark fix, signature not verified aadhaar, convert yellow question mark to green tick',
@@ -176,7 +176,7 @@ let mockSeoPages: SeoPage[] = [
   {
     id: 'seo-10',
     slug: 'meeseva-certificate-verify',
-    title: 'Verify MeeSeva Certificate Digital Signature Online | VeriSeal',
+    title: 'Verify MeeSeva Certificate Digital Signature Online | Kagazo',
     h1: 'Verify Andhra Pradesh & Telangana MeeSeva Certificate Signature',
     meta_description: 'Verify digital signatures on caste, income, residence, and land certificates issued through MeeSeva portal.',
     meta_keywords: 'meeseva certificate verify, ap meeseva digital signature, ts meeseva certificate check',

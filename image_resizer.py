@@ -1,5 +1,5 @@
 """
-VeriSeal Bi-Directional Auto-Enhance Image & Signature Engine.
+Kagazo Bi-Directional Auto-Enhance Image & Signature Engine.
 Guarantees exact file size compliance for Indian Government Exam Portals (TNPSC, UPSC, SSC, NEET, IBPS).
 
 Key Capabilities:
@@ -17,7 +17,7 @@ import logging
 from typing import Optional, Tuple, Dict, Any
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageOps
 
-logger = logging.getLogger("veriseal.image_resizer")
+logger = logging.getLogger("kagazo.image_resizer")
 logging.basicConfig(level=logging.INFO)
 
 

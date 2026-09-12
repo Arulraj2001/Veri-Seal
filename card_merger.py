@@ -1,5 +1,5 @@
 """
-VeriSeal Driving License & Smart Card (RC / PAN) Front-Back Merger Engine.
+Kagazo Driving License & Smart Card (RC / PAN) Front-Back Merger Engine.
 Combines Front and Back sides of smart card driving licenses onto a single A4 page
 calibrated strictly under <200KB for Parivahan Sarathi, State RTOs, and FASTag portals.
 """
@@ -14,7 +14,7 @@ except ImportError:
     import fitz
 from PIL import Image, ImageOps, ImageDraw
 
-logger = logging.getLogger("veriseal.card_merger")
+logger = logging.getLogger("kagazo.card_merger")
 
 # Standard ISO/IEC 7810 ID-1 (CR-80 Smart Card) Dimensions
 CARD_ASPECT_RATIO = 85.60 / 53.98  # ~1.5858

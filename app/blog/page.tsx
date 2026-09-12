@@ -10,24 +10,24 @@ import { SITE_URL } from '@/lib/constants';
 export const revalidate = 3600; // ISR 1 hour
 
 export const metadata: Metadata = {
-  title: 'VeriSeal Blog — Indian Government PDF & Digital Signature Guides',
+  title: 'Kagazo Blog — Indian Government PDF & Digital Signature Guides',
   description:
     'Step-by-step guides to verify Aadhaar, community certificate, PAN card and all Indian government PDF digital signatures. Fix yellow question mark free.',
   alternates: {
     canonical: `${SITE_URL}/blog`,
   },
   openGraph: {
-    title: 'VeriSeal Blog — Indian Government PDF & Digital Signature Guides',
+    title: 'Kagazo Blog — Indian Government PDF & Digital Signature Guides',
     description:
       'Step-by-step guides to verify Aadhaar, community certificate, PAN card and all Indian government PDF digital signatures. Fix yellow question mark free.',
     url: `${SITE_URL}/blog`,
-    siteName: 'VeriSeal',
+    siteName: 'Kagazo',
     images: [
       {
-        url: `${SITE_URL}/og?title=` + encodeURIComponent('VeriSeal Blog — Guides & Tutorials'),
+        url: `${SITE_URL}/og?title=` + encodeURIComponent('Kagazo Blog — Guides & Tutorials'),
         width: 1200,
         height: 630,
-        alt: 'VeriSeal Blog — Indian Government PDF & Digital Signature Guides',
+        alt: 'Kagazo Blog — Indian Government PDF & Digital Signature Guides',
       },
     ],
     locale: 'en_IN',
@@ -35,10 +35,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'VeriSeal Blog — Indian Government PDF & Digital Signature Guides',
+    title: 'Kagazo Blog — Indian Government PDF & Digital Signature Guides',
     description:
       'Step-by-step guides to verify Aadhaar, community certificate, PAN card and all Indian government PDF digital signatures. Fix yellow question mark free.',
-    images: [`${SITE_URL}/og?title=` + encodeURIComponent('VeriSeal Blog — Guides & Tutorials')],
+    images: [`${SITE_URL}/og?title=` + encodeURIComponent('Kagazo Blog — Guides & Tutorials')],
   },
 };
 

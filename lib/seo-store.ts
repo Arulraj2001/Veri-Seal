@@ -21,7 +21,7 @@ export const mockSeoPages: SeoPageData[] = [
   {
     id: 'seo-1',
     slug: 'verify-aadhaar-pdf',
-    title: 'Verify e-Aadhaar PDF Digital Signature Online | VeriSeal',
+    title: 'Verify e-Aadhaar PDF Digital Signature Online | Kagazo',
     h1: 'Verify UIDAI e-Aadhaar Digital Signature Online',
     meta_description: 'Verify the digital signature on your downloaded e-Aadhaar PDF. Fix yellow question mark into green tick verified by CCA India.',
     meta_keywords: 'verify aadhaar signature, aadhaar digital signature verify, uidai green tick, aadhaar yellow question mark fix, eaadhaar signature valid',
@@ -33,22 +33,22 @@ export const mockSeoPages: SeoPageData[] = [
 
 Every e-Aadhaar downloaded from the UIDAI portal contains a cryptographic digital signature generated with a high-assurance Hardware Security Module (HSM) licensed under the Controller of Certifying Authorities (CCA).
 
-Because UIDAI signs millions of documents dynamically, the embedded signing certificates operate under India's sovereign root trust framework (RCAI). VeriSeal provides the instant verification engine that establishes the complete cryptographic chain of trust.`,
+Because UIDAI signs millions of documents dynamically, the embedded signing certificates operate under India's sovereign root trust framework (RCAI). Kagazo provides the instant verification engine that establishes the complete cryptographic chain of trust.`,
     faq: [
       {
         q: 'Why does my Aadhaar PDF show a yellow question mark?',
-        a: 'Adobe Acrobat Reader and other desktop PDF viewers do not bundle the Controller of Certifying Authorities (CCA) India root certificate by default. Consequently, Adobe displays a yellow question mark stating "Signature validity is unknown". VeriSeal validates the signature against the official RCAI root and embeds Long-Term Validation (LTV) so it renders as a verified green tick.'
+        a: 'Adobe Acrobat Reader and other desktop PDF viewers do not bundle the Controller of Certifying Authorities (CCA) India root certificate by default. Consequently, Adobe displays a yellow question mark stating "Signature validity is unknown". Kagazo validates the signature against the official RCAI root and embeds Long-Term Validation (LTV) so it renders as a verified green tick.'
       },
       {
         q: 'What is the password to open and verify my e-Aadhaar PDF?',
         a: 'The official UIDAI password format is the first 4 letters of your name in CAPITAL LETTERS followed by your 4-digit Year of Birth (e.g. if your name is SURESH KUMAR and birth year is 1992, your password is SURE1992).'
       },
       {
-        q: 'Is it safe to upload my Aadhaar document on VeriSeal?',
-        a: 'Yes, completely safe. VeriSeal operates with a strict Zero-Storage Architecture. Your PDF is processed 100% in volatile server memory (RAM) and immediately purged upon completing cryptographic checks. Your Aadhaar number and demographic data are never stored or logged.'
+        q: 'Is it safe to upload my Aadhaar document on Kagazo?',
+        a: 'Yes, completely safe. Kagazo operates with a strict Zero-Storage Architecture. Your PDF is processed 100% in volatile server memory (RAM) and immediately purged upon completing cryptographic checks. Your Aadhaar number and demographic data are never stored or logged.'
       },
       {
-        q: 'Is a VeriSeal verified e-Aadhaar valid for government and bank submissions?',
+        q: 'Is a Kagazo verified e-Aadhaar valid for government and bank submissions?',
         a: 'Yes. Under Section 5 of the Information Technology Act 2000 and UIDAI circulars, a digitally verified e-Aadhaar bearing an authenticated digital signature has full legal evidentiary status equal to the physical Aadhaar letter.'
       }
     ],
@@ -58,7 +58,7 @@ Because UIDAI signs millions of documents dynamically, the embedded signing cert
   {
     id: 'seo-2',
     slug: 'verify-community-certificate-tamil-nadu',
-    title: 'Verify Tamil Nadu Community Certificate Signature | VeriSeal',
+    title: 'Verify Tamil Nadu Community Certificate Signature | Kagazo',
     h1: 'Verify Tamil Nadu Community Certificate Digital Signature',
     meta_description: 'Verify digital signature on Tamil Nadu revenue department community certificate issued via e-Sevai / TNeGA portal.',
     meta_keywords: 'tamil nadu community certificate verify, tnega digital signature, esevai certificate verification, tnea counseling signature verify',
@@ -74,7 +74,7 @@ Students applying for college counseling through TNEA, medical seats through TN 
     faq: [
       {
         q: 'How do I verify the digital signature on my TNeGA community certificate?',
-        a: 'Upload your certificate PDF downloaded from the e-Sevai portal to VeriSeal. The system parses the PKCS#7 signature container, checks the Deputy Tahsildar\'s signing token against the NIC Sub-CA root, and confirms zero unauthorized alterations.'
+        a: 'Upload your certificate PDF downloaded from the e-Sevai portal to Kagazo. The system parses the PKCS#7 signature container, checks the Deputy Tahsildar\'s signing token against the NIC Sub-CA root, and confirms zero unauthorized alterations.'
       },
       {
         q: 'Who is the authorized signer on Tamil Nadu revenue certificates?',
@@ -82,7 +82,7 @@ Students applying for college counseling through TNEA, medical seats through TN 
       },
       {
         q: 'Why was my community certificate flagged as unverified during TNEA counseling?',
-        a: 'Counseling scrutiny committees look for a cryptographically verified green checkmark. If viewed in unconfigured PDF software, it shows an unverified question mark. VeriSeal fixes this by validating the certificate and appending Long-Term Validation (LTV).'
+        a: 'Counseling scrutiny committees look for a cryptographically verified green checkmark. If viewed in unconfigured PDF software, it shows an unverified question mark. Kagazo fixes this by validating the certificate and appending Long-Term Validation (LTV).'
       }
     ],
     published: true,
@@ -91,7 +91,7 @@ Students applying for college counseling through TNEA, medical seats through TN 
   {
     id: 'seo-3',
     slug: 'verify-nativity-certificate-tamil-nadu',
-    title: 'Verify Tamil Nadu Nativity Certificate Signature | VeriSeal',
+    title: 'Verify Tamil Nadu Nativity Certificate Signature | Kagazo',
     h1: 'Verify Tamil Nadu Nativity Certificate Digital Signature',
     meta_description: 'Check digital signature authenticity on Tamil Nadu nativity and residence certificates issued via TNeGA.',
     meta_keywords: 'tamil nadu nativity certificate signature, verify esevai residence certificate, tnega nativity green tick',
@@ -103,15 +103,15 @@ Students applying for college counseling through TNEA, medical seats through TN 
 
 Issued under the authority of the Commissioner of Revenue Administration and Disaster Management, each certificate is generated through the e-District application and cryptographically sealed.
 
-VeriSeal confirms the integrity of the document, validating that the electronic record matches the original issuance parameters without tampering.`,
+Kagazo confirms the integrity of the document, validating that the electronic record matches the original issuance parameters without tampering.`,
     faq: [
       {
         q: 'What does a valid nativity certificate signature contain?',
         a: 'It contains the name of the revenue officer, their designated Taluk and District, the timestamp of approval, and the cryptographic thumbprint issued by the NIC Certifying Authority.'
       },
       {
-        q: 'Can VeriSeal detect if an e-Sevai PDF has been modified?',
-        a: 'Yes. VeriSeal performs ByteRange checking. If even a single pixel or character of text (such as name, address, or date) has been edited using PDF editors, the cryptographic hash verification will immediately fail and flag the document as invalid.'
+        q: 'Can Kagazo detect if an e-Sevai PDF has been modified?',
+        a: 'Yes. Kagazo performs ByteRange checking. If even a single pixel or character of text (such as name, address, or date) has been edited using PDF editors, the cryptographic hash verification will immediately fail and flag the document as invalid.'
       }
     ],
     published: true,
@@ -120,7 +120,7 @@ VeriSeal confirms the integrity of the document, validating that the electronic 
   {
     id: 'seo-4',
     slug: 'verify-income-certificate',
-    title: 'Verify Income Certificate Digital Signature Online | VeriSeal',
+    title: 'Verify Income Certificate Digital Signature Online | Kagazo',
     h1: 'Verify Income Certificate Digital Signature',
     meta_description: 'Verify government income certificate digital signature across Tamil Nadu, Karnataka, AP, Telangana and other states.',
     meta_keywords: 'income certificate verify online, revenue income certificate signature, tahsildar dsc verification, scholarship income certificate verify',
@@ -132,11 +132,11 @@ VeriSeal confirms the integrity of the document, validating that the electronic 
 
 Digital income certificates are issued through state e-District platforms (such as Nadakacheri in Karnataka, Meeseva in Andhra Pradesh & Telangana, e-District in UP and Maharashtra, and TNeGA in Tamil Nadu).
 
-VeriSeal supports all state revenue portals operating under the Controller of Certifying Authorities (CCA) India hierarchy.`,
+Kagazo supports all state revenue portals operating under the Controller of Certifying Authorities (CCA) India hierarchy.`,
     faq: [
       {
-        q: 'Can I submit a VeriSeal verified income certificate for national scholarships?',
-        a: 'Yes. VeriSeal verifies the document against the Indian National PKI hierarchy and embeds LTV proof, ensuring educational institutions and verification officers see a verified green tick.'
+        q: 'Can I submit a Kagazo verified income certificate for national scholarships?',
+        a: 'Yes. Kagazo verifies the document against the Indian National PKI hierarchy and embeds LTV proof, ensuring educational institutions and verification officers see a verified green tick.'
       },
       {
         q: 'Does an Income Certificate have an expiration date?',
@@ -149,7 +149,7 @@ VeriSeal supports all state revenue portals operating under the Controller of Ce
   {
     id: 'seo-5',
     slug: 'verify-pan-card-pdf',
-    title: 'Verify e-PAN Card Digital Signature Online | VeriSeal',
+    title: 'Verify e-PAN Card Digital Signature Online | Kagazo',
     h1: 'Verify Income Tax Department e-PAN Card Digital Signature',
     meta_description: 'Verify digital signature on NSDL / UTIITSL / Income Tax portal e-PAN cards instantly. Confirm authenticity before financial transactions.',
     meta_keywords: 'verify pan card signature, e-pan digital signature verify, protean nsdl pan signature, utiitsl pan card verify',
@@ -165,7 +165,7 @@ Banks, demat account brokers, real estate registries, and NBFCs require proof of
     faq: [
       {
         q: 'How do I know if my e-PAN card signature is genuine?',
-        a: 'When verified on VeriSeal, a genuine e-PAN will display the signer identity as "Protean eGov Technologies Limited" or "UTI Infrastructure Technology And Services Limited" with a certificate issued by an approved Indian CA (such as eMudhra or NIC).'
+        a: 'When verified on Kagazo, a genuine e-PAN will display the signer identity as "Protean eGov Technologies Limited" or "UTI Infrastructure Technology And Services Limited" with a certificate issued by an approved Indian CA (such as eMudhra or NIC).'
       },
       {
         q: 'What is the password for opening an e-PAN PDF?',
@@ -178,7 +178,7 @@ Banks, demat account brokers, real estate registries, and NBFCs require proof of
   {
     id: 'seo-6',
     slug: 'verify-digilocker-pdf',
-    title: 'Verify DigiLocker Issued Document Signature | VeriSeal',
+    title: 'Verify DigiLocker Issued Document Signature | Kagazo',
     h1: 'Verify DigiLocker Digital Signature and Certificate Integrity',
     meta_description: 'Verify digital signatures on documents issued by DigiLocker. Validate driving licenses, vehicle RC, marksheet and degree certificates.',
     meta_keywords: 'digilocker signature verify, verify digilocker document, digilocker green tick, digilocker national pki',
@@ -197,8 +197,8 @@ Under Rule 9A of the Information Technology (Preservation and Retention of Infor
         a: 'The digital signature proves that the document originated directly from the issuing authority\'s authenticated database and was not altered after issuance.'
       },
       {
-        q: 'Does VeriSeal support DigiLocker educational certificates?',
-        a: 'Yes. VeriSeal verifies digital signatures on CBSE marksheets, university degree certificates, migration certificates, and state board transcripts issued via DigiLocker.'
+        q: 'Does Kagazo support DigiLocker educational certificates?',
+        a: 'Yes. Kagazo verifies digital signatures on CBSE marksheets, university degree certificates, migration certificates, and state board transcripts issued via DigiLocker.'
       }
     ],
     published: true,
@@ -207,7 +207,7 @@ Under Rule 9A of the Information Technology (Preservation and Retention of Infor
   {
     id: 'seo-7',
     slug: 'verify-epfo-uan-card',
-    title: 'Verify EPFO UAN Card & Passbook Signature | VeriSeal',
+    title: 'Verify EPFO UAN Card & Passbook Signature | Kagazo',
     h1: 'Verify EPFO Digital Signature on UAN Card & Member Passbook',
     meta_description: 'Verify digital signature on EPFO UAN card and provident fund member passbook. Ensure authenticity of retirement savings records.',
     meta_keywords: 'epfo signature verify, uan card digital signature, epf passbook signature validation, epfo green tick',
@@ -232,7 +232,7 @@ These documents are digitally signed by authorized EPFO IT systems to prevent fr
   {
     id: 'seo-8',
     slug: 'verify-itr-acknowledgement',
-    title: 'Verify Income Tax ITR-V Acknowledgment Signature | VeriSeal',
+    title: 'Verify Income Tax ITR-V Acknowledgment Signature | Kagazo',
     h1: 'Verify ITR-V Income Tax Return Digital Signature',
     meta_description: 'Verify digital signature on ITR-V tax filing acknowledgment PDFs. Validate CPC Bengaluru cryptographic signature online.',
     meta_keywords: 'itr-v signature verify, income tax return acknowledgment signature, cpc bengaluru digital signature verify',

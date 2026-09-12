@@ -17,7 +17,7 @@ export function PaymentApprovedEmail({
         {/* Header */}
         <div style={{ borderBottom: '2px solid #F1EFEE', paddingBottom: '20px', marginBottom: '24px' }}>
           <span style={{ backgroundColor: '#FFF0EA', border: '1px solid #E6570B', color: '#E6570B', borderRadius: '8px', padding: '6px 12px', fontWeight: 'bold', fontSize: '18px' }}>
-            VeriSeal
+            Kagazo
           </span>
         </div>
 
@@ -25,7 +25,7 @@ export function PaymentApprovedEmail({
         <div style={{ textAlign: 'center', marginBottom: '24px' }}>
           <div style={{ fontSize: '36px', marginBottom: '8px' }}>🎉</div>
           <h2 style={{ fontSize: '22px', fontWeight: '900', color: '#2E241F', margin: '0 0 8px 0' }}>
-            Your VeriSeal {plan.toUpperCase()} Access is Now Active!
+            Your Kagazo {plan.toUpperCase()} Access is Now Active!
           </h2>
           <p style={{ fontSize: '14px', color: '#786C65', margin: 0 }}>
             Hi {name}, your UPI payment has been verified and your subscription is active.
@@ -60,7 +60,7 @@ export function PaymentApprovedEmail({
 
         <div style={{ textAlign: 'center', margin: '32px 0' }}>
           <a
-            href="https://veriseal.in/dashboard"
+            href="https://Kagazo.in/dashboard"
             style={{
               backgroundColor: '#E6570B',
               color: '#FFFFFF',
@@ -80,7 +80,7 @@ export function PaymentApprovedEmail({
         <div style={{ borderTop: '1px solid #F1EFEE', paddingTop: '16px', fontSize: '11px', color: '#9C9189', textAlign: 'center' }}>
           Thank you for supporting digital integrity in citizen government services.
           <br />
-          VeriSeal &bull; Safe, Private, and Cryptographically Authentic
+          Kagazo &bull; Safe, Private, and Cryptographically Authentic
         </div>
       </div>
     </div>

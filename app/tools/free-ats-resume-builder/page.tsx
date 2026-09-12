@@ -28,7 +28,7 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'Free ATS Resume Builder Online & Bio-Data Studio (100% Free, No Signup) | VeriSeal',
+  title: 'Free ATS Resume Builder Online & Bio-Data Studio (100% Free, No Signup) | Kagazo',
   description:
     'Build ATS-compliant software engineer resumes, fresher 1-page CVs, Sarkari PSU tabular biodata, and marriage biodata online. Real-time ATS readiness scoring (0-100), modern tech stack chips, clean A4 PDF export. 100% private in-RAM, zero watermark.',
   keywords: [
@@ -46,14 +46,14 @@ export const metadata: Metadata = {
     'psu tabular cv format',
   ],
   alternates: {
-    canonical: 'https://veriseal.in/tools/free-ats-resume-builder',
+    canonical: 'https://Kagazo.in/tools/free-ats-resume-builder',
   },
   openGraph: {
-    title: 'Free ATS Resume Builder Online & Bio-Data Studio | VeriSeal',
+    title: 'Free ATS Resume Builder Online & Bio-Data Studio | Kagazo',
     description:
       'Real-time ATS scoring (0-100), 10 print-ready templates, quick tech chips, and zero cloud storage. Export clean single-page A4 PDFs for tech jobs, PSUs, and bio-data.',
-    url: 'https://veriseal.in/tools/free-ats-resume-builder',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/free-ats-resume-builder',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -88,32 +88,32 @@ const ATS_RULES = [
 const COMPARISON = [
   {
     feature: 'Price & Hidden Paywalls',
-    veriseal: '100% Free Forever (No Card)',
+    Kagazo: '100% Free Forever (No Card)',
     competitors: '₹1,500/mo or $24.90 Paywall at Download',
   },
   {
     feature: 'Watermarks & Branding',
-    veriseal: 'Zero Watermark, Completely Sovereign',
+    Kagazo: 'Zero Watermark, Completely Sovereign',
     competitors: 'Forced Watermark on Free Tier',
   },
   {
     feature: 'ATS Scoring Engine',
-    veriseal: 'Live 0–100 Deterministic Audit & JD Matcher',
+    Kagazo: 'Live 0–100 Deterministic Audit & JD Matcher',
     competitors: 'Vague visual percentage or paid upsell',
   },
   {
     feature: 'Data Privacy & Storage',
-    veriseal: '100% In-Browser RAM (Zero Cloud Storage)',
+    Kagazo: '100% In-Browser RAM (Zero Cloud Storage)',
     competitors: 'Resume & PII Stored & Sold to Job Portals',
   },
   {
     feature: 'Specialized Indian Modes',
-    veriseal: 'Tech ATS + Academic CV + Sarkari PSU + Marriage Bio-Data',
+    Kagazo: 'Tech ATS + Academic CV + Sarkari PSU + Marriage Bio-Data',
     competitors: 'Generic western templates only',
   },
   {
     feature: 'A4 Single-Page Auto-Fit',
-    veriseal: '1-Click Intelligent Font & Margin Packing',
+    Kagazo: '1-Click Intelligent Font & Margin Packing',
     competitors: 'Manual spacing adjustments required',
   },
 ];
@@ -122,7 +122,7 @@ const FAQS = [
   {
     question: 'How does the ATS Resume Scoring algorithm work?',
     answer:
-      'VeriSeal analyzes your resume against 10 strict institutional ATS criteria used by Taleo, Workday, Greenhouse, and Lever. It evaluates: contact completeness (phone, email, LinkedIn/GitHub), summary length, work experience quantified metrics (percentages, dollar/rupee amounts, performance figures), action-oriented power verbs, hard skill density, education chronological order, and strict 1-page physical limits.',
+      'Kagazo analyzes your resume against 10 strict institutional ATS criteria used by Taleo, Workday, Greenhouse, and Lever. It evaluates: contact completeness (phone, email, LinkedIn/GitHub), summary length, work experience quantified metrics (percentages, dollar/rupee amounts, performance figures), action-oriented power verbs, hard skill density, education chronological order, and strict 1-page physical limits.',
   },
   {
     question: 'Why do so many resumes fail ATS parsers despite good qualifications?',
@@ -132,12 +132,12 @@ const FAQS = [
   {
     question: 'Is this resume builder truly 100% free with no watermark?',
     answer:
-      'Yes, absolutely. Unlike commercial resume builders that let you spend 45 minutes typing your life history only to demand a ₹1,500 credit card subscription at the final download screen, VeriSeal generates vector-clean, 100% watermark-free A4 PDFs directly inside your browser for zero rupees.',
+      'Yes, absolutely. Unlike commercial resume builders that let you spend 45 minutes typing your life history only to demand a ₹1,500 credit card subscription at the final download screen, Kagazo generates vector-clean, 100% watermark-free A4 PDFs directly inside your browser for zero rupees.',
   },
   {
     question: 'Is my personal information or employment history stored on your servers?',
     answer:
-      'Never. VeriSeal operates on a strict Sovereign Local-First Privacy architecture. All state management, ATS scoring computation, layout rendering, and PDF generation occur strictly in your local browser’s RAM memory. Zero bytes of your resume are ever uploaded or transmitted across the network.',
+      'Never. Kagazo operates on a strict Sovereign Local-First Privacy architecture. All state management, ATS scoring computation, layout rendering, and PDF generation occur strictly in your local browser’s RAM memory. Zero bytes of your resume are ever uploaded or transmitted across the network.',
   },
   {
     question: 'How do I use the Sarkari PSU and Indian Marriage Bio-Data modes?',
@@ -147,7 +147,7 @@ const FAQS = [
   {
     question: 'Can I save my resume and edit it later without creating an account?',
     answer:
-      'Yes! Click the "Save Profile JSON" button at any time to download your complete resume data as a lightweight JSON file to your computer. When you return to VeriSeal in the future, click "Load JSON" to instantly restore your entire profile, templates, and styling without needing any login or password.',
+      'Yes! Click the "Save Profile JSON" button at any time to download your complete resume data as a lightweight JSON file to your computer. When you return to Kagazo in the future, click "Load JSON" to instantly restore your entire profile, templates, and styling without needing any login or password.',
   },
 ];
 
@@ -157,8 +157,8 @@ export default function FreeAtsResumeBuilderPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal ATS Resume Builder & Sovereign Bio-Data Studio',
-        url: 'https://veriseal.in/tools/free-ats-resume-builder',
+        name: 'Kagazo ATS Resume Builder & Sovereign Bio-Data Studio',
+        url: 'https://Kagazo.in/tools/free-ats-resume-builder',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         browserRequirements: 'Requires HTML5 and JavaScript.',
@@ -323,7 +323,7 @@ export default function FreeAtsResumeBuilderPage() {
         {/* Transparent Comparison Table */}
         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-border p-6 sm:p-8 space-y-6 shadow-sm">
           <div className="border-b border-border pb-4">
-            <h2 className="text-xl font-bold text-foreground">Why Job Seekers Choose VeriSeal Over Paywalled Builders</h2>
+            <h2 className="text-xl font-bold text-foreground">Why Job Seekers Choose Kagazo Over Paywalled Builders</h2>
             <p className="text-xs text-muted-foreground mt-1">
               Zero sneaky subscriptions, zero locked downloads, and zero data leakage
             </p>
@@ -335,7 +335,7 @@ export default function FreeAtsResumeBuilderPage() {
                 <tr className="border-b border-border bg-slate-50 dark:bg-slate-800/60 text-foreground">
                   <th className="py-3 px-4 font-bold">Feature / Standard</th>
                   <th className="py-3 px-4 font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50/50 dark:bg-emerald-950/20">
-                    VeriSeal Sovereign Studio
+                    Kagazo Sovereign Studio
                   </th>
                   <th className="py-3 px-4 font-bold text-muted-foreground">
                     Commercial Builders (Zety, Canva, Novoresume)
@@ -347,7 +347,7 @@ export default function FreeAtsResumeBuilderPage() {
                   <tr key={idx} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                     <td className="py-3 px-4 font-semibold text-foreground">{row.feature}</td>
                     <td className="py-3 px-4 font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50/30 dark:bg-emerald-950/10">
-                      ✓ {row.veriseal}
+                      ✓ {row.Kagazo}
                     </td>
                     <td className="py-3 px-4 text-muted-foreground">✗ {row.competitors}</td>
                   </tr>
@@ -432,7 +432,7 @@ export default function FreeAtsResumeBuilderPage() {
           <div className="space-y-2 text-center sm:text-left">
             <h3 className="text-lg font-bold text-foreground">Need To Rescale Exam Photos or Join Marksheets?</h3>
             <p className="text-xs text-muted-foreground">
-              Explore VeriSeal’s 50+ free utilities: passport photo sheet generator, marksheet compressor, and salary slip generator.
+              Explore Kagazo’s 50+ free utilities: passport photo sheet generator, marksheet compressor, and salary slip generator.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0">

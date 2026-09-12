@@ -3,7 +3,7 @@ import BreakEvenEngine from '@/components/business-os/BreakEvenEngine';
 import { Target, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Break-Even & Survival Volume Calculator for Indian SMBs | VeriSeal',
+  title: 'Break-Even & Survival Volume Calculator for Indian SMBs | Kagazo',
   description:
     'Free break-even calculator in Indian Rupees. Calculate the exact monthly turnover, total orders, and daily order quota needed to cover rent, staff, and fixed bills.',
   keywords: [
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Break-Even & Survival Volume Calculator for Indian SMBs',
     description:
       'Know the exact day of the month and order volume after which your business stops paying bills and starts pocketing true profit.',
-    url: 'https://veriseal.org/business-os/break-even-calculator',
+    url: 'https://Kagazo.org/business-os/break-even-calculator',
   },
 };
 
@@ -26,7 +26,7 @@ export default function BreakEvenPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'Break-Even & Survival Volume Calculator',
-    url: 'https://veriseal.org/business-os/break-even-calculator',
+    url: 'https://Kagazo.org/business-os/break-even-calculator',
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'All',
     offers: {

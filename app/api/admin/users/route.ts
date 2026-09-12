@@ -20,7 +20,7 @@ let mockUsers: AdminUser[] = [
   {
     id: 'u-101',
     name: 'Samuel Administrator',
-    email: 'samuel@veriseal.in',
+    email: 'samuel@Kagazo.in',
     plan: 'business',
     role: 'admin',
     banned: false,

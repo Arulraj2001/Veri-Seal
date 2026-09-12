@@ -1,5 +1,5 @@
 """
-VeriSeal High-Volume Batch Image Resizer & Queue Engine.
+Kagazo High-Volume Batch Image Resizer & Queue Engine.
 Processes up to 50 student photos or signatures concurrently in volatile computer RAM.
 Outputs a structured, zero-watermark ZIP archive calibrated to exact government recruitment guidelines.
 """
@@ -11,7 +11,7 @@ import logging
 from typing import Dict, Any, List, Tuple
 from PIL import Image, ImageOps
 
-logger = logging.getLogger("veriseal.batch_processor")
+logger = logging.getLogger("kagazo.batch_processor")
 
 PRESET_CONFIGS = {
     "ssc_photo": {"width": 350, "height": 450, "min_kb": 20, "max_kb": 50, "label": "SSC Photo (3.5x4.5cm)"},

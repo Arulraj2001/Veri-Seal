@@ -81,7 +81,7 @@ export default function ContactPage() {
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary-light text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider mb-4 shadow-2xs">
             <MessageSquare className="w-3.5 h-3.5" />
-            <span>VeriSeal Government PKI &amp; Citizen Support</span>
+            <span>Kagazo Government PKI &amp; Citizen Support</span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-black text-text-main tracking-tight leading-tight">
             Get in Touch with our Technical Desk

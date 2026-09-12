@@ -37,7 +37,7 @@ export default function RenovationCostEngine() {
     const query = type === 'paint'
       ? 'asian paints royale emulsion premium paint 20 litre'
       : 'vitrified floor tiles 2x2 kajaria somany';
-    window.open(`https://www.amazon.in/s?k=${encodeURIComponent(query)}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${encodeURIComponent(query)}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

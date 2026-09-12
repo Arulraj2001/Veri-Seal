@@ -23,14 +23,14 @@ export const metadata: Metadata = {
   description:
     'Search and find IFSC codes, MICR codes, branch addresses, and contact numbers for all Indian banks (State Bank of India, Indian Bank, Canara, HDFC, ICICI, PNB). Fast 1-click copy for exam forms and online money transfers.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/ifsc-code-finder',
+    canonical: 'https://Kagazo.in/tools/ifsc-code-finder',
   },
   openGraph: {
-    title: 'Free IFSC Code & Bank Branch Finder | VeriSeal',
+    title: 'Free IFSC Code & Bank Branch Finder | Kagazo',
     description:
       'Find IFSC and MICR codes for Indian banks with branch address and 1-click copy.',
-    url: 'https://veriseal.in/tools/ifsc-code-finder',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/ifsc-code-finder',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -58,12 +58,12 @@ const FAQS = [
   {
     question: 'Can I find an IFSC code if I only have the branch location?',
     answer:
-      'Yes! Switch to "Browse by Bank & State" mode on VeriSeal. Select your bank, state, and city to immediately discover your branch’s active IFSC, MICR, and office address.',
+      'Yes! Switch to "Browse by Bank & State" mode on Kagazo. Select your bank, state, and city to immediately discover your branch’s active IFSC, MICR, and office address.',
   },
   {
     question: 'Are my searched bank account details or IFSC lookups stored?',
     answer:
-      'No. VeriSeal queries client-side databases. Zero search queries or banking lookups are logged on our servers.',
+      'No. Kagazo queries client-side databases. Zero search queries or banking lookups are logged on our servers.',
   },
 ];
 
@@ -73,8 +73,8 @@ export default function IfscFinderPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal IFSC Code & Bank Branch Finder',
-        url: 'https://veriseal.in/tools/ifsc-code-finder',
+        name: 'Kagazo IFSC Code & Bank Branch Finder',
+        url: 'https://Kagazo.in/tools/ifsc-code-finder',
         applicationCategory: 'FinanceApplication',
         operatingSystem: 'All',
         offers: {

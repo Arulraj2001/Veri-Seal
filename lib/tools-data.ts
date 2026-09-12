@@ -1,5 +1,5 @@
 /**
- * VeriSeal Master Tools Catalog & Registry.
+ * Kagazo Master Tools Catalog & Registry.
  * Single source of truth for all public utilities, exam resizers, and document tools.
  * Powers the /tools directory, search index, Navbar mega-menu, and Sitemap.
  */

@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Calculate your monthly Indian electricity bill with exact state DISCOM tariff slabs (TANGEDCO, MSEDCL, BSES, BESCOM, UPPCL). Appliance-by-appliance power breakdown and What-If cost simulator.',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/electricity-bill-calculator',
+    canonical: 'https://Kagazo.in/home-cost/electricity-bill-calculator',
   },
   openGraph: {
-    title: 'Free Home Electricity Bill Calculator India | VeriSeal',
+    title: 'Free Home Electricity Bill Calculator India | Kagazo',
     description:
       'Accurate electricity bill calculation for Indian homes using authentic state slab rates and room-by-room appliance wattages.',
-    url: 'https://veriseal.in/home-cost/electricity-bill-calculator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/electricity-bill-calculator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

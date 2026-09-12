@@ -1,5 +1,5 @@
 """
-VeriSeal Black Ink Signature Extractor & Contrast Enhancer Engine.
+Kagazo Black Ink Signature Extractor & Contrast Enhancer Engine.
 Removes ruled notebook lines, converts blue/faint ink to dense official India Black,
 whitens paper backgrounds to pure #FFFFFF, auto-crops to stroke boundaries,
 and calibrates output to strict portal specifications (SSC, UPSC, IBPS, TNPSC).
@@ -18,7 +18,7 @@ except ImportError:
     np = None
 from PIL import Image, ImageOps
 
-logger = logging.getLogger("veriseal.signature_extractor")
+logger = logging.getLogger("kagazo.signature_extractor")
 
 
 def remove_notebook_lines(gray: np.ndarray, line_sensitivity: float = 1.0) -> np.ndarray:

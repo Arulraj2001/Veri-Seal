@@ -16,16 +16,16 @@ export function InstallPromptModal() {
 
   React.useEffect(() => {
     // Check if dismissed before
-    const isDismissed = localStorage.getItem('veriseal_pwa_dismissed');
+    const isDismissed = localStorage.getItem('kagazo_pwa_dismissed');
     if (isDismissed) return;
 
     // Check verification count from localStorage
-    const count = parseInt(localStorage.getItem('veriseal_guest_count') || '0', 10);
+    const count = parseInt(localStorage.getItem('kagazo_guest_count') || '0', 10);
 
     const handleBeforeInstallPrompt = (e: Event) => {
       const promptEvent = e as BeforeInstallPromptEvent;
       setDeferredPrompt(promptEvent);
-      (window as unknown as { __veriseal_pwa_prompt?: BeforeInstallPromptEvent }).__veriseal_pwa_prompt = promptEvent;
+      (window as unknown as { __kagazo_pwa_prompt?: BeforeInstallPromptEvent }).__kagazo_pwa_prompt = promptEvent;
 
       // Only suppress default mini-infobar when we are actively displaying custom modal UI
       if (count >= 2) {
@@ -82,7 +82,7 @@ export function InstallPromptModal() {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem('veriseal_pwa_dismissed', 'true');
+    localStorage.setItem('kagazo_pwa_dismissed', 'true');
   };
 
   if (!isVisible) return null;
@@ -107,7 +107,7 @@ export function InstallPromptModal() {
               <span>Faster Access</span>
             </div>
             <h4 className="font-extrabold text-sm sm:text-base text-text-main">
-              Install VeriSeal App
+              Install Kagazo App
             </h4>
             <p className="text-xs text-text-main/70 mt-1 leading-relaxed">
               Verify Indian government PDF signatures instantly from your home screen with zero install wait.

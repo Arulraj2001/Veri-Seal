@@ -18,7 +18,7 @@ function LoginFormContent() {
   const [error, setError] = React.useState<string | null>(null);
 
   const isAdminEmail =
-    email.trim().toLowerCase() === 'admin@veriseal.in' ||
+    email.trim().toLowerCase() === 'admin@Kagazo.in' ||
     email.trim().toLowerCase().startsWith('admin@') ||
     email.trim().toLowerCase().includes('admin');
 
@@ -30,7 +30,7 @@ function LoginFormContent() {
       } else if (urlError === 'AccessDenied') {
         setError('Sign-in access was denied by Google.');
       } else if (urlError === 'admin_required') {
-        setError('Admin access required. Please sign in with admin@veriseal.in and your password.');
+        setError('Admin access required. Please sign in with admin@Kagazo.in and your password.');
       } else {
         setError(`Authentication notice: ${urlError}`);
       }
@@ -60,7 +60,7 @@ function LoginFormContent() {
       if (res?.error) {
         if (isAdminEmail) {
           setError(
-            'Incorrect admin password. Please enter the password you set for admin@veriseal.in in Supabase Auth.'
+            'Incorrect admin password. Please enter the password you set for admin@Kagazo.in in Supabase Auth.'
           );
         } else {
           setError('Failed to sign in. Please verify your credentials and try again.');
@@ -112,12 +112,12 @@ function LoginFormContent() {
             </svg>
           </div>
           <span className="text-2xl font-black text-text-main">
-            Veri<span className="text-primary">Seal</span>
+            Kaga<span className="text-primary">zo</span>
           </span>
         </Link>
 
         <h1 className="text-2xl font-extrabold text-text-main tracking-tight">
-          Sign In to VeriSeal
+          Sign In to Kagazo
         </h1>
         <p className="text-xs sm:text-sm text-text-main/70 mt-1">
           Access your verification history, API keys, or administrative panel.
@@ -149,7 +149,7 @@ function LoginFormContent() {
             <input
               type="email"
               required
-              placeholder="admin@veriseal.in or name@example.com"
+              placeholder="admin@Kagazo.in or name@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
@@ -192,7 +192,7 @@ function LoginFormContent() {
           {isAdminEmail && (
             <p className="text-[11px] text-primary/80 mt-1.5 flex items-center gap-1 font-medium">
               <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-              <span>Verified against Supabase Auth for admin@veriseal.in</span>
+              <span>Verified against Supabase Auth for admin@Kagazo.in</span>
             </p>
           )}
         </div>
@@ -250,7 +250,7 @@ function LoginFormContent() {
 
       {/* Terms footnote */}
       <p className="mt-8 text-center text-[11px] text-text-main/60 leading-relaxed">
-        By signing in, you agree to VeriSeal&apos;s Terms of Service and Privacy Policy. Files uploaded are processed strictly in-memory.
+        By signing in, you agree to Kagazo&apos;s Terms of Service and Privacy Policy. Files uploaded are processed strictly in-memory.
       </p>
     </div>
   );

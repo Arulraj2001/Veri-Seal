@@ -87,10 +87,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'compress-pdf-to-200kb': {
     slug: 'compress-pdf-to-200kb',
-    title: 'Compress PDF to 200KB Online Free - Exact Size Guarantee | VeriSeal',
+    title: 'Compress PDF to 200KB Online Free - Exact Size Guarantee | Kagazo',
     metaDescription:
       'Compress PDF to strictly under 200KB online for free. Guaranteed safe limit (170-190 KB) for TNPSC, SSC, and IBPS portal uploads without text blurriness. No sign-up, 100% private.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/compress-pdf-to-200kb',
+    canonicalUrl: 'https://kagazo.in/tools/compress-pdf-to-200kb',
     heroBadge: 'Exact 200 KB Portal Safe Limit • 100% Free',
     heroHeading: 'Compress PDF to ',
     heroHighlight: '200KB Online Free',
@@ -113,7 +113,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       {
         question: 'Why do Indian portals strictly demand PDFs under 200 KB?',
         answer:
-          'Recruitment servers like TNPSC OTR and SSC handle millions of concurrent applicant submissions. They set a hard ceiling of 200 KB to optimize database storage. If a document is even 201 KB, the upload crashes. VeriSeal compresses your file to a safe 180 KB buffer so it never fails.',
+          'Recruitment servers like TNPSC OTR and SSC handle millions of concurrent applicant submissions. They set a hard ceiling of 200 KB to optimize database storage. If a document is even 201 KB, the upload crashes. Kagazo compresses your file to a safe 180 KB buffer so it never fails.',
       },
       {
         question: 'Will compressing my PDF to 200KB make text blurry?',
@@ -144,10 +144,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'compress-pdf-to-100kb': {
     slug: 'compress-pdf-to-100kb',
-    title: 'Compress PDF to 100KB Online Free - High Text Clarity | VeriSeal',
+    title: 'Compress PDF to 100KB Online Free - High Text Clarity | Kagazo',
     metaDescription:
       'Compress PDF to 100KB online for free. Tailored for strict government portal uploads requiring files under 100KB without losing text legibility. 100% free, unlimited, no watermark.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/compress-pdf-to-100kb',
+    canonicalUrl: 'https://kagazo.in/tools/compress-pdf-to-100kb',
     heroBadge: 'Strict 100 KB Portal Ceiling • Zero Monetization',
     heroHeading: 'Compress PDF to ',
     heroHighlight: '100KB Online Free',
@@ -166,9 +166,9 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
-        question: 'How does VeriSeal achieve 100KB without destroying text quality?',
+        question: 'How does Kagazo achieve 100KB without destroying text quality?',
         answer:
-          'VeriSeal removes invisible XML metadata, duplicates fonts, and uses 8-bit high-contrast monochrome rendering for scanned documents. This strips color noise while keeping black text razor-sharp.',
+          'Kagazo removes invisible XML metadata, duplicates fonts, and uses 8-bit high-contrast monochrome rendering for scanned documents. This strips color noise while keeping black text razor-sharp.',
       },
       {
         question: 'What portals require PDFs under 100 KB?',
@@ -188,10 +188,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'compress-pdf-to-300kb': {
     slug: 'compress-pdf-to-300kb',
-    title: 'Compress PDF to 300KB Online Free (UPSC OTR & NEET) | VeriSeal',
+    title: 'Compress PDF to 300KB Online Free (UPSC OTR & NEET) | Kagazo',
     metaDescription:
       'Compress PDF to 300KB online for UPSC Civil Services DAF, OTR, and NTA NEET certificate uploads. High resolution, clear seals and signatures. 100% free forever.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/compress-pdf-to-300kb',
+    canonicalUrl: 'https://kagazo.in/tools/compress-pdf-to-300kb',
     heroBadge: 'UPSC & NTA Verified Limit • 100% Free Forever',
     heroHeading: 'Compress PDF to ',
     heroHighlight: '300KB for UPSC & NEET',
@@ -232,10 +232,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'compress-pdf-to-500kb': {
     slug: 'compress-pdf-to-500kb',
-    title: 'Compress PDF to 500KB Online Free (EPFO & State PSCs) | VeriSeal',
+    title: 'Compress PDF to 500KB Online Free (EPFO & State PSCs) | Kagazo',
     metaDescription:
       'Compress PDF documents to 500KB online for free. Ideal for EPFO UAN KYC passbook uploads, judicial services, and state public service commission forms.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/compress-pdf-to-500kb',
+    canonicalUrl: 'https://kagazo.in/tools/compress-pdf-to-500kb',
     heroBadge: 'EPFO & State PSC Limit • 100% Free',
     heroHeading: 'Compress PDF to ',
     heroHighlight: '500KB Online Free',
@@ -270,10 +270,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'tnpsc-pdf-compressor': {
     slug: 'tnpsc-pdf-compressor',
-    title: 'TNPSC PDF Compressor 200KB Online Free (OTR & Hall Ticket) | VeriSeal',
+    title: 'TNPSC PDF Compressor 200KB Online Free (OTR & Hall Ticket) | Kagazo',
     metaDescription:
       'Compress PDF for TNPSC One Time Registration (OTR) strictly to 100KB-200KB. Guaranteed compliant with Group 1, 2, 4 certificate upload rules. 100% Free.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/tnpsc-pdf-compressor',
+    canonicalUrl: 'https://kagazo.in/tools/tnpsc-pdf-compressor',
     heroBadge: 'Official TNPSC 100KB–200KB Limit • 100% Free',
     heroHeading: 'TNPSC PDF Compressor ',
     heroHighlight: '(Strict 200 KB OTR Safe)',
@@ -314,10 +314,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'upsc-pdf-compressor': {
     slug: 'upsc-pdf-compressor',
-    title: 'UPSC PDF Compressor 300KB Online (OTR & DAF Uploads) | VeriSeal',
+    title: 'UPSC PDF Compressor 300KB Online (OTR & DAF Uploads) | Kagazo',
     metaDescription:
       'Compress certificate PDFs for UPSC Civil Services DAF and OTR to strictly under 300KB. 100% Free, zero blurriness for seals, marks, and signatures.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/upsc-pdf-compressor',
+    canonicalUrl: 'https://kagazo.in/tools/upsc-pdf-compressor',
     heroBadge: 'UPSC DAF & OTR Safe • 100% Free Public Utility',
     heroHeading: 'UPSC PDF Compressor ',
     heroHighlight: '(Exact 300 KB DAF Limit)',
@@ -352,10 +352,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'ssc-pdf-compressor': {
     slug: 'ssc-pdf-compressor',
-    title: 'SSC PDF Compressor 200KB Online Free (CGL, CHSL, MTS) | VeriSeal',
+    title: 'SSC PDF Compressor 200KB Online Free (CGL, CHSL, MTS) | Kagazo',
     metaDescription:
       'Compress PDF documents to strictly under 200KB for Staff Selection Commission (SSC CGL, CHSL, MTS, GD) online application uploads. 100% free forever.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/ssc-pdf-compressor',
+    canonicalUrl: 'https://kagazo.in/tools/ssc-pdf-compressor',
     heroBadge: 'SSC Portal Verified • 100% Free',
     heroHeading: 'SSC PDF Compressor ',
     heroHighlight: '(Strict 200 KB CGL/CHSL Limit)',
@@ -390,10 +390,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'pdf-compressor': {
     slug: 'pdf-compressor',
-    title: 'Free PDF Compressor Online (Exact Target Size & Batch) | VeriSeal',
+    title: 'Free PDF Compressor Online (Exact Target Size & Batch) | Kagazo',
     metaDescription:
       '100% Free online PDF compressor with exact target limits (100KB, 200KB, 300KB, 500KB), batch compression, and page deletion. In-memory privacy, zero ads.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/pdf-compressor',
+    canonicalUrl: 'https://kagazo.in/tools/pdf-compressor',
     heroBadge: 'All-in-One Master Compressor • 100% Free Forever',
     heroHeading: 'Online ',
     heroHighlight: 'PDF Compressor',
@@ -412,12 +412,12 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
-        question: 'How does VeriSeal compare to iLovePDF and 11zon?',
+        question: 'How does Kagazo compare to iLovePDF and 11zon?',
         answer:
-          'iLovePDF forces vague compression levels (Extreme/Recommended) and cannot guarantee exact file sizes like 200KB. 11zon has exact sizes but is cluttered with ads and popups. VeriSeal gives you exact target limits, batch compression, page deletion, and zero ads—100% free forever.',
+          'iLovePDF forces vague compression levels (Extreme/Recommended) and cannot guarantee exact file sizes like 200KB. 11zon has exact sizes but is cluttered with ads and popups. Kagazo gives you exact target limits, batch compression, page deletion, and zero ads—100% free forever.',
       },
       {
-        question: 'Are files stored on VeriSeal servers?',
+        question: 'Are files stored on Kagazo servers?',
         answer:
           'Never. All processing happens in-memory and is wiped immediately after your download starts. Zero disk storage, 100% privacy.',
       },
@@ -435,10 +435,10 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
   // -------------------------------------------------------------------------
   'government-exam-pdf-compressor': {
     slug: 'government-exam-pdf-compressor',
-    title: 'Government Exam PDF Compressor (TNPSC 200KB, UPSC 300KB, SSC, NEET) | VeriSeal',
+    title: 'Government Exam PDF Compressor (TNPSC 200KB, UPSC 300KB, SSC, NEET) | Kagazo',
     metaDescription:
       '100% Free online PDF compressor tailored for Indian government exam portals (TNPSC 200KB, UPSC 300KB, SSC, NEET, Banking). In-memory privacy, zero ads.',
-    canonicalUrl: 'https://veri-seal.vercel.app/tools/government-exam-pdf-compressor',
+    canonicalUrl: 'https://kagazo.in/tools/government-exam-pdf-compressor',
     heroBadge: 'All-India Exam Portal Limits • 100% Free Forever',
     heroHeading: 'Government Exam ',
     heroHighlight: 'PDF Compressor',
@@ -459,7 +459,7 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       {
         question: 'Why do Indian exam portals reject files above 200KB or 300KB?',
         answer:
-          'State and central recruitment portals enforce hard storage limits to process millions of candidates smoothly. VeriSeal guarantees your file is strictly within bounds.',
+          'State and central recruitment portals enforce hard storage limits to process millions of candidates smoothly. Kagazo guarantees your file is strictly within bounds.',
       },
       {
         question: 'Will fine marksheet lines or seals be blurred?',

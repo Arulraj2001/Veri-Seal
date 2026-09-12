@@ -9,8 +9,8 @@ export async function GET() {
     const user = session?.user as { role?: string; email?: string } | undefined;
     const isAdmin =
       user?.role === 'admin' ||
-      user?.email?.toLowerCase() === 'admin@veriseal.in' ||
-      user?.email?.toLowerCase() === 'samuel@veriseal.in';
+      user?.email?.toLowerCase() === 'admin@Kagazo.in' ||
+      user?.email?.toLowerCase() === 'samuel@Kagazo.in';
     if (!isAdmin) {
       return NextResponse.json({ error: 'Forbidden: Admin role required' }, { status: 403 });
     }
@@ -28,8 +28,8 @@ export async function POST(req: Request) {
     const user = session?.user as { role?: string; email?: string } | undefined;
     const isAdmin =
       user?.role === 'admin' ||
-      user?.email?.toLowerCase() === 'admin@veriseal.in' ||
-      user?.email?.toLowerCase() === 'samuel@veriseal.in';
+      user?.email?.toLowerCase() === 'admin@Kagazo.in' ||
+      user?.email?.toLowerCase() === 'samuel@Kagazo.in';
     if (!isAdmin) {
       return NextResponse.json({ error: 'Forbidden: Admin role required' }, { status: 403 });
     }

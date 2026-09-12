@@ -28,7 +28,7 @@ export function OstruneAgencyBanner() {
             <div className="space-y-4 max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
-                <span>{language === 'ta' ? 'வெரிசீல் பின்னால் உள்ள சிறப்பு பங்குதாரர்' : 'Featured Partner & Agency Behind VeriSeal'}</span>
+                <span>{language === 'ta' ? 'வெரிசீல் பின்னால் உள்ள சிறப்பு பங்குதாரர்' : 'Featured Partner & Agency Behind Kagazo'}</span>
               </div>
 
               <h3 className="text-2xl sm:text-3xl font-black text-text-main tracking-tight">
@@ -54,7 +54,7 @@ export function OstruneAgencyBanner() {
                   </>
                 ) : (
                   <>
-                    VeriSeal was engineered with sub-second speeds, 100/100 Core Web Vitals, and sovereign-grade PKI security by{' '}
+                    Kagazo was engineered with sub-second speeds, 100/100 Core Web Vitals, and sovereign-grade PKI security by{' '}
                     <a
                       href="https://ostrune.netlify.app/"
                       target="_blank"

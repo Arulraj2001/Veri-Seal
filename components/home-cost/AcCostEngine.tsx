@@ -51,7 +51,7 @@ export default function AcCostEngine() {
 
   const handleAffiliateClick = () => {
     const query = encodeURIComponent(`5 star inverter ac ${tonnage} ton daikin panasonic`);
-    window.open(`https://www.amazon.in/s?k=${query}&tag=veriseal-21`, '_blank', 'noopener,noreferrer');
+    window.open(`https://www.amazon.in/s?k=${query}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

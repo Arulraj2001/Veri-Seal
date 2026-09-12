@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Enhance biological friction ridges, clean ink smudges, and format Left Thumb Impressions (LTI) strictly to 240x240 pixels (20KB–50KB) for IBPS PO, Clerk, SBI, Railway RRB, and SSC exams. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/thumb-impression-resizer',
+    canonical: 'https://Kagazo.in/tools/thumb-impression-resizer',
   },
   openGraph: {
-    title: 'Free Left Thumb Impression (LTI) Resizer & Sharpener | VeriSeal',
+    title: 'Free Left Thumb Impression (LTI) Resizer & Sharpener | Kagazo',
     description:
       'Sharpen faint fingerprint ridges and calibrate thumb impression photos strictly under 50KB for IBPS and Railway recruitment.',
-    url: 'https://veriseal.in/tools/thumb-impression-resizer',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/thumb-impression-resizer',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -58,8 +58,8 @@ export default function ThumbImpressionPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Thumb Impression Resizer & Sharpener',
-        url: 'https://veriseal.in/tools/thumb-impression-resizer',
+        name: 'Kagazo Thumb Impression Resizer & Sharpener',
+        url: 'https://Kagazo.in/tools/thumb-impression-resizer',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description:
     'Calculate the perfect inverter capacity (VA / kVA) and battery size (Ah) for your Indian home. Sizing for fans, lights, TV, fridge, and AC with realistic backup duration (hours).',
   alternates: {
-    canonical: 'https://veriseal.in/home-cost/inverter-battery-calculator',
+    canonical: 'https://Kagazo.in/home-cost/inverter-battery-calculator',
   },
   openGraph: {
-    title: 'Inverter & Battery Capacity Sizing Calculator | VeriSeal',
+    title: 'Inverter & Battery Capacity Sizing Calculator | Kagazo',
     description:
       'Size your home backup inverter and 150Ah/200Ah tubular or lithium battery with exact backup hours calculation.',
-    url: 'https://veriseal.in/home-cost/inverter-battery-calculator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/home-cost/inverter-battery-calculator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };

@@ -21,14 +21,14 @@ export const metadata: Metadata = {
   description:
     'Complete TNPSC One Time Registration (OTR) bundle maker. Generate Photo with Name & Date (20-50KB), Signature strictly 10-20KB (anti-rejection safe), and Left Thumb Impression (10-50KB). 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/tnpsc-otr-compliance-kit',
+    canonical: 'https://Kagazo.in/tools/tnpsc-otr-compliance-kit',
   },
   openGraph: {
-    title: 'TNPSC OTR Photo, Signature & Thumb Compliance Kit | VeriSeal',
+    title: 'TNPSC OTR Photo, Signature & Thumb Compliance Kit | Kagazo',
     description:
       'All-in-one TNPSC OTR upload preparer: Photo with Name/DOP, Signature 10-20KB guarantee, and Biometric Thumb.',
-    url: 'https://veriseal.in/tools/tnpsc-otr-compliance-kit',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/tnpsc-otr-compliance-kit',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -44,7 +44,7 @@ const FAQS = [
   {
     question: 'Why does the TNPSC portal reject signatures saying "File size less than 10 KB"?',
     answer:
-      'When candidates crop a small signature to 3.5cm × 1.5cm, standard compressors reduce the file to 4–7 KB. The TNPSC OTR server algorithm strictly rejects any upload below 10 KB. VeriSeal solves this by applying 300 DPI high-chroma sampling and safe JFIF padding to guarantee the output is strictly between 12 KB and 18 KB.',
+      'When candidates crop a small signature to 3.5cm × 1.5cm, standard compressors reduce the file to 4–7 KB. The TNPSC OTR server algorithm strictly rejects any upload below 10 KB. Kagazo solves this by applying 300 DPI high-chroma sampling and safe JFIF padding to guarantee the output is strictly between 12 KB and 18 KB.',
   },
   {
     question: 'Is it mandatory to print the Candidate Name and Date of Photograph (DOP)?',
@@ -57,7 +57,7 @@ const FAQS = [
       'Yes. You can click "Download All 3 Files" to get your compliant photo, signature, and left thumb impression sequentially named, or download each file individually.',
   },
   {
-    question: 'Does VeriSeal store or send my photo and signature to any server?',
+    question: 'Does Kagazo store or send my photo and signature to any server?',
     answer:
       'Never. All processing happens 100% in your local browser’s volatile RAM memory using client-side HTML5 canvas. No files or personal identity assets are ever uploaded to any server.',
   },
@@ -68,7 +68,7 @@ export default function TnpscOtrComplianceKitPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: 'TNPSC OTR Photo, Signature & Thumb Compliance Kit',
-    url: 'https://veriseal.in/tools/tnpsc-otr-compliance-kit',
+    url: 'https://Kagazo.in/tools/tnpsc-otr-compliance-kit',
     applicationCategory: 'UtilityApplication',
     operatingSystem: 'All',
     offers: {

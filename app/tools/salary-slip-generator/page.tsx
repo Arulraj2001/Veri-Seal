@@ -24,14 +24,14 @@ export const metadata: Metadata = {
   description:
     'Free online salary slip & payslip maker in English and Tamil. Standard format with EPF, ESI, Professional Tax, and TDS calculations. 100% compliant for personal loan, car loan, home loan, and international visa applications.',
   alternates: {
-    canonical: 'https://veriseal.in/tools/salary-slip-generator',
+    canonical: 'https://Kagazo.in/tools/salary-slip-generator',
   },
   openGraph: {
-    title: 'Free Bilingual Salary Slip Generator | VeriSeal',
+    title: 'Free Bilingual Salary Slip Generator | Kagazo',
     description:
       'Generate corporate & MSME salary slips in English & Tamil with automatic tax calculations and print-ready PDF export.',
-    url: 'https://veriseal.in/tools/salary-slip-generator',
-    siteName: 'VeriSeal',
+    url: 'https://Kagazo.in/tools/salary-slip-generator',
+    siteName: 'Kagazo',
     type: 'website',
   },
 };
@@ -48,7 +48,7 @@ const FAQS = [
   {
     question: 'Can I use this generated salary slip for bank loans and credit cards?',
     answer:
-      'Yes. Indian banks (SBI, HDFC, ICICI, Axis) require official monthly salary slips displaying the employer name, employee designation, UAN/PF number, PAN, and complete itemized earnings/deductions. VeriSeal generates a formal corporate A4 layout recognized by bank underwriting systems.',
+      'Yes. Indian banks (SBI, HDFC, ICICI, Axis) require official monthly salary slips displaying the employer name, employee designation, UAN/PF number, PAN, and complete itemized earnings/deductions. Kagazo generates a formal corporate A4 layout recognized by bank underwriting systems.',
   },
   {
     question: 'Is this payslip valid for Schengen, US, and UK visa applications?',
@@ -58,7 +58,7 @@ const FAQS = [
   {
     question: 'How does the bilingual English and Tamil toggle work?',
     answer:
-      'VeriSeal is the first platform in India to offer official Tamil (`மாதாந்திர சம்பள ரசீது`) alongside standard English terminology. Small business owners, shops, and institutions in Tamil Nadu can generate legal salary documentation for local employees in seconds.',
+      'Kagazo is the first platform in India to offer official Tamil (`மாதாந்திர சம்பள ரசீது`) alongside standard English terminology. Small business owners, shops, and institutions in Tamil Nadu can generate legal salary documentation for local employees in seconds.',
   },
   {
     question: 'Are my salary numbers or bank account digits saved on your servers?',
@@ -73,8 +73,8 @@ export default function SalarySlipGeneratorPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'VeriSeal Bilingual Salary Slip & Payslip Generator',
-        url: 'https://veriseal.in/tools/salary-slip-generator',
+        name: 'Kagazo Bilingual Salary Slip & Payslip Generator',
+        url: 'https://Kagazo.in/tools/salary-slip-generator',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {

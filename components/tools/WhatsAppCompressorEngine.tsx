@@ -180,7 +180,7 @@ export default function WhatsAppCompressorEngine() {
 
   const handleWhatsAppShare = () => {
     const text = encodeURIComponent(
-      'Here is the verified compressed document from VeriSeal. Clean, readable, and optimized for mobile sharing.'
+      'Here is the verified compressed document from Kagazo. Clean, readable, and optimized for mobile sharing.'
     );
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
   };

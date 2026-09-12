@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: SeoLandingPageProps): Promise
   const page = await getSeoPageBySlug(params.slug);
   if (!page) {
     return {
-      title: 'Document Guide Not Found — VeriSeal',
+      title: 'Document Guide Not Found — Kagazo',
     };
   }
 
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: SeoLandingPageProps): Promise
       title: page.title,
       description: page.meta_description,
       url: pageUrl,
-      siteName: 'VeriSeal',
+      siteName: 'Kagazo',
       images: [
         {
           url: ogImage,
@@ -116,8 +116,8 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
       {
         '@type': 'HowToStep',
         position: 1,
-        name: 'Go to VeriSeal',
-        text: 'Access the free VeriSeal Indian Government digital signature verification engine.',
+        name: 'Go to Kagazo',
+        text: 'Access the free Kagazo Indian Government digital signature verification engine.',
       },
       {
         '@type': 'HowToStep',
@@ -232,9 +232,9 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
                   <div className="w-8 h-8 rounded-xl bg-primary text-white font-black text-sm flex items-center justify-center mb-3 shadow-xs">
                     1
                   </div>
-                  <h3 className="font-bold text-sm text-text-main mb-1">Open VeriSeal</h3>
+                  <h3 className="font-bold text-sm text-text-main mb-1">Open Kagazo</h3>
                   <p className="text-xs text-text-main/70 leading-relaxed">
-                    Access veriseal.in in any browser on mobile or desktop.
+                    Access Kagazo.in in any browser on mobile or desktop.
                   </p>
                 </div>
               </div>
@@ -317,7 +317,7 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
                 This warning occurs because consumer PDF viewers rely exclusively on the <em>Adobe Approved Trust List (AATL)</em>, which consists predominantly of commercial Western certificate authorities. In contrast, the Government of India regulates sovereign digital signatures under the <strong>Information Technology Act, 2000</strong> via the <strong>Controller of Certifying Authorities (CCA)</strong> and the <strong>Root Certifying Authority of India (RCAI)</strong>.
               </p>
               <p>
-                Because Western software manufacturers do not bundle India&apos;s RCAI root keys by default, unconfigured readers cannot build the certificate validation chain. VeriSeal bridges this gap by directly executing the CCA cryptographic validation and embedding a standards-compliant Document Security Store (/DSS) dictionary, rendering the signature permanently valid and green across all devices.
+                Because Western software manufacturers do not bundle India&apos;s RCAI root keys by default, unconfigured readers cannot build the certificate validation chain. Kagazo bridges this gap by directly executing the CCA cryptographic validation and embedding a standards-compliant Document Security Store (/DSS) dictionary, rendering the signature permanently valid and green across all devices.
               </p>
             </div>
           </section>

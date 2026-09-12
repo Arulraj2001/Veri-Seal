@@ -61,11 +61,11 @@ const contentStore: Record<string, Record<string, any>> = {
       items: [
         {
           q: 'Why does Adobe Acrobat show a yellow question mark on my Aadhaar?',
-          a: 'Adobe Reader does not pre-install Indian CCA root certificates. VeriSeal includes the full CCA India trust store to validate the certificate.',
+          a: 'Adobe Reader does not pre-install Indian CCA root certificates. Kagazo includes the full CCA India trust store to validate the certificate.',
         },
         {
           q: 'Are my uploaded government documents stored on any server?',
-          a: 'No. VeriSeal operates strictly in volatile RAM. Once verification finishes, file buffers are permanently discarded.',
+          a: 'No. Kagazo operates strictly in volatile RAM. Once verification finishes, file buffers are permanently discarded.',
         },
         {
           q: 'Can I verify password-protected e-Aadhaar files?',
