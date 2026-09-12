@@ -241,7 +241,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             className="mb-6 sm:mb-8"
           />
 
-          {/* Main Layout Grid: Left (Article) + Right (Sticky TOC & Related) */}
+          {/* Main Layout Grid: Left (Article) + Right (TOC & Related) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Article Main Column (8 cols on desktop) */}
             <article className="lg:col-span-8 space-y-8">
@@ -355,9 +355,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
             </article>
 
-            {/* Desktop Right Sidebar (4 cols on desktop, sticky) */}
+            {/* Desktop Right Sidebar (4 cols on desktop) */}
             <aside className="hidden lg:block lg:col-span-4 space-y-6">
-              {/* 3C. Table of Contents (Sticky on desktop right side) */}
+              {/* 3C. Table of Contents */}
               <TableOfContents content={post.content} />
 
               {/* Related Articles Card */}

@@ -65,7 +65,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
   if (headings.length === 0) return null;
 
   return (
-    <div className="bg-white border border-surface-darker rounded-3xl p-5 shadow-sm sticky top-28 space-y-3">
+    <div className="bg-white border border-surface-darker rounded-3xl p-5 shadow-sm space-y-3">
       <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-text-main pb-2 border-b border-surface-darker">
         <List className="w-4 h-4 text-primary" />
         <span>Table of Contents</span>
