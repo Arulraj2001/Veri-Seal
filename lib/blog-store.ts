@@ -1180,6 +1180,84 @@ Kagazo provides a lightning-fast GST verification engine:
 
 Verify every invoice before payment to safeguard your cash flow and ensure total tax compliance.`,
   },
+  {
+    id: 'post-tamil-community-cert',
+    title: 'சமூக சான்றிதழ் கையொப்பம் சரிபார்க்கப்படவில்லை — இலவசமாக சரிசெய்வது எப்படி 2026',
+    slug: 'community-certificate-signature-not-verified-free-fix-how-to-2026-tamil',
+    excerpt: 'தமிழ்நாடு இ-சேவை (TNeGA) சமூக சான்றிதழில் வரும் "Signature Not Verified" அல்லது மஞ்சள் நிற கேள்விக்குறியை Adobe Acrobat இல்லாமல் நொடிகளில் பச்சை நிற சரிபார்ப்பு டிக் குறியாக மாற்றுவது எப்படி?',
+    category: 'Tamil Nadu',
+    meta_description: 'தமிழ்நாடு சமூக சான்றிதழ் டிஜிட்டல் கையொப்பம் சரிபார்ப்பு. மஞ்சள் நிற கேள்விக்குறியை இலவசமாக பச்சை டிக் ஆக மாற்றுவது எப்படி 2026 வழிகாட்டி.',
+    meta_keywords: 'community certificate signature not verified tamil, tnega certificate digital signature, esevai community certificate green tick, சான்றிதழ் கையொப்பம் சரிபார்ப்பு, kagazo tamil nadu',
+    featured_image_url: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80',
+    published: true,
+    published_at: '2026-09-12T10:00:00Z',
+    author_name: 'Kagazo PKI தமிழ்நாடு பிரிவு',
+    created_at: '2026-09-12T10:00:00Z',
+    updated_at: '2026-09-12T10:00:00Z',
+    lang: 'ta',
+    hreflang_group: 'community-certificate-signature-not-verified',
+    reading_time: 4,
+    view_count: 142,
+    tags: ['தமிழ்நாடு', 'சமூக சான்றிதழ்', 'டிஜிட்டல் கையொப்பம்', 'TNeGA', 'e-Sevai', 'Green Tick'],
+    content: `# சமூக சான்றிதழ் கையொப்பம் சரிபார்க்கப்படவில்லை — இலவசமாக சரிசெய்வது எப்படி 2026
+
+தமிழ்நாடு அரசு **இ-சேவை (TNeGA / TN e-District)** மூலமாக வழங்கப்படும் **சமூக சான்றிதழ் (Community Certificate)**, வருமானச் சான்றிதழ் (Income Certificate), இருப்பிடச் சான்றிதழ் (Nativity Certificate) போன்றவற்றை நீங்கள் பதிவிறக்கம் செய்யும்போது, பெரும்பாலான சந்தர்ப்பங்களில் டிஜிட்டல் கையொப்பப் பகுதியில்:
+
+> **"Signature Not Verified" (கையொப்பம் சரிபார்க்கப்படவில்லை)** அல்லது **மஞ்சள் நிற கேள்விக்குறி (? / Yellow Question Mark)**
+
+காண்பிக்கப்படுகிறது.
+
+கல்லூரி சேர்க்கை, அரசு வேலைவாய்ப்பு விண்ணப்பங்கள் (TNPSC, UPSC, SSC, TRB) அல்லது வங்கி கடன்களுக்கு இந்த சான்றிதழை சமர்ப்பிக்கும் போது, அதிகாரிகள் **"பச்சை நிற டிக் மார்க் (Green Tick) உள்ள சான்றிதழை சமர்ப்பிக்கவும்"** என்று கூறி நிராகரிக்க வாய்ப்புள்ளது.
+
+இந்த வழிகாட்டியில், Adobe Acrobat போன்ற எந்த மென்பொருளையும் நிறுவாமல், உங்கள் மொபைல் அல்லது கணினியிலேயே **Kagazo** மூலம் சில நொடிகளில் இதை இலவசமாக சரிசெய்வது எப்படி என்பதை விரிவாகப் பார்ப்போம்.
+
+---
+
+## சான்றிதழில் ஏன் "கையொப்பம் சரிபார்க்கப்படவில்லை" என்று வருகிறது?
+
+தமிழ்நாடு அரசு வழங்கிய சான்றிதழ் போலி அல்ல. இது அதிகாரப்பூர்வமாக வட்டாட்சியர் (Tahsildar / Zonal Deputy Tahsildar) அவர்களால் டிஜிட்டல் முறையில் கையொப்பமிடப்பட்டது.
+
+இருப்பினும் இந்த பிழை தோன்றுவதற்கு இரண்டு முக்கிய காரணங்கள் உள்ளன:
+
+1. **ரூட் சான்றிதழ் அங்கீகாரம் இல்லாமை (Root Certificate Trust):** உங்கள் கணினி அல்லது மொபைலில் உள்ள PDF Reader மென்பொருளில் இந்திய அரசின் **Controller of Certifying Authorities (CCA India)** அல்லது e-Mudhra / NIC ரூட் சான்றிதழ்கள் சேர்க்கப்படவில்லை.
+2. **மொபைல் போன்களின் வரம்பு:** Android அல்லது iPhone-ல் Adobe Reader நிறுவப்பட்டிருந்தாலும், அதில் சான்றிதழ் அமைப்புகளை (Trust Settings) கைமுறையாக மாற்றுவது மிகக் கடினம்.
+
+---
+
+## Kagazo மூலம் 2 நொடிகளில் பச்சை நிற டிக் ஆக மாற்றுவது எப்படி?
+
+எந்த ஒரு கணினி மையத்திற்கும் (Browsing / Cyber Cafe) செல்ல வேண்டிய அவசியமில்லை. உங்கள் ஸ்மார்ட்போனிலேயே இதை உடனடியாகச் செய்யலாம்:
+
+### படி 1: Kagazo தளத்திற்கு செல்லவும்
+உங்கள் உலாவி (Chrome / Safari) மூலம் **[Kagazo.in](https://kagazo.in)** முதன்மைப் பக்கத்திற்குச் செல்லவும்.
+
+### படி 2: உங்கள் சமூக சான்றிதழை பதிவேற்றவும்
+- முகப்புப் பக்கத்தில் உள்ள **"Upload Signed PDF"** பகுதியில் உங்கள் PDF சமூக சான்றிதழை பதிவேற்றவும் (Drag & Drop அல்லது Browse).
+- உங்கள் சான்றிதழ் பாதுகாப்பாக உலாவியிலேயே குறியாக்கம் செய்யப்படுகிறது; எந்த ரகசியத் தரவும் சேமிக்கப்படாது.
+
+### படி 3: தானியங்கி சரிபார்ப்பு (Automated PKI Audit)
+- Kagazo இந்திய மின்னணு தகவல் தொடர்பு அமைச்சகத்தின் (MeitY) CCA ரூட் சான்றிதழ் சங்கிலியுடன் டிஜிட்டல் கையொப்பத்தின் SHA-256 ஹாஷை சரிபார்க்கிறது.
+- சான்றிதழில் அதிகாரப்பூர்வ **LTV (Long Term Validation)** பாதுகாப்பை உட்பொதிக்கிறது.
+
+### படி 4: சரிபார்க்கப்பட்ட சான்றிதழை பதிவிறக்கவும்
+- சரிபார்ப்பு முடிந்ததும், **"Download Verified PDF"** பொத்தானைக் கிளிக் செய்யவும்.
+- இப்போது உங்கள் சமூக சான்றிதழில் அதிகாரப்பூர்வ **பச்சை நிற டிக் மார்க் (Green Verified Tick)** நிரந்தரமாகத் தோன்றும்!
+
+---
+
+## அடிக்கடி கேட்கப்படும் கேள்விகள் (FAQs)
+
+### 1. சரிபார்க்கப்பட்ட சான்றிதழ் அரசு வேலைகளுக்கு செல்லுபடியாகுமா?
+ஆம்! TNPSC, UPSC, பள்ளி-கல்லூரி சேர்க்கை மற்றும் அனைத்து அரசு அமைப்புகளும் CCA India சான்றிதழ் பெற்ற இந்த டிஜிட்டல் சரிபார்ப்பை 100% சட்டப்பூர்வமாக அங்கீகரிக்கின்றன.
+
+### 2. இந்த சேவைக்கு கட்டணம் செலுத்த வேண்டுமா?
+இல்லை. Kagazo-வில் அனைத்து இந்திய அரசு PDF சான்றிதழ்களையும் சரிபார்ப்பது முற்றிலும் **இலவசம்**.
+
+### 3. எனது தனிப்பட்ட ஆவணங்கள் பாதுகாப்பாக இருக்குமா?
+நிச்சயமாக! Kagazo ஜீரோ-நாலேஜ் (Zero-Knowledge) தனியுரிமைக் கொள்கையைக் கடைப்பிடிக்கிறது. உங்கள் ஆவணங்கள் சரிபார்ப்பு முடிந்ததும் உங்கள் சாதனத்தில் மட்டுமே இருக்கும்.
+
+இப்போதே உங்கள் சமூக சான்றிதழைப் பதிவேற்றி சரிபார்த்து பயன்பெறுங்கள்!`,
+  },
 ];
 
 export function calculateReadTime(content: string): string {
@@ -1224,7 +1302,12 @@ export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
     console.debug('Supabase getPublishedBlogPosts fallback:', e);
   }
 
-  return mockBlogPosts.filter((p) => p.published);
+  return mockBlogPosts
+    .filter((p) => p.published)
+    .map((p) => ({
+      ...p,
+      lang: p.lang || 'en',
+    }));
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
@@ -1264,7 +1347,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
   }
 
   const found = mockBlogPosts.find((p) => p.slug === slug && p.published);
-  return found || null;
+  return found ? { ...found, lang: found.lang || 'en' } : null;
 }
 
 export async function incrementBlogView(slug: string): Promise<number> {

@@ -17,6 +17,7 @@ import {
 import { FeaturedImageUpload } from '@/components/admin/FeaturedImageUpload';
 import { BlogPost } from '@/lib/blog-store';
 import { cn } from '@/lib/utils';
+import { generateSmartSlug, detectLanguageFromText } from '@/lib/slugify-indic';
 
 interface BlogEditorProps {
   initialPost?: Partial<BlogPost>;
@@ -51,6 +52,9 @@ export function BlogEditor({
   const [tagsInput, setTagsInput] = React.useState<string>(
     (initialPost?.tags || []).join(', ')
   );
+  const [isSlugManuallyEdited, setIsSlugManuallyEdited] = React.useState<boolean>(
+    Boolean(initialPost?.slug)
+  );
   const [isSaving, setIsSaving] = React.useState(false);
   const [toastMessage, setToastMessage] = React.useState<string | null>(null);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
@@ -61,23 +65,55 @@ export function BlogEditor({
   };
 
   const handleTitleChange = (val: string) => {
-    const slug = val
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/[\s_-]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+    const detected = detectLanguageFromText(val);
+    let updatedLang = post.lang || 'en';
+    let updatedCategory = post.category || 'Guides & Tutorials';
+
+    // Auto-detect regional languages when typing in Tamil or Devanagari script
+    if (detected === 'ta' && (!post.lang || post.lang === 'en')) {
+      updatedLang = 'ta';
+      if (!post.category || post.category === 'Guides & Tutorials') {
+        updatedCategory = 'Tamil Nadu';
+      }
+    } else if (detected === 'hi' && (!post.lang || post.lang === 'en')) {
+      updatedLang = 'hi';
+    }
+
+    let nextSlug = post.slug;
+    if (!isSlugManuallyEdited && !post.id) {
+      nextSlug = generateSmartSlug(val, updatedLang).slug;
+    }
 
     setPost((prev) => ({
       ...prev,
       title: val,
-      slug: prev.id ? prev.slug : slug,
+      slug: nextSlug,
+      lang: updatedLang,
+      category: updatedCategory,
+    }));
+  };
+
+  const handleLanguageChange = (newLang: string) => {
+    let nextSlug = post.slug;
+    if (!isSlugManuallyEdited && !post.id && post.title) {
+      nextSlug = generateSmartSlug(post.title, newLang).slug;
+    }
+    setPost((prev) => ({
+      ...prev,
+      lang: newLang,
+      slug: nextSlug,
+      category:
+        newLang === 'ta' && (!prev.category || prev.category === 'Guides & Tutorials')
+          ? 'Tamil Nadu'
+          : prev.category,
     }));
   };
 
   const handleSave = async (publishStatus: boolean) => {
     setErrorMessage(null);
-    if (!post.title || !post.slug) {
+    const trimmedTitle = (post.title || '').trim();
+    const trimmedSlug = (post.slug || '').trim();
+    if (!trimmedTitle || !trimmedSlug) {
       setErrorMessage('Article title and permalink slug are required.');
       return;
     }
@@ -91,10 +127,15 @@ export function BlogEditor({
         .filter(Boolean);
 
       const wordCount = (post.content || '').trim().split(/\s+/).filter(Boolean).length;
-      const readingTime = Math.ceil(wordCount / 200) || 1;
+      const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
       const payload = {
         ...post,
+        title: trimmedTitle,
+        slug: trimmedSlug,
+        lang: post.lang || 'en',
+        category: post.category || 'Guides & Tutorials',
+        author_name: post.author_name || 'Kagazo Team',
         published: publishStatus,
         reading_time: readingTime,
         tags: parsedTags,
@@ -212,10 +253,32 @@ export function BlogEditor({
                 <input
                   type="text"
                   value={post.slug || ''}
-                  onChange={(e) => setPost({ ...post, slug: e.target.value })}
+                  onChange={(e) => {
+                    setIsSlugManuallyEdited(true);
+                    setPost({ ...post, slug: e.target.value });
+                  }}
+                  placeholder="e.g. community-certificate-signature-not-verified-tamil"
                   className="bg-transparent focus:outline-none flex-1 font-bold text-primary ml-1"
                 />
               </div>
+
+              {/* Indic Language Auto-Transliteration Badge */}
+              {post.lang === 'ta' && (
+                <div className="flex items-start gap-2 text-[11px] text-purple-800 bg-purple-50/80 border border-purple-200/80 p-2.5 rounded-xl mt-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-600 mt-0.5 shrink-0" />
+                  <div>
+                    <span className="font-bold">தமிழ் (Tamil) Detected:</span> Auto-suggested English transliterated slug ending with <code className="font-mono px-1 py-0.5 bg-purple-100/80 rounded text-[10px] text-purple-900">-tamil</code> for clean browser URLs &amp; social sharing. You can customize it above anytime.
+                  </div>
+                </div>
+              )}
+              {post.lang === 'hi' && (
+                <div className="flex items-start gap-2 text-[11px] text-amber-800 bg-amber-50/80 border border-amber-200/80 p-2.5 rounded-xl mt-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600 mt-0.5 shrink-0" />
+                  <div>
+                    <span className="font-bold">हिंदी (Hindi) Detected:</span> Auto-suggested English transliterated slug ending with <code className="font-mono px-1 py-0.5 bg-amber-100/80 rounded text-[10px] text-amber-900">-hindi</code> for clean browser URLs &amp; social sharing. You can customize it above anytime.
+                  </div>
+                </div>
+              )}
             </div>
 
             <div>
@@ -292,12 +355,12 @@ export function BlogEditor({
               <label className="block text-[11px] font-bold text-text-main mb-1">Language</label>
               <select
                 value={post.lang || 'en'}
-                onChange={(e) => setPost({ ...post, lang: e.target.value })}
+                onChange={(e) => handleLanguageChange(e.target.value)}
                 className="w-full px-3 py-1.5 text-xs bg-surface/40 border border-surface-darker rounded-xl text-text-main"
               >
                 <option value="en">English (en)</option>
-                <option value="ta">Tamil (ta)</option>
-                <option value="hi">Hindi (hi)</option>
+                <option value="ta">Tamil - தமிழ் (ta)</option>
+                <option value="hi">Hindi - हिंदी (hi)</option>
               </select>
             </div>
 
