@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="aadhaarSun" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9933"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="aadhaarRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D32F2F"/>
+      <stop offset="100%" stop-color="#B71C1C"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circular badge -->
+  <circle cx="60" cy="60" r="56" fill="#FFFFFF" stroke="#FFE0B2" stroke-width="2"/>
+  <!-- Aadhaar Sunburst rays -->
+  <g fill="url(#aadhaarSun)">
+    <path d="M60 12 L63 24 L57 24 Z"/>
+    <path d="M60 108 L63 96 L57 96 Z"/>
+    <path d="M12 60 L24 63 L24 57 Z"/>
+    <path d="M108 60 L96 63 L96 57 Z"/>
+    <path d="M26 26 L36 34 L32 38 Z"/>
+    <path d="M94 94 L84 86 L88 82 Z"/>
+    <path d="M26 94 L34 84 L38 88 Z"/>
+    <path d="M94 26 L84 36 L88 32 Z"/>
+    <path d="M42 16 L47 27 L41 29 Z"/>
+    <path d="M78 16 L79 29 L73 27 Z"/>
+    <path d="M16 42 L27 47 L29 41 Z"/>
+    <path d="M16 78 L29 79 L27 73 Z"/>
+    <path d="M104 42 L93 47 L91 41 Z"/>
+    <path d="M104 78 L91 79 L93 73 Z"/>
+    <path d="M42 104 L47 93 L41 91 Z"/>
+    <path d="M78 104 L79 91 L73 93 Z"/>
+  </g>
+  <!-- Fingerprint concentric arch curves in iconic red/orange -->
+  <g fill="none" stroke="url(#aadhaarRed)" stroke-width="3" stroke-linecap="round">
+    <path d="M46 54 A14 14 0 0 1 74 54"/>
+    <path d="M41 62 A19 19 0 0 1 79 62"/>
+    <path d="M38 72 A22 22 0 0 1 82 72"/>
+    <path d="M51 60 A9 9 0 0 1 69 60 V74"/>
+    <path d="M56 64 A4 4 0 0 1 64 64 V78"/>
+    <path d="M60 67 V79"/>
+  </g>
+  <!-- Base identity banner -->
+  <path d="M30 88 Q60 84 90 88 Q60 94 30 88 Z" fill="#138808"/>
+  <text x="60" y="103" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="9" fill="#1A237E" letter-spacing="1">AADHAAR</text>
+  <text x="60" y="112" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="6" fill="#D32F2F" letter-spacing="0.5">UIDAI GOVT OF INDIA</text>
+</svg>

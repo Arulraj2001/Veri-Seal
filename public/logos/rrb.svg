@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="rrbRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#991B1B"/>
+    </radialGradient>
+    <linearGradient id="rrbGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular Badge -->
+  <circle cx="60" cy="60" r="54" fill="url(#rrbRed)" stroke="url(#rrbGold)" stroke-width="3"/>
+  <circle cx="60" cy="60" r="48" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="2,2"/>
+  
+  <!-- Steam Locomotive Engine Front Profile -->
+  <g fill="#FFFFFF">
+    <!-- Boiler and Cabin -->
+    <rect x="42" y="44" width="36" height="30" rx="3"/>
+    <rect x="46" y="38" width="28" height="6" rx="2" fill="url(#rrbGold)"/>
+    <!-- Chimney / Smokestack -->
+    <rect x="55" y="30" width="10" height="9" rx="1" fill="url(#rrbGold)"/>
+    <!-- Cowcatcher / Grill -->
+    <polygon points="40,74 80,74 84,82 36,82" fill="url(#rrbGold)"/>
+    <!-- Headlight -->
+    <circle cx="60" cy="54" r="8" fill="#FDE047" stroke="#78350F" stroke-width="1.5"/>
+    <circle cx="60" cy="54" r="4" fill="#FFFFFF"/>
+    <!-- Piston Wheels -->
+    <circle cx="45" cy="74" r="5" fill="#1F2937"/>
+    <circle cx="75" cy="74" r="5" fill="#1F2937"/>
+  </g>
+
+  <!-- Text: RAILWAY RECRUITMENT BOARD -->
+  <text x="60" y="24" fill="#FDE047" font-size="6.5" font-family="'Inter', sans-serif" font-weight="900" text-anchor="middle" letter-spacing="1">RAILWAY RECRUITMENT</text>
+  <text x="60" y="99" fill="#FFFFFF" font-size="8.5" font-family="'Inter', sans-serif" font-weight="900" text-anchor="middle" letter-spacing="1.5">RRB • INDIAN RAIL</text>
+</svg>

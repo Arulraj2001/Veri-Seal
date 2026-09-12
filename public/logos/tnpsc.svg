@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="tnRed" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#991B1B"/>
+      <stop offset="100%" stop-color="#7F1D1D"/>
+    </linearGradient>
+    <linearGradient id="tnGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="50%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular Disc -->
+  <circle cx="60" cy="60" r="56" fill="#FFFFFF" stroke="#991B1B" stroke-width="3"/>
+  <circle cx="60" cy="60" r="50" fill="#FFFBEB" stroke="url(#tnGold)" stroke-width="1.5"/>
+
+  <!-- Iconic Tamil Nadu Gopuram (Temple Tower) Motif -->
+  <g fill="url(#tnGold)" stroke="#78350F" stroke-width="0.8">
+    <!-- Top Kalasams (Finials) -->
+    <path d="M57 26 L60 22 L63 26 Z"/>
+    <path d="M52 28 L54 25 L56 28 Z"/>
+    <path d="M64 28 L66 25 L68 28 Z"/>
+    <!-- Top tier -->
+    <rect x="50" y="28" width="20" height="4" rx="0.5"/>
+    <!-- Tier 2 -->
+    <rect x="47" y="32" width="26" height="5" rx="0.5"/>
+    <!-- Tier 3 -->
+    <rect x="44" y="37" width="32" height="6" rx="0.5"/>
+    <!-- Tier 4 -->
+    <rect x="41" y="43" width="38" height="6" rx="0.5"/>
+    <!-- Tier 5 -->
+    <rect x="38" y="49" width="44" height="7" rx="0.5"/>
+    <!-- Main Gateway (Doorway arch) -->
+    <path d="M35 56 L85 56 L85 68 L70 68 A10 10 0 0 0 50 68 L35 68 Z"/>
+    <!-- Doorway Cutout -->
+    <path d="M54 68 A6 6 0 0 1 66 68 Z" fill="#991B1B"/>
+    <!-- Indian National Flag Accent on base -->
+    <rect x="30" y="68" width="60" height="3" fill="#FF9933"/>
+    <rect x="30" y="71" width="60" height="2" fill="#FFFFFF"/>
+    <rect x="30" y="73" width="60" height="3" fill="#138808"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="60" y="87" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="11" fill="#991B1B" letter-spacing="1.5">TNPSC</text>
+  <rect x="18" y="91" width="84" height="11" rx="2" fill="#991B1B"/>
+  <text x="60" y="99" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="5" fill="#FFFFFF" letter-spacing="0.5">GOVT OF TAMIL NADU</text>
+  <text x="60" y="108" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="4.5" fill="#991B1B" letter-spacing="0.6">தமிழ்நாடு அரசு • E-SEVAI</text>
+</svg>

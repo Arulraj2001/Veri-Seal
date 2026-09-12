@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="tneaBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E40AF"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+    <linearGradient id="tneaOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB923C"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular Base -->
+  <circle cx="60" cy="60" r="56" fill="#FFFFFF" stroke="#1E40AF" stroke-width="3"/>
+  <circle cx="60" cy="60" r="50" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.5"/>
+
+  <!-- Academic Cap & Gear / Engineering Compass Motif -->
+  <g transform="translate(60, 48)">
+    <!-- Engineering Gear Wheel -->
+    <path d="M-22 0 A22 22 0 1 1 22 0 A22 22 0 1 1 -22 0 Z" fill="none" stroke="#DBEAFE" stroke-width="6"/>
+    <!-- Mortarboard Hat -->
+    <path d="M0 -16 L24 -5 L0 6 L-24 -5 Z" fill="url(#tneaBlue)"/>
+    <!-- Skull Cap -->
+    <path d="M-14 -1 L-14 9 C-14 17 14 17 14 9 L14 -1 Z" fill="url(#tneaBlue)"/>
+    <!-- Tassel -->
+    <path d="M12 -3 L22 8 L22 18" fill="none" stroke="url(#tneaOrange)" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="22" cy="18" r="2.5" fill="url(#tneaOrange)"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="60" y="85" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="13" fill="#1E40AF" letter-spacing="1.5">TNEA</text>
+  <rect x="22" y="89" width="76" height="11" rx="2.5" fill="#EA580C"/>
+  <text x="60" y="97" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="4.8" fill="#FFFFFF" letter-spacing="0.5">ANNA UNIVERSITY • DOTE</text>
+  <text x="60" y="107" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="4.5" fill="#1E40AF" letter-spacing="0.5">ENGINEERING ADMISSIONS</text>
+</svg>

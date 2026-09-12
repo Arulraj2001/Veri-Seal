@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="waGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#25D366"/>
+      <stop offset="100%" stop-color="#128C7E"/>
+    </linearGradient>
+    <filter id="waShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#075E54" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <!-- Main WhatsApp Green Circular Icon -->
+  <circle cx="60" cy="60" r="54" fill="url(#waGreen)" filter="url(#waShadow)"/>
+  
+  <!-- Speech Bubble Inner Path -->
+  <path fill="#FFFFFF" d="M60 22 C39 22 22 39 22 60 C22 67.5 24.2 74.5 28 80.5 L24 96 L40 92 C45.8 95.2 52.6 97 60 97 C81 97 98 80 98 60 C98 39 81 22 60 22 Z"/>
+  
+  <!-- Speech Bubble Green Inner Shape -->
+  <path fill="url(#waGreen)" d="M60 27 C41.8 27 27 41.8 27 60 C27 66.8 29.1 73.1 32.7 78.4 L30 89 L41 86.4 C46.2 89.4 52.8 91 60 91 C78.2 91 93 76.2 93 60 C93 41.8 78.2 27 60 27 Z"/>
+  
+  <!-- Official White Handset Symbol -->
+  <path fill="#FFFFFF" d="M48.5 42 C47.5 39.5 45.8 39.5 44 39.5 C42.2 39.5 40.5 40.2 39 42 C37.5 43.8 33 48.5 33 58 C33 67.5 40 76.5 41 77.8 C42 79.1 54.5 98.5 73.8 90 C89.8 82.8 86.5 72.8 85 71.5 C83.5 70.2 75.8 66.2 74.2 65.5 C72.8 64.8 71.8 64.5 70.8 66 C69.5 67.8 66.2 71.8 65 73.2 C63.8 74.5 62.5 74.8 60.8 74 C59 73.2 53.2 71.2 46.5 65.2 C41.2 60.5 37.8 54.8 36.8 53 C35.8 51.2 36.8 50.2 37.5 49.2 C38.2 48.2 39.2 47 40.2 45.8 C41.2 44.5 41.5 43.8 42.2 42.8 C42.8 41.8 42.2 40.8 41.8 40 C41.2 39.2 37.8 31 36.2 27" transform="scale(0.85) translate(10, 10)"/>
+</svg>

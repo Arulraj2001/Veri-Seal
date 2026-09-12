@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Search,
   X,
@@ -281,7 +282,7 @@ const CATEGORY_STYLES: Record<
   },
 };
 
-/** Individual Medium-Sized Tool Card with Faded Background Watermark */
+/** Individual Medium-Sized Tool Card with Authentic Authority Emblem & Hover Watermark */
 function ToolCard({ tool }: { tool: ToolItem }) {
   const style = CATEGORY_STYLES[tool.category] || CATEGORY_STYLES.pdf_tools;
   const Watermark = style.WatermarkIcon;
@@ -289,23 +290,53 @@ function ToolCard({ tool }: { tool: ToolItem }) {
   return (
     <Link
       href={tool.slug}
-      className={`group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${style.hoverBorder} overflow-hidden min-h-[220px]`}
+      className={`group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${style.hoverBorder} overflow-hidden min-h-[230px]`}
     >
-      {/* Themed Low-Opacity Background Watermark Motif */}
-      <div
-        className={`absolute -bottom-4 -right-4 w-28 h-28 pointer-events-none opacity-[0.05] dark:opacity-[0.07] group-hover:opacity-[0.14] dark:group-hover:opacity-[0.20] group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 ${style.watermarkColor} flex items-center justify-center`}
-      >
-        <Watermark className="w-full h-full stroke-[1.2]" />
-      </div>
+      {/* Official Authority Emblem Watermark (Right Bottom Corner) */}
+      {tool.authorityLogo ? (
+        <div
+          className="absolute -bottom-3 -right-3 w-28 h-28 pointer-events-none flex items-center justify-center transition-all duration-300 z-0"
+        >
+          <Image
+            src={tool.authorityLogo}
+            alt={tool.authorityName || tool.name}
+            width={112}
+            height={112}
+            className="w-full h-full object-contain opacity-[0.16] dark:opacity-[0.22] grayscale group-hover:grayscale-0 group-hover:opacity-90 dark:group-hover:opacity-95 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 drop-shadow-sm"
+          />
+        </div>
+      ) : (
+        <div
+          className={`absolute -bottom-4 -right-4 w-28 h-28 pointer-events-none opacity-[0.05] dark:opacity-[0.07] group-hover:opacity-[0.14] dark:group-hover:opacity-[0.20] group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 ${style.watermarkColor} flex items-center justify-center z-0`}
+        >
+          <Watermark className="w-full h-full stroke-[1.2]" />
+        </div>
+      )}
 
       <div className="relative z-10 space-y-2.5">
-        {/* Top Badges */}
+        {/* Top Badges with Mini Emblem */}
         <div className="flex items-center justify-between gap-2">
-          <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${style.badgeClass}`}>
-            {tool.categoryLabel}
-          </span>
+          <div className="flex items-center gap-1.5 min-w-0">
+            {tool.authorityLogo && (
+              <div className="w-6 h-6 rounded-md bg-white dark:bg-slate-800 shadow-sm border border-slate-200/90 dark:border-slate-700/80 p-0.5 shrink-0 flex items-center justify-center overflow-hidden">
+                <Image
+                  src={tool.authorityLogo}
+                  alt={tool.authorityName || 'Authority'}
+                  width={20}
+                  height={20}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            )}
+            <span
+              className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border truncate ${style.badgeClass}`}
+              title={tool.authorityName || tool.categoryLabel}
+            >
+              {tool.authorityName ? tool.authorityName : tool.categoryLabel}
+            </span>
+          </div>
           {tool.badge && (
-            <span className="text-[9px] font-black uppercase tracking-wider bg-slate-900 text-white dark:bg-slate-800 dark:text-amber-400 border border-slate-800 dark:border-amber-500/30 px-2 py-0.5 rounded-full">
+            <span className="text-[9px] font-black uppercase tracking-wider bg-slate-900 text-white dark:bg-slate-800 dark:text-amber-400 border border-slate-800 dark:border-amber-500/30 px-2 py-0.5 rounded-full shrink-0">
               {tool.badge}
             </span>
           )}

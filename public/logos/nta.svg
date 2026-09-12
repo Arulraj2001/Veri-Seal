@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="ntaBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#075985"/>
+    </linearGradient>
+    <linearGradient id="ntaOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular Badge -->
+  <circle cx="60" cy="60" r="54" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+  <circle cx="60" cy="60" r="48" fill="none" stroke="url(#ntaBlue)" stroke-width="2.5"/>
+
+  <!-- NTA Flame / Torch symbol -->
+  <g transform="translate(0, -4)">
+    <!-- Torch Base -->
+    <polygon points="56,76 64,76 62,88 58,88" fill="#475569"/>
+    <rect x="53" y="72" width="14" height="4" rx="1.5" fill="url(#ntaBlue)"/>
+    
+    <!-- Outer Blue Flame Wing -->
+    <path d="M60 30 C72 44 80 58 74 72 C68 64 64 62 60 52 C56 62 52 64 46 72 C40 58 48 44 60 30 Z" fill="url(#ntaBlue)"/>
+    
+    <!-- Inner Saffron / Orange Flame Core -->
+    <path d="M60 42 C67 52 70 60 67 68 C64 63 62 60 60 54 C58 60 56 63 53 68 C50 60 53 52 60 42 Z" fill="url(#ntaOrange)"/>
+    
+    <!-- Yellow Spark Center -->
+    <ellipse cx="60" cy="62" rx="3.5" ry="6" fill="#FDE047"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="60" y="24" fill="#0369A1" font-size="8" font-family="'Inter', sans-serif" font-weight="900" text-anchor="middle" letter-spacing="1.5">NTA INDIA</text>
+  <text x="60" y="103" fill="#C2410C" font-size="6" font-family="'Inter', sans-serif" font-weight="800" text-anchor="middle" letter-spacing="1">NATIONAL TESTING AGENCY</text>
+</svg>

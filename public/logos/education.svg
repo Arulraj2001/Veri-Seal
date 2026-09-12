@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="eduNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+    <linearGradient id="eduGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+  <!-- Circular Board Seal -->
+  <circle cx="60" cy="60" r="54" fill="url(#eduNavy)" stroke="url(#eduGold)" stroke-width="3"/>
+  <circle cx="60" cy="60" r="48" fill="none" stroke="url(#eduGold)" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+  <!-- Academic Mortarboard (Graduation Cap) -->
+  <polygon points="60,28 88,40 60,52 32,40" fill="url(#eduGold)"/>
+  <polygon points="46,47 46,60 60,65 74,60 74,47 60,52" fill="#FDE68A"/>
+  <!-- Tassel -->
+  <path d="M78 45 L82 58 L80 62 L84 62 L82 58" fill="#F59E0B"/>
+
+  <!-- Open Academic Book of Knowledge -->
+  <path d="M60 74 C50 67, 36 70, 34 78 C42 77, 52 75, 60 82 C68 75, 78 77, 86 78 C84 70, 70 67, 60 74 Z" fill="#FFFFFF"/>
+  <line x1="60" y1="74" x2="60" y2="82" stroke="#1E3A8A" stroke-width="1.5"/>
+
+  <!-- Laurel Wreath Leaves on Sides -->
+  <g fill="url(#eduGold)">
+    <circle cx="25" cy="58" r="2.5"/>
+    <circle cx="23" cy="67" r="2.5"/>
+    <circle cx="26" cy="76" r="2.5"/>
+    <circle cx="95" cy="58" r="2.5"/>
+    <circle cx="97" cy="67" r="2.5"/>
+    <circle cx="94" cy="76" r="2.5"/>
+  </g>
+
+  <!-- Seal Text Around Ring -->
+  <text x="60" y="24" fill="#FDE68A" font-size="6.5" font-family="'Inter', sans-serif" font-weight="900" text-anchor="middle" letter-spacing="1">SECONDARY &amp; HIGHER EDUCATION</text>
+  <text x="60" y="99" fill="#FBBF24" font-size="7.5" font-family="'Inter', sans-serif" font-weight="900" text-anchor="middle" letter-spacing="1.2">BOARD OF EDUCATION</text>
+</svg>

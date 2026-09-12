@@ -21,6 +21,8 @@ export interface ToolItem {
   examTags: string[];
   featuredInNav?: boolean;
   priorityOrder: number;
+  authorityLogo?: string;
+  authorityName?: string;
 }
 
 export interface ToolCategory {
@@ -84,6 +86,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['All India', 'UPSC', 'SSC', 'TNPSC', 'State PSC'],
     featuredInNav: true,
     priorityOrder: 1,
+    authorityLogo: '/logos/education.svg',
+    authorityName: 'All India & Boards',
   },
   {
     id: 'compress-pdf-200kb',
@@ -96,6 +100,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNPSC', 'UPSC', 'SSC', 'Police', 'High Court'],
     featuredInNav: true,
     priorityOrder: 2,
+    authorityLogo: '/logos/tnpsc.svg',
+    authorityName: 'TNPSC & State PSC',
   },
   {
     id: 'compress-pdf-100kb',
@@ -108,6 +114,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Scholarships', 'State PSC', 'Universities', 'BPSC'],
     featuredInNav: true,
     priorityOrder: 3,
+    authorityLogo: '/logos/education.svg',
+    authorityName: 'Scholarships & Univ',
   },
   {
     id: 'compress-pdf-300kb',
@@ -120,6 +128,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'IAS/IPS', 'Judiciary', 'High Court'],
     featuredInNav: true,
     priorityOrder: 4,
+    authorityLogo: '/logos/upsc.svg',
+    authorityName: 'UPSC Civil Services',
   },
   {
     id: 'compress-pdf-500kb',
@@ -132,6 +142,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Banking', 'IBPS', 'SBI', 'Staff Selection'],
     featuredInNav: true,
     priorityOrder: 5,
+    authorityLogo: '/logos/ibps.svg',
+    authorityName: 'IBPS & Banking',
   },
   {
     id: 'govt-exam-compressor',
@@ -144,6 +156,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'TNPSC', 'NEET', 'Railway RRB'],
     featuredInNav: true,
     priorityOrder: 6,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'UPSC • SSC • RRB',
   },
   {
     id: 'tnpsc-pdf-compressor',
@@ -156,6 +170,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNPSC', 'Group 4', 'Group 2', 'VAO'],
     featuredInNav: false,
     priorityOrder: 7,
+    authorityLogo: '/logos/tnpsc.svg',
+    authorityName: 'TNPSC Tamil Nadu',
   },
   {
     id: 'upsc-pdf-compressor',
@@ -168,6 +184,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'NDA', 'CDS', 'Civil Services'],
     featuredInNav: false,
     priorityOrder: 8,
+    authorityLogo: '/logos/upsc.svg',
+    authorityName: 'UPSC ORA Portal',
   },
   {
     id: 'ssc-pdf-compressor',
@@ -180,6 +198,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC', 'CGL', 'CHSL', 'MTS', 'GD Constable'],
     featuredInNav: false,
     priorityOrder: 9,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'Staff Selection Commission',
   },
 
   // -------------------------------------------------------------
@@ -196,6 +216,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC CGL', 'CHSL', 'MTS', 'GD', 'Delhi Police'],
     featuredInNav: true,
     priorityOrder: 10,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'Staff Selection Commission',
   },
   {
     id: 'upsc-photo-resizer',
@@ -208,6 +230,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC CSE', 'NDA', 'CDS', 'IES', 'EPFO'],
     featuredInNav: true,
     priorityOrder: 11,
+    authorityLogo: '/logos/upsc.svg',
+    authorityName: 'UPSC Civil Services',
   },
   {
     id: 'rrb-photo-resizer',
@@ -220,6 +244,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['RRB NTPC', 'Group D', 'ALP', 'Technician', 'JE'],
     featuredInNav: true,
     priorityOrder: 12,
+    authorityLogo: '/logos/rrb.svg',
+    authorityName: 'Railway Recruitment Board',
   },
   {
     id: 'gate-photo-resizer',
@@ -232,6 +258,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['GATE', 'IIT JAM', 'IIT GOAPS', 'M.Tech'],
     featuredInNav: true,
     priorityOrder: 13,
+    authorityLogo: '/logos/education.svg',
+    authorityName: 'IIT GOAPS & GATE',
   },
   {
     id: 'neet-photo-resizer',
@@ -244,6 +272,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['NEET UG', 'NTA', 'Medical', 'AIIMS', 'JIPMER'],
     featuredInNav: true,
     priorityOrder: 14,
+    authorityLogo: '/logos/nta.svg',
+    authorityName: 'NTA NEET India',
   },
   {
     id: 'ibps-photo-resizer',
@@ -256,6 +286,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['IBPS PO', 'Clerk', 'SBI PO', 'RBI', 'NABARD'],
     featuredInNav: true,
     priorityOrder: 15,
+    authorityLogo: '/logos/ibps.svg',
+    authorityName: 'IBPS Banking Selection',
   },
   {
     id: 'tnpsc-photo-resizer',
@@ -268,6 +300,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNPSC', 'Group 1', 'Group 4', 'VAO'],
     featuredInNav: true,
     priorityOrder: 16,
+    authorityLogo: '/logos/tnpsc.svg',
+    authorityName: 'TNPSC Tamil Nadu',
   },
   {
     id: 'compress-image-20kb',
@@ -280,6 +314,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'State PSC', 'Judiciary'],
     featuredInNav: false,
     priorityOrder: 17,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'Govt Signature Standard',
   },
   {
     id: 'compress-image-50kb',
@@ -292,6 +328,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['All Portals', 'SSC', 'RRB', 'Police'],
     featuredInNav: false,
     priorityOrder: 18,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'Govt Passport Standard',
   },
 
   // -------------------------------------------------------------
@@ -308,6 +346,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'TNPSC', 'Banking', 'Universities'],
     featuredInNav: true,
     priorityOrder: 19,
+    authorityLogo: '/logos/education.svg',
+    authorityName: 'Board of Education',
   },
   {
     id: 'clean-document-scanner',
@@ -320,6 +360,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['All Marksheets', 'Certificates', 'ID Cards'],
     featuredInNav: true,
     priorityOrder: 20,
+    authorityLogo: '/logos/incometax.svg',
+    authorityName: 'Govt Document Verification',
   },
   {
     id: 'image-to-pdf-200kb',
@@ -332,6 +374,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNPSC', 'Community Cert', 'Income Cert'],
     featuredInNav: true,
     priorityOrder: 21,
+    authorityLogo: '/logos/tnpsc.svg',
+    authorityName: 'TNPSC & e-District',
   },
   {
     id: 'image-to-pdf-300kb',
@@ -344,6 +388,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'State PSC', 'Court Filings'],
     featuredInNav: false,
     priorityOrder: 22,
+    authorityLogo: '/logos/upsc.svg',
+    authorityName: 'UPSC & High Courts',
   },
   {
     id: 'pdf-to-image-300dpi',
@@ -356,6 +402,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['e-Aadhaar', 'Admit Cards', 'Hall Tickets'],
     featuredInNav: true,
     priorityOrder: 23,
+    authorityLogo: '/logos/uidai.svg',
+    authorityName: 'UIDAI & Govt Portals',
   },
 
   // -------------------------------------------------------------
@@ -372,6 +420,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['e-Aadhaar', 'Form 16', 'Bank Statement'],
     featuredInNav: true,
     priorityOrder: 24,
+    authorityLogo: '/logos/uidai.svg',
+    authorityName: 'UIDAI e-Aadhaar & Form 16',
   },
   {
     id: 'mask-aadhaar-tool',
@@ -384,6 +434,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UIDAI', 'Bank KYC', 'Exam ID Proof', 'Sim KYC'],
     featuredInNav: true,
     priorityOrder: 25,
+    authorityLogo: '/logos/uidai.svg',
+    authorityName: 'UIDAI & RBI Compliance',
   },
 
   // -------------------------------------------------------------
@@ -400,6 +452,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Cyber Cafe', 'Studio', 'Print 4x6', 'Admit Cards', 'Epson Print'],
     featuredInNav: true,
     priorityOrder: 26,
+    authorityLogo: '/logos/passport.svg',
+    authorityName: 'Passport Seva & MEA',
   },
   {
     id: 'formal-attire-changer',
@@ -412,6 +466,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Passport Suit', 'Blazer Overlay', 'SSC Photo', 'UPSC Attire', 'Studio Formal', 'Job CV'],
     featuredInNav: true,
     priorityOrder: 27,
+    authorityLogo: '/logos/passport.svg',
+    authorityName: 'ICAO Biometric Studio',
   },
   {
     id: 'photo-date-name-stamper',
@@ -424,6 +480,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC CGL', 'UPSC CSE', 'DOP Strip', 'Name On Photo', 'White Banner', 'IBPS'],
     featuredInNav: true,
     priorityOrder: 28,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'SSC & UPSC DOP Rules',
   },
   {
     id: 'biometric-face-aligner',
@@ -436,6 +494,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Indian Passport', 'US Visa 2x2', 'Schengen', '70-80% Head', 'Biometric Frame'],
     featuredInNav: true,
     priorityOrder: 29,
+    authorityLogo: '/logos/passport.svg',
+    authorityName: 'ICAO Biometric Standard',
   },
   {
     id: 'stamp-size-photo-maker',
@@ -448,6 +508,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Stamp Size', '20x25mm', 'NEET Postcard', 'Railway MST Pass', 'Student ID', '4x6 Card'],
     featuredInNav: true,
     priorityOrder: 30,
+    authorityLogo: '/logos/nta.svg',
+    authorityName: 'NTA & Railway Passes',
   },
 
   // -------------------------------------------------------------
@@ -464,6 +526,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['e-Aadhaar', 'Community', 'Nativity', 'PAN', 'DigiLocker'],
     featuredInNav: true,
     priorityOrder: 27,
+    authorityLogo: '/logos/rbi.svg',
+    authorityName: 'CCA India & DigiLocker',
   },
   {
     id: 'verify-aadhaar-pdf',
@@ -476,6 +540,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UIDAI', 'myAadhaar', 'e-KYC'],
     featuredInNav: false,
     priorityOrder: 28,
+    authorityLogo: '/logos/uidai.svg',
+    authorityName: 'UIDAI Certifying Authority',
   },
   {
     id: 'signature-cleaner-extractor',
@@ -489,6 +555,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC CGL', 'UPSC CSE', 'IBPS PO', 'TNPSC', 'Black Ink', '140x60'],
     featuredInNav: true,
     priorityOrder: 29,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'SSC & IBPS Official Ink',
   },
   {
     id: 'thumb-impression-resizer',
@@ -502,6 +570,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['IBPS Clerk', 'SBI PO', 'Railway RRB', 'SSC LTI', '240x240'],
     featuredInNav: true,
     priorityOrder: 30,
+    authorityLogo: '/logos/ibps.svg',
+    authorityName: 'IBPS & RRB Biometric',
   },
   {
     id: 'driving-license-card-merger',
@@ -515,6 +585,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Parivahan', 'Sarathi', 'Smart Card', 'RC', 'FASTag', '200KB'],
     featuredInNav: true,
     priorityOrder: 31,
+    authorityLogo: '/logos/parivahan.svg',
+    authorityName: 'Parivahan Sarathi MoRTH',
   },
   {
     id: 'photo-signature-joiner',
@@ -528,6 +600,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['MP PEB', 'UPSSSC', 'Rajasthan RSMSSB', 'Kerala PSC', 'DOP'],
     featuredInNav: true,
     priorityOrder: 32,
+    authorityLogo: '/logos/education.svg',
+    authorityName: 'PEB & State PSC Slips',
   },
   {
     id: 'batch-photo-resizer',
@@ -541,6 +615,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Cyber Cafe', 'CSC Centre', 'SSC Batch', 'UPSC', 'IBPS', 'ZIP Stream'],
     featuredInNav: true,
     priorityOrder: 33,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'CSC & Cyber Cafe Suite',
   },
   {
     id: 'pvc-id-card-maker',
@@ -554,6 +630,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Epson L805', 'PVC Card', 'Aadhaar Smart Card', 'PAN Card', '300 DPI', 'A4 Lamination'],
     featuredInNav: true,
     priorityOrder: 34,
+    authorityLogo: '/logos/pvc.svg',
+    authorityName: 'CR-80 Smart ID Standard',
   },
   {
     id: 'self-attest-pdf',
@@ -567,6 +645,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Marksheet', 'Caste Certificate', 'UPSC OTR', 'SSC DV', 'Self Attested', '<200KB'],
     featuredInNav: true,
     priorityOrder: 35,
+    authorityLogo: '/logos/upsc.svg',
+    authorityName: 'UPSC & High Court OTR',
   },
   {
     id: 'exam-specifications-radar',
@@ -580,6 +660,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'IBPS', 'NEET', 'JEE', 'RRB', 'TNPSC', 'State PSC', 'Guidelines'],
     featuredInNav: true,
     priorityOrder: 36,
+    authorityLogo: '/logos/ssc.svg',
+    authorityName: 'National Exam Standards',
   },
   {
     id: 'a4-multi-card-sheet',
@@ -593,6 +675,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Aadhaar Print', 'PAN Card', 'Voter ID', 'A4 Gang Sheet', '300 DPI', 'CSC VLE', 'Cyber Cafe'],
     featuredInNav: true,
     priorityOrder: 37,
+    authorityLogo: '/logos/pvc.svg',
+    authorityName: 'CR-80 Smart ID & CSC',
   },
   {
     id: 'handwritten-declaration-scanner',
@@ -606,6 +690,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['IBPS PO', 'IBPS Clerk', 'SBI Clerk', 'RRB NTPC', '50KB to 100KB', 'Ruled Line Remover'],
     featuredInNav: true,
     priorityOrder: 38,
+    authorityLogo: '/logos/sbi.svg',
+    authorityName: 'State Bank of India',
   },
   {
     id: 'aadhaar-pan-kyc-merge',
@@ -619,6 +705,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Aadhaar PAN', 'Bank KYC', 'SIM KYC', 'Single PDF', 'RBI Masked', '<200KB'],
     featuredInNav: true,
     priorityOrder: 39,
+    authorityLogo: '/logos/uidai.svg',
+    authorityName: 'UIDAI & Income Tax PAN',
   },
   {
     id: 'affidavit-generator',
@@ -632,6 +720,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Affidavit', 'Name Change', 'e-Stamp Paper', 'Notary', 'Gap Year', 'Tamil Affidavit'],
     featuredInNav: true,
     priorityOrder: 40,
+    authorityLogo: '/logos/tnpsc.svg',
+    authorityName: 'Sworn Legal & Notary',
   },
   {
     id: 'gst-number-verifier',
@@ -645,6 +735,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['GSTIN', 'GST Verify', 'ITC Input Credit', 'Taxpayer Search', 'State Code'],
     featuredInNav: true,
     priorityOrder: 41,
+    authorityLogo: '/logos/gst.svg',
+    authorityName: 'GST India (GSTN)',
   },
   {
     id: 'salary-slip-generator',
@@ -658,6 +750,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Salary Slip', 'Payslip Maker', 'Bank Loan Proof', 'Visa Payslip', 'EPF Calculator', 'Tamil Payslip'],
     featuredInNav: true,
     priorityOrder: 42,
+    authorityLogo: '/logos/rbi.svg',
+    authorityName: 'EPFO & Corporate Ready',
   },
   {
     id: 'compress-for-whatsapp',
@@ -671,6 +765,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['WhatsApp Compress', '<500KB', 'No Blur', 'Marksheet Share', 'Mobile 4G'],
     featuredInNav: true,
     priorityOrder: 43,
+    authorityLogo: '/logos/whatsapp.svg',
+    authorityName: 'WhatsApp Sharing Std',
   },
   {
     id: 'income-tax-calculator-2025-26',
@@ -684,6 +780,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Income Tax', 'Budget 2025-26', 'New Regime', 'Standard Deduction ₹75k', 'Sec 87A'],
     featuredInNav: true,
     priorityOrder: 44,
+    authorityLogo: '/logos/incometax.svg',
+    authorityName: 'Income Tax Department',
   },
   {
     id: 'ifsc-code-finder',
@@ -697,6 +795,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['IFSC Code', 'MICR Code', 'Bank Branch', 'SBI IFSC', 'Indian Bank', 'NEFT RTGS'],
     featuredInNav: true,
     priorityOrder: 45,
+    authorityLogo: '/logos/rbi.svg',
+    authorityName: 'Reserve Bank of India',
   },
   // -------------------------------------------------------------
   // Phase 2: Tamil Nadu Monopoly & Academic Admission Suite
@@ -713,6 +813,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNPSC', 'Group 4', 'Group 2', 'VAO', 'OTR Photo', 'TNPSC Signature', '10-20KB', 'Thumb'],
     featuredInNav: true,
     priorityOrder: 46,
+    authorityLogo: '/logos/tnpsc.svg',
+    authorityName: 'TNPSC Tamil Nadu',
   },
   {
     id: 'tn-marksheet-compressor',
@@ -726,6 +828,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSLC Marksheet', '12th Marksheet', 'TNEA', 'TNGASA', 'TNPSC', 'Marksheet PDF', '200KB'],
     featuredInNav: true,
     priorityOrder: 47,
+    authorityLogo: '/logos/tnea.svg',
+    authorityName: 'TN State Board & DGE',
   },
   {
     id: 'tnea-cutoff-calculator',
@@ -739,6 +843,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNEA 2025', 'TNEA Cutoff', 'Anna University', 'Engineering Cutoff', '7.5 Quota', 'First Graduate'],
     featuredInNav: true,
     priorityOrder: 48,
+    authorityLogo: '/logos/tnea.svg',
+    authorityName: 'Anna University Chennai',
   },
   {
     id: 'pstm-certificate-generator',
@@ -752,6 +858,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PSTM', 'GO 82', 'Tamil Medium', 'TNPSC Reservation', 'School Certificate', 'Group 4'],
     featuredInNav: true,
     priorityOrder: 49,
+    authorityLogo: '/logos/tnpsc.svg',
+    authorityName: 'Govt of Tamil Nadu G.O. 82',
   },
   {
     id: 'aadhaar-front-back-pdf',
@@ -765,6 +873,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Aadhaar Front Back', 'Aadhaar Both Sides', 'Aadhaar Single Page', 'Masked Aadhaar', '200KB PDF'],
     featuredInNav: true,
     priorityOrder: 50,
+    authorityLogo: '/logos/uidai.svg',
+    authorityName: 'UIDAI Aadhaar Official',
   },
   {
     id: 'tn-esevai-certificate-prep',
@@ -778,6 +888,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['e-Sevai', 'Community Certificate', 'Nativity', 'First Graduate', 'Tahsildar QR', 'TNPSC Upload'],
     featuredInNav: true,
     priorityOrder: 51,
+    authorityLogo: '/logos/tnpsc.svg',
+    authorityName: 'TN e-Sevai & Revenue',
   },
   {
     id: 'college-admission-photo-maker',
@@ -791,6 +903,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['College Photo', 'Passport Sheet 4x6', 'Stamp Size Photo', 'Admission Photo', 'Print Sheet'],
     featuredInNav: true,
     priorityOrder: 52,
+    authorityLogo: '/logos/education.svg',
+    authorityName: 'Higher Education Board',
   },
   {
     id: 'free-ats-resume-builder',
@@ -804,6 +918,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['ATS Resume', 'Tech Resume', 'Sarkari CV', 'Indian Bio-Data', 'Fresher 1-Page', 'Software Engineer Resume', 'Zero Cloud Storage'],
     featuredInNav: true,
     priorityOrder: 53,
+    authorityLogo: '/logos/ats.svg',
+    authorityName: 'ATS Institutional Standard',
   },
 ];
 
