@@ -162,15 +162,15 @@ export function Header() {
           </div>
         </Link>
 
-        {/* Desktop Nav Center (Elongated, spacious, perfectly centered) */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/90 px-4 xl:px-6 py-2 rounded-full border border-surface-darker/80 backdrop-blur-md shadow-xs z-30 transition-all">
+        {/* Desktop Nav Center (Elongated, compact sleek height, perfectly centered) */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/90 px-3.5 xl:px-5 py-1 rounded-full border border-surface-darker/80 backdrop-blur-md shadow-xs z-30 transition-all">
           {/* Tools Mega-Menu Trigger */}
           <div ref={toolsRef} className="relative">
             <button
               type="button"
               onClick={() => setToolsMenuOpen(!toolsMenuOpen)}
               className={cn(
-                'flex items-center gap-1.5 px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-semibold rounded-full transition-all cursor-pointer select-none shrink-0 whitespace-nowrap',
+                'flex items-center gap-1.5 px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-semibold rounded-full transition-all cursor-pointer select-none shrink-0 whitespace-nowrap',
                 toolsMenuOpen
                   ? 'bg-white text-primary shadow-2xs'
                   : 'text-text-main hover:text-primary hover:bg-white/60'
@@ -542,7 +542,7 @@ export function Header() {
           {/* Home Cost & Savings Direct Link */}
           <Link
             href="/home-cost"
-            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-emerald-700 hover:bg-emerald-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
+            className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-emerald-700 hover:bg-emerald-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
           >
             {t.nav.homeCost}
           </Link>
@@ -550,7 +550,7 @@ export function Header() {
           {/* Business Profit OS Direct Link */}
           <Link
             href="/business-os"
-            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-indigo-700 hover:bg-indigo-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
+            className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-indigo-700 hover:bg-indigo-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
           >
             {t.nav.businessOs}
           </Link>
@@ -558,7 +558,7 @@ export function Header() {
           {/* Vehicle Decision OS Direct Link */}
           <Link
             href="/vehicle-os"
-            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-amber-700 hover:bg-amber-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
+            className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-amber-700 hover:bg-amber-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
           >
             Vehicle OS
           </Link>
@@ -566,7 +566,7 @@ export function Header() {
           {/* Documents Section Link */}
           <Link
             href="/#supported-docs"
-            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
+            className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
           >
             {t.nav.documents}
           </Link>
@@ -574,7 +574,7 @@ export function Header() {
           {/* Trust & Security Link (visible on 2xl displays) */}
           <Link
             href="/#trust-section"
-            className="hidden 2xl:block px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
+            className="hidden 2xl:block px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
           >
             {t.nav.security}
           </Link>
@@ -582,7 +582,7 @@ export function Header() {
           {/* Blog Link */}
           <Link
             href="/blog"
-            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
+            className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
           >
             {t.nav.blog}
           </Link>
