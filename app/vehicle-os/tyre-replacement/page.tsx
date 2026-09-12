@@ -1,5 +1,6 @@
 'use client';
 
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import * as React from 'react';
 import Link from 'next/link';
 import {
@@ -33,6 +34,14 @@ export default function TyreReplacementPage() {
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Vehicle OS', href: '/vehicle-os' },
+          { label: 'Tyre Health & Replacement Planner' },
+        ]}
+      />
       {/* Header */}
       <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-3">
         <div className="flex items-center gap-2">

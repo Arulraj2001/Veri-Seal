@@ -23,6 +23,7 @@ import { cn } from '@/lib/utils';
 import { resizeImage, type ImageResizeResponse } from '@/lib/api';
 import { QualityProofEngine } from './QualityProofEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 export interface CustomPreset {
   id: string;
@@ -577,16 +578,20 @@ export function ImageResizerEngine({
             dimensions={{ width: result.width_px, height: result.height_px, unit: 'px' }}
           />
 
-          {/* Download Action Button */}
-          <div className="pt-2">
+          {/* Download Action Button & WhatsApp Share */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
             <button
               type="button"
               onClick={handleDownload}
-              className="w-full py-3.5 px-5 rounded-2xl bg-primary hover:bg-primary-hover text-white font-black text-sm sm:text-base shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+              className="flex-1 w-full py-3.5 px-5 rounded-2xl bg-primary hover:bg-primary-hover text-white font-black text-sm sm:text-base shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
             >
               <Download className="w-5 h-5" />
               <span>Download Verified {mode === 'photo' ? 'Photo' : 'Signature'} ({result.output_size_kb} KB)</span>
             </button>
+            <WhatsAppShare
+              message="Resized my exam photo to exact KB using Kagazo 📸 Free tool for SSC/UPSC/TNPSC: https://kagazo.in/tools"
+              className="w-full sm:w-auto justify-center py-3.5 px-5 rounded-2xl"
+            />
           </div>
 
           {/* Official Agency Partner Slot */}

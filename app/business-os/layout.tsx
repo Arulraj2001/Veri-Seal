@@ -16,7 +16,6 @@ import {
   Trophy,
   Clock,
   Truck,
-  ChevronRight,
 } from 'lucide-react';
 
 const SUB_NAV_LINKS = [
@@ -47,17 +46,6 @@ export default function BusinessOsLayout({ children }: { children: React.ReactNo
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/business-os" className="hover:text-primary transition-colors font-medium">
-            Small Business Profit OS
-          </Link>
-        </nav>
-
         {/* Sub-Navigation Ribbon (Crisp Light Aesthetic) */}
         <div className="bg-white/95 border border-slate-200/90 rounded-2xl p-2 backdrop-blur-xl shadow-xs flex items-center gap-1.5 overflow-x-auto scrollbar-thin">
           {SUB_NAV_LINKS.map((link) => {

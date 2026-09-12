@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 import { compressPdf, type CompressionResponseData } from '@/lib/api';
 
 interface ExamPreset {
@@ -621,6 +622,10 @@ export function ExamPdfCompressor() {
                   <Download className="w-5 h-5 mr-2" />
                   Download Compressed PDF ({result.compressed_size_kb} KB)
                 </Button>
+                <WhatsAppShare
+                  message="Compressed my PDF for govt portal using Kagazo 📄 Free: https://kagazo.in/tools"
+                  className="w-full sm:w-auto justify-center py-4 rounded-2xl"
+                />
                 <Button
                   variant="outline"
                   onClick={handleReset}

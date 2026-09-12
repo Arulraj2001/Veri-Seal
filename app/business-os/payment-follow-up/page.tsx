@@ -1,3 +1,4 @@
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { Metadata } from 'next';
 import UdhaarReminderEngine from '@/components/business-os/UdhaarReminderEngine';
 import { CreditCard, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
@@ -40,6 +41,14 @@ export default function PaymentFollowUpPage() {
 
   return (
     <div className="space-y-10">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Business OS', href: '/business-os' },
+          { label: 'Udhaar Ledger & Payment Reminders' },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

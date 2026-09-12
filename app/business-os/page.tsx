@@ -23,6 +23,7 @@ import {
   Calendar,
   Users,
 } from 'lucide-react';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import BusinessHealthScoreCard from '@/components/business-os/BusinessHealthScoreCard';
 
 export const metadata: Metadata = {
@@ -275,6 +276,14 @@ export default function BusinessOsHubPage() {
 
   return (
     <div className="space-y-12">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Business OS' },
+        ]}
+        showHomeIcon
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

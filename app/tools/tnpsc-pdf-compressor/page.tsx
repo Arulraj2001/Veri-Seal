@@ -1,3 +1,4 @@
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import * as React from 'react';
 import type { Metadata } from 'next';
 import { CompressorPageTemplate } from '@/components/tools/CompressorPageTemplate';
@@ -28,5 +29,18 @@ export const metadata: Metadata = {
 };
 
 export default function TnpscPdfCompressorPage() {
-  return <CompressorPageTemplate config={config} />;
+  return (
+    <CompressorPageTemplate
+      config={config}
+      breadcrumb={
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'TNPSC PDF Compressor' },
+          ]}
+        />
+      }
+    />
+  );
 }

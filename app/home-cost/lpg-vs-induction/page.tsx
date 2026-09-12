@@ -1,3 +1,4 @@
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -45,6 +46,14 @@ const FAQS = [
 export default function LpgVsInductionPage() {
   return (
     <div className="space-y-10">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Home Cost OS', href: '/home-cost' },
+          { label: 'LPG vs Induction Cooking Cost' },
+        ]}
+      />
       {/* Header Hero */}
       <div className="space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">

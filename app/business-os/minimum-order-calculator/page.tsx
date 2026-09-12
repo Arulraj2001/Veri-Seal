@@ -1,3 +1,4 @@
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { Metadata } from 'next';
 import MinimumOrderValueEngine from '@/components/business-os/MinimumOrderValueEngine';
 import { Truck, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
@@ -40,6 +41,14 @@ export default function MinimumOrderPage() {
 
   return (
     <div className="space-y-10">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Business OS', href: '/business-os' },
+          { label: 'Minimum Order Value (MOV) Sizer' },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

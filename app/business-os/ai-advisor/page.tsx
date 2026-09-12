@@ -1,3 +1,4 @@
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { Metadata } from 'next';
 import AiAdvisorEngine from '@/components/business-os/AiAdvisorEngine';
 import { Sparkles, HelpCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
@@ -40,6 +41,14 @@ export default function AiAdvisorPage() {
 
   return (
     <div className="space-y-10">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Business OS', href: '/business-os' },
+          { label: 'AI Business Diagnostic & Advisor' },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

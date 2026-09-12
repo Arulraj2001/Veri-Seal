@@ -22,6 +22,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { VEHICLE_TOOLS } from '@/components/vehicle-os/VehicleSubNav';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 export default function VehicleOsHubPage() {
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -39,6 +40,15 @@ export default function VehicleOsHubPage() {
 
   return (
     <div className="space-y-12">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Vehicle OS' },
+        ]}
+        showHomeIcon
+      />
+
       {/* Hero Banner (Crisp Light Automotive Theme) */}
       <div className="relative bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-sm overflow-hidden">
         <div className="max-w-3xl space-y-4">

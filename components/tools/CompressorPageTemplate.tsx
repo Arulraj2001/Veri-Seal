@@ -20,6 +20,7 @@ import { RelatedTools } from '@/components/ui/RelatedTools';
 
 interface CompressorPageTemplateProps {
   config: ToolConfig;
+  breadcrumb?: React.ReactNode;
 }
 
 const QUICK_SWITCH_TOOLS = [
@@ -33,7 +34,7 @@ const QUICK_SWITCH_TOOLS = [
   { name: 'Master PDF Compressor', href: '/tools/pdf-compressor', tag: 'Custom Slider', slug: 'pdf-compressor' },
 ];
 
-export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) {
+export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTemplateProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -118,14 +119,16 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
 
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <Breadcrumb
-          items={[
-            { label: 'Home', href: '/' },
-            { label: 'Tools', href: '/tools' },
-            { label: config.heroHighlight || config.title },
-          ]}
-          showHomeIcon
-        />
+        {breadcrumb || (
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Tools', href: '/tools' },
+              { label: config.heroHighlight || config.title },
+            ]}
+            showHomeIcon
+          />
+        )}
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">

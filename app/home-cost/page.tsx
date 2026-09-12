@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import HomeDigitalTwinDashboard from '@/components/home-cost/HomeDigitalTwinDashboard';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 export const metadata: Metadata = {
   title: 'Home Cost & Savings Intelligence Platform India | What Is Costing You Money?',
@@ -131,6 +132,15 @@ export default function HomeCostLandingPage() {
 
   return (
     <div className="space-y-12">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Home Cost OS' },
+        ]}
+        showHomeIcon
+      />
+
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"

@@ -1,3 +1,4 @@
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -50,6 +51,14 @@ const FAQS = [
 export default function SolarCalculatorPage() {
   return (
     <div className="space-y-10">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Home Cost OS', href: '/home-cost' },
+          { label: 'Rooftop Solar Size & Subsidy Calculator' },
+        ]}
+      />
       {/* Header Hero */}
       <div className="space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">

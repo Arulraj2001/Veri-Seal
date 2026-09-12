@@ -1,3 +1,4 @@
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { Metadata } from 'next';
 import CashFlowSurvivalEngine from '@/components/business-os/CashFlowSurvivalEngine';
 import { Clock, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
@@ -40,6 +41,14 @@ export default function CashFlowSurvivalPage() {
 
   return (
     <div className="space-y-10">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Business OS', href: '/business-os' },
+          { label: 'Cash-Flow Survival Calculator' },
+        ]}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

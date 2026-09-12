@@ -18,6 +18,7 @@ import {
   BatchProcessResponse,
   BatchProcessOptions,
 } from '@/lib/api';
+import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 const PRESETS = [
   { id: 'ssc_photo', label: 'SSC Photo', desc: '350×450 px • 20–50 KB' },
@@ -244,13 +245,19 @@ export default function BatchResizerEngine() {
               </button>
 
               {result?.zip_base64 && (
-                <button
-                  onClick={handleDownloadZip}
-                  className="px-6 py-3 rounded-2xl bg-slate-900 hover:bg-black text-white font-bold text-sm inline-flex items-center gap-2 shadow-md transition-all"
-                >
-                  <Download className="w-4 h-4 text-emerald-400" />
-                  <span>Download Processed ZIP ({result.total_zip_size_kb} KB)</span>
-                </button>
+                <>
+                  <button
+                    onClick={handleDownloadZip}
+                    className="px-6 py-3 rounded-2xl bg-slate-900 hover:bg-black text-white font-bold text-sm inline-flex items-center gap-2 shadow-md transition-all"
+                  >
+                    <Download className="w-4 h-4 text-emerald-400" />
+                    <span>Download Processed ZIP ({result.total_zip_size_kb} KB)</span>
+                  </button>
+                  <WhatsAppShare
+                    message="Resized my exam photo to exact KB using Kagazo 📸 Free tool for SSC/UPSC/TNPSC: https://kagazo.in/tools"
+                    className="py-3 text-sm rounded-2xl"
+                  />
+                </>
               )}
             </div>
           </div>

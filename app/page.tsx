@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { HeroSection } from '@/components/home/HeroSection';
+import { StatsBar } from '@/components/home/StatsBar';
 import { IntentGateway } from '@/components/home/IntentGateway';
 import { UploadZone } from '@/components/home/UploadZone';
 import { UploadZoneSkeleton } from '@/components/home/UploadZoneSkeleton';
@@ -15,6 +16,9 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <HeroSection />
+
+      {/* Real-time Stats Bar */}
+      <StatsBar />
 
       {/* 3-Pillar Intent Gateway (Psychological Navigation) */}
       <IntentGateway />

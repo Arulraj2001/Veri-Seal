@@ -34,6 +34,7 @@ import {
 import confetti from 'canvas-confetti';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 import type { VerificationState, VerificationResult } from '@/types';
 import { SITE_CONFIG } from '@/lib/constants';
 import {
@@ -707,7 +708,7 @@ export function UploadZone() {
                 </p>
               </div>
 
-              {/* Download Verified Button */}
+              {/* Download Verified Button & WhatsApp Share */}
               <div className="flex flex-col sm:flex-row items-center gap-3">
                 <Button
                   variant="primary"
@@ -718,6 +719,11 @@ export function UploadZone() {
                   <Download className="w-5 h-5" />
                   <span>{t.upload.downloadBtn}</span>
                 </Button>
+
+                <WhatsAppShare
+                  message="I verified my government PDF signature using Kagazo ✅ It shows green tick now! Try it free: https://kagazo.in"
+                  className="w-full sm:w-auto justify-center py-3.5"
+                />
 
                 <Button
                   variant="secondary"

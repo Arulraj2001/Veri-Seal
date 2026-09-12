@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { printIsolatedDocument } from '@/lib/print-utils';
+import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 type AffidavitType =
   | 'name_change'
@@ -350,6 +351,10 @@ export default function AffidavitGeneratorEngine() {
               <Printer className="w-3.5 h-3.5" />
               <span>1-Click Print A4 Document</span>
             </button>
+            <WhatsAppShare
+              message="Generated bilingual affidavit in Tamil & English using Kagazo 📝 Free: https://kagazo.in/tools/bilingual-affidavit-generator"
+              className="py-2 text-xs rounded-xl"
+            />
           </div>
         </div>
 

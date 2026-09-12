@@ -20,6 +20,7 @@ import {
   PhotoSignatureJoinerOptions,
 } from '@/lib/api';
 import PreFlightComplianceCard from './PreFlightComplianceCard';
+import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 export default function PhotoSignatureJoinerEngine() {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -295,13 +296,19 @@ export default function PhotoSignatureJoinerEngine() {
           </button>
 
           {result?.image_base64 && (
-            <button
-              onClick={handleDownload}
-              className="px-6 py-3 rounded-2xl bg-slate-900 hover:bg-black text-white font-bold text-sm inline-flex items-center gap-2 shadow-md transition-all"
-            >
-              <Download className="w-4 h-4" />
-              <span>Download Slip (JPG &lt;{result.target_max_kb}KB)</span>
-            </button>
+            <>
+              <button
+                onClick={handleDownload}
+                className="px-6 py-3 rounded-2xl bg-slate-900 hover:bg-black text-white font-bold text-sm inline-flex items-center gap-2 shadow-md transition-all"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download Slip (JPG &lt;{result.target_max_kb}KB)</span>
+              </button>
+              <WhatsAppShare
+                message="Resized my exam photo to exact KB using Kagazo 📸 Free tool for SSC/UPSC/TNPSC: https://kagazo.in/tools"
+                className="py-3 text-sm rounded-2xl"
+              />
+            </>
           )}
         </div>
       </div>

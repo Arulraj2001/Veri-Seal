@@ -1,5 +1,6 @@
 'use client';
 
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import * as React from 'react';
 import Link from 'next/link';
 import {
@@ -102,6 +103,14 @@ export default function VehicleDashboardPage() {
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
+      {/* Breadcrumb Navigation */}
+      <Breadcrumb
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Vehicle OS', href: '/vehicle-os' },
+          { label: 'Digital Vehicle Garage' },
+        ]}
+      />
       {/* Top Garage Bar */}
       <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
