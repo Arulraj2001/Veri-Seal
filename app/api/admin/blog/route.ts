@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 import { mockBlogPosts, BlogPost } from '@/lib/blog-store';
 import { detectLanguageFromText } from '@/lib/slugify-indic';
 
@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 
       // Check Supabase
       try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseAdmin
           .from('blog_posts')
           .select('*')
           .or(`id.eq.${id},slug.eq.${id}`)
@@ -64,7 +64,7 @@ export async function GET(req: Request) {
 
     // Add Supabase posts
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseAdmin
         .from('blog_posts')
         .select('*')
         .order('created_at', { ascending: false });
@@ -199,7 +199,7 @@ export async function POST(req: Request) {
 
       // Sync to Supabase
       try {
-        await supabase.from('blog_posts').upsert({
+        await supabaseAdmin.from('blog_posts').upsert({
           title: updatedPost.title,
           slug: updatedPost.slug,
           excerpt: updatedPost.excerpt,
@@ -263,9 +263,11 @@ export async function POST(req: Request) {
         mockBlogPosts.unshift(newPost);
       }
 
+      let supabaseResult: any = null;
       // Sync to Supabase
       try {
-        await supabase.from('blog_posts').upsert({
+        console.log('Attempting Supabase insert...');
+        const { data, error } = await supabaseAdmin.from('blog_posts').upsert({
           title: newPost.title,
           slug: newPost.slug,
           excerpt: newPost.excerpt,
@@ -284,8 +286,11 @@ export async function POST(req: Request) {
           reading_time: newPost.reading_time,
           view_count: newPost.view_count,
           tags: newPost.tags,
-        }, { onConflict: 'slug' });
-      } catch (dbErr) {
+        }, { onConflict: 'slug' }).select();
+        supabaseResult = { data, error };
+        console.log('Supabase result:', { data, error });
+      } catch (dbErr: any) {
+        supabaseResult = { exception: dbErr?.message || String(dbErr) };
         console.warn('Supabase post insert notice:', dbErr);
       }
 
@@ -298,7 +303,7 @@ export async function POST(req: Request) {
         ]).catch(() => {});
       }
 
-      return NextResponse.json({ success: true, post: newPost });
+      return NextResponse.json({ success: true, post: newPost, supabaseResult });
     }
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 });
@@ -329,7 +334,7 @@ export async function DELETE(req: Request) {
 
     // Delete from Supabase
     try {
-      await supabase.from('blog_posts').delete().or(`id.eq.${id},slug.eq.${targetSlug}`);
+      await supabaseAdmin.from('blog_posts').delete().or(`id.eq.${id},slug.eq.${targetSlug}`);
     } catch (_) {}
 
     return NextResponse.json({ success: true });

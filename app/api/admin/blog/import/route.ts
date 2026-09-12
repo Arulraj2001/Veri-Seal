@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase';
 import { mockBlogPosts, BlogPost } from '@/lib/blog-store';
 
 interface ImportPostInput {
@@ -111,7 +111,7 @@ export async function POST(req: Request) {
 
     // 2. Insert into Supabase (upsert on slug)
     try {
-      const { error } = await supabase
+      const { error } = await supabaseAdmin
         .from('blog_posts')
         .upsert(dbInserts, { onConflict: 'slug' });
       if (error) {

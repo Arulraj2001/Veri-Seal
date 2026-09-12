@@ -1268,6 +1268,16 @@ export function calculateReadTime(content: string): string {
 }
 
 export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
+  const postsMap = new Map<string, BlogPost>();
+
+  // 1. In-memory baseline
+  for (const p of mockBlogPosts) {
+    if (p.published) {
+      postsMap.set(p.slug, { ...p, lang: p.lang || 'en' });
+    }
+  }
+
+  // 2. Fetch and overlay Supabase posts (Supabase is single source of truth)
   try {
     const { data, error } = await supabase
       .from('blog_posts')
@@ -1276,38 +1286,39 @@ export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
       .order('published_at', { ascending: false });
 
     if (!error && data && data.length > 0) {
-      return data.map((d: any) => ({
-        id: d.id,
-        title: d.title,
-        slug: d.slug,
-        excerpt: d.excerpt || '',
-        content: d.content,
-        meta_description: d.meta_description || '',
-        meta_keywords: d.meta_keywords || '',
-        featured_image_url: d.featured_image_url || 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
-        category: d.category || 'Guides & Tutorials',
-        published: Boolean(d.published),
-        published_at: d.published_at,
-        author_name: d.author_name || 'Kagazo Team',
-        created_at: d.created_at,
-        updated_at: d.updated_at,
-        lang: d.lang || 'en',
-        hreflang_group: d.hreflang_group || null,
-        reading_time: d.reading_time || Math.ceil((d.content || '').trim().split(/\s+/).length / 200),
-        view_count: typeof d.view_count === 'number' ? d.view_count : 0,
-        tags: Array.isArray(d.tags) ? d.tags : [],
-      }));
+      for (const d of data) {
+        postsMap.set(d.slug, {
+          id: d.id,
+          title: d.title,
+          slug: d.slug,
+          excerpt: d.excerpt || '',
+          content: d.content,
+          meta_description: d.meta_description || '',
+          meta_keywords: d.meta_keywords || '',
+          featured_image_url: d.featured_image_url || 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
+          category: d.category || 'Guides & Tutorials',
+          published: Boolean(d.published),
+          published_at: d.published_at,
+          author_name: d.author_name || 'Kagazo Team',
+          created_at: d.created_at,
+          updated_at: d.updated_at,
+          lang: d.lang || 'en',
+          hreflang_group: d.hreflang_group || null,
+          reading_time: d.reading_time || Math.ceil((d.content || '').trim().split(/\s+/).length / 200),
+          view_count: typeof d.view_count === 'number' ? d.view_count : 0,
+          tags: Array.isArray(d.tags) ? d.tags : [],
+        });
+      }
     }
   } catch (e) {
     console.debug('Supabase getPublishedBlogPosts fallback:', e);
   }
 
-  return mockBlogPosts
-    .filter((p) => p.published)
-    .map((p) => ({
-      ...p,
-      lang: p.lang || 'en',
-    }));
+  return Array.from(postsMap.values()).sort((a, b) => {
+    const dateA = new Date(a.published_at || a.created_at).getTime();
+    const dateB = new Date(b.published_at || b.created_at).getTime();
+    return dateB - dateA;
+  });
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {

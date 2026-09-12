@@ -12,6 +12,7 @@ export async function GET() {
     return NextResponse.json({
       payment_enabled: false,
       site_name: 'Kagazo',
+      contact_email: 'support@kagazo.in',
       verification_counter: 421847,
       language_tamil_enabled: true,
       free_daily_limit: 3,

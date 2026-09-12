@@ -3,13 +3,25 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MessageSquare, ExternalLink, Sparkles, ShieldCheck } from 'lucide-react';
+import { MessageSquare, ExternalLink, Sparkles, ShieldCheck, Mail } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 import { translations } from '@/lib/translations';
 
 export function Footer() {
   const { language } = useLanguage();
   const pathname = usePathname();
+  const [contactEmail, setContactEmail] = React.useState('support@kagazo.in');
+
+  React.useEffect(() => {
+    fetch('/api/settings', { cache: 'no-store' })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.contact_email) {
+          setContactEmail(data.contact_email);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) {
     return null;
@@ -67,15 +79,23 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Contact Action */}
-            <div className="pt-1 flex items-center gap-2.5 text-text-main/70">
+            {/* Contact Actions */}
+            <div className="pt-2 flex flex-wrap items-center gap-2 text-text-main/70">
+              <a
+                href={`mailto:${contactEmail}`}
+                className="h-9 px-3 rounded-xl bg-white border border-surface-darker flex items-center gap-2 hover:text-primary hover:border-primary/40 transition-colors shadow-2xs text-xs font-semibold text-text-main group"
+                aria-label="Email Support"
+              >
+                <Mail className="h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform" />
+                <span>{contactEmail}</span>
+              </a>
               <Link
                 href="/contact"
-                className="h-9 px-3 rounded-xl bg-white border border-surface-darker flex items-center gap-1.5 hover:text-primary hover:border-primary/40 transition-colors shadow-2xs text-xs font-semibold"
+                className="h-9 px-3 rounded-xl bg-white border border-surface-darker flex items-center gap-1.5 hover:text-primary hover:border-primary/40 transition-colors shadow-2xs text-xs font-semibold text-text-main"
                 aria-label="Contact Us"
               >
                 <MessageSquare className="h-3.5 w-3.5" />
-                <span>Support</span>
+                <span>Support Desk</span>
               </Link>
             </div>
           </div>
@@ -379,7 +399,7 @@ export function Footer() {
           </p>
 
           {/* Quick Legal Links */}
-          <div className="flex items-center gap-4 text-xs font-medium text-text-main/60 shrink-0">
+          <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-text-main/60 shrink-0">
             <Link href="/privacy" className="hover:text-primary transition-colors">
               Privacy Policy
             </Link>
@@ -395,6 +415,14 @@ export function Footer() {
             <Link href="/contact" className="hover:text-primary transition-colors">
               Support
             </Link>
+            <span>•</span>
+            <a
+              href={`mailto:${contactEmail}`}
+              className="hover:text-primary transition-colors font-semibold text-text-main/80 flex items-center gap-1"
+            >
+              <Mail className="w-3 h-3 text-primary" />
+              <span>{contactEmail}</span>
+            </a>
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0 bg-white/70 border border-surface-darker px-3 py-1.5 rounded-full font-medium shadow-2xs">
