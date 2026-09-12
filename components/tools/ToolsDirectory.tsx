@@ -302,12 +302,12 @@ function ToolCard({ tool }: { tool: ToolItem }) {
             alt={tool.authorityName || tool.name}
             width={112}
             height={112}
-            className="w-full h-full object-contain opacity-[0.16] dark:opacity-[0.22] grayscale group-hover:grayscale-0 group-hover:opacity-90 dark:group-hover:opacity-95 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 drop-shadow-sm"
+            className="w-full h-full object-contain opacity-65 dark:opacity-70 group-hover:opacity-100 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 drop-shadow-sm"
           />
         </div>
       ) : (
         <div
-          className={`absolute -bottom-4 -right-4 w-28 h-28 pointer-events-none opacity-[0.05] dark:opacity-[0.07] group-hover:opacity-[0.14] dark:group-hover:opacity-[0.20] group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 ${style.watermarkColor} flex items-center justify-center z-0`}
+          className={`absolute -bottom-4 -right-4 w-28 h-28 pointer-events-none opacity-60 dark:opacity-70 group-hover:opacity-100 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 ${style.watermarkColor} flex items-center justify-center z-0`}
         >
           <Watermark className="w-full h-full stroke-[1.2]" />
         </div>
@@ -370,15 +370,11 @@ function ToolCard({ tool }: { tool: ToolItem }) {
         </div>
       </div>
 
-      {/* Bottom CTA Bar */}
-      <div className="relative z-10 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
-        <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 flex items-center gap-1">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-          <span>In-RAM Privacy</span>
-        </span>
-        <span className="font-bold text-emerald-700 dark:text-emerald-400 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+      {/* Bottom CTA Bar - Centered so bottom-right authority logo is completely visible */}
+      <div className="relative z-10 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-center text-xs">
+        <span className="font-bold text-emerald-700 dark:text-emerald-400 inline-flex items-center justify-center gap-1.5 px-4 py-1 rounded-full bg-emerald-50/90 dark:bg-emerald-950/50 border border-emerald-200/80 dark:border-emerald-800/60 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600 transition-all shadow-sm">
           <span>Use Tool</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
         </span>
       </div>
     </Link>

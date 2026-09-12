@@ -128,7 +128,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'IAS/IPS', 'Judiciary', 'High Court'],
     featuredInNav: true,
     priorityOrder: 4,
-    authorityLogo: '/logos/upsc.svg',
+    authorityLogo: '/logos/upsc.png',
     authorityName: 'UPSC Civil Services',
   },
   {
@@ -156,7 +156,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'TNPSC', 'NEET', 'Railway RRB'],
     featuredInNav: true,
     priorityOrder: 6,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'UPSC • SSC • RRB',
   },
   {
@@ -184,7 +184,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'NDA', 'CDS', 'Civil Services'],
     featuredInNav: false,
     priorityOrder: 8,
-    authorityLogo: '/logos/upsc.svg',
+    authorityLogo: '/logos/upsc.png',
     authorityName: 'UPSC ORA Portal',
   },
   {
@@ -198,7 +198,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC', 'CGL', 'CHSL', 'MTS', 'GD Constable'],
     featuredInNav: false,
     priorityOrder: 9,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'Staff Selection Commission',
   },
 
@@ -216,7 +216,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC CGL', 'CHSL', 'MTS', 'GD', 'Delhi Police'],
     featuredInNav: true,
     priorityOrder: 10,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'Staff Selection Commission',
   },
   {
@@ -230,7 +230,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC CSE', 'NDA', 'CDS', 'IES', 'EPFO'],
     featuredInNav: true,
     priorityOrder: 11,
-    authorityLogo: '/logos/upsc.svg',
+    authorityLogo: '/logos/upsc.png',
     authorityName: 'UPSC Civil Services',
   },
   {
@@ -314,7 +314,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'State PSC', 'Judiciary'],
     featuredInNav: false,
     priorityOrder: 17,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'Govt Signature Standard',
   },
   {
@@ -328,7 +328,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['All Portals', 'SSC', 'RRB', 'Police'],
     featuredInNav: false,
     priorityOrder: 18,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'Govt Passport Standard',
   },
 
@@ -360,7 +360,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['All Marksheets', 'Certificates', 'ID Cards'],
     featuredInNav: true,
     priorityOrder: 20,
-    authorityLogo: '/logos/incometax.svg',
+    authorityLogo: '/logos/incometax.png',
     authorityName: 'Govt Document Verification',
   },
   {
@@ -388,7 +388,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'State PSC', 'Court Filings'],
     featuredInNav: false,
     priorityOrder: 22,
-    authorityLogo: '/logos/upsc.svg',
+    authorityLogo: '/logos/upsc.png',
     authorityName: 'UPSC & High Courts',
   },
   {
@@ -480,7 +480,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC CGL', 'UPSC CSE', 'DOP Strip', 'Name On Photo', 'White Banner', 'IBPS'],
     featuredInNav: true,
     priorityOrder: 28,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'SSC & UPSC DOP Rules',
   },
   {
@@ -555,7 +555,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC CGL', 'UPSC CSE', 'IBPS PO', 'TNPSC', 'Black Ink', '140x60'],
     featuredInNav: true,
     priorityOrder: 29,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'SSC & IBPS Official Ink',
   },
   {
@@ -615,7 +615,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Cyber Cafe', 'CSC Centre', 'SSC Batch', 'UPSC', 'IBPS', 'ZIP Stream'],
     featuredInNav: true,
     priorityOrder: 33,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'CSC & Cyber Cafe Suite',
   },
   {
@@ -645,7 +645,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Marksheet', 'Caste Certificate', 'UPSC OTR', 'SSC DV', 'Self Attested', '<200KB'],
     featuredInNav: true,
     priorityOrder: 35,
-    authorityLogo: '/logos/upsc.svg',
+    authorityLogo: '/logos/upsc.png',
     authorityName: 'UPSC & High Court OTR',
   },
   {
@@ -660,7 +660,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'IBPS', 'NEET', 'JEE', 'RRB', 'TNPSC', 'State PSC', 'Guidelines'],
     featuredInNav: true,
     priorityOrder: 36,
-    authorityLogo: '/logos/ssc.svg',
+    authorityLogo: '/logos/ssc.png',
     authorityName: 'National Exam Standards',
   },
   {
@@ -780,7 +780,7 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Income Tax', 'Budget 2025-26', 'New Regime', 'Standard Deduction ₹75k', 'Sec 87A'],
     featuredInNav: true,
     priorityOrder: 44,
-    authorityLogo: '/logos/incometax.svg',
+    authorityLogo: '/logos/incometax.png',
     authorityName: 'Income Tax Department',
   },
   {

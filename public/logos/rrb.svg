@@ -1,36 +1,84 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  <defs>
-    <radialGradient id="rrbRed" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#DC2626"/>
-      <stop offset="100%" stop-color="#991B1B"/>
-    </radialGradient>
-    <linearGradient id="rrbGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FCD34D"/>
-      <stop offset="100%" stop-color="#D97706"/>
-    </linearGradient>
-  </defs>
-  <!-- Circular Badge -->
-  <circle cx="60" cy="60" r="54" fill="url(#rrbRed)" stroke="url(#rrbGold)" stroke-width="3"/>
-  <circle cx="60" cy="60" r="48" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-dasharray="2,2"/>
-  
-  <!-- Steam Locomotive Engine Front Profile -->
-  <g fill="#FFFFFF">
-    <!-- Boiler and Cabin -->
-    <rect x="42" y="44" width="36" height="30" rx="3"/>
-    <rect x="46" y="38" width="28" height="6" rx="2" fill="url(#rrbGold)"/>
-    <!-- Chimney / Smokestack -->
-    <rect x="55" y="30" width="10" height="9" rx="1" fill="url(#rrbGold)"/>
-    <!-- Cowcatcher / Grill -->
-    <polygon points="40,74 80,74 84,82 36,82" fill="url(#rrbGold)"/>
-    <!-- Headlight -->
-    <circle cx="60" cy="54" r="8" fill="#FDE047" stroke="#78350F" stroke-width="1.5"/>
-    <circle cx="60" cy="54" r="4" fill="#FFFFFF"/>
-    <!-- Piston Wheels -->
-    <circle cx="45" cy="74" r="5" fill="#1F2937"/>
-    <circle cx="75" cy="74" r="5" fill="#1F2937"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   viewBox="0 0 500 405"
+   id="svg14"
+   sodipodi:docname="Indian_Railways_Tricolour_Logo.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="706"
+     id="namedview16"
+     showgrid="false"
+     inkscape:snap-bbox="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:object-paths="true"
+     inkscape:zoom="0.83972969"
+     inkscape:cx="304.87896"
+     inkscape:cy="212.49572"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <metadata
+     id="metadata2">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     d="m 417.43991,202.5 a 167.43991,167.44098 0 0 1 -334.87982,0 167.43991,167.44098 0 1 1 334.87982,0 z"
+     fill="none"
+     stroke="#dc241f"
+     stroke-width="70.1182"
+     id="path4"
+     style="stroke:#f15b25" />
+  <path
+     d="m 417.43991,202.5 c 0,92.47516 -74.9654,167.44091 -167.43991,167.44091 -92.47451,0 -167.43991,-74.96575 -167.43991,-167.44091 z"
+     fill="none"
+     stroke="#dc241f"
+     stroke-width="70.1182"
+     id="path4-1"
+     sodipodi:nodetypes="cscc"
+     style="stroke:#006934" />
+  <g
+     transform="translate(1.7e-5 -4)"
+     id="g12">
+    <path
+       d="m0 265h500v-117h-500z"
+       fill="#000080"
+       id="path6"
+       style="fill:#2c2c6f" />
+    <path
+       d="m0 148h500v-10.269h-500z"
+       fill="#fff"
+       id="path8" />
+    <path
+       d="m0 275.27h500v-10.269h-500z"
+       fill="#fff"
+       id="path10" />
   </g>
-
-  <!-- Text: RAILWAY RECRUITMENT BOARD -->
-  <text x="60" y="24" fill="#FDE047" font-size="6.5" font-family="'Inter', sans-serif" font-weight="900" text-anchor="middle" letter-spacing="1">RAILWAY RECRUITMENT</text>
-  <text x="60" y="99" fill="#FFFFFF" font-size="8.5" font-family="'Inter', sans-serif" font-weight="900" text-anchor="middle" letter-spacing="1.5">RRB • INDIAN RAIL</text>
 </svg>

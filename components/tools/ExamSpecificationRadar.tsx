@@ -63,8 +63,8 @@ const EXAM_DATABASE: ExamSpecItem[] = [
       ink: 'Black',
       format: 'JPEG / JPG',
     },
-    recommendedToolPath: '/tools/image-resizer',
-    toolLabel: 'Resize to SSC Standard',
+    recommendedToolPath: '/tools/ssc-photo-signature-resizer',
+    toolLabel: 'Resize with SSC Tool',
     officialNote: 'Spectacles and caps strictly prohibited. Both ears must be clearly visible.',
   },
   {
@@ -85,8 +85,8 @@ const EXAM_DATABASE: ExamSpecItem[] = [
       ink: 'Black',
       format: 'JPG',
     },
-    recommendedToolPath: '/tools/photo-date-namer',
-    toolLabel: 'Add UPSC Name & Date',
+    recommendedToolPath: '/tools/upsc-photo-signature-resizer',
+    toolLabel: 'Resize with UPSC Tool',
     officialNote: 'Photo must not be older than 10 days from opening of online application.',
   },
   {
@@ -111,8 +111,8 @@ const EXAM_DATABASE: ExamSpecItem[] = [
       required: true,
       spec: 'Left Thumb: 240×240 px, 20–50 KB (Blue/Black ink)',
     },
-    recommendedToolPath: '/tools/thumb-impression-resizer',
-    toolLabel: 'Prepare LTI & Signature',
+    recommendedToolPath: '/tools/ibps-photo-signature-resizer',
+    toolLabel: 'Prepare with IBPS Suite',
     officialNote: 'Capital letter signatures are invalid. Hand-written declaration also mandatory (50–100 KB).',
   },
   {
@@ -137,8 +137,8 @@ const EXAM_DATABASE: ExamSpecItem[] = [
       required: true,
       spec: 'Left Thumb: 240×240 px, 20–50 KB',
     },
-    recommendedToolPath: '/tools/image-resizer',
-    toolLabel: 'Resize for SBI Portal',
+    recommendedToolPath: '/tools/handwritten-declaration-scanner',
+    toolLabel: 'Format for SBI Portal',
     officialNote: 'Strict file budget. Files above 50KB or below 20KB trigger upload errors.',
   },
   {
@@ -163,8 +163,8 @@ const EXAM_DATABASE: ExamSpecItem[] = [
       required: true,
       spec: 'Fingers & Thumb impressions: 10–200 KB',
     },
-    recommendedToolPath: '/tools/photo-date-namer',
-    toolLabel: 'Create NTA Date Photo',
+    recommendedToolPath: '/tools/neet-photo-signature-resizer',
+    toolLabel: 'Resize with NEET Tool',
     officialNote: 'Candidate name and date of taking photograph must be clearly printed below photograph.',
   },
   {
@@ -207,8 +207,8 @@ const EXAM_DATABASE: ExamSpecItem[] = [
       ink: 'Black',
       format: 'JPG / JPEG',
     },
-    recommendedToolPath: '/tools/batch-photo-resizer',
-    toolLabel: 'Batch Resize for RRB',
+    recommendedToolPath: '/tools/rrb-photo-signature-resizer',
+    toolLabel: 'Resize with RRB Tool',
     officialNote: 'Color photo taken on or after notification date. No selfies allowed.',
   },
   {
@@ -273,8 +273,8 @@ const EXAM_DATABASE: ExamSpecItem[] = [
       ink: 'Blue / Black',
       format: 'JPG',
     },
-    recommendedToolPath: '/tools/photo-date-namer',
-    toolLabel: 'Add TNPSC Date & Name',
+    recommendedToolPath: '/tools/tnpsc-photo-signature-resizer',
+    toolLabel: 'Resize with TNPSC Tool',
     officialNote: 'Photo must contain candidate name & date of photo capture in bottom strip.',
   },
   {
@@ -317,8 +317,8 @@ const EXAM_DATABASE: ExamSpecItem[] = [
       ink: 'Black',
       format: 'JPG',
     },
-    recommendedToolPath: '/tools/photo-date-namer',
-    toolLabel: 'Defence Photo Formatter',
+    recommendedToolPath: '/tools/upsc-photo-signature-resizer',
+    toolLabel: 'Format with UPSC Tool',
     officialNote: 'Strict facial recognition checks at SSB interview. No tilted angles or filters.',
   },
 ];
@@ -344,40 +344,40 @@ export default function ExamSpecificationRadar() {
 
   return (
     <div className="space-y-8">
-      {/* Search & Filter Header Bar */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-xl shadow-xl space-y-6">
+      {/* Search & Filter Header Bar - Matches VeriSeal UI Light/Clean Card System */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl p-6 sm:p-7 shadow-sm space-y-5">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Search Input */}
           <div className="relative w-full md:w-96">
-            <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-500" />
+            <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search exam (UPSC, SSC, IBPS, NEET, UPSSSC)..."
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition-colors"
+              className="w-full bg-slate-50 dark:bg-slate-800/80 border border-slate-200/90 dark:border-slate-700/80 rounded-2xl pl-10 pr-4 py-2.5 text-sm text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
             />
           </div>
 
           {/* Quick Counter */}
-          <div className="text-xs text-slate-400 font-medium flex items-center gap-2 shrink-0">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <div className="text-xs text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-2 shrink-0">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>
-              Showing <strong className="text-white">{filteredExams.length}</strong> official recruitment portals
+              Showing <strong className="text-slate-900 dark:text-white font-bold">{filteredExams.length}</strong> official recruitment portals
             </span>
           </div>
         </div>
 
         {/* Category Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
           {CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+              className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all ${
                 activeCategory === cat
-                  ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
-                  : 'bg-slate-950/80 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
             >
               {cat}
@@ -386,53 +386,55 @@ export default function ExamSpecificationRadar() {
         </div>
       </div>
 
-      {/* Grid of Exam Cards */}
+      {/* Grid of Exam Cards - Clean VeriSeal UI Card System without Logo Distractions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredExams.map((item) => (
           <div
             key={item.id}
-            className="bg-slate-900/60 border border-slate-800 hover:border-slate-700 rounded-2xl p-6 backdrop-blur-xl shadow-xl transition-all duration-200 flex flex-col justify-between group"
+            className="group relative bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-emerald-500/60 hover:shadow-xl rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between"
           >
             <div>
               {/* Card Title & Org */}
               <div className="flex items-start justify-between gap-3 mb-4">
-                <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300">
-                    {item.category}
-                  </span>
-                  <h3 className="text-base font-bold text-white mt-1 group-hover:text-emerald-400 transition-colors">
+                <div className="space-y-1">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                      {item.category}
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors pt-1">
                     {item.name}
                   </h3>
-                  <p className="text-xs text-slate-400">{item.organization}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{item.organization}</p>
                 </div>
               </div>
 
-              {/* Spec Highlights */}
-              <div className="space-y-3 bg-slate-950/60 rounded-xl p-4 border border-slate-800/80 mb-4">
+              {/* Spec Highlights Container */}
+              <div className="space-y-3 bg-slate-50/90 dark:bg-slate-800/60 rounded-xl p-4 border border-slate-200/70 dark:border-slate-700/60 mb-4 backdrop-blur-sm">
                 {/* Photo Spec */}
                 <div className="flex items-start gap-2.5 text-xs">
-                  <Camera className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <Camera className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold text-white">Photo: </span>
-                    <span className="text-slate-300">{item.photo.dimensions}</span>
-                    <span className="text-emerald-400 font-medium"> ({item.photo.sizeRange})</span>
-                    <p className="text-[11px] text-slate-400 mt-0.5">
+                    <span className="font-bold text-slate-800 dark:text-slate-200">Photo: </span>
+                    <span className="text-slate-700 dark:text-slate-300">{item.photo.dimensions}</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-bold"> ({item.photo.sizeRange})</span>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                       Background: {item.photo.background}
                       {item.photo.nameDateRequired && (
-                        <span className="ml-1.5 text-amber-400 font-semibold">• Name & Date Required</span>
+                        <span className="ml-1.5 text-amber-700 dark:text-amber-400 font-bold">• Name &amp; Date Required</span>
                       )}
                     </p>
                   </div>
                 </div>
 
                 {/* Signature Spec */}
-                <div className="flex items-start gap-2.5 text-xs pt-2 border-t border-slate-800/60">
-                  <PenTool className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2.5 text-xs pt-2 border-t border-slate-200/80 dark:border-slate-700/60">
+                  <PenTool className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold text-white">Signature: </span>
-                    <span className="text-slate-300">{item.signature.dimensions}</span>
-                    <span className="text-blue-400 font-medium"> ({item.signature.sizeRange})</span>
-                    <p className="text-[11px] text-slate-400 mt-0.5">
+                    <span className="font-bold text-slate-800 dark:text-slate-200">Signature: </span>
+                    <span className="text-slate-700 dark:text-slate-300">{item.signature.dimensions}</span>
+                    <span className="text-blue-600 dark:text-blue-400 font-bold"> ({item.signature.sizeRange})</span>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                       Ink: {item.signature.ink} • Format: {item.signature.format}
                     </p>
                   </div>
@@ -440,47 +442,47 @@ export default function ExamSpecificationRadar() {
 
                 {/* Thumb / Extra Spec if applicable */}
                 {item.thumb && (
-                  <div className="flex items-start gap-2.5 text-xs pt-2 border-t border-slate-800/60">
-                    <Fingerprint className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-2.5 text-xs pt-2 border-t border-slate-200/80 dark:border-slate-700/60">
+                    <Fingerprint className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-semibold text-white">Thumb Impression: </span>
-                      <span className="text-slate-300">{item.thumb.spec}</span>
+                      <span className="font-bold text-slate-800 dark:text-slate-200">Thumb Impression: </span>
+                      <span className="text-slate-700 dark:text-slate-300">{item.thumb.spec}</span>
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Official Compliance Tip */}
-              <div className="flex items-start gap-2 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/10 text-xs text-slate-300 mb-5">
-                <Info className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 text-xs text-slate-700 dark:text-slate-300 mb-5">
+                <Info className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <p className="leading-relaxed">
-                  <strong className="text-white">Portal Rule: </strong>
+                  <strong className="text-slate-900 dark:text-white font-bold">Portal Rule: </strong>
                   {item.officialNote}
                 </p>
               </div>
             </div>
 
-            {/* Quick Action Button */}
-            <Link
-              href={item.recommendedToolPath}
-              className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-emerald-500 text-slate-200 hover:text-slate-950 font-semibold text-xs transition-all duration-200"
-            >
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4" />
+            {/* Quick Action Button - Valid Working Route with Clean CTA */}
+            <div className="pt-2 flex items-center justify-center">
+              <Link
+                href={item.recommendedToolPath}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs transition-all duration-200 shadow-sm group-hover:shadow-md"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                 <span>{item.toolLabel}</span>
-              </div>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
         ))}
       </div>
 
       {/* Zero State */}
       {filteredExams.length === 0 && (
-        <div className="text-center py-16 bg-slate-900/40 border border-slate-800 rounded-2xl">
-          <Search className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-          <h3 className="text-base font-semibold text-white">No exams found matching &quot;{searchQuery}&quot;</h3>
-          <p className="text-xs text-slate-400 mt-1">
+        <div className="text-center py-16 bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl p-8">
+          <Search className="w-12 h-12 text-slate-400 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-slate-800 dark:text-white">No exams found matching &quot;{searchQuery}&quot;</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Try searching for SSC, UPSC, Bank, NEET, or select &quot;All&quot; from categories.
           </p>
         </div>
