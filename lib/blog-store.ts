@@ -15,6 +15,11 @@ export interface BlogPost {
   author_name: string;
   created_at: string;
   updated_at: string;
+  lang?: string;
+  hreflang_group?: string | null;
+  reading_time?: number;
+  view_count?: number;
+  tags?: string[];
 }
 
 export const mockBlogPosts: BlogPost[] = [
@@ -1205,9 +1210,14 @@ export async function getPublishedBlogPosts(): Promise<BlogPost[]> {
         category: d.category || 'Guides & Tutorials',
         published: Boolean(d.published),
         published_at: d.published_at,
-        author_name: d.author_name || 'Kagazo Desk',
+        author_name: d.author_name || 'Kagazo Team',
         created_at: d.created_at,
         updated_at: d.updated_at,
+        lang: d.lang || 'en',
+        hreflang_group: d.hreflang_group || null,
+        reading_time: d.reading_time || Math.ceil((d.content || '').trim().split(/\s+/).length / 200),
+        view_count: typeof d.view_count === 'number' ? d.view_count : 0,
+        tags: Array.isArray(d.tags) ? d.tags : [],
       }));
     }
   } catch (e) {
@@ -1239,9 +1249,14 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
         category: data.category || 'Guides & Tutorials',
         published: Boolean(data.published),
         published_at: data.published_at,
-        author_name: data.author_name || 'Kagazo Desk',
+        author_name: data.author_name || 'Kagazo Team',
         created_at: data.created_at,
         updated_at: data.updated_at,
+        lang: data.lang || 'en',
+        hreflang_group: data.hreflang_group || null,
+        reading_time: data.reading_time || Math.ceil((data.content || '').trim().split(/\s+/).length / 200),
+        view_count: typeof data.view_count === 'number' ? data.view_count : 0,
+        tags: Array.isArray(data.tags) ? data.tags : [],
       };
     }
   } catch (e) {
@@ -1250,6 +1265,27 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 
   const found = mockBlogPosts.find((p) => p.slug === slug && p.published);
   return found || null;
+}
+
+export async function incrementBlogView(slug: string): Promise<number> {
+  // 1. Try Supabase RPC
+  try {
+    const { error } = await supabase.rpc('increment_view_count', { post_slug: slug });
+    if (!error) {
+      const { data } = await supabase.from('blog_posts').select('view_count').eq('slug', slug).single();
+      if (data && typeof data.view_count === 'number') return data.view_count;
+    }
+  } catch (e) {
+    console.debug('Supabase increment_view_count fallback:', e);
+  }
+
+  // 2. Fallback in-memory
+  const post = mockBlogPosts.find((p) => p.slug === slug);
+  if (post) {
+    post.view_count = (post.view_count || 0) + 1;
+    return post.view_count;
+  }
+  return 1;
 }
 
 export async function getRelatedBlogPosts(category: string, currentSlug: string): Promise<BlogPost[]> {

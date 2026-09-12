@@ -83,6 +83,33 @@ export async function POST(req: Request) {
       existing.author_name = author_name || 'Kagazo Team';
       existing.updated_at = nowIso;
 
+      // Sync to Supabase
+      try {
+        await supabase.from('blog_posts').update({
+          title: existing.title,
+          slug: existing.slug,
+          excerpt: existing.excerpt,
+          content: existing.content,
+          meta_description: existing.meta_description,
+          meta_keywords: existing.meta_keywords,
+          featured_image_url: existing.featured_image_url,
+          category: existing.category,
+          published: existing.published,
+          published_at: existing.published_at,
+          author_name: existing.author_name,
+          updated_at: existing.updated_at,
+        }).eq('slug', existing.slug);
+      } catch (_) {}
+
+      // Ping search engines if published
+      if (published) {
+        const sitemapUrl = encodeURIComponent('https://kagazo.in/sitemap.xml');
+        Promise.allSettled([
+          fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`),
+          fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`),
+        ]).catch(() => {});
+      }
+
       return NextResponse.json({ success: true, post: existing });
     } else {
       // Create new
@@ -104,6 +131,35 @@ export async function POST(req: Request) {
       };
 
       mockBlogPosts.unshift(newPost);
+
+      // Sync to Supabase
+      try {
+        await supabase.from('blog_posts').upsert({
+          title: newPost.title,
+          slug: newPost.slug,
+          excerpt: newPost.excerpt,
+          content: newPost.content,
+          meta_description: newPost.meta_description,
+          meta_keywords: newPost.meta_keywords,
+          featured_image_url: newPost.featured_image_url,
+          category: newPost.category,
+          published: newPost.published,
+          published_at: newPost.published_at,
+          author_name: newPost.author_name,
+          created_at: newPost.created_at,
+          updated_at: newPost.updated_at,
+        }, { onConflict: 'slug' });
+      } catch (_) {}
+
+      // Ping search engines if published
+      if (published) {
+        const sitemapUrl = encodeURIComponent('https://kagazo.in/sitemap.xml');
+        Promise.allSettled([
+          fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`),
+          fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`),
+        ]).catch(() => {});
+      }
+
       return NextResponse.json({ success: true, post: newPost });
     }
   } catch (error) {

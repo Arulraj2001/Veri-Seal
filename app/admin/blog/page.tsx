@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   PenTool,
   Plus,
@@ -16,8 +17,10 @@ import {
   Save,
   Globe,
   FileText,
+  Upload,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { FeaturedImageUpload } from '@/components/admin/FeaturedImageUpload';
 
 interface BlogPost {
   id: string;
@@ -193,6 +196,14 @@ export default function AdminBlogPage() {
                   </button>
                 ))}
               </div>
+
+              <Link
+                href="/admin/blog/import"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface border border-surface-darker text-text-main text-xs font-bold hover:bg-surface-darker transition-colors shadow-2xs"
+              >
+                <Upload className="w-4 h-4 text-primary" />
+                <span>Import Articles</span>
+              </Link>
 
               <button
                 type="button"
@@ -440,26 +451,10 @@ export default function AdminBlogPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-[11px] font-bold text-text-main mb-1">
-                    Featured Image URL
-                  </label>
-                  <input
-                    type="text"
-                    value={currentPost.featured_image_url || ''}
-                    onChange={(e) => setCurrentPost({ ...currentPost, featured_image_url: e.target.value })}
-                    className="w-full px-3 py-1.5 text-xs bg-surface/40 border border-surface-darker rounded-xl text-text-main"
-                  />
-                  {currentPost.featured_image_url && (
-                    <div className="mt-2 rounded-xl overflow-hidden border border-surface-darker max-h-32">
-                      <img
-                        src={currentPost.featured_image_url}
-                        alt="Featured image preview"
-                        className="w-full h-auto object-cover"
-                      />
-                    </div>
-                  )}
-                </div>
+                <FeaturedImageUpload
+                  value={currentPost.featured_image_url || ''}
+                  onChange={(url) => setCurrentPost({ ...currentPost, featured_image_url: url })}
+                />
 
                 <div>
                   <label className="block text-[11px] font-bold text-text-main mb-1">Author Name</label>
