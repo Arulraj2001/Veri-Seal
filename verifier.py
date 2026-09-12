@@ -32,10 +32,18 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.x509 import ocsp as crypto_ocsp
 from pyhanko.pdf_utils.reader import AuthStatus, PdfFileReader
 from pyhanko.pdf_utils.incremental_writer import IncrementalPdfFileWriter
-from pyhanko.sign.validation import validate_pdf_signature
+from pyhanko.sign.validation import validate_pdf_signature, pdf_embedded
 from pyhanko.sign.validation.dss import DocumentSecurityStore
 from pyhanko.sign.validation.status import SignatureCoverageLevel
 from pyhanko_certvalidator import ValidationContext
+
+# Patch pyHanko subfilter validation to support Indian Government & CCA PKI signatures (/adbe.pkcs7.sha1)
+_orig_validate_subfilter = pdf_embedded._validate_subfilter
+def _patched_validate_subfilter(subfilter_str, allowed, *args):
+    if subfilter_str in ("/adbe.pkcs7.sha1", "/adbe.pkcs7.detached", "/ETSI.CAdES.detached", "/ETSI.RFC3161"):
+        return
+    return _orig_validate_subfilter(subfilter_str, allowed, *args)
+pdf_embedded._validate_subfilter = _patched_validate_subfilter
 
 from cca_certs import (
     get_all_cert_bytes_der,
@@ -1249,11 +1257,16 @@ def verify_pdf(
         ltv_bytes = clean_bytes
 
     # Stage 4: Visual stamp
-    try:
-        final_bytes = stage4_add_stamp(ltv_bytes, status, sig_infos, doc_type)
-    except Exception as e:
-        logger.error("Stage 4 failed: %s", e)
+    # When LTV DSS is embedded, preserve the cryptographically intact incremental update (ltv_bytes).
+    # Non-incremental page modifications strip the signature dictionary and DSS from the AcroForm.
+    if ltv_embedded:
         final_bytes = ltv_bytes
+    else:
+        try:
+            final_bytes = stage4_add_stamp(ltv_bytes, status, sig_infos, doc_type)
+        except Exception as e:
+            logger.error("Stage 4 failed: %s", e)
+            final_bytes = ltv_bytes
 
     return VerificationResult(
         status=status,

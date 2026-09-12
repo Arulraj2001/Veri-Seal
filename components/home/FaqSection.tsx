@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/accordion';
 import { FAQ } from '@/lib/constants';
 import { useLanguage } from '@/components/providers/LanguageProvider';
+import { translations } from '@/lib/translations';
 
 const FAQ_TA = [
   {
@@ -46,6 +47,7 @@ const FAQ_TA = [
 
 export function FaqSection() {
   const { t, language } = useLanguage();
+  const flatT = (translations as any)[language] || translations.en;
   const faqList = language === 'ta' ? FAQ_TA : FAQ;
 
   return (
@@ -57,7 +59,7 @@ export function FaqSection() {
             {t.faq.badge}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-text-main mt-4 tracking-tight">
-            {t.faq.heading}
+            {flatT.faq_title || t.faq.heading}
           </h2>
           <p className="text-base sm:text-lg text-text-main/70 mt-3">
             {t.faq.subheading}

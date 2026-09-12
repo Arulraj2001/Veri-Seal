@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import ResumeBuilderEngine from '@/components/tools/ResumeBuilderEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
   title: 'Free ATS Resume Builder Online & Bio-Data Studio (100% Free, No Signup) | VeriSeal',
@@ -227,17 +229,14 @@ export default function FreeAtsResumeBuilderPage() {
 
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            KYC &amp; Career Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold truncate">ATS Resume &amp; Bio-Data Studio</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'ATS Resume Builder' },
+          ]}
+          showHomeIcon
+        />
 
         {/* Hero Section */}
         <div className="space-y-4">
@@ -446,6 +445,9 @@ export default function FreeAtsResumeBuilderPage() {
             </Link>
           </div>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/ats-resume-builder" />
       </div>
     </div>
   );

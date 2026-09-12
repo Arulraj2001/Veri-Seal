@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import IncomeTaxCalculatorEngine from '@/components/tools/IncomeTaxCalculatorEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
   title: 'Income Tax Calculator FY 2025–26 (AY 2026–27) | New vs Old Regime',
@@ -131,17 +133,14 @@ export default function IncomeTaxCalculatorPage() {
 
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Calculators
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold truncate">Income Tax Calculator FY 2025–26</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Calculators', href: '/tools' },
+            { label: 'Income Tax Calculator FY 2025–26' },
+          ]}
+          showHomeIcon
+        />
 
         {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -304,6 +303,9 @@ export default function IncomeTaxCalculatorPage() {
             <AdSlot slot="sidebar" />
           </div>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/income-tax-fy25-calculator" />
       </div>
     </div>
   );

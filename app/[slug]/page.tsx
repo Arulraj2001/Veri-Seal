@@ -22,6 +22,7 @@ import {
   getAllSeoPageSlugs,
 } from '@/lib/seo-store';
 import { SITE_URL } from '@/lib/constants';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { UploadZone } from '@/components/home/UploadZone';
 import { FaqAccordion } from '@/components/seo/FaqAccordion';
 
@@ -176,33 +177,18 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
 
       <div className="pt-28 pb-16 sm:pt-36 sm:pb-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8">
-            <ol className="flex flex-wrap items-center gap-1.5 text-xs text-text-main/60 font-medium">
-              <li>
-                <Link href="/" className="hover:text-primary transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <ChevronRight className="w-3 h-3 text-text-main/40" />
-              </li>
-              <li>
-                <span className="text-text-main/80 font-semibold">{page.state}</span>
-              </li>
-              <li>
-                <ChevronRight className="w-3 h-3 text-text-main/40" />
-              </li>
-              <li className="text-text-main font-semibold truncate max-w-xs">{page.doc_type}</li>
-            </ol>
-          </nav>
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: page.title },
+            ]}
+            showHomeIcon
+            className="mb-6 sm:mb-8"
+          />
 
           {/* Hero Header Section */}
           <header className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">

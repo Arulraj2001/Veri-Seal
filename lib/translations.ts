@@ -132,7 +132,43 @@ export interface TranslationDictionary {
     tooltip: string;
     badge: string;
   };
+
+  // Flat keys for quick localization
+  hero_title: string;
+  hero_subtitle: string;
+  hero_badge_1: string;
+  hero_badge_2: string;
+  hero_badge_3: string;
+  hero_counter: string;
+  upload_title: string;
+  upload_subtitle: string;
+  upload_password_label: string;
+  upload_password_hint: string;
+  upload_btn: string;
+  upload_processing: string;
+  result_valid: string;
+  result_invalid: string;
+  result_unknown: string;
+  result_no_sig: string;
+  result_signer: string;
+  result_signed_on: string;
+  result_download: string;
+  nav_home: string;
+  nav_tools: string;
+  nav_blog: string;
+  nav_about: string;
+  nav_login: string;
+  pay_title: string;
+  pay_scan: string;
+  pay_submit: string;
+  pay_txn: string;
+  faq_title: string;
+  footer_tagline: string;
+  footer_made: string;
+  footer_rights: string;
 }
+
+export type TranslationKey = keyof typeof translations.en;
 
 export const translations: Record<SupportedLanguage, TranslationDictionary> = {
   en: {
@@ -268,6 +304,52 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       tooltip: 'Need Help? Contact Admin',
       badge: 'Help',
     },
+
+    // Hero
+    hero_title: 'Verify Indian Government PDF Signature Instantly',
+    hero_subtitle: 'Fix the yellow ❓ on your Aadhaar, community certificate, nativity, PAN or DigiLocker PDF. Free, instant, your file never leaves your device.',
+    hero_badge_1: 'Files Never Stored',
+    hero_badge_2: 'Instant Verification',
+    hero_badge_3: 'CCA India Certified',
+    hero_counter: 'PDFs verified and counting',
+
+    // Upload Zone
+    upload_title: 'Drop your PDF here or click to upload',
+    upload_subtitle: 'Supports e-Aadhaar • Community Cert • Nativity • PAN • DigiLocker',
+    upload_password_label: 'Enter PDF Password',
+    upload_password_hint: 'For e-Aadhaar: First 4 letters of name in CAPS + birth year. Example: RAMA1995',
+    upload_btn: 'Verify Signature',
+    upload_processing: 'Verifying signature...',
+
+    // Results
+    result_valid: 'Signature Valid',
+    result_invalid: 'Signature Invalid',
+    result_unknown: 'Signature Unknown',
+    result_no_sig: 'No Signature Found',
+    result_signer: 'Signer',
+    result_signed_on: 'Signed On',
+    result_download: 'Download Verified PDF',
+
+    // Navigation
+    nav_home: 'Home',
+    nav_tools: 'Tools',
+    nav_blog: 'Blog',
+    nav_about: 'About',
+    nav_login: 'Login',
+
+    // Payment modal
+    pay_title: 'Upgrade to Pro',
+    pay_scan: 'Scan QR or pay to UPI ID',
+    pay_submit: 'I have paid — Submit Screenshot',
+    pay_txn: 'UPI Transaction ID',
+
+    // FAQ
+    faq_title: 'Frequently Asked Questions',
+
+    // Footer
+    footer_tagline: 'Verify government PDFs instantly. Made for India.',
+    footer_made: 'Made with ❤️ for India 🇮🇳',
+    footer_rights: 'All rights reserved',
   },
   ta: {
     common: {
@@ -402,6 +484,51 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       tooltip: 'உதவி தேவையா? நிர்வாகியை தொடர்பு கொள்ளவும்',
       badge: 'உதவி',
     },
+
+    // Hero
+    hero_title: 'இந்திய அரசு PDF கையொப்பத்தை உடனடியாக சரிபார்க்கவும்',
+    hero_subtitle: 'உங்கள் ஆதார், சமூக சான்றிதழ், பூர்வீக சான்று, PAN அல்லது DigiLocker PDF-இல் உள்ள மஞ்சள் ❓ அடையாளத்தை சரிசெய்யுங்கள். இலவசம், உடனடியானது, உங்கள் கோப்பு உங்கள் சாதனத்தை விட்டு வெளியேறாது.',
+    hero_badge_1: 'கோப்புகள் சேமிக்கப்படுவதில்லை',
+    hero_badge_2: 'உடனடி சரிபார்ப்பு',
+    hero_badge_3: 'CCA இந்தியா சான்றளிக்கப்பட்டது',
+    hero_counter: 'PDF கள் சரிபார்க்கப்பட்டன',
+
+    // Upload Zone
+    upload_title: 'உங்கள் PDF ஐ இங்கே இழுத்து விடுங்கள் அல்லது பதிவேற்றவும்',
+    upload_subtitle: 'ஆதார் • சமூக சான்று • பூர்வீகம் • PAN • DigiLocker ஆதரிக்கப்படுகிறது',
+    upload_password_label: 'PDF கடவுச்சொல் உள்ளிடவும்',
+    upload_password_hint: 'ஆதாருக்கு: பெயரின் முதல் 4 எழுத்துகள் பெரிய எழுத்தில் + பிறந்த ஆண்டு. உதாரணம்: RAMA1995',
+    upload_btn: 'கையொப்பம் சரிபார்க்கவும்',
+    upload_processing: 'கையொப்பம் சரிபார்க்கிறது...',
+
+    // Results
+    result_valid: 'கையொப்பம் சரியானது',
+    result_invalid: 'கையொப்பம் தவறானது',
+    result_unknown: 'கையொப்பம் தெரியவில்லை',
+    result_no_sig: 'கையொப்பம் இல்லை',
+    result_signer: 'கையொப்பமிட்டவர்',
+    result_signed_on: 'கையொப்பமிட்ட தேதி',
+    result_download: 'சரிபார்க்கப்பட்ட PDF பதிவிறக்கவும்',
+
+    // Navigation
+    nav_home: 'முகப்பு',
+    nav_tools: 'கருவிகள்',
+    nav_blog: 'வலைப்பதிவு',
+    nav_about: 'எங்களைப் பற்றி',
+    nav_login: 'உள்நுழைவு',
+
+    // Payment modal
+    pay_title: 'Pro-க்கு மேம்படுத்தவும்',
+    pay_scan: 'QR குறியீட்டை ஸ்கேன் செய்யுங்கள் அல்லது UPI ID-க்கு பணம் செலுத்துங்கள்',
+    pay_submit: 'பணம் செலுத்தினேன் — ஸ்கிரீன்ஷாட் சமர்ப்பிக்கவும்',
+    pay_txn: 'UPI பரிமாற்ற ID',
+
+    // FAQ
+    faq_title: 'அடிக்கடி கேட்கப்படும் கேள்விகள்',
+
+    // Footer
+    footer_tagline: 'அரசு PDF களை உடனடியாக சரிபார்க்கவும். இந்தியாவிற்காக உருவாக்கப்பட்டது.',
+    footer_made: 'இந்தியாவிற்காக ❤️ உடன் உருவாக்கப்பட்டது 🇮🇳',
+    footer_rights: 'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை',
   },
 };
-

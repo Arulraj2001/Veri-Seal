@@ -17,6 +17,8 @@ import {
 import { cn } from '@/lib/utils';
 import { PdfUnlockEngine } from '@/components/tools/PdfUnlockEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
   title: 'Unlock e-Aadhaar PDF Online Free | Remove Password from PDF | VeriSeal',
@@ -124,17 +126,14 @@ export default function UnlockPdfPage() {
 
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools/government-exam-pdf-compressor" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Unlock e-Aadhaar &amp; PDF</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'PDF Password Remover' },
+          ]}
+          showHomeIcon
+        />
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
@@ -318,6 +317,9 @@ export default function UnlockPdfPage() {
             </div>
           </aside>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/pdf-password-remover" />
       </div>
     </div>
   );

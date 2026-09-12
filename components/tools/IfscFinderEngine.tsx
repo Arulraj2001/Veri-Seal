@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Search,
   Building2,
@@ -17,9 +17,12 @@ import {
   Printer,
   FileCheck,
   DollarSign,
+  Loader2,
+  AlertCircle,
 } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { printIsolatedDocument } from '@/lib/print-utils';
+import { cn } from '@/lib/utils';
 
 interface BranchData {
   bank: string;
@@ -31,6 +34,10 @@ interface BranchData {
   district: string;
   state: string;
   contact?: string;
+  upi?: boolean;
+  rtgs?: boolean;
+  neft?: boolean;
+  imps?: boolean;
 }
 
 const SAMPLE_BRANCHES: BranchData[] = [
@@ -272,9 +279,14 @@ const BANK_PREFIX_MAP: Record<string, string> = {
 };
 
 export default function IfscFinderEngine() {
-  const [ifscInput, setIfscInput] = useState<string>('SBIN0001428');
+  const [ifscInput, setIfscInput] = useState<string>('SBIN0001234');
   const [copiedIfsc, setCopiedIfsc] = useState<boolean>(false);
   const [copiedFull, setCopiedFull] = useState<boolean>(false);
+
+  // Live Razorpay API states
+  const [liveBranch, setLiveBranch] = useState<BranchData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [apiError, setApiError] = useState<string | null>(null);
 
   // Mandate Slip Inputs
   const [beneficiaryName, setBeneficiaryName] = useState<string>('');
@@ -282,35 +294,88 @@ export default function IfscFinderEngine() {
   const [transferAmount, setTransferAmount] = useState<string>('');
   const [remitterName, setRemitterName] = useState<string>('');
 
-  const cleanIfsc = ifscInput.trim().toUpperCase();
+  const cleanIfsc = ifscInput.trim().toUpperCase().replace(/\s+/g, '');
 
-  // Search Results
-  const matchedBranch = useMemo(() => {
-    const match = SAMPLE_BRANCHES.find((b) => b.ifsc === cleanIfsc);
-    if (match) return match;
+  // Format validator: exactly 11 characters, first 4 alpha, 5th 0, last 6 alphanumeric
+  const isValidFormat = /^[A-Z]{4}0[A-Z0-9]{6}$/.test(cleanIfsc);
 
-    // Derived bank name from prefix
-    const prefix = cleanIfsc.slice(0, 4);
-    const bankName = BANK_PREFIX_MAP[prefix] || 'Commercial / Scheduled Bank';
-
-    if (/^[A-Z]{4}0[A-Z0-9]{6}$/.test(cleanIfsc)) {
-      return {
-        bank: bankName,
-        ifsc: cleanIfsc,
-        micr: 'Available on Checkbook',
-        branch: `Branch Code: ${cleanIfsc.slice(5)}`,
-        address: 'Official RBI Certified IFSC Code for Electronic Settlement',
-        city: 'Verified National Settlement Branch',
-        district: 'Regional Clearing Hub',
-        state: 'India',
-        contact: 'Bank Helpline / 1800-Toll-Free',
-      };
+  const formatError = useMemo(() => {
+    if (!cleanIfsc) return null;
+    if (cleanIfsc.length !== 11) {
+      return `Invalid IFSC format (${cleanIfsc.length}/11 characters). Must be exactly 11 characters (e.g. SBIN0001234 or HDFC0000001).`;
     }
-
+    if (!/^[A-Z]{4}/.test(cleanIfsc)) {
+      return 'Invalid bank code: First 4 characters must be alphabetic bank code (e.g. SBIN, HDFC).';
+    }
+    if (cleanIfsc[4] !== '0') {
+      return "Invalid format: 5th character must strictly be '0' (zero).";
+    }
+    if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(cleanIfsc)) {
+      return 'Invalid branch code: Last 6 characters must be alphanumeric.';
+    }
     return null;
   }, [cleanIfsc]);
 
-  const isValidFormat = /^[A-Z]{4}0[A-Z0-9]{6}$/.test(cleanIfsc);
+  // Live fetch from Razorpay IFSC API
+  useEffect(() => {
+    if (!isValidFormat) {
+      setLiveBranch(null);
+      setApiError(null);
+      return;
+    }
+
+    let isMounted = true;
+    setIsLoading(true);
+    setApiError(null);
+
+    fetch(`https://ifsc.razorpay.com/${encodeURIComponent(cleanIfsc)}`)
+      .then(async (res) => {
+        if (!isMounted) return;
+        if (!res.ok) {
+          if (res.status === 404) {
+            setLiveBranch(null);
+            setApiError(`IFSC code "${cleanIfsc}" not found on RBI clearing network.`);
+            return;
+          }
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        if (!isMounted) return;
+        setLiveBranch({
+          bank: data.BANK || 'Bank',
+          ifsc: data.IFSC || cleanIfsc,
+          micr: data.MICR || 'N/A',
+          branch: data.BRANCH || 'Branch',
+          address: data.ADDRESS || 'Official Bank Branch Address',
+          city: data.CITY || 'City',
+          district: data.DISTRICT || data.CITY || 'District',
+          state: data.STATE || 'State',
+          contact: data.CONTACT || 'Bank Helpline',
+          upi: Boolean(data.UPI),
+          rtgs: Boolean(data.RTGS),
+          neft: Boolean(data.NEFT),
+          imps: Boolean(data.IMPS),
+        });
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        const sampleMatch = SAMPLE_BRANCHES.find((b) => b.ifsc === cleanIfsc);
+        if (sampleMatch) {
+          setLiveBranch(sampleMatch);
+        } else {
+          setApiError('Unable to reach live IFSC clearing network. Please check your network connection.');
+        }
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [cleanIfsc, isValidFormat]);
+
+  const matchedBranch = liveBranch || (SAMPLE_BRANCHES.find((b) => b.ifsc === cleanIfsc) ?? null);
 
   const handleCopyIfsc = () => {
     navigator.clipboard.writeText(cleanIfsc);
@@ -520,58 +585,122 @@ export default function IfscFinderEngine() {
             </div>
           </div>
 
-          {/* Matched Branch Card */}
-          {matchedBranch ? (
-            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-700 pb-3">
+          {/* Format Error Alert (Instant validation on change) */}
+          {formatError && (
+            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-800 flex items-start gap-2.5 text-xs text-amber-900 dark:text-amber-200 animate-in fade-in duration-200">
+              <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <span className="font-bold">IFSC Format Notice</span>
+                <p>{formatError}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Loading Indicator */}
+          {isLoading && (
+            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-3 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+              <Loader2 className="w-4 h-4 animate-spin text-emerald-600" />
+              <span>Querying Live RBI / Clearing Network via Razorpay IFSC API...</span>
+            </div>
+          )}
+
+          {/* API Error / Not Found Alert */}
+          {!isLoading && apiError && (
+            <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/20 border border-rose-300 dark:border-rose-800 flex items-start gap-2.5 text-xs text-rose-900 dark:text-rose-200">
+              <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold">Branch Lookup Notice: </span>
+                <span>{apiError}</span>
+              </div>
+            </div>
+          )}
+
+          {/* Matched Branch Card with All Live Fields & Payment Badges */}
+          {!isLoading && matchedBranch && (
+            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-5">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-700 pb-4">
                 <div>
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                     <span>{matchedBranch.bank}</span>
                     <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-300">
-                      Verified
+                      Live Verified
                     </span>
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5">{matchedBranch.branch}</p>
+                  <p className="text-xs text-slate-500 mt-0.5 font-medium">{matchedBranch.branch}</p>
                 </div>
 
                 <div className="flex items-center gap-2 text-xs font-mono font-bold">
                   <span className="text-slate-500">IFSC:</span>
-                  <span className="bg-white dark:bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-300 dark:border-slate-700 text-emerald-600">
+                  <span className="bg-white dark:bg-slate-800 px-3 py-1 rounded-xl border border-slate-300 dark:border-slate-700 text-emerald-600 tracking-wider">
                     {matchedBranch.ifsc}
                   </span>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+              {/* Supported Payment Channels Badge Pills */}
+              <div className="flex flex-wrap items-center gap-2 pb-2">
+                <span className="text-xs font-bold text-slate-600 dark:text-slate-400 mr-1">Settlement Modes:</span>
+                {[
+                  { label: 'UPI', supported: matchedBranch.upi ?? true },
+                  { label: 'RTGS', supported: matchedBranch.rtgs ?? true },
+                  { label: 'NEFT', supported: matchedBranch.neft ?? true },
+                  { label: 'IMPS', supported: matchedBranch.imps ?? true },
+                ].map((mode) => (
+                  <span
+                    key={mode.label}
+                    className={cn(
+                      'px-3 py-1 rounded-full text-xs font-bold border transition-colors flex items-center gap-1 shadow-2xs',
+                      mode.supported
+                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700'
+                        : 'bg-slate-100 dark:bg-slate-800/60 text-slate-400 border-slate-200 dark:border-slate-700 opacity-60'
+                    )}
+                  >
+                    <span>{mode.label}</span>
+                    <span className="text-[10px]">{mode.supported ? '✔' : '✖'}</span>
+                  </span>
+                ))}
+              </div>
+
+              {/* 8 Explicit Display Fields */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs pt-1 border-t border-slate-200/80 dark:border-slate-700/80">
                 <div>
-                  <span className="text-slate-400 block mb-0.5">MICR Code</span>
-                  <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{matchedBranch.micr}</span>
+                  <span className="text-slate-400 block mb-0.5 font-medium uppercase tracking-wider text-[10px]">BANK</span>
+                  <span className="font-bold text-slate-900 dark:text-white">{matchedBranch.bank}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block mb-0.5">District &amp; City</span>
-                  <span className="font-semibold text-slate-800 dark:text-slate-200">{matchedBranch.city}, {matchedBranch.district}</span>
+                  <span className="text-slate-400 block mb-0.5 font-medium uppercase tracking-wider text-[10px]">BRANCH</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">{matchedBranch.branch}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block mb-0.5">State</span>
+                  <span className="text-slate-400 block mb-0.5 font-medium uppercase tracking-wider text-[10px]">CITY</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">{matchedBranch.city}</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block mb-0.5 font-medium uppercase tracking-wider text-[10px]">DISTRICT</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">{matchedBranch.district}</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 block mb-0.5 font-medium uppercase tracking-wider text-[10px]">STATE</span>
                   <span className="font-semibold text-slate-800 dark:text-slate-200">{matchedBranch.state}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block mb-0.5">Clearing Contact</span>
-                  <span className="font-semibold text-slate-800 dark:text-slate-200">{matchedBranch.contact || 'Helpdesk Available'}</span>
+                  <span className="text-slate-400 block mb-0.5 font-medium uppercase tracking-wider text-[10px]">MICR</span>
+                  <span className="font-mono font-bold text-slate-800 dark:text-slate-200">{matchedBranch.micr}</span>
+                </div>
+                <div className="sm:col-span-2">
+                  <span className="text-slate-400 block mb-0.5 font-medium uppercase tracking-wider text-[10px]">CONTACT</span>
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">{matchedBranch.contact || 'Helpline / Branch Operations'}</span>
                 </div>
               </div>
 
-              <div className="pt-2 text-xs text-slate-500 border-t border-slate-200 dark:border-slate-700 flex items-start gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
-                <span>{matchedBranch.address}</span>
+              <div className="pt-3 text-xs text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-slate-700 flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span className="leading-relaxed">
+                  <strong className="text-slate-800 dark:text-slate-200 mr-1">ADDRESS:</strong>
+                  {matchedBranch.address}
+                </span>
               </div>
             </div>
-          ) : (
-            cleanIfsc.length === 11 && (
-              <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200">
-                Invalid IFSC structure. A valid IFSC consists of 4 letters, the 5th character is strictly &apos;0&apos;, followed by 6 alphanumeric branch digits.
-              </div>
-            )
           )}
 
           {/* Beneficiary Voucher Details Form for Printable Slip */}

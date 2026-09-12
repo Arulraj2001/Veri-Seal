@@ -7,11 +7,25 @@ import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function HeroSection() {
   const { t, language } = useLanguage();
+  const [counter, setCounter] = React.useState(421847);
+
+  React.useEffect(() => {
+    fetch('/api/stats')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.verification_counter) {
+          setCounter(parseInt(data.verification_counter, 10));
+        } else if (data.count) {
+          setCounter(data.count);
+        }
+      })
+      .catch(() => {}); // fail silently, show default
+  }, []);
 
   const trustBadges = [
-    { icon: Lock, label: t.hero.badge1Label, subtext: t.hero.badge1Subtext },
-    { icon: Zap, label: t.hero.badge2Label, subtext: t.hero.badge2Subtext },
-    { icon: ShieldCheck, label: t.hero.badge3Label, subtext: t.hero.badge3Subtext },
+    { icon: Lock, label: t.hero_badge_1 || t.hero.badge1Label, subtext: t.hero.badge1Subtext },
+    { icon: Zap, label: t.hero_badge_2 || t.hero.badge2Label, subtext: t.hero.badge2Subtext },
+    { icon: ShieldCheck, label: t.hero_badge_3 || t.hero.badge3Label, subtext: t.hero.badge3Subtext },
   ];
 
   return (
@@ -20,7 +34,7 @@ export function HeroSection() {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Top Tag */}
+        {/* Top Tag with Live Real-time Counter */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -28,13 +42,15 @@ export function HeroSection() {
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary mb-6 shadow-2xs"
         >
           <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span>{t.hero.tag}</span>
+          <span className="font-mono font-bold text-text-main">{counter.toLocaleString('en-IN')}</span>
+          <span className="text-primary/90 font-medium">{t.hero_counter || 'PDFs verified and counting'}</span>
+          <span className="hidden sm:inline text-primary/40">•</span>
+          <span className="hidden sm:inline text-text-main/80 text-xs">{t.hero.tag}</span>
         </motion.div>
 
         {/* H1 Headline */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-text-main tracking-tight leading-[1.18] mb-6">
-          <span>{t.hero.titleStart} </span>
-          <span className="text-primary">{t.hero.titleHighlight}</span>
+          <span>{t.hero_title}</span>
         </h1>
 
         {/* Subheadline */}
@@ -48,23 +64,7 @@ export function HeroSection() {
           }}
           className="text-lg sm:text-xl text-text-main/80 max-w-3xl mx-auto mb-10 leading-relaxed font-normal"
         >
-          {language === 'ta' ? (
-            <>
-              உங்கள் ஆதார், சாதி சான்றிதழ், இருப்பிட சான்றிதழ், பான் கார்டு அல்லது டிஜிலாக்கர் PDF இல் உள்ள மஞ்சள்{' '}
-              <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-amber-100 text-amber-700 font-bold text-sm shadow-2xs mx-0.5">
-                ❓
-              </span>{' '}
-              குறியை உடனே சரிசெய்யுங்கள். இலவசம், கோப்புகள் எங்கும் சேமிக்கப்படாது.
-            </>
-          ) : (
-            <>
-              Fix the yellow{' '}
-              <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-amber-100 text-amber-700 font-bold text-sm shadow-2xs mx-0.5">
-                ❓
-              </span>{' '}
-              on your Aadhaar, community certificate, nativity, PAN card or DigiLocker PDF. Free, instant, your file never leaves your device.
-            </>
-          )}
+          {t.hero_subtitle}
         </motion.p>
 
         {/* Trust Badges Row */}

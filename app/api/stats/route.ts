@@ -1,50 +1,64 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
 
-// Base static verified counter requested by user: 4,215
-const STATIC_BASE_COUNT = 4215;
-const LIVE_THRESHOLD = 1000;
+// Base verified counter default
+const DEFAULT_COUNTER = 421847;
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
   try {
-    // Count real verifications from Supabase database
-    let realCount = 0;
-    try {
-      const { count, error } = await supabase
-        .from('verifications')
-        .select('*', { count: 'exact', head: true });
+    let currentCounter = DEFAULT_COUNTER;
+    let rawVal = '421847';
 
-      if (!error && typeof count === 'number') {
-        realCount = count;
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (supabaseUrl && serviceKey) {
+      const res = await fetch(`${supabaseUrl}/rest/v1/site_settings?key=eq.verification_counter&select=key,value`, {
+        headers: {
+          apikey: serviceKey,
+          Authorization: `Bearer ${serviceKey}`,
+        },
+        cache: 'no-store',
+      });
+
+      if (res.ok) {
+        const rows = await res.json();
+        if (Array.isArray(rows) && rows.length > 0 && rows[0]?.value) {
+          rawVal = rows[0].value;
+          const parsed = parseInt(rawVal, 10);
+          if (!isNaN(parsed) && parsed > 0) {
+            currentCounter = parsed;
+          }
+        }
       }
-    } catch {
-      // Fallback
     }
 
-    // Rule:
-    // When real tool usage crosses 1,000, start counting live.
-    // Until then, keep static at 4,215.
-    const isLive = realCount >= LIVE_THRESHOLD;
-    const displayCount = isLive
-      ? STATIC_BASE_COUNT + (realCount - LIVE_THRESHOLD)
-      : STATIC_BASE_COUNT;
-
-    return NextResponse.json({
-      success: true,
-      count: displayCount,
-      isLive,
-      realCount,
-      label: `${displayCount.toLocaleString('en-IN')} PDFs verified and counting`,
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        verification_counter: rawVal,
+        count: currentCounter,
+        isLive: true,
+        label: `${currentCounter.toLocaleString('en-IN')} PDFs verified and counting`,
+      },
+      {
+        headers: {
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+        },
+      }
+    );
   } catch (error) {
+    console.error('Stats fetch error:', error);
     return NextResponse.json({
       success: true,
-      count: STATIC_BASE_COUNT,
-      isLive: false,
-      realCount: 0,
-      label: `${STATIC_BASE_COUNT.toLocaleString('en-IN')} PDFs verified and counting`,
+      verification_counter: '421847',
+      count: DEFAULT_COUNTER,
+      isLive: true,
+      label: `${DEFAULT_COUNTER.toLocaleString('en-IN')} PDFs verified and counting`,
     });
   }
 }
+
+

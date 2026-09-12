@@ -17,6 +17,8 @@ import {
 import { cn } from '@/lib/utils';
 import { AadhaarMaskEngine } from '@/components/tools/AadhaarMaskEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
   title: 'Mask Aadhaar Card Online Free | Redact First 8 Digits (XXXX-XXXX-1234) | VeriSeal',
@@ -124,17 +126,14 @@ export default function MaskAadhaarPage() {
 
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools/government-exam-pdf-compressor" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Mask Aadhaar Card</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'Mask Aadhaar Card' },
+          ]}
+          showHomeIcon
+        />
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
@@ -318,6 +317,9 @@ export default function MaskAadhaarPage() {
             </div>
           </aside>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/aadhaar-masker" />
       </div>
     </div>
   );

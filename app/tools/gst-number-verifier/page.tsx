@@ -31,6 +31,13 @@ export const metadata: Metadata = {
     url: 'https://veriseal.in/tools/gst-number-verifier',
     siteName: 'VeriSeal',
     type: 'website',
+    images: [
+      {
+        url: `/api/og?title=${encodeURIComponent('GST Number (GSTIN) Instant Verifier')}&subtitle=${encodeURIComponent('Taxpayer Lookup & Free ISO/IEC 7064 MOD 36 Checksum')}&type=tool`,
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
 };
 

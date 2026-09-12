@@ -15,6 +15,8 @@ import { cn } from '@/lib/utils';
 import { PdfCompressorEngine } from './PdfCompressorEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 import type { ToolConfig } from './tool-configs';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 interface CompressorPageTemplateProps {
   config: ToolConfig;
@@ -62,29 +64,6 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
           'Compatible with TCS iON, NIC, CDAC, and NTA portals',
         ],
         description: config.metaDescription,
-      },
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Home',
-            item: 'https://veriseal.in',
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: 'Tools Directory',
-            item: 'https://veriseal.in/tools',
-          },
-          {
-            '@type': 'ListItem',
-            position: 3,
-            name: config.heroHighlight || config.title,
-            item: config.canonicalUrl,
-          },
-        ],
       },
       {
         '@type': 'HowTo',
@@ -139,17 +118,14 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
 
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools/pdf-compressor" className="hover:text-primary transition-colors font-medium">
-            Free Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">{config.heroHighlight || config.title}</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: config.heroHighlight || config.title },
+          ]}
+          showHomeIcon
+        />
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
@@ -445,6 +421,9 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
             </div>
           </aside>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug={config.slug || '/tools/pdf-compressor'} />
       </div>
     </div>
   );

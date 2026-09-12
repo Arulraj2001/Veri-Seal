@@ -14,6 +14,7 @@
     "@supabase/supabase-js": "^2.109.0",
     "@uiw/react-md-editor": "^4.1.2",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/og": "^1.0.0",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
     "critters": "^0.0.23",

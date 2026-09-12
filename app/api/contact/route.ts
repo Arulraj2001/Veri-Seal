@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { saveContactMessage } from '@/lib/contact-store';
+import { sendContactInquiryEmail } from '@/lib/email';
 
 export async function POST(req: Request) {
   try {
@@ -32,6 +33,15 @@ export async function POST(req: Request) {
       subject,
       message,
     });
+
+    // Fire email notifications in background (don't block HTTP response)
+    sendContactInquiryEmail({
+      name,
+      email,
+      phone,
+      subject,
+      message,
+    }).catch((err) => console.error('Contact email error:', err));
 
     return NextResponse.json({
       success: true,

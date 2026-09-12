@@ -16,33 +16,46 @@ const LanguageContext = React.createContext<LanguageContextType | undefined>(und
 const STORAGE_KEY = 'veriseal_selected_language';
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const language: SupportedLanguage = 'en';
+  const [language, setLanguageState] = React.useState<SupportedLanguage>('en');
 
   React.useEffect(() => {
     try {
-      localStorage.removeItem(STORAGE_KEY);
-      document.documentElement.lang = 'en';
+      const saved = localStorage.getItem(STORAGE_KEY) as SupportedLanguage;
+      if (saved === 'ta' || saved === 'en') {
+        setLanguageState(saved);
+        document.documentElement.lang = saved;
+      }
     } catch {
       // localStorage may be disabled
     }
   }, []);
 
-  const setLanguage = React.useCallback((_lang: SupportedLanguage) => {
+  const setLanguage = React.useCallback((lang: SupportedLanguage) => {
+    setLanguageState(lang);
     try {
-      localStorage.removeItem(STORAGE_KEY);
-      document.documentElement.lang = 'en';
+      localStorage.setItem(STORAGE_KEY, lang);
+      document.documentElement.lang = lang;
     } catch {
       // ignore
     }
   }, []);
 
   const toggleLanguage = React.useCallback(() => {
-    // Keep strictly English
+    setLanguageState((prev) => {
+      const next = prev === 'en' ? 'ta' : 'en';
+      try {
+        localStorage.setItem(STORAGE_KEY, next);
+        document.documentElement.lang = next;
+      } catch {
+        // ignore
+      }
+      return next;
+    });
   }, []);
 
   const currentTranslations = React.useMemo(() => {
-    return translations.en;
-  }, []);
+    return translations[language] || translations.en;
+  }, [language]);
 
   const value = React.useMemo(
     () => ({

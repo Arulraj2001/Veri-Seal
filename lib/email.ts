@@ -5,11 +5,11 @@ import { PaymentRejectedEmail } from './emails/PaymentRejectedEmail';
 import { AdminNewPaymentAlertEmail } from './emails/AdminNewPaymentAlertEmail';
 import { WelcomeEmail } from './emails/WelcomeEmail';
 
-const resendApiKey = process.env.RESEND_API_KEY || 're_mock_test_api_key';
+const resendApiKey = process.env.RESEND_API_KEY || '';
 const resendFromEmail = process.env.RESEND_FROM_EMAIL || 'VeriSeal <notifications@veriseal.in>';
 const adminNotificationEmail = process.env.ADMIN_EMAIL || 'admin@veriseal.in';
 
-export const resend = new Resend(resendApiKey);
+export const resend = new Resend(resendApiKey || 'dummy_resend_init_key');
 
 /**
  * Sends payment request confirmation to user (3a) and alert to admin (3d)
@@ -147,3 +147,41 @@ export async function sendWelcomeEmail(params: {
     return { success: false, error: String(error) };
   }
 }
+
+/**
+ * Sends contact inquiry alert to admin and receipt to citizen
+ */
+export async function sendContactInquiryEmail(params: {
+  name: string;
+  email: string;
+  phone?: string | null;
+  subject: string;
+  message: string;
+}) {
+  try {
+    if (resendApiKey && !resendApiKey.includes('mock') && resendApiKey.startsWith('re_')) {
+      // 1. Alert Admin
+      await resend.emails.send({
+        from: resendFromEmail,
+        to: adminNotificationEmail,
+        subject: `[VeriSeal Contact] ${params.subject} — ${params.name}`,
+        text: `New contact inquiry received on VeriSeal:\n\nName: ${params.name}\nEmail: ${params.email}\nPhone: ${params.phone || 'Not provided'}\nSubject: ${params.subject}\n\nMessage:\n${params.message}\n\n---\nVeriSeal Sovereign Document Operations Desk`,
+      });
+
+      // 2. Receipt to Citizen
+      await resend.emails.send({
+        from: resendFromEmail,
+        to: params.email,
+        subject: `Inquiry Received: ${params.subject} — VeriSeal Support Desk`,
+        text: `Dear ${params.name},\n\nThank you for reaching out to VeriSeal Sovereign Document Operations Desk. We have received your inquiry regarding "${params.subject}".\n\nOur administration desk will review your details and respond directly to this email.\n\nYour message:\n"${params.message}"\n\nWarm regards,\nVeriSeal Operations Desk\nhttps://veri-seal.vercel.app`,
+      });
+    } else {
+      console.info(`[Resend Mock] Dispatched contact inquiry alert for ${params.name} (${params.email}) to ${adminNotificationEmail}`);
+    }
+    return { success: true };
+  } catch (error) {
+    console.error('Error sending contact inquiry email:', error);
+    return { success: false, error: String(error) };
+  }
+}
+

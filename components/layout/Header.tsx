@@ -79,7 +79,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [toolsMenuOpen, setToolsMenuOpen] = React.useState(false);
   const toolsRef = React.useRef<HTMLDivElement>(null);
-  const { t } = useLanguage();
+  const { t, language, toggleLanguage } = useLanguage();
 
   const user = session?.user;
   const userRole = (user as { role?: string })?.role || 'user';
@@ -599,6 +599,17 @@ export function Header() {
 
         {/* Right Actions - Adjusted to right end without overlap */}
         <div className="hidden md:flex items-center justify-end gap-2 ml-auto z-20 shrink-0">
+          {/* Language Toggle Button */}
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-surface-darker/80 hover:border-primary/40 bg-surface/70 hover:bg-primary-light/40 transition-all text-xs font-bold text-text-main shadow-2xs cursor-pointer"
+            title={language === 'en' ? 'தமிழில் மாற்றவும் (Switch to Tamil)' : 'Switch to English'}
+          >
+            <span className="text-sm">🌐</span>
+            <span>{language === 'en' ? 'தமிழ்' : 'English'}</span>
+          </button>
+
           {/* Conditional Auth State */}
           {status === 'authenticated' && user ? (
             <div className="flex items-center gap-1.5 shrink-0">
@@ -676,8 +687,17 @@ export function Header() {
           )}
         </div>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Hamburger Button & Language Switcher */}
         <div className="flex md:hidden items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-surface-darker text-xs font-bold text-text-main bg-surface/80"
+            title="Toggle Language"
+          >
+            <span>🌐</span>
+            <span>{language === 'en' ? 'தமிழ்' : 'EN'}</span>
+          </button>
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

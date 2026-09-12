@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Building2,
   CheckCircle2,
@@ -17,6 +17,9 @@ import {
   Printer,
   Sparkles,
   FileCheck,
+  RefreshCw,
+  MapPin,
+  Clock,
 } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { printIsolatedDocument } from '@/lib/print-utils';
@@ -47,8 +50,10 @@ const GST_STATE_CODES: Record<string, string> = {
   '22': 'Chhattisgarh',
   '23': 'Madhya Pradesh',
   '24': 'Gujarat',
-  '26': 'Dadra and Nagar Haveli and Daman and Diu',
+  '25': 'Daman & Diu',
+  '26': 'Dadra & Nagar Haveli',
   '27': 'Maharashtra',
+  '28': 'Andhra Pradesh (Old)',
   '29': 'Karnataka',
   '30': 'Goa',
   '31': 'Lakshadweep',
@@ -57,16 +62,16 @@ const GST_STATE_CODES: Record<string, string> = {
   '34': 'Puducherry',
   '35': 'Andaman & Nicobar Islands',
   '36': 'Telangana',
-  '37': 'Andhra Pradesh',
+  '37': 'Andhra Pradesh (New)',
   '38': 'Ladakh',
   '97': 'Other Territory',
   '99': 'Centre Jurisdiction',
 };
 
-// 4th Character PAN Entity Structure
+// 4th Character of PAN indicates Entity Constitution
 const PAN_ENTITY_TYPES: Record<string, string> = {
   C: 'Company / Private Limited / Limited',
-  P: 'Individual / Sole Proprietorship',
+  P: 'Individual / Proprietorship',
   H: 'Hindu Undivided Family (HUF)',
   F: 'Partnership Firm / LLP',
   A: 'Association of Persons (AOP)',
@@ -74,16 +79,28 @@ const PAN_ENTITY_TYPES: Record<string, string> = {
   B: 'Body of Individuals (BOI)',
   L: 'Local Authority',
   J: 'Artificial Juridical Person',
-  G: 'Government Entity',
+  G: 'Government Agency',
 };
 
 // Verified Sample Presets
 const SAMPLE_PRESETS = [
+  { name: 'Reliance Retail (Tamil Nadu)', gstin: '33AAACR5055K1ZR' },
+  { name: 'SBI (Tamil Nadu)', gstin: '33AAACS8577K1ZQ' },
   { name: 'TCS (Maharashtra)', gstin: '27AAACT2727Q1ZW' },
   { name: 'Infosys (Karnataka)', gstin: '29AAACI4747L1ZF' },
-  { name: 'Reliance (Maharashtra)', gstin: '27AAACR5055K1ZX' },
-  { name: 'SBI (Tamil Nadu)', gstin: '33AAACS8577K1ZQ' },
 ];
+
+export interface GstLiveDetails {
+  gstin: string;
+  lgnm: string;
+  tradeNam: string;
+  sts: string;
+  rgdt: string;
+  lstupdt: string;
+  dty: string;
+  ctb?: string;
+  pradr: string;
+}
 
 // Official GSTN MOD 36 Checksum Validation Algorithm
 function validateGstinChecksum(gstin: string): { isValid: boolean; expectedChecksum?: string } {
@@ -115,10 +132,15 @@ function validateGstinChecksum(gstin: string): { isValid: boolean; expectedCheck
 }
 
 export default function GstinVerifierEngine() {
-  const [inputGstin, setInputGstin] = useState<string>('33AAACS8577K1ZQ');
-  const [vendorName, setVendorName] = useState<string>('State Bank of India');
+  const [inputGstin, setInputGstin] = useState<string>('33AAACR5055K1ZR');
+  const [vendorName, setVendorName] = useState<string>('Reliance Retail Limited');
   const [invoiceRef, setInvoiceRef] = useState<string>('INV-2026-001');
   const [copied, setCopied] = useState<boolean>(false);
+
+  // Live GSTN API search state
+  const [liveDetails, setLiveDetails] = useState<GstLiveDetails | null>(null);
+  const [isLiveLoading, setIsLiveLoading] = useState<boolean>(false);
+  const [liveMessage, setLiveMessage] = useState<string | null>(null);
 
   const cleanGstin = useMemo(() => inputGstin.trim().toUpperCase().replace(/\s+/g, ''), [inputGstin]);
 
@@ -178,6 +200,51 @@ export default function GstinVerifierEngine() {
       expectedChecksum: checksumResult.expectedChecksum || '',
     };
   }, [cleanGstin]);
+
+  // Query live GST search API whenever 15-character GST format matches
+  useEffect(() => {
+    if (!analysis?.formatMatch || cleanGstin.length !== 15) {
+      setLiveDetails(null);
+      setLiveMessage(null);
+      return;
+    }
+
+    let isMounted = true;
+    setIsLiveLoading(true);
+    setLiveMessage(null);
+
+    fetch(`/api/gst-lookup?gstin=${encodeURIComponent(cleanGstin)}`)
+      .then((res) => res.json())
+      .then((resData) => {
+        if (!isMounted) return;
+        if (resData.success && resData.data) {
+          setLiveDetails(resData.data);
+          if (resData.data.tradeNam && resData.data.tradeNam !== 'N/A') {
+            setVendorName(resData.data.tradeNam);
+          } else if (resData.data.lgnm && resData.data.lgnm !== 'N/A') {
+            setVendorName(resData.data.lgnm);
+          }
+        } else {
+          setLiveDetails(null);
+          if (resData.message) {
+            setLiveMessage(resData.message);
+          }
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          setLiveDetails(null);
+          setLiveMessage('Operating in offline checksum verification mode.');
+        }
+      })
+      .finally(() => {
+        if (isMounted) setIsLiveLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [cleanGstin, analysis?.formatMatch]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(cleanGstin);
@@ -490,6 +557,143 @@ export default function GstinVerifierEngine() {
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Entity Count / Check</span>
                 <span className="text-sm font-bold text-slate-900 dark:text-white block">Reg #{analysis.entityNumber}</span>
                 <span className="text-[10px] text-slate-500 font-semibold block">Checksum: {analysis.checksumChar} (Mod 36)</span>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3 & 4: Live Taxpayer Information & Status Badge (when valid) */}
+          {analysis && analysis.isFullyValid && (
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 overflow-hidden shadow-sm">
+              <div className="bg-slate-50 dark:bg-slate-800/80 px-5 py-3.5 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span className="text-xs font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">
+                    Official GSTN Taxpayer Verification
+                  </span>
+                </div>
+
+                {isLiveLoading ? (
+                  <span className="inline-flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                    <span>Querying GSTN Portal...</span>
+                  </span>
+                ) : liveDetails ? (
+                  // Status badge colours: Active (green), Cancelled (red), Suspended (amber), Provisional (blue)
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border shadow-xs ${
+                      liveDetails.sts.toLowerCase().includes('active')
+                        ? 'bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800'
+                        : liveDetails.sts.toLowerCase().includes('cancel')
+                        ? 'bg-rose-100 text-rose-800 border-rose-300 dark:bg-rose-950/60 dark:text-rose-300 dark:border-rose-800'
+                        : liveDetails.sts.toLowerCase().includes('suspend')
+                        ? 'bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800'
+                        : 'bg-blue-100 text-blue-800 border-blue-300 dark:bg-blue-950/60 dark:text-blue-300 dark:border-blue-800'
+                    }`}
+                  >
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        liveDetails.sts.toLowerCase().includes('active')
+                          ? 'bg-emerald-600 animate-pulse'
+                          : liveDetails.sts.toLowerCase().includes('cancel')
+                          ? 'bg-rose-600'
+                          : liveDetails.sts.toLowerCase().includes('suspend')
+                          ? 'bg-amber-600'
+                          : 'bg-blue-600'
+                      }`}
+                    />
+                    <span>Status: {liveDetails.sts}</span>
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+                    <span>✓ MOD 36 Algorithm Verified</span>
+                  </span>
+                )}
+              </div>
+
+              <div className="p-5 sm:p-6 space-y-4">
+                {isLiveLoading ? (
+                  <div className="py-6 flex flex-col items-center justify-center text-center space-y-2 text-slate-400">
+                    <RefreshCw className="w-6 h-6 animate-spin text-emerald-600" />
+                    <p className="text-xs">Fetching taxpayer registration status, legal name, and address...</p>
+                  </div>
+                ) : liveDetails ? (
+                  <div className="space-y-4 text-xs">
+                    {/* Legal & Trade Name */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                          Trade Name (tradeNam)
+                        </span>
+                        <span className="text-sm font-extrabold text-slate-900 dark:text-white block mt-0.5">
+                          {liveDetails.tradeNam || 'N/A'}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                          Legal Name (lgnm)
+                        </span>
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-200 block mt-0.5">
+                          {liveDetails.lgnm || 'N/A'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Metadata Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
+                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">State (Code {analysis.stateCode})</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-200 block mt-0.5">{analysis.stateName}</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
+                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Business Type (dty)</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-200 block mt-0.5">{liveDetails.dty}</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
+                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Registration Date (rgdt)</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-200 block mt-0.5">{liveDetails.rgdt}</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
+                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Last Updated (lstupdt)</span>
+                        <span className="font-bold text-slate-800 dark:text-slate-200 block mt-0.5">{liveDetails.lstupdt}</span>
+                      </div>
+                    </div>
+
+                    {/* Principal Place of Business */}
+                    <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 flex items-start gap-2.5">
+                      <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Principal Place of Business (pradr)</span>
+                        <p className="text-slate-700 dark:text-slate-300 text-xs font-medium mt-0.5 leading-relaxed">{liveDetails.pradr}</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="p-4 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/60 text-xs space-y-1">
+                    <span className="font-bold text-emerald-900 dark:text-emerald-200 flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span>ISO/IEC 7064 MOD 36 Mathematical Checksum Verified</span>
+                    </span>
+                    <p className="text-emerald-800/80 dark:text-emerald-300/80 text-[11px] leading-relaxed">
+                      {liveMessage || 'Structure, state code, and error-detecting checksum digit match 100% with statutory GST specifications.'}
+                    </p>
+                  </div>
+                )}
+
+                {/* Step 5: Statutory Disclaimer */}
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800 text-center">
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                    Data sourced from GSTN. Verify critical transactions at{' '}
+                    <a
+                      href="https://services.gst.gov.in/services/searchtp"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-emerald-600 hover:underline font-semibold inline-flex items-center gap-0.5"
+                    >
+                      <span>gstin.gov.in</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
           )}

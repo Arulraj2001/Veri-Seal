@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     siteName: 'VeriSeal India',
     images: [
       {
-        url: `${SITE_URL}/og`,
+        url: `${SITE_URL}/api/og?title=${encodeURIComponent('VeriSeal — Verify Indian Government PDF Digital Signature')}&subtitle=${encodeURIComponent('Free · Instant · 100% In-Memory RAM · DPDP Act 2023 Compliant')}&type=verify`,
         width: 1200,
         height: 630,
         alt: 'VeriSeal - Indian Government PDF Digital Signature Verification',
@@ -85,7 +85,9 @@ export const metadata: Metadata = {
     title: 'VeriSeal — Verify Indian Government PDF Digital Signature Online Free',
     description:
       'Fix the yellow question mark on e-Aadhaar, community, and government certificates. Free, instant, 100% in-memory.',
-    images: [`${SITE_URL}/og`],
+    images: [
+      `${SITE_URL}/api/og?title=${encodeURIComponent('VeriSeal — Verify Indian Government PDF Digital Signature')}&subtitle=${encodeURIComponent('Free · Instant · 100% In-Memory RAM · DPDP Act 2023 Compliant')}&type=verify`,
+    ],
     creator: '@veriseal_in',
   },
   robots: {
@@ -100,7 +102,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: '03r5QiL7AV8mYg3EA27FgE4YCVKgIkB03M4y-usjb5U',
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '03r5QiL7AV8mYg3EA27FgE4YCVKgIkB03M4y-usjb5U',
   },
   other: {
     'revisit-after': '1 day',

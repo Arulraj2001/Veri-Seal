@@ -23,6 +23,7 @@ import { SITE_URL } from '@/lib/constants';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { ShareButtons } from '@/components/blog/ShareButtons';
 import { MarkdownRenderer } from '@/components/blog/MarkdownRenderer';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 export const revalidate = 3600; // ISR 1 hour
 
@@ -48,9 +49,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   const pageUrl = `${SITE_URL}/blog/${post.slug}`;
-  const ogImage =
-    post.featured_image_url ||
-    `${SITE_URL}/og?title=${encodeURIComponent(post.title)}`;
+  const ogImage = `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.excerpt?.slice(0, 90) || 'Official VeriSeal Guide')}&type=blog`;
 
   return {
     title: `${post.title} — VeriSeal`,
@@ -158,37 +157,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
 
       <div className="pt-28 pb-16 sm:pt-36 sm:pb-20">
         <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8">
-            <ol className="flex flex-wrap items-center gap-1.5 text-xs text-text-main/60 font-medium">
-              <li>
-                <Link href="/" className="hover:text-primary transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <ChevronRight className="w-3 h-3 text-text-main/40" />
-              </li>
-              <li>
-                <Link href="/blog" className="hover:text-primary transition-colors">
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <ChevronRight className="w-3 h-3 text-text-main/40" />
-              </li>
-              <li className="text-text-main font-semibold truncate max-w-[200px] sm:max-w-xs">
-                {post.title}
-              </li>
-            </ol>
-          </nav>
+          {/* Breadcrumb Navigation with embedded BreadcrumbList schema */}
+          <Breadcrumb
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: post.title },
+            ]}
+            showHomeIcon
+            className="mb-6 sm:mb-8"
+          />
 
           {/* Post Header */}
           <header className="mb-8 sm:mb-10">

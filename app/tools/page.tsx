@@ -14,6 +14,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import ToolsDirectory from '@/components/tools/ToolsDirectory';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 export const metadata: Metadata = {
   title: 'All Free Exam & Document Tools Directory | VeriSeal India',
@@ -100,13 +101,13 @@ export default function ToolsDirectoryPage() {
 
       <div className="max-w-7xl mx-auto space-y-10">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Exam &amp; Document Tools Directory</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Exam & Document Tools Directory' },
+          ]}
+          showHomeIcon
+        />
 
         {/* Page Header Hero */}
         <div className="text-center max-w-3xl mx-auto space-y-4">

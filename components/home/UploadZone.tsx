@@ -92,13 +92,16 @@ export function UploadZone() {
     fetch('/api/stats')
       .then((res) => res.json())
       .then((data) => {
-        if (data?.count) {
+        if (data?.verification_counter) {
+          setVerifiedCount(parseInt(data.verification_counter, 10));
+          setIsCounterLive(Boolean(data.isLive));
+        } else if (data?.count) {
           setVerifiedCount(data.count);
           setIsCounterLive(Boolean(data.isLive));
         }
       })
       .catch(() => {
-        setVerifiedCount(4215);
+        setVerifiedCount(421847);
       });
   }, []);
 
@@ -392,11 +395,11 @@ export function UploadZone() {
               </div>
 
               <h3 className="text-lg sm:text-xl font-bold text-text-main mb-2">
-                {t.upload.dropTitle}
+                {t.upload_title || t.upload.dropTitle}
               </h3>
 
               <p className="text-xs sm:text-sm text-text-main/60 max-w-md mb-6 leading-relaxed">
-                {t.upload.dropHint}
+                {t.upload_subtitle || t.upload.dropHint}
               </p>
 
               <Button
@@ -405,7 +408,7 @@ export function UploadZone() {
                 size="md"
                 className="pointer-events-none group-hover:bg-primary-hover shadow-md"
               >
-                {t.upload.selectPdfBtn}
+                {t.upload_btn || t.upload.selectPdfBtn}
               </Button>
             </div>
           )}
@@ -501,7 +504,7 @@ export function UploadZone() {
                       <div className="flex items-center justify-between">
                         <label className="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
                           <Lock className="w-3.5 h-3.5 text-primary" />
-                          <span>{t.upload.passwordDecryptionTitle}</span>
+                          <span>{t.upload_password_label || t.upload.passwordDecryptionTitle}</span>
                         </label>
                         <span className="text-[11px] font-medium text-amber-800/80">
                           {t.upload.inMemoryOnly}
@@ -526,7 +529,7 @@ export function UploadZone() {
                       </div>
 
                       <p className="text-xs text-amber-800 leading-relaxed">
-                        {t.upload.passwordRuleDetail}
+                        {t.upload_password_hint || t.upload.passwordRuleDetail}
                       </p>
                     </div>
                   </motion.div>
@@ -541,7 +544,7 @@ export function UploadZone() {
                   onClick={() => startVerification()}
                   className="w-full sm:flex-1 text-base font-bold shadow-md"
                 >
-                  {t.upload.verifyBtn}
+                  {t.upload_btn || t.upload.verifyBtn}
                 </Button>
                 <Button
                   variant="secondary"
@@ -571,7 +574,7 @@ export function UploadZone() {
 
               <div>
                 <h3 className="text-xl font-bold text-text-main">
-                  {t.upload.verifyingTitle}
+                  {t.upload_processing || t.upload.verifyingTitle}
                 </h3>
                 <p className="text-sm text-text-main/70 mt-1 font-mono">
                   {progressStage}

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MessageSquare, ExternalLink, Sparkles, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
+import { translations } from '@/lib/translations';
 
 export function Footer() {
   const { language } = useLanguage();
@@ -14,6 +15,7 @@ export function Footer() {
     return null;
   }
 
+  const t = (translations as any)[language] || translations.en;
   const isTamil = language === 'ta';
 
   return (
@@ -49,9 +51,9 @@ export function Footer() {
             </Link>
 
             <p className="text-sm text-text-main/80 max-w-sm leading-relaxed">
-              {isTamil
+              {t.footer_tagline || (isTamil
                 ? 'அரசு PDF ஆவணங்களை உடனடியாக சரிபார்க்கவும். இந்தியாவிற்காக உருவாக்கப்பட்டது.'
-                : 'Free cryptographically verified Indian government PDF validator, smart photo sheet studio, and financial intelligence calculators.'}
+                : 'Free cryptographically verified Indian government PDF validator, smart photo sheet studio, and financial intelligence calculators.')}
             </p>
 
             {/* Zero Retention Architecture Pill */}
@@ -404,9 +406,9 @@ export function Footer() {
         {/* Bottom Bar: Symmetrical Copyright, Legal Quick Links, and India Badge */}
         <div className="pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-text-main/70">
           <p className="text-center lg:text-left leading-relaxed">
-            {isTamil
-              ? '© 2024 வெரிசீல். இந்திய அரசு PDF டிஜிட்டல் கையொப்பங்களை சரிபார்க்கும் இலவச தளம். UIDAI அல்லது NIC உடன் இணைக்கப்படவில்லை.'
-              : '© 2024 VeriSeal. Free online tool for Indian government PDF digital signature verification. Not affiliated with UIDAI, NIC, or government bodies.'}
+            © 2026 VeriSeal. {t.footer_rights || (isTamil ? 'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை' : 'All rights reserved')} — {isTamil
+              ? 'இந்திய அரசு PDF டிஜிட்டல் கையொப்பங்களை சரிபார்க்கும் இலவச தளம்.'
+              : 'Free online tool for Indian government PDF digital signature verification.'}
           </p>
 
           {/* Quick Legal Links */}
@@ -429,10 +431,7 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0 bg-white/70 border border-surface-darker px-3 py-1.5 rounded-full font-medium shadow-2xs">
-            <span>{isTamil ? 'இந்தியாவிற்காக' : 'Made with'}</span>
-            <span className="text-red-500 font-bold animate-pulse">❤️</span>
-            <span>{isTamil ? 'உருவாக்கப்பட்டது' : 'for India'}</span>
-            <span className="text-base leading-none">🇮🇳</span>
+            <span>{t.footer_made || (isTamil ? 'இந்தியாவிற்காக ❤️ உடன் உருவாக்கப்பட்டது 🇮🇳' : 'Made with ❤️ for India 🇮🇳')}</span>
           </div>
         </div>
       </div>

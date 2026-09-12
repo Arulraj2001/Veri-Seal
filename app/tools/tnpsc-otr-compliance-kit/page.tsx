@@ -13,6 +13,8 @@ import {
   Fingerprint,
 } from 'lucide-react';
 import TnpscOtrComplianceKitEngine from '@/components/tools/TnpscOtrComplianceKitEngine';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
   title: 'TNPSC OTR Photo, Signature & Thumb Compliance Kit | Group 1, 2, 4 & VAO',
@@ -87,17 +89,14 @@ export default function TnpscOtrComplianceKitPage() {
 
       <div className="max-w-6xl mx-auto space-y-10">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">TNPSC OTR Compliance Kit</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'TNPSC OTR Compliance Kit' },
+          ]}
+          showHomeIcon
+        />
 
         {/* Page Hero Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
@@ -186,6 +185,9 @@ export default function TnpscOtrComplianceKitPage() {
             ))}
           </div>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/tnpsc-otr-compliance-kit" />
       </div>
     </div>
   );

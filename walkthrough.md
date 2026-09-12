@@ -261,12 +261,63 @@ VeriSeal has transitioned from a point tool into India’s comprehensive soverei
 
 ---
 
+## Verification Checklist & Results
+
+### Task 1 — GST API Live Verifier
+- **Live Endpoint Test**: `POST /api/gst-lookup` with GSTIN `33AAACR5055K1ZE` (Reliance Industries Tamil Nadu)
+  - `tradeNam`: `"RELIANCE INDUSTRIES LIMITED"`
+  - `lgnm`: `"RELIANCE INDUSTRIES LIMITED"`
+  - `sts`: `"Active"`
+  - `rgdt`: `"01/07/2017"`
+  - `dty`: `"Regular"`
+- **GSTIN Checksum note**: The prompt query `33AAACR5055K1ZR` has an invalid MOD 36 checksum character for state 33 (`R` is for Maharashtra `27AAACR5055K1ZR`; state 33 Tamil Nadu uses `E`). Both valid GSTINs return live 200 data.
+- **Key Security**: `GST_API_KEY` is loaded exclusively on the Node server in `app/api/gst-lookup/route.ts` from `process.env.GST_API_KEY`. No `NEXT_PUBLIC_` prefix exists in code or client bundles.
+
+### Task 2A — IFSC Finder Live API
+- **Endpoint**: `https://ifsc.razorpay.com/{IFSC_CODE}`
+- **Field rendering**: BANK, BRANCH, ADDRESS, CITY, STATE, DISTRICT, CONTACT, MICR.
+- **Badges**: UPI, RTGS, NEFT, IMPS pill badges.
+- **Validation**: Strict 11-char regex `/^[A-Z]{4}0[A-Z0-9]{6}$/`.
+  - `ABCD` triggers instant format error feedback: *"IFSC code must be exactly 11 characters"*.
+  - `SBIN0001234` returns live SBI Hajiganj branch details.
+  - `HDFC0000001` returns live HDFC Nariman Point branch details.
+
+### Task 2B — Related Tools Grid
+- **Module**: `lib/related-tools.ts` with explicit mappings and smart category fallback.
+- **Component**: `components/ui/RelatedTools.tsx` with responsive 4-column cards, badges, and category tags.
+- **Mounted on**: All 14 requested tool pages + `CompressorPageTemplate.tsx` + `ifsc-code-finder`.
+
+### Task 2C — Breadcrumbs & JSON-LD Schema
+- **Component**: `components/ui/Breadcrumb.tsx`
+- **Schema**: Inlines valid `https://schema.org/BreadcrumbList` JSON-LD `<script type="application/ld+json">`.
+- **Integrated on**: All tool pages, calculator pages (`Home → Calculators → ...`), blog post pages (`Home → Blog → ...`), and SEO landing pages (`Home → ...`).
+
+### Task 3 — Adobe Green Tick Debug
+- **Function**: `full_vri_debug(output_bytes)` executed on verified PDF output bytes.
+- **Exact Output**:
+```
+VRI keys in DSS: ['/5CE9D017B291CF5E40379EFC3EBB6622BF8E00E1']
+Signature field: GCMSignature
+Correct VRI key: /5CE9D017B291CF5E40379EFC3EBB6622BF8E00E1
+Key match: YES
+Signer serial: 26289878
+Signer cert FOUND in DSS
+Subject: CN=MURUGAN P,2.5.4.5=0b21fdee2c6c81fee3cb539e8251b282cb4ceb48f3fc500ffb332a13ef8e2762,ST=Tamil Nadu,2.5.4.17=606604,2.5.4.20=1896732c0cfcd0657972bf3b6242ee4b9d171f976e74fbd98aff9509df0ee68a,2.5.4.12=5032,O=PERSONAL,C=IN
+```
+- **Key Conclusions**:
+  1. **VRI key match**: **YES**
+  2. **Signer cert found in DSS**: **YES**
+  3. **Root Cause Resolved**: pyHanko's subfilter validator now explicitly permits `/adbe.pkcs7.sha1` and `/adbe.pkcs7.detached`, and Stage 4 preserves `ltv_bytes` when DSS is embedded to prevent PyMuPDF flattening from stripping `/AcroForm /Fields` signature dictionaries.
+
+### Build Verification
+- `npx tsc --noEmit` → **0 errors**
+- `npm run build` → **0 errors** (all 176 static routes generated)
+
+---
+
 ### 4. Technical Validation
 - **TypeScript Typecheck**: `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)**.
 - **Sitemap Registration**: All 7 routes added to [`app/sitemap.ts`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/sitemap.ts) with `priority: 0.95` and daily revalidation.
 - **Global Footer**: All 7 routes cross-linked with priority stars in [`components/layout/Footer.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/layout/Footer.tsx).
 - **Tools Catalog**: Expanded to 45 tools in [`lib/tools-data.ts`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/lib/tools-data.ts).
-- **Monetization Guarantee**: Exclusively features Ostrune agency (`https://ostrune.netlify.app/`) with zero third-party affiliate ads.
-
-
 

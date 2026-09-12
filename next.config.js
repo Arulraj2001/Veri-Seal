@@ -15,6 +15,50 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/tools/ifsc-finder',
+        destination: '/tools/ifsc-code-finder',
+        permanent: true,
+      },
+      {
+        source: '/tools/ibps-bank-photo-signature-resizer',
+        destination: '/tools/ibps-photo-signature-resizer',
+        permanent: true,
+      },
+      {
+        source: '/tools/marksheet-pdf-merger',
+        destination: '/tools/merge-marksheets-pdf',
+        permanent: true,
+      },
+      {
+        source: '/tools/bilingual-affidavit-generator',
+        destination: '/tools/affidavit-generator',
+        permanent: true,
+      },
+      {
+        source: '/tools/income-tax-fy25-calculator',
+        destination: '/tools/income-tax-calculator-2025-26',
+        permanent: true,
+      },
+      {
+        source: '/tools/ats-resume-builder',
+        destination: '/tools/free-ats-resume-builder',
+        permanent: true,
+      },
+      {
+        source: '/tools/pdf-password-remover',
+        destination: '/tools/unlock-pdf',
+        permanent: true,
+      },
+      {
+        source: '/tools/aadhaar-masker',
+        destination: '/tools/mask-aadhaar',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
