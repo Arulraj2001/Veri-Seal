@@ -5,12 +5,17 @@ whitens paper backgrounds to pure #FFFFFF, auto-crops to stroke boundaries,
 and calibrates output to strict portal specifications (SSC, UPSC, IBPS, TNPSC).
 """
 
+from __future__ import annotations
 import io
 import base64
 import logging
 from typing import Dict, Any, Optional, Tuple
-import cv2
-import numpy as np
+try:
+    import cv2
+    import numpy as np
+except ImportError:
+    cv2 = None
+    np = None
 from PIL import Image, ImageOps
 
 logger = logging.getLogger("veriseal.signature_extractor")
@@ -85,6 +90,9 @@ def process_signature(
     Executes in volatile RAM; zero disk storage.
     """
     # 1. Load image from RAM buffer
+    if cv2 is None or np is None:
+        raise RuntimeError("OpenCV and NumPy are required for signature extraction on the server.")
+
     nparr = np.frombuffer(image_bytes, np.uint8)
     img_bgr = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     if img_bgr is None:

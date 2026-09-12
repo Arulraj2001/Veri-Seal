@@ -4,12 +4,17 @@ Enhances biological friction ridges, normalizes uneven ink darkness,
 eliminates paper smudges, and budgets strictly to 20KB-50KB for IBPS, SBI, and Railway RRB portals.
 """
 
+from __future__ import annotations
 import io
 import base64
 import logging
 from typing import Dict, Any, Optional
-import cv2
-import numpy as np
+try:
+    import cv2
+    import numpy as np
+except ImportError:
+    cv2 = None
+    np = None
 from PIL import Image
 
 logger = logging.getLogger("veriseal.thumb_impression_engine")
@@ -46,6 +51,9 @@ def process_thumb_impression(
     """
     Processes thumb impression strictly in RAM.
     """
+    if cv2 is None or np is None:
+        raise RuntimeError("OpenCV and NumPy are required for thumb impression processing on the server.")
+
     nparr = np.frombuffer(image_bytes, np.uint8)
     img_bgr = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     if img_bgr is None:

@@ -8,7 +8,10 @@ import io
 import base64
 import logging
 from typing import Dict, Any, Optional
-import numpy as np
+try:
+    import numpy as np
+except ImportError:
+    np = None
 from PIL import Image, ImageEnhance, ImageOps
 try:
     import pymupdf as fitz
@@ -23,6 +26,12 @@ def remove_shadows_magic_color(img: Image.Image) -> Image.Image:
     Normalizes background lighting to pure white using background division.
     Keeps ink, blue/red stamps, and photos vibrant while eliminating shadows.
     """
+    if np is None:
+        enhancer = ImageEnhance.Contrast(img.convert("RGB"))
+        boosted = enhancer.enhance(1.25)
+        brightener = ImageEnhance.Brightness(boosted)
+        return brightener.enhance(1.1)
+
     img_rgb = img.convert("RGB")
     np_img = np.array(img_rgb, dtype=np.float32)
 
@@ -62,6 +71,11 @@ def apply_xerox_binarize(img: Image.Image, threshold_offset: int = 0) -> Image.I
     Creates an ultra-sharp black & white photocopy scan using local adaptive thresholding.
     Eliminates all phone shadows, creases, and off-white tints.
     """
+    if np is None:
+        grey = img.convert("L")
+        threshold = 140 + threshold_offset
+        return grey.point(lambda p: 255 if p > threshold else 0).convert("RGB")
+
     grey = img.convert("L")
     np_grey = np.array(grey, dtype=np.float32)
 
