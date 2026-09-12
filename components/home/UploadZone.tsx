@@ -340,7 +340,8 @@ export function UploadZone() {
 
   return (
     <ErrorBoundary fallbackTitle="Verification Engine Error">
-      <section id="upload-zone" className="py-12 md:py-16 scroll-mt-20">
+      <section id="verify-engine" className="py-12 md:py-16 scroll-mt-20">
+        <div id="upload-zone" className="scroll-mt-20" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Card Wrapper with fixed min-height for zero CLS */}
           <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-10 relative overflow-hidden min-h-[480px]">
