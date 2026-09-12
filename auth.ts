@@ -9,13 +9,21 @@ const ADMIN_EMAILS = [
   process.env.ADMIN_EMAIL?.toLowerCase(),
 ].filter(Boolean) as string[];
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [
+const googleClientId = process.env.GOOGLE_CLIENT_ID || process.env.AUTH_GOOGLE_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET || process.env.AUTH_GOOGLE_SECRET;
+
+const authProviders = [];
+if (googleClientId && googleClientSecret) {
+  authProviders.push(
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID || process.env.AUTH_GOOGLE_ID || '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || process.env.AUTH_GOOGLE_SECRET || '',
-    }),
-    Credentials({
+      clientId: googleClientId,
+      clientSecret: googleClientSecret,
+    })
+  );
+}
+
+authProviders.push(
+  Credentials({
       id: 'credentials',
       name: 'Email & Password',
       credentials: {
@@ -153,9 +161,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           plan: userPlan,
         };
       },
-    }),
-  ],
-  session: { strategy: 'jwt' },
+    })
+  );
+
+  export const { handlers, signIn, signOut, auth } = NextAuth({
+    trustHost: true,
+    secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'veriseal_super_secret_auth_key_prod_32chars_minimum_length',
+    providers: authProviders,
+    session: { strategy: 'jwt' },
   callbacks: {
     async signIn({ user }) {
       if (user?.email) {

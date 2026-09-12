@@ -23,11 +23,13 @@ export function InstallPromptModal() {
     const count = parseInt(localStorage.getItem('veriseal_guest_count') || '0', 10);
 
     const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      const promptEvent = e as BeforeInstallPromptEvent;
+      setDeferredPrompt(promptEvent);
+      (window as unknown as { __veriseal_pwa_prompt?: BeforeInstallPromptEvent }).__veriseal_pwa_prompt = promptEvent;
 
-      // Trigger prompt on mobile after 3rd verification attempt
-      if (count >= 3) {
+      // Only suppress default mini-infobar when we are actively displaying custom modal UI
+      if (count >= 2) {
+        e.preventDefault();
         setIsVisible(true);
       }
     };

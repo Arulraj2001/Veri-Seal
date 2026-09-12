@@ -36,6 +36,7 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false,
+    storageKey: 'sb-admin-isolated-key',
   },
   ...(wsTransport ? { realtime: { transport: wsTransport } } : {}),
 });
