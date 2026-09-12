@@ -4,6 +4,8 @@ import { PaymentApprovedEmail } from './emails/PaymentApprovedEmail';
 import { PaymentRejectedEmail } from './emails/PaymentRejectedEmail';
 import { AdminNewPaymentAlertEmail } from './emails/AdminNewPaymentAlertEmail';
 import { WelcomeEmail } from './emails/WelcomeEmail';
+import { AdminContactInquiryAlertEmail } from './emails/AdminContactInquiryAlertEmail';
+import { CitizenContactReceiptEmail } from './emails/CitizenContactReceiptEmail';
 
 const resendApiKey = process.env.RESEND_API_KEY || '';
 const resendFromEmail = process.env.RESEND_FROM_EMAIL || 'Kagazo <notifications@kagazo.in>';
@@ -165,7 +167,13 @@ export async function sendContactInquiryEmail(params: {
         from: resendFromEmail,
         to: adminNotificationEmail,
         subject: `[Kagazo Contact] ${params.subject} — ${params.name}`,
-        text: `New contact inquiry received on Kagazo:\n\nName: ${params.name}\nEmail: ${params.email}\nPhone: ${params.phone || 'Not provided'}\nSubject: ${params.subject}\n\nMessage:\n${params.message}\n\n---\nKagazo Sovereign Document Operations Desk`,
+        react: AdminContactInquiryAlertEmail({
+          name: params.name,
+          email: params.email,
+          phone: params.phone,
+          subject: params.subject,
+          message: params.message,
+        }),
       });
 
       // 2. Receipt to Citizen
@@ -173,7 +181,11 @@ export async function sendContactInquiryEmail(params: {
         from: resendFromEmail,
         to: params.email,
         subject: `Inquiry Received: ${params.subject} — Kagazo Support Desk`,
-        text: `Dear ${params.name},\n\nThank you for reaching out to Kagazo Sovereign Document Operations Desk. We have received your inquiry regarding "${params.subject}".\n\nOur administration desk will review your details and respond directly to this email.\n\nYour message:\n"${params.message}"\n\nWarm regards,\nKagazo Operations Desk\nhttps://kagazo.in`,
+        react: CitizenContactReceiptEmail({
+          name: params.name,
+          subject: params.subject,
+          message: params.message,
+        }),
       });
     } else {
       console.info(`[Resend Mock] Dispatched contact inquiry alert for ${params.name} (${params.email}) to ${adminNotificationEmail}`);

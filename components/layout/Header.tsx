@@ -21,6 +21,7 @@ import {
   Zap,
   Briefcase,
   Car,
+  Headphones,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -118,7 +119,6 @@ export function Header() {
     { label: t.nav.security, href: '/#trust-section' },
     { label: t.nav.faq, href: '/#faq-section' },
     { label: t.nav.blog, href: '/blog' },
-    { label: t.nav.contact, href: '/contact' },
   ];
 
   return (
@@ -587,18 +587,24 @@ export function Header() {
           >
             {t.nav.blog}
           </Link>
-
-          {/* Contact Link */}
-          <Link
-            href="/contact"
-            className="px-3 py-1.5 xl:px-3.5 xl:py-2 text-sm font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
-          >
-            {t.nav.contact}
-          </Link>
         </nav>
 
         {/* Right Actions - Adjusted to right end without overlap */}
-        <div className="hidden md:flex items-center justify-end gap-2 ml-auto z-20 shrink-0">
+        <div className="hidden md:flex items-center justify-end gap-2.5 ml-auto z-20 shrink-0">
+          {/* Real Colored Support & Contact Badge Button */}
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-700 hover:text-emerald-800 text-xs font-black transition-all shadow-2xs group hover:scale-[1.03] active:scale-[0.98] select-none shrink-0"
+            title="Citizen Support & Verification Help Desk"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <Headphones className="w-3.5 h-3.5 text-emerald-600 group-hover:scale-110 transition-transform" />
+            <span>Support</span>
+          </Link>
+
           {/* Language Toggle Button */}
           <button
             type="button"
@@ -720,6 +726,26 @@ export function Header() {
             className="fixed inset-0 top-[61px] bg-background z-40 md:hidden flex flex-col px-6 py-8 overflow-y-auto border-t border-surface-darker"
           >
             <div className="flex flex-col gap-3">
+              {/* Dedicated Colored Support Card for Mobile */}
+              <Link
+                href="/contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 text-emerald-950 font-bold text-sm shadow-2xs hover:shadow-xs transition-all mb-1"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-2xs shrink-0">
+                    <Headphones className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-black text-emerald-950">Citizen Support Desk</div>
+                    <div className="text-[10px] text-emerald-700 font-medium">Quick 2–4h Technical Assistance</div>
+                  </div>
+                </div>
+                <span className="text-[11px] font-bold bg-emerald-600 text-white px-2.5 py-1 rounded-lg">
+                  Help &rarr;
+                </span>
+              </Link>
+
               {navLinks.map((link, idx) => (
                 <motion.a
                   key={link.label}
