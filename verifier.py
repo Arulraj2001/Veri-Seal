@@ -1044,45 +1044,45 @@ def stage4_add_stamp(
                 green_color = (0.04, 0.67, 0.25)  # Vivid Adobe Green #0AAC41
                 black_color = (0.0, 0.0, 0.0)
 
-                # Vector Adobe 3D Green Checkmark coordinates (centered in block, intersecting 'valid')
-                check_p1 = fitz.Point(bx + 32, by + 34)
-                check_p2 = fitz.Point(bx + 52, by + 58)
-                check_p3 = fitz.Point(bx + 86, by + 11)
+                # Exact Adobe Acrobat calibrated 3D Green Checkmark coordinates (matching Image 1)
+                check_p1 = fitz.Point(bx + 24.5, by + 28.5)
+                check_p2 = fitz.Point(bx + 38.0, by + 42.5)
+                check_p3 = fitz.Point(bx + 62.5, by + 7.5)
 
-                # Layer 1: Solid black 3D drop shadow (offset down-right by 1.8pt)
-                shadow_offset = fitz.Point(1.8, 1.8)
+                # Layer 1: Solid black 3D drop shadow (sharp miter joint, 1.2pt offset)
+                shadow_offset = fitz.Point(1.2, 1.2)
                 page.draw_polyline(
                     [check_p1 + shadow_offset, check_p2 + shadow_offset, check_p3 + shadow_offset],
                     color=black_color,
-                    width=5.8,
-                    lineJoin=1,
-                    lineCap=0,  # butt cap matching Adobe
+                    width=4.2,
+                    lineJoin=0,  # sharp miter join matching Adobe
+                    lineCap=0,   # butt cap matching Adobe
                     overlay=True,
                 )
 
-                # Layer 2: Vibrant green checkmark on top of shadow
+                # Layer 2: Vibrant green checkmark on top of shadow (sharp miter joint)
                 page.draw_polyline(
                     [check_p1, check_p2, check_p3],
                     color=green_color,
-                    width=5.8,
-                    lineJoin=1,
-                    lineCap=0,  # butt cap matching Adobe
+                    width=4.2,
+                    lineJoin=0,  # sharp miter join matching Adobe
+                    lineCap=0,   # butt cap matching Adobe
                     overlay=True,
                 )
 
-                # Layer 3: Header Text 'Signature valid' in Times-Roman Serif (Solid Black)
+                # Layer 3: Header Text 'Signature valid' in Times-Roman Serif (Solid Black, 12.5pt)
                 page.insert_text(
-                    fitz.Point(bx, by + 13),
+                    fitz.Point(bx, by + 11.5),
                     "Signature valid",
                     fontname="tiro",  # Times-Roman
-                    fontsize=14.0,
+                    fontsize=12.5,
                     color=black_color,
                     overlay=True,
                 )
 
-                # Layer 4: Detail lines in Helvetica (Solid Black) rendered over checkmark
+                # Layer 4: Detail lines in Helvetica (Solid Black, 6.8pt, 7.8pt pitch) rendered over checkmark
                 detail_lines = format_signature_details(signer, date_str)
-                curr_y = by + 26
+                curr_y = by + 21.5
                 for line in detail_lines:
                     page.insert_text(
                         fitz.Point(bx, curr_y),
@@ -1092,7 +1092,7 @@ def stage4_add_stamp(
                         color=black_color,
                         overlay=True,
                     )
-                    curr_y += 8.8
+                    curr_y += 7.8
 
             elif verification_status == VerificationStatus.INVALID:
                 red_color = (0.863, 0.149, 0.149)  # #DC2626
