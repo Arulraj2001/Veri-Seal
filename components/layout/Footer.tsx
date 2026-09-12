@@ -4,13 +4,9 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  MessageSquare,
   ExternalLink,
   Sparkles,
-  ShieldCheck,
   Mail,
-  Lock,
-  Cpu,
   Check,
   Copy,
   ArrowUpRight,
@@ -60,49 +56,12 @@ export function Footer() {
       {/* Ambient Top Glow Line */}
       <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
 
-      {/* 1. Sovereign Trust & Security Ribbon */}
-      <div className="border-b border-surface-darker/60 bg-white/60 backdrop-blur-xs">
-        <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200/80 shrink-0">
-                <Lock className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="font-extrabold text-text-main">100% In-RAM Processing</span>
-                <p className="text-[11px] text-text-main/60 leading-tight">Zero disk retention. Documents destroyed post-audit.</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-primary/10 text-primary flex items-center justify-center border border-primary/20 shrink-0">
-                <ShieldCheck className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="font-extrabold text-text-main">CCA India Root PKI Compliant</span>
-                <p className="text-[11px] text-text-main/60 leading-tight">Audited against sovereign root cryptographic anchors.</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-200/80 shrink-0">
-                <Cpu className="w-4 h-4" />
-              </div>
-              <div>
-                <span className="font-extrabold text-text-main">Sub-Second Processing</span>
-                <p className="text-[11px] text-text-main/60 leading-tight">High-speed offline-first client &amp; cloud verification.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Main Footer Directory */}
-      <div className="max-w-[1440px] xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10 pb-12 border-b border-surface-darker/80">
+      {/* Main Footer Directory (Centered & well-proportioned max-w-7xl, reducing excessive horizontal stretch) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-6 gap-x-6 gap-y-10 lg:gap-8 pb-12 border-b border-surface-darker/80">
           
-          {/* Brand & Trust Column (Col 1 & 2) */}
-          <div className="lg:col-span-2 space-y-4">
+          {/* Brand & Trust Column (Col 1 & 2 on desktop, full width on mobile) */}
+          <div className="col-span-2 lg:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2.5 group">
               <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-primary/15 to-primary-light border border-primary/25 flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-2xs">
                 <svg
@@ -128,7 +87,7 @@ export function Footer() {
               </div>
             </Link>
 
-            <p className="text-sm text-text-main/80 max-w-sm leading-relaxed">
+            <p className="text-xs sm:text-sm text-text-main/80 max-w-sm leading-relaxed">
               {t.footer_tagline || (isTamil
                 ? 'அரசு PDF ஆவணங்களை உடனடியாக சரிபார்க்கவும். இந்தியாவிற்காக உருவாக்கப்பட்டது.'
                 : 'Free cryptographically verified Indian government PDF validator, smart photo sheet studio, and financial intelligence calculators.')}
@@ -148,21 +107,21 @@ export function Footer() {
               <div className="text-xs font-black uppercase tracking-wider text-text-main/70">
                 Official Support Desk
               </div>
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 max-w-sm">
                 {/* Clickable Email Button with Copy Option */}
-                <div className="inline-flex items-center rounded-xl bg-white border border-surface-darker shadow-2xs hover:border-primary/40 transition-colors group">
+                <div className="flex items-center rounded-xl bg-white border border-surface-darker shadow-2xs hover:border-primary/40 transition-colors group">
                   <a
                     href={`mailto:${contactEmail}`}
-                    className="h-9 px-3 flex items-center gap-2 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                    className="h-9 px-3 flex-1 sm:flex-initial flex items-center gap-2 text-xs font-bold text-text-main hover:text-primary transition-colors"
                     title="Send Email to Support Desk"
                   >
-                    <Mail className="h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform" />
-                    <span className="truncate max-w-[170px] sm:max-w-none">{contactEmail}</span>
+                    <Mail className="h-3.5 w-3.5 text-primary group-hover:scale-110 transition-transform shrink-0" />
+                    <span className="truncate max-w-[160px] sm:max-w-none">{contactEmail}</span>
                   </a>
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className="h-9 px-2.5 border-l border-surface-darker/60 text-text-main/50 hover:text-primary transition-colors cursor-pointer"
+                    className="h-9 px-2.5 border-l border-surface-darker/60 text-text-main/50 hover:text-primary transition-colors cursor-pointer shrink-0"
                     title="Copy Email Address"
                     aria-label="Copy Email Address"
                   >
@@ -177,7 +136,7 @@ export function Footer() {
                 {/* Support Form CTA */}
                 <Link
                   href="/contact"
-                  className="h-9 px-3.5 rounded-xl bg-primary text-white hover:bg-primary-hover transition-colors shadow-2xs text-xs font-bold flex items-center gap-1.5"
+                  className="h-9 px-3.5 rounded-xl bg-primary text-white hover:bg-primary-hover transition-colors shadow-2xs text-xs font-bold flex items-center justify-center gap-1.5 shrink-0"
                   aria-label="Contact Support Desk"
                 >
                   <Headphones className="h-3.5 w-3.5" />
@@ -187,32 +146,32 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 1: Photo & Biometric Suite (7 items) */}
+          {/* Column 1: Photo & Biometric Suite (Col 1 on mobile 2-col grid) */}
           <div className="space-y-3">
             <h4 className="text-xs font-black uppercase tracking-wider text-text-main/90 flex items-center gap-1.5">
-              <span>{isTamil ? 'புகைப்பட ஸ்டுடியோ' : 'Photo Studio Suite'}</span>
+              <span>{isTamil ? 'புகைப்பட ஸ்டுடியோ' : 'Photo Studio'}</span>
             </h4>
             <ul className="space-y-2 text-xs font-medium">
               <li>
                 <Link
                   href="/tools/passport-photo-sheet-maker"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Passport Sheet Maker (4×6)
+                  Passport Sheet (4×6)
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/a4-multi-card-sheet"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  A4 Multi-Card Sheet Maker
+                  A4 Multi-Card Sheet
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/signature-cleaner-extractor"
-                  className="text-emerald-700 font-bold hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-emerald-700 font-bold hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
                   Signature Extractor ★
                 </Link>
@@ -220,80 +179,80 @@ export function Footer() {
               <li>
                 <Link
                   href="/tools/thumb-impression-resizer"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Thumb Impression (LTI) Resizer
+                  Thumb Resizer (LTI)
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/photo-date-name-stamper"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Photo Date &amp; Name Stamper
+                  Date &amp; Name Stamper
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/biometric-face-aligner"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Biometric Face Aligner (ICAO)
+                  Biometric Face Aligner
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/photo-signature-joiner"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Photo &amp; Signature Slip Joiner
+                  Photo-Signature Joiner
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 2: PDF & Exam Compressors (7 items) */}
+          {/* Column 2: PDF & Exam Compressors (Col 2 on mobile 2-col grid) */}
           <div className="space-y-3">
             <h4 className="text-xs font-black uppercase tracking-wider text-text-main/90">
-              {isTamil ? 'PDF & தேர்வு கருவிகள்' : 'PDF & Exam Suite'}
+              {isTamil ? 'PDF & தேர்வுகள்' : 'PDF & Exam Suite'}
             </h4>
             <ul className="space-y-2 text-xs font-medium">
               <li>
                 <Link
                   href="/tools/compress-pdf-to-200kb"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Compress PDF to 200KB
+                  Compress PDF 200KB
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/compress-pdf-to-100kb"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Compress PDF to 100KB
+                  Compress PDF 100KB
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/compress-pdf-to-300kb"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Compress PDF to 300KB
+                  Compress PDF 300KB
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/handwritten-declaration-scanner"
-                  className="text-indigo-600 font-bold hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-indigo-600 font-bold hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Declaration Scanner (50KB–100KB) ★
+                  Declaration (50–100KB) ★
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/mask-aadhaar"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
                   Mask Aadhaar (8 Digits)
                 </Link>
@@ -301,7 +260,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/tools/merge-marksheets-pdf"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
                   Merge Marksheets (&lt;1MB)
                 </Link>
@@ -309,15 +268,15 @@ export function Footer() {
               <li>
                 <Link
                   href="/tools/unlock-pdf"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Unlock Password-Protected PDF
+                  Unlock Protected PDF
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Tax, Decision OS & Calculators (7 items) */}
+          {/* Column 3: Tax, Decision OS & Calculators (Col 1 on row 2 on mobile) */}
           <div className="space-y-3">
             <h4 className="text-xs font-black uppercase tracking-wider text-text-main/90">
               {isTamil ? 'முடிவு அமைப்புகள்' : 'Decision OS & Tax'}
@@ -326,39 +285,39 @@ export function Footer() {
               <li>
                 <Link
                   href="/tools/income-tax-calculator-2025-26"
-                  className="text-emerald-700 font-bold hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-emerald-700 font-bold hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Income Tax FY 2025-26 ★
+                  Income Tax 2025-26 ★
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/gst-number-verifier"
-                  className="text-indigo-600 font-bold hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-indigo-600 font-bold hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  GST Number (GSTIN) Verifier ★
+                  GSTIN Verifier ★
                 </Link>
               </li>
               <li>
                 <Link
                   href="/home-cost"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Home Cost &amp; Construction OS
+                  Home Cost &amp; Build OS
                 </Link>
               </li>
               <li>
                 <Link
                   href="/business-os"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Business Profit &amp; Cash Flow OS
+                  Business Profit OS
                 </Link>
               </li>
               <li>
                 <Link
                   href="/vehicle-os"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
                   Vehicle Decision OS
                 </Link>
@@ -366,32 +325,32 @@ export function Footer() {
               <li>
                 <Link
                   href="/tools/ifsc-code-finder"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  IFSC Code &amp; Branch Finder
+                  IFSC &amp; Branch Finder
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/marriage-biodata-maker"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Indian Marriage Biodata Maker
+                  Marriage Biodata Maker
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Verification & PKI Trust (6 items) */}
+          {/* Column 4: Verification & PKI Trust (Col 2 on row 2 on mobile) */}
           <div className="space-y-3">
             <h4 className="text-xs font-black uppercase tracking-wider text-text-main/90">
-              {isTamil ? 'சரிபார்ப்பு & அறக்கட்டளை' : 'Verify & Knowledge'}
+              {isTamil ? 'சரிபார்ப்பு & தளம்' : 'Verify & Directory'}
             </h4>
             <ul className="space-y-2 text-xs font-medium">
               <li>
                 <Link
                   href="/verify-aadhaar-pdf"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
                   Verify e-Aadhaar PDF
                 </Link>
@@ -399,7 +358,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/verify-pan-card-pdf"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
                   Verify e-PAN Card PDF
                 </Link>
@@ -407,33 +366,33 @@ export function Footer() {
               <li>
                 <Link
                   href="/verify-community-certificate-tamil-nadu"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  TN Community Certificate
+                  TN Community Cert
                 </Link>
               </li>
               <li>
                 <Link
                   href="/blog"
-                  className="text-primary font-bold hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-primary font-bold hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Blog &amp; Knowledge Base &rarr;
+                  Blog &amp; Knowledge Hub &rarr;
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  All 32+ Free Exam Tools
+                  All 56+ Free Tools
                 </Link>
               </li>
               <li>
                 <Link
                   href="/privacy"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight hover:translate-x-0.5 transform duration-150"
+                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
-                  Zero Data Retention Policy
+                  Zero Data Retention
                 </Link>
               </li>
             </ul>
@@ -441,14 +400,14 @@ export function Footer() {
 
         </div>
 
-        {/* 3. Engineering Partner Showcase (Ostrune) */}
-        <div className="py-5 my-8 px-6 sm:px-8 rounded-3xl bg-gradient-to-r from-surface/90 via-white to-surface border border-surface-darker/80 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4 text-center md:text-left">
-            <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 text-primary flex items-center justify-center shrink-0 border border-primary/20 shadow-2xs">
+        {/* Engineering Partner Showcase (Ostrune) */}
+        <div className="py-5 my-8 px-5 sm:px-8 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-surface/90 via-white to-surface border border-surface-darker/80 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left">
+            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 text-primary flex items-center justify-center shrink-0 border border-primary/20 shadow-2xs">
               <Sparkles className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <p className="text-xs sm:text-sm font-extrabold text-text-main flex items-center justify-center md:justify-start gap-1.5 flex-wrap">
+              <p className="text-xs sm:text-sm font-extrabold text-text-main flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
                 <span>Engineered for Speed &amp; Performance by</span>
                 <a
                   href="https://ostrune.netlify.app/"
@@ -473,15 +432,15 @@ export function Footer() {
             href="https://ostrune.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-text-main hover:bg-black text-white text-xs font-black shrink-0 transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-text-main hover:bg-black text-white text-xs font-black shrink-0 transition-colors shadow-xs w-full sm:w-auto justify-center"
           >
             <span>Visit Ostrune</span>
             <ArrowUpRight className="w-4 h-4" />
           </a>
         </div>
 
-        {/* 4. Bottom Bar: Symmetrical Copyright, Legal Quick Links & India Badge */}
-        <div className="pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-text-main/70">
+        {/* Bottom Bar: Symmetrical Copyright, Legal Quick Links & India Badge */}
+        <div className="pt-6 sm:pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-text-main/70">
           <p className="text-center lg:text-left leading-relaxed">
             © 2026 Kagazo. {t.footer_rights || (isTamil ? 'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை' : 'All rights reserved')} — {isTamil
               ? 'இந்திய அரசு PDF டிஜிட்டல் கையொப்பங்களை சரிபார்க்கும் இலவச தளம்.'
@@ -489,7 +448,7 @@ export function Footer() {
           </p>
 
           {/* Quick Legal & Contact Links */}
-          <div className="flex flex-wrap items-center justify-center gap-3.5 text-xs font-semibold text-text-main/70 shrink-0">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-3.5 text-xs font-semibold text-text-main/70 shrink-0">
             <Link href="/privacy" className="hover:text-primary transition-colors">
               Privacy Policy
             </Link>
