@@ -620,14 +620,14 @@ export default function AdminSettingsPage() {
                   ad_slot_post_download: settings.ad_slot_post_download ?? 'true',
                   ad_slot_in_content: settings.ad_slot_in_content ?? 'true',
                   ad_slot_mobile: settings.ad_slot_mobile ?? 'true',
-                  sponsor_title: settings.sponsor_title || 'Ostrune Agency & Exam Prep Hub',
+                  sponsor_title: settings.sponsor_title || 'Ostrune — Web Development, SEO & Speed Growth Agency',
                   sponsor_desc:
                     settings.sponsor_desc ||
-                    'Professional web development & free government recruitment study kits for Tamil Nadu and Central exams.',
+                    'We build sub-second websites, custom web apps, and run SEO & Meta Ads with 100/100 Core Web Vitals for ambitious businesses worldwide. Free site audit with 12h reply guarantee.',
                   sponsor_image_url: settings.sponsor_image_url || '',
-                  sponsor_cta_text: settings.sponsor_cta_text || 'Explore Free Resources',
-                  sponsor_cta_url: settings.sponsor_cta_url || 'https://veriseal.in/blog',
-                  sponsor_badge: settings.sponsor_badge || 'Verified Partner',
+                  sponsor_cta_text: settings.sponsor_cta_text || 'Book Free Strategy Call',
+                  sponsor_cta_url: settings.sponsor_cta_url || 'https://ostrune.netlify.app/',
+                  sponsor_badge: settings.sponsor_badge || 'Ostrune Agency',
                 })
               }
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-hover shadow-sm disabled:opacity-50 self-start sm:self-auto"
@@ -808,7 +808,7 @@ export default function AdminSettingsPage() {
                   <label className="block font-bold text-text-main mb-1">Headline</label>
                   <input
                     type="text"
-                    value={settings.sponsor_title || 'Ostrune Agency & Exam Prep Hub'}
+                    value={settings.sponsor_title || 'Ostrune — Web Development, SEO & Speed Growth Agency'}
                     onChange={(e) => setSettings({ ...settings, sponsor_title: e.target.value })}
                     className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-text-main text-xs"
                   />
@@ -818,7 +818,7 @@ export default function AdminSettingsPage() {
                   <label className="block font-bold text-text-main mb-1">Badge Tag</label>
                   <input
                     type="text"
-                    value={settings.sponsor_badge || 'Verified Partner'}
+                    value={settings.sponsor_badge || 'Ostrune Agency'}
                     onChange={(e) => setSettings({ ...settings, sponsor_badge: e.target.value })}
                     className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-text-main text-xs"
                   />
@@ -830,7 +830,7 @@ export default function AdminSettingsPage() {
                     type="text"
                     value={
                       settings.sponsor_desc ||
-                      'Professional web development & free government recruitment study kits for Tamil Nadu and Central exams.'
+                      'We build sub-second websites, custom web apps, and run SEO & Meta Ads with 100/100 Core Web Vitals for ambitious businesses worldwide. Free site audit with 12h reply guarantee.'
                     }
                     onChange={(e) => setSettings({ ...settings, sponsor_desc: e.target.value })}
                     className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-text-main text-xs"
@@ -841,7 +841,7 @@ export default function AdminSettingsPage() {
                   <label className="block font-bold text-text-main mb-1">CTA Button Text</label>
                   <input
                     type="text"
-                    value={settings.sponsor_cta_text || 'Explore Free Resources'}
+                    value={settings.sponsor_cta_text || 'Book Free Strategy Call'}
                     onChange={(e) => setSettings({ ...settings, sponsor_cta_text: e.target.value })}
                     className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-text-main text-xs"
                   />
@@ -851,7 +851,7 @@ export default function AdminSettingsPage() {
                   <label className="block font-bold text-text-main mb-1">Destination URL</label>
                   <input
                     type="text"
-                    value={settings.sponsor_cta_url || 'https://veriseal.in/blog'}
+                    value={settings.sponsor_cta_url || 'https://ostrune.netlify.app/'}
                     onChange={(e) => setSettings({ ...settings, sponsor_cta_url: e.target.value })}
                     className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-text-main text-xs"
                   />
@@ -867,25 +867,25 @@ export default function AdminSettingsPage() {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-primary-light text-primary border border-primary/20">
-                        {settings.sponsor_badge || 'Verified Partner'}
+                        {settings.sponsor_badge || 'Ostrune Agency'}
                       </span>
                       <span className="text-[10px] text-text-main/40 uppercase tracking-widest font-semibold">
-                        Sponsored
+                        Agency Partner
                       </span>
                     </div>
                     <div className="font-extrabold text-sm text-text-main">
-                      {settings.sponsor_title || 'Ostrune Agency & Exam Prep Hub'}
+                      {settings.sponsor_title || 'Ostrune — Web Development, SEO & Speed Growth Agency'}
                     </div>
                     <p className="text-[11px] text-text-main/70 max-w-xl">
                       {settings.sponsor_desc ||
-                        'Professional web development & free government recruitment study kits for Tamil Nadu and Central exams.'}
+                        'We build sub-second websites, custom web apps, and run SEO & Meta Ads with 100/100 Core Web Vitals for ambitious businesses worldwide. Free site audit with 12h reply guarantee.'}
                     </p>
                   </div>
                   <button
                     type="button"
                     className="px-4 py-2 rounded-xl bg-primary text-white font-extrabold text-xs shadow-xs hover:bg-primary-hover shrink-0 self-start sm:self-auto"
                   >
-                    {settings.sponsor_cta_text || 'Explore Free Resources'}
+                    {settings.sponsor_cta_text || 'Book Free Strategy Call'}
                   </button>
                 </div>
               </div>

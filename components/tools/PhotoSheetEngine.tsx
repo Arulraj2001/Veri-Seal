@@ -28,6 +28,8 @@ import {
   Move,
   Info,
 } from 'lucide-react';
+import { AdSlot } from '@/components/ads/AdSlot';
+import { printIsolatedDocument } from '@/lib/print-utils';
 
 interface PhotoItem {
   id: string;
@@ -166,6 +168,8 @@ export default function PhotoSheetEngine() {
   const [photos, setPhotos] = useState<PhotoItem[]>([]);
   const [activePhotoId, setActivePhotoId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [replaceTargetId, setReplaceTargetId] = useState<string | null>(null);
+  const replaceFileInputRef = useRef<HTMLInputElement>(null);
 
   // Step 2: Photo Settings
   const [selectedSizeId, setSelectedSizeId] = useState<string>('35x45');
@@ -178,7 +182,7 @@ export default function PhotoSheetEngine() {
   
   // Text On Photo
   const [enableText, setEnableText] = useState<boolean>(false);
-  const [candidateName, setCandidateName] = useState<string>('RAHUL SHARMA');
+  const [candidateName, setCandidateName] = useState<string>('');
   const [dateOfPhoto, setDateOfPhoto] = useState<string>(new Date().toISOString().split('T')[0]);
 
   // Adjustments (Filters)
@@ -256,6 +260,42 @@ export default function PhotoSheetEngine() {
       };
       setPhotos((prev) => [...prev, newPhoto]);
       setActivePhotoId(newPhoto.id);
+    };
+    img.src = preview;
+    e.target.value = '';
+  };
+
+  // Replace existing photo handler
+  const handleTriggerReplace = (id: string) => {
+    setReplaceTargetId(id);
+    replaceFileInputRef.current?.click();
+  };
+
+  const handleExecuteReplace = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0 || !replaceTargetId) return;
+    const file = e.target.files[0];
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload a valid JPG, PNG, or WebP image file.');
+      return;
+    }
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    const preview = URL.createObjectURL(file);
+    img.onload = () => {
+      setPhotos((prev) =>
+        prev.map((p) =>
+          p.id === replaceTargetId
+            ? {
+                ...p,
+                file,
+                previewUrl: preview,
+                imageObj: img,
+              }
+            : p
+        )
+      );
+      setReplaceTargetId(null);
     };
     img.src = preview;
     e.target.value = '';
@@ -644,92 +684,108 @@ export default function PhotoSheetEngine() {
   // Direct Hardware Print with Exact 100% Size Locked
   const handlePrint = () => {
     if (!renderedImageUrl) return;
-    const printWin = window.open('', '_blank');
-    if (!printWin) {
-      alert('Please allow popups to open the printer driver.');
-      return;
-    }
-
-    const pageSize = `${paperWMm}mm ${paperHMm}mm`;
-    printWin.document.write(`
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Print Passport Photo Sheet - VeriSeal Studio</title>
-          <style>
-            @page {
-              size: ${pageSize};
-              margin: 0mm;
-            }
-            @media print {
-              html, body {
-                width: 100%;
-                height: 100%;
-                margin: 0 !important;
-                padding: 0 !important;
-                background: #FFFFFF;
-                overflow: hidden;
-              }
-              img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                display: block;
-              }
-            }
-            body {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              background-color: #f8fafc;
-            }
-          </style>
-        </head>
-        <body onload="window.print();">
-          <img src="${renderedImageUrl}" alt="Passport Photo Sheet Print" />
-        </body>
-      </html>
-    `);
-    printWin.document.close();
+    const is4x6 = paperSizeId === '4R';
+    printIsolatedDocument({
+      title: 'Passport Photo Sheet - VeriSeal Studio',
+      bodyHtml: `<div style="width: ${paperWMm}mm; height: ${paperHMm}mm; margin: 0 auto; padding: 0; display: flex; align-items: center; justify-content: center; background: #ffffff;">
+        <img src="${renderedImageUrl}" style="width: 100%; height: 100%; object-fit: contain; display: block;" alt="Passport Photo Sheet Print" />
+      </div>`,
+      pageSize: is4x6 ? '4x6' : 'A4',
+      orientation: orientation,
+    });
   };
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      {/* ------------------------------------------------------------- */}
-      {/* LEFT COLUMN: 4-Step Numbered Control Panel (7 cols)            */}
-      {/* ------------------------------------------------------------- */}
-      <div className="lg:col-span-7 space-y-6">
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleAddPhoto}
-          accept="image/jpeg,image/png,image/webp"
-          className="hidden"
-        />
-
-        {/* ========================================================= */}
-        {/* STEP 1: PHOTOS & SUBJECTS                                 */}
-        {/* ========================================================= */}
-        <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 shadow-xs space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-slate-900 text-white text-xs font-black flex items-center justify-center">
-                1
-              </span>
-              <h2 className="text-sm font-black uppercase tracking-wider text-slate-800">
-                PHOTOS &amp; SUBJECTS
-              </h2>
+    <div className="w-full space-y-8">
+      {/* Sovereign Studio Shell Container */}
+      <div className="w-full bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-xl overflow-hidden">
+        {/* Top Dark Header Bar */}
+        <div className="bg-slate-900 text-white px-5 sm:px-6 py-4 sm:py-5 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800">
+          <div className="flex items-center gap-3.5">
+            <div className="w-11 h-11 rounded-2xl bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center justify-center shrink-0">
+              <Printer className="w-5 h-5" />
             </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-lg font-bold text-white tracking-tight">
+                  Passport Photo Sheet Studio
+                </h2>
+                <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-purple-500 text-white uppercase tracking-wide">
+                  300 DPI LAB PRINT READY
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5">
+                4×6&quot; (8 photos for ₹5 lab print) &amp; A4 sheets (32 photos) with scissor ticks &amp; DOP text stamp.
+              </p>
+            </div>
+          </div>
 
+          <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="px-3.5 py-1.5 bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs border border-purple-200"
+              onClick={handlePrint}
+              disabled={!renderedImageUrl || photos.length === 0}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed text-white transition-all shadow-md active:scale-95 cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Photo</span>
+              <Printer className="w-3.5 h-3.5" />
+              <span>1-Click Print</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleDownloadPdf}
+              disabled={!renderedImageUrl || photos.length === 0}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 border border-slate-700 transition-all active:scale-95 cursor-pointer"
+            >
+              <Download className="w-3.5 h-3.5 text-purple-400" />
+              <span>Download PDF</span>
             </button>
           </div>
+        </div>
+
+        {/* Studio Workspace Grid */}
+        <div className="p-5 sm:p-6 lg:p-7 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* ------------------------------------------------------------- */}
+          {/* LEFT COLUMN: 4-Step Numbered Control Panel (7 cols)            */}
+          {/* ------------------------------------------------------------- */}
+          <div className="lg:col-span-7 space-y-4">
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleAddPhoto}
+              accept="image/jpeg,image/png,image/webp"
+              className="hidden"
+            />
+            <input
+              type="file"
+              ref={replaceFileInputRef}
+              onChange={handleExecuteReplace}
+              accept="image/jpeg,image/png,image/webp"
+              className="hidden"
+            />
+
+            {/* ========================================================= */}
+            {/* STEP 1: PHOTOS & SUBJECTS                                 */}
+            {/* ========================================================= */}
+            <div className="bg-slate-50/70 dark:bg-slate-800/40 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 p-4 sm:p-5 space-y-3.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-5 h-5 rounded-full bg-slate-900 text-white text-[11px] font-black flex items-center justify-center">
+                    1
+                  </span>
+                  <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                    PHOTOS &amp; SUBJECTS
+                  </h3>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="px-3 py-1 bg-purple-50 hover:bg-purple-100 text-purple-700 text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs border border-purple-200"
+                >
+                  <Plus className="w-3 h-3" />
+                  <span>+ Add Photo</span>
+                </button>
+              </div>
 
           {/* Allocation Progress Bar */}
           {photos.length > 0 && (
@@ -829,7 +885,7 @@ export default function PhotoSheetEngine() {
                     </div>
 
                     {/* Copy Counter & Actions */}
-                    <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                    <div className="flex flex-wrap items-center gap-2" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center border border-slate-300 rounded-xl bg-white overflow-hidden shadow-2xs">
                         <button
                           type="button"
@@ -838,7 +894,7 @@ export default function PhotoSheetEngine() {
                         >
                           <Minus className="w-3.5 h-3.5" />
                         </button>
-                        <span className="px-3 py-1 font-mono font-bold text-xs text-slate-800 min-w-[28px] text-center">
+                        <span className="px-2.5 py-1 font-mono font-bold text-xs text-slate-800 min-w-[28px] text-center">
                           {item.copies}
                         </span>
                         <button
@@ -852,11 +908,22 @@ export default function PhotoSheetEngine() {
 
                       <button
                         type="button"
+                        onClick={() => handleTriggerReplace(item.id)}
+                        className="px-2.5 py-1.5 text-xs font-bold rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-600 flex items-center gap-1 shadow-2xs cursor-pointer transition-colors"
+                        title="Replace this photo"
+                      >
+                        <RefreshCw className="w-3 h-3 text-purple-600 dark:text-purple-400" />
+                        <span>Replace</span>
+                      </button>
+
+                      <button
+                        type="button"
                         onClick={() => removePhoto(item.id)}
-                        className="p-2 text-slate-400 hover:text-rose-600 rounded-xl hover:bg-rose-50 transition-colors cursor-pointer"
+                        className="px-2 py-1.5 text-xs font-bold rounded-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-100 flex items-center gap-1 cursor-pointer transition-colors"
                         title="Remove Photo"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3 h-3" />
+                        <span>Remove</span>
                       </button>
                     </div>
                   </div>
@@ -924,14 +991,14 @@ export default function PhotoSheetEngine() {
         {/* ========================================================= */}
         {/* STEP 2: PHOTO SETTINGS                                    */}
         {/* ========================================================= */}
-        <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 shadow-xs space-y-5">
+        <div className="bg-slate-50/70 dark:bg-slate-800/40 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2.5">
-            <span className="w-6 h-6 rounded-full bg-slate-900 text-white text-xs font-black flex items-center justify-center">
+            <span className="w-5 h-5 rounded-full bg-slate-900 text-white text-[11px] font-black flex items-center justify-center">
               2
             </span>
-            <h2 className="text-sm font-black uppercase tracking-wider text-slate-800">
+            <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
               PHOTO SETTINGS &amp; DIMENSIONS
-            </h2>
+            </h3>
           </div>
 
           {/* Photo Size Dropdown */}
@@ -1079,7 +1146,7 @@ export default function PhotoSheetEngine() {
                     type="text"
                     value={candidateName}
                     onChange={(e) => setCandidateName(e.target.value.toUpperCase())}
-                    placeholder="e.g. RAHUL SHARMA"
+                    placeholder="e.g. Full Name as per ID"
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800"
                   />
                 </div>
@@ -1153,14 +1220,14 @@ export default function PhotoSheetEngine() {
         {/* ========================================================= */}
         {/* STEP 3: PRINT LAYOUT & PAPER                              */}
         {/* ========================================================= */}
-        <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 shadow-xs space-y-5">
+        <div className="bg-slate-50/70 dark:bg-slate-800/40 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2.5">
-            <span className="w-6 h-6 rounded-full bg-slate-900 text-white text-xs font-black flex items-center justify-center">
+            <span className="w-5 h-5 rounded-full bg-slate-900 text-white text-[11px] font-black flex items-center justify-center">
               3
             </span>
-            <h2 className="text-sm font-black uppercase tracking-wider text-slate-800">
+            <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
               PRINT LAYOUT &amp; PAPER YIELD
-            </h2>
+            </h3>
           </div>
 
           {/* Paper Size Cards */}
@@ -1319,14 +1386,14 @@ export default function PhotoSheetEngine() {
         {/* ========================================================= */}
         {/* STEP 4: GENERATE & DOWNLOAD                               */}
         {/* ========================================================= */}
-        <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 shadow-xs space-y-5">
+        <div className="bg-slate-50/70 dark:bg-slate-800/40 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2.5">
-            <span className="w-6 h-6 rounded-full bg-slate-900 text-white text-xs font-black flex items-center justify-center">
+            <span className="w-5 h-5 rounded-full bg-slate-900 text-white text-[11px] font-black flex items-center justify-center">
               4
             </span>
-            <h2 className="text-sm font-black uppercase tracking-wider text-slate-800">
+            <h3 className="text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
               GENERATE &amp; DOWNLOAD
-            </h2>
+            </h3>
           </div>
 
           {/* Output DPI Selector */}
@@ -1454,95 +1521,98 @@ export default function PhotoSheetEngine() {
             </button>
           </div>
         </div>
+
+        {/* Official Agency Partner */}
+        <AdSlot slot="post_download" />
       </div>
 
       {/* ------------------------------------------------------------- */}
       {/* RIGHT COLUMN: Sticky Live Print Preview (5 cols)              */}
       {/* ------------------------------------------------------------- */}
-      <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-4">
-        <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 shadow-xl space-y-4">
+      <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
+        <div className="bg-slate-50/70 dark:bg-slate-800/40 rounded-2xl border border-slate-200/80 dark:border-slate-700/80 p-4 sm:p-5 space-y-4">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-700/60 pb-3">
             <div className="flex items-center gap-2">
-              <Printer className="w-4 h-4 text-purple-600" />
-              <h3 className="text-sm font-black text-slate-800 uppercase tracking-wider">
+              <Printer className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+              <h3 className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider">
                 Live Sheet Preview
               </h3>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+              <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-slate-200/70 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
                 {photos.length === 0 ? 'No photo' : `${totalAllocatedCopies} / ${totalSlots} copies`}
               </span>
               <button
                 type="button"
                 onClick={handlePrint}
                 disabled={photos.length === 0}
-                className="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-1 cursor-pointer shadow-xs"
+                className="px-3 py-1 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 text-white font-bold text-xs rounded-xl transition-colors flex items-center gap-1 cursor-pointer shadow-xs"
               >
-                <Printer className="w-3.5 h-3.5" />
+                <Printer className="w-3 h-3" />
                 <span>Print</span>
               </button>
             </div>
           </div>
 
           {/* Preview Container */}
-          <div className="relative bg-slate-100/80 rounded-2xl border border-slate-200/80 p-4 sm:p-6 flex items-center justify-center min-h-[380px] max-h-[520px] overflow-hidden">
+          <div className="relative bg-slate-200/50 dark:bg-slate-950/50 rounded-xl border border-slate-200/80 dark:border-slate-700/80 p-3 sm:p-4 flex items-center justify-center min-h-[300px] max-h-[460px] overflow-hidden">
             {renderedImageUrl ? (
-              <div className="relative shadow-2xl rounded-sm border border-slate-300 bg-white max-w-full max-h-[460px] overflow-hidden">
+              <div className="relative shadow-xl rounded-sm border border-slate-300 dark:border-slate-700 bg-white max-w-full max-h-[420px] overflow-hidden">
                 <img
                   src={renderedImageUrl}
                   alt="Live Print Sheet Preview"
-                  className="max-h-[460px] w-auto object-contain block select-none"
+                  className="max-h-[420px] w-auto object-contain block select-none"
                 />
               </div>
             ) : (
-              <div className="text-center space-y-3 p-8">
-                <div className="w-12 h-12 rounded-2xl bg-slate-200/80 text-slate-400 flex items-center justify-center mx-auto">
+              <div className="text-center space-y-3 p-6">
+                <div className="w-12 h-12 rounded-2xl bg-slate-200/80 dark:bg-slate-800 text-slate-400 flex items-center justify-center mx-auto">
                   <ImageIcon className="w-6 h-6" />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-xs font-bold text-slate-700">Upload a photo to preview sheet.</p>
-                  <p className="text-[11px] text-slate-400">Preview updates live as you adjust zoom &amp; layout.</p>
+                  <p className="text-xs font-bold text-slate-700 dark:text-slate-300">Upload a photo to preview sheet.</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">Preview updates live as you adjust zoom &amp; layout.</p>
                 </div>
               </div>
             )}
           </div>
 
           {/* Specifications Card */}
-          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 text-xs">
-            <div className="flex justify-between text-slate-600">
+          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-1.5 text-xs">
+            <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Paper Dimensions</span>
-              <span className="font-bold text-slate-800">
+              <span className="font-bold text-slate-800 dark:text-slate-200">
                 {paperWMm} × {paperHMm} mm ({activePaper.label})
               </span>
             </div>
-            <div className="flex justify-between text-slate-600">
+            <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Single Photo Size</span>
-              <span className="font-bold text-slate-800">
+              <span className="font-bold text-slate-800 dark:text-slate-200">
                 {activeSize.widthMm} × {activeSize.heightMm} mm ({selectedSizeId})
               </span>
             </div>
-            <div className="flex justify-between text-slate-600">
+            <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Resolution &amp; Yield</span>
-              <span className="font-bold text-emerald-700">
+              <span className="font-bold text-emerald-700 dark:text-emerald-400">
                 {dpi} DPI • {totalSlots} Photos Yield
               </span>
             </div>
-            <div className="flex justify-between text-slate-600">
+            <div className="flex justify-between text-slate-600 dark:text-slate-400">
               <span>Estimated Print Cost</span>
-              <span className="font-bold text-indigo-700">
+              <span className="font-bold text-indigo-700 dark:text-indigo-400">
                 ₹5 to ₹10 at local photo lab (₹0.80/photo)
               </span>
             </div>
           </div>
 
           {/* Hardware Printer Safety Notice */}
-          <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-[11px] text-amber-900 flex items-start gap-2 font-medium">
-            <Info className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+          <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-[11px] text-amber-900 dark:text-amber-200 flex items-start gap-2 font-medium">
+            <Info className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
             <div>
               <span className="font-bold">Important Printer Instruction:</span>
-              <p className="mt-0.5 leading-tight text-amber-800">
+              <p className="mt-0.5 leading-tight text-amber-800 dark:text-amber-300">
                 In print dialog, set scaling to <strong>Actual Size (100%)</strong>. Do not use &quot;Fit to Printable Area&quot;, which shrinks photos.
               </p>
             </div>
@@ -1550,5 +1620,7 @@ export default function PhotoSheetEngine() {
         </div>
       </div>
     </div>
+  </div>
+</div>
   );
 }

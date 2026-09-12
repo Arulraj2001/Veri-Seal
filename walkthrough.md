@@ -186,11 +186,87 @@ Result: 28 / 28 Routes Returned HTTP 200 OK!
   - Clean JPEG / PDF format (eliminates `.webp` extension rejection bugs)
   - 200 / 300 DPI Resolution
 
-### 3. Verification & SEO Deployment
-- `npx tsc --noEmit` &rarr; **0 errors**.
-- All 4 new tool routes verified returning **HTTP 200 OK**.
-- Python in-memory test suite verified with **100% success**.
-- Catalog expanded to **32 Free Indian Exam & Document Tools**.
-- Sitemaps updated with priority 0.95 and daily revalidation.
+---
+
+## Phase 5: Sovereign Indian KYC, Legal Templates & Tax Platform (45 Tools Total)
+
+### 1. The 6 Sovereign Psychological Domains
+VeriSeal has transitioned from a point tool into India’s comprehensive sovereign utility platform, organized into 6 psychological domains:
+1. 🔏 **Digital Verification & Lookups** (`verify`): PKI DSC signatures, GST Number (GSTIN) ISO/IEC 7064 MOD 36 validator, IFSC & bank branch finder.
+2. 🪪 **KYC & Legal Templates** (`kyc_documents`): Aadhaar + PAN single PDF KYC merger, bilingual legal affidavits, salary slips, masked Aadhaar.
+3. 📸 **Exam Photo & Signature** (`photo_image`): Auto-padding undersized scans, capping oversized images, declarations, and biometric face alignment.
+4. 📄 **PDF & Document Tools** (`pdf_tools`): 200KB/100KB certificate compressors, marksheets merger, and WhatsApp zero-blur PDF booster.
+5. 🧮 **Tax & Cost Calculators** (`calculators`): FY 2025-26 New vs Old Regime side-by-side tax engine with ₹75,000 standard deduction, and household energy OS.
+6. 🖨️ **Print & Cyber Cafe Lab** (`print_share`): 5-in-1 A4 gang sheets, Epson L805 PVC card trays, and 4×6 passport sheets.
+
+---
+
+### 2. The 7 High-ROI Sovereign Tools Built in Phase 1
+
+1. **Aadhaar + PAN Single PDF KYC Merger** (`/tools/aadhaar-pan-kyc-merge`)
+   - Merges Aadhaar (Front + Back) and PAN Card into an official single-page vector A4 PDF.
+   - Built-in 1-click **RBI First-8-Digits Masking** (`XXXX-XXXX-1234`).
+   - Strict byte-budget targets (<200KB for net banking / SBI / HDFC KYC, <500KB for loans & EPFO).
+   - 100% In-RAM Canvas vector processing; zero cloud document uploads.
+
+2. **Bilingual Legal Affidavit Generator** (`/tools/affidavit-generator`)
+   - Native **English $\leftrightarrow$ தமிழ் (Tamil)** language switch.
+   - Ready templates for Name Correction / Spelling Errors, Date of Birth Discrepancies, Study Break / Gap Year, Address Proof, Lost Certificates, and General Sworn Declarations.
+   - Exact **3.5-inch / 4.0-inch top margin spacing** designed specifically for feeding non-judicial state stamp paper (₹20, ₹50, ₹100) through standard office laser printers.
+   - Includes Notary Public stamp block and Advocate Attestation seals.
+
+3. **GST Number (GSTIN) Instant Verifier** (`/tools/gst-number-verifier`)
+   - Sub-second client-side validation using the official **ISO/IEC 7064 MOD 36-2 algorithm**.
+   - Automatic 2-digit State Code decoding and embedded 10-digit PAN extraction.
+   - Instant entity type classification (Proprietorship, Private Limited, Partnership/LLP, HUF, Trust).
+   - 1-click clipboard copy of validated GSTIN and embedded PAN.
+
+4. **Bilingual Salary Slip / Payslip Generator** (`/tools/salary-slip-generator`)
+   - Clean A4 PDF salary slip generator with English and Tamil bilingual support.
+   - Automatic statutory compensation breakdown: Basic, HRA, Special Allowance, EPF (12%), ESIC (0.75%), Professional Tax (PT), and TDS.
+   - Automatic Indian English currency word converter (e.g. *"Rupees Fifty-Four Thousand Two Hundred Only"*).
+   - Bank loan, credit card, and visa interview compliant layout with seal & authorized signatory blocks.
+
+5. **WhatsApp Document & Photo Compressor** (`/tools/compress-for-whatsapp`)
+   - Calibrated for Indian mobile networks and instant WhatsApp sharing.
+   - Quick-toggle size modes (<500KB and <200KB).
+   - Adaptive micro-contrast booster that prevents fine text and stamps from blurring when shared over mobile apps.
+
+6. **Income Tax Calculator FY 2025-26** (`/tools/income-tax-calculator-2025-26`)
+   - Side-by-side comparison between **New Tax Regime** and **Old Tax Regime**.
+   - Incorporates the Union Budget FY 2025-26 **₹75,000 standard deduction** for salaried taxpayers.
+   - Accurately models Section 87A tax rebate (zero tax on taxable income up to ₹7,00,000 / gross ₹7,75,000 under New Regime).
+   - Compares 80C, 80D, and HRA deductions under Old Regime to give an unambiguous verdict on which regime saves the citizen more money.
+
+7. **IFSC Code & Bank Branch Finder** (`/tools/ifsc-code-finder`)
+   - Instant 11-character alphanumeric IFSC decoder.
+   - Bank prefix lookup across SBI, HDFC, ICICI, PNB, Canara, Indian Bank, Bank of Baroda, and Axis.
+   - Details branch code, MICR code, RTGS/NEFT/IMPS support, and 1-click copy for bank account transfers.
+
+---
+
+### 3. Visual Verification Artifacts
+
+![Tools Directory Category Pills](C:/Users/samue/.gemini/antigravity-ide/brain/b754a127-f111-48ac-8a2f-257e29b3d009/category_pills_1789181431996.png)
+*Figure 1: Updated Tools Directory with 6 psychological category filters, dynamic count badges, and zero CLS.*
+
+![Aadhaar + PAN KYC Merger](C:/Users/samue/.gemini/antigravity-ide/brain/b754a127-f111-48ac-8a2f-257e29b3d009/aadhaar_pan_kyc_merge_1789181477504.png)
+*Figure 2: Aadhaar + PAN KYC Merger with 1-click 8-digit masking and dual byte budgets (<200KB / <500KB).*
+
+![Bilingual Legal Affidavit Generator](C:/Users/samue/.gemini/antigravity-ide/brain/b754a127-f111-48ac-8a2f-257e29b3d009/affidavit_generator_1789181522954.png)
+*Figure 3: Bilingual Legal Affidavit Generator running live in தமிழ் with 3.5" non-judicial stamp paper margin and notary seal.*
+
+![Income Tax Calculator FY 2025-26](C:/Users/samue/.gemini/antigravity-ide/brain/b754a127-f111-48ac-8a2f-257e29b3d009/income_tax_calculator_1789181570554.png)
+*Figure 4: Income Tax Calculator FY 2025-26 with New vs Old Regime comparison and ₹75,000 standard deduction.*
+
+---
+
+### 4. Technical Validation
+- **TypeScript Typecheck**: `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)**.
+- **Sitemap Registration**: All 7 routes added to [`app/sitemap.ts`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/sitemap.ts) with `priority: 0.95` and daily revalidation.
+- **Global Footer**: All 7 routes cross-linked with priority stars in [`components/layout/Footer.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/layout/Footer.tsx).
+- **Tools Catalog**: Expanded to 45 tools in [`lib/tools-data.ts`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/lib/tools-data.ts).
+- **Monetization Guarantee**: Exclusively features Ostrune agency (`https://ostrune.netlify.app/`) with zero third-party affiliate ads.
+
 
 

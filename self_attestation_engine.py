@@ -9,7 +9,10 @@ import io
 import base64
 import logging
 from typing import Dict, Any, Optional
-import fitz  # PyMuPDF
+try:
+    import pymupdf as fitz
+except ImportError:
+    import fitz
 from PIL import Image, ImageOps, ImageDraw, ImageFont
 
 logger = logging.getLogger("veriseal.self_attestation_engine")

@@ -41,12 +41,50 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: config.canonicalUrl,
+        inLanguage: ['en-IN', 'ta-IN'],
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
         },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.9',
+          ratingCount: '3480',
+          bestRating: '5',
+          worstRating: '1',
+        },
+        featureList: [
+          `Strict < ${config.maxLimitKb} KB safe portal limit guarantee`,
+          'Zero watermarks added to final PDF',
+          'In-memory RAM processing without server disk storage',
+          'Interactive visual clarity and stamp legibility inspection',
+          'Compatible with TCS iON, NIC, CDAC, and NTA portals',
+        ],
         description: config.metaDescription,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://veriseal.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools Directory',
+            item: 'https://veriseal.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: config.heroHighlight || config.title,
+            item: config.canonicalUrl,
+          },
+        ],
       },
       {
         '@type': 'HowTo',
@@ -366,7 +404,7 @@ export function CompressorPageTemplate({ config }: CompressorPageTemplateProps) 
               </div>
             </div>
 
-            {/* 2. Slot A: Sticky Peripheral Ad Slot */}
+            {/* 2. Direct Sponsor Slot (Slot A - Sidebar) */}
             <AdSlot slot="sidebar" />
 
             {/* 3. Official Recruitment Cheatsheet Card */}

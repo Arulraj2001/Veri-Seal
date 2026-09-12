@@ -18,7 +18,10 @@ import logging
 import zipfile
 from typing import Any, Dict, List, Optional, Tuple
 
-import fitz  # PyMuPDF
+try:
+    import pymupdf as fitz
+except ImportError:
+    import fitz
 from PIL import Image
 import pikepdf
 

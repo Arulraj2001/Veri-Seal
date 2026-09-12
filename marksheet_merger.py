@@ -8,7 +8,10 @@ import io
 import base64
 import logging
 from typing import List, Tuple, Dict, Any, Optional
-import fitz  # PyMuPDF
+try:
+    import pymupdf as fitz
+except ImportError:
+    import fitz
 from PIL import Image, ImageEnhance
 
 logger = logging.getLogger("veriseal.marksheet_merger")

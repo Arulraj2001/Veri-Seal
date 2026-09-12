@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { HeroSection } from '@/components/home/HeroSection';
+import { IntentGateway } from '@/components/home/IntentGateway';
 import { UploadZone } from '@/components/home/UploadZone';
 import { UploadZoneSkeleton } from '@/components/home/UploadZoneSkeleton';
 import { HowItWorks } from '@/components/home/HowItWorks';
@@ -14,6 +15,9 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <HeroSection />
+
+      {/* 3-Pillar Intent Gateway (Psychological Navigation) */}
+      <IntentGateway />
 
       {/* Upload Zone (Main Interactive Tool) with Suspense & Zero CLS Skeleton */}
       <React.Suspense fallback={<UploadZoneSkeleton />}>

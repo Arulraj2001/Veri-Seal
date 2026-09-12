@@ -10,7 +10,10 @@ import base64
 import logging
 from typing import Dict, Any, Optional
 from PIL import Image, ImageDraw, ImageFont
-import fitz  # PyMuPDF
+try:
+    import pymupdf as fitz
+except ImportError:
+    import fitz
 
 logger = logging.getLogger("veriseal.photo_sheet_generator")
 

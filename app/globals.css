@@ -83,3 +83,86 @@ body {
   background-color: rgba(230, 87, 11, 0.2);
   color: #2E241F;
 }
+
+/* Universal Print Rules - Protect against printing whole website chrome */
+@media print {
+  header,
+  footer,
+  nav,
+  aside,
+  .no-print,
+  [data-no-print="true"],
+  .ad-slot-container {
+    display: none !important;
+  }
+
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    background-image: none !important;
+  }
+
+  /* When printing an isolated container directly */
+  .veriseal-print-document {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #FFFFFF !important;
+  }
+}
+
+/* =========================================================
+   VERISEAL RESUME PRODUCTION PRINT ENGINE
+   ========================================================= */
+.veriseal-resume-print-portal {
+  display: none !important;
+}
+
+@media print {
+  /* When the resume print portal is mounted or body is printing resume */
+  body:has(#veriseal-resume-print-mount) > *:not(#veriseal-resume-print-mount),
+  body.printing-resume > *:not(#veriseal-resume-print-mount) {
+    display: none !important;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #veriseal-resume-print-mount {
+    display: block !important;
+    position: static !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  #veriseal-resume-print-mount .veriseal-resume-print-sheet {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+}

@@ -32,6 +32,7 @@ import {
   type PdfPageInfo,
 } from '@/lib/api';
 import type { ToolConfig } from './tool-configs';
+import { QualityProofEngine } from './QualityProofEngine';
 
 interface PdfCompressorEngineProps {
   config: ToolConfig;
@@ -720,64 +721,20 @@ export function PdfCompressorEngine({ config }: PdfCompressorEngineProps) {
                 </div>
               </div>
 
-              {/* Verified Portals Badges */}
-              <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
-                <div className="text-xs font-bold text-text-main mb-2.5 flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-primary" />
-                  Guaranteed Compatible Portals:
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {result.compliance_badges.map((badge, idx) => (
-                    <span
-                      key={idx}
-                      className="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 bg-white border border-primary/20 text-primary rounded-lg shadow-2xs"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
-                      {badge}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Visual Clarity Preview Card */}
-              {result.preview_image_b64 && (
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <div className="text-xs sm:text-sm font-bold text-text-main flex items-center gap-1.5">
-                        <FileCheck className="w-4 h-4 text-primary" />
-                        Page 1 Clarity Inspection
-                      </div>
-                      <div className="text-[11px] text-text-main/60">
-                        Check marks, stamps, and signatures before uploading to portal.
-                      </div>
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setIsZoomed(true)}
-                      className="border-surface-darker hover:bg-white text-text-main text-xs h-8 px-3 rounded-xl cursor-pointer"
-                    >
-                      <Maximize2 className="w-3.5 h-3.5 mr-1 text-primary" />
-                      Zoom
-                    </Button>
-                  </div>
-
-                  <div
-                    onClick={() => setIsZoomed(true)}
-                    className="relative max-h-60 overflow-hidden rounded-xl border border-surface-darker bg-white cursor-pointer group flex items-center justify-center p-2 shadow-2xs"
-                  >
-                    <img
-                      src={result.preview_image_b64}
-                      alt="Compressed Preview"
-                      className="w-full max-w-sm object-contain mx-auto transition-transform duration-200 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-text-main/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1.5 rounded-xl">
-                      <Maximize2 className="w-4 h-4" /> Click to zoom and inspect
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* Quality & Compliance Proof Engine */}
+              <QualityProofEngine
+                originalSizeKb={result.original_size_kb}
+                compressedSizeKb={result.compressed_size_kb}
+                maxLimitKb={config.maxLimitKb}
+                originalPreviewUrl={pagesInfo[0]?.thumbnail_b64 || null}
+                compressedPreviewUrl={result.preview_image_b64 || null}
+                portalName={config.presetId ? `${config.presetId.toUpperCase()} & State PSC Portals` : 'Official Portals'}
+                documentType="Official Certificate PDF"
+                pageCount={result.page_count}
+                dpi={200}
+                format="PDF"
+                isPdf={true}
+              />
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row items-center gap-3">

@@ -7,11 +7,14 @@ import { cn } from '@/lib/utils';
 
 export type AdSlotType = 'sidebar' | 'post_download' | 'in_content' | 'mobile';
 
-interface AdSlotProps {
+export interface AdSlotProps {
   slot: AdSlotType;
   className?: string;
   customTitle?: string;
   customDesc?: string;
+  customCtaText?: string;
+  customCtaUrl?: string;
+  context?: 'exam' | 'cyber_cafe' | 'legal' | 'general';
 }
 
 interface PublicAdsConfig {
@@ -29,6 +32,14 @@ interface PublicAdsConfig {
   sponsor_badge: string;
 }
 
+export const DEFAULT_OSTRUNE_CONFIG = {
+  title: 'Ostrune — Web Development, SEO & Speed Growth Agency',
+  desc: 'We build sub-second websites, custom web apps, and run SEO & Meta Ads with 100/100 Core Web Vitals for ambitious businesses worldwide. Free site audit with 12h reply guarantee.',
+  cta_text: 'Book Free Strategy Call',
+  cta_url: 'https://ostrune.netlify.app/',
+  badge: 'Ostrune Agency',
+};
+
 const DEFAULT_CONFIG: PublicAdsConfig = {
   ads_enabled: true,
   ads_provider: 'custom_sponsor',
@@ -37,15 +48,21 @@ const DEFAULT_CONFIG: PublicAdsConfig = {
   ad_slot_post_download: true,
   ad_slot_in_content: true,
   ad_slot_mobile: true,
-  sponsor_title: 'Ostrune Agency & Exam Prep Hub',
-  sponsor_desc:
-    'Professional web design, custom portals & free government recruitment study kits for Tamil Nadu and Central exams.',
-  sponsor_cta_text: 'Explore Free Resources',
-  sponsor_cta_url: 'https://veriseal.in/blog',
-  sponsor_badge: 'Verified Partner',
+  sponsor_title: DEFAULT_OSTRUNE_CONFIG.title,
+  sponsor_desc: DEFAULT_OSTRUNE_CONFIG.desc,
+  sponsor_cta_text: DEFAULT_OSTRUNE_CONFIG.cta_text,
+  sponsor_cta_url: DEFAULT_OSTRUNE_CONFIG.cta_url,
+  sponsor_badge: DEFAULT_OSTRUNE_CONFIG.badge,
 };
 
-export function AdSlot({ slot, className, customTitle, customDesc }: AdSlotProps) {
+export function AdSlot({
+  slot,
+  className,
+  customTitle,
+  customDesc,
+  customCtaText,
+  customCtaUrl,
+}: AdSlotProps) {
   const [config, setConfig] = React.useState<PublicAdsConfig>(DEFAULT_CONFIG);
   const [loaded, setLoaded] = React.useState(false);
   const [adBlocked, setAdBlocked] = React.useState(false);
@@ -64,11 +81,11 @@ export function AdSlot({ slot, className, customTitle, customDesc }: AdSlotProps
           ad_slot_post_download: data.ad_slot_post_download !== false,
           ad_slot_in_content: data.ad_slot_in_content !== false,
           ad_slot_mobile: data.ad_slot_mobile !== false,
-          sponsor_title: data.sponsor_title || DEFAULT_CONFIG.sponsor_title,
-          sponsor_desc: data.sponsor_desc || DEFAULT_CONFIG.sponsor_desc,
-          sponsor_cta_text: data.sponsor_cta_text || DEFAULT_CONFIG.sponsor_cta_text,
-          sponsor_cta_url: data.sponsor_cta_url || DEFAULT_CONFIG.sponsor_cta_url,
-          sponsor_badge: data.sponsor_badge || DEFAULT_CONFIG.sponsor_badge,
+          sponsor_title: data.sponsor_title || DEFAULT_OSTRUNE_CONFIG.title,
+          sponsor_desc: data.sponsor_desc || DEFAULT_OSTRUNE_CONFIG.desc,
+          sponsor_cta_text: data.sponsor_cta_text || DEFAULT_OSTRUNE_CONFIG.cta_text,
+          sponsor_cta_url: data.sponsor_cta_url || DEFAULT_OSTRUNE_CONFIG.cta_url,
+          sponsor_badge: data.sponsor_badge || DEFAULT_OSTRUNE_CONFIG.badge,
         });
         setLoaded(true);
       })
@@ -98,6 +115,13 @@ export function AdSlot({ slot, className, customTitle, customDesc }: AdSlotProps
     config.adsense_publisher_id &&
     !adBlocked;
 
+  // Resolve dynamic sponsor text from admin settings, custom props, or Ostrune default
+  const activeTitle = customTitle || config.sponsor_title || DEFAULT_OSTRUNE_CONFIG.title;
+  const activeDesc = customDesc || config.sponsor_desc || DEFAULT_OSTRUNE_CONFIG.desc;
+  const activeCtaText = customCtaText || config.sponsor_cta_text || DEFAULT_OSTRUNE_CONFIG.cta_text;
+  const activeCtaUrl = customCtaUrl || config.sponsor_cta_url || DEFAULT_OSTRUNE_CONFIG.cta_url;
+  const activeBadge = config.sponsor_badge || DEFAULT_OSTRUNE_CONFIG.badge;
+
   // Custom Direct Sponsor UI
   if (!isAdSense || adBlocked) {
     if (slot === 'sidebar') {
@@ -110,27 +134,27 @@ export function AdSlot({ slot, className, customTitle, customDesc }: AdSlotProps
         >
           <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-text-main/50">
             <span className="px-2 py-0.5 rounded-full bg-primary-light text-primary border border-primary/20">
-              {config.sponsor_badge}
+              {activeBadge}
             </span>
             <span className="text-text-main/40 font-semibold tracking-widest">Sponsored</span>
           </div>
 
           <div className="space-y-1.5 pt-1">
             <h4 className="font-extrabold text-sm text-text-main leading-snug">
-              {customTitle || config.sponsor_title}
+              {activeTitle}
             </h4>
             <p className="text-xs text-text-main/70 leading-relaxed">
-              {customDesc || config.sponsor_desc}
+              {activeDesc}
             </p>
           </div>
 
           <a
-            href={config.sponsor_cta_url}
+            href={activeCtaUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl bg-surface border border-surface-darker hover:border-primary/40 hover:bg-primary-light/40 text-xs font-bold text-text-main hover:text-primary transition-all shadow-2xs group"
           >
-            <span>{config.sponsor_cta_text}</span>
+            <span>{activeCtaText}</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform text-primary" />
           </a>
         </div>
@@ -150,27 +174,27 @@ export function AdSlot({ slot, className, customTitle, customDesc }: AdSlotProps
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-primary-light text-primary border border-primary/20 flex items-center gap-1">
                 <Sparkles className="w-3 h-3" />
-                {config.sponsor_badge}
+                {activeBadge}
               </span>
               <span className="text-[10px] text-text-main/40 uppercase tracking-widest font-semibold">
-                Sponsored Partner
+                Verified Partner
               </span>
             </div>
             <h3 className="text-base sm:text-lg font-extrabold text-text-main">
-              {customTitle || config.sponsor_title}
+              {activeTitle}
             </h3>
             <p className="text-xs sm:text-sm text-text-main/70 max-w-xl leading-relaxed">
-              {customDesc || config.sponsor_desc}
+              {activeDesc}
             </p>
           </div>
 
           <a
-            href={config.sponsor_cta_url}
+            href={activeCtaUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary hover:bg-primary-hover text-white font-extrabold text-xs sm:text-sm shadow-sm transition-all shrink-0 cursor-pointer self-stretch sm:self-auto justify-center"
           >
-            <span>{config.sponsor_cta_text}</span>
+            <span>{activeCtaText}</span>
             <ArrowRight className="w-4 h-4" />
           </a>
         </aside>
@@ -188,27 +212,27 @@ export function AdSlot({ slot, className, customTitle, customDesc }: AdSlotProps
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-primary-light text-primary border border-primary/20">
-              {config.sponsor_badge}
+              {activeBadge}
             </span>
             <span className="text-[10px] text-text-main/40 uppercase tracking-widest font-semibold">
               Advertisement
             </span>
           </div>
           <h4 className="font-extrabold text-sm sm:text-base text-text-main">
-            {customTitle || config.sponsor_title}
+            {activeTitle}
           </h4>
           <p className="text-xs text-text-main/70 max-w-lg leading-relaxed">
-            {customDesc || config.sponsor_desc}
+            {activeDesc}
           </p>
         </div>
 
         <a
-          href={config.sponsor_cta_url}
+          href={activeCtaUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-surface border border-surface-darker hover:border-primary/40 text-xs font-bold text-text-main hover:text-primary transition-all shrink-0"
         >
-          <span>{config.sponsor_cta_text}</span>
+          <span>{activeCtaText}</span>
           <ExternalLink className="w-3.5 h-3.5 text-primary" />
         </a>
       </div>

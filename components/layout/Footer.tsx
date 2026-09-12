@@ -112,6 +112,7 @@ export function Footer() {
           </div>
 
           {/* Column 1: Photo & Card Studio (6 items) */}
+          {/* Column 1: Photo & Card Studio (7 items) */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/90">
               {isTamil ? 'புகைப்பட ஸ்டுடியோ' : 'Photo Studio Suite'}
@@ -127,10 +128,18 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/tools/stamp-size-photo-maker"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight"
+                  href="/tools/a4-multi-card-sheet"
+                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight font-medium text-emerald-600 dark:text-emerald-400"
                 >
-                  Stamp Size &amp; NEET Postcard
+                  Multi-Card A4 Sheet (5-in-1) ★
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/compress-for-whatsapp"
+                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight font-medium text-emerald-600 dark:text-emerald-400"
+                >
+                  WhatsApp Doc Compressor ★
                 </Link>
               </li>
               <li>
@@ -139,6 +148,14 @@ export function Footer() {
                   className="text-text-main/75 hover:text-primary transition-colors block leading-tight"
                 >
                   Dual-Sided PVC Card Maker
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/stamp-size-photo-maker"
+                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight"
+                >
+                  Stamp Size &amp; NEET Postcard
                 </Link>
               </li>
               <li>
@@ -157,37 +174,53 @@ export function Footer() {
                   Exam Name &amp; DOP Stamper
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/tools/biometric-face-aligner"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight"
-                >
-                  ICAO Biometric Face Aligner
-                </Link>
-              </li>
             </ul>
           </div>
 
-          {/* Column 2: Exam PDF & Image Utilities (6 items) */}
+          {/* Column 2: KYC Documents & Exam PDF (7 items) */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/90">
-              {isTamil ? 'தேர்வு PDF கருவிகள்' : 'Exam PDF Utilities'}
+              {isTamil ? 'KYC & தேர்வு ஆவணங்கள்' : 'KYC & Exam Utilities'}
             </h4>
             <ul className="space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/tools/aadhaar-pan-kyc-merge"
+                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight font-medium text-emerald-600 dark:text-emerald-400"
+                >
+                  Aadhaar + PAN Single PDF ★
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/affidavit-generator"
+                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight font-medium text-indigo-600 dark:text-indigo-400"
+                >
+                  Legal Affidavit Generator (தமிழ்) ★
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/salary-slip-generator"
+                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight font-medium text-emerald-600 dark:text-emerald-400"
+                >
+                  Salary Slip Generator (தமிழ்) ★
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/handwritten-declaration-scanner"
+                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight font-medium text-indigo-600 dark:text-indigo-400"
+                >
+                  Declaration Scanner (50KB–100KB) ★
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/tools/compress-pdf-to-200kb"
                   className="text-text-main/75 hover:text-primary transition-colors block leading-tight"
                 >
                   Compress PDF to 200KB
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tools/compress-pdf-to-100kb"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight"
-                >
-                  Compress PDF to 100KB
                 </Link>
               </li>
               <li>
@@ -206,31 +239,39 @@ export function Footer() {
                   Mask Aadhaar (8 Digits)
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/tools/photo-signature-joiner"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight"
-                >
-                  Photo &amp; Signature Joiner
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tools/unlock-pdf"
-                  className="text-text-main/75 hover:text-primary transition-colors block leading-tight"
-                >
-                  Unlock e-Aadhaar PDF
-                </Link>
-              </li>
             </ul>
           </div>
 
-          {/* Column 3: Home & Business Intelligence (6 items) */}
+          {/* Column 3: Tax, Calculators & Lookups (7 items) */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-text-main/90">
-              {isTamil ? 'வணிகம் & வீடு' : 'Systems & Calculators'}
+              {isTamil ? 'வரி & கணக்கீடுகள்' : 'Tax & Business Calculators'}
             </h4>
             <ul className="space-y-2.5 text-sm">
+              <li>
+                <Link
+                  href="/tools/income-tax-calculator-2025-26"
+                  className="text-text-main/75 hover:text-emerald-700 transition-colors block leading-tight font-medium text-emerald-600 dark:text-emerald-400"
+                >
+                  Income Tax FY 2025-26 ★
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/gst-number-verifier"
+                  className="text-text-main/75 hover:text-emerald-700 transition-colors block leading-tight font-medium text-indigo-600 dark:text-indigo-400"
+                >
+                  GST Number (GSTIN) Verifier ★
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/ifsc-code-finder"
+                  className="text-text-main/75 hover:text-emerald-700 transition-colors block leading-tight"
+                >
+                  IFSC &amp; Branch Finder
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/home-cost"
@@ -257,26 +298,10 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/business-os/daily-profit-calculator"
-                  className="text-text-main/75 hover:text-indigo-700 transition-colors block leading-tight"
-                >
-                  Daily Profit &amp; Margin
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/vehicle-os"
                   className="text-text-main/75 hover:text-amber-700 transition-colors block leading-tight"
                 >
                   Vehicle Decision OS
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/vehicle-os/ev-vs-petrol-diesel"
-                  className="text-text-main/75 hover:text-amber-700 transition-colors block leading-tight"
-                >
-                  EV vs Petrol / Diesel TCO
                 </Link>
               </li>
             </ul>

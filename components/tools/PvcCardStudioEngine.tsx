@@ -15,6 +15,7 @@ import {
   Scissors,
   Award,
 } from 'lucide-react';
+import { AdSlot } from '@/components/ads/AdSlot';
 
 export default function PvcCardStudioEngine() {
   const [frontFile, setFrontFile] = useState<File | null>(null);
@@ -380,6 +381,9 @@ export default function PvcCardStudioEngine() {
             </div>
           </div>
         )}
+
+        {/* Official Agency Partner */}
+        <AdSlot slot="post_download" />
       </div>
     </div>
   );

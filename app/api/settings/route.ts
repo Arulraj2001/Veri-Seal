@@ -24,11 +24,11 @@ export async function GET() {
       ad_slot_post_download: true,
       ad_slot_in_content: true,
       ad_slot_mobile: true,
-      sponsor_title: 'Ostrune Agency & Exam Prep Hub',
-      sponsor_desc: 'Professional web development & free government recruitment study kits for Tamil Nadu and Central exams.',
-      sponsor_cta_text: 'Explore Free Resources',
-      sponsor_cta_url: 'https://veriseal.in/blog',
-      sponsor_badge: 'Verified Partner',
+      sponsor_title: 'Ostrune — Web Development, SEO & Speed Growth Agency',
+      sponsor_desc: 'We build sub-second websites, custom web apps, and run SEO & Meta Ads with 100/100 Core Web Vitals for ambitious businesses worldwide. Free site audit with 12h reply guarantee.',
+      sponsor_cta_text: 'Book Free Strategy Call',
+      sponsor_cta_url: 'https://ostrune.netlify.app/',
+      sponsor_badge: 'Ostrune Agency',
     });
   }
 }

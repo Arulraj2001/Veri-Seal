@@ -11,6 +11,8 @@ import {
   ShieldCheck,
   Printer,
   CheckCircle2,
+  CreditCard,
+  Calculator,
   ArrowRight,
   Sparkles,
   Zap,
@@ -31,6 +33,8 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   ShieldCheck: <ShieldCheck className="w-4 h-4 text-emerald-600" />,
   Printer: <Printer className="w-4 h-4 text-emerald-600" />,
   CheckCircle2: <CheckCircle2 className="w-4 h-4 text-emerald-600" />,
+  CreditCard: <CreditCard className="w-4 h-4 text-emerald-600" />,
+  Calculator: <Calculator className="w-4 h-4 text-emerald-600" />,
 };
 
 export default function ToolsDirectory() {
@@ -171,7 +175,7 @@ export default function ToolsDirectory() {
             onClick={resetAll}
             className="py-2.5 px-6 bg-emerald-600 text-white text-xs font-bold rounded-xl hover:bg-emerald-700 transition-colors inline-flex items-center gap-2"
           >
-            <span>Show All 28 Tools</span>
+            <span>Show All {TOOLS_CATALOG.length} Tools</span>
           </button>
         </div>
       ) : activeCategory === 'all' && !searchQuery ? (
@@ -230,56 +234,119 @@ export default function ToolsDirectory() {
   );
 }
 
-/** Individual Tool Card */
+const CATEGORY_STYLES: Record<
+  string,
+  {
+    badgeClass: string;
+    hoverBorder: string;
+    watermarkColor: string;
+    WatermarkIcon: React.ElementType;
+  }
+> = {
+  verify: {
+    badgeClass: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
+    hoverBorder: 'hover:border-emerald-500/70 hover:shadow-emerald-500/10',
+    watermarkColor: 'text-emerald-700 dark:text-emerald-400',
+    WatermarkIcon: ShieldCheck,
+  },
+  kyc_documents: {
+    badgeClass: 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800',
+    hoverBorder: 'hover:border-indigo-500/70 hover:shadow-indigo-500/10',
+    watermarkColor: 'text-indigo-700 dark:text-indigo-400',
+    WatermarkIcon: CreditCard,
+  },
+  photo_image: {
+    badgeClass: 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+    hoverBorder: 'hover:border-amber-500/70 hover:shadow-amber-500/10',
+    watermarkColor: 'text-amber-700 dark:text-amber-400',
+    WatermarkIcon: Camera,
+  },
+  pdf_tools: {
+    badgeClass: 'bg-cyan-50 text-cyan-800 dark:bg-cyan-950/40 dark:text-cyan-300 border-cyan-200 dark:border-cyan-800',
+    hoverBorder: 'hover:border-cyan-500/70 hover:shadow-cyan-500/10',
+    watermarkColor: 'text-cyan-700 dark:text-cyan-400',
+    WatermarkIcon: FileText,
+  },
+  calculators: {
+    badgeClass: 'bg-violet-50 text-violet-800 dark:bg-violet-950/40 dark:text-violet-300 border-violet-200 dark:border-violet-800',
+    hoverBorder: 'hover:border-violet-500/70 hover:shadow-violet-500/10',
+    watermarkColor: 'text-violet-700 dark:text-violet-400',
+    WatermarkIcon: Calculator,
+  },
+  print_share: {
+    badgeClass: 'bg-fuchsia-50 text-fuchsia-800 dark:bg-fuchsia-950/40 dark:text-fuchsia-300 border-fuchsia-200 dark:border-fuchsia-800',
+    hoverBorder: 'hover:border-fuchsia-500/70 hover:shadow-fuchsia-500/10',
+    watermarkColor: 'text-fuchsia-700 dark:text-fuchsia-400',
+    WatermarkIcon: Printer,
+  },
+};
+
+/** Individual Medium-Sized Tool Card with Faded Background Watermark */
 function ToolCard({ tool }: { tool: ToolItem }) {
+  const style = CATEGORY_STYLES[tool.category] || CATEGORY_STYLES.pdf_tools;
+  const Watermark = style.WatermarkIcon;
+
   return (
     <Link
       href={tool.slug}
-      className="group bg-white rounded-3xl border border-surface-darker/70 hover:border-emerald-500/70 p-6 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1 transition-all duration-200 relative overflow-hidden"
+      className={`group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${style.hoverBorder} overflow-hidden min-h-[220px]`}
     >
-      <div className="space-y-3">
+      {/* Themed Low-Opacity Background Watermark Motif */}
+      <div
+        className={`absolute -bottom-4 -right-4 w-28 h-28 pointer-events-none opacity-[0.05] dark:opacity-[0.07] group-hover:opacity-[0.14] dark:group-hover:opacity-[0.20] group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 ${style.watermarkColor} flex items-center justify-center`}
+      >
+        <Watermark className="w-full h-full stroke-[1.2]" />
+      </div>
+
+      <div className="relative z-10 space-y-2.5">
         {/* Top Badges */}
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+          <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${style.badgeClass}`}>
             {tool.categoryLabel}
           </span>
           {tool.badge && (
-            <span className="text-[10px] font-black uppercase tracking-wide bg-slate-900 text-white px-2 py-0.5 rounded-full">
+            <span className="text-[9px] font-black uppercase tracking-wider bg-slate-900 text-white dark:bg-slate-800 dark:text-amber-400 border border-slate-800 dark:border-amber-500/30 px-2 py-0.5 rounded-full">
               {tool.badge}
             </span>
           )}
         </div>
 
         {/* Title */}
-        <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug">
+        <h3 className="text-[15px] font-bold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors leading-snug line-clamp-1">
           {tool.name}
         </h3>
 
         {/* Description */}
-        <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
+        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">
           {tool.shortDesc}
         </p>
 
         {/* Exam Tags */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
-          {tool.examTags.map((tag) => (
+        <div className="flex flex-wrap gap-1 pt-0.5">
+          {tool.examTags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="text-[10px] font-medium text-slate-600 bg-slate-100 group-hover:bg-emerald-50/80 group-hover:text-emerald-800 px-2 py-0.5 rounded-md transition-colors"
+              className="text-[10px] font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md"
             >
               {tag}
             </span>
           ))}
+          {tool.examTags.length > 3 && (
+            <span className="text-[9px] font-semibold text-slate-400 dark:text-slate-500 self-center">
+              +{tool.examTags.length - 3}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Bottom CTA Bar */}
-      <div className="pt-5 mt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-        <span className="text-[11px] font-bold text-slate-400 group-hover:text-emerald-600 transition-colors">
-          100% Free • No Signup
+      <div className="relative z-10 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+        <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 flex items-center gap-1">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+          <span>In-RAM Privacy</span>
         </span>
-        <span className="font-bold text-emerald-700 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-          <span>Open Tool</span>
+        <span className="font-bold text-emerald-700 dark:text-emerald-400 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+          <span>Use Tool</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>

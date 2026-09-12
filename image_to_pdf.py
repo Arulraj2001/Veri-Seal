@@ -12,7 +12,10 @@ Features:
 """
 
 import io
-import fitz  # PyMuPDF
+try:
+    import pymupdf as fitz
+except ImportError:
+    import fitz
 import logging
 from typing import List, Tuple, Dict, Any, Optional
 from PIL import Image, ImageOps, ImageEnhance

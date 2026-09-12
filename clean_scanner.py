@@ -10,7 +10,10 @@ import logging
 from typing import Dict, Any, Optional
 import numpy as np
 from PIL import Image, ImageEnhance, ImageOps
-import fitz  # PyMuPDF
+try:
+    import pymupdf as fitz
+except ImportError:
+    import fitz
 
 logger = logging.getLogger("veriseal.clean_scanner")
 

@@ -16,9 +16,13 @@ import {
   ShieldCheck,
   Calendar,
   User,
+  RefreshCw,
+  Trash2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { resizeImage, type ImageResizeResponse } from '@/lib/api';
+import { QualityProofEngine } from './QualityProofEngine';
+import { AdSlot } from '@/components/ads/AdSlot';
 
 export interface CustomPreset {
   id: string;
@@ -60,7 +64,7 @@ export function ImageResizerEngine({
   const [widthPx, setWidthPx] = React.useState<number | undefined>(initialPreset?.widthPx);
   const [heightPx, setHeightPx] = React.useState<number | undefined>(initialPreset?.heightPx);
   const [addNameDate, setAddNameDate] = React.useState<boolean>(initialPreset?.isPhoto ?? (defaultMode === 'photo'));
-  const [candidateName, setCandidateName] = React.useState<string>('S. ARULRAJ');
+  const [candidateName, setCandidateName] = React.useState<string>('');
   const [dateOfPhoto, setDateOfPhoto] = React.useState<string>('11-09-2026');
   const [xeroxFilter, setXeroxFilter] = React.useState<boolean>(initialPreset?.isXerox ?? (defaultMode === 'signature'));
 
@@ -294,18 +298,34 @@ export function ImageResizerEngine({
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setFile(null);
-                setFilePreview(null);
-                setResult(null);
-              }}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-surface-darker bg-white hover:bg-surface text-xs font-bold text-text-main transition-colors shrink-0"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Change Image</span>
-            </button>
+            <div className="flex items-center gap-2 shrink-0">
+              <label
+                htmlFor="image-upload-replace"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-primary/30 bg-primary/10 hover:bg-primary/20 text-xs font-bold text-primary transition-colors cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Replace File</span>
+                <input
+                  id="image-upload-replace"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/jpg"
+                  onChange={handleFileChange}
+                  className="sr-only"
+                />
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  setFile(null);
+                  setFilePreview(null);
+                  setResult(null);
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 text-xs font-bold text-rose-600 transition-colors"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Remove / Try Another</span>
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -348,7 +368,7 @@ export function ImageResizerEngine({
                       type="text"
                       value={candidateName}
                       onChange={(e) => setCandidateName(e.target.value)}
-                      placeholder="ARULRAJ S"
+                      placeholder="e.g. Candidate Full Name"
                       className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-xs font-bold text-text-main"
                     />
                   </div>
@@ -540,6 +560,23 @@ export function ImageResizerEngine({
             </div>
           </div>
 
+          {/* Quality & Portal Compliance Proof */}
+          <QualityProofEngine
+            originalSizeKb={result.input_size_kb}
+            compressedSizeKb={result.output_size_kb}
+            maxLimitKb={targetMaxKb}
+            minLimitKb={targetMinKb}
+            originalPreviewUrl={filePreview}
+            compressedPreviewUrl={result.data_base64}
+            portalName={`${examName} Official Portals`}
+            documentType={mode === 'photo' ? 'Exam Candidate Photograph' : 'Candidate Ink Signature'}
+            pageCount={1}
+            dpi={result.dpi || 200}
+            format="JPEG"
+            isPdf={false}
+            dimensions={{ width: result.width_px, height: result.height_px, unit: 'px' }}
+          />
+
           {/* Download Action Button */}
           <div className="pt-2">
             <button
@@ -551,6 +588,9 @@ export function ImageResizerEngine({
               <span>Download Verified {mode === 'photo' ? 'Photo' : 'Signature'} ({result.output_size_kb} KB)</span>
             </button>
           </div>
+
+          {/* Official Agency Partner Slot */}
+          <AdSlot slot="post_download" />
         </div>
       )}
     </div>
