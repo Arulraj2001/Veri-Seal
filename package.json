@@ -41,6 +41,7 @@
     "rehype-highlight": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "resend": "^6.27.0",
+    "sql-formatter": "^15.8.2",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
