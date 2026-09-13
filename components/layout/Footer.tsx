@@ -93,6 +93,24 @@ export function Footer() {
               <span>All Systems Operational • 99.9% Uptime</span>
             </div>
 
+            {/* Product Hunt Featured Badge */}
+            <div className="pt-1">
+              <a
+                href="https://www.producthunt.com/products/kagazo?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-kagazo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block hover:opacity-90 hover:scale-[1.01] transition-all"
+              >
+                <img
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1249001&theme=light&t=1789285219090"
+                  alt="Kagazo - Verify Gov PDF Digital Signatures Free & Productivity Tools | Product Hunt"
+                  width={250}
+                  height={54}
+                  className="w-[210px] h-auto rounded-lg"
+                />
+              </a>
+            </div>
+
             {/* Interactive Contact & Support Action Group */}
             <div className="pt-2 space-y-2.5">
               <div className="text-xs font-black uppercase tracking-wider text-text-main/70">

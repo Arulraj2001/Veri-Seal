@@ -125,7 +125,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.25 }}
-          className="flex flex-wrap items-center justify-center gap-2 mb-10 max-w-3xl mx-auto"
+          className="flex flex-wrap items-center justify-center gap-2 mb-6 max-w-3xl mx-auto"
         >
           <span className="text-[11px] font-bold text-text-main/50 uppercase tracking-wider mr-1">
             {language === 'ta' ? 'விரைவு தேர்வுகள்:' : 'Direct Portals:'}
@@ -157,6 +157,29 @@ export function HeroSection() {
               </Link>
             );
           })}
+        </motion.div>
+
+        {/* Product Hunt Featured Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.28 }}
+          className="flex justify-center mb-8"
+        >
+          <a
+            href="https://www.producthunt.com/products/kagazo?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-kagazo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block hover:opacity-90 hover:scale-[1.02] transition-all"
+          >
+            <img
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1249001&theme=light&t=1789285219090"
+              alt="Kagazo - Verify Gov PDF Digital Signatures Free & Productivity Tools | Product Hunt"
+              width={250}
+              height={54}
+              className="w-[210px] sm:w-[250px] h-auto drop-shadow-xs"
+            />
+          </a>
         </motion.div>
 
         {/* Trust Badges Row */}
