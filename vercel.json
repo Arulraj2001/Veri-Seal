@@ -3,6 +3,10 @@
     {
       "path": "/api/ping-google",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/indexnow",
+      "schedule": "0 10 * * 1"
     }
   ]
 }

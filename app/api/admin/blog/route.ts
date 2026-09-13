@@ -222,13 +222,29 @@ export async function POST(req: Request) {
         console.warn('Supabase post update notice:', dbErr);
       }
 
-      // Ping search engines if published
+      // Ping search engines and IndexNow if published
       if (published) {
         const sitemapUrl = encodeURIComponent('https://kagazo.in/sitemap.xml');
         Promise.allSettled([
           fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`),
           fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`),
         ]).catch(() => {});
+
+        // Auto-submit to IndexNow
+        const newUrls = [
+          `https://kagazo.in/blog/${trimmedSlug}`
+        ];
+        try {
+          fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'https://kagazo.in'}/api/indexnow`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ urls: newUrls }),
+          }).catch(() => {}); // fire and forget
+        } catch {
+          // non-fatal
+        }
       }
 
       return NextResponse.json({ success: true, post: updatedPost });
@@ -294,13 +310,29 @@ export async function POST(req: Request) {
         console.warn('Supabase post insert notice:', dbErr);
       }
 
-      // Ping search engines if published
+      // Ping search engines and IndexNow if published
       if (published) {
         const sitemapUrl = encodeURIComponent('https://kagazo.in/sitemap.xml');
         Promise.allSettled([
           fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`),
           fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`),
         ]).catch(() => {});
+
+        // Auto-submit to IndexNow
+        const newUrls = [
+          `https://kagazo.in/blog/${trimmedSlug}`
+        ];
+        try {
+          fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'https://kagazo.in'}/api/indexnow`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ urls: newUrls }),
+          }).catch(() => {}); // fire and forget
+        } catch {
+          // non-fatal
+        }
       }
 
       return NextResponse.json({ success: true, post: newPost, supabaseResult });

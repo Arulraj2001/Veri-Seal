@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getPublishedBlogPosts } from '@/lib/blog-store';
 import { getPublishedSeoPages } from '@/lib/seo-store';
+import { supabaseAdmin } from '@/lib/supabase';
 import { SITE_URL } from '@/lib/constants';
 
 export const revalidate = 86400; // 24 hours daily revalidation
@@ -662,14 +663,73 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // Dynamic published blog posts - auto-crawled daily
-  const blogPosts = await getPublishedBlogPosts();
-  const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.updated_at ? new Date(post.updated_at) : now,
-    changeFrequency: 'daily',
-    priority: 0.85,
-  }));
+  // Dynamic published blog posts from Supabase (with fallback to published boolean & in-memory store)
+  let blogRoutes: MetadataRoute.Sitemap = [];
+  try {
+    let dbPosts: { slug: string; updated_at?: string }[] | null = null;
+
+    const { data: byStatus } = await supabaseAdmin
+      .from('blog_posts')
+      .select('slug, updated_at')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false });
+
+    if (byStatus && byStatus.length > 0) {
+      dbPosts = byStatus;
+    } else {
+      const { data: byPublished } = await supabaseAdmin
+        .from('blog_posts')
+        .select('slug, updated_at')
+        .eq('published', true)
+        .order('published_at', { ascending: false });
+      if (byPublished && byPublished.length > 0) {
+        dbPosts = byPublished;
+      }
+    }
+
+    if (dbPosts && dbPosts.length > 0) {
+      const seenSlugs = new Set<string>();
+      blogRoutes = dbPosts.map((post) => {
+        seenSlugs.add(post.slug);
+        return {
+          url: `${baseUrl}/blog/${post.slug}`,
+          lastModified: post.updated_at ? new Date(post.updated_at) : now,
+          changeFrequency: 'weekly' as const,
+          priority: 0.8,
+        };
+      });
+
+      // Ensure baseline blog posts are also present
+      const fallbackPosts = await getPublishedBlogPosts();
+      for (const bp of fallbackPosts) {
+        if (!seenSlugs.has(bp.slug)) {
+          seenSlugs.add(bp.slug);
+          blogRoutes.push({
+            url: `${baseUrl}/blog/${bp.slug}`,
+            lastModified: bp.updated_at ? new Date(bp.updated_at) : now,
+            changeFrequency: 'weekly' as const,
+            priority: 0.8,
+          });
+        }
+      }
+    } else {
+      const fallbackPosts = await getPublishedBlogPosts();
+      blogRoutes = fallbackPosts.map((post) => ({
+        url: `${baseUrl}/blog/${post.slug}`,
+        lastModified: post.updated_at ? new Date(post.updated_at) : now,
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+      }));
+    }
+  } catch {
+    const fallbackPosts = await getPublishedBlogPosts();
+    blogRoutes = fallbackPosts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: post.updated_at ? new Date(post.updated_at) : now,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    }));
+  }
 
   // Dynamic published SEO landing pages - auto-crawled daily
   const seoPages = await getPublishedSeoPages();

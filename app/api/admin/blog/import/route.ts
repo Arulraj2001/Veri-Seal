@@ -131,7 +131,7 @@ export async function POST(req: Request) {
       }
     }
 
-    // 4. If published, automatically ping Google & Bing
+    // 4. If published, automatically ping Google, Bing & IndexNow
     if (isPublish) {
       try {
         const sitemapUrl = encodeURIComponent('https://kagazo.in/sitemap.xml');
@@ -140,6 +140,20 @@ export async function POST(req: Request) {
           fetch(`https://www.bing.com/ping?sitemap=${sitemapUrl}`),
         ]).catch(() => {});
       } catch (_) {}
+
+      // Auto-submit to IndexNow
+      const newUrls = processedPosts.map(
+        (p: { slug: string }) => `https://kagazo.in/blog/${p.slug}`
+      );
+      try {
+        fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'https://kagazo.in'}/api/indexnow`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ urls: newUrls }),
+        }).catch(() => {});
+      } catch {}
     }
 
     return NextResponse.json({
