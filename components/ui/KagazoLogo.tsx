@@ -16,28 +16,26 @@ export function KagazoLogo({ className = 'w-6 h-6', size, ...props }: KagazoLogo
       height={size}
       {...props}
     >
-      {/* Saffron-Orange Sovereign Shield */}
+      {/* Saffron-Orange Sovereign Shield (Concept 1) */}
       <path
-        d="M50 8C38 14 24 17 15 19V52C15 74 30 89 50 94C70 89 85 74 85 52V19C76 17 62 14 50 8Z"
+        d="M50 6L13.7 17.7V47.6C13.7 69 28 85 50 94C72 85 86.3 69 86.3 47.6V17.7Z"
         fill="#E6570B"
       />
 
-      {/* K Vertical Stem */}
-      <rect x="44.5" y="26" width="7" height="41" rx="0.5" fill="white" />
-
-      {/* Dynamic Verification Checkmark Swoosh */}
-      <path
-        d="M20.5 52L33.5 67L63 32C55 41 44 51 33.5 59L26 50L20.5 52Z"
+      {/* Dynamic Verification Checkmark Slicing Through Shield */}
+      <polygon
+        points="73.9,13.8 67.6,12.3 38.6,53.0 30.7,42.7 24.7,46.3 38.3,66.5"
         fill="white"
       />
 
-      {/* Upper Arm of K */}
-      <polygon points="51.5,41 68,26 77,26 51.5,50" fill="white" />
-
-      {/* Lower Leg of K */}
-      <polygon points="51.5,43 76,67 66,67 51.5,53" fill="white" />
+      {/* K-Chevron Dynamic Wing Completing The K */}
+      <polygon
+        points="76.4,30.3 69.0,30.3 54.6,51.5 64.8,66.8 73.0,66.6 62.5,51.2"
+        fill="white"
+      />
     </svg>
   );
 }
 
 export default KagazoLogo;
+
