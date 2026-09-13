@@ -124,7 +124,7 @@ export default function MaskAadhaarPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <Breadcrumb
           items={[
@@ -154,9 +154,9 @@ export default function MaskAadhaarPage() {
         </header>
 
         {/* 2-Column Responsive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (68% Width) */}
-          <main className="lg:col-span-8 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
+          {/* Main Focus Workspace (80% - 83.3% Width) */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <AadhaarMaskEngine />
 
             {/* Post-Download Native AdSlot */}
@@ -222,75 +222,35 @@ export default function MaskAadhaarPage() {
             </section>
           </main>
 
-          {/* Sticky Right Sidebar Rail (32% Width) */}
-          <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
+          {/* Sticky Right Sidebar Rail (Compact 16.7% - 20% Width) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-24 self-start">
             {/* Quick Switch Matrix */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+            <div className="p-3.5 bg-white rounded-2xl border border-surface-darker shadow-card space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
                 <Zap className="w-3.5 h-3.5 text-primary" />
-                Related Identity Tools
+                Related Tools
               </h3>
 
-              <div className="space-y-2">
-                <Link
-                  href="/tools/unlock-pdf"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Unlock e-Aadhaar PDF
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      Remove password before masking
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/pdf-to-image"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      PDF to Image (300 DPI)
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      Extract Aadhaar PDF to JPG
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/image-to-pdf-200kb"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Image to PDF (&lt; 200 KB)
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      A4 formatted certificate PDF
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/government-exam-pdf-compressor"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Govt Exam PDF Compressor
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      100KB, 200KB, 300KB sizing
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
+              <div className="space-y-1">
+                {[
+                  { name: 'Unlock Aadhaar PDF', href: '/tools/unlock-pdf', desc: 'Remove password' },
+                  { name: 'PDF to Image 300DPI', href: '/tools/pdf-to-image', desc: 'Extract to JPG' },
+                  { name: 'Img to PDF <200KB', href: '/tools/image-to-pdf-200kb', desc: 'Certificate PDF' },
+                  { name: 'Gov Exam PDF Tool', href: '/tools/government-exam-pdf-compressor', desc: 'Exam sizes' },
+                ].map((item, idx) => (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    className="flex items-center justify-between px-2.5 py-1.5 rounded-xl bg-surface/40 hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  >
+                    <div className="space-y-0.5 truncate pr-1">
+                      <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors block truncate">
+                        {item.name}
+                      </span>
+                    </div>
+                    <ChevronRight className="w-3 h-3 text-text-main/40 group-hover:text-primary transition-colors shrink-0" />
+                  </Link>
+                ))}
               </div>
             </div>
 
@@ -298,22 +258,14 @@ export default function MaskAadhaarPage() {
             <AdSlot slot="sidebar" />
 
             {/* RAM Security & Privacy Shield */}
-            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
-              <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
-                <Lock className="w-4 h-4 shrink-0" />
-                <span>Zero-Retention RAM Privacy</span>
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
+              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
+                <Lock className="w-3.5 h-3.5 shrink-0" />
+                <span>Zero-Retention RAM</span>
               </div>
-              <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
-                Your Aadhaar card and identity data are processed solely in volatile memory and destroyed immediately upon download. Never saved to disk or shared with third parties.
+              <p className="text-[10px] text-text-main/70 leading-normal">
+                Aadhaar card processed solely in RAM and destroyed immediately on download.
               </p>
-              <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
-                <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Zero Watermark
-                </span>
-                <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> 100% Free
-                </span>
-              </div>
             </div>
           </aside>
         </div>

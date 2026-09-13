@@ -130,7 +130,7 @@ export default function ImageToPdf200KbPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -162,9 +162,9 @@ export default function ImageToPdf200KbPage() {
         </header>
 
         {/* 2-Column Responsive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (68% Width) */}
-          <main className="lg:col-span-8 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
+          {/* Main Focus Workspace (80% - 83.3% Desktop Width) */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageToPdfEngine initialTargetKb={200} />
 
             {/* Post-Download Native AdSlot */}
@@ -229,14 +229,14 @@ export default function ImageToPdf200KbPage() {
                       <td className="py-3.5 px-3 font-mono">PDF</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold">IBPS / State Banks</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Handwritten Declaration</td>
+                      <td className="py-3.5 px-3 font-bold">IBPS (PO, Clerk, SO)</td>
+                      <td className="py-3.5 px-3 text-text-main/70">Handwritten Declaration &amp; Certificate</td>
                       <td className="py-3.5 px-3">
                         <span className="font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md">
-                          50 – 100 KB
+                          &lt; 200 KB
                         </span>
                       </td>
-                      <td className="py-3.5 px-3 font-mono">JPG / PDF</td>
+                      <td className="py-3.5 px-3 font-mono">PDF</td>
                     </tr>
                   </tbody>
                 </table>
@@ -325,42 +325,42 @@ export default function ImageToPdf200KbPage() {
             </aside>
           </main>
 
-          {/* Right Sticky Sidebar (32% Width) */}
-          <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-24 self-start">
+          {/* Right Sticky Sidebar (Compact 16.7% - 20% Width) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-24 self-start">
             {/* Quick Switch Card */}
-            <div className="p-5 sm:p-6 bg-white rounded-3xl border border-surface-darker shadow-card space-y-3.5">
+            <div className="p-3.5 bg-white rounded-2xl border border-surface-darker shadow-card space-y-2.5">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                  <Zap className="w-4 h-4 text-primary" />
-                  Document Tools
+                <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-primary" />
+                  Quick Tools
                 </h3>
-                <span className="text-[10px] font-extrabold text-primary bg-primary-light px-2 py-0.5 rounded-full border border-primary/20">
+                <span className="text-[9px] font-extrabold text-primary bg-primary-light px-1.5 py-0.2 rounded-full border border-primary/20">
                   Instant
                 </span>
               </div>
-              <div className="space-y-1.5 pt-0.5">
+              <div className="space-y-1">
                 {[
-                  { name: 'Image to PDF under 200KB', href: '/tools/image-to-pdf-200kb', active: true, tag: 'Current' },
-                  { name: 'Compress PDF to 200KB', href: '/tools/compress-pdf-to-200kb', active: false, tag: 'Most Popular' },
-                  { name: 'Compress PDF to 100KB', href: '/tools/compress-pdf-to-100kb', active: false, tag: 'Strict' },
-                  { name: 'TNPSC Photo & Sig Resizer', href: '/tools/tnpsc-photo-signature-resizer', active: false, tag: 'TNPSC' },
-                  { name: 'TNPSC PDF Compressor', href: '/tools/tnpsc-pdf-compressor', active: false, tag: 'Certificates' },
-                  { name: 'Master PDF Compressor', href: '/tools/pdf-compressor', active: false, tag: 'All Formats' },
+                  { name: 'Img to PDF <200KB', href: '/tools/image-to-pdf-200kb', active: true, tag: '200KB' },
+                  { name: 'Compress PDF 200KB', href: '/tools/compress-pdf-to-200kb', active: false, tag: 'PDF' },
+                  { name: 'Compress PDF 100KB', href: '/tools/compress-pdf-to-100kb', active: false, tag: '100KB' },
+                  { name: 'TNPSC Photo & Sig', href: '/tools/tnpsc-photo-signature-resizer', active: false, tag: 'TNPSC' },
+                  { name: 'TNPSC PDF Compress', href: '/tools/tnpsc-pdf-compressor', active: false, tag: 'Gov' },
+                  { name: 'Master PDF Tool', href: '/tools/pdf-compressor', active: false, tag: 'All' },
                 ].map((item, idx) => (
                   <Link
                     key={idx}
                     href={item.href}
                     className={cn(
-                      'flex items-center justify-between p-2.5 rounded-2xl text-xs font-bold transition-all border',
+                      'flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all border leading-tight',
                       item.active
                         ? 'bg-primary-light border-primary/40 text-primary shadow-2xs'
                         : 'bg-surface/40 border-surface-darker hover:border-primary/40 hover:bg-white text-text-main'
                     )}
                   >
-                    <span className="truncate pr-2">{item.name}</span>
+                    <span className="truncate pr-1 text-[11px]">{item.name}</span>
                     <span
                       className={cn(
-                        'text-[10px] px-2 py-0.5 rounded-md font-semibold shrink-0',
+                        'text-[9px] px-1 py-0.2 rounded font-semibold shrink-0 font-mono',
                         item.active ? 'bg-primary text-white' : 'bg-surface border border-surface-darker text-text-main/60'
                       )}
                     >
@@ -375,39 +375,35 @@ export default function ImageToPdf200KbPage() {
             <AdSlot slot="sidebar" />
 
             {/* Official Portal CheatSheet */}
-            <div className="p-5 sm:p-6 bg-white rounded-3xl border border-surface-darker shadow-card space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-primary" />
-                Portal Marksheet Limits
+            <div className="p-3.5 bg-white rounded-2xl border border-surface-darker shadow-card space-y-2">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+                PDF Limits
               </h3>
-              <div className="space-y-2 text-xs divide-y divide-surface-darker/60">
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">TNPSC Certificate PDF</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">&lt; 200 KB</span>
+              <div className="space-y-1.5 text-xs divide-y divide-surface-darker/60">
+                <div className="pt-1.5 flex items-center justify-between text-[11px]">
+                  <span className="font-semibold text-text-main">TNPSC</span>
+                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.2 rounded">&lt; 200 KB</span>
                 </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">UPSC Marksheets</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">20 – 300 KB</span>
+                <div className="pt-1.5 flex items-center justify-between text-[11px]">
+                  <span className="font-semibold text-text-main">UPSC</span>
+                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.2 rounded">20-300 KB</span>
                 </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">SSC Certificates</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">&lt; 200 KB</span>
-                </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">IBPS Marksheet PDF</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">&lt; 200 KB</span>
+                <div className="pt-1.5 flex items-center justify-between text-[11px]">
+                  <span className="font-semibold text-text-main">SSC / IBPS</span>
+                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.2 rounded">&lt; 200 KB</span>
                 </div>
               </div>
             </div>
 
             {/* Privacy Shield */}
-            <div className="p-5 rounded-3xl bg-surface/60 border border-surface-darker space-y-2">
-              <div className="flex items-center gap-2 text-text-main font-black text-xs">
-                <Lock className="w-4 h-4 text-primary" />
-                <span>100% In-Memory Privacy</span>
+            <div className="p-3 rounded-2xl bg-surface/60 border border-surface-darker space-y-1">
+              <div className="flex items-center gap-1.5 text-text-main font-black text-[11px]">
+                <Lock className="w-3.5 h-3.5 text-primary" />
+                <span>In-Memory Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-relaxed">
-                Marksheet images are converted in RAM and never written to permanent disk storage. 100% private.
+              <p className="text-[10px] text-text-main/70 leading-normal">
+                Files converted in local memory. Never saved to disk.
               </p>
             </div>
           </aside>

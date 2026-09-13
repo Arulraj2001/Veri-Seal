@@ -117,7 +117,7 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         {breadcrumb || (
           <Breadcrumb
@@ -170,8 +170,8 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
 
         {/* 2-Column Responsive Layout Blueprint */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* PRIMARY WORKSPACE (Left 8 Cols ~ 68% Desktop Width) */}
-          <main className="lg:col-span-8 space-y-8">
+          {/* PRIMARY WORKSPACE (83.3% Width on XL, 75% on LG) */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             {/* Core Interactive Tool Component */}
             <section aria-label="Interactive PDF Compressor">
               <PdfCompressorEngine config={config} />
@@ -242,9 +242,19 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
                 <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
                   <Zap className="w-6 h-6" />
                 </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">Strict Limit Guarantee</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Unlike generic tools with vague presets, our engine guarantees your file is strictly under {config.maxLimitKb} KB so recruitment portals never reject your upload.
+                <h3 className="text-base font-extrabold text-text-main">Strict Limit Protection</h3>
+                <p className="text-xs text-text-main/70 leading-relaxed">
+                  Our quantization bisection algorithm strictly ensures your PDF is under {config.maxLimitKb} KB. No more guessing quality percentages.
+                </p>
+              </div>
+
+              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <h3 className="text-base font-extrabold text-text-main">100% On-Device Privacy</h3>
+                <p className="text-xs text-text-main/70 leading-relaxed">
+                  Your confidential marksheets and certificates are processed in browser RAM. Zero bytes uploaded to external servers.
                 </p>
               </div>
 
@@ -252,41 +262,33 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
                 <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
                   <Award className="w-6 h-6" />
                 </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">100% Free Forever • No Paywalls</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Built as a permanent public utility for students, job applicants, and cyber cafes. Zero fees, no daily limits, no watermark additions, and no sign-in required.
-                </p>
-              </div>
-
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Lock className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">In-Memory Privacy</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Your sensitive marksheets and certificates are processed in RAM and never saved to permanent disk storage. 100% private and confidential.
+                <h3 className="text-base font-extrabold text-text-main">Official Portal Ready</h3>
+                <p className="text-xs text-text-main/70 leading-relaxed">
+                  Specially tuned for UPSC ORA, SSC CGL, TNPSC OTR, NTA NEET, and IBPS application servers.
                 </p>
               </div>
             </section>
 
-            {/* Hyper-Targeted FAQ Accordion */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2 pb-2 border-b border-surface-darker/60">
+            {/* Deep FAQ Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-primary" />
-                Frequently Asked Questions
-              </h2>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main">
+                  Frequently Asked Questions ({config.presetId?.toUpperCase() || 'PDF'} Compression)
+                </h2>
+              </div>
 
-              <div className="space-y-3 pt-2">
-                {config.faqs.map((faq, index) => (
+              <div className="space-y-4">
+                {config.faqs.map((faq, idx) => (
                   <details
-                    key={index}
-                    className="group border border-surface-darker rounded-2xl bg-surface/40 p-4 sm:p-5 open:bg-surface transition-all cursor-pointer"
+                    key={idx}
+                    className="group border border-surface-darker rounded-2xl p-4 sm:p-5 bg-surface/30 open:bg-white transition-all overflow-hidden"
                   >
-                    <summary className="font-bold text-sm sm:text-base text-text-main list-none flex items-center justify-between">
+                    <summary className="flex items-center justify-between font-bold text-text-main text-xs sm:text-sm cursor-pointer select-none">
                       <span>{faq.question}</span>
-                      <span className="text-primary text-xl transition-transform group-open:rotate-180 font-bold">▾</span>
+                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform shrink-0 ml-2" />
                     </summary>
-                    <p className="text-xs sm:text-sm text-text-main/80 mt-3 leading-relaxed">
+                    <p className="mt-3 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/60 pt-3">
                       {faq.answer}
                     </p>
                   </details>
@@ -294,18 +296,19 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
               </div>
             </section>
 
-            {/* Related Tools Topic Cluster (SEO Interlinking) */}
+            {/* Cross-Link to Related Document Presets */}
             {config.relatedTools && config.relatedTools.length > 0 && (
-              <section className="p-6 sm:p-8 rounded-3xl bg-white border border-surface-darker shadow-card space-y-3">
-                <h3 className="text-sm font-extrabold uppercase tracking-wider text-text-main/70">
-                  Related Document &amp; Exam Compressors
-                </h3>
-                <div className="flex flex-wrap gap-2.5 pt-1">
-                  {config.relatedTools.map((rel, idx) => (
+              <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+                <h2 className="text-base sm:text-lg font-extrabold text-text-main flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-primary" />
+                  Related Document Compression Tools
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {config.relatedTools.map((rel, i) => (
                     <Link
-                      key={idx}
+                      key={i}
                       href={rel.href}
-                      className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-surface border border-surface-darker hover:border-primary/50 text-xs sm:text-sm font-bold text-text-main hover:text-primary transition-colors shadow-2xs"
+                      className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-surface-darker/50 border border-surface-darker text-xs font-bold text-text-main transition-colors"
                     >
                       <span>{rel.name}</span>
                       <span className="text-[10px] text-primary bg-primary-light px-1.5 py-0.5 rounded-md">
@@ -338,23 +341,20 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
             </aside>
           </main>
 
-          {/* RIGHT SIDEBAR RAIL (32% Width, Sticky) */}
-          <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-24 self-start">
+          {/* ULTRA-COMPACT RIGHT SIDEBAR RAIL (16.7% Width on XL, 25% on LG) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28 self-start">
             {/* 1. Quick Switch Tools Card */}
-            <div className="p-5 sm:p-6 bg-white rounded-3xl border border-surface-darker shadow-card space-y-3.5">
+            <div className="p-3.5 bg-white rounded-3xl border border-surface-darker shadow-card space-y-2.5">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                  <Zap className="w-4 h-4 text-primary" />
-                  Quick Switch Tools
+                <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-primary" />
+                  Quick Switch
                 </h3>
-                <span className="text-[10px] font-extrabold text-primary bg-primary-light px-2 py-0.5 rounded-full border border-primary/20">
+                <span className="text-[9px] font-extrabold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20">
                   Instant
                 </span>
               </div>
-              <p className="text-[11px] text-text-main/60">
-                Switch target file limit without losing your place:
-              </p>
-              <div className="space-y-1.5 pt-0.5">
+              <div className="space-y-1 pt-0.5">
                 {QUICK_SWITCH_TOOLS.map((item, idx) => {
                   const isActive = config.slug === item.slug;
                   return (
@@ -362,16 +362,16 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
                       key={idx}
                       href={item.href}
                       className={cn(
-                        'flex items-center justify-between p-2.5 rounded-2xl text-xs font-bold transition-all border',
+                        'flex items-center justify-between p-2 rounded-xl text-[11px] font-bold transition-all border',
                         isActive
                           ? 'bg-primary-light border-primary/40 text-primary shadow-2xs'
                           : 'bg-surface/40 border-surface-darker hover:border-primary/40 hover:bg-white text-text-main'
                       )}
                     >
-                      <span className="truncate pr-2">{item.name}</span>
+                      <span className="truncate pr-1">{item.name.replace('Compress PDF to ', '').replace(' Document Compressor', '')}</span>
                       <span
                         className={cn(
-                          'text-[10px] px-2 py-0.5 rounded-md font-semibold shrink-0',
+                          'text-[9px] px-1.5 py-0.5 rounded font-semibold shrink-0',
                           isActive ? 'bg-primary text-white' : 'bg-surface border border-surface-darker text-text-main/60'
                         )}
                       >
@@ -387,39 +387,39 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
             <AdSlot slot="sidebar" />
 
             {/* 3. Official Recruitment Cheatsheet Card */}
-            <div className="p-5 sm:p-6 bg-white rounded-3xl border border-surface-darker shadow-card space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-primary" />
-                Exam Upload Cheatsheet
+            <div className="p-3.5 bg-white rounded-3xl border border-surface-darker shadow-card space-y-2">
+              <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+                Exam Upload Ceilings
               </h3>
-              <div className="space-y-2 text-xs divide-y divide-surface-darker/60">
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">TNPSC Hall Ticket / Cert</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">&lt; 200 KB</span>
+              <div className="space-y-1.5 text-[11px] divide-y divide-surface-darker/60">
+                <div className="pt-1.5 flex items-center justify-between">
+                  <span className="font-bold text-text-main truncate pr-1">TNPSC Cert</span>
+                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded text-[9px] shrink-0">&lt; 200 KB</span>
                 </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">UPSC Marksheets</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">20 – 300 KB</span>
+                <div className="pt-1.5 flex items-center justify-between">
+                  <span className="font-bold text-text-main truncate pr-1">UPSC Marksheets</span>
+                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded text-[9px] shrink-0">&le; 300 KB</span>
                 </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">SSC Documents</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">&lt; 200 KB</span>
+                <div className="pt-1.5 flex items-center justify-between">
+                  <span className="font-bold text-text-main truncate pr-1">SSC Documents</span>
+                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded text-[9px] shrink-0">&lt; 200 KB</span>
                 </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">IBPS Declaration</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">50 – 100 KB</span>
+                <div className="pt-1.5 flex items-center justify-between">
+                  <span className="font-bold text-text-main truncate pr-1">IBPS Declaration</span>
+                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded text-[9px] shrink-0">50–100 KB</span>
                 </div>
               </div>
             </div>
 
             {/* 4. Privacy & RAM Processing Guarantee Card */}
-            <div className="p-5 rounded-3xl bg-surface/60 border border-surface-darker space-y-2">
-              <div className="flex items-center gap-2 text-text-main font-black text-xs">
-                <Lock className="w-4 h-4 text-primary" />
+            <div className="p-3 rounded-2xl bg-surface/60 border border-surface-darker space-y-1.5">
+              <div className="flex items-center gap-1.5 text-text-main font-black text-[11px]">
+                <Lock className="w-3.5 h-3.5 text-primary" />
                 <span>100% In-Memory Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-relaxed">
-                Kagazo processes certificates entirely in memory (RAM). Documents are never saved to permanent disk storage, ensuring 100% data privacy for candidates.
+              <p className="text-[10px] text-text-main/70 leading-tight">
+                Certificates processed in RAM and never written to disk. Zero retention.
               </p>
             </div>
           </aside>

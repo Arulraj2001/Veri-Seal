@@ -127,7 +127,7 @@ export default function TnpscPhotoSignatureResizerPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <Breadcrumb
           items={[
@@ -159,7 +159,7 @@ export default function TnpscPhotoSignatureResizerPage() {
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Focus Workspace (68% Width) */}
-          <main className="lg:col-span-8 space-y-8">
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageResizerEngine
               initialMode="signature"
               examName="TNPSC OTR"
@@ -322,11 +322,11 @@ export default function TnpscPhotoSignatureResizerPage() {
           </main>
 
           {/* Right Sticky Sidebar (32% Width) */}
-          <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-24 self-start">
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-24 self-start">
             {/* Quick Switch Card */}
-            <div className="p-5 sm:p-6 bg-white rounded-3xl border border-surface-darker shadow-card space-y-3.5">
+            <div className="p-3.5 bg-white rounded-3xl border border-surface-darker shadow-card space-y-2.5">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
+                <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
                   <Zap className="w-4 h-4 text-primary" />
                   Exam Tools Quick Switch
                 </h3>
@@ -348,7 +348,7 @@ export default function TnpscPhotoSignatureResizerPage() {
                     key={idx}
                     href={item.href}
                     className={cn(
-                      'flex items-center justify-between p-2.5 rounded-2xl text-xs font-bold transition-all border',
+                      'flex items-center justify-between p-2 rounded-xl text-[11px] font-bold transition-all border',
                       item.active
                         ? 'bg-primary-light border-primary/40 text-primary shadow-2xs'
                         : 'bg-surface/40 border-surface-darker hover:border-primary/40 hover:bg-white text-text-main'
@@ -357,7 +357,7 @@ export default function TnpscPhotoSignatureResizerPage() {
                     <span className="truncate pr-2">{item.name}</span>
                     <span
                       className={cn(
-                        'text-[10px] px-2 py-0.5 rounded-md font-semibold shrink-0',
+                        'text-[9px] px-1.5 py-0.5 rounded-md font-semibold shrink-0',
                         item.active ? 'bg-primary text-white' : 'bg-surface border border-surface-darker text-text-main/60'
                       )}
                     >
@@ -372,12 +372,12 @@ export default function TnpscPhotoSignatureResizerPage() {
             <AdSlot slot="sidebar" />
 
             {/* Official TNPSC Cheatsheet Card */}
-            <div className="p-5 sm:p-6 bg-white rounded-3xl border border-surface-darker shadow-card space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
+            <div className="p-3.5 bg-white rounded-3xl border border-surface-darker shadow-card space-y-2">
+              <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-primary" />
                 TNPSC OTR Quick Cheatsheet
               </h3>
-              <div className="space-y-2 text-xs divide-y divide-surface-darker/60">
+              <div className="space-y-1.5 text-[11px] divide-y divide-surface-darker/60">
                 <div className="pt-2 flex items-center justify-between">
                   <span className="font-bold text-text-main">Photo Size</span>
                   <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">20 – 50 KB</span>
@@ -398,7 +398,7 @@ export default function TnpscPhotoSignatureResizerPage() {
             </div>
 
             {/* Privacy Shield */}
-            <div className="p-5 rounded-3xl bg-surface/60 border border-surface-darker space-y-2">
+            <div className="p-3 rounded-2xl bg-surface/60 border border-surface-darker space-y-1.5">
               <div className="flex items-center gap-2 text-text-main font-black text-xs">
                 <Lock className="w-4 h-4 text-primary" />
                 <span>100% In-Memory Privacy</span>

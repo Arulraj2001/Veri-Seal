@@ -120,7 +120,7 @@ export default function ImageToPdf300KbPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -152,9 +152,9 @@ export default function ImageToPdf300KbPage() {
         </header>
 
         {/* 2-Column Responsive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (68% Width) */}
-          <main className="lg:col-span-8 space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
+          {/* Main Focus Workspace (80% - 83.3% Width) */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageToPdfEngine initialTargetKb={300} />
 
             {/* Post-Download Native AdSlot */}
@@ -180,7 +180,7 @@ export default function ImageToPdf300KbPage() {
                     Kagazo (1-Pass Direct Optimization)
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    Calculates target image JPEG quantization directly during PDF page assembly. The result lands comfortably between 220 KB and 290 KB with sharp, readable stamps and text.
+                    Smart bicubic scaling calculates the exact DPI and compression ratio to achieve &le; 300 KB on the first try while boosting black text and ink seals.
                   </p>
                 </div>
               </div>
@@ -189,106 +189,60 @@ export default function ImageToPdf300KbPage() {
             {/* In-Content Native AdSlot */}
             <AdSlot slot="in_content" />
 
-            {/* FAQ Accordion Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions (Image to PDF under 300KB)
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Everything you need to know about converting photos to 300 KB PDFs.
-                </p>
-              </div>
+            {/* Hyper-Targeted FAQ Accordion */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2 pb-2 border-b border-surface-darker/60">
+                <HelpCircle className="w-5 h-5 text-primary" />
+                Frequently Asked Questions
+              </h2>
 
-              <div className="space-y-3">
-                {FAQS.map((faq, idx) => (
+              <div className="space-y-3 pt-2">
+                {FAQS.map((faq, index) => (
                   <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
+                    key={index}
+                    className="group border border-surface-darker rounded-2xl bg-surface/40 p-4 sm:p-5 open:bg-surface transition-all cursor-pointer"
                   >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
+                    <summary className="font-bold text-sm sm:text-base text-text-main list-none flex items-center justify-between">
                       <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
+                      <span className="text-primary text-xl transition-transform group-open:rotate-180 font-bold">▾</span>
                     </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                    <p className="text-xs sm:text-sm text-text-main/80 mt-3 leading-relaxed">
                       {faq.answer}
-                    </div>
+                    </p>
                   </details>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Sticky Right Sidebar Rail (32% Width) */}
-          <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
-            {/* Quick Switch Matrix */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+          {/* Right Sticky Sidebar (Compact 16.7% - 20% Width) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-24 self-start">
+            {/* Quick Switch Card */}
+            <div className="p-3.5 bg-white rounded-2xl border border-surface-darker shadow-card space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
                 <Zap className="w-3.5 h-3.5 text-primary" />
-                Related Conversion Tools
+                Related Tools
               </h3>
-
-              <div className="space-y-2">
-                <Link
-                  href="/tools/image-to-pdf-200kb"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Marksheet Image to PDF (&lt; 200 KB)
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      Standard TNPSC, UPSC &amp; SSC 200KB limit
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/compress-pdf-to-300kb"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Compress Existing PDF to 300KB
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      Shrink large PDFs to 300KB
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/ssc-photo-signature-resizer"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      SSC Photo &amp; Signature Resizer
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      20–50 KB &amp; 10–20 KB guaranteed
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/upsc-photo-signature-resizer"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      UPSC Photo &amp; Signature Resizer
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      20–300 KB, 350×350 px, 10-day rule
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
+              <div className="space-y-1">
+                {[
+                  { name: 'Img to PDF <200KB', href: '/tools/image-to-pdf-200kb', desc: '200KB limit' },
+                  { name: 'Compress PDF 300KB', href: '/tools/compress-pdf-to-300kb', desc: 'Shrink PDFs' },
+                  { name: 'SSC Photo & Sig', href: '/tools/ssc-photo-signature-resizer', desc: 'SSC specs' },
+                  { name: 'UPSC Photo & Sig', href: '/tools/upsc-photo-signature-resizer', desc: '350x350px' },
+                ].map((item, idx) => (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    className="flex items-center justify-between px-2.5 py-1.5 rounded-xl bg-surface/40 hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  >
+                    <div className="space-y-0.5 truncate pr-1">
+                      <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors block truncate">
+                        {item.name}
+                      </span>
+                    </div>
+                    <ChevronRight className="w-3 h-3 text-text-main/40 group-hover:text-primary transition-colors shrink-0" />
+                  </Link>
+                ))}
               </div>
             </div>
 
@@ -296,22 +250,14 @@ export default function ImageToPdf300KbPage() {
             <AdSlot slot="sidebar" />
 
             {/* RAM Security & Privacy Shield */}
-            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
-              <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
-                <Lock className="w-4 h-4 shrink-0" />
-                <span>100% In-Memory RAM Shield</span>
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
+              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
+                <Lock className="w-3.5 h-3.5 shrink-0" />
+                <span>RAM-Only Privacy</span>
               </div>
-              <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
-                Marksheet photos and certificates are processed in volatile memory and destroyed immediately upon PDF download. Never written to permanent disk storage.
+              <p className="text-[10px] text-text-main/70 leading-normal">
+                Files converted in volatile RAM and destroyed on download. Never saved to disk.
               </p>
-              <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
-                <span className="flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-primary" /> Zero Watermark
-                </span>
-                <span className="flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-primary" /> 100% Free
-                </span>
-              </div>
             </div>
           </aside>
         </div>

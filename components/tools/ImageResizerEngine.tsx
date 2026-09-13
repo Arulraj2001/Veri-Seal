@@ -254,314 +254,383 @@ export function ImageResizerEngine({
         </div>
       </div>
 
-      {/* Upload Dropzone */}
-      <div className="space-y-4">
-        {!filePreview ? (
-          <label
-            htmlFor="image-upload"
-            className="border-2 border-dashed border-primary/30 hover:border-primary/60 rounded-3xl p-8 sm:p-10 flex flex-col items-center justify-center text-center cursor-pointer bg-primary-light/10 hover:bg-primary-light/20 transition-all group"
-          >
-            <div className="w-14 h-14 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20 group-hover:scale-105 transition-transform mb-3">
-              <Upload className="w-7 h-7" />
-            </div>
-            <div className="font-extrabold text-base text-text-main">
-              Upload {mode === 'photo' ? 'Candidate Photograph' : 'Candidate Signature'}
-            </div>
-            <p className="text-xs sm:text-sm text-text-main/60 mt-1 max-w-md">
-              Drag &amp; drop your scanned image or smartphone capture. Auto-enhances and strictly formats for official portal compliance.
-            </p>
-            <span className="mt-3 inline-flex items-center gap-1 text-[11px] font-extrabold text-primary bg-white px-3 py-1 rounded-full border border-primary/20 shadow-2xs">
-              JPG, JPEG, PNG, WEBP (Up to 25MB)
-            </span>
-            <input
-              id="image-upload"
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/jpg"
-              onChange={handleFileChange}
-              className="sr-only"
-            />
-          </label>
-        ) : (
-          <div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-surface/60 rounded-2xl border border-surface-darker gap-4">
-            <div className="flex items-center gap-3">
-              <img
-                src={filePreview}
-                alt="Uploaded source"
-                className="w-16 h-16 object-contain bg-white rounded-xl border border-surface-darker p-1"
-              />
-              <div>
-                <div className="font-extrabold text-sm text-text-main max-w-[240px] sm:max-w-xs truncate">
-                  {file?.name}
-                </div>
-                <div className="text-xs text-text-main/60">
-                  Original Size: <span className="font-bold text-text-main">{file ? (file.size / 1024).toFixed(1) : 0} KB</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 shrink-0">
+      {/* 2-Column Side-by-Side Desktop Studio */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Left Column: Upload Dropzone & Portal Controls (7 cols) */}
+        <div className="lg:col-span-7 space-y-4">
+          {/* Upload Dropzone */}
+          <div>
+            {!filePreview ? (
               <label
-                htmlFor="image-upload-replace"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-primary/30 bg-primary/10 hover:bg-primary/20 text-xs font-bold text-primary transition-colors cursor-pointer"
+                htmlFor="image-upload"
+                className="border-2 border-dashed border-primary/30 hover:border-primary/60 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center cursor-pointer bg-primary-light/10 hover:bg-primary-light/20 transition-all group"
               >
-                <RefreshCw className="w-3.5 h-3.5" />
-                <span>Replace File</span>
+                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20 group-hover:scale-105 transition-transform mb-2.5">
+                  <Upload className="w-6 h-6" />
+                </div>
+                <div className="font-extrabold text-sm sm:text-base text-text-main">
+                  Upload {mode === 'photo' ? 'Candidate Photograph' : 'Candidate Signature'}
+                </div>
+                <p className="text-xs text-text-main/60 mt-1 max-w-md">
+                  Drag &amp; drop your scan or camera capture. Auto-enhances to {targetMinKb}KB–{targetMaxKb}KB for portal compliance.
+                </p>
+                <span className="mt-2.5 inline-flex items-center gap-1 text-[10px] font-extrabold text-primary bg-white px-3 py-1 rounded-full border border-primary/20 shadow-2xs">
+                  JPG, JPEG, PNG, WEBP (Up to 25MB)
+                </span>
                 <input
-                  id="image-upload-replace"
+                  id="image-upload"
                   type="file"
                   accept="image/jpeg,image/png,image/webp,image/jpg"
                   onChange={handleFileChange}
                   className="sr-only"
                 />
               </label>
-              <button
-                type="button"
-                onClick={() => {
-                  setFile(null);
-                  setFilePreview(null);
-                  setResult(null);
-                }}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 text-xs font-bold text-rose-600 transition-colors"
-              >
-                <Trash2 className="w-3.5 h-3.5" />
-                <span>Remove / Try Another</span>
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+            ) : (
+              <div className="flex flex-col sm:flex-row items-center justify-between p-3.5 bg-surface/60 rounded-2xl border border-surface-darker gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <img
+                    src={filePreview}
+                    alt="Uploaded source"
+                    className="w-14 h-14 object-contain bg-white rounded-xl border border-surface-darker p-1 shrink-0"
+                  />
+                  <div className="min-w-0">
+                    <div className="font-extrabold text-xs sm:text-sm text-text-main truncate max-w-[200px] sm:max-w-xs">
+                      {file?.name}
+                    </div>
+                    <div className="text-[11px] text-text-main/60">
+                      Original: <span className="font-bold text-text-main">{file ? (file.size / 1024).toFixed(1) : 0} KB</span>
+                    </div>
+                  </div>
+                </div>
 
-      {/* Mode Specific Controls */}
-      {file && (
-        <div className="p-5 rounded-2xl bg-surface/40 border border-surface-darker space-y-4">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-text-main flex items-center gap-1.5">
-              <Sliders className="w-3.5 h-3.5 text-primary" />
-              Portal Compliance Parameters
-            </span>
-            <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-0.5 rounded-full">
-              Safe Bracket: {targetMinKb} KB – {targetMaxKb} KB
-            </span>
-          </div>
-
-          {/* Photo Mode Options: Name & Date Stamp */}
-          {mode === 'photo' && (
-            <div className="space-y-3 pt-1 border-t border-surface-darker/60">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={addNameDate}
-                  onChange={(e) => setAddNameDate(e.target.checked)}
-                  className="w-4 h-4 rounded text-primary"
-                />
-                <span className="text-xs font-bold text-text-main">
-                  Add Name &amp; Date of Photo (DOP) Strip Mandated by TNPSC / UPSC / SSC
-                </span>
-              </label>
-
-              {addNameDate && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-6">
-                  <div>
-                    <label className="block text-[11px] font-bold text-text-main/70 mb-1 flex items-center gap-1">
-                      <User className="w-3 h-3 text-primary" /> Candidate Full Name (Capital Letters)
-                    </label>
+                <div className="flex items-center gap-2 shrink-0">
+                  <label
+                    htmlFor="image-upload-replace"
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-primary/30 bg-primary/10 hover:bg-primary/20 text-xs font-bold text-primary transition-colors cursor-pointer"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    <span>Replace</span>
                     <input
-                      type="text"
-                      value={candidateName}
-                      onChange={(e) => setCandidateName(e.target.value)}
-                      placeholder="e.g. Candidate Full Name"
-                      className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-xs font-bold text-text-main"
+                      id="image-upload-replace"
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,image/jpg"
+                      onChange={handleFileChange}
+                      className="sr-only"
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFile(null);
+                      setFilePreview(null);
+                      setResult(null);
+                    }}
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-100 text-xs font-bold text-rose-600 transition-colors"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Clear</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Mode Specific Controls */}
+          {file && (
+            <div className="p-4 rounded-2xl bg-surface/40 border border-surface-darker space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-text-main flex items-center gap-1.5">
+                  <Sliders className="w-3.5 h-3.5 text-primary" />
+                  Portal Compliance Parameters
+                </span>
+                <span className="text-[10px] font-bold text-primary bg-primary-light px-2 py-0.5 rounded-full">
+                  Safe Bracket: {targetMinKb} KB – {targetMaxKb} KB
+                </span>
+              </div>
+
+              {/* Photo Mode Options: Name & Date Stamp */}
+              {mode === 'photo' && (
+                <div className="space-y-3 pt-1 border-t border-surface-darker/60">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={addNameDate}
+                      onChange={(e) => setAddNameDate(e.target.checked)}
+                      className="w-4 h-4 rounded text-primary"
+                    />
+                    <span className="text-xs font-bold text-text-main">
+                      Add Name &amp; Date of Photo (DOP) Strip Mandated by TNPSC / UPSC / SSC
+                    </span>
+                  </label>
+
+                  {addNameDate && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-6">
+                      <div>
+                        <label className="block text-[11px] font-bold text-text-main/70 mb-1 flex items-center gap-1">
+                          <User className="w-3 h-3 text-primary" /> Candidate Full Name (Capital Letters)
+                        </label>
+                        <input
+                          type="text"
+                          value={candidateName}
+                          onChange={(e) => setCandidateName(e.target.value)}
+                          placeholder="e.g. Candidate Full Name"
+                          className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-xs font-bold text-text-main"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-text-main/70 mb-1 flex items-center gap-1">
+                          <Calendar className="w-3 h-3 text-primary" /> Date of Photo Taken (DD-MM-YYYY)
+                        </label>
+                        <input
+                          type="text"
+                          value={dateOfPhoto}
+                          onChange={(e) => setDateOfPhoto(e.target.value)}
+                          placeholder="11-09-2026"
+                          className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-xs font-bold text-text-main font-mono"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Signature Mode Xerox Filter */}
+              {mode === 'signature' && (
+                <div className="pt-1 border-t border-surface-darker/60">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={xeroxFilter}
+                      onChange={(e) => setXeroxFilter(e.target.checked)}
+                      className="w-4 h-4 rounded text-primary"
+                    />
+                    <span className="text-xs font-bold text-text-main">
+                      High Contrast White Paper Boost (Removes shadow/yellow tint from phone photos)
+                    </span>
+                  </label>
+                </div>
+              )}
+
+              {/* Custom Mode Dimensions */}
+              {mode === 'custom' && (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs pt-1 border-t border-surface-darker/60">
+                  <div>
+                    <label className="block font-bold text-text-main/70 mb-1">Min (KB)</label>
+                    <input
+                      type="number"
+                      value={targetMinKb}
+                      onChange={(e) => setTargetMinKb(Number(e.target.value))}
+                      className="w-full px-2.5 py-1.5 bg-white border border-surface-darker rounded-xl font-bold"
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] font-bold text-text-main/70 mb-1 flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-primary" /> Date of Photo Taken (DD-MM-YYYY)
-                    </label>
+                    <label className="block font-bold text-text-main/70 mb-1">Max (KB)</label>
                     <input
-                      type="text"
-                      value={dateOfPhoto}
-                      onChange={(e) => setDateOfPhoto(e.target.value)}
-                      placeholder="11-09-2026"
-                      className="w-full px-3 py-1.5 bg-white border border-surface-darker rounded-xl text-xs font-bold text-text-main"
+                      type="number"
+                      value={targetMaxKb}
+                      onChange={(e) => setTargetMaxKb(Number(e.target.value))}
+                      className="w-full px-2.5 py-1.5 bg-white border border-surface-darker rounded-xl font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-text-main/70 mb-1">Width (cm)</label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={widthCm}
+                      onChange={(e) => setWidthCm(Number(e.target.value))}
+                      className="w-full px-2.5 py-1.5 bg-white border border-surface-darker rounded-xl font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold text-text-main/70 mb-1">Height (cm)</label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={heightCm}
+                      onChange={(e) => setHeightCm(Number(e.target.value))}
+                      className="w-full px-2.5 py-1.5 bg-white border border-surface-darker rounded-xl font-bold"
                     />
                   </div>
                 </div>
               )}
-            </div>
-          )}
 
-          {/* Signature Mode Options: Xerox Ink Boost */}
-          {mode === 'signature' && (
-            <div className="pt-1 border-t border-surface-darker/60">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={xeroxFilter}
-                  onChange={(e) => setXeroxFilter(e.target.checked)}
-                  className="w-4 h-4 rounded text-primary"
-                />
-                <span className="text-xs font-bold text-text-main">
-                  Xerox Ink Boost (Eliminate smartphone camera shadows and enhance faint pen strokes)
-                </span>
-              </label>
-            </div>
-          )}
-
-          {/* Custom Sliders (If Custom Mode) */}
-          {mode === 'custom' && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1 border-t border-surface-darker/60 text-xs">
-              <div>
-                <label className="block font-bold text-text-main/70 mb-1">Min Target (KB)</label>
-                <input
-                  type="number"
-                  value={targetMinKb}
-                  onChange={(e) => setTargetMinKb(Number(e.target.value))}
-                  className="w-full px-2.5 py-1.5 bg-white border border-surface-darker rounded-xl font-bold"
-                />
-              </div>
-              <div>
-                <label className="block font-bold text-text-main/70 mb-1">Max Target (KB)</label>
-                <input
-                  type="number"
-                  value={targetMaxKb}
-                  onChange={(e) => setTargetMaxKb(Number(e.target.value))}
-                  className="w-full px-2.5 py-1.5 bg-white border border-surface-darker rounded-xl font-bold"
-                />
-              </div>
-              <div>
-                <label className="block font-bold text-text-main/70 mb-1">Width (cm)</label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value={widthCm}
-                  onChange={(e) => setWidthCm(Number(e.target.value))}
-                  className="w-full px-2.5 py-1.5 bg-white border border-surface-darker rounded-xl font-bold"
-                />
-              </div>
-              <div>
-                <label className="block font-bold text-text-main/70 mb-1">Height (cm)</label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value={heightCm}
-                  onChange={(e) => setHeightCm(Number(e.target.value))}
-                  className="w-full px-2.5 py-1.5 bg-white border border-surface-darker rounded-xl font-bold"
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Action Button */}
-          <button
-            type="button"
-            disabled={processing}
-            onClick={handleProcess}
-            className="w-full py-3 px-4 rounded-2xl bg-primary hover:bg-primary-hover text-white font-extrabold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
-          >
-            {processing ? (
-              <>
-                <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                <span>Auto-Enhancing &amp; Padding to Safe Bracket...</span>
-              </>
-            ) : (
-              <>
-                <Zap className="w-4 h-4" />
-                <span>
-                  Resize &amp; Guarantee {targetMinKb}KB – {targetMaxKb}KB
-                </span>
-              </>
-            )}
-          </button>
-        </div>
-      )}
-
-      {/* Error Banner */}
-      {error && (
-        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
-          <span>{error}</span>
-        </div>
-      )}
-
-      {/* Results Card */}
-      {result && (
-        <div className="p-6 rounded-3xl bg-surface/50 border border-emerald-500/30 shadow-card space-y-5 animate-in fade-in slide-in-from-bottom-3 duration-300">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker">
-            <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
-                <CheckCircle2 className="w-5 h-5" />
-              </span>
-              <div>
-                <h3 className="font-extrabold text-base text-text-main flex items-center gap-2">
-                  <span>Portal Compliance Verified</span>
-                  <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 border border-emerald-500/30">
-                    PASSED
-                  </span>
-                </h3>
-                <p className="text-xs text-text-main/60">
-                  Ready to upload directly to government recruitment portal without rejection.
-                </p>
-              </div>
-            </div>
-
-            <div className="text-right self-start sm:self-auto">
-              <span className="text-xs text-text-main/60 block">Output File Size</span>
-              <span className="text-lg font-black text-primary font-mono">
-                {result.output_size_kb} KB
-              </span>
-            </div>
-          </div>
-
-          {/* Side by Side Preview */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Original */}
-            <div className="p-4 bg-white rounded-2xl border border-surface-darker space-y-2 text-center">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-text-main/50 block">
-                Source Upload ({result.input_size_kb} KB)
-              </span>
-              <div className="h-40 flex items-center justify-center bg-surface/40 rounded-xl overflow-hidden p-2">
-                <img
-                  src={filePreview || ''}
-                  alt="Original preview"
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Enhanced & Verified */}
-            <div className="p-4 bg-white rounded-2xl border-2 border-primary/40 space-y-2 text-center relative">
-              <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider">
-                <span className="text-primary font-black flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  Enhanced ({result.output_size_kb} KB)
-                </span>
-                <span className="text-text-main/50 font-mono">
-                  {result.width_px}x{result.height_px}px @ {result.dpi}DPI
-                </span>
-              </div>
-              <div
-                onMouseEnter={() => setIsHoverZoom(true)}
-                onMouseLeave={() => setIsHoverZoom(false)}
-                className="h-40 flex items-center justify-center bg-surface/40 rounded-xl overflow-hidden p-2 relative group cursor-zoom-in"
+              {/* Action Button */}
+              <button
+                type="button"
+                disabled={processing}
+                onClick={handleProcess}
+                className="w-full py-3 px-4 rounded-2xl bg-primary hover:bg-primary-hover text-white font-extrabold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
               >
-                <img
-                  src={result.data_base64}
-                  alt="Enhanced output"
-                  className={cn(
-                    'max-h-full max-w-full object-contain transition-transform duration-200',
-                    isHoverZoom && 'scale-150'
-                  )}
-                />
-                {!isHoverZoom && (
-                  <span className="absolute bottom-2 right-2 p-1 rounded-lg bg-white/80 backdrop-blur-xs text-[10px] font-semibold text-text-main/70 flex items-center gap-1">
-                    <ZoomIn className="w-3 h-3 text-primary" /> Hover Zoom
-                  </span>
+                {processing ? (
+                  <>
+                    <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                    <span>Auto-Enhancing &amp; Padding to Safe Bracket...</span>
+                  </>
+                ) : (
+                  <>
+                    <Zap className="w-4 h-4" />
+                    <span>
+                      Resize &amp; Guarantee {targetMinKb}KB – {targetMaxKb}KB
+                    </span>
+                  </>
                 )}
+              </button>
+            </div>
+          )}
+
+          {/* Error Banner */}
+          {error && (
+            <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+              <span>{error}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Right Column: Live Output Studio & Actions (5 cols, sticky on desktop) */}
+        <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-24">
+          {result ? (
+            <div className="p-4 sm:p-5 rounded-3xl bg-surface/50 border-2 border-emerald-500/40 shadow-card space-y-4 animate-in fade-in duration-200">
+              <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-surface-darker">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 shrink-0">
+                    <CheckCircle2 className="w-4 h-4" />
+                  </span>
+                  <div className="min-w-0">
+                    <span className="text-xs font-black text-text-main block truncate">Portal Compliance Verified</span>
+                    <span className="text-[10px] text-text-main/60 block truncate">
+                      Safe Bracket: {targetMinKb}–{targetMaxKb} KB
+                    </span>
+                  </div>
+                </div>
+                <div className="text-right shrink-0">
+                  <span className="text-[9px] text-text-main/50 uppercase font-bold block">Output Size</span>
+                  <span className="text-base font-black text-primary font-mono">{result.output_size_kb} KB</span>
+                </div>
+              </div>
+
+              {/* Side by Side Preview */}
+              <div className="grid grid-cols-2 gap-2">
+                {/* Original Source */}
+                <div className="p-2.5 bg-white rounded-2xl border border-surface-darker space-y-1.5 text-center">
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-text-main/50 block truncate">
+                    Source ({result.input_size_kb} KB)
+                  </span>
+                  <div className="h-32 flex items-center justify-center bg-surface/30 rounded-xl overflow-hidden p-1.5">
+                    <img
+                      src={filePreview || ''}
+                      alt="Source preview"
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                </div>
+
+                {/* Enhanced Output */}
+                <div className="p-2.5 bg-white rounded-2xl border-2 border-primary/40 space-y-1.5 text-center relative">
+                  <div className="flex items-center justify-between text-[9px] font-bold uppercase tracking-wider px-0.5">
+                    <span className="text-primary font-black flex items-center gap-0.5 truncate">
+                      <ShieldCheck className="w-3 h-3" />
+                      Enhanced
+                    </span>
+                    <span className="text-text-main/50 font-mono text-[9px]">
+                      {result.width_px}x{result.height_px}
+                    </span>
+                  </div>
+                  <div
+                    onMouseEnter={() => setIsHoverZoom(true)}
+                    onMouseLeave={() => setIsHoverZoom(false)}
+                    className="h-32 flex items-center justify-center bg-surface/30 rounded-xl overflow-hidden p-1.5 relative group cursor-zoom-in"
+                  >
+                    <img
+                      src={result.data_base64}
+                      alt="Enhanced output"
+                      className={cn(
+                        'max-h-full max-w-full object-contain transition-transform duration-200',
+                        isHoverZoom && 'scale-150'
+                      )}
+                    />
+                    {!isHoverZoom && (
+                      <span className="absolute bottom-1 right-1 p-0.5 px-1 rounded bg-white/80 backdrop-blur-xs text-[9px] font-semibold text-text-main/70 flex items-center gap-0.5">
+                        <ZoomIn className="w-2.5 h-2.5 text-primary" /> Zoom
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Specs Pills */}
+              <div className="grid grid-cols-3 gap-1.5 text-center">
+                <div className="p-2 bg-white rounded-xl border border-surface-darker">
+                  <span className="text-[9px] text-text-main/50 uppercase font-bold block">Status</span>
+                  <span className="text-[11px] font-black text-emerald-600">PASSED</span>
+                </div>
+                <div className="p-2 bg-white rounded-xl border border-surface-darker">
+                  <span className="text-[9px] text-text-main/50 uppercase font-bold block">Resolution</span>
+                  <span className="text-[11px] font-black text-text-main font-mono">{result.width_px}x{result.height_px}</span>
+                </div>
+                <div className="p-2 bg-white rounded-xl border border-surface-darker">
+                  <span className="text-[9px] text-text-main/50 uppercase font-bold block">Density</span>
+                  <span className="text-[11px] font-black text-text-main font-mono">{result.dpi || 200} DPI</span>
+                </div>
+              </div>
+
+              {/* Download Action & WhatsApp Share */}
+              <div className="space-y-2 pt-1">
+                <button
+                  type="button"
+                  onClick={handleDownload}
+                  className="w-full py-3 px-4 rounded-2xl bg-primary hover:bg-primary-hover text-white font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download Verified {mode === 'photo' ? 'Photo' : 'Signature'} ({result.output_size_kb} KB)</span>
+                </button>
+
+                <WhatsAppShare
+                  message={`I just resized my exam ${mode === 'photo' ? 'photo' : 'signature'} for ${examName} using Kagazo's free compliance tool! Check it out:`}
+                  className="w-full justify-center py-2.5 px-4 rounded-xl text-xs"
+                />
               </div>
             </div>
-          </div>
+          ) : (
+            /* Ready State Card */
+            <div className="p-6 rounded-3xl bg-surface/30 border-2 border-dashed border-surface-darker text-center space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary mx-auto flex items-center justify-center shadow-2xs">
+                <Sparkles className="w-6 h-6 animate-pulse" />
+              </div>
+              <div>
+                <span className="text-xs font-extrabold text-text-main block">Official Portal Standards Ready</span>
+                <span className="text-[11px] text-text-main/60 block mt-0.5">
+                  Upload your {mode === 'photo' ? 'candidate photograph' : 'candidate signature'} on the left to view verified results and instant download here.
+                </span>
+              </div>
 
-          {/* Quality & Portal Compliance Proof */}
+              <div className="p-3 bg-white rounded-2xl border border-surface-darker text-left space-y-2 text-[11px]">
+                <div className="flex items-center justify-between text-text-main font-semibold">
+                  <span className="text-text-main/60">Target Bracket:</span>
+                  <span className="text-primary font-bold font-mono">{targetMinKb} KB – {targetMaxKb} KB</span>
+                </div>
+                <div className="flex items-center justify-between text-text-main font-semibold">
+                  <span className="text-text-main/60">Target Dimensions:</span>
+                  <span className="font-mono">{widthCm || 3.5}cm × {heightCm || (mode === 'photo' ? 4.5 : 1.5)}cm</span>
+                </div>
+                <div className="flex items-center justify-between text-text-main font-semibold">
+                  <span className="text-text-main/60">Target DPI:</span>
+                  <span className="font-mono">200 DPI (Exam Compliant)</span>
+                </div>
+                <div className="flex items-center justify-between text-text-main font-semibold">
+                  <span className="text-text-main/60">In-Memory Privacy:</span>
+                  <span className="text-emerald-600 font-bold">100% Client-Side RAM</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Full-Width QualityProofEngine Certificate Report below studio when result is ready */}
+      {result && (
+        <div className="pt-4 border-t border-surface-darker/60 space-y-4 animate-in fade-in duration-300">
           <QualityProofEngine
             originalSizeKb={result.input_size_kb}
             compressedSizeKb={result.output_size_kb}
@@ -577,22 +646,6 @@ export function ImageResizerEngine({
             isPdf={false}
             dimensions={{ width: result.width_px, height: result.height_px, unit: 'px' }}
           />
-
-          {/* Download Action Button & WhatsApp Share */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
-            <button
-              type="button"
-              onClick={handleDownload}
-              className="flex-1 w-full py-3.5 px-5 rounded-2xl bg-primary hover:bg-primary-hover text-white font-black text-sm sm:text-base shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
-            >
-              <Download className="w-5 h-5" />
-              <span>Download Verified {mode === 'photo' ? 'Photo' : 'Signature'} ({result.output_size_kb} KB)</span>
-            </button>
-            <WhatsAppShare
-              message="Resized my exam photo to exact KB using Kagazo 📸 Free tool for SSC/UPSC/TNPSC: https://kagazo.in/tools"
-              className="w-full sm:w-auto justify-center py-3.5 px-5 rounded-2xl"
-            />
-          </div>
 
           {/* Official Agency Partner Slot */}
           <AdSlot slot="post_download" />

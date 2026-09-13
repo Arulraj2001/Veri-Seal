@@ -512,6 +512,53 @@ export interface ImageResizeResponse {
 }
 
 export async function resizeImage(file: File, options?: ImageResizeOptions): Promise<ImageResizeResponse> {
+  // Client-side high-precision execution (Instant, 0-cost, 100% private)
+  if (typeof window !== 'undefined') {
+    try {
+      const { processImageClient } = await import('@/lib/image-engine');
+      const inputKb = Math.round((file.size / 1024) * 100) / 100;
+      const res = await processImageClient(file, {
+        targetMinKb: options?.targetMinKb ?? 10.0,
+        targetMaxKb: options?.targetMaxKb ?? 20.0,
+        targetWidthCm: options?.widthCm,
+        targetHeightCm: options?.heightCm,
+        targetWidthPx: options?.widthPx,
+        targetHeightPx: options?.heightPx,
+        dpi: options?.dpi ?? 300,
+        maintainAspectRatio: options?.maintainAspectRatio ?? true,
+        addNameDateStrip: Boolean(options?.addNameDate),
+        candidateName: options?.candidateName,
+        photoDate: options?.dateOfPhoto,
+        filterMode: options?.xeroxFilter ? 'signature_ink' : 'unsharp_sharp',
+        onProgress: options?.onProgress,
+      });
+
+      const reader = new FileReader();
+      const b64Promise = new Promise<string>((resolve) => {
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(res.blob);
+      });
+      const dataBase64 = await b64Promise;
+
+      return {
+        input_size_kb: inputKb,
+        output_size_kb: res.sizeKb,
+        target_min_kb: options?.targetMinKb ?? 10.0,
+        target_max_kb: options?.targetMaxKb ?? 20.0,
+        width_px: res.widthPx,
+        height_px: res.heightPx,
+        dpi: res.dpi,
+        is_compliant: res.isCompliant,
+        quality_used: res.qualityUsed,
+        filename: file.name.replace(/\.[^/.]+$/, '') + `_${res.sizeKb}kb.jpg`,
+        data_base64: dataBase64,
+      };
+    } catch (clientErr) {
+      console.warn('Client-side processing fallback to server:', clientErr);
+    }
+  }
+
+  // Fallback to server API
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     const formData = new FormData();

@@ -6,126 +6,97 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
-  Camera,
-  PenTool,
-  ArrowRight,
-  AlertTriangle,
+  FileSpreadsheet,
+  BookOpen,
+  Layers,
   CheckCircle2,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
+import { UniversalPdfCompressor } from '@/components/tools/UniversalPdfCompressor';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Railway RRB Photo & Signature Resizer Online Free | NTPC, Group D, ALP | Kagazo',
+  title: 'Compress PDF to 10MB Online Free | Large Reports & Portfolios | Kagazo',
   description:
-    'Resize photo (20-50KB, 320x240px with plain white background) and signature (10-40KB, 160x80px) for Railway RRB NTPC, Group D, ALP, Technician, and RPF Constable online application forms.',
+    'Compress large PDF documents strictly under 10MB online free. Reduce heavy corporate annual reports, scanned book archives, engineering drawings, and tender packages. 100% private in-memory processing.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/rrb-photo-signature-resizer',
+    canonical: 'https://kagazo.in/tools/compress-pdf-to-10mb',
   },
   openGraph: {
-    title: 'Railway RRB Photo & Signature Resizer Online Free | Kagazo',
+    title: 'Compress PDF to 10MB Online Free | Kagazo',
     description:
-      'Exact 320x240 px and 160x80 px dimensions guaranteed. Avoid mass RRB application rejection. 100% free forever.',
-    url: 'https://Kagazo.in/tools/rrb-photo-signature-resizer',
+      'Reduce heavy PDF files strictly under 10MB for cloud portals, enterprise uploads, and email links. Zero loss on vector charts.',
+    url: 'https://kagazo.in/tools/compress-pdf-to-10mb',
     siteName: 'Kagazo',
     type: 'website',
   },
 };
 
-const RRB_PRESETS: CustomPreset[] = [
+const FAQS = [
   {
-    id: 'photo',
-    label: 'RRB Photo (20-50KB, 240×320px)',
-    minKb: 20,
-    maxKb: 50,
-    widthPx: 240,
-    heightPx: 320,
-    isPhoto: true,
+    question: 'Why compress a large PDF down to 10MB?',
+    answer:
+      'Many cloud services, enterprise HR systems, client portals, and collaboration platforms enforce a hard 10MB or 15MB file cap. Compressing 50MB–200MB PDFs to strictly under 10MB makes them shareable across Slack, Teams, and web portals without triggering upload rejections.',
   },
   {
-    id: 'signature',
-    label: 'RRB Signature (10-40KB, 160×80px)',
-    minKb: 10,
-    maxKb: 40,
-    widthPx: 160,
-    heightPx: 80,
-    isXerox: true,
+    question: 'Will architectural blueprints, CAD diagrams, or financial spreadsheets stay legible?',
+    answer:
+      'Yes. Kagazo never rasterizes vector line work, text glyphs, or tabular data. Only bulky embedded photography and scanner raster layers are optimized using multi-step Lanczos resampling, preserving crisp vector lines and fine table borders.',
+  },
+  {
+    question: 'How much compression can I achieve on a 100MB+ scanned book or catalog?',
+    answer:
+      'Scanned books and multi-page catalogs typically drop by 70% to 90% in size because default scanner software saves uncompressed bitmaps. By deduplicating repeated background objects and recompressing image streams with modern Huffman-encoded JPEG, Kagazo reliably reduces heavy 100MB+ documents to under 10MB.',
+  },
+  {
+    question: 'Can I select and exclude specific pages before compressing?',
+    answer:
+      'Yes! Kagazo includes an interactive Page Selector. Simply click "Select Pages" after uploading your document to preview all pages and exclude redundant cover pages, index sheets, or blank pages.',
   },
 ];
 
-const RRB_FAQS = [
-  {
-    question: 'What are the official photo and signature dimensions for Railway RRB exams?',
-    answer:
-      'According to official Railway Recruitment Board (RRB) notifications (NTPC, Group D, ALP, Technician, and RPF): Photograph must be 320 × 240 pixels (or 240 × 320 px) with file size strictly between 20 KB and 50 KB in JPG/JPEG format on a pure plain white background. Signature must have dimensions of 160 × 80 pixels with file size strictly between 10 KB and 40 KB in black ink on white paper.',
-  },
-  {
-    question: 'Why do so many railway applications get rejected every year?',
-    answer:
-      'In past RRB recruitments, over 500,000 candidate forms were rejected due to: (1) Background not being plain white (e.g. blue wall, outdoor backdrop, shadows), (2) Signatures written in CAPITAL / BLOCK letters instead of running handwriting, (3) Selfie photos or photos wearing caps/sunglasses, and (4) Incorrect pixel dimensions (not 320x240 or 160x80).',
-  },
-  {
-    question: 'Does Kagazo ensure my RRB signature is in running handwriting?',
-    answer:
-      'Kagazo preserves your genuine running handwriting strokes and applies our Xerox ink boost to darken faint ballpoint pen ink. Remember: never sign in block/capital letters when signing for Railway applications.',
-  },
-  {
-    question: 'Is this RRB Resizer tool free with no watermark?',
-    answer:
-      'Yes, 100% free forever for all railway aspirants and cyber cafe operators. Kagazo never stamps watermarks, never requires payment or signups, and processes images in volatile RAM memory.',
-  },
-];
-
-export default function RrbPhotoSignatureResizerPage() {
+export default function CompressPdfTo10MbPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'Railway RRB Photo & Signature Resizer',
+        name: 'Compress PDF to 10MB Online Free',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/rrb-photo-signature-resizer',
+        url: 'https://kagazo.in/tools/compress-pdf-to-10mb',
         offers: {
           '@type': 'Offer',
           price: '0',
-          priceCurrency: 'INR',
+          priceCurrency: 'USD',
         },
         description:
-          'Resize photograph (20-50KB, 320x240px) and signature (10-40KB, 160x80px) for Railway RRB NTPC, Group D, ALP, and RPF Constable.',
+          'Compress heavy PDF files strictly under 10MB online free. Ideal for corporate reports, engineering drawings, and multi-page books.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Resize Photo and Signature for Railway RRB Portal Online',
+        name: 'How to Compress a PDF to 10MB Online',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Choose RRB Photo or Signature',
-            text: 'Select RRB Photo (20-50KB, 240x320px) or RRB Signature (10-40KB, 160x80px).',
+            name: 'Upload Your PDF Document',
+            text: 'Select your heavy PDF document (up to 150MB).',
           },
           {
             '@type': 'HowToStep',
-            name: 'Upload File',
-            text: 'Upload your recent passport photograph or scanned signature.',
+            name: 'Automatic 10MB Optimization',
+            text: 'Kagazo compresses internal streams to land safely under 10000KB.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Automatic Pixel Calibration',
-            text: 'Kagazo locks exact pixel dimensions and balances file size within strict RRB rules.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Compliant JPEG',
-            text: 'Inspect with clarity zoom loupe and download the verified JPEG.',
+            name: 'Download Compact PDF',
+            text: 'Download your optimized, shareable PDF document.',
           },
         ],
       },
       {
         '@type': 'FAQPage',
-        mainEntity: RRB_FAQS.map((faq) => ({
+        mainEntity: FAQS.map((faq) => ({
           '@type': 'Question',
           name: faq.question,
           acceptedAnswer: {
@@ -155,28 +126,27 @@ export default function RrbPhotoSignatureResizerPage() {
             Home
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools/government-exam-pdf-compressor" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Railway RRB Resizer</span>
+          <span className="text-primary font-bold">Compress PDF to 10MB</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>RRB NTPC, Group D, ALP, Technician &amp; RPF Ready</span>
+            <span>Target Ceiling: Max 10 MB (10000 KB)</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>Railway RRB Photo &amp; </span>
-            <span className="text-primary">Signature Resizer Online</span>
+            <span>Compress PDF to </span>
+            <span className="text-primary">10MB Online Free</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Calibrate photos to exact Railway Recruitment Board standards: Photo (20–50 KB, 320×240 px, plain white background) 
-            and Signature (10–40 KB, 160×80 px). Guaranteed zero facial distortion.
+            Reduce heavy corporate reports, scanned book archives, and engineering drawings to strictly under 10MB. Fast, lossless vector clarity, 100% private.
           </p>
         </header>
 
@@ -184,57 +154,53 @@ export default function RrbPhotoSignatureResizerPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Focus Workspace (68% Width) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <ImageResizerEngine
-              initialMode="photo"
-              examName="Railway RRB"
-              customPresets={RRB_PRESETS}
+            <UniversalPdfCompressor
+              initialTargetKb={10000}
+              isFixedTarget={true}
+              toolHeading="Compress PDF to Under 10 MB"
+              toolSubheading="Optimized for corporate annual reports, scanned book collections, and heavy blueprint dossiers."
             />
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Official RRB Specifications Table */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
-                <div>
-                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5 text-primary" />
-                    Official Railway RRB Upload Specifications
-                  </h2>
-                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                    Enforced strictly by the Railway Recruitment Board online registration system.
+            {/* Popular 10MB PDF Use Cases */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-5">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                Ideal Scenarios for 10MB PDF Optimization
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
+                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
+                    <FileSpreadsheet className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-extrabold text-sm text-text-main">Corporate Annual Reports</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Investor presentations and multi-year audited financial dossiers packed with high-resolution charts brought safely under 10MB.
                   </p>
                 </div>
-                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
-                  RRB Rules
-                </span>
-              </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs sm:text-sm border-collapse">
-                  <thead>
-                    <tr className="border-b border-surface-darker bg-surface text-text-main">
-                      <th className="py-3 px-3 font-bold">Document</th>
-                      <th className="py-3 px-3 font-bold">Allowed Size</th>
-                      <th className="py-3 px-3 font-bold">Dimensions</th>
-                      <th className="py-3 px-3 font-bold">Non-Negotiable Guidelines</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-surface-darker text-text-main/85">
-                    <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">Passport Photograph</td>
-                      <td className="py-3 px-3 font-bold text-primary">20 KB to 50 KB</td>
-                      <td className="py-3 px-3">240 × 320 pixels (or 320×240)</td>
-                      <td className="py-3 px-3">Pure plain white background, frontal face, no glare</td>
-                    </tr>
-                    <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">Candidate Signature</td>
-                      <td className="py-3 px-3 font-bold text-primary">10 KB to 40 KB</td>
-                      <td className="py-3 px-3">160 × 80 pixels</td>
-                      <td className="py-3 px-3 text-red-600 font-medium">Running handwriting only (Capital letters disqualified)</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
+                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
+                    <BookOpen className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-extrabold text-sm text-text-main">Scanned Books &amp; Manuals</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Heavy scanned textbooks, legal codices, and user manuals compressed from 150MB+ down to a light, readable 10MB file.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
+                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-extrabold text-sm text-text-main">CAD &amp; Construction Sets</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Multi-sheet construction blueprints and CAD schematics preserved with sharp vector lines and small raster footprints.
+                  </p>
+                </div>
               </div>
             </section>
 
@@ -246,15 +212,15 @@ export default function RrbPhotoSignatureResizerPage() {
               <div>
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions (Railway RRB Resizer)
+                  Frequently Asked Questions (10MB PDF Compressor)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Clear guidance for candidates applying for Railway NTPC, Group D, and ALP recruitment.
+                  Learn how Kagazo compresses large multi-page PDF documents to under 10MB.
                 </p>
               </div>
 
               <div className="space-y-3">
-                {RRB_FAQS.map((faq, idx) => (
+                {FAQS.map((faq, idx) => (
                   <details
                     key={idx}
                     className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
@@ -278,65 +244,65 @@ export default function RrbPhotoSignatureResizerPage() {
             <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
                 <Zap className="w-3.5 h-3.5 text-primary" />
-                Related Exam Resizers
+                Other PDF Tools
               </h3>
 
               <div className="space-y-2">
                 <Link
-                  href="/tools/ssc-photo-signature-resizer"
+                  href="/tools/compress-pdf-to-5mb"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      SSC Photo &amp; Signature
+                      Compress PDF to 5MB
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–50 KB &amp; 10–20 KB, 3.5×4.5 cm
+                      Standard for thesis &amp; e-tender submissions
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/ibps-photo-signature-resizer"
+                  href="/tools/compress-pdf-to-2mb"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      IBPS Banking Resizer
+                      Compress PDF to 2MB
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      Photo, Sig, Thumb &amp; Declaration
+                      Standard for court filings &amp; legal portals
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/neet-photo-signature-resizer"
+                  href="/tools/compress-pdf-to-1mb"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      NEET Postcard (4"×6")
+                      Compress PDF to 1MB
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      Postcard, Photo &amp; 10-Finger scan
+                      Email attachment &amp; passport portal target
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/image-to-pdf-200kb"
+                  href="/tools/merge-marksheets-pdf"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Marksheet to PDF (&lt; 200 KB)
+                      Merge Marksheets to Single PDF
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      Class 10/12 certificate to PDF
+                      Combine 1–12 semester sheets
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
@@ -347,21 +313,21 @@ export default function RrbPhotoSignatureResizerPage() {
             {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* RAM Security & Privacy Shield */}
+            {/* In-Memory RAM Privacy */}
             <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
               <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
                 <Lock className="w-4 h-4 shrink-0" />
-                <span>100% Client-Side RAM Privacy</span>
+                <span>100% In-Memory RAM Privacy</span>
               </div>
               <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
-                Railway photos and signatures are processed in volatile memory and wiped immediately upon download. Never stored on server disks.
+                Documents are processed in volatile RAM memory. Zero copies are stored on permanent servers or shared.
               </p>
               <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
                 <span className="flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Zero Watermark
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> 100% Free
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Instant Speed
                 </span>
               </div>
             </div>

@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { printIsolatedDocument } from '@/lib/print-utils';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { binarySearchJpeg } from '@/lib/image-engine';
 
 interface ProcessedAsset {
   file: File | null;
@@ -153,21 +154,10 @@ export default function TnpscOtrComplianceKitEngine() {
       ctx.font = `600 ${Math.round(fontSizePx * 0.9)}px Arial, sans-serif`;
       ctx.fillText(dopStr, targetW / 2, photoAvailH + lineSpacing * 2.1);
 
-      // Binary Search JPEG compression for strictly 20KB - 48KB
-      let quality = 0.88;
-      let dataUrl = canvas.toDataURL('image/jpeg', quality);
-      let sizeKb = Math.round((dataUrl.length * 3) / 4 / 1024);
-
-      if (sizeKb > 48) {
-        quality = 0.72;
-        dataUrl = canvas.toDataURL('image/jpeg', quality);
-        sizeKb = Math.round((dataUrl.length * 3) / 4 / 1024);
-      } else if (sizeKb < 22) {
-        // Upsample quality slightly to prevent <20KB portal rejection
-        quality = 0.98;
-        dataUrl = canvas.toDataURL('image/jpeg', quality);
-        sizeKb = Math.round((dataUrl.length * 3) / 4 / 1024);
-      }
+      // High-Precision Binary Quality Bisection (20KB - 50KB) with COM padding and 300 DPI injection
+      const { bytes, sizeKb } = await binarySearchJpeg(canvas, 20, 50, 300);
+      const blob = new Blob([bytes.buffer as ArrayBuffer], { type: 'image/jpeg' });
+      const dataUrl = URL.createObjectURL(blob);
 
       const errors: string[] = [];
       if (sizeKb < 20) errors.push('File size under 20KB limit');
@@ -249,17 +239,10 @@ export default function TnpscOtrComplianceKitEngine() {
       }
       ctx.putImageData(imgData, 0, 0);
 
-      // If anti-rejection padding is enabled, add subtle metadata payload to strictly ensure 12KB - 18KB
-      let quality = antiRejectionPadding ? 0.98 : 0.85;
-      let dataUrl = canvas.toDataURL('image/jpeg', quality);
-      let sizeKb = Math.round((dataUrl.length * 3) / 4 / 1024);
-
-      if (sizeKb < 11 && antiRejectionPadding) {
-        // Safe JFIF high-chroma sampling
-        quality = 1.0;
-        dataUrl = canvas.toDataURL('image/jpeg', quality);
-        sizeKb = Math.round((dataUrl.length * 3) / 4 / 1024);
-      }
+      // High-Precision Binary Quality Bisection (10KB - 20KB) with under-size COM padding and 300 DPI
+      const { bytes, sizeKb } = await binarySearchJpeg(canvas, 10, 20, 300);
+      const blob = new Blob([bytes.buffer as ArrayBuffer], { type: 'image/jpeg' });
+      const dataUrl = URL.createObjectURL(blob);
 
       const errors: string[] = [];
       if (sizeKb < 10) errors.push('TNPSC portal rejects signatures <10KB. Keep anti-rejection on.');
@@ -344,9 +327,10 @@ export default function TnpscOtrComplianceKitEngine() {
       }
       ctx.putImageData(imgData, 0, 0);
 
-      const quality = 0.92;
-      const dataUrl = canvas.toDataURL('image/jpeg', quality);
-      const sizeKb = Math.round((dataUrl.length * 3) / 4 / 1024);
+      // High-Precision Binary Quality Bisection (10KB - 50KB) with 300 DPI
+      const { bytes, sizeKb } = await binarySearchJpeg(canvas, 10, 50, 300);
+      const blob = new Blob([bytes.buffer as ArrayBuffer], { type: 'image/jpeg' });
+      const dataUrl = URL.createObjectURL(blob);
 
       const errors: string[] = [];
       if (sizeKb < 10) errors.push('Thumb file is under 10KB');

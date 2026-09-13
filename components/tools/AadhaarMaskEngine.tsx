@@ -108,7 +108,7 @@ export function AadhaarMaskEngine({ onDownloadSuccess }: AadhaarMaskEngineProps)
         </div>
       </div>
 
-      {/* Upload Zone */}
+      {/* Main Workspace: Upload or Side-by-Side Studio */}
       {!file ? (
         <div
           onDragOver={(e) => e.preventDefault()}
@@ -134,39 +134,40 @@ export function AadhaarMaskEngine({ onDownloadSuccess }: AadhaarMaskEngineProps)
           </p>
         </div>
       ) : (
-        <div className="space-y-5">
-          {/* Selected File Box */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl bg-surface border border-surface-darker gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
-                <FileText className="w-5 h-5" />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          {/* Left Column: File Info & Redaction Options */}
+          <div className="lg:col-span-6 space-y-4">
+            {/* Selected File Box */}
+            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-surface border border-surface-darker gap-3">
+              <div className="flex items-center gap-2.5 overflow-hidden">
+                <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center shrink-0">
+                  <FileText className="w-4 h-4" />
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-xs font-bold text-text-main truncate max-w-[200px] sm:max-w-xs">
+                    {file.name}
+                  </p>
+                  <p className="text-[11px] text-text-main/60">
+                    {(file.size / 1024).toFixed(1)} KB &bull; {file.type || 'Document'}
+                  </p>
+                </div>
               </div>
-              <div className="overflow-hidden">
-                <p className="text-sm font-bold text-text-main truncate max-w-xs sm:max-w-md">
-                  {file.name}
-                </p>
-                <p className="text-xs text-text-main/60">
-                  {(file.size / 1024).toFixed(1)} KB &bull; {file.type || 'Document'}
-                </p>
-              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setFile(null);
+                  setResult(null);
+                  setError(null);
+                }}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl border border-surface-darker text-xs font-semibold text-text-main/70 hover:text-red-600 hover:border-red-200 transition-all shrink-0"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Change</span>
+              </button>
             </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                setFile(null);
-                setResult(null);
-                setError(null);
-              }}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-surface-darker text-xs font-semibold text-text-main/70 hover:text-red-600 hover:border-red-200 transition-all self-start sm:self-auto"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Change File</span>
-            </button>
-          </div>
-
-          {/* Masking Options */}
-          {!result && (
+            {/* Masking Options */}
             <div className="p-4 sm:p-5 rounded-2xl bg-surface/60 border border-surface-darker space-y-3">
               <span className="text-xs font-bold text-text-main uppercase tracking-wider block">
                 Redaction Configuration
@@ -208,24 +209,22 @@ export function AadhaarMaskEngine({ onDownloadSuccess }: AadhaarMaskEngineProps)
                 </label>
               </div>
             </div>
-          )}
 
-          {/* Error Message */}
-          {error && (
-            <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{error}</span>
-            </div>
-          )}
+            {/* Error Message */}
+            {error && (
+              <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{error}</span>
+              </div>
+            )}
 
-          {/* Mask Action Button */}
-          {!result && (
+            {/* Mask Action Button */}
             <button
               type="button"
               disabled={processing}
               onClick={handleMask}
               className={cn(
-                'w-full py-3 px-6 rounded-2xl font-bold text-sm text-white flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg',
+                'w-full py-3 px-6 rounded-2xl font-bold text-xs sm:text-sm text-white flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg cursor-pointer',
                 processing
                   ? 'bg-primary/60 cursor-not-allowed'
                   : 'bg-primary hover:bg-primary-hover active:scale-[0.99]'
@@ -234,61 +233,81 @@ export function AadhaarMaskEngine({ onDownloadSuccess }: AadhaarMaskEngineProps)
               {processing ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  <span>Sanitizing Aadhaar Data in RAM ({progress}%)...</span>
+                  <span>Sanitizing Aadhaar in RAM ({progress}%)...</span>
                 </>
               ) : (
                 <>
                   <ShieldCheck className="w-4 h-4" />
-                  <span>Generate Official Masked Aadhaar (100% Free)</span>
+                  <span>Generate Official Masked Aadhaar (Free)</span>
                 </>
               )}
             </button>
-          )}
+          </div>
 
-          {/* Success Result View */}
-          {result && (
-            <div className="p-5 sm:p-6 rounded-3xl bg-primary-light/30 border border-primary/20 space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-primary/20">
-                <div className="flex items-center gap-2.5 text-primary">
-                  <CheckCircle2 className="w-6 h-6 shrink-0" />
-                  <div>
-                    <h3 className="text-sm sm:text-base font-extrabold text-text-main">
-                      Masked Aadhaar Generated Successfully!
-                    </h3>
-                    <p className="text-xs text-text-main/70">
-                      {result.redactions_applied} privacy redactions applied &bull; Underlying text stream purged
-                    </p>
+          {/* Right Column: Sticky Sanitized Live Preview & Download */}
+          <div className="lg:col-span-6 lg:sticky lg:top-24 space-y-4">
+            {result ? (
+              <div className="p-5 rounded-3xl bg-white border-2 border-primary/30 shadow-card space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="flex items-center justify-between pb-3 border-b border-surface-darker">
+                  <div className="flex items-center gap-2 text-primary">
+                    <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600" />
+                    <div>
+                      <div className="text-xs font-black text-text-main flex items-center gap-1.5">
+                        <span>Masked Aadhaar Ready</span>
+                        <span className="text-[9px] font-black uppercase px-1.5 py-0.2 rounded-full bg-emerald-500/15 text-emerald-600 border border-emerald-500/30">
+                          SANITIZED
+                        </span>
+                      </div>
+                      <div className="text-[10px] text-text-main/60">
+                        {result.redactions_applied} redactions &bull; RAM purged
+                      </div>
+                    </div>
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={handleDownload}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-bold shadow-md transition-all shrink-0 cursor-pointer"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download {result.file_type.toUpperCase()}</span>
+                  </button>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleDownload}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-primary hover:bg-primary-hover text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all self-start sm:self-auto"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>Download Masked {result.file_type.toUpperCase()}</span>
-                </button>
+                {/* Sanitized Preview */}
+                {result.preview_base64 && (
+                  <div className="space-y-2">
+                    <span className="text-[11px] font-bold text-text-main flex items-center gap-1.5">
+                      <Eye className="w-3.5 h-3.5 text-primary" />
+                      Sanitized Document Preview
+                    </span>
+                    <div className="rounded-2xl border border-surface-darker bg-surface/30 p-2 flex items-center justify-center max-h-[360px] overflow-hidden">
+                      <img
+                        src={result.preview_base64}
+                        alt="Masked Aadhaar Preview"
+                        className="max-h-[340px] object-contain rounded-lg shadow-2xs"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-
-              {/* Preview Thumbnail */}
-              {result.preview_base64 && (
-                <div className="space-y-2">
-                  <span className="text-xs font-bold text-text-main flex items-center gap-1.5">
-                    <Eye className="w-3.5 h-3.5 text-primary" />
-                    Sanitized Preview
-                  </span>
-                  <div className="rounded-2xl border border-surface-darker bg-white p-3 flex items-center justify-center max-h-[400px] overflow-hidden">
-                    <img
-                      src={result.preview_base64}
-                      alt="Masked Aadhaar Preview"
-                      className="max-h-[380px] object-contain rounded-lg shadow-2xs"
-                    />
-                  </div>
+            ) : (
+              <div className="p-8 rounded-3xl bg-surface/40 border-2 border-dashed border-surface-darker text-center space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-primary-light/50 text-primary flex items-center justify-center mx-auto border border-primary/20">
+                  <ShieldCheck className="w-6 h-6" />
                 </div>
-              )}
-            </div>
-          )}
+                <div className="space-y-1">
+                  <h4 className="font-extrabold text-xs text-text-main">Live Sanitized Preview</h4>
+                  <p className="text-[11px] text-text-main/60 max-w-xs mx-auto leading-relaxed">
+                    Click &ldquo;Generate Official Masked Aadhaar&rdquo; to redact the first 8 digits in memory. Your live sanitized preview will appear right here with instant download.
+                  </p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-white/70 border border-surface-darker text-[10px] text-text-main/60 font-medium">
+                  UIDAI &amp; RBI KYC compliant redaction • 100% in-RAM processing
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

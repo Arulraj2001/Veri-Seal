@@ -148,7 +148,7 @@ export default function GatePhotoSignatureResizerPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -183,7 +183,7 @@ export default function GatePhotoSignatureResizerPage() {
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Focus Workspace (68% Width) */}
-          <main className="lg:col-span-8 space-y-8">
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageResizerEngine
               initialMode="signature"
               examName="IIT GATE GOAPS"
@@ -292,7 +292,7 @@ export default function GatePhotoSignatureResizerPage() {
           </main>
 
           {/* Sticky Right Sidebar Rail (32% Width) */}
-          <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-28">
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
             {/* Quick Switch Matrix */}
             <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
