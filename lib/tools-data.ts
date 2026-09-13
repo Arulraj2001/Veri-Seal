@@ -541,6 +541,20 @@ export const TOOLS_CATALOG: ToolItem[] = [
     authorityLogo: '/logos/education.svg',
     authorityName: 'Document Standards',
   },
+  {
+    id: 'pan-card-photo-signature-resizer',
+    slug: '/tools/pan-card-photo-signature-resizer',
+    name: 'PAN Card Photo & Signature Resizer (NSDL / UTIITSL)',
+    category: 'photo_image',
+    categoryLabel: 'Exam Photo & Signature',
+    shortDesc: 'Resize photo to 213x213 px (300 DPI, <30KB) and signature to 400x200 px (600 DPI, <60KB) for NSDL Form 49A.',
+    badge: 'NSDL & UTIITSL',
+    examTags: ['PAN Card', 'NSDL', 'UTIITSL', 'Form 49A', '213x213', '400x200', '600 DPI'],
+    featuredInNav: true,
+    priorityOrder: 18.93,
+    authorityLogo: '/logos/passport.svg',
+    authorityName: 'Income Tax Dept & NSDL',
+  },
 
   // -------------------------------------------------------------
   // Category 3: Degree, Marksheet & Scanner Tools
