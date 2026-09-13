@@ -7,17 +7,53 @@ import {
   Search,
   X,
   FileText,
-  Camera,
+  FileDown,
+  FileArchive,
   Layers,
+  Combine,
+  Unlock,
+  Camera,
+  Image as ImageIcon,
+  UserSquare2,
+  PenTool,
+  Scan,
+  Palette,
+  Video,
+  MessageCircle,
+  QrCode,
+  Barcode,
+  Link2,
+  Globe,
   ShieldCheck,
-  Printer,
-  CheckCircle2,
-  CreditCard,
+  SearchCode,
+  MapPin,
+  ArrowRightLeft,
+  Share2,
+  Braces,
+  FileCode2,
+  Database,
+  BookOpen,
+  Binary,
+  Code,
+  Volume2,
+  Pilcrow,
+  CaseUpper,
+  AlignLeft,
+  Eraser,
+  KeyRound,
+  Clock,
+  Ruler,
+  Coins,
+  Fingerprint,
   Calculator,
+  CreditCard,
+  Printer,
+  Award,
   ArrowRight,
   Sparkles,
   Zap,
   Filter,
+  CheckCircle2,
 } from 'lucide-react';
 import {
   TOOLS_CATALOG,
@@ -282,17 +318,106 @@ const CATEGORY_STYLES: Record<
   },
 };
 
-/** Individual Medium-Sized Tool Card with Authentic Authority Emblem & Hover Watermark */
+/** Returns the exact matching closed-related Lucide SVG icon for every individual tool */
+function getToolWatermarkIcon(tool: ToolItem): React.ElementType {
+  const id = tool.id.toLowerCase();
+  const slug = tool.slug.toLowerCase();
+
+  // QR Code
+  if (id.includes('qr-code') || slug.includes('qr-code')) return QrCode;
+
+  // Barcode
+  if (id.includes('barcode') || slug.includes('barcode')) return Barcode;
+
+  // WhatsApp
+  if (id.includes('whatsapp') || slug.includes('whatsapp')) return MessageCircle;
+
+  // YouTube
+  if (id.includes('youtube') || slug.includes('youtube')) return Video;
+
+  // Color tools
+  if (id.includes('color') || slug.includes('color')) return Palette;
+
+  // Signatures
+  if (id.includes('signature') || slug.includes('signature') || id.includes('sign-') || id.includes('attest')) return PenTool;
+
+  // Passports & Visas
+  if (id.includes('passport') || id.includes('visa') || id.includes('stamp-size') || id.includes('face-align') || id.includes('attire')) return UserSquare2;
+
+  // Scanner & OCR
+  if (id.includes('scanner') || id.includes('declaration')) return Scan;
+
+  // Unlock PDF
+  if (id.includes('unlock') || slug.includes('unlock')) return Unlock;
+
+  // ID Cards & KYC
+  if (id.includes('pvc') || id.includes('card') || id.includes('aadhaar')) return CreditCard;
+
+  // Marksheet, Certificates & Resume
+  if (id.includes('marksheet') || id.includes('certificate') || id.includes('pstm') || id.includes('resume')) return Award;
+
+  // Image Transcoding & Converters
+  if (id.includes('image-converter') || id.includes('png-to') || id.includes('webp-to') || id.includes('jpg-to') || id.includes('heic-to')) return Layers;
+
+  // Image Optimizer & KB sizing
+  if (id.includes('image-optimizer') || id.includes('compress-image')) return ImageIcon;
+
+  // PDF Merge / Combine
+  if (id.includes('merge') || id.includes('joiner') || id.includes('image-to-pdf') || id.includes('pdf-to-image')) return Combine;
+
+  // PDF Compressors
+  if (id.includes('compress-pdf') || id.includes('pdf-compressor')) return FileDown;
+
+  // Network & Domains
+  if (id.includes('dns') || slug.includes('dns')) return Globe;
+  if (id.includes('ssl') || slug.includes('ssl')) return ShieldCheck;
+  if (id.includes('whois') || slug.includes('whois')) return SearchCode;
+  if (id.includes('ip-lookup') || slug.includes('ip-lookup')) return MapPin;
+  if (id.includes('http-headers') || id.includes('redirect')) return ArrowRightLeft;
+  if (id.includes('meta-tags') || slug.includes('meta-tags')) return Share2;
+
+  // Code & Formats
+  if (id.includes('json') || slug.includes('json')) return Braces;
+  if (id.includes('minifier') || slug.includes('minifier')) return FileCode2;
+  if (id.includes('sql') || slug.includes('sql')) return Database;
+  if (id.includes('markdown') || slug.includes('markdown')) return BookOpen;
+  if (id.includes('base64') || slug.includes('base64')) return Binary;
+  if (id.includes('url-encode') || id.includes('html-entity')) return Code;
+
+  // Text, Speech, Security
+  if (id.includes('text-to-speech') || slug.includes('text-to-speech')) return Volume2;
+  if (id.includes('lorem-ipsum') || slug.includes('lorem-ipsum')) return Pilcrow;
+  if (id.includes('case-converter') || slug.includes('case-converter')) return CaseUpper;
+  if (id.includes('word-counter') || slug.includes('word-counter')) return AlignLeft;
+  if (id.includes('text-cleaner') || id.includes('remove-line-breaks')) return Eraser;
+  if (id.includes('password') || slug.includes('password')) return KeyRound;
+
+  // Math, Converters & Time
+  if (id.includes('timestamp') || slug.includes('timestamp')) return Clock;
+  if (id.includes('unit-converter') || slug.includes('unit-converter')) return Ruler;
+  if (id.includes('number-to-words') || slug.includes('number-to-words')) return Coins;
+  if (id.includes('hash-generator') || slug.includes('hash-generator')) return Binary;
+  if (id.includes('uuid-generator') || slug.includes('uuid-generator')) return Fingerprint;
+
+  // Calculators
+  if (id.includes('calculator') || id.includes('tax') || id.includes('salary') || id.includes('cutoff')) return Calculator;
+
+  // Fallback by category
+  const style = CATEGORY_STYLES[tool.category];
+  return style?.WatermarkIcon || FileText;
+}
+
+/** Individual Medium-Sized Tool Card with Matching Closed-Related Watermark at 50% Opacity */
 function ToolCard({ tool }: { tool: ToolItem }) {
   const style = CATEGORY_STYLES[tool.category] || CATEGORY_STYLES.pdf_tools;
-  const Watermark = style.WatermarkIcon;
+  const WatermarkIcon = getToolWatermarkIcon(tool);
 
   return (
     <Link
       href={tool.slug}
       className={`group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${style.hoverBorder} overflow-hidden min-h-[230px]`}
     >
-      {/* Official Authority Emblem Watermark (Right Bottom Corner) */}
+      {/* Official Authority Emblem or Exact Matching Closed-Related Watermark (Right Bottom Corner) */}
       {tool.authorityLogo ? (
         <div
           className="absolute -bottom-3 -right-3 w-28 h-28 pointer-events-none flex items-center justify-center transition-all duration-300 z-0"
@@ -302,14 +427,14 @@ function ToolCard({ tool }: { tool: ToolItem }) {
             alt={tool.authorityName || tool.name}
             width={112}
             height={112}
-            className="w-full h-full object-contain opacity-65 dark:opacity-70 group-hover:opacity-100 group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 drop-shadow-sm"
+            className="w-full h-full object-contain opacity-50 dark:opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-85 group-hover:scale-105 group-hover:-rotate-3 transition-all duration-300 drop-shadow-xs"
           />
         </div>
       ) : (
         <div
-          className={`absolute -bottom-4 -right-4 w-28 h-28 pointer-events-none opacity-60 dark:opacity-70 group-hover:opacity-100 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 ${style.watermarkColor} flex items-center justify-center z-0`}
+          className={`absolute -bottom-4 -right-4 w-28 h-28 pointer-events-none opacity-50 dark:opacity-50 group-hover:opacity-80 group-hover:scale-105 group-hover:-rotate-6 transition-all duration-300 ${style.watermarkColor} flex items-center justify-center z-0`}
         >
-          <Watermark className="w-full h-full stroke-[1.2]" />
+          <WatermarkIcon className="w-full h-full stroke-[1.2]" />
         </div>
       )}
 
@@ -370,11 +495,15 @@ function ToolCard({ tool }: { tool: ToolItem }) {
         </div>
       </div>
 
-      {/* Bottom CTA Bar - Centered so bottom-right authority logo is completely visible */}
-      <div className="relative z-10 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-center text-xs">
-        <span className="font-bold text-emerald-700 dark:text-emerald-400 inline-flex items-center justify-center gap-1.5 px-4 py-1 rounded-full bg-emerald-50/90 dark:bg-emerald-950/50 border border-emerald-200/80 dark:border-emerald-800/60 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600 transition-all shadow-sm">
+      {/* Bottom CTA Bar */}
+      <div className="relative z-10 pt-3 mt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+        <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 flex items-center gap-1">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+          <span>In-RAM Privacy</span>
+        </span>
+        <span className="font-bold text-emerald-700 dark:text-emerald-400 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
           <span>Use Tool</span>
-          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>
     </Link>

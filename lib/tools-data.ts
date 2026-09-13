@@ -86,8 +86,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['All India', 'UPSC', 'SSC', 'TNPSC', 'State PSC'],
     featuredInNav: true,
     priorityOrder: 1,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'All India & Boards',
   },
   {
     id: 'compress-pdf-200kb',
@@ -100,8 +98,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNPSC', 'UPSC', 'SSC', 'Police', 'High Court'],
     featuredInNav: true,
     priorityOrder: 2,
-    authorityLogo: '/logos/tnpsc.svg',
-    authorityName: 'TNPSC & State PSC',
   },
   {
     id: 'compress-pdf-100kb',
@@ -114,8 +110,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Scholarships', 'State PSC', 'Universities', 'BPSC'],
     featuredInNav: true,
     priorityOrder: 3,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Scholarships & Univ',
   },
   {
     id: 'compress-pdf-300kb',
@@ -128,8 +122,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'IAS/IPS', 'Judiciary', 'High Court'],
     featuredInNav: true,
     priorityOrder: 4,
-    authorityLogo: '/logos/upsc.png',
-    authorityName: 'UPSC Civil Services',
   },
   {
     id: 'compress-pdf-500kb',
@@ -142,8 +134,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Banking', 'IBPS', 'SBI', 'Staff Selection'],
     featuredInNav: true,
     priorityOrder: 5,
-    authorityLogo: '/logos/ibps.svg',
-    authorityName: 'IBPS & Banking',
   },
   {
     id: 'compress-pdf-1mb',
@@ -156,8 +146,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Email', 'Passport Seva', 'Visas', 'Resumes'],
     featuredInNav: true,
     priorityOrder: 5.1,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Universal Email Standard',
   },
   {
     id: 'compress-pdf-2mb',
@@ -170,8 +158,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Court e-Filing', 'Legal', 'MCA', 'Tenders'],
     featuredInNav: true,
     priorityOrder: 5.2,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Legal & Court Standard',
   },
   {
     id: 'compress-pdf-5mb',
@@ -184,8 +170,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PhD Thesis', 'Dissertation', 'GeM Tenders', 'Portfolios', 'Shodhganga'],
     featuredInNav: true,
     priorityOrder: 5.3,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Academic & Tender Standard',
   },
   {
     id: 'compress-pdf-10mb',
@@ -198,8 +182,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Annual Reports', 'CAD Drawings', 'Scanned Books', 'Blueprints', 'Enterprise'],
     featuredInNav: true,
     priorityOrder: 5.4,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Enterprise & Report Standard',
   },
   {
     id: 'govt-exam-compressor',
@@ -212,8 +194,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'TNPSC', 'NEET', 'Railway RRB'],
     featuredInNav: true,
     priorityOrder: 6,
-    authorityLogo: '/logos/ssc.png',
-    authorityName: 'UPSC • SSC • RRB',
   },
   {
     id: 'tnpsc-pdf-compressor',
@@ -226,8 +206,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNPSC', 'Group 4', 'Group 2', 'VAO'],
     featuredInNav: false,
     priorityOrder: 7,
-    authorityLogo: '/logos/tnpsc.svg',
-    authorityName: 'TNPSC Tamil Nadu',
   },
   {
     id: 'upsc-pdf-compressor',
@@ -240,8 +218,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'NDA', 'CDS', 'Civil Services'],
     featuredInNav: false,
     priorityOrder: 8,
-    authorityLogo: '/logos/upsc.png',
-    authorityName: 'UPSC ORA Portal',
   },
   {
     id: 'ssc-pdf-compressor',
@@ -254,8 +230,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC', 'CGL', 'CHSL', 'MTS', 'GD Constable'],
     featuredInNav: false,
     priorityOrder: 9,
-    authorityLogo: '/logos/ssc.png',
-    authorityName: 'Staff Selection Commission',
   },
 
   // -------------------------------------------------------------
@@ -314,8 +288,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['GATE', 'IIT JAM', 'IIT GOAPS', 'M.Tech'],
     featuredInNav: true,
     priorityOrder: 13,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'IIT GOAPS & GATE',
   },
   {
     id: 'neet-photo-resizer',
@@ -370,8 +342,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'State PSC', 'Judiciary'],
     featuredInNav: false,
     priorityOrder: 17,
-    authorityLogo: '/logos/ssc.png',
-    authorityName: 'Govt Signature Standard',
   },
   {
     id: 'compress-image-50kb',
@@ -384,8 +354,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['All Portals', 'SSC', 'RRB', 'Police'],
     featuredInNav: false,
     priorityOrder: 18,
-    authorityLogo: '/logos/ssc.png',
-    authorityName: 'Govt Passport Standard',
   },
   {
     id: 'compress-image-exact-kb',
@@ -398,8 +366,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Universal', 'All Portals', 'Worldwide', 'Resumes'],
     featuredInNav: true,
     priorityOrder: 18.1,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Universal Web Standard',
   },
   {
     id: 'compress-image-to-100kb',
@@ -412,8 +378,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['LinkedIn', 'Job Portals', 'Universities', 'Admissions'],
     featuredInNav: true,
     priorityOrder: 18.2,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Job & Admission Standard',
   },
   {
     id: 'compress-image-to-200kb',
@@ -426,8 +390,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Govt Portals', 'UPSC', 'SSC', 'Certificates', 'State PSC'],
     featuredInNav: true,
     priorityOrder: 18.3,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Govt Portal Standard',
   },
   {
     id: 'compress-image-to-1mb',
@@ -440,8 +402,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Email', 'Passport Seva', 'Visa', 'High-Res'],
     featuredInNav: true,
     priorityOrder: 18.4,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Email & Visa Standard',
   },
   {
     id: 'passport-photo-maker-tool',
@@ -454,8 +414,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Passport Photo', '35x45mm', 'Passport Seva', 'MEA India', 'US Visa', 'Schengen', '4x6 Sheet'],
     featuredInNav: true,
     priorityOrder: 18.45,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'Ministry of External Affairs (MEA)',
   },
   {
     id: 'us-passport-photo-tool',
@@ -468,8 +426,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['US Passport', 'DS-160', 'DV Lottery', 'US Visa', 'Green Card', '4x6 Sheet'],
     featuredInNav: true,
     priorityOrder: 18.5,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'U.S. Department of State',
   },
   {
     id: 'uk-passport-photo-tool',
@@ -482,8 +438,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UK Passport', 'HM Passport Office', 'British Visa', '4x6 Sheet', 'Tesco Print'],
     featuredInNav: true,
     priorityOrder: 18.6,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'HM Passport Office',
   },
   {
     id: 'schengen-visa-photo-tool',
@@ -496,8 +450,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Schengen Visa', 'France Visa', 'Germany Visa', 'VFS Global', 'BLS', 'ICAO 9303'],
     featuredInNav: true,
     priorityOrder: 18.7,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'European Commission (ICAO)',
   },
   {
     id: 'canadian-passport-photo-tool',
@@ -510,8 +462,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Canada Passport', 'IRCC', 'PR Card', 'Express Entry', 'Super Visa', '50x70mm'],
     featuredInNav: true,
     priorityOrder: 18.8,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'IRCC Canada',
   },
   {
     id: 'change-image-dpi-tool',
@@ -524,8 +474,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['300 DPI', '600 DPI', 'JFIF', 'UPSC', 'SSC', 'High-Res Print', 'Resolution'],
     featuredInNav: true,
     priorityOrder: 18.9,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'JFIF Density Standard',
   },
   {
     id: 'heic-to-jpg-converter',
@@ -538,8 +486,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['iPhone', 'Apple HEIC', 'Batch Convert', 'Zero Upload', 'All Portals'],
     featuredInNav: true,
     priorityOrder: 18.91,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'Apple iOS & Portals',
   },
   {
     id: 'heic-to-pdf-converter',
@@ -552,8 +498,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['iPhone to PDF', 'A4 Merge', 'Homework', 'Receipts', 'Govt Forms'],
     featuredInNav: true,
     priorityOrder: 18.92,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Document Standards',
   },
   {
     id: 'pan-card-photo-signature-resizer',
@@ -566,8 +510,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PAN Card', 'NSDL', 'UTIITSL', 'Form 49A', '213x213', '400x200', '600 DPI'],
     featuredInNav: true,
     priorityOrder: 18.93,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'Income Tax Dept & NSDL',
   },
   {
     id: 'uscis-photo-checker',
@@ -580,8 +522,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['USCIS', 'US Visa', 'DS-160', 'Green Card', '600x600', '300 DPI'],
     featuredInNav: true,
     priorityOrder: 18.94,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'U.S. Citizenship & Immigration',
   },
   {
     id: 'dv-lottery-photo-tool',
@@ -594,8 +534,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['DV Lottery', 'Diversity Visa', 'Green Card Lottery', 'DV-2026', 'DV-2027', '600x600'],
     featuredInNav: true,
     priorityOrder: 18.95,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'U.S. Department of State',
   },
   {
     id: 'sign-pdf-tool',
@@ -608,8 +546,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Sign PDF', 'Digital Signature', 'No Sign-up', 'No Watermark', 'Agreements', 'Contracts'],
     featuredInNav: true,
     priorityOrder: 18.96,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Legal Document Standard',
   },
   {
     id: 'sarathi-driving-licence-resizer',
@@ -622,8 +558,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Sarathi', 'Parivahan', 'Driving Licence', 'Learner Licence', 'RTO', 'MoRTH', '35x45mm', '20x50mm'],
     featuredInNav: true,
     priorityOrder: 18.97,
-    authorityLogo: '/logos/parivahan.svg',
-    authorityName: 'MoRTH & Sarathi Parivahan',
   },
   {
     id: 'epfo-passbook-resizer',
@@ -636,8 +570,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['EPFO', 'UAN Portal', 'Provident Fund', 'Passbook Resizer', 'Cancelled Cheque', 'Under 500KB'],
     featuredInNav: true,
     priorityOrder: 18.98,
-    authorityLogo: '/logos/emblem_of_india.svg',
-    authorityName: "Employees' Provident Fund Org",
   },
   {
     id: 'marriage-biodata-maker',
@@ -650,8 +582,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Marriage Biodata', 'Matrimonial Profile', 'Shadi Biodata', 'Kundali', 'A4 PDF', 'WhatsApp Share', 'No Watermark'],
     featuredInNav: true,
     priorityOrder: 18.99,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Matrimonial Document Standards',
   },
   {
     id: 'remove-background-hd',
@@ -664,8 +594,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Background Remover', 'No 500px Limit', 'Transparent PNG', 'Product Photos', 'Signatures', 'Zero Upload'],
     featuredInNav: true,
     priorityOrder: 18.991,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Full HD Image Processing',
   },
   {
     id: 'passport-white-background',
@@ -678,8 +606,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['White Background', 'Passport Photo', 'US Visa', 'Schengen Visa', '300 DPI', 'ICAO Doc 9303'],
     featuredInNav: true,
     priorityOrder: 18.992,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'Passport & Visa Biometrics',
   },
 
   // -------------------------------------------------------------
@@ -696,8 +622,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'TNPSC', 'Banking', 'Universities'],
     featuredInNav: true,
     priorityOrder: 19,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Board of Education',
   },
   {
     id: 'clean-document-scanner',
@@ -710,8 +634,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['All Marksheets', 'Certificates', 'ID Cards'],
     featuredInNav: true,
     priorityOrder: 20,
-    authorityLogo: '/logos/incometax.png',
-    authorityName: 'Govt Document Verification',
   },
   {
     id: 'image-to-pdf-200kb',
@@ -724,8 +646,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNPSC', 'Community Cert', 'Income Cert'],
     featuredInNav: true,
     priorityOrder: 21,
-    authorityLogo: '/logos/tnpsc.svg',
-    authorityName: 'TNPSC & e-District',
   },
   {
     id: 'image-to-pdf-300kb',
@@ -738,8 +658,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'State PSC', 'Court Filings'],
     featuredInNav: false,
     priorityOrder: 22,
-    authorityLogo: '/logos/upsc.png',
-    authorityName: 'UPSC & High Courts',
   },
   {
     id: 'pdf-to-image-300dpi',
@@ -752,8 +670,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['e-Aadhaar', 'Admit Cards', 'Hall Tickets'],
     featuredInNav: true,
     priorityOrder: 23,
-    authorityLogo: '/logos/uidai.svg',
-    authorityName: 'UIDAI & Govt Portals',
   },
 
   // -------------------------------------------------------------
@@ -770,8 +686,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['e-Aadhaar', 'Form 16', 'Bank Statement'],
     featuredInNav: true,
     priorityOrder: 24,
-    authorityLogo: '/logos/uidai.svg',
-    authorityName: 'UIDAI e-Aadhaar & Form 16',
   },
   {
     id: 'mask-aadhaar-tool',
@@ -802,8 +716,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Cyber Cafe', 'Studio', 'Print 4x6', 'Admit Cards', 'Epson Print'],
     featuredInNav: true,
     priorityOrder: 26,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'Passport Seva & MEA',
   },
   {
     id: 'formal-attire-changer',
@@ -816,8 +728,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Passport Suit', 'Blazer Overlay', 'SSC Photo', 'UPSC Attire', 'Studio Formal', 'Job CV'],
     featuredInNav: true,
     priorityOrder: 27,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'ICAO Biometric Studio',
   },
   {
     id: 'photo-date-name-stamper',
@@ -830,8 +740,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC CGL', 'UPSC CSE', 'DOP Strip', 'Name On Photo', 'White Banner', 'IBPS'],
     featuredInNav: true,
     priorityOrder: 28,
-    authorityLogo: '/logos/ssc.png',
-    authorityName: 'SSC & UPSC DOP Rules',
   },
   {
     id: 'biometric-face-aligner',
@@ -844,8 +752,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Indian Passport', 'US Visa 2x2', 'Schengen', '70-80% Head', 'Biometric Frame'],
     featuredInNav: true,
     priorityOrder: 29,
-    authorityLogo: '/logos/passport.svg',
-    authorityName: 'ICAO Biometric Standard',
   },
   {
     id: 'stamp-size-photo-maker',
@@ -858,8 +764,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Stamp Size', '20x25mm', 'NEET Postcard', 'Railway MST Pass', 'Student ID', '4x6 Card'],
     featuredInNav: true,
     priorityOrder: 30,
-    authorityLogo: '/logos/nta.svg',
-    authorityName: 'NTA & Railway Passes',
   },
 
   // -------------------------------------------------------------
@@ -876,8 +780,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['e-Aadhaar', 'Community', 'Nativity', 'PAN', 'DigiLocker'],
     featuredInNav: true,
     priorityOrder: 27,
-    authorityLogo: '/logos/rbi.svg',
-    authorityName: 'CCA India & DigiLocker',
   },
   {
     id: 'verify-aadhaar-pdf',
@@ -890,8 +792,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UIDAI', 'myAadhaar', 'e-KYC'],
     featuredInNav: false,
     priorityOrder: 28,
-    authorityLogo: '/logos/uidai.svg',
-    authorityName: 'UIDAI Certifying Authority',
   },
   {
     id: 'signature-cleaner-extractor',
@@ -905,8 +805,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSC CGL', 'UPSC CSE', 'IBPS PO', 'TNPSC', 'Black Ink', '140x60'],
     featuredInNav: true,
     priorityOrder: 29,
-    authorityLogo: '/logos/ssc.png',
-    authorityName: 'SSC & IBPS Official Ink',
   },
   {
     id: 'thumb-impression-resizer',
@@ -920,8 +818,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['IBPS Clerk', 'SBI PO', 'Railway RRB', 'SSC LTI', '240x240'],
     featuredInNav: true,
     priorityOrder: 30,
-    authorityLogo: '/logos/ibps.svg',
-    authorityName: 'IBPS & RRB Biometric',
   },
   {
     id: 'driving-license-card-merger',
@@ -950,8 +846,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['MP PEB', 'UPSSSC', 'Rajasthan RSMSSB', 'Kerala PSC', 'DOP'],
     featuredInNav: true,
     priorityOrder: 32,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'PEB & State PSC Slips',
   },
   {
     id: 'batch-photo-resizer',
@@ -965,8 +859,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Cyber Cafe', 'CSC Centre', 'SSC Batch', 'UPSC', 'IBPS', 'ZIP Stream'],
     featuredInNav: true,
     priorityOrder: 33,
-    authorityLogo: '/logos/ssc.png',
-    authorityName: 'CSC & Cyber Cafe Suite',
   },
   {
     id: 'pvc-id-card-maker',
@@ -980,8 +872,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Epson L805', 'PVC Card', 'Aadhaar Smart Card', 'PAN Card', '300 DPI', 'A4 Lamination'],
     featuredInNav: true,
     priorityOrder: 34,
-    authorityLogo: '/logos/pvc.svg',
-    authorityName: 'CR-80 Smart ID Standard',
   },
   {
     id: 'self-attest-pdf',
@@ -995,8 +885,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Marksheet', 'Caste Certificate', 'UPSC OTR', 'SSC DV', 'Self Attested', '<200KB'],
     featuredInNav: true,
     priorityOrder: 35,
-    authorityLogo: '/logos/upsc.png',
-    authorityName: 'UPSC & High Court OTR',
   },
   {
     id: 'exam-specifications-radar',
@@ -1010,8 +898,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UPSC', 'SSC', 'IBPS', 'NEET', 'JEE', 'RRB', 'TNPSC', 'State PSC', 'Guidelines'],
     featuredInNav: true,
     priorityOrder: 36,
-    authorityLogo: '/logos/ssc.png',
-    authorityName: 'National Exam Standards',
   },
   {
     id: 'a4-multi-card-sheet',
@@ -1025,8 +911,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Aadhaar Print', 'PAN Card', 'Voter ID', 'A4 Gang Sheet', '300 DPI', 'CSC VLE', 'Cyber Cafe'],
     featuredInNav: true,
     priorityOrder: 37,
-    authorityLogo: '/logos/pvc.svg',
-    authorityName: 'CR-80 Smart ID & CSC',
   },
   {
     id: 'handwritten-declaration-scanner',
@@ -1040,8 +924,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['IBPS PO', 'IBPS Clerk', 'SBI Clerk', 'RRB NTPC', '50KB to 100KB', 'Ruled Line Remover'],
     featuredInNav: true,
     priorityOrder: 38,
-    authorityLogo: '/logos/sbi.svg',
-    authorityName: 'State Bank of India',
   },
   {
     id: 'aadhaar-pan-kyc-merge',
@@ -1055,8 +937,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Aadhaar PAN', 'Bank KYC', 'SIM KYC', 'Single PDF', 'RBI Masked', '<200KB'],
     featuredInNav: true,
     priorityOrder: 39,
-    authorityLogo: '/logos/uidai.svg',
-    authorityName: 'UIDAI & Income Tax PAN',
   },
   {
     id: 'affidavit-generator',
@@ -1070,8 +950,8 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Affidavit', 'Name Change', 'e-Stamp Paper', 'Notary', 'Gap Year', 'Tamil Affidavit'],
     featuredInNav: true,
     priorityOrder: 40,
-    authorityLogo: '/logos/tnpsc.svg',
-    authorityName: 'Sworn Legal & Notary',
+    authorityLogo: '/logos/emblem_of_india.svg',
+    authorityName: 'Government of India / Gazette',
   },
   {
     id: 'gst-number-verifier',
@@ -1085,8 +965,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['GSTIN', 'GST Verify', 'ITC Input Credit', 'Taxpayer Search', 'State Code'],
     featuredInNav: true,
     priorityOrder: 41,
-    authorityLogo: '/logos/gst.svg',
-    authorityName: 'GST India (GSTN)',
   },
   {
     id: 'salary-slip-generator',
@@ -1100,8 +978,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Salary Slip', 'Payslip Maker', 'Bank Loan Proof', 'Visa Payslip', 'EPF Calculator', 'Tamil Payslip'],
     featuredInNav: true,
     priorityOrder: 42,
-    authorityLogo: '/logos/rbi.svg',
-    authorityName: 'EPFO & Corporate Ready',
   },
   {
     id: 'compress-for-whatsapp',
@@ -1115,8 +991,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['WhatsApp Compress', '<500KB', 'No Blur', 'Marksheet Share', 'Mobile 4G'],
     featuredInNav: true,
     priorityOrder: 43,
-    authorityLogo: '/logos/whatsapp.svg',
-    authorityName: 'WhatsApp Sharing Std',
   },
   {
     id: 'income-tax-calculator-2025-26',
@@ -1145,8 +1019,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['IFSC Code', 'MICR Code', 'Bank Branch', 'SBI IFSC', 'Indian Bank', 'NEFT RTGS'],
     featuredInNav: true,
     priorityOrder: 45,
-    authorityLogo: '/logos/rbi.svg',
-    authorityName: 'Reserve Bank of India',
   },
   // -------------------------------------------------------------
   // Phase 2: Tamil Nadu Monopoly & Academic Admission Suite
@@ -1178,8 +1050,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSLC Marksheet', '12th Marksheet', 'TNEA', 'TNGASA', 'TNPSC', 'Marksheet PDF', '200KB'],
     featuredInNav: true,
     priorityOrder: 47,
-    authorityLogo: '/logos/tnea.svg',
-    authorityName: 'TN State Board & DGE',
   },
   {
     id: 'tnea-cutoff-calculator',
@@ -1193,8 +1063,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['TNEA 2025', 'TNEA Cutoff', 'Anna University', 'Engineering Cutoff', '7.5 Quota', 'First Graduate'],
     featuredInNav: true,
     priorityOrder: 48,
-    authorityLogo: '/logos/tnea.svg',
-    authorityName: 'Anna University Chennai',
   },
   {
     id: 'pstm-certificate-generator',
@@ -1208,8 +1076,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PSTM', 'GO 82', 'Tamil Medium', 'TNPSC Reservation', 'School Certificate', 'Group 4'],
     featuredInNav: true,
     priorityOrder: 49,
-    authorityLogo: '/logos/tnpsc.svg',
-    authorityName: 'Govt of Tamil Nadu G.O. 82',
   },
   {
     id: 'aadhaar-front-back-pdf',
@@ -1223,8 +1089,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Aadhaar Front Back', 'Aadhaar Both Sides', 'Aadhaar Single Page', 'Masked Aadhaar', '200KB PDF'],
     featuredInNav: true,
     priorityOrder: 50,
-    authorityLogo: '/logos/uidai.svg',
-    authorityName: 'UIDAI Aadhaar Official',
   },
   {
     id: 'tn-esevai-certificate-prep',
@@ -1238,8 +1102,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['e-Sevai', 'Community Certificate', 'Nativity', 'First Graduate', 'Tahsildar QR', 'TNPSC Upload'],
     featuredInNav: true,
     priorityOrder: 51,
-    authorityLogo: '/logos/tnpsc.svg',
-    authorityName: 'TN e-Sevai & Revenue',
   },
   {
     id: 'college-admission-photo-maker',
@@ -1253,8 +1115,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['College Photo', 'Passport Sheet 4x6', 'Stamp Size Photo', 'Admission Photo', 'Print Sheet'],
     featuredInNav: true,
     priorityOrder: 52,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Higher Education Board',
   },
   {
     id: 'free-ats-resume-builder',
@@ -1268,8 +1128,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['ATS Resume', 'Tech Resume', 'Sarkari CV', 'Indian Bio-Data', 'Fresher 1-Page', 'Software Engineer Resume', 'Zero Cloud Storage'],
     featuredInNav: true,
     priorityOrder: 53,
-    authorityLogo: '/logos/ats.svg',
-    authorityName: 'ATS Institutional Standard',
   },
   // -------------------------------------------------------------
   // Phase 1: High-Volume Media, Image & Color Studios
@@ -1285,8 +1143,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Image Optimizer', 'WebP Compressor', 'AVIF Converter', 'Batch Compress', 'Strip Exif', 'Web Speed'],
     featuredInNav: true,
     priorityOrder: 54,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Web Media Standard',
   },
   {
     id: 'image-converter-matrix',
@@ -1299,8 +1155,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PNG to JPG', 'WebP to PNG', 'Favicon ICO', 'Image Converter', 'Batch Convert'],
     featuredInNav: true,
     priorityOrder: 55,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Web Media Standard',
   },
   {
     id: 'youtube-thumbnail-downloader-tool',
@@ -1313,8 +1167,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['YouTube Thumbnail', 'YouTube Shorts Cover', 'Maxresdefault', 'HD Thumbnail Downloader'],
     featuredInNav: true,
     priorityOrder: 56,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Media Creator Hub',
   },
   {
     id: 'signature-generator-studio',
@@ -1327,8 +1179,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Digital Signature', 'Calligraphy Signature', 'Draw Signature', 'E-Sign PDF', 'Transparent Signature'],
     featuredInNav: true,
     priorityOrder: 57,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Legal E-Sign Standard',
   },
   {
     id: 'color-picker-studio',
@@ -1341,8 +1191,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Color Picker', 'HEX to RGB', 'RGB to HSL', 'Palette Extractor', 'WCAG Contrast Checker'],
     featuredInNav: true,
     priorityOrder: 58,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Design System Standard',
   },
   {
     id: 'color-converter-tool',
@@ -1355,8 +1203,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Color Converter', 'HEX to CMYK', 'RGB to HEX', 'CSS Color Codes'],
     featuredInNav: false,
     priorityOrder: 59,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Design System Standard',
   },
   {
     id: 'png-to-jpg-tool',
@@ -1369,8 +1215,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PNG to JPG', 'Convert PNG', 'JPEG Converter'],
     featuredInNav: false,
     priorityOrder: 60,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Web Media Standard',
   },
   {
     id: 'jpg-to-png-tool',
@@ -1383,8 +1227,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['JPG to PNG', 'JPEG to PNG', 'Lossless PNG'],
     featuredInNav: false,
     priorityOrder: 61,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Web Media Standard',
   },
   {
     id: 'png-to-webp-tool',
@@ -1397,8 +1239,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PNG to WebP', 'WebP Converter', 'PageSpeed Optimizer'],
     featuredInNav: false,
     priorityOrder: 62,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Web Media Standard',
   },
   {
     id: 'webp-to-png-tool',
@@ -1411,8 +1251,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['WebP to PNG', 'Unpack WebP', 'Transparent PNG'],
     featuredInNav: false,
     priorityOrder: 63,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Web Media Standard',
   },
   {
     id: 'png-to-ico-tool',
@@ -1425,8 +1263,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PNG to ICO', 'Favicon Generator', 'Multi-Res Favicon', 'Windows Icon'],
     featuredInNav: false,
     priorityOrder: 64,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Webmaster Standard',
   },
   // -------------------------------------------------------------
   // Phase 2: Communication, Deep Links & QR Lab
@@ -1442,8 +1278,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['WhatsApp Link', 'wa.me generator', 'WhatsApp QR', 'Click to Chat', 'Business WhatsApp'],
     featuredInNav: true,
     priorityOrder: 65,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Communication Lab',
   },
   {
     id: 'qr-code-generator-studio',
@@ -1456,8 +1290,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['QR Code Generator', 'WiFi QR', 'UPI QR Code', 'vCard QR', 'Custom QR with Logo'],
     featuredInNav: true,
     priorityOrder: 66,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Digital ID Standard',
   },
   {
     id: 'qr-code-reader-tool',
@@ -1470,8 +1302,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['QR Code Reader', 'Scan QR from Image', 'Camera QR Scanner', 'Decode QR Online'],
     featuredInNav: false,
     priorityOrder: 67,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Digital ID Standard',
   },
   {
     id: 'barcode-generator-studio',
@@ -1484,8 +1314,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Barcode Generator', 'Code 128', 'EAN 13', 'UPC Barcode', 'Shipping Label Barcode'],
     featuredInNav: true,
     priorityOrder: 68,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Logistics Standard',
   },
   {
     id: 'barcode-reader-tool',
@@ -1498,8 +1326,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Barcode Reader', 'Scan Barcode Online', 'EAN Scanner', 'UPC Reader'],
     featuredInNav: false,
     priorityOrder: 69,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Logistics Standard',
   },
   {
     id: 'utm-link-generator-tool',
@@ -1512,8 +1338,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UTM Builder', 'GA4 Link Builder', 'Campaign URL Maker', 'UTM Generator'],
     featuredInNav: false,
     priorityOrder: 70,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Marketing Standard',
   },
   {
     id: 'mailto-link-generator-tool',
@@ -1526,8 +1350,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Mailto Generator', 'Email Link Builder', 'Mailto with Subject', 'Contact Button Code'],
     featuredInNav: false,
     priorityOrder: 71,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Webmaster Standard',
   },
   {
     id: 'paypal-link-generator-tool',
@@ -1540,8 +1362,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['PayPal Link Generator', 'PayPal.me Maker', 'Donation Link', 'Payment QR Code'],
     featuredInNav: false,
     priorityOrder: 72,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Payment Standard',
   },
   // -------------------------------------------------------------
   // Phase 3: Network, Domain & Security Health Checkers
@@ -1557,8 +1377,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['DNS Lookup', 'MX Records', 'SPF DKIM TXT', 'Nameserver Check', 'BIND Zone File', 'Cloudflare DoH'],
     featuredInNav: true,
     priorityOrder: 73,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'DNS Standard',
   },
   {
     id: 'ssl-lookup-tool',
@@ -1571,8 +1389,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SSL Lookup', 'TLS Handshake', 'SSL Expiration', 'SAN Domains', 'Cipher Suite Check'],
     featuredInNav: true,
     priorityOrder: 74,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Security Standard',
   },
   {
     id: 'whois-lookup-tool',
@@ -1585,8 +1401,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['WHOIS Lookup', 'Domain Age Checker', 'ICANN RDAP', 'Registrar Lookup', 'Domain Expiration'],
     featuredInNav: true,
     priorityOrder: 75,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'ICANN Standard',
   },
   {
     id: 'ip-lookup-tool',
@@ -1599,8 +1413,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['IP Lookup', 'IP Geolocation', 'ASN Lookup', 'ISP Finder', 'My IP Address'],
     featuredInNav: true,
     priorityOrder: 76,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'BGP Standard',
   },
   {
     id: 'reverse-ip-lookup-tool',
@@ -1613,8 +1425,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Reverse IP', 'PTR Lookup', 'rDNS Checker', 'Mail Server Verification', 'FCrDNS'],
     featuredInNav: false,
     priorityOrder: 77,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'BGP Standard',
   },
   {
     id: 'http-headers-lookup-tool',
@@ -1627,8 +1437,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['HTTP Headers', 'Security Headers', 'HSTS Checker', 'CSP Validator', 'Server Response'],
     featuredInNav: true,
     priorityOrder: 78,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'W3C Standard',
   },
   {
     id: 'url-redirect-checker-tool',
@@ -1641,8 +1449,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Redirect Checker', '301 Redirect Tracer', 'Redirect Chain', 'Status Code Checker', 'SEO Redirects'],
     featuredInNav: false,
     priorityOrder: 79,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'W3C Standard',
   },
   {
     id: 'meta-tags-checker-tool',
@@ -1655,8 +1461,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Meta Tags Checker', 'Open Graph Preview', 'Twitter Card Validator', 'SERP Simulator', 'SEO Meta Tags'],
     featuredInNav: true,
     priorityOrder: 80,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'SEO Standard',
   },
   // -------------------------------------------------------------
   // Phase 4: Developer Code, Formatter & Minifier Suite
@@ -1672,8 +1476,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['JSON Formatter', 'JSON Validator', 'JSON Beautifier', 'JSON Tree View', 'Minify JSON', 'Sort JSON Keys'],
     featuredInNav: true,
     priorityOrder: 81,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'JSON Standard',
   },
   {
     id: 'json-validator-tool',
@@ -1686,8 +1488,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['JSON Validator', 'JSON Lint', 'JSON Syntax Error', 'RFC 8259'],
     featuredInNav: false,
     priorityOrder: 82,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'JSON Standard',
   },
   {
     id: 'json-beautifier-tool',
@@ -1700,8 +1500,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['JSON Beautifier', 'Pretty Print JSON', 'Format JSON', 'Indent JSON'],
     featuredInNav: false,
     priorityOrder: 83,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'JSON Standard',
   },
   {
     id: 'html-minifier-tool',
@@ -1714,8 +1512,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['HTML Minifier', 'Compress HTML', 'HTML Optimizer', 'Core Web Vitals'],
     featuredInNav: true,
     priorityOrder: 84,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'W3C Standard',
   },
   {
     id: 'css-minifier-tool',
@@ -1728,8 +1524,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['CSS Minifier', 'Compress CSS', 'Clean CSS', 'Stylesheet Optimizer'],
     featuredInNav: true,
     priorityOrder: 85,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'W3C Standard',
   },
   {
     id: 'js-minifier-tool',
@@ -1742,8 +1536,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['JavaScript Minifier', 'JS Compressor', 'Minify JS', 'Code Optimization'],
     featuredInNav: true,
     priorityOrder: 86,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'ECMAScript Standard',
   },
   {
     id: 'sql-formatter-tool',
@@ -1756,8 +1548,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SQL Formatter', 'Beautify SQL', 'PostgreSQL Formatter', 'MySQL Beautifier', 'Format SQL Query'],
     featuredInNav: true,
     priorityOrder: 87,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'ANSI SQL Standard',
   },
   {
     id: 'markdown-to-html-tool',
@@ -1770,8 +1560,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Markdown to HTML', 'GFM Converter', 'Markdown Editor', 'HTML Export'],
     featuredInNav: true,
     priorityOrder: 88,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'CommonMark Standard',
   },
   {
     id: 'base64-encode-tool',
@@ -1784,8 +1572,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Base64 Encoder', 'Text to Base64', 'File to Base64', 'Data URI Generator', 'URL-Safe Base64'],
     featuredInNav: true,
     priorityOrder: 89,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'RFC 4648 Standard',
   },
   {
     id: 'base64-decode-tool',
@@ -1798,8 +1584,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Base64 Decoder', 'Base64 to Text', 'Base64 to Image', 'Decode Base64'],
     featuredInNav: false,
     priorityOrder: 90,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'RFC 4648 Standard',
   },
   {
     id: 'url-encode-tool',
@@ -1812,8 +1596,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['URL Encoder', 'Percent Encoding', 'encodeURIComponent', 'Query String Encoder'],
     featuredInNav: false,
     priorityOrder: 91,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'RFC 3986 Standard',
   },
   {
     id: 'url-decode-tool',
@@ -1826,8 +1608,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['URL Decoder', 'Decode URL', 'Percent Decoding', 'Unpack Query String'],
     featuredInNav: false,
     priorityOrder: 92,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'RFC 3986 Standard',
   },
   {
     id: 'html-entity-encoder-tool',
@@ -1840,8 +1620,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['HTML Entity Encoder', 'Escape HTML', 'XSS Prevention', 'HTML Entities'],
     featuredInNav: false,
     priorityOrder: 93,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'W3C Standard',
   },
   {
     id: 'html-entity-decoder-tool',
@@ -1854,8 +1632,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['HTML Entity Decoder', 'Unescape HTML', 'Decode Entities', 'HTML Symbols'],
     featuredInNav: false,
     priorityOrder: 94,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'W3C Standard',
   },
   // -------------------------------------------------------------
   // Phase 5: Text Manipulation, Speech & Security Generator Suite
@@ -1871,8 +1647,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Text to Speech', 'TTS Voice Generator', 'Realistic Voice', 'Audio Reader', 'Speech Synthesis'],
     featuredInNav: true,
     priorityOrder: 95,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Web Speech Standard',
   },
   {
     id: 'lorem-ipsum-generator-tool',
@@ -1885,8 +1659,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Lorem Ipsum Generator', 'Placeholder Text', 'Dummy Text', 'Mockup Text'],
     featuredInNav: true,
     priorityOrder: 96,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Cicero Standard',
   },
   {
     id: 'case-converter-tool',
@@ -1899,8 +1671,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Case Converter', 'UPPERCASE', 'lowercase', 'Title Case', 'camelCase', 'snake_case'],
     featuredInNav: true,
     priorityOrder: 97,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Unicode Standard',
   },
   {
     id: 'word-counter-tool',
@@ -1913,8 +1683,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Word Counter', 'Character Count', 'Reading Time', 'Keyword Density', 'Sentence Counter'],
     featuredInNav: true,
     priorityOrder: 98,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Typography Standard',
   },
   {
     id: 'text-cleaner-tool',
@@ -1927,8 +1695,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Text Cleaner', 'Remove Extra Spaces', 'Clean Text', 'Strip HTML', 'Whitespace Sanitizer'],
     featuredInNav: false,
     priorityOrder: 99,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Typography Standard',
   },
   {
     id: 'remove-line-breaks-tool',
@@ -1941,8 +1707,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Remove Line Breaks', 'Line Break Remover', 'Fix Copied PDF Text', 'Paragraph Formatter'],
     featuredInNav: false,
     priorityOrder: 100,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Typography Standard',
   },
   {
     id: 'password-generator-tool',
@@ -1955,8 +1719,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Password Generator', 'Strong Password', 'Random Password', 'CSPRNG', 'Secure Password'],
     featuredInNav: true,
     priorityOrder: 101,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'NIST Security Standard',
   },
   {
     id: 'unix-timestamp-converter',
@@ -1969,8 +1731,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Unix Timestamp', 'Epoch Converter', 'Epoch to Date', 'ISO 8601', 'Timestamp'],
     featuredInNav: true,
     priorityOrder: 102,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'POSIX Standard',
   },
   {
     id: 'unit-converter',
@@ -1983,8 +1743,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Unit Converter', 'Metric Converter', 'Measurement', 'Bytes to GB', 'Length Converter'],
     featuredInNav: true,
     priorityOrder: 103,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'BIPM SI Units',
   },
   {
     id: 'number-to-words-converter',
@@ -1997,8 +1755,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['Number to Words', 'Cheque Words', 'Lakhs and Crores', 'Rupees in Words', 'Invoice'],
     featuredInNav: true,
     priorityOrder: 104,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'Banking & RBI Standards',
   },
   {
     id: 'hash-generator',
@@ -2011,8 +1767,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['SHA256 Generator', 'MD5 Hash', 'File Checksum', 'SHA512', 'Cryptographic Hash'],
     featuredInNav: true,
     priorityOrder: 105,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'W3C Web Cryptography',
   },
   {
     id: 'uuid-generator',
@@ -2025,8 +1779,6 @@ export const TOOLS_CATALOG: ToolItem[] = [
     examTags: ['UUID Generator', 'GUID Generator', 'UUID v4', 'Random UUID', 'RFC 4122'],
     featuredInNav: true,
     priorityOrder: 106,
-    authorityLogo: '/logos/education.svg',
-    authorityName: 'IETF RFC 4122',
   },
 ];
 
