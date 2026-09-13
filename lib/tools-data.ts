@@ -625,6 +625,20 @@ export const TOOLS_CATALOG: ToolItem[] = [
     authorityLogo: '/logos/emblem_of_india.svg',
     authorityName: "Employees' Provident Fund Org",
   },
+  {
+    id: 'marriage-biodata-maker',
+    slug: '/tools/marriage-biodata-maker',
+    name: 'Marriage Bio-Data Maker Online (A4 PDF & WhatsApp)',
+    category: 'pdf_tools',
+    categoryLabel: 'PDF & Document Tools',
+    shortDesc: 'Create elegant matrimonial biodata with 6 cultural vector themes (Vedic, Royal, Islamic, Christian). Instant watermark-free A4 PDF & WhatsApp image.',
+    badge: '100% FREE BIODATA',
+    examTags: ['Marriage Biodata', 'Matrimonial Profile', 'Shadi Biodata', 'Kundali', 'A4 PDF', 'WhatsApp Share', 'No Watermark'],
+    featuredInNav: true,
+    priorityOrder: 18.99,
+    authorityLogo: '/logos/education.svg',
+    authorityName: 'Matrimonial Document Standards',
+  },
 
   // -------------------------------------------------------------
   // Category 3: Degree, Marksheet & Scanner Tools
