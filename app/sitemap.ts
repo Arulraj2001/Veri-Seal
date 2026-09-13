@@ -367,6 +367,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.98,
     },
     {
+      url: `${baseUrl}/tools/sarathi-driving-licence-photo-signature-resizer`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/tools/epfo-passbook-photo-resizer`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
       url: `${baseUrl}/home-cost`,
       lastModified: now,
       changeFrequency: 'daily',
