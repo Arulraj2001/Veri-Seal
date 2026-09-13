@@ -182,6 +182,12 @@ const STATIC_URLS = [
   '/blog/tnpsc-otr-photo-size-requirements-2026-hindi',
 ];
 
+const INDEXNOW_ENDPOINTS = [
+  'https://api.indexnow.org/indexnow',
+  'https://yandex.com/indexnow',
+  'https://search.seznam.cz/indexnow',
+];
+
 async function submitToIndexNow(urls: string[]) {
   const payload = {
     host: 'kagazo.in',
@@ -190,15 +196,31 @@ async function submitToIndexNow(urls: string[]) {
     urlList: urls.map((u) => (u.startsWith('http') ? u : `${SITE_URL}${u}`)),
   };
 
-  const res = await fetch('https://api.indexnow.org/indexnow', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
+  const results = await Promise.allSettled(
+    INDEXNOW_ENDPOINTS.map(async (endpoint) => {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      return { endpoint, status: res.status };
+    })
+  );
 
-  return res.status;
+  const successful = results.find(
+    (r) => r.status === 'fulfilled' && (r.value.status === 200 || r.value.status === 202)
+  );
+
+  if (successful && successful.status === 'fulfilled') {
+    return successful.value.status;
+  }
+
+  const firstFulfilled = results.find((r) => r.status === 'fulfilled');
+  return firstFulfilled && firstFulfilled.status === 'fulfilled'
+    ? firstFulfilled.value.status
+    : 500;
 }
 
 // POST — submit specific URLs
