@@ -604,20 +604,62 @@ function getToolWatermarkIcon(tool: ToolItem): React.ElementType {
   return style?.WatermarkIcon || FileText;
 }
 
-/** Individual Compact Tool Card with 36x36px Avatar Box, Format Tag, and 50% Watermark */
+// Maximum 2 to 3 flagship cards per logo/category receive a watermark; rest have clean backgrounds
+const WATERMARK_ELIGIBLE_TOOL_IDS = new Set<string>([
+  // Official Recruitment Flagship Tools
+  'ssc-photo-resizer',
+  'upsc-photo-resizer',
+  'tnpsc-photo-resizer',
+  'tnpsc-otr-compliance-kit',
+  'rrb-photo-resizer',
+  'ibps-photo-resizer',
+  'neet-photo-resizer',
+  'mask-aadhaar-tool',
+  'driving-license-card-merger',
+  'affidavit-generator',
+  'income-tax-calculator-2025-26',
+
+  // Select 2-3 Flagship Cards for Key Utility Categories
+  'pdf-compressor-master',
+  'compress-pdf-200kb',
+  'merge-marksheets-pdf',
+  'passport-photo-maker-tool',
+  'passport-white-background',
+  'compress-image-exact-kb',
+  'change-image-dpi-tool',
+  'youtube-thumbnail-downloader-tool',
+  'json-formatter-master',
+  'base64-encode-tool',
+  'dns-lookup-tool',
+  'ssl-lookup-tool',
+  'text-to-speech-tool',
+  'word-counter-tool',
+  'qr-code-generator-studio',
+  'whatsapp-link-generator-tool',
+  'password-generator-tool',
+  'digital-signature-verifier',
+  'salary-slip-generator',
+  'a4-multi-card-sheet',
+  'pvc-id-card-maker',
+  'passport-photo-sheet-maker',
+  'handwritten-declaration-scanner',
+]);
+
+/** Individual Compact Tool Card with 36x36px Avatar Box, Format Tag, and Selective Watermark */
 function ToolCard({ tool }: { tool: ToolItem }) {
   const style = CATEGORY_STYLES[tool.category] || CATEGORY_STYLES.pdf_tools;
   const WatermarkIcon = getToolWatermarkIcon(tool);
   const formatTag = tool.formatTag || 'TOOL';
   const formatTagStyle = FORMAT_TAG_STYLES[formatTag] || FORMAT_TAG_STYLES.PDF;
+  const hasWatermark = WATERMARK_ELIGIBLE_TOOL_IDS.has(tool.id);
 
   return (
     <Link
       href={tool.slug}
       className={`group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-4 sm:p-4.5 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${style.hoverBorder} overflow-hidden min-h-[165px]`}
     >
-      {/* Official Authority Emblem or Exact Matching Closed-Related Watermark (Right Bottom Corner) */}
-      {tool.authorityLogo ? (
+      {/* Selective Watermark: only 2-3 flagship cards per logo, clean on others */}
+      {hasWatermark && tool.authorityLogo ? (
         <div className="absolute -bottom-3 -right-3 w-24 h-24 pointer-events-none flex items-center justify-center transition-all duration-300 z-0">
           <Image
             src={tool.authorityLogo}
@@ -627,13 +669,13 @@ function ToolCard({ tool }: { tool: ToolItem }) {
             className="w-full h-full object-contain opacity-50 dark:opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-85 group-hover:scale-105 group-hover:-rotate-3 transition-all duration-300 drop-shadow-xs"
           />
         </div>
-      ) : (
+      ) : hasWatermark ? (
         <div
           className={`absolute -bottom-4 -right-4 w-24 h-24 pointer-events-none opacity-50 dark:opacity-50 group-hover:opacity-80 group-hover:scale-105 group-hover:-rotate-6 transition-all duration-300 ${style.watermarkColor} flex items-center justify-center z-0`}
         >
           <WatermarkIcon className="w-full h-full stroke-[1.2]" />
         </div>
-      )}
+      ) : null}
 
       <div className="relative z-10 space-y-2">
         {/* Top Bar: 36x36px Avatar Box + Category Badge (Left), Format Tag + Official Promo Badge (Right) */}

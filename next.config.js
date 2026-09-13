@@ -80,6 +80,14 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/tools/api/auth/:path*',
+        destination: '/api/auth/:path*',
+      },
+    ];
+  },
   async headers() {
     return [
       {

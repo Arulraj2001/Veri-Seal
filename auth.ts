@@ -165,6 +165,7 @@ authProviders.push(
   );
 
   export const { handlers, signIn, signOut, auth } = NextAuth({
+    basePath: '/api/auth',
     trustHost: true,
     secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'kagazo_super_secret_auth_key_prod_32chars_minimum_length',
     providers: authProviders,
