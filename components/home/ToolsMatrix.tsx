@@ -82,19 +82,20 @@ export function ToolsMatrix() {
       case 'exam':
         return TOOLS_CATALOG.filter(
           (t) =>
-            t.category === 'photo_image' ||
+            t.category === 'exam_photos' ||
+            t.category === 'passport_visa' ||
             t.examTags.some((tag) => ['UPSC', 'TNPSC', 'SSC', 'IBPS', 'NEET', 'GATE'].includes(tag))
         ).slice(0, 8);
       case 'identity':
         return TOOLS_CATALOG.filter(
           (t) =>
-            t.category === 'kyc_documents' ||
+            t.category === 'security_identity' ||
             ['mask-aadhaar', 'aadhaar-front-back-pdf', 'aadhaar-pan-kyc-merge', 'biometric-face-aligner', 'signature-cleaner-extractor'].includes(t.id)
         ).slice(0, 8);
       case 'print':
         return TOOLS_CATALOG.filter(
           (t) =>
-            t.category === 'print_share' ||
+            t.category === 'print_cybercafe' ||
             ['a4-multi-card-sheet', 'pvc-id-card-maker', 'passport-photo-sheet-maker', 'driving-license-card-merger'].includes(t.id)
         ).slice(0, 8);
       case 'pdf':
