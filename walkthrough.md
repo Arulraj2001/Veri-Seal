@@ -1,13 +1,71 @@
-# VeriSeal Complete Public Exam & Cyber Cafe Tools Suite (Phase 1 & Phase 2)
+# VeriSeal Complete Public Exam, Global & Sovereign Tools Suite
 
 ## Overview & Architecture
-VeriSeal has been transformed into India's premier 100% free public utility platform for competitive exam applicants (UPSC, SSC, NEET, IBPS, RRB, GATE, State PSCs) and cyber cafe / DTP studio operators.
+VeriSeal (Kagazo) has been transformed into India's premier 100% free public utility platform for competitive exam applicants (UPSC, SSC, NEET, IBPS, RRB, GATE, State PSCs), global visa applicants (USCIS, DS-160, DV Lottery), and citizen document workflows (PAN Form 49A, Sarathi Parivahan, EPFO, Matrimonial Bio-data, PDF Signing, and Full-HD Background Removal).
 
 All tools operate strictly with **100% In-Memory RAM Processing**, guaranteeing absolute citizen privacy:
 - Zero files saved to server disks or databases
 - Zero watermarks added to downloaded files
 - Zero sign-up / login walls for document utilities
 - Zero paywalls or tier limitations
+
+---
+
+## Next-Generation Global & Sovereign Tools Suite (Phases 1 - 7)
+
+### 1. Apple HEIC to JPG / PNG / PDF Converter Studio (`/tools/heic-to-jpg`, `/tools/heic-to-pdf`)
+- **Engine**: [`components/tools/HeicConverterEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/HeicConverterEngine.tsx)
+- Solves the #1 friction point where iPhone users cannot upload `.heic` photos to government and university admission portals.
+- Batch client-side conversion up to 50 files via dynamic `heic2any` import in browser RAM.
+- 1-Click ZIP bundle export (`jszip`) or consolidated print-ready A4 PDF document (`jspdf`).
+- **Commit**: `890b2f9`
+
+### 2. NSDL & UTIITSL PAN Card 213×213 & 400×200 Studio (`/tools/pan-card-photo-signature-resizer`)
+- **Engine**: [`components/tools/PanCardCropEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/PanCardCropEngine.tsx)
+- Photo: Exact 213×213 px at 300 DPI (binary JFIF marker injected) strictly between 10 KB – 30 KB.
+- Signature: Exact 400×200 px (2:1 aspect ratio) at 600 DPI strictly between 10 KB – 60 KB.
+- Built-in Otsu Black & White Ink Booster to eliminate phone camera shadows and yellow tint from signature paper.
+- 1-Click Complete PAN Application Kit ZIP download.
+- **Commit**: `bac6fcf`
+
+### 3. USCIS & DV Lottery 2026/2027 Biometric Validator (`/tools/uscis-photo-checker`, `/tools/dv-lottery-photo-tool`)
+- **Engine**: [`components/tools/UscisPhotoCheckerEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/UscisPhotoCheckerEngine.tsx)
+- Biometric 600×600 px at 300 DPI validation strictly under 240 KB for US Visa (DS-160) and Green Card Diversity Visa Lottery.
+- Interactive 50%–69% biometric head-height oval alignment guide.
+- Printable 4×6" 6-photo passport card generator saving applicants $15–$25 per pharmacy photo print.
+- **Commit**: `194ddb7`
+
+### 4. Client-Side Sign PDF Studio (`/tools/sign-pdf`)
+- **Engine**: [`components/tools/SignPdfEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/SignPdfEngine.tsx)
+- 100% Free, unlimited, client-side PDF signing without DocuSign accounts, subscriptions, or cloud uploads.
+- 3 signature input modes: Draw (Bézier smoothing), Type (handwriting calligraphy fonts), Phone Camera Scan with auto white-paper transparency binarization.
+- Multi-page interactive drag-and-drop placement with date and name stamps.
+- Permanent vector flattening via `pdf-lib` in volatile RAM memory.
+- **Commit**: `5f4da46`
+
+### 5. Sarathi Driving Licence & EPFO Passbook Resizers (`/tools/sarathi-driving-licence-photo-signature-resizer`, `/tools/epfo-passbook-photo-resizer`)
+- **Engines**: [`components/tools/SarathiResizerEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/SarathiResizerEngine.tsx), [`components/tools/EpfoResizerEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/EpfoResizerEngine.tsx)
+- Sarathi MoRTH Portal: Photo (35×45mm, 20–50KB) & Signature (20×50mm, 10–20KB) at 300 DPI.
+- EPFO Passbook & Cheque Resizer: Strictly compresses cheque and bank passbook scans to 100KB – 500KB with bank IFSC/account number text clarity booster to prevent claim rejections.
+- **Commit**: `794ef14`
+
+### 6. Free Marriage Bio-Data Maker Studio (`/tools/marriage-biodata-maker`)
+- **Engine**: [`components/tools/MarriageBiodataEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/MarriageBiodataEngine.tsx)
+- 100% Free, NO watermark, NO sign-up.
+- 6 cultural vector themes: Vedic Traditional (Maroon & Gold), Royal Gold & Emerald, South Indian Classic (Temple Border), Modern Minimalist (Executive), Islamic Nikah (Arabesque & Bismillah), Christian Elegance (Burgundy & Cross).
+- 1-Click sample profiles (Hindu Groom/Bride, South Indian, Islamic, Christian, Blank).
+- Real-time live A4 preview with high-res print PDF export (`html2canvas` + `jspdf`) and instant WhatsApp image export.
+- **Commit**: `301fad3`
+
+### 7. Full-HD In-Browser AI Background Remover (`/tools/remove-background`, `/tools/passport-white-background`)
+- **Engine**: [`components/tools/BackgroundRemoverEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/BackgroundRemoverEngine.tsx)
+- Full resolution export (up to 4K / 4000px) eliminating the commercial 500px downscale paywall.
+- Multi-pass client-side edge-aware segmentation with adaptive color tolerance and edge feathering.
+- Presets for Transparent PNG, Passport Pure White (`#FFFFFF`), Passport Light Blue (`#B0C4DE`), and custom colors.
+- Embedded 300 DPI / 600 DPI JFIF injection for passport & visa compliance.
+- Interactive comparison modes (Side-by-Side, Draggable Split Slider, Result Only).
+- Batch processing with 1-click ZIP archive export.
+- **Commit**: `11bb4cb`
 
 ---
 
