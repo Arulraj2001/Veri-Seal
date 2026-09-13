@@ -583,6 +583,20 @@ export const TOOLS_CATALOG: ToolItem[] = [
     authorityLogo: '/logos/passport.svg',
     authorityName: 'U.S. Department of State',
   },
+  {
+    id: 'sign-pdf-tool',
+    slug: '/tools/sign-pdf',
+    name: 'Sign PDF Online Free (Draw, Type, Phone Scan)',
+    category: 'pdf_tools',
+    categoryLabel: 'PDF & Document Tools',
+    shortDesc: 'Sign any PDF contract or form online free without account registration. Permanent vector flattening in browser RAM.',
+    badge: '100% PRIVATE SIGN',
+    examTags: ['Sign PDF', 'Digital Signature', 'No Sign-up', 'No Watermark', 'Agreements', 'Contracts'],
+    featuredInNav: true,
+    priorityOrder: 18.96,
+    authorityLogo: '/logos/education.svg',
+    authorityName: 'Legal Document Standard',
+  },
 
   // -------------------------------------------------------------
   // Category 3: Degree, Marksheet & Scanner Tools
