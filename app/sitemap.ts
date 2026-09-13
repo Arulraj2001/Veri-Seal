@@ -691,6 +691,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.98,
     },
     {
+      url: `${baseUrl}/tools/unix-timestamp-converter`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/tools/unit-converter`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/tools/number-to-words-converter`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/tools/hash-generator`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/tools/uuid-generator`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
       url: `${baseUrl}/tools/compress-image-exact-kb`,
       lastModified: now,
       changeFrequency: 'daily',
