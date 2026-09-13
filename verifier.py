@@ -198,32 +198,71 @@ class InvalidPdfError(VerificationEngineError):
 def detect_document_type(raw_bytes: bytes) -> tuple[str, str, bool]:
     """
     Returns: (doc_type_label, source_portal, is_aadhaar)
-    Detect by scanning first 8KB of PDF content for keywords.
+    Detect by scanning first 16KB of PDF content for keywords.
     Do NOT parse full PDF — just raw bytes scan.
     """
-    sample = raw_bytes[:8192].lower()
+    sample = raw_bytes[:16384].lower()
 
     checks = [
+        # Aadhaar
         (b"uidai", "e-Aadhaar", "UIDAI Portal", True),
         (b"unique identification", "e-Aadhaar", "UIDAI Portal", True),
         (b"myaadhaar", "e-Aadhaar", "UIDAI Portal", True),
         (b"aadhaar", "e-Aadhaar", "UIDAI Portal", True),
+
+        # TDS / Tax (Must precede generic PAN/NSDL checks)
+        (b"form no. 16a", "Form 16A", "TRACES CPC", False),
+        (b"form 16a", "Form 16A", "TRACES CPC", False),
+        (b"form no. 16", "Form 16", "TRACES CPC", False),
+        (b"form 16", "Form 16", "TRACES CPC", False),
+        (b"traces", "Form 16 / TDS Certificate", "TRACES CPC", False),
+        (b"itr-v", "ITR-V", "Income Tax Portal", False),
+        (b"income tax return", "ITR-V", "Income Tax Portal", False),
+
+        # PAN Card
+        (b"income tax department", "PAN Card", "Protean / NSDL", False),
+        (b"permanent account number", "PAN Card", "Protean / NSDL", False),
+        (b"protean", "PAN Card", "Protean / NSDL", False),
+        (b"utiitsl", "PAN Card", "UTIITSL", False),
+
+        # Parivahan / Transport
+        (b"driving licence", "Driving Licence", "MoRTH Parivahan", False),
+        (b"driving license", "Driving Licence", "MoRTH Parivahan", False),
+        (b"sarathi", "Driving Licence", "MoRTH Parivahan", False),
+        (b"registration certificate", "Vehicle RC", "MoRTH Parivahan", False),
+        (b"vahan", "Vehicle RC", "MoRTH Parivahan", False),
+
+        # Tamil Nadu e-District / Revenue / CRSTN
+        (b"first graduate", "First Graduate Certificate", "TN e-District", False),
+        (b"legal heir", "Legal Heir Certificate", "TN e-District", False),
         (b"community certificate", "Community Certificate", "TN e-District", False),
         (b"\xe0\xae\x9a\xe0\xae\xae\xe0\xaf\x82\xe0\xae\x95", "Community Certificate", "TN e-District", False),
         (b"nativity certificate", "Nativity Certificate", "TN e-District", False),
         (b"income certificate", "Income Certificate", "TN e-District", False),
-        (b"first graduate", "First Graduate Certificate", "TN e-District", False),
-        (b"legal heir", "Legal Heir Certificate", "TN e-District", False),
-        (b"birth certificate", "Birth Certificate", "CRSTN / e-District", False),
-        (b"death certificate", "Death Certificate", "CRSTN / e-District", False),
-        (b"income tax department", "PAN Card", "Protean / NSDL", False),
-        (b"permanent account number", "PAN Card", "Protean / NSDL", False),
-        (b"digilocker", "DigiLocker Document", "DigiLocker", False),
-        (b"itr-v", "ITR-V", "Income Tax Portal", False),
-        (b"income tax return", "ITR-V", "Income Tax Portal", False),
+        (b"widow certificate", "Widow Certificate", "TN e-District", False),
+        (b"deserted woman", "Deserted Woman Certificate", "TN e-District", False),
+        (b"inter-caste", "Inter-caste Marriage Certificate", "TN e-District", False),
+        (b"intercaste", "Inter-caste Marriage Certificate", "TN e-District", False),
+        (b"solvency certificate", "Solvency Certificate", "TN e-District", False),
+        (b"crstn", "Birth/Death Certificate", "CRSTN Tamil Nadu", False),
+
+        # Civil Registration (Birth / Death)
+        (b"birth certificate", "Birth Certificate", "Civil Registration System", False),
+        (b"death certificate", "Death Certificate", "Civil Registration System", False),
+        (b"sevana", "Civil Registration Certificate", "Kerala Sevana", False),
+
+        # Central / State e-District Portals
+        (b"other backward class", "Central OBC Certificate", "National e-District", False),
         (b"meeseva", "MeeSeva Certificate", "AP/TS MeeSeva", False),
+        (b"nadakacheri", "Nadakacheri Certificate", "Karnataka Nadakacheri", False),
         (b"ejanma", "Birth/Death Certificate", "Karnataka eJanma", False),
-        (b"nadakacheri", "Caste/Income Certificate", "Karnataka Nadakacheri", False),
+        (b"edistrict.up", "UP e-District Certificate", "Uttar Pradesh e-District", False),
+        (b"aaple sarkar", "Aaple Sarkar Certificate", "Maharashtra Aaple Sarkar", False),
+        (b"aaplesarkar", "Aaple Sarkar Certificate", "Maharashtra Aaple Sarkar", False),
+
+        # DigiLocker / EPFO
+        (b"epfo", "EPFO UAN / Pension Certificate", "EPFO India", False),
+        (b"digilocker", "DigiLocker Document", "DigiLocker", False),
     ]
 
     for keyword, doc_type, source, is_aadhaar in checks:

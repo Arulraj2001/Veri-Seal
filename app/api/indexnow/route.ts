@@ -18,7 +18,7 @@ const STATIC_URLS = [
   '/home-cost',
   '/business-os',
 
-  // SEO landing pages
+  // SEO landing pages (Government Document Verifiers)
   '/verify-aadhaar-pdf',
   '/verify-community-certificate-tamil-nadu',
   '/verify-nativity-certificate-tamil-nadu',
@@ -27,6 +27,22 @@ const STATIC_URLS = [
   '/verify-digilocker-pdf',
   '/verify-epfo-uan-card',
   '/verify-itr-acknowledgement',
+  '/verify-birth-certificate',
+  '/verify-death-certificate',
+  '/verify-first-graduate-certificate',
+  '/verify-legal-heir-certificate',
+  '/verify-form-16',
+  '/verify-driving-licence-pdf',
+  '/verify-vehicle-rc-pdf',
+  '/verify-obc-certificate',
+  '/verify-meeseva-caste-certificate',
+  '/verify-nadakacheri-certificate',
+  '/verify-up-edistrict-certificate',
+  '/verify-aaple-sarkar-certificate',
+  '/verify-widow-certificate',
+  '/verify-solvency-certificate',
+  '/verify-deserted-woman-certificate',
+  '/verify-intercaste-marriage-certificate',
 
   // Tools — PDF
   '/tools/pdf-compressor',

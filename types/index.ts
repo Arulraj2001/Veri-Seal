@@ -20,6 +20,7 @@ export interface SupportedDocItem {
   description: string;
   isPasswordProtectedSupported?: boolean;
   code?: string;
+  slug?: string;
 }
 
 export interface VerificationResult {

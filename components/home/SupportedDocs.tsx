@@ -118,7 +118,9 @@ export function SupportedDocs() {
 
                   {/* Document Name */}
                   <h3 className="font-bold text-base text-text-main group-hover:text-primary transition-colors leading-snug mb-2">
-                    <Link href={`/${getSeoSlugForDocType(doc.name)}`}>{doc.name}</Link>
+                    <Link href={(doc.slug ? `/${doc.slug}` : (getSeoSlugForDocType(doc.name).startsWith('#') ? getSeoSlugForDocType(doc.name) : `/${getSeoSlugForDocType(doc.name)}`))}>
+                      {doc.name}
+                    </Link>
                   </h3>
 
                   {/* Description */}
@@ -142,7 +144,7 @@ export function SupportedDocs() {
                   )}
 
                   <Link
-                    href={`/${getSeoSlugForDocType(doc.name)}`}
+                    href={(doc.slug ? `/${doc.slug}` : (getSeoSlugForDocType(doc.name).startsWith('#') ? getSeoSlugForDocType(doc.name) : `/${getSeoSlugForDocType(doc.name)}`))}
                     className="inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-primary-hover group-hover:translate-x-0.5 transition-all"
                   >
                     <span>{language === 'ta' ? 'சரிபார்ப்பு வழிகாட்டி' : 'Verify Guide'}</span>

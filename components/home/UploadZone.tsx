@@ -106,6 +106,48 @@ export function UploadZone() {
       });
   }, []);
 
+  const getPasswordHint = () => {
+    const fname = file?.name?.toLowerCase() || '';
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
+
+    if (fname.includes('aadhaar') || currentPath.includes('aadhaar')) {
+      return {
+        placeholder: 'e.g. RAMA1995',
+        hint: language === 'ta'
+          ? 'உங்கள் பெயரின் முதல் 4 எழுத்துக்கள் (CAPITAL) + பிறந்த ஆண்டு (எ.கா. RAMA1995).'
+          : 'First 4 letters of your name in CAPITAL LETTERS + your 4-digit Year of Birth (e.g. RAMA1995).'
+      };
+    }
+    if (fname.includes('pan') || currentPath.includes('pan')) {
+      return {
+        placeholder: 'e.g. 25081995',
+        hint: language === 'ta'
+          ? 'உங்கள் பிறந்த தேதி DDMMYYYY வடிவத்தில் இடைவெளி இன்றி (எ.கா. 25081995).'
+          : 'Your Date of Birth in DDMMYYYY format without spaces or slashes (e.g. 25081995 for 25-Aug-1995).'
+      };
+    }
+    if (fname.includes('form16') || fname.includes('form-16') || currentPath.includes('form-16')) {
+      return {
+        placeholder: 'e.g. ABCDE1234F',
+        hint: language === 'ta'
+          ? 'உங்கள் 10 இலக்க PAN எண் (பெரிய எழுத்துக்களில்).'
+          : 'Your 10-character PAN number in CAPITAL LETTERS (e.g. ABCDE1234F) or PAN + Date of Birth.'
+      };
+    }
+    if (fname.includes('itr') || currentPath.includes('itr')) {
+      return {
+        placeholder: 'e.g. abcde1234f25081995',
+        hint: language === 'ta'
+          ? 'PAN எண் (சிறிய எழுத்துக்களில்) + பிறந்த தேதி DDMMYYYY.'
+          : 'Your 10-digit PAN in lowercase + Date of Birth in DDMMYYYY format (e.g. abcde1234f25081995).'
+      };
+    }
+    return {
+      placeholder: t.upload.passwordPlaceholder || 'Enter PDF password',
+      hint: t.upload_password_hint || t.upload.passwordRuleDetail || 'This document is processed in-memory and immediately discarded.'
+    };
+  };
+
   const resetAll = () => {
     setState('idle');
     setFile(null);
@@ -161,8 +203,11 @@ export function UploadZone() {
     }
 
     setFile(selectedFile);
-    const isAadhaar = selectedFile.name.toLowerCase().includes('aadhaar');
-    setIsPasswordProtected(isAadhaar);
+    const fname = selectedFile.name.toLowerCase();
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
+    const isPasswordName = ['aadhaar', 'pan', 'form16', 'form-16', 'itr', 'traces', 'salary', 'payslip', 'statement', 'tax'].some((k) => fname.includes(k));
+    const isPasswordPage = ['verify-pan-card-pdf', 'verify-form-16', 'verify-itr-acknowledgement', 'verify-aadhaar-pdf'].some((k) => currentPath.includes(k));
+    setIsPasswordProtected(isPasswordName || isPasswordPage);
     setState('file-selected');
 
     // Telemetry: Track PDF uploaded
@@ -293,10 +338,18 @@ export function UploadZone() {
         return;
       }
 
-      if (code === 'WRONG_PASSWORD') {
+      if (
+        code === 'WRONG_PASSWORD' ||
+        code === 'PASSWORD_REQUIRED' ||
+        String(errorObj?.message || '').toLowerCase().includes('password')
+      ) {
+        setIsPasswordProtected(true);
+        setState('file-selected');
+        const hintObj = getPasswordHint();
         setErrorMessage(
-          'Incorrect password provided. For e-Aadhaar, use the first 4 letters of your name in CAPITAL LETTERS + year of birth (e.g. RAMA1995).'
+          `Password required or incorrect. ${hintObj.hint}`
         );
+        return;
       } else if (code === 'NO_SIGNATURE_FOUND') {
         setErrorMessage(
           'No digital signatures were detected in this PDF. Please ensure you are uploading the official government digitally signed document.'
@@ -474,6 +527,21 @@ export function UploadZone() {
                 </button>
               </div>
 
+              {/* Error Notice in file-selected state */}
+              {errorMessage && (
+                <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-900 flex items-start gap-2.5">
+                  <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div className="flex-1 font-medium leading-relaxed">{errorMessage}</div>
+                  <button
+                    type="button"
+                    onClick={() => setErrorMessage('')}
+                    className="text-amber-600 hover:text-amber-800"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
+
               {/* Password Checkbox */}
               <div className="flex items-center gap-2.5 px-1">
                 <input
@@ -516,7 +584,7 @@ export function UploadZone() {
                       <div className="relative">
                         <input
                           type={showPassword ? 'text' : 'password'}
-                          placeholder={t.upload.passwordPlaceholder}
+                          placeholder={getPasswordHint().placeholder}
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           className="w-full bg-white border border-amber-200 rounded-xl px-4 py-3 text-sm text-text-main font-mono placeholder:text-text-main/40 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent pr-11"
@@ -530,8 +598,8 @@ export function UploadZone() {
                         </button>
                       </div>
 
-                      <p className="text-xs text-amber-800 leading-relaxed">
-                        {t.upload_password_hint || t.upload.passwordRuleDetail}
+                      <p className="text-xs text-amber-800 leading-relaxed font-medium">
+                        {getPasswordHint().hint}
                       </p>
                     </div>
                   </motion.div>

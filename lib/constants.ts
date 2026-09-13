@@ -36,6 +36,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Digitally signed by Unique Identification Authority of India (UIDAI). Supports password-protected PDF.',
     isPasswordProtectedSupported: true,
     code: 'AADHAAR',
+    slug: 'verify-aadhaar-pdf',
   },
   {
     id: 'pan-nsdl',
@@ -47,6 +48,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Instant e-PAN signed with official Income Tax / NSDL certificate.',
     isPasswordProtectedSupported: true,
     code: 'PAN',
+    slug: 'verify-pan-card-pdf',
   },
   {
     id: 'digilocker-general',
@@ -58,6 +60,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'All legally recognized documents issued and signed by DigiLocker Authority.',
     isPasswordProtectedSupported: false,
     code: 'DIGILOCKER',
+    slug: 'verify-digilocker-pdf',
   },
   {
     id: 'itr-v-acknowledgement',
@@ -69,6 +72,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Income Tax Department signed acknowledgement receipt.',
     isPasswordProtectedSupported: true,
     code: 'ITR_V',
+    slug: 'verify-itr-acknowledgement',
   },
   {
     id: 'tds-form-16',
@@ -80,6 +84,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Employer TDS certificate digitally signed under CCA India hierarchy.',
     isPasswordProtectedSupported: true,
     code: 'FORM16',
+    slug: 'verify-form-16',
   },
   {
     id: 'digilocker-dl',
@@ -91,6 +96,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Ministry of Road Transport and Highways signed driving licence PDF.',
     isPasswordProtectedSupported: false,
     code: 'DL',
+    slug: 'verify-driving-licence-pdf',
   },
   {
     id: 'digilocker-rc',
@@ -102,6 +108,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Vehicle Registration Certificate with CCA cryptographic signature.',
     isPasswordProtectedSupported: false,
     code: 'RC',
+    slug: 'verify-vehicle-rc-pdf',
   },
 
   // TAMIL NADU
@@ -115,6 +122,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Revenue administration signed caste certificate with QR and digital stamp.',
     isPasswordProtectedSupported: false,
     code: 'TN_COMMUNITY',
+    slug: 'verify-community-certificate-tamil-nadu',
   },
   {
     id: 'tn-nativity',
@@ -126,6 +134,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Official residency verification issued by Tahsildar / Revenue Department.',
     isPasswordProtectedSupported: false,
     code: 'TN_NATIVITY',
+    slug: 'verify-nativity-certificate-tamil-nadu',
   },
   {
     id: 'tn-income',
@@ -137,6 +146,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Annual family income certificate signed under CCA NIC hierarchy.',
     isPasswordProtectedSupported: false,
     code: 'TN_INCOME',
+    slug: 'verify-income-certificate',
   },
   {
     id: 'tn-first-graduate',
@@ -148,6 +158,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Higher education tuition concession certificate issued by Tahsildar.',
     isPasswordProtectedSupported: false,
     code: 'TN_FIRST_GRAD',
+    slug: 'verify-first-graduate-certificate',
   },
   {
     id: 'tn-birth-crstn',
@@ -159,6 +170,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Sanitary Inspector / Health Officer digitally signed birth certificate.',
     isPasswordProtectedSupported: false,
     code: 'TN_BIRTH',
+    slug: 'verify-birth-certificate',
   },
   {
     id: 'tn-death-crstn',
@@ -170,6 +182,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Officially validated digital death certificate with NIC signature.',
     isPasswordProtectedSupported: false,
     code: 'TN_DEATH',
+    slug: 'verify-death-certificate',
   },
   {
     id: 'tn-legal-heir',
@@ -181,6 +194,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Tahsildar signed legal succession certificate.',
     isPasswordProtectedSupported: false,
     code: 'TN_LEGAL_HEIR',
+    slug: 'verify-legal-heir-certificate',
   },
   {
     id: 'tn-residence',
@@ -192,6 +206,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Proof of residential address within Tamil Nadu state jurisdiction.',
     isPasswordProtectedSupported: false,
     code: 'TN_RESIDENCE',
+    slug: 'verify-nativity-certificate-tamil-nadu',
   },
   {
     id: 'tn-obc',
@@ -203,6 +218,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Other Backward Class certificate for Central Government employment & UPSC.',
     isPasswordProtectedSupported: false,
     code: 'TN_OBC',
+    slug: 'verify-obc-certificate',
   },
   {
     id: 'tn-deserted-woman',
@@ -214,6 +230,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Revenue department verification for social welfare support.',
     isPasswordProtectedSupported: false,
     code: 'TN_DESERTED_WOMAN',
+    slug: 'verify-deserted-woman-certificate',
   },
   {
     id: 'tn-intercaste',
@@ -225,6 +242,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Social welfare department incentive certification.',
     isPasswordProtectedSupported: false,
     code: 'TN_INTERCASTE',
+    slug: 'verify-intercaste-marriage-certificate',
   },
   {
     id: 'tn-agri-income',
@@ -236,6 +254,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Revenue authority assessment of agricultural land yield and income.',
     isPasswordProtectedSupported: false,
     code: 'TN_AGRI_INCOME',
+    slug: 'verify-income-certificate',
   },
   {
     id: 'tn-widow',
@@ -247,6 +266,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Government pension and welfare benefits validation document.',
     isPasswordProtectedSupported: false,
     code: 'TN_WIDOW',
+    slug: 'verify-widow-certificate',
   },
   {
     id: 'tn-solvency',
@@ -258,6 +278,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Financial stability document for government contracts and tenders.',
     isPasswordProtectedSupported: false,
     code: 'TN_SOLVENCY',
+    slug: 'verify-solvency-certificate',
   },
 
   // ANDHRA PRADESH & TELANGANA
@@ -271,6 +292,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Integrated caste validation issued by Andhra Pradesh / Telangana MeeSeva.',
     isPasswordProtectedSupported: false,
     code: 'APTS_CASTE',
+    slug: 'verify-meeseva-caste-certificate',
   },
   {
     id: 'apts-income',
@@ -282,6 +304,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Digitally signed household income certificate for scholarship & welfare.',
     isPasswordProtectedSupported: false,
     code: 'APTS_INCOME',
+    slug: 'verify-income-certificate',
   },
   {
     id: 'apts-residence',
@@ -293,6 +316,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Domicile proof signed by Mandal Revenue Officer (MRO).',
     isPasswordProtectedSupported: false,
     code: 'APTS_RESIDENCE',
+    slug: 'verify-nativity-certificate-tamil-nadu',
   },
   {
     id: 'apts-birth',
@@ -304,6 +328,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Municipal administration signed birth registration document.',
     isPasswordProtectedSupported: false,
     code: 'APTS_BIRTH',
+    slug: 'verify-birth-certificate',
   },
   {
     id: 'apts-death',
@@ -315,6 +340,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Digital death record signed with official government PKI certificate.',
     isPasswordProtectedSupported: false,
     code: 'APTS_DEATH',
+    slug: 'verify-death-certificate',
   },
 
   // KARNATAKA
@@ -328,6 +354,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Revenue department certificate signed by Tahsildar / Revenue Inspector.',
     isPasswordProtectedSupported: false,
     code: 'KA_CASTE_INCOME',
+    slug: 'verify-nadakacheri-certificate',
   },
   {
     id: 'ka-birth-ejanma',
@@ -339,6 +366,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Vital statistics department cryptographic signature birth record.',
     isPasswordProtectedSupported: false,
     code: 'KA_BIRTH',
+    slug: 'verify-birth-certificate',
   },
   {
     id: 'ka-death-ejanma',
@@ -350,6 +378,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Official registrar certified digital death certificate.',
     isPasswordProtectedSupported: false,
     code: 'KA_DEATH',
+    slug: 'verify-death-certificate',
   },
 
   // KERALA
@@ -363,6 +392,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Local Self Government Department certified birth certificate.',
     isPasswordProtectedSupported: false,
     code: 'KL_BIRTH',
+    slug: 'verify-birth-certificate',
   },
   {
     id: 'kl-death-sevana',
@@ -374,6 +404,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Registrar of Births & Deaths digitally signed death certificate.',
     isPasswordProtectedSupported: false,
     code: 'KL_DEATH',
+    slug: 'verify-death-certificate',
   },
   {
     id: 'kl-community-edistrict',
@@ -385,6 +416,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Revenue officer digital signature under NIC Kerala CA.',
     isPasswordProtectedSupported: false,
     code: 'KL_COMMUNITY',
+    slug: 'verify-community-certificate-tamil-nadu',
   },
 
   // MORE STATES
@@ -398,6 +430,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Niwas, Jati, and Aay praman patra issued by UP government.',
     isPasswordProtectedSupported: false,
     code: 'UP_EDISTRICT',
+    slug: 'verify-up-edistrict-certificate',
   },
   {
     id: 'mh-aaplesarkar',
@@ -409,6 +442,7 @@ export const SUPPORTED_DOCS: SupportedDocItem[] = [
     description: 'Domicile, Caste, and Non-Creamy Layer certificates.',
     isPasswordProtectedSupported: false,
     code: 'MH_CERT',
+    slug: 'verify-aaple-sarkar-certificate',
   },
 ];
 
