@@ -67,6 +67,20 @@ All tools operate strictly with **100% In-Memory RAM Processing**, guaranteeing 
 - Batch processing with 1-click ZIP archive export.
 - **Commit**: `11bb4cb`
 
+### 8. Flagship Passport Photo Maker Studio & Comprehensive Link Audit (`/tools/passport-photo-maker`)
+- **Flagship Studio**: [`app/tools/passport-photo-maker/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/passport-photo-maker/page.tsx)
+- **Engine**: [`PassportPhotoStudioEngine.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/components/tools/PassportPhotoStudioEngine.tsx) (`defaultCountryId="india-passport"`)
+- Solves the 404 error when clicking "Passport Photo Maker" in right sticky sidebar rails.
+- Official Passport Seva Kendra (35×45 mm @ 300 DPI, 20–50 KB) & international visa creator.
+- Multi-country selector (India, US 2×2", UK, Schengen, Canada, Australia, Singapore).
+- Printable 4×6" 8-photo card generator with scissor cutting lines and Name/Date of Photo (DOP) stamp toggle.
+- **301/308 Redirect Safeguards** added to `next.config.js`:
+  - `/tools/compress-pdf` -> `/tools/pdf-compressor`
+  - `/tools/image-to-pdf` -> `/tools/image-to-pdf-200kb`
+  - `/tools/passport-photo` -> `/tools/passport-photo-maker`
+  - `/tools/passport-photo-resizer` -> `/tools/passport-photo-maker`
+- **Audit Result**: Scanned 401 code files across `app`, `components`, `lib`. **0 broken internal links remaining** across the entire application!
+
 ---
 
 ## Suite Summary: 28 Verified Live Routes

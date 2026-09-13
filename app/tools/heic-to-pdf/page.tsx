@@ -272,12 +272,12 @@ export default function HeicToPdfPage() {
                 </Link>
 
                 <Link
-                  href="/tools/image-to-pdf"
+                  href="/tools/image-to-pdf-200kb"
                   className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
                     <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Image to PDF
+                      Image to PDF (200KB)
                     </span>
                   </div>
                   <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
@@ -286,12 +286,12 @@ export default function HeicToPdfPage() {
                 </Link>
 
                 <Link
-                  href="/tools/compress-pdf"
+                  href="/tools/pdf-compressor"
                   className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
                     <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress PDF
+                      Master PDF Compressor
                     </span>
                   </div>
                   <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">

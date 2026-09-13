@@ -397,6 +397,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.98,
     },
     {
+      url: `${baseUrl}/tools/passport-photo-maker`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 1.0,
+    },
+    {
       url: `${baseUrl}/home-cost`,
       lastModified: now,
       changeFrequency: 'daily',

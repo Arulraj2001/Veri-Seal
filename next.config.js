@@ -58,6 +58,26 @@ const nextConfig = {
         destination: '/tools/mask-aadhaar',
         permanent: true,
       },
+      {
+        source: '/tools/compress-pdf',
+        destination: '/tools/pdf-compressor',
+        permanent: true,
+      },
+      {
+        source: '/tools/image-to-pdf',
+        destination: '/tools/image-to-pdf-200kb',
+        permanent: true,
+      },
+      {
+        source: '/tools/passport-photo',
+        destination: '/tools/passport-photo-maker',
+        permanent: true,
+      },
+      {
+        source: '/tools/passport-photo-resizer',
+        destination: '/tools/passport-photo-maker',
+        permanent: true,
+      },
     ];
   },
   async headers() {
