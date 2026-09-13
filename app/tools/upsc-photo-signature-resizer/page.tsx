@@ -6,30 +6,36 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
   Camera,
   PenTool,
   ArrowRight,
+  AlertTriangle,
+  CheckCircle2,
+  FileText,
+  Sliders,
+  Sparkles,
+  Calendar,
+  User,
+  Info,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'UPSC Photo & Signature Resizer Online Free | 20-300KB 350x350px | Kagazo',
+  title: 'UPSC Photo & Signature Resizer — ORA Portal 2026 | Kagazo',
   description:
-    'Resize photo (20-300KB with Name & Date, 3/4th face) and signature (20-300KB, Min 350x350px) for UPSC Civil Services, NDA, CDS, and OTR. Strictly compliant with UPSC 10-day photo rule.',
+    'Resize your UPSC CSE, NDA, CDS, and IES exam photo (300 KB, 350–1000 px) and signature (300 KB, JPEG) with auto name & date-of-photo banner. Free, no upload, instant.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/upsc-photo-signature-resizer',
+    canonical: 'https://kagazo.in/tools/upsc-photo-signature-resizer',
   },
   openGraph: {
-    title: 'UPSC Photo & Signature Resizer Online Free | Kagazo',
+    title: 'UPSC ORA Photo & Signature Resizer | Kagazo — Free, No Upload',
     description:
-      'Resize photo and signature for UPSC OTR. Strict 20-300KB and 350x350px guarantee. In-memory processing, zero watermark.',
-    url: 'https://Kagazo.in/tools/upsc-photo-signature-resizer',
+      'Format UPSC photo and signature to exact ORA specifications. Auto embeds candidate name and date-of-photograph banner. 100% in-browser, no server.',
+    url: 'https://kagazo.in/tools/upsc-photo-signature-resizer',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -38,7 +44,7 @@ export const metadata: Metadata = {
 const UPSC_PRESETS: CustomPreset[] = [
   {
     id: 'photo',
-    label: 'UPSC Photo (20-300KB, 350x350px)',
+    label: 'UPSC Photo (20–300 KB, 500×500 px)',
     minKb: 20,
     maxKb: 300,
     widthPx: 500,
@@ -47,7 +53,7 @@ const UPSC_PRESETS: CustomPreset[] = [
   },
   {
     id: 'signature',
-    label: 'UPSC Signature (20-300KB, 350x350px)',
+    label: 'UPSC Signature (20–300 KB, 500×500 px)',
     minKb: 20,
     maxKb: 300,
     widthPx: 500,
@@ -58,24 +64,54 @@ const UPSC_PRESETS: CustomPreset[] = [
 
 const UPSC_FAQS = [
   {
-    question: 'What are the exact photo and signature dimensions for UPSC OTR?',
+    question: 'Does UPSC still require the name and date banner on the photo in 2026?',
     answer:
-      'The Union Public Service Commission (UPSC) requires: Both Photograph and Signature must have minimum dimensions of 350 pixels x 350 pixels (and maximum 1000 x 1000 pixels). The file size for both must be strictly between 20 KB and 300 KB in JPG/JPEG format.',
+      'Yes, for most UPSC Online Recruitment Application (ORA) based examinations (CSE, NDA, CDS, CMS, and CAPF). The applicant full name and the exact date the photograph was captured must be printed in white text on a black banner strip at the bottom of the photograph. This must be physically embedded into the JPEG pixels, not typed into a form text box.',
   },
   {
-    question: 'What is the UPSC 10-Day Photo Rule?',
+    question: 'What is the official UPSC 10-Day Photograph Freshness Rule?',
     answer:
-      'As per UPSC guidelines, the photograph uploaded must not be older than 10 days from the date of online application opening. The candidate name and date on which the photo was taken must be clearly printed at the bottom of the photograph. The candidate face should occupy at least 3/4th (75%) of the photograph space.',
+      'UPSC mandates that the photograph must not be older than 10 days from the date of online application opening or submission. The date printed on the bottom banner must reflect a date within this 10-day freshness window. If you apply on March 15, the banner date must be March 5 or later.',
   },
   {
-    question: 'Why does UPSC OTR show "Resolution less than 350x350" error?',
+    question: 'What size and pixel dimensions are required for UPSC photos and signatures?',
     answer:
-      'Standard image compressors reduce pixel dimensions to shrink the file size, dropping it below 350x350 pixels. Kagazo enforces a safe 500x500 pixel canvas while keeping the file comfortably between 40 KB and 150 KB, completely preventing resolution errors.',
+      'Both photograph and signature must have pixel dimensions between 350 × 350 pixels (minimum) and 1000 × 1000 pixels (maximum) in a square 1:1 aspect ratio. The file size must be strictly below 300 KB (and at least 20 KB) in JPG/JPEG format.',
   },
   {
-    question: 'Is this UPSC tool 100% free with no watermark?',
+    question: 'Why does UPSC ORA show "Resolution less than 350x350" error?',
     answer:
-      'Yes, 100% free forever. Kagazo does not add any watermarks, does not require sign-up, and processes your photo and signature completely in RAM memory without storing them on server disks.',
+      'Many basic photo resizers shrink pixel dimensions drastically to achieve small file sizes, dropping the resolution below 350×350 px. The UPSC ORA validation script immediately halts the upload. Kagazo locks your output to a high-resolution 500×500 pixel square canvas while keeping the file size safely between 40 KB and 150 KB.',
+  },
+  {
+    question: 'Can I use a normal passport studio photo without a name/date strip?',
+    answer:
+      'Standard studio photos do not include the name and date strip unless you explicitly ask for it. Uploading a photo without the embedded strip can result in cancellation during document scrutiny or at the interview stage at Dholpur House. Kagazo embeds this required banner automatically.',
+  },
+  {
+    question: 'Can I wear spectacles or dark glasses in the UPSC photograph?',
+    answer:
+      'No. UPSC guidelines prohibit spectacles, tinted lenses, and dark sunglasses. Lenses cause camera flash glare and reflections that hinder automated facial recognition systems used during examination center verification.',
+  },
+  {
+    question: 'What background color is mandatory for UPSC photos?',
+    answer:
+      'The background must be plain white or a very light solid tone. Dark, colorful, textured, or outdoor background photographs are strictly prohibited by UPSC.',
+  },
+  {
+    question: 'How should I format the signature for UPSC?',
+    answer:
+      'Sign in black or dark blue ink on clean, unruled white paper. Keep your signature in natural running cursive handwriting. Do not sign in BLOCK / CAPITAL letters. Kagazo scales the signature onto a 1:1 square canvas above 350×350 px to comply with the ORA upload validator.',
+  },
+  {
+    question: 'Does Kagazo transmit my photo, name, or date to any server?',
+    answer:
+      'No. All processing—including facial cropping, canvas padding, banner rendering, and JPEG compression—happens 100% client-side inside your browser memory using HTML5 Canvas. No document or personal detail is ever sent to our servers.',
+  },
+  {
+    question: 'What are the rules for PDF documents on the UPSC portal?',
+    answer:
+      'UPSC ORA requires educational certificates, caste/EWS certificates, and age proof documents to be uploaded in PDF format with file size strictly under 300 KB per document.',
   },
 ];
 
@@ -88,38 +124,43 @@ export default function UpscPhotoSignatureResizerPage() {
         name: 'UPSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/upsc-photo-signature-resizer',
+        url: 'https://kagazo.in/tools/upsc-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
         },
         description:
-          'Resize photo and signature for UPSC Civil Services, NDA, CDS, and OTR. Strictly compliant with UPSC 10-day photo rule.',
+          'Prepare your UPSC Civil Services, NDA, CDS, CAPF, and IES exam photo and signature for the Online Recruitment Application (ORA) portal with auto name and date-of-photograph banner.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Resize Photo and Signature for UPSC OTR Online',
+        name: 'How to Resize Photo and Signature for UPSC ORA Online',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Choose UPSC Photo or Signature',
-            text: 'Select UPSC Photo (with Name and DOP) or UPSC Signature.',
+            name: 'Select Photo or Signature Preset',
+            text: 'Choose UPSC Photo (with Name & DOP Banner) or UPSC Scanned Signature.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Upload Photo or Scan',
-            text: 'Upload recent photo or signature.',
+            name: 'Enter Name and Photograph Date',
+            text: 'Type your full applicant name and date taken within the official 10-day freshness window.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Add Name and Date (10-Day Rule)',
-            text: 'Type candidate name and capture date for the mandatory bottom strip.',
+            name: 'Upload Your Photo or Signature',
+            text: 'Drag & drop your smartphone photo or scan. Kagazo accepts JPG, PNG, WEBP, and HEIC.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Compliant JPEG',
-            text: 'Preview side-by-side with clarity loupe, then download verified JPEG ready for UPSC portal.',
+            name: 'Square 1:1 Aspect Ratio Cropping',
+            text: 'Center your face to occupy ~75% of the frame, leaving room at the bottom for the banner strip.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download ORA-Compliant JPEG',
+            text: 'Download the verified JPEG file with embedded banner, sized under 300 KB and strictly above 350x350 px.',
           },
         ],
       },
@@ -168,12 +209,11 @@ export default function UpscPhotoSignatureResizerPage() {
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
             <span>UPSC Photo &amp; Signature </span>
-            <span className="text-primary">Resizer Online</span>
+            <span className="text-primary">Resizer — ORA Portal Guidelines (2026)</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Resize photos and signatures to 20–300 KB with minimum 350x350 pixels resolution. 
-            Complies with the official UPSC 10-day recent photo rule and 3/4th face coverage.
+            Prepare your UPSC Civil Services, NDA, CDS, CAPF, and IES exam photo and signature for the Online Recruitment Application (ORA) portal — with automatic name and date-of-photograph banner. Everything processed inside your browser, zero server contact.
           </p>
         </header>
 
@@ -190,20 +230,68 @@ export default function UpscPhotoSignatureResizerPage() {
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
+            {/* Tool Introduction & Key Differentiators */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Auto-Embedded Name &amp; Date-of-Photo Banner
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  The UPSC 10-Day Rule and the Embedded Banner Strip Requirement
+                </h2>
+              </div>
+              <div className="text-xs sm:text-sm text-text-main/85 leading-relaxed space-y-3">
+                <p>
+                  The Union Public Service Commission (<code className="font-mono text-primary bg-primary/5 px-1.5 py-0.5 rounded">upsconline.nic.in</code>) portal performs one verification check that catches thousands of candidates off guard: it requires the candidate&apos;s <strong>full name and the date the photograph was captured to be printed in white text on a black banner strip</strong> directly below the face, physically embedded into the JPEG image file itself.
+                </p>
+                <p>
+                  A standard neighborhood photo studio rarely knows this specific rule. Generic compressors and online cropping tools cannot generate the banner strip. Kagazo renders this compliant banner strip automatically. You simply type your name and capture date—our engine positions the strip cleanly at the bottom without squishing your face or exceeding the 300 KB ceiling.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <User className="w-4 h-4" /> Name &amp; DOP Banner
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Embeds the official high-contrast white-on-black strip directly into the photo pixels.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sliders className="w-4 h-4" /> Strict 1:1 Square Lock
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Enforces 350×350 to 1000×1000 px resolution, fully preventing ORA portal dimension errors.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4" /> 10-Day Freshness Check
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Prompts you to ensure the banner date falls strictly within 10 days of your application date.
+                  </p>
+                </div>
+              </div>
+            </section>
+
             {/* Official UPSC Specifications Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
                 <div>
                   <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                     <ShieldCheck className="w-5 h-5 text-primary" />
-                    Official UPSC Upload Specifications
+                    Official UPSC ORA Upload Specifications
                   </h2>
                   <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                    Strict guidelines enforced by the Union Public Service Commission portal.
+                    Strict parameters drawn from Union Public Service Commission CSE, NDA, and CDS notifications.
                   </p>
                 </div>
                 <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
-                  UPSC Rules
+                  UPSC ORA Rules
                 </span>
               </div>
 
@@ -211,223 +299,321 @@ export default function UpscPhotoSignatureResizerPage() {
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
                     <tr className="border-b border-surface-darker bg-surface text-text-main">
-                      <th className="py-3 px-3 font-bold">Item</th>
-                      <th className="py-3 px-3 font-bold">Allowed Size Range</th>
-                      <th className="py-3 px-3 font-bold">Resolution Limits</th>
-                      <th className="py-3 px-3 font-bold">Key Rule</th>
+                      <th className="py-3 px-3 font-bold">Parameter</th>
+                      <th className="py-3 px-3 font-bold">UPSC Scanned Photograph</th>
+                      <th className="py-3 px-3 font-bold">UPSC Scanned Signature</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker/70 text-text-main">
+                  <tbody className="divide-y divide-surface-darker text-text-main/85">
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold flex items-center gap-1.5">
-                        <Camera className="w-4 h-4 text-primary" /> Photograph
-                      </td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md">
-                          20 KB to 300 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">Min 350x350 px (Max 1000x1000 px)</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Candidate Name &amp; Date of Photo at bottom; &le;10 days old</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Applicable Exams</td>
+                      <td className="py-3 px-3">CSE (IAS/IPS/IFS), NDA &amp; NA, CDS, CAPF (AC), IES/ISS, EPFO</td>
+                      <td className="py-3 px-3">Mandatory across all UPSC recruitment and OTR examinations</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold flex items-center gap-1.5">
-                        <PenTool className="w-4 h-4 text-primary" /> Signature
-                      </td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md">
-                          20 KB to 300 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">Min 350x350 px (Max 1000x1000 px)</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Clean white paper, black ballpoint ink</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Allowed File Size</td>
+                      <td className="py-3 px-3 font-bold text-primary">20 KB to 300 KB (strictly &lt; 300 KB)</td>
+                      <td className="py-3 px-3 font-bold text-primary">20 KB to 300 KB (strictly &lt; 300 KB)</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold">Degree / Age Proof PDF</td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
-                          20 KB to 300 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">PDF Format</td>
-                      <td className="py-3.5 px-3 text-text-main/70">
-                        <Link href="/tools/upsc-pdf-compressor" className="text-primary font-bold hover:underline">
-                          Use UPSC PDF Compressor →
-                        </Link>
-                      </td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Pixel Dimensions</td>
+                      <td className="py-3 px-3">Min 350×350 px — Max 1000×1000 px (1:1 square)</td>
+                      <td className="py-3 px-3">Min 350×350 px (or proportional square canvas)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">File Format</td>
+                      <td className="py-3 px-3 font-mono text-primary font-bold">JPG / JPEG only</td>
+                      <td className="py-3 px-3 font-mono text-primary font-bold">JPG / JPEG only</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Name &amp; Date Banner</td>
+                      <td className="py-3 px-3 font-semibold text-primary">Mandatory: Candidate name &amp; DOP printed at bottom</td>
+                      <td className="py-3 px-3">Not applicable</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Date Freshness</td>
+                      <td className="py-3 px-3">Captured within 10 days of application opening date</td>
+                      <td className="py-3 px-3">—</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Background &amp; Pen</td>
+                      <td className="py-3 px-3">Plain white or very light background; 75% face coverage</td>
+                      <td className="py-3 px-3">Clean white paper, black or dark blue ballpoint ink, running cursive</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Spectacles / Glasses</td>
+                      <td className="py-3 px-3 font-semibold text-red-600">Strictly prohibited (no clear or power glasses)</td>
+                      <td className="py-3 px-3">—</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Verification Note:</strong> UPSC modifies guidelines periodically across notifications. The 10-day photograph freshness rule is strictly enforced during physical verification at Dholpur House. Always verify active guidelines on <code className="font-mono font-bold">upsconline.nic.in</code>. Need to change image metadata? Try{' '}
+                  <Link href="/tools/change-image-dpi" className="underline font-bold text-amber-950 hover:text-primary">
+                    Change Image DPI to 300
+                  </Link>.
+                </p>
+              </div>
             </section>
+
+            {/* How to Use Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Resize and Add Name &amp; Date for UPSC in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    1
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Preset</h3>
+                  <p className="text-xs text-text-main/75">
+                    Click <strong>UPSC Photo</strong> (with Name &amp; Date banner) or <strong>UPSC Signature</strong>.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    2
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Enter Name &amp; Date</h3>
+                  <p className="text-xs text-text-main/75">
+                    Type your full name and the photograph date (within 10 days of application submission).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    3
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Photo or Scan</h3>
+                  <p className="text-xs text-text-main/75">
+                    Drop your image. Accepts JPG, PNG, WEBP, and iPhone HEIC files directly without prior conversion.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    4
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Crop to 1:1 Square</h3>
+                  <p className="text-xs text-text-main/75">
+                    Center face so both ears are visible, occupying 75% of space with bottom margin for the banner.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    5
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download ORA-Ready JPEG</h3>
+                  <p className="text-xs text-text-main/75">
+                    Kagazo generates the banner-embedded JPEG, locking resolution above 350×350 px and under 300 KB for instant upload.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Common Errors Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common UPSC ORA Upload Rejections and How to Avoid Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: &quot;Resolution less than 350x350 pixels&quot;
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Normal compressors shrink pixel width to reduce size, falling below 350 px. Kagazo keeps a calibrated 500×500 px canvas, completely avoiding resolution errors.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Missing Name and Date Strip
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Typing your name into the ORA form text box does not fulfill the requirement. The banner must be burned into the JPEG pixels. Use our tool or the{' '}
+                    <Link href="/tools/photo-date-name-stamper" className="text-primary font-semibold hover:underline">
+                      Photo Date &amp; Name Stamper
+                    </Link>.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Date of Photograph Older than 10 Days
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Entering an older date triggers disqualification during document verification. Make sure the date entered represents a capture within 10 days of your submission.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: File Size Exceeds 300 KB
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Smartphones produce 3–8 MB photos. Kagazo uses adaptive JPEG compression to maintain sharp facial clarity while guaranteeing the final file is under 300 KB.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Contextual Certificate Support Callout */}
+            <div className="p-6 rounded-3xl bg-surface border border-surface-darker flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-primary" />
+                  Need to compress UPSC Degree, Caste, or Age Proof PDFs under 300 KB?
+                </h3>
+                <p className="text-xs text-text-main/70">
+                  UPSC ORA enforces a strict 300 KB maximum limit on all uploaded educational and identity PDF documents.
+                </p>
+              </div>
+              <Link
+                href="/tools/compress-pdf-to-300kb"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-dark transition-all shrink-0"
+              >
+                Compress PDF to 300KB
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
 
             {/* In-Content Native AdSlot */}
             <AdSlot slot="in_content" />
 
-            {/* Why Kagazo is Better for UPSC Aspirants */}
-            <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">350x350 Resolution Guard</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Never get rejected with &quot;Pixel dimensions less than 350x350&quot;. Kagazo enforces the exact square geometry required by UPSC OTR.
+            {/* FAQ Accordion Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <HelpCircle className="w-5 h-5 text-primary" />
+                  Frequently Asked Questions (UPSC Photo &amp; Signature)
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                  Answers to the most critical photo, signature, and ORA portal questions for UPSC aspirants.
                 </p>
               </div>
 
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Award className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">Auto 10-Day Rule Strip</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Automatically generates the compliant white bottom strip with candidate full name and recent capture date.
-                </p>
-              </div>
-
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Lock className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">In-Memory Privacy</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Processed in RAM only. Your photograph and signature are never saved on server disks.
-                </p>
-              </div>
-            </section>
-
-            {/* Hyper-Targeted FAQ Accordion */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2 pb-2 border-b border-surface-darker/60">
-                <HelpCircle className="w-5 h-5 text-primary" />
-                UPSC Photo &amp; Signature FAQs
-              </h2>
-
-              <div className="space-y-3 pt-2">
-                {UPSC_FAQS.map((faq, index) => (
+              <div className="space-y-3">
+                {UPSC_FAQS.map((faq, idx) => (
                   <details
-                    key={index}
-                    className="group border border-surface-darker rounded-2xl bg-surface/40 p-4 sm:p-5 open:bg-surface transition-all cursor-pointer"
+                    key={idx}
+                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
                   >
-                    <summary className="font-bold text-sm sm:text-base text-text-main list-none flex items-center justify-between">
+                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
                       <span>{faq.question}</span>
-                      <span className="text-primary text-xl transition-transform group-open:rotate-180 font-bold">▾</span>
+                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
                     </summary>
-                    <p className="text-xs sm:text-sm text-text-main/80 mt-3 leading-relaxed">
+                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
                       {faq.answer}
-                    </p>
+                    </div>
                   </details>
                 ))}
               </div>
             </section>
-
-            {/* Cross-Link to UPSC PDF Compressor */}
-            <aside className="p-6 sm:p-8 rounded-3xl bg-surface border border-primary/30 shadow-card flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="space-y-1.5 text-center sm:text-left">
-                <h3 className="text-base sm:text-lg font-extrabold text-text-main flex items-center gap-2 justify-center sm:justify-start">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
-                  Need to compress UPSC Degree or Community PDF?
-                </h3>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Compress your certificate PDF to strictly between 20 KB and 300 KB for UPSC Civil Services DAF and OTR.
-                </p>
-              </div>
-              <Link
-                href="/tools/upsc-pdf-compressor"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary hover:bg-primary-hover text-white font-extrabold text-sm shadow-md transition-all shrink-0 cursor-pointer"
-              >
-                UPSC PDF Compressor
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </aside>
           </main>
 
-          {/* Right Sticky Sidebar (32% Width) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-24 self-start">
-            {/* Quick Switch Card */}
-            <div className="p-3.5 bg-white rounded-3xl border border-surface-darker shadow-card space-y-2.5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                  <Zap className="w-4 h-4 text-primary" />
-                  Exam Tools Quick Switch
-                </h3>
-                <span className="text-[10px] font-extrabold text-primary bg-primary-light px-2 py-0.5 rounded-full border border-primary/20">
-                  Instant
-                </span>
-              </div>
-              <div className="space-y-1.5 pt-0.5">
-                {[
-                  { name: 'UPSC Photo & Sig Resizer', href: '/tools/upsc-photo-signature-resizer', active: true, tag: 'Current' },
-                  { name: 'UPSC Document Compressor', href: '/tools/upsc-pdf-compressor', active: false, tag: '20-300KB' },
-                  { name: 'TNPSC Photo & Sig Resizer', href: '/tools/tnpsc-photo-signature-resizer', active: false, tag: 'TNPSC' },
-                  { name: 'Image to PDF under 200KB', href: '/tools/image-to-pdf-200kb', active: false, tag: 'Marksheets' },
-                  { name: 'Compress PDF to 200KB', href: '/tools/compress-pdf-to-200kb', active: false, tag: 'Popular' },
-                  { name: 'Compress PDF to 100KB', href: '/tools/compress-pdf-to-100kb', active: false, tag: 'Strict' },
-                  { name: 'All Exam Tools', href: '/tools/government-exam-pdf-compressor', active: false, tag: 'Hub' },
-                ].map((item, idx) => (
-                  <Link
-                    key={idx}
-                    href={item.href}
-                    className={cn(
-                      'flex items-center justify-between p-2 rounded-xl text-[11px] font-bold transition-all border',
-                      item.active
-                        ? 'bg-primary-light border-primary/40 text-primary shadow-2xs'
-                        : 'bg-surface/40 border-surface-darker hover:border-primary/40 hover:bg-white text-text-main'
-                    )}
-                  >
-                    <span className="truncate pr-2">{item.name}</span>
-                    <span
-                      className={cn(
-                        'text-[9px] px-1.5 py-0.5 rounded-md font-semibold shrink-0',
-                        item.active ? 'bg-primary text-white' : 'bg-surface border border-surface-darker text-text-main/60'
-                      )}
-                    >
-                      {item.tag}
+          {/* Sticky Right Sidebar Rail (32% Width) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
+            {/* Quick Switch Matrix */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                Related Exam Resizers
+              </h3>
+
+              <div className="space-y-2">
+                <Link
+                  href="/tools/ssc-photo-signature-resizer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      SSC Photo &amp; Signature
                     </span>
-                  </Link>
-                ))}
+                    <span className="text-[11px] text-text-main/60">
+                      20–50 KB photo &amp; 10–20 KB signature
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
+                  href="/tools/photo-date-name-stamper"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      Photo Name &amp; Date Stamper
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      Custom banner strip generator
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
+                  href="/tools/upsc-pdf-compressor"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      UPSC PDF Compressor
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      Compress marksheets &lt; 300 KB
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
+                  href="/tools/specifications"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      Exam Specs Radar
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      Compare SSC, UPSC, RRB, NEET
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
               </div>
             </div>
 
-            {/* Slot A: Sticky Sidebar Display Unit */}
+            {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* Official UPSC Cheatsheet Card */}
-            <div className="p-3.5 bg-white rounded-3xl border border-surface-darker shadow-card space-y-2">
-              <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-primary" />
-                UPSC OTR Quick Cheatsheet
-              </h3>
-              <div className="space-y-1.5 text-[11px] divide-y divide-surface-darker/60">
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">Photo Size</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">20 – 300 KB</span>
-                </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">Signature Size</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">20 – 300 KB</span>
-                </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">Min Resolution</span>
-                  <span className="font-mono font-bold text-text-main bg-surface px-2 py-0.5 rounded-md">350 x 350 px</span>
-                </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">Max Resolution</span>
-                  <span className="font-mono font-bold text-text-main bg-surface px-2 py-0.5 rounded-md">1000 x 1000 px</span>
-                </div>
+            {/* RAM Security & Privacy Shield */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
+              <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
+                <Lock className="w-4 h-4 shrink-0" />
+                <span>100% In-Browser Privacy</span>
               </div>
-            </div>
-
-            {/* Privacy Shield */}
-            <div className="p-3 rounded-2xl bg-surface/60 border border-surface-darker space-y-1.5">
-              <div className="flex items-center gap-2 text-text-main font-black text-xs">
-                <Lock className="w-4 h-4 text-primary" />
-                <span>100% In-Memory Privacy</span>
-              </div>
-              <p className="text-[11px] text-text-main/70 leading-relaxed">
-                Your photograph and signature are processed in RAM and never written to permanent disk storage. Zero data retention.
+              <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
+                Your photograph, signature, and candidate name are processed purely in temporary browser memory. Never uploaded to cloud servers or stored in any database.
               </p>
+              <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Zero Watermark
+                </span>
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> No Signup
+                </span>
+              </div>
             </div>
           </aside>
         </div>

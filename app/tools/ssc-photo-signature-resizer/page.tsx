@@ -6,32 +6,34 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
   Camera,
   PenTool,
   ArrowRight,
   AlertTriangle,
   CheckCircle2,
+  FileText,
+  Sliders,
+  Sparkles,
+  Info,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'SSC Photo & Signature Resizer Online Free | 20-50KB & 10-20KB | Kagazo',
+  title: 'SSC Photo & Signature Resizer — 20–50 KB & 10–20 KB | Kagazo',
   description:
-    'Resize photo (20-50 KB, 3.5x4.5 cm) and signature (10-20 KB, 4.0x2.0 cm) for SSC CGL, CHSL, MTS, CPO, GD Constable. 100% compliant with Staff Selection Commission portal specifications.',
+    'Resize your SSC CGL, CHSL, MTS, and GD Constable photo (3.5x4.5 cm, 20–50 KB) and signature (4x2 cm, 10–20 KB) instantly. Auto-corrects undersized files. No uploads, zero watermarks.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/ssc-photo-signature-resizer',
+    canonical: 'https://kagazo.in/tools/ssc-photo-signature-resizer',
   },
   openGraph: {
-    title: 'SSC Photo & Signature Resizer Online Free | Kagazo',
+    title: 'SSC Photo & Signature Resizer | Kagazo — Free, Zero Upload',
     description:
-      'Resize photograph and signature for SSC CGL, CHSL, MTS, GD Constable online. Strict 20-50KB and 10-20KB limits guaranteed. No blur, no watermark.',
-    url: 'https://Kagazo.in/tools/ssc-photo-signature-resizer',
+      'Format your SSC exam photo and scanned signature to exact portal limits. Handles both undersized and oversized files. 100% in-browser, no server, no account required.',
+    url: 'https://kagazo.in/tools/ssc-photo-signature-resizer',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
 const SSC_PRESETS: CustomPreset[] = [
   {
     id: 'photo',
-    label: 'SSC Photo (20-50KB, 3.5x4.5cm)',
+    label: 'SSC Photo (20–50 KB, 3.5×4.5 cm)',
     minKb: 20,
     maxKb: 50,
     widthCm: 3.5,
@@ -49,7 +51,7 @@ const SSC_PRESETS: CustomPreset[] = [
   },
   {
     id: 'signature',
-    label: 'SSC Signature (10-20KB, 4.0x2.0cm)',
+    label: 'SSC Signature (10–20 KB, 4.0×2.0 cm)',
     minKb: 10,
     maxKb: 20,
     widthCm: 4.0,
@@ -60,24 +62,54 @@ const SSC_PRESETS: CustomPreset[] = [
 
 const SSC_FAQS = [
   {
-    question: 'What are the official photo and signature dimensions for SSC exams?',
+    question: 'What is the exact photo size for SSC CGL in 2026?',
     answer:
-      'According to Staff Selection Commission (SSC) official guidelines: Photograph must have dimensions of 3.5 cm (width) x 4.5 cm (height) and file size between 20 KB and 50 KB. Signature must have dimensions of 4.0 cm (width) x 2.0 cm (height) and file size strictly between 10 KB and 20 KB in JPEG/JPG format.',
+      'For most SSC CGL recruitment cycles, the scanned photograph must be in JPEG format, with a physical dimension of 3.5 cm (width) x 4.5 cm (height), and a file size strictly between 20 KB and 50 KB. Always verify this against the official notification for your specific recruitment year, as SSC may update these values.',
   },
   {
-    question: 'Why does the SSC portal reject my signature with "File size less than 10 KB"?',
+    question: 'My signature file is 8 KB. Can I still upload it to the SSC portal?',
     answer:
-      'When students crop signatures tightly, ordinary mobile tools compress the JPEG to 4 KB - 8 KB. The SSC online application portal instantly flags any file below 10.0 KB as invalid. Kagazo uses 300 DPI super-sampling and safe JFIF structure padding to ensure your signature strictly lands in the safe 12 KB - 18 KB range.',
+      'No. The SSC portal strictly requires the signature file to be at least 10.0 KB. Uploading an 8 KB file will produce a "file size not in range" error. Kagazo\'s bi-directional processing automatically brings undersized signature files up to a compliant size without distorting the image by utilizing high-fidelity supersampling and safe JFIF padding.',
   },
   {
-    question: 'What are the main reasons for SSC photo rejection?',
+    question: 'Can I use my phone camera to photograph my signature for SSC?',
     answer:
-      'SSC strictly rejects photos with: (1) Caps, hats, or dark spectacles/sunglasses, (2) Both ears not clearly visible, (3) Side profile or tilted face, (4) Dark or patterned backgrounds, (5) Blurry or pixelated scans, and (6) File size outside 20-50 KB.',
+      'Yes, but it requires care. Place your signed paper on a flat white surface, shoot directly from above with no tilt, ensure even natural lighting, and avoid hand shadows. The resulting image will typically be 2–5 MB. Kagazo\'s signature preset compresses it into the 10–20 KB range while cleaning up yellow background tint with our Xerox filter.',
   },
   {
-    question: 'Is this SSC Resizer 100% free with no watermark?',
+    question: 'Does SSC accept PNG or WEBP files?',
     answer:
-      'Yes, Kagazo is 100% free forever for all applicants and cyber cafe operators. We never stamp watermarks, never require signups, and process files in volatile RAM memory so your personal documents are never stored on server storage.',
+      'No. SSC portals accept only JPEG (JPG) files for photo and signature uploads. Even if you rename a PNG file to .jpg, the portal will detect the internal binary header and reject it. Kagazo re-encodes all output files as standards-compliant JPEG binaries.',
+  },
+  {
+    question: 'Can I wear glasses in my SSC photograph?',
+    answer:
+      'No. Staff Selection Commission guidelines strictly prohibit spectacles, including clear prescription glasses, in uploaded photographs. Glare from lenses can also fail automated face-matching biometric checks at the examination hall. Always capture your photo without spectacles.',
+  },
+  {
+    question: 'My signature is in capital letters — is that a problem?',
+    answer:
+      'Yes. SSC explicitly states that signatures written in BLOCK or CAPITAL/UPPERCASE letters will be rejected. Your signature must be in your natural running/cursive handwriting. Submitting signatures in capital letters can lead to cancellation during document verification.',
+  },
+  {
+    question: 'Does SSC require live photo capture or a scanned photo upload?',
+    answer:
+      'For recent SSC CGL and CHSL recruitment notifications, the ssc.gov.in portal has introduced live webcam capture via browser or the MySSC app during initial registration. However, the signature is always uploaded as a scanned file (10–20 KB JPEG). For several other SSC posts and correction windows, scanned photo uploads remain mandatory.',
+  },
+  {
+    question: 'Does Kagazo store my photo or signature on any server?',
+    answer:
+      'No. All image resizing, cropping, and compression run 100% client-side inside your web browser using HTML5 Canvas and JavaScript FileReader APIs. Your biometric documents never travel across the internet to our servers or any cloud database.',
+  },
+  {
+    question: 'What pixel dimensions should my SSC photo be?',
+    answer:
+      'The physical specification is 3.5 cm x 4.5 cm. In pixels, this translates to approximately 100 x 120 px (at 72 DPI) up to 350 x 450 px (at 300 DPI). The portal validates on byte count (20–50 KB) and JPEG format, but maintaining the ~7:9 aspect ratio is essential to avoid facial distortion.',
+  },
+  {
+    question: 'What pen ink should I use for the SSC signature?',
+    answer:
+      'SSC guidelines specify black or dark blue ink. Signing with a fresh black ballpoint pen on unruled, plain white paper produces the highest contrast scan. Avoid gel pens that reflect camera flash, pencil signatures, or ruled notebook paper.',
   },
 ];
 
@@ -90,14 +122,14 @@ export default function SscPhotoSignatureResizerPage() {
         name: 'SSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/ssc-photo-signature-resizer',
+        url: 'https://kagazo.in/tools/ssc-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
         },
         description:
-          'Resize photograph and signature for SSC CGL, CHSL, MTS, CPO, and GD Constable. Strictly compliant with 20-50KB and 10-20KB rules.',
+          'Format your SSC CGL, CHSL, MTS, GD Constable, and CPO exam photo and signature to exact Staff Selection Commission limits — 20–50 KB photo, 10–20 KB signature, JPEG only.',
       },
       {
         '@type': 'HowTo',
@@ -110,18 +142,23 @@ export default function SscPhotoSignatureResizerPage() {
           },
           {
             '@type': 'HowToStep',
-            name: 'Upload Photo or Scan',
-            text: 'Drag and drop or select your photo or signature image.',
+            name: 'Upload Your Image',
+            text: 'Drag and drop or select your photo or signature scan. Supports JPG, PNG, WEBP, and HEIC.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Automatic Enhancement',
-            text: 'Kagazo centers the image, boosts contrast, and calibrates file size to strict SSC limits.',
+            name: 'Adjust Framing & Enhancement',
+            text: 'Kagazo centers the face or handwriting, enhances contrast, and cleans background tints.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Bi-directional File Size Calibration',
+            text: 'Large files are compressed while undersized files below 10KB/20KB are padded into safe compliance.',
           },
           {
             '@type': 'HowToStep',
             name: 'Download Compliant JPEG',
-            text: 'Inspect with high-resolution clarity loupe and download the verified JPEG.',
+            text: 'Inspect with high-resolution clarity loupe and download the portal-ready JPEG file.',
           },
         ],
       },
@@ -132,7 +169,6 @@ export default function SscPhotoSignatureResizerPage() {
           name: faq.question,
           acceptedAnswer: {
             '@type': 'Answer',
-            jsonLdAnswer: faq.answer,
             text: faq.answer,
           },
         })),
@@ -171,12 +207,11 @@ export default function SscPhotoSignatureResizerPage() {
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
             <span>SSC Photo &amp; Signature </span>
-            <span className="text-primary">Resizer Online</span>
+            <span className="text-primary">Resizer (2026 Portal Guidelines)</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Resize your photo (20–50 KB, 3.5×4.5 cm) and signature (10–20 KB, 4.0×2.0 cm) to exact Staff Selection Commission upload standards. 
-            Guaranteed under-size padding and over-size compression with zero facial distortion.
+            Format your SSC CGL, CHSL, MTS, GD Constable, and CPO exam photo and signature to exact Staff Selection Commission limits — 20–50 KB photo, 10–20 KB signature, JPEG only. Processed entirely inside your browser. No file is ever sent to any server.
           </p>
         </header>
 
@@ -193,16 +228,64 @@ export default function SscPhotoSignatureResizerPage() {
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
+            {/* Tool Introduction & Key Differentiators */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Bi-Directional File Size Calibration
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Overcoming the SSC Undersized Signature Rejection Floor
+                </h2>
+              </div>
+              <div className="text-xs sm:text-sm text-text-main/85 leading-relaxed space-y-3">
+                <p>
+                  Getting your Staff Selection Commission application past the document upload stage requires hitting the precise file-size window enforced by the <code className="font-mono text-primary bg-primary/5 px-1.5 py-0.5 rounded">ssc.gov.in</code> validation script. A photo at 19 KB gets rejected just as firmly as one at 55 KB. A signature scan of 7 KB triggers the exact same <em>&quot;File size not in range&quot;</em> error as a 25 KB file.
+                </p>
+                <p>
+                  Standard mobile photo compressors only reduce file sizes downward — they cannot bring an undersized 4–8 KB cropped signature up into compliance. Kagazo is built specifically with <strong>bi-directional file size calibration</strong>: large smartphone images are compressed cleanly, while undersized signatures are safely padded into the required 12–18 KB window using lossless JFIF structural markers.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sliders className="w-4 h-4" /> Both Presets Built-In
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Switch between 3.5×4.5 cm Photo (20–50 KB) and 4.0×2.0 cm Signature (10–20 KB) in one click.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <PenTool className="w-4 h-4" /> Xerox Ink Booster
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Strips yellow casts and shadows from mobile camera snaps, leaving crisp dark strokes on pure white paper.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> Zero Server Exposure
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Your photo and signature never leave your device. Memory is wiped immediately when you close the tab.
+                  </p>
+                </div>
+              </div>
+            </section>
+
             {/* Official SSC Specifications Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
                 <div>
                   <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                     <ShieldCheck className="w-5 h-5 text-primary" />
-                    Official SSC Upload Specifications
+                    Official SSC Photo &amp; Signature Specifications
                   </h2>
                   <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                    Strict rules enforced by the Staff Selection Commission (ssc.gov.in) portal.
+                    Strict parameters drawn from Staff Selection Commission recruitment notifications.
                   </p>
                 </div>
                 <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
@@ -214,27 +297,124 @@ export default function SscPhotoSignatureResizerPage() {
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
                     <tr className="border-b border-surface-darker bg-surface text-text-main">
-                      <th className="py-3 px-3 font-bold">Document</th>
-                      <th className="py-3 px-3 font-bold">Allowed Size Range</th>
-                      <th className="py-3 px-3 font-bold">Dimensions</th>
-                      <th className="py-3 px-3 font-bold">Format &amp; Quality</th>
+                      <th className="py-3 px-3 font-bold">Parameter</th>
+                      <th className="py-3 px-3 font-bold">SSC Scanned Photograph</th>
+                      <th className="py-3 px-3 font-bold">SSC Scanned Signature</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-surface-darker text-text-main/85">
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">SSC Candidate Photo</td>
-                      <td className="py-3 px-3 font-bold text-primary">20 KB to 50 KB</td>
-                      <td className="py-3 px-3">3.5 cm (W) × 4.5 cm (H)</td>
-                      <td className="py-3 px-3">Light background, both ears visible, no spectacles</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Applicable Exams</td>
+                      <td className="py-3 px-3">CGL, CHSL, MTS, GD Constable, CPO (Delhi Police / CAPF), Stenographer</td>
+                      <td className="py-3 px-3">Mandatory across all SSC recruitment examinations</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">SSC Candidate Signature</td>
-                      <td className="py-3 px-3 font-bold text-primary">10 KB to 20 KB</td>
-                      <td className="py-3 px-3">4.0 cm (W) × 2.0 cm (H)</td>
-                      <td className="py-3 px-3">Strict 2:1 horizontal ratio, dark blue/black ink</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Mandatory File Size</td>
+                      <td className="py-3 px-3 font-bold text-primary">20.0 KB minimum — 50.0 KB maximum</td>
+                      <td className="py-3 px-3 font-bold text-primary">10.0 KB minimum — 20.0 KB maximum</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Physical Dimensions</td>
+                      <td className="py-3 px-3">3.5 cm (W) × 4.5 cm (H)</td>
+                      <td className="py-3 px-3">4.0 cm (W) × 2.0 cm (H) (2:1 aspect ratio)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Approx Pixel Resolution</td>
+                      <td className="py-3 px-3">100×120 px (72 DPI) to 350×450 px (300 DPI)</td>
+                      <td className="py-3 px-3">140×60 px to 400×200 px (calibrated canvas)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Permitted Format</td>
+                      <td className="py-3 px-3 font-mono text-primary font-bold">JPG / JPEG only</td>
+                      <td className="py-3 px-3 font-mono text-primary font-bold">JPG / JPEG only</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Background &amp; Paper</td>
+                      <td className="py-3 px-3">Light plain background, both ears visible</td>
+                      <td className="py-3 px-3">Unruled, plain white paper</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Ink / Handwriting</td>
+                      <td className="py-3 px-3">—</td>
+                      <td className="py-3 px-3">Dark blue or black ink; running cursive handwriting only</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Restrictions</td>
+                      <td className="py-3 px-3">No spectacles / glasses; no caps or dark goggles</td>
+                      <td className="py-3 px-3">Strictly no capital / block letter signatures</td>
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Verification Notice:</strong> SSC periodically issues updated recruitment notifications. Before final submission, cross-check against the active PDF on <code className="font-mono font-bold">ssc.gov.in</code>. Compare specifications across boards on our{' '}
+                  <Link href="/tools/specifications" className="underline font-bold text-amber-950 hover:text-primary">
+                    Exam Specifications Radar
+                  </Link>.
+                </p>
+              </div>
+            </section>
+
+            {/* How to Use Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Format SSC Photos &amp; Signatures in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    1
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Asset Preset</h3>
+                  <p className="text-xs text-text-main/75">
+                    Click the <strong>SSC Photo</strong> tab (20–50 KB, 3.5×4.5 cm) or <strong>SSC Signature</strong> tab (10–20 KB, 4.0×2.0 cm).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    2
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Any Image</h3>
+                  <p className="text-xs text-text-main/75">
+                    Select your smartphone photo, scanner output, or iPhone HEIC file. No prior format conversion needed.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    3
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Frame &amp; Center</h3>
+                  <p className="text-xs text-text-main/75">
+                    Center face so both ears are visible, covering ~75% of canvas. For signatures, crop outer borders.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    4
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Auto Size Tuning</h3>
+                  <p className="text-xs text-text-main/75">
+                    The engine applies targeted JPEG compression and bi-directional padding, landing safely in the target range.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    5
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Inspect &amp; Download Verified JPEG</h3>
+                  <p className="text-xs text-text-main/75">
+                    Review your final file size in KB with our clarity loupe preview, then download the verified JPEG ready for instant upload on the SSC application portal.
+                  </p>
+                </div>
               </div>
             </section>
 
@@ -242,43 +422,73 @@ export default function SscPhotoSignatureResizerPage() {
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Top Reasons SSC Applications Get Rejected (And How Kagazo Fixes Them)
+                Common SSC Upload Errors and How Kagazo Fixes Them
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
                   <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Trap #1: Under 10 KB Signature
+                    Error: &quot;File size should be between 10 KB and 20 KB&quot;
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    Cropping signatures tightly often results in 4–8 KB files. SSC servers immediately throw an error. Kagazo applies super-sampling and safe JFIF padding to lock signatures securely at 12–18 KB.
+                    Cropping signatures closely drops file size to 4–8 KB. The SSC validation script rejects anything under 10.0 KB. Kagazo injects safe JFIF structural padding to lock signatures safely between 12 KB and 18 KB. Or use our{' '}
+                    <Link href="/tools/compress-image-to-20kb" className="text-primary font-semibold hover:underline">
+                      Compress Image to 20 KB
+                    </Link>{' '}
+                    tool.
                   </p>
                 </div>
+
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
                   <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Trap #2: Facial Distortion
+                    Error: Signature in Capital / Block Letters
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    Generic online resizers force images into rectangular boxes, stretching round faces into tall ovals. Kagazo scales proportionally and centers on a pure white canvas without warping.
+                    SSC explicitly disallows capital letter signatures. Ensure your handwritten signature uses normal cursive writing. If ink is faint, our Xerox boost deepens strokes to pure black.
                   </p>
                 </div>
+
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
                   <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Trap #3: Faint Ballpoint Pen Ink
+                    Error: Faint Pen or Yellow Scanner Cast
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    Mobile photos of signatures often have dark gray paper and faint blue ink. Our Xerox filter darkens the pen strokes while washing background paper to pure #FFFFFF white.
+                    Camera captures under indoor bulb lighting leave yellowish shadows. If our preset doesn&apos;t clear heavy shadows, use our dedicated{' '}
+                    <Link href="/tools/signature-cleaner-extractor" className="text-primary font-semibold hover:underline">
+                      Black Ink Signature Extractor &amp; Enhancer
+                    </Link>.
                   </p>
                 </div>
+
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
                   <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Trap #4: Wrong Aspect Ratio
+                    Error: Facial Distortion / Wrong Aspect Ratio
                   </span>
                   <p className="text-xs sm:text-sm text-text-main/80">
-                    SSC mandates a wide 4.0 cm × 2.0 cm (2:1 aspect ratio) for signatures. Kagazo automatically frames your signature to prevent squished or truncated letters.
+                    Generic resizers squash faces into awkward dimensions. Kagazo preserves your true biometric aspect ratio with white border padding rather than geometrical stretching.
                   </p>
                 </div>
               </div>
             </section>
+
+            {/* Contextual Certificate Support Callout */}
+            <div className="p-6 rounded-3xl bg-surface border border-surface-darker flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-primary" />
+                  Need to compress caste, EWS, or marksheets for SSC?
+                </h3>
+                <p className="text-xs text-text-main/70">
+                  SSC application forms require educational certificates and category proofs as compressed PDF documents.
+                </p>
+              </div>
+              <Link
+                href="/tools/ssc-pdf-compressor"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-dark transition-all shrink-0"
+              >
+                SSC PDF Compressor
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
 
             {/* In-Content Native AdSlot */}
             <AdSlot slot="in_content" />
@@ -291,7 +501,7 @@ export default function SscPhotoSignatureResizerPage() {
                   Frequently Asked Questions (SSC Photo &amp; Signature)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Clear answers to common questions about SSC CGL, CHSL, MTS, and GD photo uploads.
+                  Clear, verified answers covering SSC CGL, CHSL, MTS, CPO, and GD Constable portal uploads.
                 </p>
               </div>
 
@@ -330,10 +540,40 @@ export default function SscPhotoSignatureResizerPage() {
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      UPSC Photo &amp; Signature Resizer
+                      UPSC Photo &amp; Signature
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–300 KB, 350×350 px, 10-day DOP rule
+                      20–300 KB, 350×350 px, DOP strip
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
+                  href="/tools/photo-date-name-stamper"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      Photo Name &amp; Date Stamper
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      Auto banner for UPSC &amp; State PSC
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
+                  href="/tools/thumb-impression-resizer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      Thumb Impression Resizer
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      LTI for GD Constable &amp; Police forms
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
@@ -345,40 +585,10 @@ export default function SscPhotoSignatureResizerPage() {
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      TNPSC Photo &amp; Signature Resizer
+                      TNPSC Photo &amp; Signature
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–50 KB &amp; 10–20 KB, Name &amp; DOP Strip
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/image-to-pdf-200kb"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Marksheet Image to PDF (&lt; 200 KB)
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      1-click certificate &amp; marksheet converter
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/government-exam-pdf-compressor"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Govt Exam PDF Compressor
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      Compress PDFs to 100KB, 200KB, 500KB
+                      20–50 KB &amp; 10–20 KB OTR format
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
@@ -393,10 +603,10 @@ export default function SscPhotoSignatureResizerPage() {
             <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
               <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
                 <Lock className="w-4 h-4 shrink-0" />
-                <span>100% Client-Side &amp; In-Memory Privacy</span>
+                <span>100% Client-Side Privacy</span>
               </div>
               <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
-                Your photograph and signature are processed exclusively in volatile RAM memory and immediately destroyed after download. Never saved to database or disk.
+                Your photograph and signature are processed exclusively in volatile RAM memory and immediately destroyed after download. Never saved to any database or server disk.
               </p>
               <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
                 <span className="flex items-center gap-1">

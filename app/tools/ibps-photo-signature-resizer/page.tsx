@@ -6,7 +6,6 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
   Camera,
   PenTool,
@@ -14,25 +13,30 @@ import {
   AlertTriangle,
   CheckCircle2,
   FileText,
+  Sliders,
+  Sparkles,
+  Info,
+  Copy,
+  Layers,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
+import { DeclarationProforma } from '@/components/tools/DeclarationProforma';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'IBPS Photo, Signature, Thumb & Declaration Resizer Online Free | Kagazo',
+  title: 'IBPS Photo, Signature, Thumb & Declaration Resizer — 2026 | Kagazo',
   description:
-    'Resize IBPS Photo (20-50KB, 200x230px), Signature (10-20KB, 140x60px), Left Thumb Impression (20-50KB, 240x240px), and Handwritten Declaration (50-100KB, 800x400px) for IBPS PO, Clerk, SO, RRB, and SBI online forms.',
+    'Format all 4 mandatory IBPS uploads: photo (20–50 KB), signature (10–20 KB), left thumb (20–50 KB), and handwritten declaration (50–100 KB). 100% compliant, free.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/ibps-photo-signature-resizer',
+    canonical: 'https://kagazo.in/tools/ibps-photo-signature-resizer',
   },
   openGraph: {
-    title: 'IBPS Photo, Signature, Thumb & Declaration Resizer Online Free | Kagazo',
+    title: 'IBPS Photo, Signature, Thumb & Declaration Resizer | Kagazo',
     description:
       'All-in-one free image resizer for IBPS PO, Clerk, SO, RRB and SBI bank examinations. Exact pixels, zero watermark, 100% compliant.',
-    url: 'https://Kagazo.in/tools/ibps-photo-signature-resizer',
+    url: 'https://kagazo.in/tools/ibps-photo-signature-resizer',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -41,7 +45,7 @@ export const metadata: Metadata = {
 const IBPS_PRESETS: CustomPreset[] = [
   {
     id: 'photo',
-    label: 'IBPS Photo (20-50KB, 200×230px)',
+    label: 'IBPS Photo (20–50 KB, 200×230 px)',
     minKb: 20,
     maxKb: 50,
     widthPx: 200,
@@ -50,7 +54,7 @@ const IBPS_PRESETS: CustomPreset[] = [
   },
   {
     id: 'signature',
-    label: 'IBPS Signature (10-20KB, 140×60px)',
+    label: 'IBPS Signature (10–20 KB, 140×60 px)',
     minKb: 10,
     maxKb: 20,
     widthPx: 140,
@@ -59,7 +63,7 @@ const IBPS_PRESETS: CustomPreset[] = [
   },
   {
     id: 'thumb',
-    label: 'Left Thumb (20-50KB, 240×240px)',
+    label: 'Left Thumb (20–50 KB, 240×240 px)',
     minKb: 20,
     maxKb: 50,
     widthPx: 240,
@@ -68,7 +72,7 @@ const IBPS_PRESETS: CustomPreset[] = [
   },
   {
     id: 'declaration',
-    label: 'Declaration (50-100KB, 800×400px)',
+    label: 'Declaration (50–100 KB, 800×400 px)',
     minKb: 50,
     maxKb: 100,
     widthPx: 800,
@@ -79,26 +83,59 @@ const IBPS_PRESETS: CustomPreset[] = [
 
 const IBPS_FAQS = [
   {
-    question: 'What are the required dimensions for IBPS photo, signature, thumb, and declaration?',
+    question: 'What are the four mandatory image uploads required for IBPS applications?',
     answer:
-      'According to official IBPS guidelines: Photograph must be 200 × 230 pixels (20–50 KB), Signature must be 140 × 60 pixels (10–20 KB), Left Thumb Impression must be 240 × 240 pixels at 200 DPI (20–50 KB, 3×3 cm), and Handwritten Declaration must be 800 × 400 pixels at 200 DPI (50–100 KB, 10×5 cm).',
+      'IBPS PO, Clerk, Specialist Officer (SO), and RRB applications require four separate uploads: (1) Passport photograph (20–50 KB, 200×230 px), (2) Signature in running cursive (10–20 KB, 140×60 px), (3) Left Thumb Impression (20–50 KB, 240×240 px), and (4) Handwritten Declaration in cursive (50–100 KB, 800×400 px). All must be in JPG/JPEG format.',
   },
   {
     question: 'What is the exact text for the IBPS Handwritten Declaration?',
     answer:
-      'The official declaration text must read: "I, _______ (Name of the candidate), hereby declare that all the information submitted by me in the application form is correct, true and valid. I will present the supporting documents as and when required." It must be written in English by the candidate in black ink on white paper.',
+      'The official declaration text must be handwritten as follows: "I, _______ (Name of the candidate), hereby declare that all the information submitted by me in the application form is correct, true and valid. I will present the supporting documents as and when required." It must be written in English by the applicant in black ink on unruled white paper.',
   },
   {
-    question: 'Can the IBPS handwritten declaration be typed or written in capital letters?',
+    question: 'Can the IBPS handwritten declaration be typed or written in block/capital letters?',
     answer:
-      'No. IBPS explicitly states that handwritten declarations written in CAPITAL (BLOCK) LETTERS or typed by a computer will NOT be accepted and the application will be rejected.',
+      'No. IBPS explicitly states that declarations written in CAPITAL (BLOCK) LETTERS, or typed on a computer and printed, will NOT be accepted. Uploading a typed declaration will lead to disqualification during manual scrutiny.',
   },
   {
-    question: 'What if I do not have a Left Thumb for the IBPS impression?',
+    question: 'Why does IBPS reject signatures signed in blue ink?',
     answer:
-      'As per IBPS rules, if a candidate does not have a left thumb, they may use their right thumb. If both thumbs are missing, impression of one of the fingers of the left hand may be taken starting from the forefinger.',
+      'While some exams permit blue ink, IBPS guidelines specifically stipulate that the applicant signature MUST be signed in BLACK ink on plain white paper. Blue ink signatures can fail automated optical scanners on ibps.in.',
+  },
+  {
+    question: 'What if I do not have a left thumb for the IBPS impression?',
+    answer:
+      'As per IBPS rules, if a candidate does not have a left thumb, they may use their right thumb. If both thumbs are missing, an impression of one of the fingers of the left hand may be taken starting from the forefinger, and documented in the form.',
+  },
+  {
+    question: 'What is the minimum file size for the IBPS Left Thumb Impression (LTI)?',
+    answer:
+      'Unlike NEET which allows 10–50 KB, IBPS enforces a strict 20.0 KB lower floor for LTI (20–50 KB). If cropped too tightly, mobile scans often drop to 8–15 KB and trigger a portal error. Kagazo safely pads LTI files into the 25–40 KB range.',
+  },
+  {
+    question: 'Does this tool work for SBI PO and SBI Clerk applications as well?',
+    answer:
+      'Yes. State Bank of India (SBI) utilizes the identical four-document upload architecture with matching dimensions and KB limits (Photo 20–50 KB, Signature 10–20 KB, Thumb 20–50 KB, Declaration 50–100 KB).',
+  },
+  {
+    question: 'Can I wear glasses or spectacles in the IBPS passport photo?',
+    answer:
+      'Spectacles with tinted lenses or sunglasses are strictly prohibited. Even clear prescription glasses are discouraged if camera flash creates reflection on the lenses, obscuring the candidate eyes.',
+  },
+  {
+    question: 'What happens if I accidentally swap the thumb and declaration uploads?',
+    answer:
+      'The automated portal script checks file size and format, so an accidental swap might pass initial submission, but your application will be canceled during document verification. Kagazo clearly labels each downloaded file to prevent upload mixups.',
+  },
+  {
+    question: 'Does Kagazo save my handwritten declaration or thumbprint on any server?',
+    answer:
+      'No. All processing for all four documents occurs 100% in your browser RAM using HTML5 Canvas. Your signature, thumbprint, and declaration are never uploaded to any remote server or stored on disk.',
   },
 ];
+
+const IBPS_DECLARATION_TEXT =
+  'I, _______ (Name of the candidate), hereby declare that all the information submitted by me in the application form is correct, true and valid. I will present the supporting documents as and when required.';
 
 export default function IbpsPhotoSignatureResizerPage() {
   const jsonLd = {
@@ -109,38 +146,43 @@ export default function IbpsPhotoSignatureResizerPage() {
         name: 'IBPS Photo, Signature, Thumb & Declaration Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/ibps-photo-signature-resizer',
+        url: 'https://kagazo.in/tools/ibps-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
         },
         description:
-          'Resize Photograph, Signature, Left Thumb Impression, and Handwritten Declaration for IBPS PO, Clerk, SO, and RRB recruitment.',
+          'Prepare all four mandatory IBPS uploads — passport photo (20–50 KB), signature (10–20 KB), left thumb impression (20–50 KB), and handwritten declaration (50–100 KB) — for IBPS PO, Clerk, RRB, and SBI.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Resize IBPS Banking Application Documents Online',
+        name: 'How to Resize All 4 IBPS Uploads Online',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Choose Banking Document Type',
-            text: 'Select Photo (20-50KB), Signature (10-20KB), Thumb (20-50KB), or Declaration (50-100KB).',
+            name: 'Select Document Preset',
+            text: 'Choose Photo (20–50 KB), Signature (10–20 KB), Left Thumb (20–50 KB), or Declaration (50–100 KB).',
           },
           {
             '@type': 'HowToStep',
-            name: 'Upload Scan or Smartphone Photo',
-            text: 'Upload your document or capture.',
+            name: 'Upload Scanned File',
+            text: 'Upload phone photo or scanner file. Accepts JPG, PNG, WEBP, and Apple HEIC directly.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Automatic Pixel & Size Calibration',
-            text: 'Kagazo sets exact pixels (e.g. 200x230 or 800x400) and locks the file in the accepted KB range.',
+            name: 'Contrast & Ink Enhancement',
+            text: 'Our Xerox filter darkens handwriting strokes and thumbprint ridges while clearing background shadows.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Verified JPEG',
-            text: 'Download the optimized JPEG ready for instant upload on the IBPS portal.',
+            name: 'Automated Size Calibration',
+            text: 'File sizes are locked into the exact IBPS band, preventing both undersize floor and oversize errors.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Verified JPEGs',
+            text: 'Download portal-ready JPEG files ready for instant upload on ibps.in and sbi.co.in/careers.',
           },
         ],
       },
@@ -175,7 +217,7 @@ export default function IbpsPhotoSignatureResizerPage() {
           items={[
             { label: 'Home', href: '/' },
             { label: 'Tools', href: '/tools' },
-            { label: 'IBPS Bank Photo & Signature Resizer' },
+            { label: 'IBPS & Bank Exam Resizer' },
           ]}
           showHomeIcon
         />
@@ -184,17 +226,16 @@ export default function IbpsPhotoSignatureResizerPage() {
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>IBPS PO, Clerk, SO, RRB &amp; SBI Portal Ready</span>
+            <span>IBPS PO, Clerk, RRB Officer &amp; SBI Suite Ready</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>IBPS Photo, Signature &amp; </span>
-            <span className="text-primary">Declaration Resizer</span>
+            <span>IBPS &amp; Bank Exam Photo Resizer </span>
+            <span className="text-primary">(PO, Clerk, RRB, SBI — 2026)</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Calibrate banking exam documents to exact official pixel specifications: Photo (200×230 px), 
-            Signature (140×60 px), Left Thumb (240×240 px), and Handwritten Declaration (800×400 px).
+            Prepare all four mandatory IBPS uploads — passport photo (20–50 KB), signature (10–20 KB), left thumb impression (20–50 KB), and handwritten declaration (50–100 KB) — for IBPS PO, Clerk, RRB Officer, and SBI online forms.
           </p>
         </header>
 
@@ -203,13 +244,25 @@ export default function IbpsPhotoSignatureResizerPage() {
           {/* Main Focus Workspace (68% Width) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageResizerEngine
-              initialMode="photo"
-              examName="IBPS / SBI"
+              initialMode="declaration"
+              examName="IBPS Bank Selection"
               customPresets={IBPS_PRESETS}
             />
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
+
+            {/* Copyable IBPS Handwritten Declaration Proforma */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <DeclarationProforma text={IBPS_DECLARATION_TEXT} />
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Critical Warning:</strong> Writing in CAPITAL (BLOCK) LETTERS or typing and printing the declaration will result in instant disqualification. Write naturally in cursive handwriting.
+                </p>
+              </div>
+            </section>
 
             {/* Official IBPS Specifications Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
@@ -217,14 +270,14 @@ export default function IbpsPhotoSignatureResizerPage() {
                 <div>
                   <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                     <ShieldCheck className="w-5 h-5 text-primary" />
-                    Official IBPS / SBI Upload Specifications
+                    Official IBPS 4-Upload Specifications
                   </h2>
                   <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                    Enforced by the Institute of Banking Personnel Selection online registration engine.
+                    Parameters enforced across IBPS PO, Clerk, SO, RRB, and SBI online portals.
                   </p>
                 </div>
                 <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
-                  IBPS Rules
+                  Banking Norms
                 </span>
               </div>
 
@@ -232,58 +285,154 @@ export default function IbpsPhotoSignatureResizerPage() {
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
                     <tr className="border-b border-surface-darker bg-surface text-text-main">
-                      <th className="py-3 px-3 font-bold">Document</th>
-                      <th className="py-3 px-3 font-bold">Allowed Size</th>
+                      <th className="py-3 px-3 font-bold">Upload Item</th>
+                      <th className="py-3 px-3 font-bold">Mandatory File Size</th>
                       <th className="py-3 px-3 font-bold">Pixel Dimensions</th>
-                      <th className="py-3 px-3 font-bold">Key Guidelines</th>
+                      <th className="py-3 px-3 font-bold">Format &amp; Key Rules</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-surface-darker text-text-main/85">
                     <tr className="hover:bg-surface/50">
                       <td className="py-3 px-3 font-semibold text-text-main">Passport Photograph</td>
                       <td className="py-3 px-3 font-bold text-primary">20 KB to 50 KB</td>
-                      <td className="py-3 px-3">200 × 230 pixels</td>
-                      <td className="py-3 px-3">Light/white background, frontal face</td>
+                      <td className="py-3 px-3 font-mono">200 × 230 pixels</td>
+                      <td className="py-3 px-3">JPG/JPEG; light/white bg; no spectacles; both ears visible</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
                       <td className="py-3 px-3 font-semibold text-text-main">Candidate Signature</td>
                       <td className="py-3 px-3 font-bold text-primary">10 KB to 20 KB</td>
-                      <td className="py-3 px-3">140 × 60 pixels</td>
-                      <td className="py-3 px-3">Black ink on white paper, no capital letters</td>
+                      <td className="py-3 px-3 font-mono">140 × 60 pixels</td>
+                      <td className="py-3 px-3">JPG/JPEG; BLACK ink only; cursive handwriting (no capitals)</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
                       <td className="py-3 px-3 font-semibold text-text-main">Left Thumb Impression</td>
                       <td className="py-3 px-3 font-bold text-primary">20 KB to 50 KB</td>
-                      <td className="py-3 px-3">240 × 240 pixels (3×3 cm)</td>
-                      <td className="py-3 px-3">Blue or black ink, clear ridge lines</td>
+                      <td className="py-3 px-3 font-mono">240 × 240 pixels (200 DPI)</td>
+                      <td className="py-3 px-3">JPG/JPEG; blue or black ink; clear ridges; unsmudged</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
                       <td className="py-3 px-3 font-semibold text-text-main">Handwritten Declaration</td>
                       <td className="py-3 px-3 font-bold text-primary">50 KB to 100 KB</td>
-                      <td className="py-3 px-3">800 × 400 pixels (10×5 cm)</td>
-                      <td className="py-3 px-3">In English, black ink, candidate's own handwriting</td>
+                      <td className="py-3 px-3 font-mono">800 × 400 pixels (200 DPI)</td>
+                      <td className="py-3 px-3">JPG/JPEG; English cursive handwriting; plain white paper</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Verification Note:</strong> IBPS notifications may have slight variations between PO and Specialist Officer posts. Always cross-check with the official notification on <code className="font-mono font-bold">ibps.in</code> before uploading. Need to scan declarations? Use our{' '}
+                  <Link href="/tools/handwritten-declaration-scanner" className="underline font-bold text-amber-950 hover:text-primary">
+                    Handwritten Declaration Scanner
+                  </Link>.
+                </p>
+              </div>
             </section>
 
-            {/* Official Handwritten Declaration Copy Box */}
+            {/* How to Use Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <div className="flex items-center justify-between gap-2 pb-2">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-primary" />
-                  Official IBPS Declaration Text to Copy
-                </h2>
-                <span className="text-[11px] font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full uppercase tracking-wider">
-                  Mandatory Text
-                </span>
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Format All 4 Banking Uploads in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    1
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Document Preset</h3>
+                  <p className="text-xs text-text-main/75">
+                    Click <strong>Photo</strong>, <strong>Signature</strong>, <strong>Left Thumb</strong>, or <strong>Declaration</strong>.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    2
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Photo or Scan</h3>
+                  <p className="text-xs text-text-main/75">
+                    Drop your phone capture or scanner image. Supports JPG, PNG, WEBP, and Apple HEIC directly.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    3
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Auto Crop Framing</h3>
+                  <p className="text-xs text-text-main/75">
+                    Kagazo automatically frames the document into official pixel boundaries (e.g. 800×400 px for declaration).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    4
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Ink Contrast Booster</h3>
+                  <p className="text-xs text-text-main/75">
+                    Darkens faint black pen ink and thumb ridges while bleaching shadowy paper to clean white.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    5
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download Compliant JPEG</h3>
+                  <p className="text-xs text-text-main/75">
+                    Review final KB and resolution with our clarity loupe, then download verified JPEGs ready for upload to ibps.in.
+                  </p>
+                </div>
               </div>
-              <p className="text-xs sm:text-sm text-text-main/70">
-                Write the following text clearly on clean white A4 paper using a black ink pen. Do not use capital letters:
-              </p>
-              <div className="p-4 rounded-2xl bg-surface border border-surface-darker font-mono text-xs sm:text-sm text-text-main/90 leading-relaxed select-all">
-                &ldquo;I, _________ (Name of the candidate), hereby declare that all the information submitted by me in the application form is correct, true and valid. I will present the supporting documents as and when required.&rdquo;
+            </section>
+
+            {/* Common Errors Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common IBPS Banking Upload Mistakes and How to Avoid Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Typed Handwritten Declaration
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Typing and printing the text leads to disqualification during manual scrutiny. It must be written by hand in natural cursive English handwriting.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Left Thumb File Size Under 20 KB
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    IBPS requires LTI to be between 20 KB and 50 KB. Scans under 20.0 KB are blocked by the portal. Kagazo safely pads LTI files into the 25–40 KB range.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Blue Ink Signature
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    IBPS explicitly requires black ink for candidate signatures. Our Xerox filter converts and enhances strokes into deep black ink.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Signatures in Capital / Block Letters
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Block letter signatures are rejected across all IBPS recruitment rounds. Sign in natural running script.
+                  </p>
+                </div>
               </div>
             </section>
 
@@ -295,10 +444,10 @@ export default function IbpsPhotoSignatureResizerPage() {
               <div>
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions (IBPS &amp; SBI)
+                  Frequently Asked Questions (IBPS &amp; Bank Exam Uploads)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Guidance for candidates applying for Bank PO, Clerk, Specialist Officer, and RRB posts.
+                  Clear, verified answers covering IBPS PO, Clerk, RRB, SO, and SBI applications.
                 </p>
               </div>
 
@@ -332,60 +481,60 @@ export default function IbpsPhotoSignatureResizerPage() {
 
               <div className="space-y-2">
                 <Link
-                  href="/tools/ssc-photo-signature-resizer"
+                  href="/tools/handwritten-declaration-scanner"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      SSC Photo &amp; Signature Resizer
+                      Declaration Scanner
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–50 KB &amp; 10–20 KB, CGL/CHSL ready
+                      Clean &amp; sharpen written text
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/upsc-photo-signature-resizer"
+                  href="/tools/thumb-impression-resizer"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      UPSC Photo &amp; Signature Resizer
+                      Thumb Impression Resizer
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–300 KB, 350×350 px, 10-day DOP rule
+                      LTI 20–50 KB optimizer
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/neet-photo-signature-resizer"
+                  href="/tools/compress-image-to-20kb"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      NEET Postcard (4"×6") &amp; Photo
+                      Compress Image to 20KB
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      4×6 Postcard, 80% face passport photo
+                      Signature 10–20 KB target
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/image-to-pdf-200kb"
+                  href="/tools/specifications"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Marksheet Image to PDF (&lt; 200 KB)
+                      Exam Specs Radar
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      1-click certificate &amp; marksheet converter
+                      Compare IBPS, SSC, UPSC
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
@@ -400,17 +549,17 @@ export default function IbpsPhotoSignatureResizerPage() {
             <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
               <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
                 <Lock className="w-4 h-4 shrink-0" />
-                <span>100% In-Memory Banking Privacy</span>
+                <span>100% In-Memory Privacy</span>
               </div>
               <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
-                Your photograph, signature, thumb impression, and declaration are processed in RAM memory and wiped immediately upon download. No personal data is ever logged or stored.
+                Biometric thumb impressions, signatures, and handwritten declarations are processed exclusively in volatile RAM and destroyed on session close. Never saved to any database.
               </p>
               <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
                 <span className="flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Zero Watermark
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> 100% Free
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> No Signup
                 </span>
               </div>
             </div>
@@ -418,7 +567,7 @@ export default function IbpsPhotoSignatureResizerPage() {
         </div>
 
         {/* Recommended Workflow Tools */}
-        <RelatedTools currentSlug="/tools/ibps-bank-photo-signature-resizer" />
+        <RelatedTools currentSlug="/tools/ibps-photo-signature-resizer" />
       </div>
     </div>
   );

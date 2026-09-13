@@ -6,30 +6,35 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
   Camera,
   PenTool,
   ArrowRight,
   AlertTriangle,
   CheckCircle2,
+  FileText,
+  Sliders,
+  Sparkles,
+  Info,
+  Ratio,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'GATE & JAM Photo & Signature Resizer Online Free | IIT GOAPS Portal | Kagazo',
+  title: 'GATE & JAM Photo & Signature Resizer — GOAPS 2026 | Kagazo',
   description:
-    'Resize photo (5-200KB, ratio 0.66-0.89) and signature (5-100KB, strict 3.15 to 3.95 aspect ratio) for IIT GATE & JAM online application (GOAPS). Solves aspect ratio upload errors.',
+    'Resize GATE and JAM photo (3.5x4.5 cm, 5–200 KB) and signature (strict 3.15–3.95 aspect ratio, 5–100 KB) to IIT GOAPS portal specifications. No upload, instant.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/gate-photo-signature-resizer',
+    canonical: 'https://kagazo.in/tools/gate-photo-signature-resizer',
   },
   openGraph: {
-    title: 'GATE & JAM Photo & Signature Resizer Online Free | Kagazo',
+    title: 'GATE & JAM Photo & Signature Resizer | Kagazo — Free, No Upload',
     description:
-      'Strict 3.15 to 3.95 aspect ratio compliance for IIT GATE GOAPS. In-memory processing, zero watermark.',
-    url: 'https://Kagazo.in/tools/gate-photo-signature-resizer',
+      'Format GATE 2026 & IIT JAM photo and signature. Solves GOAPS automated face-ratio (3.15–3.95 cm) and signature aspect-ratio errors. 100% in-browser.',
+    url: 'https://kagazo.in/tools/gate-photo-signature-resizer',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -38,16 +43,16 @@ export const metadata: Metadata = {
 const GATE_PRESETS: CustomPreset[] = [
   {
     id: 'photo',
-    label: 'GATE Photo (5-200KB, 0.77:1 ratio)',
+    label: 'GATE Photo (5–200 KB, 3.5×4.5 cm, 70–85% Face)',
     minKb: 5,
     maxKb: 200,
-    widthPx: 350,
-    heightPx: 450,
+    widthPx: 480,
+    heightPx: 640,
     isPhoto: true,
   },
   {
     id: 'signature',
-    label: 'GATE Signature (3.55:1 ratio, 5-100KB)',
+    label: 'GATE Signature (5–100 KB, 3.55:1 Ratio Lock)',
     minKb: 5,
     maxKb: 100,
     widthPx: 532,
@@ -60,22 +65,52 @@ const GATE_FAQS = [
   {
     question: 'Why does IIT GOAPS show the error: "Aspect ratio of signature not between 3.15 and 3.95"?',
     answer:
-      'The IIT GATE Online Application Processing System (GOAPS) runs an automated mathematical validation on signature dimensions: Width divided by Height must strictly fall between 3.15 and 3.95. If you upload a square or tall signature (e.g. 2:1 ratio), GOAPS automatically blocks the upload. Kagazo fixes this by centering your signature on a calibrated 3.55:1 canvas, guaranteeing zero rejection.',
+      'The IIT GATE Online Application Processing System (GOAPS) runs an automated mathematical algorithm on uploaded signatures: Width divided by Height must strictly fall between 3.15 and 3.95. If you upload a square or standard 2:1 signature, GOAPS automatically halts the upload. Kagazo centers your signature on a calibrated 3.55:1 canvas, guaranteeing zero rejection.',
   },
   {
-    question: 'What are the official photo requirements for GATE & JAM?',
+    question: 'What is the mandatory face-to-height ratio requirement for GATE GOAPS photos?',
     answer:
-      'Photograph must be between 5 KB and 200 KB in JPEG/JPG format. The aspect ratio must be between 0.66 and 0.89 (standard passport ratio). Candidate face must cover 60% to 70% of the image area on a clean white or very light background. Both ears must be clearly visible with no caps or tinted spectacles.',
+      'GOAPS requires that the height of the candidate face (from the chin to the crown/top of the head) must measure between 3.15 cm and 3.95 cm within the 3.5 cm x 4.5 cm frame (occupying roughly 70% to 88% of the total photo height). This ensures the automated facial biometric recognition algorithm at test centers can locate facial landmarks reliably.',
   },
   {
-    question: 'What ink color is permitted for the GATE signature?',
+    question: 'Can I wear glasses or spectacles in my GATE 2026 photograph?',
     answer:
-      'Signatures must be signed in black or dark blue ink within a rectangular box on clean white paper. Kagazo includes our Xerox ink boost filter to sharpen blue and black pen strokes while removing grey shadows.',
+      'No. Recent GATE notifications strictly prohibit spectacles, tinted glasses, or prescription power lenses. The GOAPS validation script incorporates automated spectacle detection. Photos with glasses are flagged and rejected. Always photograph yourself without glasses.',
   },
   {
-    question: 'Is this GATE GOAPS Resizer 100% free with no watermark?',
+    question: 'What are the official file size limits for GATE and JAM on GOAPS?',
     answer:
-      'Yes, Kagazo is completely free forever. No watermarks, no signups, and your images are processed purely in volatile RAM memory without saving to server disks.',
+      'The photograph file size must be between 5 KB and 200 KB (some organizing IITs allow up to 500 KB; 5–200 KB is universally accepted across all cycles). The signature must be between 5 KB and 100 KB in JPG/JPEG format only.',
+  },
+  {
+    question: 'What ink color and background paper are required for the GATE signature?',
+    answer:
+      'Signatures must be made in black or dark blue ink within a clean rectangular box on plain unruled white paper. Avoid gel pens that reflect camera glare, pencil signatures, or lined paper. Kagazo provides our Xerox filter to boost ink contrast to deep black.',
+  },
+  {
+    question: 'Is the IIT JAM photo requirement identical to GATE?',
+    answer:
+      'Yes. IIT Joint Admission test for Masters (JAM) uses the exact same GOAPS portal infrastructure, requiring the 3.5×4.5 cm photo with 70–88% face height coverage and the mathematical 3.15–3.95 signature aspect ratio.',
+  },
+  {
+    question: 'Why does my studio passport photo get rejected on GOAPS?',
+    answer:
+      'Standard commercial studio photos usually crop faces to occupy only 50–60% of the frame with large chest margins. When uploaded to GOAPS, the automated face detector fails with "Face not detected" because the face is smaller than 3.15 cm. Kagazo frames the face tightly to satisfy the 70–88% constraint.',
+  },
+  {
+    question: 'Does GOAPS accept PNG or WEBP image formats?',
+    answer:
+      'No. The GOAPS server only accepts genuine standard baseline JPEG binaries. Kagazo encodes all output images as standard compliant JPEGs with 300 DPI metadata.',
+  },
+  {
+    question: 'What if the GOAPS organizing IIT changes this year?',
+    answer:
+      'While the organizing IIT rotates annually among IISc Bangalore, IIT Kharagpur, IIT Roorkee, IIT Kanpur, IIT Madras, IIT Bombay, and IIT Delhi, the core GOAPS software engine enforcing the 3.15–3.95 ratio and 3.5×4.5 cm format remains standardized.',
+  },
+  {
+    question: 'Does Kagazo store or inspect my GATE photo?',
+    answer:
+      'No. Image scaling, ratio calculation, and JPEG encoding execute 100% in your local browser memory using HTML5 Canvas. Your biometric documents are never uploaded to any cloud server.',
   },
 ];
 
@@ -88,38 +123,43 @@ export default function GatePhotoSignatureResizerPage() {
         name: 'GATE & JAM Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/gate-photo-signature-resizer',
+        url: 'https://kagazo.in/tools/gate-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
         },
         description:
-          'Resize photo and signature for IIT GATE and JAM online applications with strict 3.15 to 3.95 aspect ratio compliance.',
+          'Format your IIT GATE and JAM application photo and signature to exact GOAPS automated-validation specifications — 3.5x4.5 cm photo, strictly enforced 3.15 to 3.95 signature aspect ratio, 5–200 KB.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Resize Photo and Signature for IIT GOAPS Online',
+        name: 'How to Format GATE & JAM Photos for GOAPS Online',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Select GATE Photo or Signature',
-            text: 'Choose GATE Photo (5-200KB) or GATE Signature (3.55:1 aspect ratio).',
+            name: 'Select GATE Photo or Signature Preset',
+            text: 'Choose GATE Photo (70-88% face coverage) or GATE Signature (3.15-3.95 aspect ratio lock).',
           },
           {
             '@type': 'HowToStep',
-            name: 'Upload Image',
-            text: 'Upload your passport photo or signature scan.',
+            name: 'Upload Your Image',
+            text: 'Upload phone photo or scanned signature. Supports JPG, PNG, WEBP, and HEIC.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Mathematical Aspect Ratio Locking',
-            text: 'Kagazo sets exact dimensions (e.g. 532x150 px) to satisfy the 3.15-3.95 GOAPS rule.',
+            name: 'Face Height & Ratio Framing',
+            text: 'Center your face so chin to head crown occupies 70-85% of the 3.5x4.5cm frame.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Compliant JPEG',
-            text: 'Inspect with high-resolution clarity loupe and download the verified JPEG.',
+            name: 'GOAPS Algorithmic Calibration',
+            text: 'Kagazo automatically frames signature to a 3.55:1 canvas, satisfying GOAPS mathematical ratio checks.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Verified JPEG',
+            text: 'Inspect with clarity preview and download portal-compliant JPEG ready for GOAPS upload.',
           },
         ],
       },
@@ -150,33 +190,29 @@ export default function GatePhotoSignatureResizerPage() {
 
       <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools/government-exam-pdf-compressor" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">GATE &amp; JAM Resizer</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'GATE & JAM IIT GOAPS Resizer' },
+          ]}
+          showHomeIcon
+        />
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>IIT GOAPS Portal Ready &bull; Aspect Ratio Locked</span>
+            <span>IIT GATE 2026 &amp; IIT JAM GOAPS Ready</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>GATE &amp; JAM Photo &amp; </span>
-            <span className="text-primary">Signature Resizer (GOAPS)</span>
+            <span>GATE &amp; IIT JAM Photo Resizer </span>
+            <span className="text-primary">— GOAPS Portal (2026 Guidelines)</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Calibrate engineering &amp; science exam documents to strict IIT GOAPS standards. 
-            Guarantees signature aspect ratio strictly within the mandatory <span className="font-mono font-bold text-primary">3.15 to 3.95</span> range.
+            Format your GATE 2026 or IIT JAM photo and signature for the GOAPS portal. Enforces the mandatory face-to-image height ratio (3.15–3.95 cm) and 3.15 to 3.95 signature aspect ratio that cause automatic rejection when violated.
           </p>
         </header>
 
@@ -185,28 +221,76 @@ export default function GatePhotoSignatureResizerPage() {
           {/* Main Focus Workspace (68% Width) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageResizerEngine
-              initialMode="signature"
-              examName="IIT GATE GOAPS"
+              initialMode="photo"
+              examName="IIT GATE / JAM"
               customPresets={GATE_PRESETS}
             />
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Official GATE Specifications Table */}
+            {/* Tool Introduction & Key Differentiator */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  GOAPS Algorithmic Ratio Enforcement
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  The GOAPS Automated Face-Height &amp; Signature Ratio Checks
+                </h2>
+              </div>
+              <div className="text-xs sm:text-sm text-text-main/85 leading-relaxed space-y-3">
+                <p>
+                  GATE and IIT JAM enforce two technical image constraints unique to the Graduate Online Application Processing System (GOAPS). First, the <strong>face height must measure between 3.15 cm and 3.95 cm</strong> within a 3.5×4.5 cm photo (70% to 88% face coverage). Photos where the face is too small fail the portal&apos;s automated face-detection scan on upload.
+                </p>
+                <p>
+                  Second, the signature&apos;s width divided by its height must strictly calculate between <strong>3.15 and 3.95</strong>. If you upload a signature with a common 2:1 ratio, GOAPS blocks the upload with an aspect ratio error. Kagazo locks both the 70–88% face framing and the 3.55:1 signature canvas automatically.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Ratio className="w-4 h-4" /> 3.15–3.95 Ratio Lock
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Mathematically ensures signature width-to-height ratio lands at 3.55:1, avoiding algorithmic rejection.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Camera className="w-4 h-4" /> 70–88% Face Coverage
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Frames chin-to-crown distance within 3.15–3.95 cm for flawless GOAPS automated facial detection.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4" /> Spectacles Warning
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Highlights GOAPS strict ban on glasses and tinted spectacles to prevent document disqualification.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Official GATE GOAPS Specifications Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
                 <div>
                   <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                     <ShieldCheck className="w-5 h-5 text-primary" />
-                    Official IIT GOAPS Upload Specifications
+                    Official GATE &amp; JAM GOAPS Specifications
                   </h2>
                   <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                    Strict mathematical parameters enforced by the Indian Institute of Technology.
+                    Standards drawn from official IIT GATE Information Bulletins.
                   </p>
                 </div>
                 <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
-                  IIT Standards
+                  GOAPS Norms
                 </span>
               </div>
 
@@ -214,46 +298,164 @@ export default function GatePhotoSignatureResizerPage() {
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
                     <tr className="border-b border-surface-darker bg-surface text-text-main">
-                      <th className="py-3 px-3 font-bold">Document</th>
-                      <th className="py-3 px-3 font-bold">Allowed File Size</th>
-                      <th className="py-3 px-3 font-bold">Aspect Ratio Rule</th>
-                      <th className="py-3 px-3 font-bold">Key Guidelines</th>
+                      <th className="py-3 px-3 font-bold">Parameter</th>
+                      <th className="py-3 px-3 font-bold">GOAPS Candidate Photograph</th>
+                      <th className="py-3 px-3 font-bold">GOAPS Candidate Signature</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-surface-darker text-text-main/85">
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">Passport Photograph</td>
-                      <td className="py-3 px-3 font-bold text-primary">5 KB to 200 KB</td>
-                      <td className="py-3 px-3">0.66 to 0.89</td>
-                      <td className="py-3 px-3">White background, 60–70% face coverage, both ears visible</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Applicable Exams</td>
+                      <td className="py-3 px-3">GATE (all 30 papers across IITs/IISc), IIT JAM (M.Sc/Ph.D)</td>
+                      <td className="py-3 px-3">Mandatory across all GOAPS applications</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">Candidate Signature</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Allowed File Size</td>
+                      <td className="py-3 px-3 font-bold text-primary">5 KB to 200 KB (up to 500 KB on some portals)</td>
                       <td className="py-3 px-3 font-bold text-primary">5 KB to 100 KB</td>
-                      <td className="py-3 px-3 text-primary font-bold">3.15 to 3.95 (Strict)</td>
-                      <td className="py-3 px-3">Black or dark blue ink, running hand (Capital letters prohibited)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Dimensions / Ratio</td>
+                      <td className="py-3 px-3">3.5 cm (W) × 4.5 cm (H) (approx 480×640 px)</td>
+                      <td className="py-3 px-3 font-mono text-primary font-bold">Strict 3.15 to 3.95 Width:Height Ratio</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Face Height Rule</td>
+                      <td className="py-3 px-3 font-semibold text-primary">Face height 3.15 cm to 3.95 cm (70%–88% coverage)</td>
+                      <td className="py-3 px-3">Not applicable</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">File Format</td>
+                      <td className="py-3 px-3 font-mono">JPG / JPEG only</td>
+                      <td className="py-3 px-3 font-mono">JPG / JPEG only</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Spectacles Policy</td>
+                      <td className="py-3 px-3 font-semibold text-red-600">Strictly prohibited (no clear or power glasses)</td>
+                      <td className="py-3 px-3">—</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Background &amp; Ink</td>
+                      <td className="py-3 px-3">Uniform white or light background</td>
+                      <td className="py-3 px-3">Dark blue or black ink on unruled white paper</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Verification Note:</strong> GATE is organized by rotating IITs (IISc, IIT Kharagpur, IIT Roorkee, etc.). While organizing IITs change annually, the GOAPS automated face-detection check remains active. Compare specs across exams on our{' '}
+                  <Link href="/tools/specifications" className="underline font-bold text-amber-950 hover:text-primary">
+                    Exam Specifications Radar
+                  </Link>.
+                </p>
+              </div>
             </section>
 
-            {/* The 3.15 - 3.95 Aspect Ratio Explanation */}
+            {/* How to Use Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Format GATE &amp; JAM Images in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    1
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Preset</h3>
+                  <p className="text-xs text-text-main/75">
+                    Choose <strong>GATE Photo (70–85% Face)</strong> or <strong>GATE Signature (3.55:1 Ratio)</strong>.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    2
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Photo or Scan</h3>
+                  <p className="text-xs text-text-main/75">
+                    Drop your image. Accepts JPG, PNG, WEBP, and Apple HEIC directly.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    3
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Calibrate Face Height</h3>
+                  <p className="text-xs text-text-main/75">
+                    Ensure the face occupies roughly 75% of the height, from chin to the top of hair.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    4
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Mathematical Ratio Lock</h3>
+                  <p className="text-xs text-text-main/75">
+                    Kagazo automatically aligns signature canvas to 3.55:1, avoiding the GOAPS aspect ratio rejection.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    5
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download GOAPS JPEG</h3>
+                  <p className="text-xs text-text-main/75">
+                    Download the verified JPEG file, sized between 5–200 KB, ready for instant upload on the GOAPS candidate portal.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Common Errors Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Understanding the IIT GOAPS 3.15–3.95 Signature Rule
+                Common GOAPS Upload Errors and How Kagazo Fixes Them
               </h2>
-              <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                <p>
-                  Most online image compressors resize signatures to a square (1:1) or standard 2:1 rectangle. When uploaded to the GOAPS portal, the automated validator divides the pixel width by the pixel height:
-                </p>
-                <div className="p-3 rounded-xl bg-white border border-surface-darker font-mono text-xs text-center text-primary font-bold">
-                  Aspect Ratio = Pixel Width ÷ Pixel Height &rarr; Must be between 3.15 and 3.95
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: &quot;Aspect ratio of signature not between 3.15 and 3.95&quot;
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Standard signatures cropped square or 2:1 are rejected by GOAPS code. Kagazo centers your signature on a calibrated 3.55:1 canvas, guaranteeing zero rejection.
+                  </p>
                 </div>
-                <p>
-                  Kagazo sets your canvas to exactly <strong>532 × 150 pixels</strong> (<span className="font-mono text-primary font-bold">532 ÷ 150 = 3.55</span>), perfectly centered in the permissible window, ensuring 100% first-time portal acceptance.
-                </p>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: &quot;Face not detected&quot; or Face Too Small
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Studio passport photos with 50% face coverage fail GOAPS automated face-detection. Crop tightly so your face spans 70–88% of the frame height.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Spectacles and Glare Rejection
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    GOAPS uses automated spectacle detection. Glasses of any type are prohibited. Always capture a fresh photo without spectacles before uploading.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Faint or Blurry Pen Strokes
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Signatures written with light ballpoint pens can be illegible at low resolution. Our Xerox boost filter deepens strokes while cleaning the paper background.
+                  </p>
+                </div>
               </div>
             </section>
 
@@ -265,10 +467,10 @@ export default function GatePhotoSignatureResizerPage() {
               <div>
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions (GATE GOAPS Resizer)
+                  Frequently Asked Questions (IIT GATE &amp; JAM GOAPS)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Guidance for engineering &amp; science graduates filling out GATE &amp; JAM registration.
+                  Technical answers for engineering and science graduates preparing for GATE and JAM registration.
                 </p>
               </div>
 
@@ -302,6 +504,21 @@ export default function GatePhotoSignatureResizerPage() {
 
               <div className="space-y-2">
                 <Link
+                  href="/tools/change-image-dpi"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      Change Image DPI
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      Set 300 DPI for GOAPS
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
                   href="/tools/upsc-photo-signature-resizer"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
@@ -310,52 +527,37 @@ export default function GatePhotoSignatureResizerPage() {
                       UPSC Photo &amp; Signature
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–300 KB, 350×350 px, 10-day DOP
+                      IES / ESE recruitment preset
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/rrb-photo-signature-resizer"
+                  href="/tools/compress-image-to-200kb"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Railway RRB Resizer
+                      Compress Image to 200KB
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      320×240 px, 20–50 KB photo
+                      Lock image under 200 KB
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/ssc-photo-signature-resizer"
+                  href="/tools/specifications"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      SSC Photo &amp; Signature
+                      Exam Specs Radar
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–50 KB &amp; 10–20 KB, 3.5×4.5 cm
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
-                </Link>
-
-                <Link
-                  href="/tools/image-to-pdf-200kb"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Degree Certificate to PDF
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      A4 formatted PDF strictly &lt; 200 KB
+                      Compare GATE, UPSC, SSC
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
@@ -370,22 +572,25 @@ export default function GatePhotoSignatureResizerPage() {
             <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
               <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
                 <Lock className="w-4 h-4 shrink-0" />
-                <span>100% In-Memory RAM Privacy</span>
+                <span>100% In-Browser Security</span>
               </div>
               <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
-                Your photograph and signature are processed in ephemeral system memory and destroyed immediately upon download. Never stored on server disks.
+                All aspect ratio calculations and image rendering take place inside your browser memory. No data is ever stored on or transmitted to any server.
               </p>
               <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
                 <span className="flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Zero Watermark
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> 100% Free
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> No Signup
                 </span>
               </div>
             </div>
           </aside>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/gate-photo-signature-resizer" />
       </div>
     </div>
   );

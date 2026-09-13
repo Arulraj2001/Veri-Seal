@@ -6,30 +6,35 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
   Camera,
   PenTool,
   ArrowRight,
   AlertTriangle,
   CheckCircle2,
+  FileText,
+  Sliders,
+  Sparkles,
+  Info,
+  Image as ImageIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'NEET Postcard (4x6) & Photo Signature Resizer Online Free | Kagazo',
+  title: 'NEET Photo, 4x6 Postcard & Signature Resizer — NTA 2026 | Kagazo',
   description:
-    'Resize Postcard Photo (4x6 inch, 10-200KB with Name & Date), Passport Photo (10-200KB, 80% face), Signature (4-30KB), and Finger Impressions for NEET UG online application and admit card.',
+    'Resize all NEET UG uploads: 4x6 inch postcard photo (50–300 KB), passport photo (10–50 KB), signature (4–30 KB), and left thumb impression. NTA compliant, zero watermark.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/neet-photo-signature-resizer',
+    canonical: 'https://kagazo.in/tools/neet-photo-signature-resizer',
   },
   openGraph: {
-    title: 'NEET Postcard (4x6) & Photo Signature Resizer Online Free | Kagazo',
+    title: 'NEET UG Photo, 4x6 Postcard & Signature Resizer | Kagazo',
     description:
-      'Free NTA NEET UG image resizer. 4"x6" Postcard photo, passport photo, running signature, and finger impressions resized to exact NTA specifications.',
-    url: 'https://Kagazo.in/tools/neet-photo-signature-resizer',
+      'Prepare 4x6 postcard photo (50–300 KB), passport photo, running signature, and thumb impression to exact NTA NEET UG specifications. Free, in-browser.',
+    url: 'https://kagazo.in/tools/neet-photo-signature-resizer',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -38,25 +43,25 @@ export const metadata: Metadata = {
 const NEET_PRESETS: CustomPreset[] = [
   {
     id: 'postcard',
-    label: 'Postcard Photo (4"×6", 10-200KB)',
-    minKb: 10,
-    maxKb: 200,
+    label: 'Postcard Photo (4"×6", 50–300 KB)',
+    minKb: 50,
+    maxKb: 300,
     widthCm: 10.16,
     heightCm: 15.24,
     isPhoto: true,
   },
   {
     id: 'passport_photo',
-    label: 'Passport Photo (3.5×4.5cm, 10-200KB)',
+    label: 'Passport Photo (3.5×4.5 cm, 10–50 KB)',
     minKb: 10,
-    maxKb: 200,
+    maxKb: 50,
     widthCm: 3.5,
     heightCm: 4.5,
     isPhoto: true,
   },
   {
     id: 'signature',
-    label: 'Running Signature (4-30KB)',
+    label: 'Running Signature (4–30 KB)',
     minKb: 4,
     maxKb: 30,
     widthCm: 3.5,
@@ -65,9 +70,9 @@ const NEET_PRESETS: CustomPreset[] = [
   },
   {
     id: 'fingers_thumbs',
-    label: 'Fingers & Thumbs (10-200KB)',
+    label: 'Left Thumb Impression (10–50 KB)',
     minKb: 10,
-    maxKb: 200,
+    maxKb: 50,
     widthCm: 6.0,
     heightCm: 4.0,
     isXerox: true,
@@ -76,24 +81,54 @@ const NEET_PRESETS: CustomPreset[] = [
 
 const NEET_FAQS = [
   {
-    question: 'What is the Postcard Size Photo required for NEET UG?',
+    question: 'What is the exact Postcard Size Photo required for NEET UG?',
     answer:
-      'The National Testing Agency (NTA) mandates a 4" × 6" (inches) or 10.16 cm × 15.24 cm Postcard size photograph for NEET UG. The photo must be in JPG/JPEG format between 10 KB and 200 KB, with a white background, 80% face coverage showing ears clearly, and candidate name with date of taking photo (DOP) printed at the bottom.',
+      'The National Testing Agency (NTA) mandates a 4" × 6" (10.16 cm × 15.24 cm) Postcard size photograph for NEET UG. The scanned file must be in JPG/JPEG format between 50 KB and 300 KB, with a plain white background and at least 80% facial coverage showing both ears. Candidate name and date of taking photo (DOP) are typically printed on the bottom strip.',
   },
   {
-    question: 'Why do students get rejected for signature in NEET?',
+    question: 'What are the three mandatory image uploads for NTA NEET UG?',
     answer:
-      'NTA rules strictly prohibit signatures written in CAPITAL (BLOCK) letters. The signature must be in running handwriting in black ink on white paper, with a file size between 4 KB and 30 KB. Submitting a signature in capital letters will lead to application cancellation.',
+      'NEET UG requires three separate image uploads on the official portal: (1) Postcard photograph (4x6 inch, 50–300 KB), (2) Standard passport photo (3.5x4.5 cm, 10–50 KB or 10–200 KB per bulletin year), and (3) Left Thumb Impression / 10-finger impressions (10–50 KB), alongside the scanned signature (4–30 KB).',
   },
   {
-    question: 'What are the 10 fingers and thumbs impression guidelines for NEET?',
+    question: 'Why do signatures get rejected in NEET applications?',
     answer:
-      'Candidates must put impressions of all 10 fingers (left and right hands) using blue ink on plain white paper. The scanned image must be between 10 KB and 200 KB in JPG/JPEG format with clear ridge visibility without smudging.',
+      'NTA rules strictly forbid signatures signed in CAPITAL (BLOCK) letters. The signature must be in your natural running cursive handwriting in black ink on unruled white paper, with file size between 4 KB and 30 KB. Submitting initials only or capital letters will lead to application rejection.',
   },
   {
-    question: 'How do I add Candidate Name and Date of Photo for NEET?',
+    question: 'Is the printed postcard photo required at the NEET exam center?',
     answer:
-      'Kagazo automatically generates the official white bottom strip. Simply type your Name and the Date the photo was taken (e.g., 01-09-2026), and our engine seamlessly mounts it with correct contrast and font proportion.',
+      'Yes. Candidates must carry a physical 4"×6" print of the exact same postcard photograph pasted on the designated attendance sheet proforma in the examination hall. The candidate name and father name are written on the back of the physical photograph.',
+  },
+  {
+    question: 'Can I upload my passport photo into the postcard photo slot?',
+    answer:
+      'No. The postcard photo has a distinct 4:6 (2:3 aspect ratio) print size and a 50–300 KB range, whereas the passport photo is 3.5×4.5 cm. Uploading a small passport photo into the postcard slot will be flagged as mismatched during center biometric verification.',
+  },
+  {
+    question: 'What if my Left Thumb Impression file size is below 10 KB?',
+    answer:
+      'The NTA online portal rejects LTI files under 10.0 KB. If your cropped thumb scan is too small, Kagazo applies contrast enhancement and safe JFIF padding to bring the file into the compliant 15–35 KB range.',
+  },
+  {
+    question: 'Can I wear spectacles or caps in my NEET photo?',
+    answer:
+      'No. NTA NEET guidelines strictly prohibit spectacles, tinted glasses, sunglasses, and caps. Both ears and the forehead must be completely uncovered and visible against a plain white background.',
+  },
+  {
+    question: 'What ink color should be used for the NEET thumb impression?',
+    answer:
+      'NTA recommends blue or black ink stamp pads on clean unruled white paper. The impression should be rolled smoothly from side to side so finger ridge lines are sharp and smudge-free.',
+  },
+  {
+    question: 'Does NEET require candidate name and date on the photo digitally?',
+    answer:
+      'Yes. As per NTA bulletin guidelines, candidate name in capital letters and the date on which the photograph was taken (e.g. 01/09/2026) must appear on a white strip at the bottom of both the passport and postcard photographs.',
+  },
+  {
+    question: 'Does Kagazo store biometric thumb impressions or photos on servers?',
+    answer:
+      'No. Thumb impressions and passport photos are sensitive biometric data. All image cropping, contrast enhancement, and compression occur 100% inside your browser using HTML5 Canvas in volatile RAM memory. Nothing is ever sent to any server.',
   },
 ];
 
@@ -103,41 +138,46 @@ export default function NeetPhotoSignatureResizerPage() {
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'NEET Postcard & Photo Signature Resizer',
+        name: 'NEET Photo, Postcard & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/neet-photo-signature-resizer',
+        url: 'https://kagazo.in/tools/neet-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
         },
         description:
-          'Resize 4x6 Postcard photo, Passport photo, Signature, and Finger impressions for NTA NEET UG examination.',
+          'Format all mandatory NTA NEET UG application uploads — 4x6 inch postcard photo, passport-size photo, running signature, and left thumb impression — to exact NTA specifications.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Resize NEET Postcard and Passport Photos Online',
+        name: 'How to Resize NEET Postcard Photo, Passport Photo & LTI Online',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Select NEET Document Type',
-            text: 'Choose Postcard Photo (4x6"), Passport Photo, Signature (4-30KB), or Fingers & Thumbs.',
+            name: 'Select Upload Type',
+            text: 'Choose Postcard Photo (4"×6", 50–300 KB), Passport Photo (10–50 KB), Signature (4–30 KB), or Left Thumb (10–50 KB).',
           },
           {
             '@type': 'HowToStep',
-            name: 'Upload Photo',
-            text: 'Upload your smartphone photo or digital scan.',
+            name: 'Upload Your Image',
+            text: 'Upload your studio photograph, running signature, or thumb impression scan. Supports JPG, PNG, WEBP, and HEIC.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Provide Name & Date (For Photos)',
-            text: 'Type candidate name and capture date for the mandatory bottom banner.',
+            name: 'Frame with 80% Face Coverage',
+            text: 'Center your face ensuring 80% coverage with both ears clearly visible on a white background.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Compliant File',
-            text: 'Preview side-by-side with clarity zoom loupe and download the verified JPEG ready for the NTA portal.',
+            name: 'Automated Size & Contrast Calibration',
+            text: 'Kagazo calibrates file size into the exact NTA range and boosts ink contrast for thumb impressions.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Verified Output',
+            text: 'Download portal-ready JPEG files verified for instant upload on exams.nta.ac.in/NEET.',
           },
         ],
       },
@@ -168,33 +208,29 @@ export default function NeetPhotoSignatureResizerPage() {
 
       <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools/government-exam-pdf-compressor" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">NEET Postcard &amp; Photo Resizer</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'NEET Postcard & Photo Resizer' },
+          ]}
+          showHomeIcon
+        />
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>NTA NEET UG Application &amp; Admit Card Ready</span>
+            <span>NTA NEET UG 2026 Official Specifications</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>NEET Postcard (4"×6") &amp; </span>
-            <span className="text-primary">Photo Resizer Online</span>
+            <span>NTA NEET UG Photo Resizer 2026 — </span>
+            <span className="text-primary">Postcard (4×6&quot;), Passport &amp; LTI</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Generate 4"×6" Postcard photos, passport photos (10–200 KB) with Name &amp; Date of Photo, 
-            running signatures (4–30 KB), and 10-finger impressions fully compliant with National Testing Agency (NTA) guidelines.
+            Prepare all mandatory NTA NEET UG photo uploads in one place: the 4×6 inch postcard photograph (50–300 KB), the standard passport-size photo (10–50 KB), running signature (4–30 KB), and left thumb impression (10–50 KB). Processed entirely in your browser with zero server contact.
           </p>
         </header>
 
@@ -211,7 +247,55 @@ export default function NeetPhotoSignatureResizerPage() {
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Official NEET Specifications Table */}
+            {/* Tool Introduction & Key Differentiators */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  All 4 Mandatory NEET Uploads in One Tool
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Understanding the NEET 4×6&quot; Postcard Photo &amp; Biometric LTI Uploads
+                </h2>
+              </div>
+              <div className="text-xs sm:text-sm text-text-main/85 leading-relaxed space-y-3">
+                <p>
+                  NTA NEET UG is unique among national entrance exams in requiring candidates to upload both a standard <strong>passport photo</strong> and a large <strong>4×6 inch Postcard photograph (50–300 KB)</strong>, alongside a <strong>Left Thumb Impression (LTI)</strong>. The postcard photo uploaded online is printed and carried to the exam center to be pasted on the attendance sheet.
+                </p>
+                <p>
+                  Uploading a normal passport photo into the postcard slot causes biometric mismatch at the center, while faint thumb impressions fail NTA&apos;s automated image quality filters. Kagazo provides distinct presets for each asset with contrast optimization, guaranteeing zero rejection on the NTA portal.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <ImageIcon className="w-4 h-4" /> 4×6&quot; Postcard Sizing
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Enforces 50–300 KB and print-resolution 4:6 aspect ratio for the mandatory NTA proforma photo.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sliders className="w-4 h-4" /> LTI Ridge Enhancer
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Boosts thumb impression ink contrast and pads scans above the 10 KB lower rejection floor.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <PenTool className="w-4 h-4" /> Cursive Signature Lock
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Frames signatures within the strict 4–30 KB range with running handwriting protection.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Official NTA NEET Specifications Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
                 <div>
@@ -220,7 +304,7 @@ export default function NeetPhotoSignatureResizerPage() {
                     Official NTA NEET UG Upload Specifications
                   </h2>
                   <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                    Strict parameters mandated in the NEET UG Information Bulletin.
+                    Exact requirements sourced from the official NTA NEET UG Information Bulletin.
                   </p>
                 </div>
                 <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
@@ -233,38 +317,153 @@ export default function NeetPhotoSignatureResizerPage() {
                   <thead>
                     <tr className="border-b border-surface-darker bg-surface text-text-main">
                       <th className="py-3 px-3 font-bold">Document</th>
+                      <th className="py-3 px-3 font-bold">Physical Dimensions</th>
                       <th className="py-3 px-3 font-bold">Allowed Size Range</th>
-                      <th className="py-3 px-3 font-bold">Required Dimensions</th>
-                      <th className="py-3 px-3 font-bold">Crucial NTA Rules</th>
+                      <th className="py-3 px-3 font-bold">Format &amp; Critical Rules</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-surface-darker text-text-main/85">
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">Postcard Size Photo</td>
-                      <td className="py-3 px-3 font-bold text-primary">10 KB to 200 KB</td>
-                      <td className="py-3 px-3">4" × 6" (10.16 × 15.24 cm)</td>
-                      <td className="py-3 px-3">White background, Name &amp; Date at bottom, pasted on admit card</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Postcard Photo</td>
+                      <td className="py-3 px-3">4&quot; × 6&quot; (10.16 × 15.24 cm)</td>
+                      <td className="py-3 px-3 font-bold text-primary">50 KB to 300 KB</td>
+                      <td className="py-3 px-3">JPG/JPEG; 80% face coverage; white bg; Name &amp; DOP strip</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">Passport Size Photo</td>
-                      <td className="py-3 px-3 font-bold text-primary">10 KB to 200 KB</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Passport Photo</td>
                       <td className="py-3 px-3">3.5 cm × 4.5 cm</td>
-                      <td className="py-3 px-3">80% face coverage, both ears visible, Name &amp; Date strip</td>
+                      <td className="py-3 px-3 font-bold text-primary">10 KB to 50 KB (or 200 KB)</td>
+                      <td className="py-3 px-3">JPG/JPEG; white bg; ears visible; no spectacles/caps</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">Candidate Signature</td>
-                      <td className="py-3 px-3 font-bold text-primary">4 KB to 30 KB</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Running Signature</td>
                       <td className="py-3 px-3">3.5 cm × 1.5 cm</td>
-                      <td className="py-3 px-3 text-red-600 font-medium">Running handwriting only (Capital letters prohibited)</td>
+                      <td className="py-3 px-3 font-bold text-primary">4 KB to 30 KB</td>
+                      <td className="py-3 px-3">Black ink on white paper; running handwriting only</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3 px-3 font-semibold text-text-main">Fingers &amp; Thumbs</td>
-                      <td className="py-3 px-3 font-bold text-primary">10 KB to 200 KB</td>
-                      <td className="py-3 px-3">Standard horizontal scan</td>
-                      <td className="py-3 px-3">All 10 fingers (Left &amp; Right hands) in blue ink on white paper</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Left Thumb Impression</td>
+                      <td className="py-3 px-3">Plain white paper scan</td>
+                      <td className="py-3 px-3 font-bold text-primary">10 KB to 50 KB</td>
+                      <td className="py-3 px-3">Blue/black stamp ink; clear ridge lines; unsmudged</td>
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Verification Note:</strong> NTA updates the NEET UG information bulletin annually. Always cross-check with the official PDF on <code className="font-mono font-bold">exams.nta.ac.in/NEET</code>. Need a custom name and date strip? Use our{' '}
+                  <Link href="/tools/photo-date-name-stamper" className="underline font-bold text-amber-950 hover:text-primary">
+                    Photo Name &amp; Date Stamper
+                  </Link>.
+                </p>
+              </div>
+            </section>
+
+            {/* How to Use Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Prepare All NEET UG Uploads in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    1
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Asset Tab</h3>
+                  <p className="text-xs text-text-main/75">
+                    Click <strong>Postcard (4×6&quot;)</strong>, <strong>Passport Photo</strong>, <strong>Signature</strong>, or <strong>Left Thumb</strong>.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    2
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload High-Res Scan</h3>
+                  <p className="text-xs text-text-main/75">
+                    Drop your phone capture or scanner file. Accepts JPG, PNG, WEBP, and Apple HEIC directly.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    3
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Frame 80% Face Space</h3>
+                  <p className="text-xs text-text-main/75">
+                    Center face to occupy 80% of canvas with both ears clearly visible on a plain white backdrop.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    4
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Bi-Directional Sizing</h3>
+                  <p className="text-xs text-text-main/75">
+                    Kagazo calibrates file size into the safe target band (50–300 KB for postcard, 10–50 KB for others).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    5
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download Compliant JPEG</h3>
+                  <p className="text-xs text-text-main/75">
+                    Review file dimensions and KB count with our clarity loupe, then download verified JPEGs for the NTA portal.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Common Errors Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common NEET Application Rejection Traps and How to Fix Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Uploading Passport Photo as Postcard
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    A 3.5×4.5 cm passport photo lacks print resolution for the 4×6 inch proforma. NTA requires a true 4×6 inch photo (50–300 KB).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Signatures in Capital Letters
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    NTA explicitly rejects signatures in BLOCK or capital letters. Always sign with natural cursive handwriting in black ink.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Left Thumb Scan Below 10 KB
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Close cropping makes thumb impressions drop to 4–8 KB. Kagazo uses safe padding to ensure the file stays above the 10 KB threshold.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Wearing Spectacles or Tinted Glasses
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Glasses are strictly disallowed in NEET photos due to flash glare. Take a fresh photograph without glasses on a clean white background.
+                  </p>
+                </div>
               </div>
             </section>
 
@@ -276,10 +475,10 @@ export default function NeetPhotoSignatureResizerPage() {
               <div>
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions (NEET UG Photos &amp; Signatures)
+                  Frequently Asked Questions (NTA NEET UG Uploads)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Guidance for medical aspirants filling out NEET application forms.
+                  Clear, verified answers covering postcard photos, passport sizing, signatures, and LTI.
                 </p>
               </div>
 
@@ -313,60 +512,60 @@ export default function NeetPhotoSignatureResizerPage() {
 
               <div className="space-y-2">
                 <Link
-                  href="/tools/ssc-photo-signature-resizer"
+                  href="/tools/thumb-impression-resizer"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      SSC Photo &amp; Signature Resizer
+                      Thumb Impression Resizer
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–50 KB &amp; 10–20 KB, CGL/CHSL ready
+                      Dedicated LTI &amp; ridge sharpener
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/upsc-photo-signature-resizer"
+                  href="/tools/photo-date-name-stamper"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      UPSC Photo &amp; Signature Resizer
+                      Photo Name &amp; Date Stamper
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      20–300 KB, 350×350 px, 10-day DOP rule
+                      Add Name &amp; DOP strip
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/image-to-pdf-200kb"
+                  href="/tools/ibps-photo-signature-resizer"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Marksheet Image to PDF (&lt; 200 KB)
+                      IBPS &amp; Bank Resizer
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      Class 10/12 certificate to A4 PDF
+                      Photo, signature &amp; declaration
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
                 </Link>
 
                 <Link
-                  href="/tools/government-exam-pdf-compressor"
+                  href="/tools/compress-image-to-50kb"
                   className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="space-y-0.5">
                     <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Govt Exam PDF Compressor
+                      Compress Image to 50KB
                     </span>
                     <span className="text-[11px] text-text-main/60">
-                      Compress PDFs to 100KB, 200KB, 500KB
+                      Instant passport photo tool
                     </span>
                   </div>
                   <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
@@ -381,22 +580,25 @@ export default function NeetPhotoSignatureResizerPage() {
             <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
               <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
                 <Lock className="w-4 h-4 shrink-0" />
-                <span>100% Client-Side &amp; In-Memory Privacy</span>
+                <span>100% Client-Side Privacy</span>
               </div>
               <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
-                Your photograph, signature, and biometric impressions are processed strictly in volatile RAM memory and immediately wiped. No images are ever saved to disk or third-party servers.
+                Biometric thumb impressions and photos are processed in temporary browser memory and wiped clean on tab close. Never uploaded to remote servers.
               </p>
               <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
                 <span className="flex items-center gap-1">
                   <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Zero Watermark
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> 100% Free
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> No Signup
                 </span>
               </div>
             </div>
           </aside>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/neet-photo-signature-resizer" />
       </div>
     </div>
   );

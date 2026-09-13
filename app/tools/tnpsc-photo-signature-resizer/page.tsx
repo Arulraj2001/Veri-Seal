@@ -6,55 +6,112 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
   Camera,
   PenTool,
   ArrowRight,
+  AlertTriangle,
+  CheckCircle2,
+  FileText,
+  Sliders,
+  Sparkles,
+  Info,
+  User,
+  Calendar,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { ImageResizerEngine } from '@/components/tools/ImageResizerEngine';
+import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'TNPSC Photo & Signature Resizer Online Free | Exact 20-50KB & 10-20KB Guarantee',
+  title: 'TNPSC Photo & Signature Resizer — OTR Portal 2026 | Kagazo',
   description:
-    'Resize and compress your TNPSC photograph (20KB - 50KB with Name & Date) and signature (10KB - 20KB) online free. Strict size guarantee so TNPSC One Time Registration (OTR) never rejects your upload.',
+    'Resize your TNPSC Group 1, Group 2, Group 4, or VAO photo (20–50 KB) and signature (10–20 KB) with the mandatory name and date strip for the One Time Registration portal. Free, no upload.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/tnpsc-photo-signature-resizer',
+    canonical: 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
   },
   openGraph: {
-    title: 'TNPSC Photo & Signature Resizer - Exact Size Guarantee | Kagazo',
+    title: 'TNPSC Photo & Signature Resizer — OTR Portal | Kagazo',
     description:
-      'Free online tool to resize TNPSC photo (20-50KB with Name/Date) and signature (10-20KB). In-memory processing, zero ads, no watermark.',
-    url: 'https://Kagazo.in/tools/tnpsc-photo-signature-resizer',
+      'Format TNPSC photo with name and date-of-photo strip (20–50 KB) and signature (10–20 KB) for OTR registration. 100% in-browser, free.',
+    url: 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
     siteName: 'Kagazo',
     type: 'website',
   },
 };
 
+const TNPSC_PRESETS: CustomPreset[] = [
+  {
+    id: 'photo',
+    label: 'TNPSC Photo (20–50 KB, 3.5×4.5 cm, Name & DOP Strip)',
+    minKb: 20,
+    maxKb: 50,
+    widthCm: 3.5,
+    heightCm: 4.5,
+    isPhoto: true,
+  },
+  {
+    id: 'signature',
+    label: 'TNPSC Signature (10–20 KB, 3.5×1.5 cm)',
+    minKb: 10,
+    maxKb: 20,
+    widthCm: 3.5,
+    heightCm: 1.5,
+    isXerox: true,
+  },
+];
+
 const TNPSC_FAQS = [
   {
-    question: 'What is the exact photo and signature size required for TNPSC OTR?',
+    question: 'Does TNPSC require a Name and Date strip on the photo for OTR?',
     answer:
-      'For TNPSC One Time Registration (OTR) and applications: The photograph must be between 20 KB and 50 KB with dimensions 3.5 cm x 4.5 cm (approx 413 x 531 pixels at 300 DPI) with candidate name and date of photo printed at the bottom. The signature must be strictly between 10 KB and 20 KB with dimensions 3.5 cm x 1.5 cm (approx 413 x 177 pixels).',
+      'Yes. As per official Tamil Nadu Public Service Commission guidelines for One Time Registration (OTR), the candidate photograph must have a clear white rectangular strip at the bottom containing the candidate full name in capital letters (matching SSLC/10th marksheet) and the date on which the photograph was captured.',
   },
   {
-    question: 'Why does TNPSC reject my signature with "File size less than 10 KB"?',
+    question: 'What are the exact photo and signature dimensions for TNPSC OTR?',
     answer:
-      'When students crop their signature to 3.5cm x 1.5cm, standard compressors reduce the file to 3–6 KB. TNPSC servers reject any signature under 10 KB. Kagazo solves this by applying 300 DPI super-sampling and safe JFIF padding to guarantee the output is strictly between 12 KB and 18 KB.',
+      'For TNPSC One Time Registration and all recruitment examinations (Group 1, 2, 4, VAO): The photograph must have dimensions of 3.5 cm (width) x 4.5 cm (height) and file size strictly between 20 KB and 50 KB in JPG/JPEG format. The signature must have dimensions of 3.5 cm (width) x 1.5 cm (height) and file size strictly between 10 KB and 20 KB.',
   },
   {
-    question: 'Is it mandatory to print Name and Date on the TNPSC photograph?',
+    question: 'Why does the TNPSC OTR portal reject signatures with "File size less than 10 KB"?',
     answer:
-      'Yes, as per TNPSC notification guidelines, the applicant photograph must have a clear white rectangular strip at the bottom containing the candidate full name in block letters and the date on which the photograph was taken.',
+      'When candidates crop a small 3.5cm x 1.5cm signature, ordinary image resizers compress the file down to 3–7 KB. The TNPSC OTR server immediately blocks files below 10.0 KB. Kagazo solves this by applying 300 DPI supersampling and safe JFIF padding to lock the output securely in the 12–18 KB safe band.',
   },
   {
-    question: 'Does Kagazo store my uploaded photograph or signature?',
+    question: 'Should the name in the photo strip be in English or Tamil?',
     answer:
-      'No. Kagazo processes all files completely in system memory (RAM). Neither your photo nor your signature is ever saved to permanent disk storage, ensuring 100% privacy and security.',
+      'The name printed in the strip should be in English CAPITAL (BLOCK) letters, exactly matching the spelling, initials, and order on your 10th (SSLC) marksheet and your OTR profile. Any mismatch during certificate verification (CV) can cause administrative holds.',
+  },
+  {
+    question: 'How recent must my TNPSC photograph be?',
+    answer:
+      'TNPSC mandates that the photograph must not be older than 3 months from the date of advertisement or OTR renewal. The date entered on the bottom strip must accurately reflect a date within this recent window.',
+  },
+  {
+    question: 'Can I wear spectacles or caps in the TNPSC photograph?',
+    answer:
+      'No. Photographs wearing spectacles, reading glasses, caps, or dark sunglasses are strictly prohibited under TNPSC commission instructions. Both ears must be clearly visible against a white or very light background.',
+  },
+  {
+    question: 'Can I sign in blue ink for TNPSC?',
+    answer:
+      'TNPSC guidelines accept dark blue or black ballpoint pen on plain white paper. However, black ballpoint ink provides superior contrast on scanners. Signatures must be in running handwriting, never in block letters.',
+  },
+  {
+    question: 'Does this tool support all TNPSC exam categories?',
+    answer:
+      'Yes. The single photo and signature uploaded to your TNPSC OTR account applies to all recruitment drives including Group 1, Group 2/2A, Group 4, VAO, Combined Technical Services, and Departmental tests.',
+  },
+  {
+    question: 'What is the file size limit for TNPSC certificate uploads?',
+    answer:
+      'For community certificates, SSLC marksheets, and PSTM certificates, the TNPSC portal requires single or merged PDF files with file size strictly between 100 KB and 200 KB.',
+  },
+  {
+    question: 'Does Kagazo store my TNPSC photo or signature on servers?',
+    answer:
+      'No. All processing—including generating the name and date strip, cropping, and padding—takes place 100% client-side in your device RAM memory. No photo, signature, or personal identity data is ever transmitted to or stored on any server.',
   },
 ];
 
@@ -67,38 +124,43 @@ export default function TnpscPhotoSignatureResizerPage() {
         name: 'TNPSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/tnpsc-photo-signature-resizer',
+        url: 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
         },
         description:
-          'Resize and compress your TNPSC photograph (20KB - 50KB with Name & Date) and signature (10KB - 20KB) online free.',
+          'Resize TNPSC photo (20–50 KB, 3.5x4.5 cm) with candidate name & DOP strip, and signature (10–20 KB, 3.5x1.5 cm) for TNPSC OTR portal.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Resize Photo and Signature for TNPSC Online',
+        name: 'How to Resize Photo and Signature for TNPSC OTR Online',
         step: [
           {
             '@type': 'HowToStep',
             name: 'Select Photo or Signature Mode',
-            text: 'Choose between Signature Mode (10-20KB, 3.5x1.5cm) or Photo Mode (20-50KB, 3.5x4.5cm).',
+            text: 'Choose TNPSC Photo (with Name & Date Strip) or TNPSC Signature (10–20 KB).',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Enter Candidate Details',
+            text: 'Type candidate name (as per SSLC marksheet) and date of photo capture.',
           },
           {
             '@type': 'HowToStep',
             name: 'Upload Scanned File',
-            text: 'Upload your smartphone photo or scanner capture.',
+            text: 'Upload phone photo or scanner capture. Supports JPG, PNG, WEBP, and HEIC.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Enable Name & Date or Xerox Boost',
-            text: 'For photos, enter Candidate Name and DOP. For signatures, toggle Xerox Ink Boost.',
+            name: 'Crop & Contrast Calibration',
+            text: 'Kagazo centers the image, embeds the high-contrast strip, and darkens ink strokes.',
           },
           {
             '@type': 'HowToStep',
             name: 'Download Guaranteed Output',
-            text: 'Preview side-by-side with clarity loupe, then download verified JPEG ready for TNPSC portal.',
+            text: 'Download verified JPEG files compliant with 20–50 KB and 10–20 KB OTR bounds.',
           },
         ],
       },
@@ -142,17 +204,16 @@ export default function TnpscPhotoSignatureResizerPage() {
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>TNPSC Group 1, 2, 4 &amp; VAO Portal Ready</span>
+            <span>TNPSC OTR, Group 1, Group 2, Group 4 &amp; VAO Ready</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
             <span>TNPSC Photo &amp; Signature </span>
-            <span className="text-primary">Resizer Online</span>
+            <span className="text-primary">Resizer — OTR Portal (2026)</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Resize photos to 20–50 KB (with Name &amp; Date) and signatures to 10–20 KB. 
-            Solves the under-size rejection error on TNPSC One Time Registration (OTR).
+            Format your TNPSC photo and signature for the Tamil Nadu Public Service Commission One Time Registration (OTR) portal — with the mandatory candidate name and date-of-photograph strip embedded directly in the image. Processed in-browser, zero server contact.
           </p>
         </header>
 
@@ -161,12 +222,61 @@ export default function TnpscPhotoSignatureResizerPage() {
           {/* Main Focus Workspace (68% Width) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageResizerEngine
-              initialMode="signature"
+              initialMode="photo"
               examName="TNPSC OTR"
+              customPresets={TNPSC_PRESETS}
             />
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
+
+            {/* Tool Introduction & Key Differentiator */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Mandatory Name &amp; Date Strip Generation
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  The TNPSC One Time Registration (OTR) Strip Rule Explained
+                </h2>
+              </div>
+              <div className="text-xs sm:text-sm text-text-main/85 leading-relaxed space-y-3">
+                <p>
+                  The Tamil Nadu Public Service Commission (<code className="font-mono text-primary bg-primary/5 px-1.5 py-0.5 rounded">tnpsc.gov.in</code>) requires every applicant&apos;s OTR photograph to feature a <strong>clean white strip at the bottom displaying the candidate full name and photograph capture date</strong>. Uploading a standard passport photo without this strip causes OTR verification rejection.
+                </p>
+                <p>
+                  Additionally, signatures uploaded to the OTR portal must measure 3.5×1.5 cm and fall strictly between 10 KB and 20 KB. Standard photo editors compress these tiny files to 3–6 KB, triggering immediate portal errors. Kagazo automatically adds the compliant name and date strip to photos, and pads signatures to safely land between 12 KB and 18 KB.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <User className="w-4 h-4" /> Name &amp; Date Strip
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Generates the white bottom strip with candidate name and date matching SSLC marksheet records.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sliders className="w-4 h-4" /> 10 KB Floor Auto-Padding
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Prevents OTR rejection by guaranteeing your signature stays safely between 10 KB and 20 KB.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4" /> 3-Month Freshness Check
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Prompts you to ensure your capture date complies with TNPSC&apos;s recent-photo mandate.
+                  </p>
+                </div>
+              </div>
+            </section>
 
             {/* Official TNPSC Specifications Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
@@ -174,14 +284,14 @@ export default function TnpscPhotoSignatureResizerPage() {
                 <div>
                   <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                     <ShieldCheck className="w-5 h-5 text-primary" />
-                    Official TNPSC Upload Specifications
+                    Official TNPSC OTR Upload Specifications
                   </h2>
                   <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                    Strict guidelines mandated by the Tamil Nadu Public Service Commission.
+                    Strict parameters drawn from TNPSC Commission notifications and OTR guidelines.
                   </p>
                 </div>
                 <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
-                  TNPSC 2026 Rules
+                  TNPSC Standards
                 </span>
               </div>
 
@@ -189,223 +299,308 @@ export default function TnpscPhotoSignatureResizerPage() {
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
                     <tr className="border-b border-surface-darker bg-surface text-text-main">
-                      <th className="py-3 px-3 font-bold">Document Type</th>
-                      <th className="py-3 px-3 font-bold">Allowed Size Range</th>
-                      <th className="py-3 px-3 font-bold">Dimensions</th>
-                      <th className="py-3 px-3 font-bold">Special Rule</th>
+                      <th className="py-3 px-3 font-bold">Parameter</th>
+                      <th className="py-3 px-3 font-bold">TNPSC Scanned Photograph</th>
+                      <th className="py-3 px-3 font-bold">TNPSC Scanned Signature</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker/70 text-text-main">
+                  <tbody className="divide-y divide-surface-darker text-text-main/85">
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold flex items-center gap-1.5">
-                        <Camera className="w-4 h-4 text-primary" /> Photograph
-                      </td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md">
-                          20 KB to 50 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">3.5 cm x 4.5 cm (413x531 px)</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Candidate Name &amp; Date of Photo at bottom</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Applicable Exams</td>
+                      <td className="py-3 px-3">Group 1, Group 2 &amp; 2A, Group 4, VAO, Combined Engineering, Forest Services</td>
+                      <td className="py-3 px-3">Mandatory across all TNPSC OTR profiles</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold flex items-center gap-1.5">
-                        <PenTool className="w-4 h-4 text-primary" /> Signature
-                      </td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md">
-                          10 KB to 20 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">3.5 cm x 1.5 cm (413x177 px)</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Blue/black pen on clean white background</td>
+                      <td className="py-3 px-3 font-semibold text-text-main">File Size Window</td>
+                      <td className="py-3 px-3 font-bold text-primary">20.0 KB minimum — 50.0 KB maximum</td>
+                      <td className="py-3 px-3 font-bold text-primary">10.0 KB minimum — 20.0 KB maximum</td>
                     </tr>
                     <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold">Community Certificate</td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
-                          100 KB to 200 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">PDF Format</td>
-                      <td className="py-3.5 px-3 text-text-main/70">
-                        <Link href="/tools/tnpsc-pdf-compressor" className="text-primary font-bold hover:underline">
-                          Use TNPSC PDF Compressor →
-                        </Link>
-                      </td>
+                      <td className="py-3 px-3 font-semibold text-text-main">Physical Dimensions</td>
+                      <td className="py-3 px-3">3.5 cm (W) × 4.5 cm (H) (approx 413×531 px)</td>
+                      <td className="py-3 px-3">3.5 cm (W) × 1.5 cm (H) (approx 413×177 px)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Name &amp; Date Strip</td>
+                      <td className="py-3 px-3 font-semibold text-primary">Mandatory: Candidate name &amp; DOP printed at bottom</td>
+                      <td className="py-3 px-3">Not applicable</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Permitted Format</td>
+                      <td className="py-3 px-3 font-mono">JPG / JPEG only</td>
+                      <td className="py-3 px-3 font-mono">JPG / JPEG only</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-3 font-semibold text-text-main">Background &amp; Pen</td>
+                      <td className="py-3 px-3">Plain white or very light background; no spectacles</td>
+                      <td className="py-3 px-3">Clean white unruled paper; dark blue or black ballpoint ink</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
-
-            {/* Why Kagazo is Better for Students */}
-            <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">Under-Size Guarantee</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Never get rejected with &quot;File size less than 10 KB&quot;. Our engine automatically super-samples signatures to guarantee they land in the legal 10–20 KB bracket.
-                </p>
-              </div>
-
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Award className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">100% Free Forever</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Zero paywalls, no watermark additions, and no sign-in required. Built specifically for Tamil Nadu students and cyber cafes.
-                </p>
-              </div>
-
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Lock className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">RAM-Only Privacy</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Your face photograph and signature are processed in memory and never stored on server disks. 100% safe.
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Verification Notice:</strong> Ensure the name spelled on the photo strip matches your 10th (SSLC) marksheet exactly. Need OTR-compliant certificate preparation? Try our{' '}
+                  <Link href="/tools/tnpsc-otr-compliance-kit" className="underline font-bold text-amber-950 hover:text-primary">
+                    TNPSC OTR Compliance Kit
+                  </Link>.
                 </p>
               </div>
             </section>
 
-            {/* Hyper-Targeted FAQ Accordion */}
+            {/* How to Use Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2 pb-2 border-b border-surface-darker/60">
-                <HelpCircle className="w-5 h-5 text-primary" />
-                TNPSC Photo &amp; Signature FAQs
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Format TNPSC Photos &amp; Signatures in 5 Steps
               </h2>
 
-              <div className="space-y-3 pt-2">
-                {TNPSC_FAQS.map((faq, index) => (
-                  <details
-                    key={index}
-                    className="group border border-surface-darker rounded-2xl bg-surface/40 p-4 sm:p-5 open:bg-surface transition-all cursor-pointer"
-                  >
-                    <summary className="font-bold text-sm sm:text-base text-text-main list-none flex items-center justify-between">
-                      <span>{faq.question}</span>
-                      <span className="text-primary text-xl transition-transform group-open:rotate-180 font-bold">▾</span>
-                    </summary>
-                    <p className="text-xs sm:text-sm text-text-main/80 mt-3 leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </details>
-                ))}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    1
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Preset</h3>
+                  <p className="text-xs text-text-main/75">
+                    Click <strong>TNPSC Photo (with Strip)</strong> or <strong>TNPSC Signature (10–20 KB)</strong>.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    2
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Enter Name &amp; Date</h3>
+                  <p className="text-xs text-text-main/75">
+                    Type candidate full name in block letters (as in SSLC) and date taken within the last 3 months.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    3
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Photo or Scan</h3>
+                  <p className="text-xs text-text-main/75">
+                    Drop your phone capture or scanner file. Supports JPG, PNG, WEBP, and Apple HEIC directly.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    4
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Strip Mount &amp; Sizing</h3>
+                  <p className="text-xs text-text-main/75">
+                    Kagazo automatically mounts the clean white strip and locks file size into the 20–50 KB or 10–20 KB window.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
+                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    5
+                  </div>
+                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download Verified JPEG</h3>
+                  <p className="text-xs text-text-main/75">
+                    Review your output with our clarity loupe, then download verified JPEGs ready for upload to your TNPSC OTR profile.
+                  </p>
+                </div>
               </div>
             </section>
 
-            {/* Cross-Link to TNPSC PDF Compressor */}
-            <aside className="p-6 sm:p-8 rounded-3xl bg-surface border border-primary/30 shadow-card flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="space-y-1.5 text-center sm:text-left">
-                <h3 className="text-base sm:text-lg font-extrabold text-text-main flex items-center gap-2 justify-center sm:justify-start">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
-                  Need to compress Community or SSLC Marksheet to 200KB?
+            {/* Common Errors Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common TNPSC OTR Upload Mistakes and How to Avoid Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Missing Name and Date Strip
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Uploading a plain passport photo without the bottom strip causes certificate verification failure. Use our tool to automatically mount the compliant strip.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Signature File Size Below 10 KB
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Cropping signatures to 3.5×1.5 cm often reduces files to 4–8 KB. The OTR portal flags files under 10.0 KB. Kagazo safely pads signatures into the 12–18 KB range.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Name Mismatch with SSLC Record
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    Spelling mistakes or missing initials on the strip cause identity mismatches during document verification. Type your name exactly as registered in your OTR profile.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                    Error: Photograph Older than 3 Months
+                  </span>
+                  <p className="text-xs sm:text-sm text-text-main/80">
+                    TNPSC mandates recent photos. The date printed on the strip must be within 3 months of the notification release date.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Contextual Certificate Support Callout */}
+            <div className="p-6 rounded-3xl bg-surface border border-surface-darker flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-primary" />
+                  Need to compress TNPSC Marksheets, Community, or PSTM PDFs under 200 KB?
                 </h3>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Use our 100% free TNPSC PDF document compressor for certificates, hall tickets, and marksheets.
+                <p className="text-xs text-text-main/70">
+                  The TNPSC OTR portal requires educational, community, and special category certificates to be between 100 KB and 200 KB in PDF format.
                 </p>
               </div>
               <Link
                 href="/tools/tnpsc-pdf-compressor"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary hover:bg-primary-hover text-white font-extrabold text-sm shadow-md transition-all shrink-0 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-dark transition-all shrink-0"
               >
                 TNPSC PDF Compressor
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
-            </aside>
-          </main>
+            </div>
 
-          {/* Right Sticky Sidebar (32% Width) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-24 self-start">
-            {/* Quick Switch Card */}
-            <div className="p-3.5 bg-white rounded-3xl border border-surface-darker shadow-card space-y-2.5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                  <Zap className="w-4 h-4 text-primary" />
-                  Exam Tools Quick Switch
-                </h3>
-                <span className="text-[10px] font-extrabold text-primary bg-primary-light px-2 py-0.5 rounded-full border border-primary/20">
-                  Instant
-                </span>
+            {/* In-Content Native AdSlot */}
+            <AdSlot slot="in_content" />
+
+            {/* FAQ Accordion Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <HelpCircle className="w-5 h-5 text-primary" />
+                  Frequently Asked Questions (TNPSC Photo &amp; Signature)
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                  Clear, verified answers covering TNPSC OTR registration, Group 4, Group 2, and Group 1 applications.
+                </p>
               </div>
-              <div className="space-y-1.5 pt-0.5">
-                {[
-                  { name: 'TNPSC Photo & Sig Resizer', href: '/tools/tnpsc-photo-signature-resizer', active: true, tag: 'Current' },
-                  { name: 'TNPSC Document Compressor (200KB)', href: '/tools/tnpsc-pdf-compressor', active: false, tag: 'Certificates' },
-                  { name: 'Compress PDF to 200KB', href: '/tools/compress-pdf-to-200kb', active: false, tag: 'Popular' },
-                  { name: 'Compress PDF to 100KB', href: '/tools/compress-pdf-to-100kb', active: false, tag: 'Strict' },
-                  { name: 'UPSC Document Compressor', href: '/tools/upsc-pdf-compressor', active: false, tag: 'UPSC' },
-                  { name: 'SSC Document Compressor', href: '/tools/ssc-pdf-compressor', active: false, tag: 'SSC' },
-                  { name: 'All Government Exam Tools', href: '/tools/government-exam-pdf-compressor', active: false, tag: 'Hub' },
-                ].map((item, idx) => (
-                  <Link
+
+              <div className="space-y-3">
+                {TNPSC_FAQS.map((faq, idx) => (
+                  <details
                     key={idx}
-                    href={item.href}
-                    className={cn(
-                      'flex items-center justify-between p-2 rounded-xl text-[11px] font-bold transition-all border',
-                      item.active
-                        ? 'bg-primary-light border-primary/40 text-primary shadow-2xs'
-                        : 'bg-surface/40 border-surface-darker hover:border-primary/40 hover:bg-white text-text-main'
-                    )}
+                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
                   >
-                    <span className="truncate pr-2">{item.name}</span>
-                    <span
-                      className={cn(
-                        'text-[9px] px-1.5 py-0.5 rounded-md font-semibold shrink-0',
-                        item.active ? 'bg-primary text-white' : 'bg-surface border border-surface-darker text-text-main/60'
-                      )}
-                    >
-                      {item.tag}
-                    </span>
-                  </Link>
+                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
+                      <span>{faq.question}</span>
+                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
+                    </summary>
+                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                      {faq.answer}
+                    </div>
+                  </details>
                 ))}
               </div>
+            </section>
+          </main>
+
+          {/* Sticky Right Sidebar Rail (32% Width) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
+            {/* Quick Switch Matrix */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                Related Exam Resizers
+              </h3>
+
+              <div className="space-y-2">
+                <Link
+                  href="/tools/tnpsc-otr-compliance-kit"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      TNPSC OTR Kit
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      All-in-one OTR suite
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
+                  href="/tools/photo-date-name-stamper"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      Photo Name &amp; Date Stamper
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      Custom banner strip tool
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
+                  href="/tools/ssc-photo-signature-resizer"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      SSC Photo &amp; Signature
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      20–50 KB &amp; 10–20 KB
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+
+                <Link
+                  href="/tools/specifications"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
+                      Exam Specs Radar
+                    </span>
+                    <span className="text-[11px] text-text-main/60">
+                      Compare TNPSC, SSC, UPSC
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                </Link>
+              </div>
             </div>
 
-            {/* Slot A: Sticky Sidebar Display Unit */}
+            {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* Official TNPSC Cheatsheet Card */}
-            <div className="p-3.5 bg-white rounded-3xl border border-surface-darker shadow-card space-y-2">
-              <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-primary" />
-                TNPSC OTR Quick Cheatsheet
-              </h3>
-              <div className="space-y-1.5 text-[11px] divide-y divide-surface-darker/60">
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">Photo Size</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">20 – 50 KB</span>
-                </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">Signature Size</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">10 – 20 KB</span>
-                </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">Photo Dimensions</span>
-                  <span className="font-mono font-bold text-text-main bg-surface px-2 py-0.5 rounded-md">3.5 x 4.5 cm</span>
-                </div>
-                <div className="pt-2 flex items-center justify-between">
-                  <span className="font-bold text-text-main">Signature Dimensions</span>
-                  <span className="font-mono font-bold text-text-main bg-surface px-2 py-0.5 rounded-md">3.5 x 1.5 cm</span>
-                </div>
+            {/* RAM Security & Privacy Shield */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
+              <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
+                <Lock className="w-4 h-4 shrink-0" />
+                <span>100% In-Browser Privacy</span>
               </div>
-            </div>
-
-            {/* Privacy Shield */}
-            <div className="p-3 rounded-2xl bg-surface/60 border border-surface-darker space-y-1.5">
-              <div className="flex items-center gap-2 text-text-main font-black text-xs">
-                <Lock className="w-4 h-4 text-primary" />
-                <span>100% In-Memory Privacy</span>
-              </div>
-              <p className="text-[11px] text-text-main/70 leading-relaxed">
-                Your photograph and signature are processed in RAM and never written to permanent disk storage. Zero data retention.
+              <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
+                Your photograph, signature, and candidate name are rendered exclusively in your browser memory. Nothing is ever saved to disk or transmitted to our servers.
               </p>
+              <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Zero Watermark
+                </span>
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> No Signup
+                </span>
+              </div>
             </div>
           </aside>
         </div>
