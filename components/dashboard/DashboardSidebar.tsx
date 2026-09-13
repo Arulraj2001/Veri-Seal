@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { fetchPublicSettings } from '@/lib/api';
+import { KagazoLogo } from '@/components/ui/KagazoLogo';
 
 interface SidebarProps {
   user: {
@@ -60,18 +61,8 @@ export function DashboardSidebar({ user, paymentEnabled }: SidebarProps) {
       {/* Brand Header */}
       <div className="h-16 flex items-center px-6 border-b border-surface-darker/60">
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary">
-            <svg
-              className="w-5 h-5 text-primary fill-primary/15 stroke-primary"
-              viewBox="0 0 24 24"
-              fill="none"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              <path d="m9 12 2 2 4-4" />
-            </svg>
+          <div className="h-9 w-9 rounded-xl bg-primary-light border border-primary/20 flex items-center justify-center">
+            <KagazoLogo className="w-5 h-5 drop-shadow-xs" />
           </div>
           <span className="text-xl font-black tracking-tight text-text-main">
             Kaga<span className="text-primary">zo</span>

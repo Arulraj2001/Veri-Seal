@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { Mail, Lock, Eye, EyeOff, ShieldCheck, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { KagazoLogo } from '@/components/ui/KagazoLogo';
 
 function LoginFormContent() {
   const router = useRouter();
@@ -98,18 +99,8 @@ function LoginFormContent() {
       {/* Brand Header */}
       <div className="text-center mb-8">
         <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
-          <div className="h-11 w-11 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
-            <svg
-              className="w-6 h-6 text-primary fill-primary/15 stroke-primary"
-              viewBox="0 0 24 24"
-              fill="none"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              <path d="m9 12 2 2 4-4" />
-            </svg>
+          <div className="h-11 w-11 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs">
+            <KagazoLogo className="w-7 h-7 drop-shadow-xs" />
           </div>
           <span className="text-2xl font-black text-text-main">
             Kaga<span className="text-primary">zo</span>

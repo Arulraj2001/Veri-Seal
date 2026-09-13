@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 import { translations } from '@/lib/translations';
+import { KagazoLogo } from '@/components/ui/KagazoLogo';
 
 export function Footer() {
   const { language } = useLanguage();
@@ -63,18 +64,8 @@ export function Footer() {
           {/* Brand & Trust Column (Col 1 & 2 on desktop, full width on mobile) */}
           <div className="col-span-2 lg:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2.5 group">
-              <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-primary/15 to-primary-light border border-primary/25 flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-2xs">
-                <svg
-                  className="w-6 h-6 text-primary fill-primary/15 stroke-primary"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
+              <div className="h-11 w-11 rounded-2xl bg-gradient-to-br from-primary/15 to-primary-light border border-primary/25 flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs">
+                <KagazoLogo className="w-7 h-7 drop-shadow-xs" />
               </div>
               <div className="flex flex-col">
                 <span className="text-2xl font-black tracking-tight text-text-main flex items-center gap-1">

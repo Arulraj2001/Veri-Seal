@@ -23,6 +23,7 @@ import {
   Car,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { KagazoLogo } from '@/components/ui/KagazoLogo';
 import { cn } from '@/lib/utils';
 import type { SupportedLanguage } from '@/types';
 import { useLanguage } from '@/components/providers/LanguageProvider';
@@ -138,18 +139,8 @@ export function Header() {
           href="/"
           className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg z-20 shrink-0"
         >
-          <div className="h-10 w-10 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
-            <svg
-              className="w-6 h-6 text-primary fill-primary/15 stroke-primary"
-              viewBox="0 0 24 24"
-              fill="none"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              <path d="m9 12 2 2 4-4" />
-            </svg>
+          <div className="h-10 w-10 rounded-2xl bg-primary-light border border-primary/20 flex items-center justify-center group-hover:scale-105 transition-transform shadow-2xs">
+            <KagazoLogo className="w-6 h-6 drop-shadow-xs" />
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-extrabold tracking-tight text-text-main flex items-center gap-1">
