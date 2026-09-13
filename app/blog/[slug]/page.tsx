@@ -21,6 +21,7 @@ import {
   getRelatedBlogPosts,
 } from '@/lib/blog-store';
 import { SITE_URL } from '@/lib/constants';
+import { getSeoSlugForDocType } from '@/lib/seo-store';
 import { TableOfContents } from '@/components/blog/TableOfContents';
 import { ShareButtons } from '@/components/blog/ShareButtons';
 import { MarkdownRenderer } from '@/components/blog/MarkdownRenderer';
@@ -203,6 +204,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     ],
   };
 
+  const targetDocSlug = getSeoSlugForDocType(post.title + ' ' + (post.slug || ''));
+  const targetDocUrl = targetDocSlug && targetDocSlug !== '#upload-zone' ? `/${targetDocSlug}` : '/#upload-zone';
+
   return (
     <>
       {/* 3H. Reading Progress Bar at very top */}
@@ -325,7 +329,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </div>
 
                 <Link
-                  href="/#upload-zone"
+                  href={targetDocUrl}
                   className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-xs hover:bg-primary-hover transition-colors shadow-sm whitespace-nowrap shrink-0 flex items-center gap-2"
                 >
                   <span>Verify PDF Free</span>

@@ -12,6 +12,7 @@ export interface SeoPageData {
   state: string;
   portal: string;
   portal_description?: string;
+  direct_answer?: string;
   faq: Array<{ q: string; a: string }>;
   published: boolean;
   updated_at: string;
@@ -34,6 +35,7 @@ export const mockSeoPages: SeoPageData[] = [
 Every e-Aadhaar downloaded from the UIDAI portal contains a cryptographic digital signature generated with a high-assurance Hardware Security Module (HSM) licensed under the Controller of Certifying Authorities (CCA).
 
 Because UIDAI signs millions of documents dynamically, the embedded signing certificates operate under India's sovereign root trust framework (RCAI). Kagazo provides the instant verification engine that establishes the complete cryptographic chain of trust.`,
+    direct_answer: 'A yellow question mark appears on e-Aadhaar PDFs when software like Adobe Acrobat does not have India\'s CCA Root Certificate installed. Kagazo automatically validates UIDAI\'s cryptographic signature against the Root Certifying Authority of India (RCAI) in memory and generates a verified PDF with a permanent green tick.',
     faq: [
       {
         q: 'Why does my Aadhaar PDF show a yellow question mark?',
@@ -46,6 +48,10 @@ Because UIDAI signs millions of documents dynamically, the embedded signing cert
       {
         q: 'Is it safe to upload my Aadhaar document on Kagazo?',
         a: 'Yes, completely safe. Kagazo operates with a strict Zero-Storage Architecture. Your PDF is processed 100% in volatile server memory (RAM) and immediately purged upon completing cryptographic checks. Your Aadhaar number and demographic data are never stored or logged.'
+      },
+      {
+        q: 'आधार कार्ड पर पीला प्रश्न चिह्न (Yellow Question Mark) क्यों आता है?',
+        a: 'अडोब एक्रोबैट (Adobe Acrobat) में भारत सरकार के आधिकारिक CCA रूट सर्टिफिकेट पहले से लोड नहीं होते हैं। कागज़ो (Kagazo) इस हस्ताक्षर को तुरंत सत्यापित कर वैध ग्रीन टिक के साथ पीडीएफ सुरक्षित डाउनलोड करने की सुविधा देता है।'
       },
       {
         q: 'Is a Kagazo verified e-Aadhaar valid for government and bank submissions?',
@@ -61,7 +67,7 @@ Because UIDAI signs millions of documents dynamically, the embedded signing cert
     title: 'Verify Tamil Nadu Community Certificate Signature | Kagazo',
     h1: 'Verify Tamil Nadu Community Certificate Digital Signature',
     meta_description: 'Verify digital signature on Tamil Nadu revenue department community certificate issued via e-Sevai / TNeGA portal.',
-    meta_keywords: 'tamil nadu community certificate verify, tnega digital signature, esevai certificate verification, tnea counseling signature verify',
+    meta_keywords: 'tamil nadu community certificate verify, tnega digital signature, esevai certificate verification, tnea counseling signature verify, சான்றிதழ் கையொப்பம் சரிபார்க்க, community certificate signature not verified tamil, tn community certificate green tick, வருவாய் துறை சான்றிதழ் கையொப்பம்',
     intro_text: 'Authenticates digitally signed caste and community certificates issued by Revenue Authorities across all 38 districts of Tamil Nadu. Validate the Zonal Deputy Tahsildar signature token.',
     doc_type: 'Community Certificate',
     state: 'Tamil Nadu',
@@ -71,10 +77,15 @@ Because UIDAI signs millions of documents dynamically, the embedded signing cert
 The issued certificate features an official government emblem, a verifiable Application Reference Number, and an electronic signature issued by the National Informatics Centre (NIC) Sub-CA for Tamil Nadu.
 
 Students applying for college counseling through TNEA, medical seats through TN Medical Selection, and government posts through TNPSC are required to produce verified digital certificates without unauthenticated signature warnings.`,
+    direct_answer: 'Tamil Nadu e-Sevai community certificates show an unverified signature warning because default PDF readers lack the NIC Tamil Nadu Sub-CA certificate. Kagazo verifies the Deputy Tahsildar\'s digital signature token against the Controller of Certifying Authorities (CCA) India hierarchy, permanently embedding an LTV green checkmark.',
     faq: [
       {
         q: 'How do I verify the digital signature on my TNeGA community certificate?',
         a: 'Upload your certificate PDF downloaded from the e-Sevai portal to Kagazo. The system parses the PKCS#7 signature container, checks the Deputy Tahsildar\'s signing token against the NIC Sub-CA root, and confirms zero unauthorized alterations.'
+      },
+      {
+        q: 'டிஜிட்டல் கையொப்பம் ஏன் சரிபார்க்கப்படவில்லை (Yellow Question Mark) என காட்டுகிறது?',
+        a: 'அடோப் அக்ரோபேட் ரீடர் போன்ற மென்பொருட்களில் தமிழ்நாடு அரசு மற்றும் NIC-ன் ரூட் சான்றிதழ் இயல்பாக நிறுவப்படாததால் மஞ்சள் கேள்விக்குறி காட்டுகிறது. காகசோ (Kagazo) தளம் உங்கள் சான்றிதழின் கையொப்பத்தை CCA விதிகளின்படி உடனடியாக சரிபார்த்து நிரந்தர பச்சை டிக் (Green Tick) வழங்கி பதிவிறக்க உதவுகிறது.'
       },
       {
         q: 'Who is the authorized signer on Tamil Nadu revenue certificates?',

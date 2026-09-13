@@ -15,6 +15,10 @@ import {
   AlertTriangle,
   Building2,
   BookOpen,
+  Zap,
+  Scale,
+  Award,
+  Check,
 } from 'lucide-react';
 import {
   getPublishedSeoPages,
@@ -206,6 +210,21 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
             </p>
           </header>
 
+          {/* Position 0 Featured Snippet: Direct Answer Box */}
+          <div className="mb-10 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-sm">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-700 mb-2">
+              <Zap className="w-4 h-4 text-amber-600" />
+              <span>Direct Answer &amp; Fix</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-text-main mb-3">
+              How to Fix the Unverified Signature on {page.doc_type} PDF
+            </h2>
+            <p className="text-sm sm:text-base text-text-main/80 leading-relaxed">
+              {page.direct_answer ||
+                `A yellow question mark appears on ${page.doc_type} PDFs when default viewers like Adobe Acrobat lack India's Controller of Certifying Authorities (CCA) root trust anchors. Kagazo cryptographically validates the RSA/ECDSA signature against the Root Certifying Authority of India (RCAI) in memory and embeds a permanent green checkmark without requiring software installation.`}
+            </p>
+          </div>
+
           {/* Inline Verify Tool Component */}
           <div className="mb-16">
             <UploadZone />
@@ -351,7 +370,56 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
             </div>
           </section>
 
-          {/* Section 4: FAQ Accordion */}
+          {/* Section 4: Statutory Credibility & E-E-A-T Legal Anchors */}
+          <section className="my-16 bg-white border border-surface-darker rounded-3xl p-8 sm:p-12 shadow-sm">
+            <div className="flex items-start gap-4 mb-8">
+              <div className="w-12 h-12 rounded-2xl bg-success/15 text-success flex items-center justify-center shrink-0 border border-success/30">
+                <Scale className="w-6 h-6" />
+              </div>
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-black text-text-main">
+                  Legal Validity &amp; Statutory Authority
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/60 mt-1">
+                  Compliance with the Information Technology Act, 2000 and CCA India Root Trust Framework
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-surface/50 border border-surface-darker rounded-2xl p-6">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-sm mb-4">
+                  §3A
+                </div>
+                <h3 className="font-black text-base text-text-main mb-2">IT Act 2000 (Section 3A &amp; 10A)</h3>
+                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
+                  Under Section 3A and 10A of the Information Technology Act, an electronic signature secured through a licensed Certifying Authority holds complete legal parity with physical ink signatures across all Indian courts and administrative bodies.
+                </p>
+              </div>
+
+              <div className="bg-surface/50 border border-surface-darker rounded-2xl p-6">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-sm mb-4">
+                  RCAI
+                </div>
+                <h3 className="font-black text-base text-text-main mb-2">CCA India Sovereign Trust</h3>
+                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
+                  Signatures issued by licensed authorities (NIC, CDAC, eMudhra, Protean, Capricorn, IDRBT) roll up directly to the Root Certifying Authority of India (RCAI). Kagazo validates this entire trust path cryptographically.
+                </p>
+              </div>
+
+              <div className="bg-surface/50 border border-surface-darker rounded-2xl p-6">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-black text-sm mb-4">
+                  DPDP
+                </div>
+                <h3 className="font-black text-base text-text-main mb-2">Zero-Retention Privacy</h3>
+                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
+                  In compliance with the Digital Personal Data Protection (DPDP) Act 2023, your documents are processed strictly inside ephemeral volatile RAM. No file contents, identity numbers, or biometric records are ever saved to disk or external databases.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 5: FAQ Accordion */}
           <section className="my-16">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary-light px-3 py-1 rounded-full border border-primary/20">
