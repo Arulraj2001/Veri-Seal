@@ -59,8 +59,8 @@ export function SupportedDocs() {
         </div>
 
         {/* State / Region Tabs */}
-        <div className="flex justify-center mb-10 overflow-x-auto pb-2 scrollbar-none">
-          <div className="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-surface border border-surface-darker shadow-sm">
+        <div className="w-full max-w-full flex justify-center mb-10 px-2 sm:px-0">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl sm:rounded-3xl bg-surface border border-surface-darker shadow-sm max-w-full">
             {STATES.map((state) => {
               const isActive = activeTab === state.id;
               return (
@@ -68,7 +68,7 @@ export function SupportedDocs() {
                   key={state.id}
                   type="button"
                   onClick={() => setActiveTab(state.id)}
-                  className={`relative px-4 py-2 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition-all duration-200 z-10 ${
+                  className={`relative px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl whitespace-nowrap transition-all duration-200 z-10 ${
                     isActive
                       ? 'text-white'
                       : 'text-text-main/80 hover:text-primary hover:bg-surface-darker/40'

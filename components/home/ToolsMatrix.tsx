@@ -29,35 +29,35 @@ const CATEGORY_TABS: CategoryTab[] = [
   {
     id: 'featured',
     label: '⭐ Most Popular Across India',
-    shortLabel: 'Popular',
+    shortLabel: '⭐ Popular',
     icon: Sparkles,
     description: 'The highest-frequency citizen utilities, exam resizers, and document tools used daily.',
   },
   {
     id: 'exam',
     label: '🎓 Exam Portal Upload Suite',
-    shortLabel: 'Exam Tools',
+    shortLabel: '🎓 Exam Tools',
     icon: GraduationCap,
     description: 'Zero-rejection criteria calibrated strictly for UPSC, TNPSC OTR, SSC, IBPS, and NEET.',
   },
   {
     id: 'identity',
     label: '🪪 Identity, KYC & Privacy',
-    shortLabel: 'Identity & KYC',
+    shortLabel: '🪪 KYC & Privacy',
     icon: ShieldCheck,
     description: 'UIDAI-compliant Aadhaar masking, front-back PDF merging, and biometric alignment in RAM.',
   },
   {
     id: 'print',
     label: '🖨️ CSC & Cyber Cafe Print Lab',
-    shortLabel: 'Print Lab',
+    shortLabel: '🖨️ Print Lab',
     icon: Printer,
     description: '5-in-1 A4 gang sheets, Epson L805 PVC tray layouts, and 4×6 studio passport sheets.',
   },
   {
     id: 'pdf',
     label: '📄 Smart PDF & Document Prep',
-    shortLabel: 'PDF Tools',
+    shortLabel: '📄 PDF Tools',
     icon: FileText,
     description: 'Compress certificates to strict 200KB/100KB limits, clean scans, and merge marksheets.',
   },
@@ -133,8 +133,8 @@ export function ToolsMatrix() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex justify-center mb-8 overflow-x-auto pb-2 scrollbar-none">
-          <div className="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-surface-darker/80 dark:border-slate-800 shadow-sm">
+        <div className="w-full max-w-full flex justify-center mb-8 px-2 sm:px-0">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 p-1.5 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-surface-darker/80 dark:border-slate-800 shadow-sm max-w-full">
             {CATEGORY_TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -143,7 +143,7 @@ export function ToolsMatrix() {
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative flex items-center gap-2 px-3.5 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 z-10 ${
+                  className={`relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 z-10 ${
                     isActive
                       ? 'text-white'
                       : 'text-text-main/75 dark:text-slate-300 hover:text-primary hover:bg-surface'
@@ -156,9 +156,9 @@ export function ToolsMatrix() {
                       transition={{ type: 'spring', stiffness: 450, damping: 35 }}
                     />
                   )}
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-primary'}`} />
-                  <span className="hidden md:inline">{tab.label}</span>
-                  <span className="md:hidden">{tab.shortLabel}</span>
+                  <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? 'text-white' : 'text-primary'}`} />
+                  <span className="hidden xl:inline">{tab.label}</span>
+                  <span className="xl:hidden">{tab.shortLabel}</span>
                 </button>
               );
             })}
