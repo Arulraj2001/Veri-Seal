@@ -2,95 +2,182 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
-  CreditCard,
-  ChevronRight,
   ShieldCheck,
+  ChevronRight,
   Zap,
-  HelpCircle,
-  FileText,
+  Lock,
   Sparkles,
+  CheckCircle2,
+  HelpCircle,
+  AlertTriangle,
+  Info,
+  Sliders,
+  Scale,
+  Banknote,
+  Calculator,
+  GraduationCap,
+  Award,
+  FileCheck2,
+  Clock,
+  Globe,
+  Code2,
+  Ruler,
+  Coins,
+  Heart,
+  FileText,
+  FileSpreadsheet,
+  TrendingUp,
+  Building2,
+  Languages,
+  PenTool,
+  Search,
+  Fingerprint,
 } from 'lucide-react';
 import CardMergerEngine from '@/components/tools/CardMergerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Driving License Front & Back Merger to Single Page PDF (<200KB) | Parivahan Sarathi',
-  description:
-    'Merge Front and Back sides of smart card Driving License (DL) or Vehicle RC onto a single A4 page PDF strictly under 200KB for Parivahan Sarathi, State RTOs, FASTag KYC, and Passport Seva. 100% free RAM privacy.',
+  title: 'Driving License Front & Back Merger to Single Page PDF (Under 200KB) | Parivahan Sarathi | Kagazo',
+  description: 'Merge smart card Driving License front and back onto a single page PDF under 200KB for Parivahan Sarathi, RTO renewals, insurance claims, and vehicle rentals. High contrast, crisp chip detail, and 100% client-side privacy.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/driving-license-card-merger',
+    canonical: 'https://kagazo.in/tools/driving-license-card-merger',
   },
   openGraph: {
-    title: 'Free Driving License Front & Back Merger to PDF (<200KB) | Kagazo',
-    description:
-      'Combine both sides of smart card DL onto a single A4 page strictly under 200KB for Parivahan Sarathi uploads.',
-    url: 'https://Kagazo.in/tools/driving-license-card-merger',
+    title: 'Driving License Front & Back Merger to Single Page PDF (Under 200KB) | Parivahan Sarathi | Kagazo',
+    description: 'Merge smart card Driving License front and back onto a single page PDF under 200KB for Parivahan Sarathi, RTO renewals, insurance claims, and vehicle rentals. High contrast, crisp chip detail, and 100% client-side privacy.',
+    url: 'https://kagazo.in/tools/driving-license-card-merger',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Driving License Front & Back Merger to Single Page PDF (Under 200KB) | Parivahan Sarathi | Kagazo',
+    description: 'Merge smart card Driving License front and back onto a single page PDF under 200KB for Parivahan Sarathi, RTO renewals, insurance claims, and vehicle rentals. High contrast, crisp chip detail, and 100% client-side privacy.',
+  },
 };
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Front Side of DL",
+    "desc": "Upload front image showing your photograph, digital signature, DL number, date of birth, and validity dates."
+  },
+  {
+    "step": 2,
+    "title": "Upload Back Side of DL",
+    "desc": "Upload back image displaying authorized vehicle categories (MCWG, LMV), permanent address, and RTO authority code."
+  },
+  {
+    "step": 3,
+    "title": "Select Sheet Layout",
+    "desc": "Choose Side-by-Side (Horizontal Xerox style) or Top-Bottom Stacked format with optional card borders."
+  },
+  {
+    "step": 4,
+    "title": "Optimize Compression & Size",
+    "desc": "Ensure target file size is set to Under 200KB to guarantee instant acceptance on Parivahan Sarathi."
+  },
+  {
+    "step": 5,
+    "title": "Download Single-Page PDF",
+    "desc": "Export your merged document ready to upload to RTO service portals, motor insurance claim desks, or car rental platforms."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "SARATHI ERROR #1",
+    "title": "Uploading Front Side Only",
+    "desc": "RTO portals require verification of vehicle class endorsements (LMV, MCWG, TRANS) located exclusively on the back side. Submitting only front causes application rejection."
+  },
+  {
+    "badge": "FILE OVER 200KB",
+    "title": "Exceeding 200KB Portal Attachment Size",
+    "desc": "Parivahan Sarathi server refuses file attachments exceeding 200KB. Use our automated slider to compress the unified sheet down to 150KB."
+  },
+  {
+    "badge": "HOLOGRAPHIC FLASH GLARE",
+    "title": "Camera Flash Glare Blinding DL Number",
+    "desc": "Smart card optical holograms reflect camera flash directly into the lens, obscuring the DL number. Take photo under diffused overhead room lighting."
+  },
+  {
+    "badge": "INCORRECT ORIENTATION",
+    "title": "Back Side Uploaded Inverted / Sideways",
+    "desc": "Uploading upside-down or sideways images prevents automated OCR verification by RTO systems. Use our 90-degree rotate tool before merging."
+  }
+];
 
 const FAQS = [
   {
-    question: 'Why does Parivahan Sarathi require both sides of the DL in a single PDF?',
-    answer:
-      'The Ministry of Road Transport and Highways (MoRTH) Sarathi portal only allows uploading one single document file per slot. The Front side contains your photo and license number, while the Back side contains vehicle class endorsements (MCWG, LMV) and validity dates.',
+    "question": "Why do I need to merge both sides of my Driving License onto one PDF?",
+    "answer": "The Parivahan Sarathi online portal, State RTO web portals, and vehicle insurance companies only allocate a single upload field for \"Proof of Driving License\". Both the front (identity & validity) and back (vehicle classes & endorsements) must be present on that single file."
   },
   {
-    question: 'What is the maximum file size allowed on Parivahan Sarathi for DL uploads?',
-    answer:
-      'The Parivahan Sarathi portal enforces a strict maximum file size of 200 KB in PDF or JPEG format. Our engine automatically compresses your merged A4 sheet strictly under this threshold.',
+    "question": "What is the maximum allowed file size on Parivahan Sarathi?",
+    "answer": "Parivahan Sarathi typically enforces a strict maximum file size of 200 KB (or 500 KB in certain state RTO instances) for PDF and JPEG uploads. Our merger guarantees output files between 120KB and 180KB."
   },
   {
-    question: 'Can I use this tool for Vehicle Registration Certificates (RC) and PAN cards?',
-    answer:
-      'Yes! All Indian smart cards follow the ISO/IEC 7810 ID-1 CR-80 standard. This tool works perfectly for Driving Licenses, Vehicle RC smart cards, Voter ID (EPIC), and PAN cards.',
+    "question": "Can I use this merged PDF for motor insurance claims?",
+    "answer": "Yes. Leading insurance providers (Digit, Acko, ICICI Lombard, Bajaj Allianz, New India Assurance) require a clear single-page document showing both sides of the driver's license during accident and third-party claims."
   },
   {
-    question: 'Are my Driving License details or photos saved on Kagazo servers?',
-    answer:
-      'Never. All card merging and compression operations are conducted strictly in temporary computer memory (RAM) and immediately purged after download.',
+    "question": "What vehicle class endorsements are shown on the back side?",
+    "answer": "The back side lists vehicle entitlement categories such as MCWOG (Motorcycle Without Gear), MCWG (Motorcycle With Gear), LMV (Light Motor Vehicle - Cars), LMV-TR, or TRANS (Commercial Transport), along with their authorization dates."
   },
+  {
+    "question": "Is it safe to merge my Driving License on this tool?",
+    "answer": "Yes. Your document images are processed entirely in client-side browser memory (RAM). Nothing is uploaded, saved, or analyzed on any external cloud server."
+  },
+  {
+    "question": "Can I merge an older laminated paper DL or only new Smart Cards?",
+    "answer": "You can merge any driving license format\u2014including newer microprocessor smart cards, digital Sarathi mParivahan/DigiLocker screenshots, or older booklet-style paper licenses."
+  },
+  {
+    "question": "Can I download the output as an image instead of a PDF?",
+    "answer": "Yes. In addition to a single-page PDF, you can export the merged canvas as a high-resolution JPEG or PNG file under 200KB."
+  },
+  {
+    "question": "Will this document be accepted by self-drive car rental companies?",
+    "answer": "Yes. Self-drive car rental services (Zoomcar, Revv, Myles) and airport rental agencies accept this single-sheet document for quick digital KYC onboarding."
+  },
+  {
+    "question": "How do I ensure the DL number and chip details remain sharp?",
+    "answer": "Keep the resolution set to 200 or 300 DPI and enable the contrast boost toggle. This preserves sharp edges around embossed text, the smart chip, and barcode strips."
+  },
+  {
+    "question": "Can I print this single-page PDF on regular paper?",
+    "answer": "Yes. The document is formatted for standard A4 paper. Printing at 100% scale yields exact 1:1 true-size replicas of your smart card suitable for offline submission."
+  }
 ];
 
-export default function CardMergerPage() {
+export default function DrivingLicenseCardMergerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Kagazo Driving License Front & Back Merger',
-        url: 'https://Kagazo.in/tools/driving-license-card-merger',
-        applicationCategory: 'UtilityApplication',
+        name: 'Driving License Front & Back Merger',
+        url: 'https://kagazo.in/tools/driving-license-card-merger',
+        applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All',
+        browserRequirements: 'Requires JavaScript',
         offers: {
           '@type': 'Offer',
-          price: '0.00',
+          price: '0',
           priceCurrency: 'INR',
         },
-        description:
-          'Combine Front and Back sides of smart card driving licenses onto a single A4 PDF strictly under 200KB for Parivahan Sarathi.',
+        description: 'Merge smart card Driving License front and back onto a single page PDF under 200KB for Parivahan Sarathi, RTO renewals, insurance claims, and vehicle rentals. High contrast, crisp chip detail, and 100% client-side privacy.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Merge Front and Back of Driving License into Single PDF under 200KB',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Front & Back Photos',
-            text: 'Take phone photos of the Front and Back sides of your smart card DL.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select A4 Layout',
-            text: 'Choose Vertical Stack (standard) or Side-by-Side.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Parivahan PDF (<200KB)',
-            text: 'Download your single-page PDF guaranteed under 200KB ready for portal upload.',
-          },
-        ],
+        name: 'How to Merge Driving License Front & Back into One PDF',
+        description: 'Step-by-step verified workflow instructions for Driving License Front & Back Merger.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -103,21 +190,42 @@ export default function CardMergerPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Driving License Front & Back Merger',
+            item: 'https://kagazo.in/tools/driving-license-card-merger',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background glow */}
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
-
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -125,117 +233,328 @@ export default function CardMergerPage() {
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
+            Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold truncate">Driving License Card Merger</span>
+          <span className="text-primary font-bold">Driving License Front & Back Merger</span>
         </nav>
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>Parivahan Sarathi & RTO Standard</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Driving License Front & Back </span>
+            <span className="text-primary">Single Page PDF (Under 200KB)</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Merge smart card Driving License front and back onto a single page PDF under 200KB for Parivahan Sarathi, RTO renewals, insurance claims, and vehicle rentals. High contrast, crisp chip detail, and 100% client-side privacy.
+          </p>
+        </header>
+
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <CreditCard className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Parivahan Sarathi & RTO Utility</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Driving License Front & Back Merger to Single PDF (&lt;200KB)
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Combine the Front and Back sides of your smart card Driving License (DL) or Vehicle RC onto a single A4 page PDF strictly under 200KB for Parivahan Sarathi, State RTOs, FASTag, and Passport Seva.
-              </p>
-            </div>
-
-            {/* In-Memory Privacy */}
-            <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>
-                <strong>100% In-Memory RAM Processing:</strong> Your Driving License and Vehicle RC documents are processed strictly in volatile RAM memory. Zero files are stored on our servers.
-              </span>
-            </div>
-
-            {/* Core Tool Engine */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* Interactive Engine Canvas */}
             <CardMergerEngine />
 
-            {/* FAQ Accordion */}
-            <div className="bg-white rounded-3xl border border-surface-darker/70 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center gap-2.5 border-b border-surface-darker/60 pb-4">
-                <HelpCircle className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-lg font-bold text-foreground">Frequently Asked Questions</h3>
+            {/* Post-Action Native Ad Placement */}
+            <AdSlot slot="post_download" />
+
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Print Production &amp; Cyber Cafe Excellence
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Key Technical Features &amp; Architecture
+                </h2>
               </div>
-              <div className="space-y-4">
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Parivahan Sarathi Calibrated
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Pre-configured to satisfy Ministry of Road Transport and Highways (MoRTH) upload limits for license renewals and address changes.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Smart Chip & QR Contrast Retention
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Adaptive edge enhancement highlights metallic chip contacts, optical holograms, and 2D barcode lines without dark pixel clipping.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Instant Client-Side Compilation
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Combines smart card photos in under 500 milliseconds directly inside browser memory without sending private credentials to servers.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Official Specifications & Reference Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-3">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main">
+                    Parivahan Sarathi & Smart Card DL Specifications
+                  </h2>
+                  <p className="text-xs text-text-main/70">
+                    Authoritative paper standards, print dimensions, and regulatory compliance thresholds:
+                  </p>
+                </div>
+                <span className="text-xs font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  MoRTH Smart Card Standard
+                </span>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-bold">
+                      <th className="py-2.5 px-3 font-bold">Parameter</th><th className="py-2.5 px-3 font-bold">Official Standard</th><th className="py-2.5 px-3 font-bold">Parivahan Upload Limit</th><th className="py-2.5 px-3 font-bold">Verification Standard</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Smart Card Format</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">ISO/IEC 7816 Microprocessor Card</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">CR-80 Standard (85.6 x 53.98 mm)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Optical smart chip & QR code visible</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">File Format</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Portable Document Format (PDF)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Single-page PDF or JPEG</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Multi-page attachments rejected</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Maximum File Size</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Under 200 KB (or 500 KB)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Strict 200 KB cap on Sarathi RTO</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Optimal file weight: 120 KB - 180 KB</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Front Information</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Name, DL No, Photo, Validity, DOB</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Clear portrait and blood group</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Must match Sarathi database records</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Back Information</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Vehicle Classes (MCWG, LMV, HGMV)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Endorsement dates & emergency contact</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Address and issuing authority stamp</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Visual Clarity</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">200 - 300 DPI Native Contrast</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Zero lens blur on dates & badge no.</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">High-contrast monochrome or full color</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Merge Driving License Front & Back into One PDF
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant compliance and verified results:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Driving License Upload Errors & Fixes
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common paper feed errors, scaling mistakes, and upload rejections:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Strict 10 Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-4">
+                <div className="space-y-1">
+                  <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+                    <HelpCircle className="w-5 h-5 text-primary" />
+                    Frequently Asked Questions
+                  </h2>
+                  <p className="text-xs text-text-main/60">
+                    Comprehensive technical, print lab, and operational answers
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  10 Questions Answered
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {FAQS.map((faq, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
-                    <h4 className="font-bold text-foreground text-sm flex items-start gap-2">
-                      <span className="text-emerald-600 font-extrabold">Q:</span>
-                      {faq.question}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
+                  <div
+                    key={idx}
+                    className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2 hover:border-primary/20 transition-all"
+                  >
+                    <h3 className="font-bold text-text-main text-xs sm:text-sm flex items-start gap-2">
+                      <span className="text-primary font-black shrink-0">Q{idx + 1}.</span>
+                      <span>{faq.question}</span>
+                    </h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed pl-6">
                       {faq.answer}
                     </p>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
+          </main>
 
-          {/* Right Sidebar (32%) */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="p-6 bg-white rounded-3xl border border-surface-darker/70 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-                <Zap className="w-4 h-4 text-emerald-600" />
-                <span>Portal Specification Rules</span>
+          {/* Compact Sticky Right Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
+            {/* Key Criteria Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                Driving License Specs
               </h3>
-              <div className="space-y-3 text-xs text-slate-600">
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">Parivahan Sarathi (MoRTH)</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">Strictly &lt; 200 KB • Single Page PDF / JPG</div>
+              <div className="space-y-1.5 text-xs">
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Standard</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    MoRTH Smart Card (CR-80)
+                  </div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">FASTag & Bank KYC</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">Both Front & Back clearly visible with vehicle number</div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Target Size</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Strictly Under 200 KB (Sarathi)
+                  </div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">Passport Seva Kendra (PSK)</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">Address proof copy with date endorsement</div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Resolution</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    200 - 300 DPI Clear Raster
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Sides Merged</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Front (Photo) + Back (Class)
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Security</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    100% In-RAM Local Execution
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 bg-white rounded-3xl border border-surface-darker/70 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider">
-                Related Document Tools
+            {/* Related Tools Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                Related Tools
               </h3>
-              <div className="space-y-2 text-xs">
+              <div className="space-y-1.5">
                 <Link
-                  href="/tools/clean-document-scanner"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium"
+                  href="/tools/aadhaar-front-back-pdf"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span>Clean Document Scanner & Binarizer</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Aadhaar Front & Back PDF
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Aadhaar
+                  </span>
                 </Link>
                 <Link
-                  href="/tools/mask-aadhaar"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium"
+                  href="/tools/aadhaar-pan-kyc-merge"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span>Mask Aadhaar (8 Digits)</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Aadhaar PAN KYC Merge
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    KYC
+                  </span>
                 </Link>
                 <Link
-                  href="/tools/compress-pdf-to-200kb"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium"
+                  href="/tools/a4-multi-card-sheet"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span>Compress PDF to 200KB</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      A4 Multi-Card Sheet
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    A4 Gang
+                  </span>
+                </Link>
+                <Link
+                  href="/tools/pvc-id-card-maker"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      PVC ID Card Maker
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    CR-80
+                  </span>
+                </Link>
+                <Link
+                  href="/tools/passport-photo-sheet-maker"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Passport Photo Sheet
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Photos
+                  </span>
                 </Link>
               </div>
             </div>
 
+            {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
-          </div>
+
+            {/* Sovereign In-RAM Privacy Box */}
+            <div className="bg-surface rounded-2xl border border-surface-darker p-3 space-y-1.5 text-text-main/80">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+                <Lock className="w-3.5 h-3.5" />
+                <span>100% In-RAM Privacy</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-text-main/70">
+                All image cropping, formatting, and high-DPI document rendering occur strictly inside your device browser memory. Zero identity cards or photo scans are sent to remote cloud servers.
+              </p>
+            </div>
+          </aside>
         </div>
       </div>
     </div>
