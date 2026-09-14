@@ -2,68 +2,149 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
-  FileText,
-  ChevronRight,
   ShieldCheck,
+  ChevronRight,
   Zap,
-  HelpCircle,
+  Lock,
   Sparkles,
-  Printer,
   CheckCircle2,
+  HelpCircle,
+  AlertTriangle,
+  Info,
+  Sliders,
+  Scale,
+  Banknote,
+  Calculator,
+  GraduationCap,
+  Award,
+  FileCheck2,
+  Clock,
+  Globe,
+  Code2,
+  Ruler,
+  Coins,
+  Heart,
+  FileText,
+  FileSpreadsheet,
+  TrendingUp,
+  Building2,
   Languages,
-  BookOpen,
 } from 'lucide-react';
 import AffidavitGeneratorEngine from '@/components/tools/AffidavitGeneratorEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
-import { Breadcrumb } from '@/components/ui/Breadcrumb';
-import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'Bilingual Legal Affidavit Generator (English & தமிழ்) | e-Stamp Paper',
-  description:
-    'Generate sworn affidavits and self-declarations in English and Tamil. Standard formats for Name Correction, Date of Birth, Address Proof, Gap Year, and Lost Documents with 3.5" Non-Judicial e-Stamp paper top margins. 100% free RAM privacy.',
+  title: 'Bilingual Affidavit & Self-Declaration Generator Online (English & Tamil) | Kagazo',
+  description: 'Generate sworn legal affidavits for Name Correction, DOB Discrepancy, Education Gap Year, and Lost Marksheets. Formatted with 3.5-inch e-Stamp margins for Rs 20, 50, and 100 Non-Judicial stamp papers. 100% private in-RAM.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/affidavit-generator',
+    canonical: 'https://kagazo.in/tools/affidavit-generator',
   },
   openGraph: {
-    title: 'Free Legal Affidavit Generator (English & தமிழ்) | Kagazo',
-    description:
-      'Generate legally valid affidavits formatted for ₹20, ₹50, and ₹100 Non-Judicial stamp papers in English & Tamil.',
-    url: 'https://Kagazo.in/tools/affidavit-generator',
+    title: 'Bilingual Affidavit & Self-Declaration Generator Online (English & Tamil) | Kagazo',
+    description: 'Generate sworn legal affidavits for Name Correction, DOB Discrepancy, Education Gap Year, and Lost Marksheets. Formatted with 3.5-inch e-Stamp margins for Rs 20, 50, and 100 Non-Judicial stamp papers. 100% private in-RAM.',
+    url: 'https://kagazo.in/tools/affidavit-generator',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bilingual Affidavit & Self-Declaration Generator Online (English & Tamil) | Kagazo',
+    description: 'Generate sworn legal affidavits for Name Correction, DOB Discrepancy, Education Gap Year, and Lost Marksheets. Formatted with 3.5-inch e-Stamp margins for Rs 20, 50, and 100 Non-Judicial stamp papers. 100% private in-RAM.',
+  },
 };
 
-const STAMP_DUTY_RULES = [
-  { purpose: 'Name Change / Correction', recommendedStamp: '₹20 or ₹50 Non-Judicial Stamp', attestation: 'Notary Public / Advocate' },
-  { purpose: 'Date of Birth Rectification', recommendedStamp: '₹50 or ₹100 Non-Judicial Stamp', attestation: 'First Class Magistrate / Notary' },
-  { purpose: 'Education Gap Year / Break', recommendedStamp: '₹20 e-Stamp or Plain A4 Paper', attestation: 'Notary Public / Self Attested' },
-  { purpose: 'Lost Marksheet / Certificate', recommendedStamp: '₹50 or ₹100 Non-Judicial Stamp', attestation: 'Notary Public + Police NCR' },
-  { purpose: 'Residential Address Proof', recommendedStamp: 'Plain A4 or ₹20 e-Stamp', attestation: 'Self Declaration / Gazetted Officer' },
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Select Legal Purpose",
+    "desc": "Choose from Name Correction, DOB Discrepancy, Education Gap Year, Lost Documents, or Custom Declaration."
+  },
+  {
+    "step": 2,
+    "title": "Choose Drafting Language",
+    "desc": "Select English or Tamil with standardized statutory swearing clauses recognized by Indian courts."
+  },
+  {
+    "step": 3,
+    "title": "Fill Deponent Information",
+    "desc": "Enter full legal name, parent/spouse name, age, residential address, and Aadhaar/voter ID numbers."
+  },
+  {
+    "step": 4,
+    "title": "Enable e-Stamp Margin",
+    "desc": "Toggle 3.5-inch top margin mode if printing directly onto physical Non-Judicial e-Stamp certificate sheets."
+  },
+  {
+    "step": 5,
+    "title": "Print or Download PDF",
+    "desc": "Print directly to your connected printer or download a clean A4 PDF for Notary Public signature and seal."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Printing Over Stamp Header",
+    "title": "Text Colliding With e-Stamp Barcode",
+    "desc": "Standard Word processors print near the top margin, overwriting the e-Stamp certificate QR code. Kagazo locks a 3.5-inch top margin to start text cleanly below the government header."
+  },
+  {
+    "badge": "Error: Missing Verification Clause",
+    "title": "Omitting Deponent Sworn Verification",
+    "desc": "Courts and passport offices reject affidavits lacking a formal Verification clause. Kagazo automatically embeds the mandatory closing oath with place and date."
+  },
+  {
+    "badge": "Error: Name Discrepancy in Body",
+    "title": "Inconsistent Spelling Across Paragraphs",
+    "desc": "Mismatched spelling between the deponent introduction and document body invalidates the filing. Kagazo harmonizes all variable references throughout the template."
+  },
+  {
+    "badge": "Error: Incorrect Printer Page Scaling",
+    "title": "Fit to Printable Area Shrinking Margins",
+    "desc": "Selecting Fit to Page in printer dialogs shrinks the 3.5-inch header to under 3 inches. Always set Printer Scale to 100% (Actual Size)."
+  }
 ];
 
 const FAQS = [
   {
-    question: 'Is an online generated affidavit legally valid in Indian courts and government offices?',
-    answer:
-      'Yes. The text generated by Kagazo complies with standard legal drafting precedents across Indian High Courts. Once printed on the appropriate Non-Judicial Stamp Paper (or e-Stamp certificate) and signed by the deponent in the presence of an authorized Notary Public or Oath Commissioner with their official seal, it carries full legal evidentiary validity under the Indian Evidence Act.',
+    "question": "Can I print this affidavit directly onto physical Non-Judicial stamp paper?",
+    "answer": "Yes. By enabling the e-Stamp Paper Margin toggle, Kagazo inserts an exact 3.5-inch (89 mm) blank top clearance. You can feed your physical Rs 20, Rs 50, or Rs 100 e-Stamp sheet into your printer tray and print cleanly below the barcode."
   },
   {
-    question: 'How do I print this directly onto ₹20, ₹50, or ₹100 Non-Judicial Stamp Paper?',
-    answer:
-      'Select the "e-Stamp Paper (3.5\\" Gap)" mode. This automatically inserts a blank 3.5-inch header margin at the top of the A4 page, allowing you to feed your green stamp paper or electronic e-Stamp certificate directly into your office printer without overlapping the official government emblem or barcode.',
+    "question": "Who needs to attest or sign the affidavit after printing?",
+    "answer": "Depending on the receiving authority (Passport Office, University, Bank, or Court), the printed affidavit must be signed by the deponent in the presence of an authorized Notary Public, Oath Commissioner, or First Class Magistrate."
   },
   {
-    question: 'Can I generate the affidavit in Tamil (தமிழ்)?',
-    answer:
-      'Yes! Kagazo is the only platform in India offering verified Tamil legal phrasing (உறுதிமொழிப் பத்திரம்) for Name Correction (பெயர் திருத்தம்), Study Gap (படிப்பு இடைவெளி), and Lost Certificates (சான்றிதழ் தொலைந்தமை). Simply toggle the "தமிழ் (Tamil)" language button.',
+    "question": "Are bilingual Tamil-English affidavits valid in Tamil Nadu government offices?",
+    "answer": "Yes. In Tamil Nadu government departments, Taluk offices, and state universities, bilingual affidavits drafted in English and Tamil (\u0ba4\u0bae\u0bbf\u0bb4\u0bcd) are widely accepted and facilitate faster local verification."
   },
   {
-    question: 'Are my personal details or affidavit statements stored on your servers?',
-    answer:
-      'No. 100% of the document generation runs in volatile client-side browser RAM. None of your names, family details, or identity numbers are ever saved or transmitted to cloud databases.',
+    "question": "What stamp paper denomination is required for an education gap affidavit?",
+    "answer": "Most Indian universities, colleges, and visa consulates require an education gap affidavit on a Rs 20 or Rs 50 Non-Judicial stamp paper attested by a Notary Public."
   },
+  {
+    "question": "Is my confidential legal information saved or logged on your servers?",
+    "answer": "No. Kagazo operates with a zero-server privacy architecture. All legal text, deponent identification details, and sworn statements are processed in volatile browser RAM and wiped upon closing the tab."
+  },
+  {
+    "question": "Can I edit the generated legal text before printing?",
+    "answer": "Yes. The interactive drafting engine allows you to edit, add, or customize specific factual paragraphs and evidentiary exhibits prior to generating your final document."
+  },
+  {
+    "question": "What is the difference between an affidavit and a self-declaration?",
+    "answer": "An affidavit is a sworn statement made under oath on stamp paper and attested by a Notary/Magistrate. A self-declaration is signed solely by the individual without requiring notary attestation, accepted by many modern digital portals."
+  },
+  {
+    "question": "What should I do if my text exceeds one page on stamp paper?",
+    "answer": "The first page prints on the Non-Judicial stamp paper with the 3.5-inch margin. Subsequent pages automatically print on standard plain A4 sheets with regular 1-inch margins, which the Notary signs and staples together."
+  },
+  {
+    "question": "Does this generator support Name Change Gazette application affidavits?",
+    "answer": "Yes. The Name Correction preset includes the standard statutory clauses required by Central and State Gazette Directorates declaring old name, new name, and bona fide intent."
+  },
+  {
+    "question": "What printer settings ensure the 3.5-inch margin does not shift?",
+    "answer": "In your browser print dialog, select Paper Size: A4, Margins: None (or Minimum), and Scale: 100% (Actual Size). This ensures exact physical alignment with the government e-Stamp certificate."
+  }
 ];
 
 export default function AffidavitGeneratorPage() {
@@ -72,43 +153,28 @@ export default function AffidavitGeneratorPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Kagazo Bilingual Legal Affidavit Generator',
-        url: 'https://Kagazo.in/tools/affidavit-generator',
-        applicationCategory: 'UtilityApplication',
+        name: 'Bilingual Legal Affidavit Generator',
+        url: 'https://kagazo.in/tools/affidavit-generator',
+        applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
+        browserRequirements: 'Requires JavaScript',
         offers: {
           '@type': 'Offer',
-          price: '0.00',
+          price: '0',
           priceCurrency: 'INR',
         },
-        description:
-          'Generate sworn affidavits and self-declarations in English and Tamil with Non-Judicial stamp paper margins.',
+        description: 'Generate sworn legal affidavits for Name Correction, DOB Discrepancy, Education Gap Year, and Lost Marksheets. Formatted with 3.5-inch e-Stamp margins for Rs 20, 50, and 100 Non-Judicial stamp papers. 100% private in-RAM.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Draft and Print an Affidavit on Stamp Paper',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Select Legal Purpose',
-            text: 'Choose Name Correction, DOB Discrepancy, Gap Year, or Lost Document.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Choose Language & Paper Mode',
-            text: 'Select English or Tamil, and enable 3.5-inch e-Stamp header gap if printing on Non-Judicial stamp paper.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Fill Deponent Details',
-            text: 'Enter your name, relation, age, residential address, and ID details.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: '1-Click Print A4 PDF',
-            text: 'Print directly onto stamp paper or download clean A4 PDF for notary sign.',
-          },
-        ],
+        name: 'How to Draft and Print an Affidavit in 5 Steps',
+        description: 'Step-by-step verified workflow instructions for Bilingual Legal Affidavit Generator.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -121,197 +187,334 @@ export default function AffidavitGeneratorPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Bilingual Legal Affidavit Generator',
+            item: 'https://kagazo.in/tools/affidavit-generator',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
-
-      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <Breadcrumb
-          items={[
-            { label: 'Home', href: '/' },
-            { label: 'Tools', href: '/tools' },
-            { label: 'Bilingual Affidavit Generator' },
-          ]}
-          showHomeIcon
-        />
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
+          <Link href="/" className="hover:text-primary transition-colors font-medium">
+            Home
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <span className="text-primary font-bold">Bilingual Legal Affidavit Generator</span>
+        </nav>
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>e-Stamp Paper Margins (3.5") • English + தமிழ்</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Bilingual Legal Affidavit & </span>
+            <span className="text-primary">Self-Declaration Generator</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Generate sworn legal affidavits for Name Correction, DOB Discrepancy, Education Gap Year, and Lost Marksheets. Formatted with 3.5-inch e-Stamp margins for Rs 20, 50, and 100 Non-Judicial stamp papers. 100% private in-RAM.
+          </p>
+        </header>
+
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-                <Languages className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                <span>First In India • Bilingual Legal Format (English + தமிழ்)</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Bilingual Legal Affidavit &amp; Self-Declaration Generator
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Generate sworn legal affidavits for Name Correction, DOB Discrepancy, Education Gap Years, and Lost Marksheets. Fully formatted with 3.5&quot; top margins for ₹20, ₹50, and ₹100 Non-Judicial e-Stamp papers.
-              </p>
-            </div>
-
-            {/* Privacy Badge */}
-            <div className="flex items-center gap-3 p-3.5 bg-amber-500/10 border border-amber-500/20 rounded-2xl text-xs text-amber-950 dark:text-amber-200 font-medium">
-              <ShieldCheck className="w-5 h-5 text-amber-600 shrink-0" />
-              <span>
-                <strong>Confidential In-Browser Generation:</strong> Your sensitive family details and sworn legal statements are drafted strictly inside local device RAM. Zero data is recorded or stored.
-              </span>
-            </div>
-
-            {/* Core Interactive Tool Engine */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* Interactive Engine Canvas */}
             <AffidavitGeneratorEngine />
 
-            {/* Stamp Duty Reference Cheatsheet */}
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center justify-between border-b border-surface-darker/60 dark:border-slate-800 pb-4">
-                <div className="flex items-center gap-2.5">
-                  <BookOpen className="w-5 h-5 text-amber-600" />
-                  <h3 className="text-lg font-bold text-foreground">
-                    Indian Stamp Duty &amp; Notary Rules Reference
-                  </h3>
+            {/* Post-Action Native Ad Placement */}
+            <AdSlot slot="post_download" />
+
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Engineering &amp; Compliance Excellence
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 bg-amber-50 dark:bg-amber-950 text-amber-800 dark:text-amber-300 rounded-full border border-amber-200 dark:border-amber-800">
-                  Legal Precedents
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Key Technical Features &amp; Architecture
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Bilingual Formats
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Draft official affidavits in formal legal English or Tamil (தமிழ்) with accurate statutory declaration clauses.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> 3.5-Inch e-Stamp Gap
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Auto-calibrated top margin leaves exact clearance for Government of India Non-Judicial e-Stamp certificates.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Zero Server Storage
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Your sworn statements, Aadhaar details, and deponent facts remain strictly inside client-side browser RAM.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Official Specifications & Reference Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-3">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main">
+                    Indian Non-Judicial Stamp Paper & Notary Rules Reference
+                  </h2>
+                  <p className="text-xs text-text-main/70">
+                    Authoritative standards, formatting thresholds, and official regulatory guidelines:
+                  </p>
+                </div>
+                <span className="text-xs font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  Statutory Precedent
                 </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300">
-                      <th className="py-2.5 px-3 font-bold">Affidavit Purpose</th>
-                      <th className="py-2.5 px-3 font-bold">Stamp Paper Value</th>
-                      <th className="py-2.5 px-3 font-bold">Attesting Authority</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-bold">
+                      <th className="py-2.5 px-3 font-bold">Affidavit Purpose</th><th className="py-2.5 px-3 font-bold">Recommended Stamp Value</th><th className="py-2.5 px-3 font-bold">Attesting Authority</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-600 dark:text-slate-300">
-                    {STAMP_DUTY_RULES.map((rule, idx) => (
-                      <tr key={idx} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
-                        <td className="py-2.5 px-3 font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
-                          <span>{rule.purpose}</span>
-                        </td>
-                        <td className="py-2.5 px-3 font-medium text-amber-700 dark:text-amber-400">
-                          {rule.recommendedStamp}
-                        </td>
-                        <td className="py-2.5 px-3">{rule.attestation}</td>
-                      </tr>
-                    ))}
+                  <tbody>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Name Correction / Alias Declaration</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Rs 20 / Rs 50 Non-Judicial e-Stamp</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Notary Public or First Class Magistrate</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Date of Birth (DOB) Discrepancy</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Rs 50 / Rs 100 Non-Judicial e-Stamp</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Notary Public with supporting birth proof</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Education / Employment Gap Year</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Rs 20 / Rs 50 Non-Judicial e-Stamp</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Notary Public or Oath Commissioner</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Lost Marksheet / Degree Certificate</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Rs 50 / Rs 100 Non-Judicial e-Stamp</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Notary Public + Police NCR / CSR Acknowledgement</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Address / Residence Self-Declaration</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Plain Paper / Rs 20 Stamp</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Self-Attestation / Notary (as required by portal)</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Marriage Registration Declaration</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Rs 100 Non-Judicial e-Stamp</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Sub-Registrar / Notary Public with 2 witnesses</td></tr>
                   </tbody>
                 </table>
               </div>
-            </div>
+            </section>
 
-            {/* FAQ Accordion */}
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center gap-2.5 border-b border-surface-darker/60 dark:border-slate-800 pb-4">
-                <HelpCircle className="w-5 h-5 text-amber-600" />
-                <h3 className="text-lg font-bold text-foreground">Frequently Asked Questions</h3>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Draft and Print an Affidavit in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant compliance and verified results:
+                </p>
               </div>
-              <div className="space-y-4">
+
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Affidavit Drafting Errors & Technical Solutions
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common formatting errors, legal omissions, and calculation pitfalls:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Strict 10 Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-4">
+                <div className="space-y-1">
+                  <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+                    <HelpCircle className="w-5 h-5 text-primary" />
+                    Frequently Asked Questions
+                  </h2>
+                  <p className="text-xs text-text-main/60">
+                    Comprehensive technical, legal, and operational answers
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  10 Questions Answered
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {FAQS.map((faq, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/80 space-y-1.5"
+                    className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2 hover:border-primary/20 transition-all"
                   >
-                    <h4 className="font-bold text-foreground text-sm flex items-start gap-2">
-                      <span className="text-amber-600 font-extrabold">Q:</span>
-                      {faq.question}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
+                    <h3 className="font-bold text-text-main text-xs sm:text-sm flex items-start gap-2">
+                      <span className="text-primary font-black shrink-0">Q{idx + 1}.</span>
+                      <span>{faq.question}</span>
+                    </h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed pl-6">
                       {faq.answer}
                     </p>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
+          </main>
 
-          {/* Right Sidebar (32%) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* Notary Verification Card */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-800 dark:text-white text-sm flex items-center gap-2">
-                <Zap className="w-4 h-4 text-amber-600" />
-                <span>Printing On Stamp Paper</span>
+          {/* Compact Sticky Right Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
+            {/* Key Criteria Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                Legal Standards
               </h3>
-              <div className="space-y-3 text-xs text-slate-600 dark:text-slate-300">
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
-                  <div className="font-bold text-slate-800 dark:text-white">Printer Feed Direction</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
-                    Insert your green stamp paper or e-Stamp certificate top-first into the manual feed tray.
+              <div className="space-y-1.5 text-xs">
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Stamp Clearance</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Exact 3.5-inch top margin for Non-Judicial e-Stamp.
                   </div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
-                  <div className="font-bold text-slate-800 dark:text-white">Page Scale: 100% (Actual)</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
-                    Leave margins at 100% so text starts precisely 3.5 inches below the stamp header.
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Bilingual Syntax</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Statutory verification clauses in English & Tamil.
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">RAM Confidentiality</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Zero server logging of legal or identity data.
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Related Tools */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-800 dark:text-white text-sm flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-600" />
-                <span>Related Document Tools</span>
+            {/* Related Tools Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                Related Tools
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <Link
                   href="/tools/self-attest-pdf"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-amber-700 transition-colors"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-amber-600" />
-                    Digital Self-Attestation PDF
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Digital Self-Attestation PDF
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Verify
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
-                  href="/tools/aadhaar-pan-kyc-merge"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-amber-700 transition-colors"
+                  href="/tools/pstm-certificate-generator"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-amber-600" />
-                    Aadhaar + PAN Single PDF KYC
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      PSTM Certificate Generator
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Govt
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
-                  href="/tools/handwritten-declaration-scanner"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-amber-700 transition-colors"
+                  href="/tools/clean-document-scanner"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-amber-600" />
-                    Exam Declaration Scanner
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Clean Document Scanner
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Scan
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>
             </div>
 
-            {/* Ad Space (Ostrune Exclusive) */}
+            {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
-          </div>
-        </div>
 
-        {/* Recommended Workflow Tools */}
-        <RelatedTools currentSlug="/tools/bilingual-affidavit-generator" />
+            {/* Sovereign In-RAM Privacy Box */}
+            <div className="bg-surface rounded-2xl border border-surface-darker p-3 space-y-1.5 text-text-main/80">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+                <Lock className="w-3.5 h-3.5" />
+                <span>100% In-RAM Privacy</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-text-main/70">
+                All calculations and document drafting occur strictly inside your device browser memory. Zero records, identity details, or files are sent to remote cloud servers.
+              </p>
+            </div>
+          </aside>
+        </div>
       </div>
     </div>
   );

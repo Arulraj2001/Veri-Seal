@@ -2,69 +2,149 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
-  FileText,
-  ChevronRight,
   ShieldCheck,
+  ChevronRight,
   Zap,
-  HelpCircle,
+  Lock,
   Sparkles,
-  Printer,
   CheckCircle2,
-  Languages,
-  DollarSign,
+  HelpCircle,
+  AlertTriangle,
+  Info,
+  Sliders,
+  Scale,
+  Banknote,
+  Calculator,
+  GraduationCap,
+  Award,
+  FileCheck2,
+  Clock,
+  Globe,
+  Code2,
+  Ruler,
+  Coins,
+  Heart,
+  FileText,
+  FileSpreadsheet,
+  TrendingUp,
   Building2,
+  Languages,
 } from 'lucide-react';
 import SalarySlipGeneratorEngine from '@/components/tools/SalarySlipGeneratorEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
-import { Breadcrumb } from '@/components/ui/Breadcrumb';
-import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'Bilingual Salary Slip Generator (English & தமிழ்) | Free Payslip Maker',
-  description:
-    'Free online salary slip & payslip maker in English and Tamil. Standard format with EPF, ESI, Professional Tax, and TDS calculations. 100% compliant for personal loan, car loan, home loan, and international visa applications.',
+  title: 'Free Salary Slip / Pay Slip Generator Online (With EPF, ESI & TDS) | Kagazo',
+  description: 'Generate professional corporate and SME monthly salary slips with automatic calculation of EPF, ESI, Professional Tax, and TDS. Bilingual format (English & Tamil) with company seal box. 100% private in-browser generation.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/salary-slip-generator',
+    canonical: 'https://kagazo.in/tools/salary-slip-generator',
   },
   openGraph: {
-    title: 'Free Bilingual Salary Slip Generator | Kagazo',
-    description:
-      'Generate corporate & MSME salary slips in English & Tamil with automatic tax calculations and print-ready PDF export.',
-    url: 'https://Kagazo.in/tools/salary-slip-generator',
+    title: 'Free Salary Slip / Pay Slip Generator Online (With EPF, ESI & TDS) | Kagazo',
+    description: 'Generate professional corporate and SME monthly salary slips with automatic calculation of EPF, ESI, Professional Tax, and TDS. Bilingual format (English & Tamil) with company seal box. 100% private in-browser generation.',
+    url: 'https://kagazo.in/tools/salary-slip-generator',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Salary Slip / Pay Slip Generator Online (With EPF, ESI & TDS) | Kagazo',
+    description: 'Generate professional corporate and SME monthly salary slips with automatic calculation of EPF, ESI, Professional Tax, and TDS. Bilingual format (English & Tamil) with company seal box. 100% private in-browser generation.',
+  },
 };
 
-const STATUTORY_RULES = [
-  { component: 'Basic Pay', rule: 'Normally 40% to 50% of Total CTC', type: 'Mandatory Earnings' },
-  { component: 'House Rent Allowance (HRA)', rule: '40% (Non-Metro) or 50% (Metro) of Basic', type: 'Tax Exempt Component' },
-  { component: 'Employees Provident Fund (EPF)', rule: '12% of Basic + DA (Capped at ₹1,800/mo)', type: 'Statutory Deduction' },
-  { component: 'ESIC Health Insurance', rule: '0.75% of Gross Pay (Applicable if Gross ≤ ₹21,000)', type: 'Statutory Health' },
-  { component: 'Professional Tax (PT)', rule: 'State Slab (e.g. ₹208/mo in TN & Maharashtra)', type: 'State Deduction' },
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Enter Employer Details",
+    "desc": "Input company name, registered office address, corporate logo, and GSTIN / PAN identifiers."
+  },
+  {
+    "step": 2,
+    "title": "Fill Employee Particulars",
+    "desc": "Provide employee name, designation, department, employee ID, date of joining, and bank details."
+  },
+  {
+    "step": 3,
+    "title": "Specify Earnings Breakdown",
+    "desc": "Input Basic Pay, HRA, Dearness Allowance, Conveyance, and Special Allowances for the pay month."
+  },
+  {
+    "step": 4,
+    "title": "Calculate Deductions",
+    "desc": "Apply automatic statutory deductions for EPF, ESI, Professional Tax, and voluntary loan recoveries."
+  },
+  {
+    "step": 5,
+    "title": "Export Clean A4 Pay Slip",
+    "desc": "Review total gross vs net pay with automatic numbers-to-words conversion and export print-ready A4 PDF."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Arithmetic Mismatch",
+    "title": "Gross Minus Deductions Not Matching Net Pay",
+    "desc": "Manual Excel pay slips frequently contain rounding discrepancies between component sums and net salary. Kagazo calculates all line items with exact cent/paise arithmetic precision."
+  },
+  {
+    "badge": "Error: Over-Deducting EPF",
+    "title": "Calculating 12% on Gross Instead of Basic",
+    "desc": "EPF rules mandate 12% deduction on Basic Pay + DA up to the Rs 15,000 ceiling, not on gross earnings. Applying PF to gross reduces employee take-home pay illegally."
+  },
+  {
+    "badge": "Error: Missing Bank Account Info",
+    "title": "Omitting Bank Name, Account & IFSC",
+    "desc": "Banks reject salary slips submitted for home loans or visa applications if salary credit bank details are missing. Ensure employee bank and IFSC numbers are explicitly noted."
+  },
+  {
+    "badge": "Error: Missing Attendance Days",
+    "title": "Omitting Total Working vs Paid Days",
+    "desc": "Auditors and visa consular officers look for effective working days, paid leave days, and LOP (Loss of Pay) count. Always include monthly attendance figures."
+  }
 ];
 
 const FAQS = [
   {
-    question: 'Can I use this generated salary slip for bank loans and credit cards?',
-    answer:
-      'Yes. Indian banks (SBI, HDFC, ICICI, Axis) require official monthly salary slips displaying the employer name, employee designation, UAN/PF number, PAN, and complete itemized earnings/deductions. Kagazo generates a formal corporate A4 layout recognized by bank underwriting systems.',
+    "question": "Are salary slips generated by Kagazo legally valid for bank loans?",
+    "answer": "Yes. When stamped or signed by an authorized company director or HR manager, salary slips formatted with complete company details, PAN/GSTIN, statutory deductions, and employee bank details are fully accepted by banks for home, car, and personal loans."
   },
   {
-    question: 'Is this payslip valid for Schengen, US, and UK visa applications?',
-    answer:
-      'Yes. Embassies and visa processing centers (VFS Global, BLS) ask for the last 3 to 6 months payslips. Simply enter your company and compensation details, ensure the numbers match your bank statement credits, and download the print-ready vector PDF.',
+    "question": "Does this salary slip generator automatically calculate EPF and ESI?",
+    "answer": "Yes. You can enable automatic calculation toggles that apply standard statutory rules: 12% on Basic Pay for EPF (with optional Rs 15,000 statutory cap) and 0.75% of Gross Wages for ESI."
   },
   {
-    question: 'How does the bilingual English and Tamil toggle work?',
-    answer:
-      'Kagazo is the first platform in India to offer official Tamil (`மாதாந்திர சம்பள ரசீது`) alongside standard English terminology. Small business owners, shops, and institutions in Tamil Nadu can generate legal salary documentation for local employees in seconds.',
+    "question": "Can small business owners, contractors, and startups use this tool?",
+    "answer": "Yes. Kagazo is engineered for SMEs, retail shops, contractors, startups, and domestic employers who need to issue professional, standardized salary receipts without expensive HRMS software."
   },
   {
-    question: 'Are my salary numbers or bank account digits saved on your servers?',
-    answer:
-      'Never. All calculations, numbers-to-words conversions, and PDF formatting execute strictly inside your local browser’s volatile RAM. Zero financial or payroll data is ever logged or uploaded.',
+    "question": "Is our company financial and employee payroll data stored online?",
+    "answer": "No. Kagazo works with 100% in-browser privacy. No payroll numbers, employee bank accounts, PAN numbers, or corporate records are uploaded to any cloud server or database."
   },
+  {
+    "question": "Does the salary slip include the Net Salary amount written in words?",
+    "answer": "Yes. The generator automatically converts your net take-home pay into official Indian Rupee currency words (e.g., \"Rupees Seventy-Five Thousand Four Hundred Only\") preventing tampering."
+  },
+  {
+    "question": "Can I add our company logo to the pay slip?",
+    "answer": "Yes. You can upload your company logo directly from your device. It is embedded dynamically into the PDF header with high-DPI clarity."
+  },
+  {
+    "question": "What are the standard mandatory components of an Indian salary slip?",
+    "answer": "A compliant Indian pay slip must include: Company Name & Address, Pay Period (Month & Year), Employee Name & ID, Designation & Department, UAN & PF Number, Bank Account & IFSC, Earnings Table, Deductions Table, and Net Pay."
+  },
+  {
+    "question": "What is Professional Tax and how is it calculated?",
+    "answer": "Professional Tax is a state-level tax levied on salaried employees, typically ranging between Rs 150 to Rs 208 per month depending on state slabs (e.g., Maharashtra, Karnataka, Tamil Nadu)."
+  },
+  {
+    "question": "Can I generate salary slips for contract or daily-wage staff?",
+    "answer": "Yes. You can customize earning headers to show Daily Wage, Overtime (OT), and Piece-rate incentives while disabling corporate benefits like PF and gratuity."
+  },
+  {
+    "question": "How should I print the salary slip for physical distribution?",
+    "answer": "Download the generated PDF, open in any PDF viewer, select A4 paper with Actual Size scaling, and print in crisp black-and-white or full color with space for company stamp and employee acknowledgement signature."
+  }
 ];
 
 export default function SalarySlipGeneratorPage() {
@@ -73,38 +153,28 @@ export default function SalarySlipGeneratorPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Kagazo Bilingual Salary Slip & Payslip Generator',
-        url: 'https://Kagazo.in/tools/salary-slip-generator',
-        applicationCategory: 'UtilityApplication',
+        name: 'Bilingual Salary Slip Generator',
+        url: 'https://kagazo.in/tools/salary-slip-generator',
+        applicationCategory: 'FinanceApplication',
         operatingSystem: 'All',
+        browserRequirements: 'Requires JavaScript',
         offers: {
           '@type': 'Offer',
-          price: '0.00',
+          price: '0',
           priceCurrency: 'INR',
         },
-        description:
-          'Create professional monthly salary slips with statutory EPF, ESIC, and PT calculations in English and Tamil.',
+        description: 'Generate professional corporate and SME monthly salary slips with automatic calculation of EPF, ESI, Professional Tax, and TDS. Bilingual format (English & Tamil) with company seal box. 100% private in-browser generation.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Generate a Salary Slip Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Enter Employer & Employee Details',
-            text: 'Provide company name, employee designation, department, and bank details.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Input Earnings & Deductions',
-            text: 'Enter Basic Pay, HRA, EPF, and Tax Deductions to compute Net Pay.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select Language & Export',
-            text: 'Choose English or Tamil and click 1-Click Print A4 PDF.',
-          },
-        ],
+        name: 'How to Generate a Professional Salary Slip in 5 Steps',
+        description: 'Step-by-step verified workflow instructions for Bilingual Salary Slip Generator.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -117,199 +187,334 @@ export default function SalarySlipGeneratorPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Bilingual Salary Slip Generator',
+            item: 'https://kagazo.in/tools/salary-slip-generator',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
-
-      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <Breadcrumb
-          items={[
-            { label: 'Home', href: '/' },
-            { label: 'Tools', href: '/tools' },
-            { label: 'Salary Slip Generator' },
-          ]}
-          showHomeIcon
-        />
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
+          <Link href="/" className="hover:text-primary transition-colors font-medium">
+            Home
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <span className="text-primary font-bold">Bilingual Salary Slip Generator</span>
+        </nav>
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>Statutory EPF & ESI Auto-Math • A4 PDF Export</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Professional Monthly Salary Slip & </span>
+            <span className="text-primary">Pay Slip Generator</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Generate professional corporate and SME monthly salary slips with automatic calculation of EPF, ESI, Professional Tax, and TDS. Bilingual format (English & Tamil) with company seal box. 100% private in-browser generation.
+          </p>
+        </header>
+
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-                <Languages className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                <span>Bilingual Corporate &amp; MSME Format (English + தமிழ்)</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Bilingual Salary Slip / Pay Slip Generator
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Generate professional, bank-compliant monthly salary slips in English and Tamil. Automatically calculates Gross Pay, EPF, ESIC, Professional Tax, TDS, and Net Pay in numbers and Indian currency words. Perfect for loan, visa, and rental verification.
-              </p>
-            </div>
-
-            {/* Privacy Guarantee */}
-            <div className="flex items-center gap-3 p-3.5 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl text-xs text-indigo-950 dark:text-indigo-200 font-medium">
-              <ShieldCheck className="w-5 h-5 text-indigo-600 shrink-0" />
-              <span>
-                <strong>Confidential In-Memory Payroll:</strong> Your compensation numbers, bank account digits, and employer details are calculated strictly in client RAM. Zero payroll data is recorded on servers.
-              </span>
-            </div>
-
-            {/* Core Interactive Tool Engine */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* Interactive Engine Canvas */}
             <SalarySlipGeneratorEngine />
 
-            {/* Statutory Compensation Rules */}
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center justify-between border-b border-surface-darker/60 dark:border-slate-800 pb-4">
-                <div className="flex items-center gap-2.5">
-                  <DollarSign className="w-5 h-5 text-indigo-600" />
-                  <h3 className="text-lg font-bold text-foreground">
-                    Indian Statutory Compensation Reference
-                  </h3>
+            {/* Post-Action Native Ad Placement */}
+            <AdSlot slot="post_download" />
+
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Engineering &amp; Compliance Excellence
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 rounded-full border border-indigo-200 dark:border-indigo-800">
-                  Labor Law Compliance
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Key Technical Features &amp; Architecture
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Auto Statutory Math
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Automatic computation of EPF (12% of Basic), ESI (0.75%), Professional Tax, and Income Tax TDS.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Bank-Approved Layout
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Clean tabular earnings and deductions layout compliant with SBI, HDFC, and ICICI loan verification standards.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> 100% Confidential
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Employee salary figures, bank account numbers, and PAN data are rendered exclusively in browser RAM.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Official Specifications & Reference Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-3">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main">
+                    Indian Payroll Statutory Deduction Limits (FY 2025–26)
+                  </h2>
+                  <p className="text-xs text-text-main/70">
+                    Authoritative standards, formatting thresholds, and official regulatory guidelines:
+                  </p>
+                </div>
+                <span className="text-xs font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  Statutory Rules
                 </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300">
-                      <th className="py-2.5 px-3 font-bold">Salary Component</th>
-                      <th className="py-2.5 px-3 font-bold">Statutory Rule / Formula</th>
-                      <th className="py-2.5 px-3 font-bold">Classification</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-bold">
+                      <th className="py-2.5 px-3 font-bold">Payroll Component</th><th className="py-2.5 px-3 font-bold">Mandatory Statutory Limit</th><th className="py-2.5 px-3 font-bold">Applicable Wage Threshold</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-600 dark:text-slate-300">
-                    {STATUTORY_RULES.map((rule, idx) => (
-                      <tr key={idx} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
-                        <td className="py-2.5 px-3 font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-indigo-500" />
-                          <span>{rule.component}</span>
-                        </td>
-                        <td className="py-2.5 px-3 font-medium text-slate-700 dark:text-slate-300">
-                          {rule.rule}
-                        </td>
-                        <td className="py-2.5 px-3 text-indigo-600 dark:text-indigo-400 font-semibold">
-                          {rule.type}
-                        </td>
-                      </tr>
-                    ))}
+                  <tbody>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Employee Provident Fund (EPF)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">12% of Basic + DA (Wage ceiling: Rs 15,000/mo)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Mandatory for establishments with 20+ staff</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Employees State Insurance (ESI)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">0.75% Employee, 3.25% Employer</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Applicable on gross monthly wages up to Rs 21,000</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Professional Tax (PT)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Slab-based (Rs 0 to Rs 208/mo per state laws)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">State-specific (Maharashtra, TN, Karnataka)</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">House Rent Allowance (HRA)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Typically 40% (Non-Metro) or 50% (Metro) of Basic</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Tax-exempt under Section 10(13A) subject to rent receipts</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Tax Deducted at Source (TDS)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">As per employee chosen tax regime (Old vs New)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Deducted monthly under Section 192</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Net Salary Formula</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Gross Earnings minus Total Deductions</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Amount credited to employee bank account</td></tr>
                   </tbody>
                 </table>
               </div>
-            </div>
+            </section>
 
-            {/* FAQ Accordion */}
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center gap-2.5 border-b border-surface-darker/60 dark:border-slate-800 pb-4">
-                <HelpCircle className="w-5 h-5 text-indigo-600" />
-                <h3 className="text-lg font-bold text-foreground">Frequently Asked Questions</h3>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Generate a Professional Salary Slip in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant compliance and verified results:
+                </p>
               </div>
-              <div className="space-y-4">
+
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Payroll Slip Errors & Compliance Traps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common formatting errors, legal omissions, and calculation pitfalls:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Strict 10 Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-4">
+                <div className="space-y-1">
+                  <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+                    <HelpCircle className="w-5 h-5 text-primary" />
+                    Frequently Asked Questions
+                  </h2>
+                  <p className="text-xs text-text-main/60">
+                    Comprehensive technical, legal, and operational answers
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  10 Questions Answered
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {FAQS.map((faq, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/80 space-y-1.5"
+                    className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2 hover:border-primary/20 transition-all"
                   >
-                    <h4 className="font-bold text-foreground text-sm flex items-start gap-2">
-                      <span className="text-indigo-600 font-extrabold">Q:</span>
-                      {faq.question}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
+                    <h3 className="font-bold text-text-main text-xs sm:text-sm flex items-start gap-2">
+                      <span className="text-primary font-black shrink-0">Q{idx + 1}.</span>
+                      <span>{faq.question}</span>
+                    </h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed pl-6">
                       {faq.answer}
                     </p>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
+          </main>
 
-          {/* Right Sidebar (32%) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* Visa & Loan Proof Card */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-800 dark:text-white text-sm flex items-center gap-2">
-                <Zap className="w-4 h-4 text-indigo-600" />
-                <span>Bank Loan &amp; Visa Submission</span>
+          {/* Compact Sticky Right Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
+            {/* Key Criteria Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                Payroll Criteria
               </h3>
-              <div className="space-y-3 text-xs text-slate-600 dark:text-slate-300">
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
-                  <div className="font-bold text-slate-800 dark:text-white">Bank Credit Reconciliation</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
-                    Ensure Net Pay matches the salary credit entry reflected in your bank statement.
+              <div className="space-y-1.5 text-xs">
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Standard Canvas</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Official A4 single-page layout with company seal box.
                   </div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
-                  <div className="font-bold text-slate-800 dark:text-white">Digital Stamp / Seal</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
-                    Affix your business stamp or authorized signatory signature in the designated footer box.
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Statutory Accuracy</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    EPF 12%, ESI 0.75%, and Professional Tax compliance.
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Confidential</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Zero server transmission of financial or bank data.
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Related Tools */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-800 dark:text-white text-sm flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-indigo-600" />
-                <span>Related Business Tools</span>
+            {/* Related Tools Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                Related Tools
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <Link
-                  href="/tools/gst-number-verifier"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-indigo-700 transition-colors"
+                  href="/tools/income-tax-calculator-2025-26"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-indigo-600" />
-                    GST Number Verifier
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Income Tax Calculator FY 2025-26
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Tax
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
-                  href="/tools/affidavit-generator"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-indigo-700 transition-colors"
+                  href="/tools/number-to-words-converter"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-indigo-600" />
-                    Bilingual Affidavit Generator
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Number to Words Converter
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Finance
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
-                  href="/tools/self-attest-pdf"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-indigo-700 transition-colors"
+                  href="/tools/epfo-passbook-photo-resizer"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-indigo-600" />
-                    Digital Self-Attest PDF
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      EPFO Passbook Resizer
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    PF
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>
             </div>
 
-            {/* Ad Space (Ostrune Exclusive) */}
+            {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
-          </div>
-        </div>
 
-        {/* Recommended Workflow Tools */}
-        <RelatedTools currentSlug="/tools/salary-slip-generator" />
+            {/* Sovereign In-RAM Privacy Box */}
+            <div className="bg-surface rounded-2xl border border-surface-darker p-3 space-y-1.5 text-text-main/80">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+                <Lock className="w-3.5 h-3.5" />
+                <span>100% In-RAM Privacy</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-text-main/70">
+                All calculations and document drafting occur strictly inside your device browser memory. Zero records, identity details, or files are sent to remote cloud servers.
+              </p>
+            </div>
+          </aside>
+        </div>
       </div>
     </div>
   );
