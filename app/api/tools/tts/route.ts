@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   let tts: MsEdgeTTS | null = null;
   try {
     const body = await req.json();
-    const { text, voice, rate = 1, pitch = 1 } = body;
+    const { text, voice, rate = 1, pitch = 1, volume = 1 } = body;
 
     if (!text || typeof text !== 'string' || !text.trim()) {
       return NextResponse.json(
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       targetVoice = voice.trim();
     }
 
-    // Calculate SSML pitch offset
+    // Calculate SSML pitch offset (Hz notation for Edge TTS)
     const pitchVal = typeof pitch === 'number' && !isNaN(pitch) ? pitch : 1;
     let pitchOffset = '+0Hz';
     if (pitchVal > 1) {
@@ -61,21 +61,28 @@ export async function POST(req: NextRequest) {
       pitchOffset = `-${Math.round((1 - pitchVal) * 20)}Hz`;
     }
 
-    // Calculate rate
+    // Calculate rate as SSML percentage (e.g. 1.5 → "+50%", 0.8 → "-20%")
     const rateVal = typeof rate === 'number' && !isNaN(rate) ? Math.max(0.5, Math.min(2.0, rate)) : 1;
+    const ratePercent = rateVal >= 1
+      ? `+${Math.round((rateVal - 1) * 100)}%`
+      : `-${Math.round((1 - rateVal) * 100)}%`;
 
-    tts = new MsEdgeTTS();
-    await tts.setMetadata(targetVoice, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
+    // Calculate volume as SSML percentage (0–1 → 0–100%)
+    const volumeVal = typeof volume === 'number' && !isNaN(volume) ? Math.max(0, Math.min(1, volume)) : 1;
+    const volumePercent = `${Math.round(volumeVal * 100)}%`;
 
+    // Build full SSML — embeds ALL settings (rate, pitch, volume) into the audio file
     const escapedText = escapeXml(cleanText);
+    const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US"><voice name="${targetVoice}"><prosody rate="${ratePercent}" pitch="${pitchOffset}" volume="${volumePercent}">${escapedText}</prosody></voice></speak>`;
+
+    // Upgrade to 48kHz 192kbps for broadcast-quality MP3 output
+    tts = new MsEdgeTTS();
+    await tts.setMetadata(targetVoice, OUTPUT_FORMAT.AUDIO_48KHZ_192KBITRATE_MONO_MP3);
 
     const audioBuffer = await new Promise<Buffer>((resolve, reject) => {
       const chunks: Buffer[] = [];
       const currentTts = tts!;
-      const { audioStream } = currentTts.toStream(escapedText, {
-        rate: rateVal,
-        pitch: pitchOffset,
-      });
+      const { audioStream } = currentTts.toStream(ssml);
 
       const timeoutId = setTimeout(() => {
         try {

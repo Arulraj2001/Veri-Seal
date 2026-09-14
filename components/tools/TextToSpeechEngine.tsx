@@ -36,6 +36,11 @@ import {
 } from '@/lib/tts-constants';
 import { enhancePunctuationAndCadence } from '@/lib/smart-punctuation';
 
+// Smallest valid silent WAV (44 bytes, 0 samples) — used to unlock browser autoplay
+// before an async fetch, preserving the user-gesture trust token through the await.
+const SILENT_AUDIO_UNLOCK =
+  'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
+
 interface SentenceChunk {
   text: string;
   startOffset: number;
@@ -322,6 +327,19 @@ export function TextToSpeechEngine() {
         return;
       }
 
+      // ── AUTOPLAY UNLOCK ────────────────────────────────────────────────────
+      // Chrome's autoplay policy expires the user-gesture token after the first
+      // `await`. We pre-play a silent audio clip synchronously (before any await)
+      // so the HTML5 audio element is already in a "playing" state. When the real
+      // MP3 arrives later, swapping .src keeps the element trusted.
+      const audio = studioAudioRef.current;
+      if (audio) {
+        audio.muted = true;
+        audio.src = SILENT_AUDIO_UNLOCK;
+        audio.play().catch(() => {}); // intentionally fire-and-forget
+      }
+      // ──────────────────────────────────────────────────────────────────────
+
       // Synthesize fresh Studio Neural Voice live stream
       setIsLoadingAudio(true);
       setDownloadError(null);
@@ -335,6 +353,7 @@ export function TextToSpeechEngine() {
             voice: selectedNeuralVoice,
             rate: rate,
             pitch: pitch,
+            volume: volume,
           }),
         });
 
@@ -352,8 +371,9 @@ export function TextToSpeechEngine() {
         setAudioBlobUrl(newUrl);
         setGeneratedParamsKey(currentParamsKey);
 
-        const audio = studioAudioRef.current;
         if (audio) {
+          // Swap silent unlock → real audio; element is already trusted by browser
+          audio.muted = false;
           audio.src = newUrl;
           audio.volume = volume;
           audio.load();
@@ -362,25 +382,21 @@ export function TextToSpeechEngine() {
             setIsPlaying(true);
             setIsPaused(false);
           } catch (playErr: any) {
-            console.warn('Audio play() blocked by browser policy/sink, falling back to device speech:', playErr);
-            if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-              const parsedChunks = parseSentenceChunks(text);
-              chunksRef.current = parsedChunks;
-              setTotalSentences(parsedChunks.length);
-              currentChunkIndexRef.current = 0;
-              setCurrentSentenceIndex(1);
-              isDeviceSpeakingRef.current = true;
-              setIsPlaying(true);
-              setIsPaused(false);
-              startDeviceWatchdog();
-              speakDeviceChunk(0);
-            }
+            // play() still rejected (rare — e.g. tab backgrounded mid-fetch)
+            console.error('Studio audio.play() rejected after unlock:', playErr);
+            setDownloadError(
+              'Playback was blocked. Try clicking Play again, or switch to Device Voice (Offline).'
+            );
           }
         }
       } catch (err: any) {
         console.error('Studio TTS fetch error:', err);
+        if (audio) {
+          audio.muted = false;
+          audio.src = '';
+        }
         setDownloadError(
-          err.message || 'Could not stream Studio Voice. You can switch to Device Voice (offline) below.'
+          err.message || 'Could not reach Studio Voice server. Switch to Device Voice (Offline) or try again.'
         );
       } finally {
         setIsLoadingAudio(false);
@@ -470,6 +486,7 @@ export function TextToSpeechEngine() {
           voice: selectedNeuralVoice,
           rate: rate,
           pitch: pitch,
+          volume: volume,
         }),
       });
 
