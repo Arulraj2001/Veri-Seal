@@ -226,6 +226,58 @@ export default function ColorPickerPage() {
               </div>
             </section>
 
+            {/* WCAG Accessibility Contrast Matrix */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  WCAG 2.2 Color Contrast &amp; Accessibility Thresholds
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Official W3C digital compliance criteria for legible web and mobile typography.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">Compliance Level</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Minimum Ratio</th>
+                      <th className="py-3 px-4 font-bold text-primary">Content Type</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Recommended Usage</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-emerald-700">WCAG Level AA</td>
+                      <td className="py-3.5 px-4 font-medium text-text-main">4.5 : 1</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Normal Body Text (&lt;18pt)</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Standard legal minimum for all commercial websites</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-emerald-700">WCAG Level AA (Large)</td>
+                      <td className="py-3.5 px-4 font-medium text-text-main">3.0 : 1</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Large Text (&ge;18pt or &ge;14pt Bold)</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Hero headings, banners &amp; large UI button labels</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-primary">WCAG Level AAA</td>
+                      <td className="py-3.5 px-4 font-medium text-text-main">7.0 : 1</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Enhanced Normal Text</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Government, banking, healthcare &amp; high-accessibility portals</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-primary">UI Components</td>
+                      <td className="py-3.5 px-4 font-medium text-text-main">3.0 : 1</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Input borders, icons &amp; focus rings</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Ensures buttons &amp; form controls stand out from backgrounds</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
             {/* FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
               <div className="space-y-1">

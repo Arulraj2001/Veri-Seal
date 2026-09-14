@@ -54,6 +54,11 @@ const FAQS = [
     answer:
       'Choose 300 DPI for all official passport photos, visa applications, government hall tickets, and photo lab prints. Choose 600 DPI for high-definition archival scans, fine biometric finger impressions, and legal evidence.',
   },
+  {
+    question: 'Are my photos uploaded to any server to inject the DPI metadata?',
+    answer:
+      'No. The DPI injection runs entirely client-side in your browser RAM by rewriting binary JFIF marker segments (`0xFFE0`). No photos are ever uploaded or transmitted across the internet.',
+  },
 ];
 
 export default function ChangeImageDpiPage() {
@@ -61,15 +66,15 @@ export default function ChangeImageDpiPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Change Image DPI Online Free (300 / 600 DPI)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/change-image-dpi',
         offers: {
           '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
+          price: '0.00',
+          priceCurrency: 'INR',
         },
         description:
           'Convert any image to 300 DPI or 600 DPI online free. RFC-compliant JFIF density marker injection with zero loss.',
@@ -90,8 +95,8 @@ export default function ChangeImageDpiPage() {
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Verified 300 DPI Image',
-            text: 'Download the converted JPEG with verified JFIF header.',
+            name: 'Download Calibrated Image',
+            text: 'Download the image with verified RFC-compliant JFIF metadata embedded.',
           },
         ],
       },
@@ -105,6 +110,29 @@ export default function ChangeImageDpiPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Change Image DPI',
+            item: 'https://kagazo.in/tools/change-image-dpi',
+          },
+        ],
       },
     ],
   };
@@ -204,8 +232,57 @@ export default function ChangeImageDpiPage() {
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* Official DPI Resolution Standards Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  Standard DPI Density Guidelines Across Digital &amp; Print Surfaces
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Recommended DPI settings according to international printing and portal submission standards.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">DPI Value</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Intended Medium</th>
+                      <th className="py-3 px-4 font-bold text-primary">Portal Requirements</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Visual Result</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">72 – 96 DPI</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Standard PC &amp; Phone Displays</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Rejected by exam &amp; visa portals</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Fine for web browsing, blurry in print</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">150 – 200 DPI</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Draft office printing &amp; OTR portals</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Accepted by TNPSC &amp; SSC OTR</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Crisp on desktop screens and office paper</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">300 DPI</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Official Passport Photos &amp; Visas</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Mandatory for UPSC, US DS-160, Schengen</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Magazine quality, razor-sharp paper prints</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">600 DPI</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Fine Biometrics &amp; Legal Scans</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Police verification &amp; high-res archives</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Microscopic ridge detail preserved perfectly</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

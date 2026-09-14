@@ -84,6 +84,11 @@ const FAQS = [
     answer:
       'Yes, 100% free with zero watermarks, zero subscription fees, and no account creation required.',
   },
+  {
+    question: 'Are my private signatures and identity photos safe?',
+    answer:
+      'Yes, 100%. Kagazo performs all compression directly inside your browser volatile memory using HTML5 Canvas and typed arrays. Your files never get uploaded to any cloud server or database.',
+  },
 ];
 
 export default function CompressImageTo20KbPage() {
@@ -91,18 +96,18 @@ export default function CompressImageTo20KbPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Compress Image to 20KB Online',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/compress-image-to-20kb',
+        url: 'https://kagazo.in/tools/compress-image-to-20kb',
         offers: {
           '@type': 'Offer',
-          price: '0',
+          price: '0.00',
           priceCurrency: 'INR',
         },
         description:
-          'Compress image and signature to strictly under 20 KB (10-20 KB) online free. Bi-directional auto-enhance prevents under-size rejection.',
+          'Bi-directional image compressor for 10-20 KB government exam photo and signature uploads.',
       },
       {
         '@type': 'HowTo',
@@ -135,6 +140,29 @@ export default function CompressImageTo20KbPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Compress Image to 20KB',
+            item: 'https://kagazo.in/tools/compress-image-to-20kb',
+          },
+        ],
       },
     ],
   };
@@ -220,8 +248,57 @@ export default function CompressImageTo20KbPage() {
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* Government Exam 20KB Guidelines Matrix */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  Government Recruitment Portals: 10KB - 20KB File Specifications
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Exact upload requirements across major national and state recruitment authorities.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">Authority / Exam</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Document Type</th>
+                      <th className="py-3 px-4 font-bold text-primary">Allowed Range</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Dimensions / Format</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">SSC (CGL, CHSL, MTS, GD)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Candidate Signature</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">10 KB – 20 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">4.0 cm × 2.0 cm (JPG)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">UPSC (Civil Services, NDA, CDS)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Signature &amp; Small Photo</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">20 KB – 50 KB (Sig 10–20 KB)</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">350 × 350 px (JPG)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">TNPSC (Group 1, 2, 4 OTR)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Candidate Signature</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">10 KB – 20 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">6.0 cm × 2.0 cm (JPG)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">IBPS / SBI Bank PO &amp; Clerk</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Signature &amp; Left Thumb</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">10 KB – 20 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">140 × 60 px (JPG)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

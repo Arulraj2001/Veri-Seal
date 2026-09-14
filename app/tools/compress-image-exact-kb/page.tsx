@@ -112,6 +112,29 @@ export default function CompressImageExactKbPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Compress Image to Exact KB',
+            item: 'https://kagazo.in/tools/compress-image-exact-kb',
+          },
+        ],
+      },
     ],
   };
 
@@ -197,8 +220,57 @@ export default function CompressImageExactKbPage() {
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* Standard Target Size Reference Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  Target File Size Specifications &amp; Use Cases
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Quick benchmark guide for choosing the right target KB limit for your documents.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">Target Limit</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Typical Use Case</th>
+                      <th className="py-3 px-4 font-bold text-primary">Algorithm Mode</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Recommended Resolution</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">20 KB</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Govt exam signatures &amp; thumbprints</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Bi-directional padding &amp; shrink</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">300 × 120 px</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">50 KB</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Passport &amp; biometric exam photos</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Face-centered aspect lock</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">350 × 450 px</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">100 KB</td>
+                      <td className="py-3.5 px-4 text-text-main/80">ID cards, Aadhaar cards, PAN cards</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">7-step quality bisection</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">800 × 600 px</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">200 KB – 1 MB</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Certificates, degree marksheets, resumes</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Lossless DCT downsampling</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">1200 × 1600 px</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

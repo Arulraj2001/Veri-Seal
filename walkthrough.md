@@ -520,9 +520,15 @@ The root container widths of the following 5 Category 4 engines were updated to 
 - **`/tools/youtube-thumbnail-downloader`**: Added 5th deep FAQ on 16:9 aspect ratios and max resolution standards, updated to `WebApplication` schema, and added `BreadcrumbList` structured data.
 - **`/tools/image-optimizer`**: Added `BreadcrumbList` structured data and verified full-width alignment.
 - **`/tools/image-converter`**: Added `BreadcrumbList` structured data and verified full-width alignment.
-- **All Compressor & DPI Spokes** (`/tools/compress-image-to-20kb`, `...-50kb`, `...-exact-kb`, `...-100kb`, `...-200kb`, `...-1mb`, `/tools/change-image-dpi`, `/tools/heic-to-jpg`, `/tools/remove-background`): Verified 100% compliance with full-width alignment, single-card layout, zero stacked ads, and complete SEO schemas.
+- **All Compressor & DPI Spokes** (`/tools/compress-image-to-20kb`, `...-50kb`, `...-exact-kb`, `...-100kb`, `...-200kb`, `...-1mb`, `/tools/change-image-dpi`, `/tools/heic-to-jpg`, `/tools/remove-background`): 
+  - **Removed duplicate `<AdSlot slot="in_content" />`** that caused two sponsored ads to stack next to each other.
+  - Added 5th deep FAQ to all pages.
+  - Added formal specification/portal requirements `<table>` to each tool.
+  - Injected complete `BreadcrumbList` structured data.
 
 ### Verification Results
 - **TypeScript Compiler**: `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)** across all 20 Category 4 tools.
-- **Ad Frequency & Placement**: Exactly 1 native ad between engine and content (`post_download`), 1 in sticky rail (`sidebar`), 0 internal duplicate engine ads.
+- **Ad Frequency & Placement**: Exactly 1 native ad between engine and content (`post_download`), 1 in sticky rail (`sidebar`), 0 internal duplicate engine ads, 0 stacked in-content ads (all 20 tools strictly `['post_download', 'sidebar']`).
+- **Data Completeness**: 20/20 tools verified with `2-Col: True`, `Table: True`, `FAQs: 5+`, `Schemas: True`.
+
 

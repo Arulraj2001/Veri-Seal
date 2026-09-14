@@ -34,24 +34,29 @@ export const metadata: Metadata = {
 
 const FAQS = [
   {
-    question: 'How does Kagazo compress 10MB+ photos to under 1MB without quality loss?',
+    question: 'Why do so many professional and visa portals limit images to 1MB?',
     answer:
-      'Modern smartphones capture photos at 12MP to 48MP with high redundant color data. Kagazo applies multi-step progressive Lanczos downsampling and optimized JPEG quantization tables, retaining razor-sharp details while shedding 80–90% of unnecessary file weight.',
+      'Portals like the US State Department (DS-160 visa), UK Visas & Immigration, and Canadian IRCC require ultra-sharp photos with strict 1MB or 2MB ceilings. This guarantees enough resolution for biometric facial checks while preventing bandwidth timeouts on embassy servers.',
   },
   {
-    question: 'Which portals require images under 1MB?',
+    question: 'Will my image lose sharpness or color vibrance at 1MB?',
     answer:
-      'Passport Seva (address and birth proofs), global visa portals (US, UK, Schengen, Canada), online banking verification systems, and corporate email attachments frequently enforce a strict 1MB ceiling on uploaded image files.',
+      'Virtually zero perceptible quality is lost. 1MB is a substantial file budget that allows Kagazo to retain 95%+ of original sensor detail while stripping out hidden camera EXIF tags, GPS metadata, and uncompressed padding.',
   },
   {
-    question: 'Can I compress iPhone HEIC or PNG images to 1MB JPG?',
+    question: 'Can I compress DSLR or iPhone RAW/HEIC photos to 1MB?',
     answer:
-      'Yes! Upload your PNG, JPG, JPEG, or WebP photo. Kagazo converts and optimizes the image to a standardized JPEG strictly under 1000KB (1MB) with universal device compatibility.',
+      'Yes! You can upload standard JPEG, PNG, or WebP files up to 30MB straight from your digital camera or phone. Kagazo recalculates the image down to exactly ~900KB–980KB on your first try.',
   },
   {
     question: 'Are my confidential photos stored or viewed by anyone?',
     answer:
       'Never. Kagazo processes all files locally in your device’s volatile memory via client-side WebAssembly. No image is ever uploaded to our servers or stored in any database.',
+  },
+  {
+    question: 'Can I crop or rotate my photo before compressing to 1MB?',
+    answer:
+      'Yes! Use the built-in Crop & Frame Studio to crop unwanted borders, straighten horizons, and frame your subject perfectly prior to downloading.',
   },
 ];
 
@@ -60,15 +65,15 @@ export default function CompressImageTo1MbPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Compress Image to 1MB Online Free',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/compress-image-to-1mb',
         offers: {
           '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
+          price: '0.00',
+          priceCurrency: 'INR',
         },
         description:
           'Compress large photos and documents to strictly under 1MB online free. Keep full high-resolution clarity.',
@@ -89,8 +94,8 @@ export default function CompressImageTo1MbPage() {
           },
           {
             '@type': 'HowToStep',
-            name: 'Download High-Clarity File',
-            text: 'Inspect with the zoom loupe and download your compressed file.',
+            name: 'Download & Submit',
+            text: 'Preview with instant zoom and download your portal-ready file.',
           },
         ],
       },
@@ -104,6 +109,29 @@ export default function CompressImageTo1MbPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Compress Image to 1MB',
+            item: 'https://kagazo.in/tools/compress-image-to-1mb',
+          },
+        ],
       },
     ],
   };
@@ -204,8 +232,57 @@ export default function CompressImageTo1MbPage() {
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* 1MB International & Professional Requirements Matrix */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  International &amp; Enterprise 1MB File Size Standards
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Global visa, corporate, and identity platform upload limits.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">Platform / Portal</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Document Type</th>
+                      <th className="py-3 px-4 font-bold text-primary">Allowed Ceiling</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Recommended Resolution</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">US Department of State (DS-160)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Digital Visa Photo</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Strictly &le; 240 KB / 1 MB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">600 × 600 px (Square)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">UK Visas and Immigration (UKVI)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Supporting Proof &amp; Photo</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Under 1 MB per image</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Min 900 × 1200 px</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">Schengen Visa Online Form</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Passport Biometric Photo</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Max 1 MB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">35 × 45 mm (300 DPI)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">Corporate Email Attachments</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Presentations &amp; Portfolios</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">&le; 1 MB per slide</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Full HD 1920 × 1080 px</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

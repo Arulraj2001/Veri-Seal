@@ -82,6 +82,11 @@ const FAQS = [
     answer:
       'Yes, 100% free with no daily limits, no login requirement, and no watermarks.',
   },
+  {
+    question: 'Are my uploaded biometric photos private and secure?',
+    answer:
+      'Yes, 100%. Kagazo operates exclusively inside your local browser memory. No photos are transmitted to external servers, uploaded to cloud databases, or analyzed by third parties.',
+  },
 ];
 
 export default function CompressImageTo50KbPage() {
@@ -89,37 +94,37 @@ export default function CompressImageTo50KbPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Compress Image to 50KB Online',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/compress-image-to-50kb',
+        url: 'https://kagazo.in/tools/compress-image-to-50kb',
         offers: {
           '@type': 'Offer',
-          price: '0',
+          price: '0.00',
           priceCurrency: 'INR',
         },
         description:
-          'Compress photo and image to strictly between 20 KB and 50 KB online free. Perfect for passport photos, SSC, and TNPSC.',
+          'Compress passport photos strictly between 20 KB and 50 KB for government exam portal compliance.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Compress Image to 50 KB Online',
+        name: 'How to Compress Photo to 50 KB Online',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Upload Photo',
-            text: 'Upload your smartphone passport photo or camera capture.',
+            name: 'Upload Passport Photo',
+            text: 'Upload your photo scan or smartphone portrait.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Select Preset or Size',
-            text: 'Choose Passport Photo (20-50KB) and optionally add Name & Date banner.',
+            name: 'Calibrate Dimensions and File Size',
+            text: 'Kagazo automatically scales to 3.5cm x 4.5cm and caps file size between 20 KB and 50 KB.',
           },
           {
             '@type': 'HowToStep',
             name: 'Download Compliant Photo',
-            text: 'Inspect with high-resolution clarity loupe and download the verified JPEG.',
+            text: 'Download the verified, portal-ready JPEG file.',
           },
         ],
       },
@@ -133,6 +138,29 @@ export default function CompressImageTo50KbPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Compress Image to 50KB',
+            item: 'https://kagazo.in/tools/compress-image-to-50kb',
+          },
+        ],
       },
     ],
   };
@@ -219,8 +247,57 @@ export default function CompressImageTo50KbPage() {
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* Government Exam 50KB Photo Specifications Matrix */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  Government Recruitment Portals: 20KB - 50KB Photo Specifications
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Strict candidate photo guidelines across state and central recruitment boards.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">Authority / Exam</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Dimension (cm / px)</th>
+                      <th className="py-3 px-4 font-bold text-primary">Allowed Range</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Special Rules</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">SSC (CGL, CHSL, MTS, CPO)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">3.5 cm × 4.5 cm</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">20 KB – 50 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Clear ears, light background</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">UPSC Civil Services / NDA</td>
+                      <td className="py-3.5 px-4 text-text-main/80">350 × 350 px min</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">20 KB – 300 KB (Photo)</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Name &amp; Date banner required</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">TNPSC (Group 1, 2, 4 OTR)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">3.5 cm × 4.5 cm (200 DPI)</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">20 KB – 50 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Must include DOP / Name strip</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">IBPS / SBI Clerk &amp; PO</td>
+                      <td className="py-3.5 px-4 text-text-main/80">200 × 230 px</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">20 KB – 50 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Pure white or light background</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

@@ -53,6 +53,11 @@ const FAQS = [
     answer:
       '100% secure. Processing is executed in your browser RAM using WebAssembly. Your documents are never uploaded to our servers, keeping your sensitive identity details completely private.',
   },
+  {
+    question: 'What file formats can I compress with this 200KB tool?',
+    answer:
+      'You can upload JPG, JPEG, PNG, and WebP documents or photos. The compressed output is formatted in standard, RFC-compliant JPEG ready for instant upload to any official portal.',
+  },
 ];
 
 export default function CompressImageTo200KbPage() {
@@ -60,15 +65,15 @@ export default function CompressImageTo200KbPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Compress Image to 200KB Online Free',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/compress-image-to-200kb',
         offers: {
           '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
+          price: '0.00',
+          priceCurrency: 'INR',
         },
         description:
           'Compress any certificate or document image strictly under 200KB online free. Fast, private, and watermark-free.',
@@ -104,6 +109,29 @@ export default function CompressImageTo200KbPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Compress Image to 200KB',
+            item: 'https://kagazo.in/tools/compress-image-to-200kb',
+          },
+        ],
       },
     ],
   };
@@ -204,8 +232,57 @@ export default function CompressImageTo200KbPage() {
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* 200KB Portal Requirement Matrix */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  Official 200KB Document &amp; Certificate Upload Matrix
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Exact upload limits across state recruitment, university portals, and banking exams.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">Authority / Portal</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Accepted Certificate</th>
+                      <th className="py-3 px-4 font-bold text-primary">Allowed Range</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Verification Requirement</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">TNPSC Group 1, 2, 4 OTR</td>
+                      <td className="py-3.5 px-4 text-text-main/80">SSLC / Community / Degree</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">100 KB – 200 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Must be sharp and legible scan</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">SSC (Combined Graduate Level)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Caste / EWS Certificate</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">50 KB – 200 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Clear official seal visible</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">UPSC Civil Services OTR</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Photo ID Card Scan</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">20 KB – 300 KB (Photo 200KB)</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Both sides clearly cropped</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">SBI / IBPS Bank Exam Portals</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Handwritten Declaration</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">50 KB – 100 KB / 200 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Black ink on white paper</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

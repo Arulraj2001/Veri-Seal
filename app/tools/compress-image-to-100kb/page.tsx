@@ -112,6 +112,29 @@ export default function CompressImageTo100KbPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Compress Image to 100KB',
+            item: 'https://kagazo.in/tools/compress-image-to-100kb',
+          },
+        ],
+      },
     ],
   };
 
@@ -211,8 +234,57 @@ export default function CompressImageTo100KbPage() {
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* 100KB Portal Requirement Matrix */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  Popular Indian Portals Requiring 100KB Image Uploads
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Standard accepted ranges and dimension guidelines for 100KB uploads.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">Portal / Application</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Required Document</th>
+                      <th className="py-3 px-4 font-bold text-primary">Allowed Range</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Accepted Formats</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">Aadhaar Self-Service Update (SSUP)</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Address Proof Document</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">50 KB – 100 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">JPEG / PNG / PDF</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">PAN Card NSDL / UTIITSL</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Applicant Photo &amp; ID Proof</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Up to 100 KB</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">JPEG (200–300 DPI)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">Passport Seva Online</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Supporting Proof Scans</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Max 100 KB per page</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">PDF / JPEG</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-text-main">CUET / JEE Mains &amp; Advanced</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Category &amp; PwD Certificate</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">50 KB – 300 KB (Sig 100KB)</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Clear legible JPEG</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

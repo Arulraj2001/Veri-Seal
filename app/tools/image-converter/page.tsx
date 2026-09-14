@@ -246,6 +246,58 @@ export default function ImageConverterPage() {
               </div>
             </section>
 
+            {/* Image Format Matrix Comparison Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <ArrowRightLeft className="w-5 h-5 text-primary" />
+                  Image Format Capability &amp; Architecture Matrix
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Technical characteristics and optimal use cases for each supported image container.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/60">
+                      <th className="py-3 px-4 font-bold text-text-main">Format</th>
+                      <th className="py-3 px-4 font-bold text-text-main">Compression</th>
+                      <th className="py-3 px-4 font-bold text-primary">Transparency</th>
+                      <th className="py-3 px-4 font-bold text-emerald-700">Primary Strength</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-text-main">PNG</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Lossless DEFLATE</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">8-bit Alpha Channel</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Logos, screenshots &amp; razor-sharp text</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-text-main">JPG / JPEG</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Lossy DCT (Quantized)</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Not Supported (White Matte)</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Universal photos, exam forms &amp; minimal size</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-text-main">WebP</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Lossy &amp; Lossless VP8</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">Full Alpha Support</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Modern web performance &amp; Google SEO (LCP)</td>
+                    </tr>
+                    <tr className="hover:bg-surface/30 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-text-main">ICO</td>
+                      <td className="py-3.5 px-4 text-text-main/80">Binary Multi-Frame</td>
+                      <td className="py-3.5 px-4 font-medium text-primary">32-bit RGBA</td>
+                      <td className="py-3.5 px-4 text-emerald-700 font-medium">16×16, 32×32, 48×48 Windows Favicons</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
             {/* FAQs Accordion */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
               <div className="space-y-1">
