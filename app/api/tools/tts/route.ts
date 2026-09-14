@@ -75,9 +75,9 @@ export async function POST(req: NextRequest) {
     const escapedText = escapeXml(cleanText);
     const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US"><voice name="${targetVoice}"><prosody rate="${ratePercent}" pitch="${pitchOffset}" volume="${volumePercent}">${escapedText}</prosody></voice></speak>`;
 
-    // Upgrade to 48kHz 192kbps for broadcast-quality MP3 output
+    // Use 24kHz 96kbps for high-quality MP3 output
     tts = new MsEdgeTTS();
-    await tts.setMetadata(targetVoice, OUTPUT_FORMAT.AUDIO_48KHZ_192KBITRATE_MONO_MP3);
+    await tts.setMetadata(targetVoice, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
 
     const audioBuffer = await new Promise<Buffer>((resolve, reject) => {
       const chunks: Buffer[] = [];

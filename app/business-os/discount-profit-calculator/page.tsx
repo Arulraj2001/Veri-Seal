@@ -1,46 +1,114 @@
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import DiscountProfitCrashEngine from '@/components/business-os/DiscountProfitCrashEngine';
-import { Percent, HelpCircle, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
+import { Percent, HelpCircle, ChevronRight, Tag, ShoppingBag, Target } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Discount Profit Crash Simulator | How Discounts Kill SMB Margins | Kagazo',
+  title: 'Discount Profit Crash Calculator India | Why 20% Off Kills 50% of Your Profit',
   description:
-    'Simulate how price discounts slash your net profits. Discover why a 20% discount requires selling 2x to 3x more units just to take home the same income.',
+    'Calculate how discounts destroy small business profits in India. Discover why a 20% discount requires 2x to 3x more sales volume to keep the same net profit, and find smart alternatives like bundling and free gifts.',
   keywords: [
-    'discount profit margin calculator',
-    'how discounts affect profit small business',
-    'sales discount breakeven volume calculator',
-    'price cut vs volume increase formula',
-    'retail discount margin erosion tool',
+    'discount profit loss calculator India',
+    'how 20 percent discount kills profit small business',
+    'sales discount breakeven volume calculator India',
+    'retail price cut margin erosion formula',
+    'discount vs volume multiplier calculator',
+    'kirana shop discount calculation India',
+    'ecommerce seller discount crash simulator',
+    'festive discount margin impact calculator',
   ],
+  alternates: {
+    canonical: 'https://Kagazo.in/business-os/discount-profit-calculator',
+  },
   openGraph: {
-    title: 'Discount Profit Crash Simulator | How Discounts Kill SMB Margins',
+    title: 'Discount Profit Crash Calculator India | Why 20% Off Kills 50% of Your Profit',
     description:
-      'A 20% discount does not cost 20% profit. Calculate your exact profit destruction and required volume jump.',
-    url: 'https://Kagazo.org/business-os/discount-profit-calculator',
+      'A 20% discount does not cost 20% profit. Calculate your exact profit destruction and required sales volume jump.',
+    url: 'https://Kagazo.in/business-os/discount-profit-calculator',
+    siteName: 'Kagazo',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Discount Profit Crash Calculator India | Profit Margin Erosion Tool',
+    description:
+      'See why 10%–20% discounts wipe out half your net profit and discover how many more units you must sell to break even.',
   },
 };
+
+const FAQS = [
+  {
+    question: 'Why does a 20% discount reduce my profit by 50% or more?',
+    answer:
+      'Your product costs (COGS), rent, staff wages, and packaging stay 100% unchanged when you offer a discount. If you sell an item for ₹1,000 that costs ₹700 to produce/procure, your normal profit is ₹300 (30% margin). If you give a 20% discount (₹200 off), your selling price drops to ₹800, but costs remain ₹700. Your new profit is only ₹100 — a massive 66.7% drop in profit from just a 20% price cut!',
+  },
+  {
+    question: 'What is the formula to calculate the extra sales volume needed after discounting?',
+    answer:
+      'The formula is: Required Volume Multiplier = Original Margin % ÷ (Original Margin % − Discount %). For example, with a 30% original gross margin and a 15% discount: 30% ÷ (30% − 15%) = 30 ÷ 15 = 2.0x. This means you must sell exactly 100% more units (double the volume) just to make the same total rupee profit as before.',
+  },
+  {
+    question: 'Why do festive Diwali/Republic Day flat discounts destroy Indian SMBs?',
+    answer:
+      'During festive seasons, shipping carriers increase delivery surcharges and advertising costs spike by 30%–50%. When Indian sellers simultaneously slash prices by 25%–30% to compete with giants like Amazon and Flipkart, their net margins turn negative. Without volume doubling, festive sales frequently generate high top-line turnover but massive net cash losses.',
+  },
+  {
+    question: 'What should Indian retail and D2C brands do instead of offering cash discounts?',
+    answer:
+      'Instead of cutting prices: (1) Bundle slow-moving items with hero products (e.g., Buy 2 Get 1 combo), (2) Add a low-cost, high-perceived-value free gift (e.g., a sample bottle or accessory costing you ₹30 but valued at ₹200), (3) Introduce a Free Shipping threshold (e.g., Free delivery on orders above ₹999), and (4) Offer store credits or cashback valid only on future purchases.',
+  },
+];
+
+const RELATED_TOOLS = [
+  { href: '/business-os/product-pricing-calculator', label: 'Product Pricing & Margin Calculator', icon: Tag },
+  { href: '/business-os/minimum-order-calculator', label: 'Minimum Order Value (MOV) Calculator', icon: ShoppingBag },
+  { href: '/business-os/break-even-calculator', label: 'Break-Even & Sales Target Finder', icon: Target },
+];
 
 export default function DiscountProfitPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Discount Profit Crash Simulator',
-    url: 'https://Kagazo.org/business-os/discount-profit-calculator',
-    applicationCategory: 'BusinessApplication',
-    operatingSystem: 'All',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'INR',
-    },
-    description:
-      'Calculate the true profit reduction from sales discounts and determine the exact sales volume multiplier needed to break even.',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Discount Profit Crash Simulator', item: 'https://Kagazo.in/business-os/discount-profit-calculator' },
+        ],
+      },
+      {
+        '@type': 'WebApplication',
+        name: 'Discount Profit Crash Simulator',
+        url: 'https://Kagazo.in/business-os/discount-profit-calculator',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'All',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'INR',
+        },
+        description:
+          'Calculate the true profit reduction from sales discounts and determine the exact sales volume multiplier needed to break even.',
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
+      },
+    ],
   };
 
   return (
     <div className="space-y-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumb Navigation */}
       <Breadcrumb
         items={[
@@ -48,10 +116,6 @@ export default function DiscountProfitPage() {
           { label: 'Business OS', href: '/business-os' },
           { label: 'Discount Profit Crash Simulator' },
         ]}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Hero Header */}
@@ -61,10 +125,10 @@ export default function DiscountProfitPage() {
           <span>Margin Protection Simulator</span>
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-          Discount Profit Crash Simulator
+          Discount Profit Crash Calculator India — Why 20% Off Kills 50% of Your Profit
         </h1>
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
-          Indian customers constantly ask for discounts. But when you discount, your product cost stays identical—meaning 100% of the discount comes straight out of your personal profit margin.
+          Indian customers constantly ask for discounts. But when you discount, your product cost stays identical — meaning 100% of the discount comes straight out of your personal profit margin.
         </p>
       </div>
 
@@ -105,6 +169,42 @@ export default function DiscountProfitPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 space-y-6 shadow-sm">
+        <div className="flex items-center gap-2.5 border-b border-slate-200/60 pb-4">
+          <HelpCircle className="w-5 h-5 text-indigo-600" />
+          <h3 className="text-lg font-bold text-slate-900">Frequently Asked Questions</h3>
+        </div>
+        <div className="space-y-4">
+          {FAQS.map((faq, idx) => (
+            <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+              <h4 className="font-bold text-slate-900 text-sm flex items-start gap-2">
+                <span className="text-indigo-600 font-extrabold">Q:</span>
+                {faq.question}
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed pl-5">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Related Tools */}
+      <div className="space-y-4">
+        <h3 className="text-base font-bold text-slate-800">Related Business OS Tools</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {RELATED_TOOLS.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <Link key={tool.href} href={tool.href} className="flex items-center gap-3 p-4 bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl transition-all group shadow-xs">
+                <Icon className="w-4 h-4 text-indigo-600 shrink-0" />
+                <span className="text-sm font-semibold text-slate-700 group-hover:text-indigo-700 leading-tight">{tool.label}</span>
+                <ChevronRight className="w-3.5 h-3.5 text-slate-400 ml-auto shrink-0 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

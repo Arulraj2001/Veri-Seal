@@ -27,25 +27,37 @@ import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import BusinessHealthScoreCard from '@/components/business-os/BusinessHealthScoreCard';
 
 export const metadata: Metadata = {
-  title: 'Small Business Cash-Flow & Profitability OS for Indian SMBs | Kagazo',
+  title: 'Free Profit & Cash-Flow Calculator for Indian Small Businesses | Kirana, D2C & WhatsApp Sellers',
   description:
-    'Free, zero-login cash-flow and profit intelligence for Indian small businesses, retail shops, Instagram/WhatsApp sellers, home bakeries, and freelancers. Answer: Am I actually making money?',
+    "India's most complete small business profit calculator — daily rupee breakdown for kirana shops, Amazon/Flipkart/Meesho seller pricing with authentic fee slabs, COD RTO loss calculator, break-even engine, udhaar reminder, and AI margin advisor. 100% free, zero login.",
   keywords: [
-    'small business profit calculator india',
+    'small business profit calculator India free',
     'kirana shop daily profit calculator',
-    'instagram seller profit margin calculator',
-    'break even calculator indian rupees',
-    'ecommerce rto cost calculator india',
-    'whatsapp quote generator free',
+    'ecommerce seller profit calculator India 2025',
+    'amazon seller fee calculator India',
+    'break even calculator Indian rupees',
+    'whatsapp quote generator free India',
     'udhaar reminder message generator',
-    'small business cash flow calendar',
+    'COD RTO loss calculator India',
+    'cash flow calculator Indian SMB',
+    'free business tools for Indian sellers',
   ],
+  alternates: {
+    canonical: 'https://Kagazo.in/business-os',
+  },
   openGraph: {
-    title: 'Small Business Cash-Flow & Profitability OS for Indian SMBs',
+    title: 'Free Profit & Cash-Flow Calculator for Indian Small Businesses | Kirana, D2C & WhatsApp Sellers',
     description:
-      'Answer the #1 small business question: Am I actually making money, and where is my money going? 100% Free, zero-login tools with authentic Indian marketplace slabs.',
+      "Answer the #1 small business question: Am I actually making money, and where is my money going? 100% free, zero-login tools with authentic Indian marketplace fee slabs.",
     type: 'website',
-    url: 'https://Kagazo.org/business-os',
+    url: 'https://Kagazo.in/business-os',
+    siteName: 'Kagazo',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Profit & Cash-Flow Tools for Indian Small Businesses | Kirana, D2C & Sellers',
+    description:
+      'Daily profit, pricing, break-even, RTO loss, WhatsApp quote & udhaar reminders — 17 free calculators for Indian SMBs. Zero login.',
   },
 };
 
@@ -242,36 +254,53 @@ const FAQS = [
     q: 'How do the WhatsApp tools work?',
     a: 'Both the WhatsApp Quote Generator and Udhaar Reminder tool run directly in your browser. When you click "Send via WhatsApp", they automatically format your text and open official WhatsApp Web or the WhatsApp mobile app using secure WhatsApp Deep Links (`https://wa.me/...`). Zero third-party API tokens or access permissions required.',
   },
+  {
+    q: 'Is it safe to enter my daily sales and profit data?',
+    a: 'Completely safe. All calculations happen inside your browser using JavaScript — zero data is transmitted to any server, stored in a database, or shared with third parties. You can verify this by opening your browser developer tools (F12 → Network tab) and confirming no external API calls are made when you enter numbers. Your financial data never leaves your device.',
+  },
+  {
+    q: 'What is the difference between gross profit and net profit for an Indian small business?',
+    a: 'Gross profit = Revenue minus direct product cost (COGS + packaging + shipping). Net profit = Gross profit minus all fixed overheads (rent, staff wages, electricity, GST, platform fees, loan EMIs). A kirana shop may show 15% gross margin but only 5–8% net margin after rent and helper wages. Tracking net profit — not gross — is what determines whether you are actually building wealth or just staying busy.',
+  },
 ];
 
 export default function BusinessOsHubPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'Small Business Cash-Flow & Profitability OS',
-    url: 'https://Kagazo.org/business-os',
-    applicationCategory: 'BusinessApplication',
-    operatingSystem: 'All modern web browsers',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'INR',
-    },
-    description:
-      'Free, zero-login cash-flow and profit intelligence for Indian small businesses, retail shops, Instagram/WhatsApp sellers, home bakeries, and freelancers.',
-  };
-
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: f.a,
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
+        ],
       },
-    })),
+      {
+        '@type': 'WebApplication',
+        name: 'Kagazo Business OS — Small Business Cash-Flow & Profitability Platform',
+        url: 'https://Kagazo.in/business-os',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'All modern web browsers',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'INR',
+        },
+        description:
+          'Free, zero-login cash-flow and profit intelligence for Indian small businesses, retail shops, Instagram/WhatsApp sellers, home bakeries, and freelancers. 17 tools including daily profit, marketplace pricing, RTO calculator, and udhaar reminders.',
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: f.a,
+          },
+        })),
+      },
+    ],
   };
 
   return (
@@ -287,10 +316,6 @@ export default function BusinessOsHubPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
       {/* Hero Section */}

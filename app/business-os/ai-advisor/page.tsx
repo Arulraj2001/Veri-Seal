@@ -1,46 +1,114 @@
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import AiAdvisorEngine from '@/components/business-os/AiAdvisorEngine';
-import { Sparkles, HelpCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Sparkles, HelpCircle, ChevronRight, TrendingUp, Target, Clock } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'AI Business Diagnostic & Margin Advisor for Indian SMBs | Kagazo',
+  title: 'AI Business Diagnostic & Advisor for Indian SMBs | 0–100 Health Score',
   description:
-    'Free heuristic financial diagnostic advisor for Indian small business owners. Diagnoses root causes of cash crunches, high marketplace cuts, and slow inventory, with 3 high-ROI weekly action items.',
+    'Free AI financial health diagnostic and strategic advisor for Indian small business owners. Diagnoses root causes of cash crunches, Amazon/Flipkart margin leaks, and dead stock, with 3 high-ROI tactical weekly action items.',
   keywords: [
-    'ai business advisor small business india',
-    'financial health diagnostic tool smb',
-    'how to fix declining retail profit margin',
+    'AI business advisor Indian SMB',
+    'business health score calculator India',
+    'small business financial health diagnostic tool',
+    'how to fix declining retail profit margin India',
     'kirana shop business advice free',
-    'ecommerce profit margin improvement strategy',
+    'ecommerce profit margin improvement advisor',
+    'heuristic business diagnostic tool rupees',
+    'SMB working capital optimization guide',
   ],
+  alternates: {
+    canonical: 'https://Kagazo.in/business-os/ai-advisor',
+  },
   openGraph: {
-    title: 'AI Business Diagnostic & Margin Advisor for Indian SMBs',
+    title: 'AI Business Diagnostic & Advisor for Indian SMBs | 0–100 Health Score',
     description:
-      'Pinpoint the exact operational leaks dragging your profit down and get 3 high-ROI fixes for this week.',
-    url: 'https://Kagazo.org/business-os/ai-advisor',
+      'Pinpoint the exact operational leaks dragging your business down and receive 3 high-ROI tactical fixes for this week.',
+    url: 'https://Kagazo.in/business-os/ai-advisor',
+    siteName: 'Kagazo',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Business Diagnostic & Advisor for Indian SMBs | Kagazo',
+    description:
+      'Diagnose cash crunches, marketplace fees, and inventory traps with an instant 0–100 business health score.',
   },
 };
+
+const FAQS = [
+  {
+    question: 'How does the AI Business Diagnostic calculate my business health score?',
+    answer:
+      'The diagnostic uses a heuristic rules-engine calibrated specifically for the Indian MSME economy. It evaluates four core pillars: (1) Gross and Net Profit Margin sufficiency against your business category baseline, (2) Cash runway and working capital liquidity cushion, (3) Customer credit (Udhaar) and receivables risk, and (4) Marketplace or shipping cost leakages, producing a synthesized 0–100 operational resilience score.',
+  },
+  {
+    question: 'What are the most common operational profit leaks discovered by this tool?',
+    answer:
+      'Across Indian small businesses, the top 4 leaks are: (1) Uncalculated marketplace deductions (closing fees, referral fees, pick & pack) taking 30%+ of selling price, (2) High RTO (Return to Origin) rates on Cash on Delivery orders wiping out delivery margins, (3) Uncollected customer Udhaar exceeding 30 days, and (4) Stale dead stock trapping working capital on godown shelves.',
+  },
+  {
+    question: 'Why does customer retention beat paid social media advertising for Indian SMBs?',
+    answer:
+      'Customer Acquisition Cost (CAC) on Meta and Google has tripled across India over the past three years, with new customer acquisition often costing ₹250 to ₹500 per order. In contrast, broadcasting special offers to past buyers via a VIP WhatsApp Community or SMS costs almost zero. Re-engaging your existing customer base every 30–45 days is the single most effective way to double your net take-home profit without increasing ad spend.',
+  },
+  {
+    question: 'Is my financial data uploaded or stored anywhere when using this AI advisor?',
+    answer:
+      'No. The diagnostic algorithm executes 100% client-side inside your browser session. None of your revenue figures, margins, or business challenges are ever sent to a remote cloud server or stored in a persistent database, guaranteeing complete commercial confidentiality.',
+  },
+];
+
+const RELATED_TOOLS = [
+  { href: '/business-os/real-profit-calculator', label: 'Monthly P&L & Profit Leak Finder', icon: TrendingUp },
+  { href: '/business-os/break-even-calculator', label: 'Break-Even & Survival Calculator', icon: Target },
+  { href: '/business-os/cash-flow-survival-calculator', label: 'Cash Flow Survival Runway', icon: Clock },
+];
 
 export default function AiAdvisorPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: 'AI Business Diagnostic & Margin Advisor',
-    url: 'https://Kagazo.org/business-os/ai-advisor',
-    applicationCategory: 'BusinessApplication',
-    operatingSystem: 'All',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'INR',
-    },
-    description:
-      'Heuristic business diagnostic advisor analyzing turnover, margins, and operational bottlenecks for Indian small businesses.',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'AI Business Diagnostic & Advisor', item: 'https://Kagazo.in/business-os/ai-advisor' },
+        ],
+      },
+      {
+        '@type': 'WebApplication',
+        name: 'AI Business Diagnostic & Margin Advisor',
+        url: 'https://Kagazo.in/business-os/ai-advisor',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'All',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'INR',
+        },
+        description:
+          'Heuristic business diagnostic advisor analyzing turnover, margins, and operational bottlenecks for Indian small businesses.',
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
+      },
+    ],
   };
 
   return (
     <div className="space-y-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumb Navigation */}
       <Breadcrumb
         items={[
@@ -48,10 +116,6 @@ export default function AiAdvisorPage() {
           { label: 'Business OS', href: '/business-os' },
           { label: 'AI Business Diagnostic & Advisor' },
         ]}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       {/* Hero Header */}
@@ -61,7 +125,7 @@ export default function AiAdvisorPage() {
           <span>Heuristic Profit Intelligence</span>
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-          AI Business Diagnostic &amp; Margin Advisor
+          AI Business Diagnostic &amp; Advisor for Indian SMBs — 0–100 Health Score
         </h1>
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
           When profits drop or cash gets tight, traditional accounting reports only state the numbers without explaining why. Input your monthly turnover and primary business headache to diagnose root causes and receive 3 tactical levers to execute this week.
@@ -105,6 +169,42 @@ export default function AiAdvisorPage() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 space-y-6 shadow-sm">
+        <div className="flex items-center gap-2.5 border-b border-slate-200/60 pb-4">
+          <HelpCircle className="w-5 h-5 text-indigo-600" />
+          <h3 className="text-lg font-bold text-slate-900">Frequently Asked Questions</h3>
+        </div>
+        <div className="space-y-4">
+          {FAQS.map((faq, idx) => (
+            <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+              <h4 className="font-bold text-slate-900 text-sm flex items-start gap-2">
+                <span className="text-indigo-600 font-extrabold">Q:</span>
+                {faq.question}
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed pl-5">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Related Tools */}
+      <div className="space-y-4">
+        <h3 className="text-base font-bold text-slate-800">Related Business OS Tools</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {RELATED_TOOLS.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <Link key={tool.href} href={tool.href} className="flex items-center gap-3 p-4 bg-white border border-slate-200 hover:border-indigo-400 rounded-2xl transition-all group shadow-xs">
+                <Icon className="w-4 h-4 text-indigo-600 shrink-0" />
+                <span className="text-sm font-semibold text-slate-700 group-hover:text-indigo-700 leading-tight">{tool.label}</span>
+                <ChevronRight className="w-3.5 h-3.5 text-slate-400 ml-auto shrink-0 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
