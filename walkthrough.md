@@ -467,4 +467,23 @@ A nationwide rebrand from **VeriSeal** to **Kagazo** (`kagazo.in`) was executed 
 4. **TypeScript & Static Build**:
    - `npx tsc --noEmit` &rarr; **0 errors**.
 
+---
 
+## 6. Layout Width Audit & Full-Width Standardization across Categories 1, 2, and 3
+
+### Issue Analysis (Image 1 vs Image 2)
+- **Identified Friction (Image 1)**: In `/tools/pdf-compressor` and related compressor tools, the interactive tool card was artificially constricted by a hardcoded `max-w-4xl mx-auto` class on the engine container (`PdfCompressorEngine.tsx`), capping its width at 896px. In contrast, the Ostrune native ad (`<AdSlot slot="post_download" />`) and the Indian Government Recruitment Upload Limits table below it spanned the full width (`lg:col-span-9 xl:col-span-10`, ~1100–1300px), causing the tool card to appear squeezed/narrow with empty margin gaps on both sides.
+- **Target Reference (Image 2)**: In `/tools/passport-white-background` (`BackgroundRemoverEngine.tsx`), the tool card uses `w-full`, creating a cohesive vertical alignment where the engine, ad slot, and content/FAQ cards share identical left and right boundaries with zero horizontal jumping.
+
+### Resolution & Audit Across Categories 1, 2, and 3:
+1. **`PdfCompressorEngine.tsx`**: Replaced `w-full max-w-4xl mx-auto space-y-6` with `w-full space-y-6`, restoring full-width alignment for all 9 compressor spokes (`pdf-compressor`, `compress-pdf-to-100kb`, `compress-pdf-to-200kb`, `compress-pdf-to-300kb`, `compress-pdf-to-500kb`, `government-exam-pdf-compressor`, `tnpsc-pdf-compressor`, `upsc-pdf-compressor`, `ssc-pdf-compressor`).
+2. **`ExamPdfCompressor.tsx`**: Replaced `w-full max-w-4xl mx-auto space-y-6` with `w-full space-y-6`.
+3. **`ThumbImpressionEngine.tsx`**: Standardized root wrapper to `w-full space-y-8`.
+4. **`PhotoSignatureJoinerEngine.tsx`**: Standardized root wrapper to `w-full space-y-8`.
+5. **`SignatureExtractorEngine.tsx`**: Standardized root wrapper to `w-full space-y-8`.
+6. **`SelfAttestEngine.tsx`**: Standardized root wrapper to `w-full space-y-8`.
+7. **`PassportPhotoStudioEngine.tsx`**: Cleaned up unused `AdSlot` import.
+
+### Verification
+- `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)**.
+- Verified that all engines in Categories 1, 2, and 3 now align edge-to-edge with the post-download sponsor ad and subsequent specification tables/sections.

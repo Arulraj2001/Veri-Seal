@@ -250,7 +250,7 @@ export function ExamPdfCompressor() {
   const activePresetInfo = PRESETS.find((p) => p.id === selectedPreset) || PRESETS[0];
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6">
+    <div className="w-full space-y-6">
       {/* 100% Free Public Utility Trust Banner */}
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-primary-light/80 border border-primary/25 rounded-2xl text-xs md:text-sm text-primary font-medium shadow-2xs">
         <div className="flex items-center gap-2">

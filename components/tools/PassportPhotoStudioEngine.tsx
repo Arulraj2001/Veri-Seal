@@ -44,7 +44,6 @@ import {
   generateA4PassportSheet,
   canvasTo300DpiBlob,
 } from '@/lib/passport-sheet';
-import { AdSlot } from '@/components/ads/AdSlot';
 import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 export interface PassportPhotoStudioEngineProps {
