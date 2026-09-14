@@ -36,11 +36,6 @@ import {
 } from '@/lib/tts-constants';
 import { enhancePunctuationAndCadence } from '@/lib/smart-punctuation';
 
-// Smallest valid silent WAV (44 bytes, 0 samples) — used to unlock browser autoplay
-// before an async fetch, preserving the user-gesture trust token through the await.
-const SILENT_AUDIO_UNLOCK =
-  'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
-
 interface SentenceChunk {
   text: string;
   startOffset: number;
@@ -90,6 +85,8 @@ export function TextToSpeechEngine() {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const activeWordRef = React.useRef<HTMLSpanElement>(null);
   const studioAudioRef = React.useRef<HTMLAudioElement | null>(null);
+  // AudioContext for page-level autoplay unlock (industry standard approach)
+  const audioContextRef = React.useRef<AudioContext | null>(null);
   const watchdogTimerRef = React.useRef<NodeJS.Timeout | null>(null);
   const currentChunkIndexRef = React.useRef(0);
   const chunksRef = React.useRef<SentenceChunk[]>([]);
@@ -145,6 +142,11 @@ export function TextToSpeechEngine() {
     return () => {
       audio.pause();
       audio.src = '';
+      // Close AudioContext on unmount to release OS audio resources
+      if (audioContextRef.current) {
+        audioContextRef.current.close().catch(() => {});
+        audioContextRef.current = null;
+      }
     };
   }, []);
 
@@ -327,18 +329,21 @@ export function TextToSpeechEngine() {
         return;
       }
 
-      // ── AUTOPLAY UNLOCK ────────────────────────────────────────────────────
-      // Chrome's autoplay policy expires the user-gesture token after the first
-      // `await`. We pre-play a silent audio clip synchronously (before any await)
-      // so the HTML5 audio element is already in a "playing" state. When the real
-      // MP3 arrives later, swapping .src keeps the element trusted.
-      const audio = studioAudioRef.current;
-      if (audio) {
-        audio.muted = true;
-        audio.src = SILENT_AUDIO_UNLOCK;
-        audio.play().catch(() => {}); // intentionally fire-and-forget
+      // ── AUTOPLAY UNLOCK (page-level, permanent) ───────────────────────────
+      // AudioContext.resume() called inside a user-gesture handler permanently
+      // unlocks audio for the entire page session — all subsequent audio.play()
+      // calls succeed even after long async awaits. This is the approach used
+      // by Spotify Web Player, YouTube, and SoundCloud.
+      if (typeof window !== 'undefined') {
+        if (!audioContextRef.current) {
+          audioContextRef.current = new (
+            window.AudioContext ||
+            (window as any).webkitAudioContext
+          )();
+        }
+        audioContextRef.current.resume().catch(() => {});
       }
-      // ──────────────────────────────────────────────────────────────────────
+      // ─────────────────────────────────────────────────────────────────────
 
       // Synthesize fresh Studio Neural Voice live stream
       setIsLoadingAudio(true);
@@ -371,30 +376,26 @@ export function TextToSpeechEngine() {
         setAudioBlobUrl(newUrl);
         setGeneratedParamsKey(currentParamsKey);
 
+        const audio = studioAudioRef.current;
         if (audio) {
-          // Swap silent unlock → real audio; element is already trusted by browser
-          audio.muted = false;
           audio.src = newUrl;
           audio.volume = volume;
-          audio.load();
+          // No audio.load() — setting .src already queues a load;
+          // calling play() directly avoids a double-load that resets element state.
           try {
             await audio.play();
             setIsPlaying(true);
             setIsPaused(false);
           } catch (playErr: any) {
-            // play() still rejected (rare — e.g. tab backgrounded mid-fetch)
-            console.error('Studio audio.play() rejected after unlock:', playErr);
+            // Should be extremely rare now; only if tab was suspended mid-fetch
+            console.error('Studio audio.play() rejected:', playErr);
             setDownloadError(
-              'Playback was blocked. Try clicking Play again, or switch to Device Voice (Offline).'
+              'Playback was blocked by the browser. Try clicking Play again, or switch to Device Voice (Offline).'
             );
           }
         }
       } catch (err: any) {
         console.error('Studio TTS fetch error:', err);
-        if (audio) {
-          audio.muted = false;
-          audio.src = '';
-        }
         setDownloadError(
           err.message || 'Could not reach Studio Voice server. Switch to Device Voice (Offline) or try again.'
         );
