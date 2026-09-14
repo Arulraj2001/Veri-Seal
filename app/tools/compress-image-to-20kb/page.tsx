@@ -6,30 +6,31 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
   Camera,
   PenTool,
   ArrowRight,
   AlertTriangle,
   CheckCircle2,
+  Sliders,
+  Sparkles,
+  Info,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
   title: 'Compress Image to 20KB Online Free | Exact 10-20KB Signature & Photo | Kagazo',
   description:
-    'Compress image and signature to strictly under 20 KB (10-20 KB) online free. Bi-directional auto-enhance prevents under-size rejection. Zero watermark, in-memory processing.',
+    'Compress image and signature to strictly between 10 KB and 20 KB online free. Bi-directional auto-calibration prevents under-size rejection. Zero watermark, 100% in-browser privacy.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/compress-image-to-20kb',
+    canonical: 'https://kagazo.in/tools/compress-image-to-20kb',
   },
   openGraph: {
     title: 'Compress Image to 20KB Online Free | Kagazo',
     description:
       'Compress photos and signatures strictly between 10 KB and 20 KB. Never rejected by government recruitment portals.',
-    url: 'https://Kagazo.in/tools/compress-image-to-20kb',
+    url: 'https://kagazo.in/tools/compress-image-to-20kb',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -72,22 +73,98 @@ const FAQS = [
   {
     question: 'Will my signature remain sharp and clear at 20 KB?',
     answer:
-      'Yes. Kagazo applies our Xerox Ink Boost algorithm that washes background paper to pure white (#FFFFFF) while preserving high-contrast dark pen strokes, preventing the blurry pixelation typical of other tools.',
+      'Yes. Kagazo applies our Xerox Ink Boost algorithm that washes background paper to pure white (#FFFFFF) while preserving high-contrast dark pen strokes, preventing the blurry pixelation typical of standard image compressors.',
   },
   {
     question: 'Which portals require 10-20 KB files?',
     answer:
-      'Almost all major Indian recruitment and admission portals—including SSC (CGL, CHSL, MTS), TNPSC Group 1, 2, 4, UPSC, IBPS, and State PSCs—mandate signatures to be between 10 KB and 20 KB.',
+      'Almost all major Indian recruitment and admission portals—including SSC (CGL, CHSL, MTS, GD), TNPSC Group 1, 2, 4, UPSC, IBPS, and State PSCs—mandate signatures and thumb impressions to be strictly between 10 KB and 20 KB.',
   },
   {
-    question: 'Is this 20 KB compressor completely free?',
+    question: 'Is this 20 KB compressor completely free with no watermarks?',
     answer:
-      'Yes, 100% free with zero watermarks, zero subscription fees, and no account creation required.',
+      'Yes, 100% free with zero watermarks, zero subscription fees, and no account creation required. Download unlimited compliant photos and signatures anytime.',
   },
   {
     question: 'Are my private signatures and identity photos safe?',
     answer:
       'Yes, 100%. Kagazo performs all compression directly inside your browser volatile memory using HTML5 Canvas and typed arrays. Your files never get uploaded to any cloud server or database.',
+  },
+  {
+    question: 'Can I compress mobile camera photos of my signature?',
+    answer:
+      'Yes. Take a well-lit photo of your signature on white paper using your phone. Kagazo automatically crops, straightens, removes yellow shadows, and compresses the 3MB camera image down to under 20 KB in seconds.',
+  },
+  {
+    question: 'What ink color is recommended for 20 KB signatures?',
+    answer:
+      'Black or dark blue ballpoint pen ink on unruled white paper provides the highest contrast. Gel pens that reflect camera flash or pencil signatures should be avoided to prevent biometric validation errors.',
+  },
+  {
+    question: 'Does this tool support PNG and WEBP input files?',
+    answer:
+      'Yes. You can upload JPG, PNG, WEBP, or HEIC files. Kagazo processes the image and automatically exports a compliant, standard JPEG file required by exam portals.',
+  },
+  {
+    question: 'What pixel dimensions will my 20 KB signature have?',
+    answer:
+      'The standard 4.0 x 2.0 cm signature preset produces calibrated dimensions of approximately 140x60 px to 400x200 px at 200–300 DPI, ensuring sharp display without portal aspect ratio stretching.',
+  },
+  {
+    question: 'Can cyber cafes and bulk applicants use this tool?',
+    answer:
+      'Yes. The tool runs client-side with lightning speed, making it ideal for cyber cafe operators, CSC centers, and candidates processing multiple application forms in a single session.',
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    step: 1,
+    title: 'Select 10–20 KB Preset',
+    desc: 'Choose Online Signature (10-20 KB), Small Photo (15-20 KB), or Thumb Impression based on your exam portal requirements.',
+  },
+  {
+    step: 2,
+    title: 'Upload Photo or Signature Scan',
+    desc: 'Drag and drop your phone snapshot, scanner output, or image file (JPG, PNG, WEBP, HEIC supported).',
+  },
+  {
+    step: 3,
+    title: 'Adjust Framing & Xerox Filter',
+    desc: 'Center the signature or face in the crop box. Enable Xerox Ink Booster to eliminate shadows and background tint.',
+  },
+  {
+    step: 4,
+    title: 'Bi-Directional Size Calibration',
+    desc: 'The engine automatically compresses large files down and pads undersized files up to guarantee a 10–20 KB compliant file.',
+  },
+  {
+    step: 5,
+    title: 'Inspect & Download Verified JPEG',
+    desc: 'Preview with our high-resolution clarity loupe to check exact KB size, then download the verified JPEG ready for upload.',
+  },
+];
+
+const COMMON_ERRORS = [
+  {
+    badge: 'Error: "File size less than 10 KB"',
+    title: 'Undersize Rejection Floor',
+    desc: 'Cropping signatures closely drops file size to 4–8 KB, triggering portal rejection. Kagazo injects safe JFIF structural padding to lock files safely between 12 KB and 18 KB.',
+  },
+  {
+    badge: 'Error: Blurry / Pixelated Signature',
+    title: 'Over-Compression Artifacts',
+    desc: 'Generic tools lower JPEG quality to 10%, making strokes unreadable. Kagazo uses 300 DPI supersampling and contrast boosting to maintain crisp handwriting.',
+  },
+  {
+    badge: 'Error: Signature in Capital Letters',
+    title: 'Disallowed Capital Letter Handwriting',
+    desc: 'Portals like SSC strictly disqualify signatures written in all-caps. Always sign in your natural running cursive handwriting on unruled paper.',
+  },
+  {
+    badge: 'Error: Unsupported File Format (PNG)',
+    title: 'Uploading Non-JPEG File Extensions',
+    desc: 'Renaming .png to .jpg fails backend portal MIME checks. Kagazo encodes a genuine JFIF standard JPEG binary to ensure seamless portal acceptance.',
   },
 ];
 
@@ -111,24 +188,15 @@ export default function CompressImageTo20KbPage() {
       },
       {
         '@type': 'HowTo',
-        name: 'How to Compress Image to 20 KB Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Image or Signature',
-            text: 'Upload your photo or signature scan.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Automatic Bi-Directional Calibration',
-            text: 'Kagazo locks the file size between 10 KB and 20 KB.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Compliant File',
-            text: 'Preview with clarity loupe and download the verified JPEG.',
-          },
-        ],
+        name: 'How to Compress Image to 20 KB Online in 5 Steps',
+        description:
+          'Step-by-step instructions to compress photos and signatures strictly between 10 KB and 20 KB.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -169,10 +237,8 @@ export default function CompressImageTo20KbPage() {
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -185,8 +251,8 @@ export default function CompressImageTo20KbPage() {
             Home
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools/government-exam-pdf-compressor" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <span className="text-primary font-bold">Compress Image to 20KB</span>
@@ -205,13 +271,12 @@ export default function CompressImageTo20KbPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Resize photos and signatures to strictly between 10 KB and 20 KB. Never get rejected with &quot;file size less than 10 KB&quot; or blurry pixelation.
+            Resize photos and signatures strictly between <strong>10 KB and 20 KB</strong>. Prevent &quot;file size less than 10 KB&quot; rejection errors and blurry pixelation with client-side calibration.
           </p>
         </header>
 
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (68% Width) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageResizerEngine
               initialMode="signature"
@@ -222,207 +287,224 @@ export default function CompressImageTo20KbPage() {
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Why Under-Size Protection Matters */}
+            {/* Key Differentiators Showcase */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-primary" />
-                The Under-Size Trap: Why Ordinary 20KB Compressors Fail
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Bi-Directional Calibration
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  The Under-Size Trap: Why Ordinary 20KB Compressors Fail
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                When you crop a signature closely, it contains very few pixels. Generic compressors reduce it to 4 KB – 8 KB, causing instant rejection on SSC, UPSC, and TNPSC portals. Kagazo compresses large files and safely pads undersized files into the 12–18 KB safe window.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
-                  <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-md inline-block">
-                    The Problem
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sliders className="w-4 h-4" /> Bi-Directional Pad
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    When you crop a signature tightly, it contains very few pixels. Generic tools compress it to 4 KB – 8 KB. When you upload this to SSC, UPSC, or TNPSC, the portal blocks it because it is strictly below the 10 KB minimum.
+                  <p className="text-xs text-text-main/70">
+                    Prevents rejection by ensuring signature files never fall below the mandatory 10.0 KB floor.
                   </p>
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    The Kagazo Solution
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <PenTool className="w-4 h-4" /> Xerox Ink Booster
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Kagazo super-samples the signature at 300 DPI and injects a standard, safe JFIF comment structure that pads the binary size to comfortably sit between 12 KB and 18 KB without degrading visual clarity.
+                  <p className="text-xs text-text-main/70">
+                    Strips yellow tints and shadows from phone snaps, leaving bold dark strokes on pure white paper.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    All compression runs locally in device RAM. Biometric documents are never sent across the internet.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Government Exam 20KB Guidelines Matrix */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
-                  Government Recruitment Portals: 10KB - 20KB File Specifications
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Exact upload requirements across major national and state recruitment authorities.
-                </p>
+            {/* Technical Specification Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    Government Exam 10KB - 20KB Upload Specifications
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                    Strict parameters drawn from national and state recruitment authorities.
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
+                  Official Standards
+                </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="border-b border-surface-darker bg-surface/60">
-                      <th className="py-3 px-4 font-bold text-text-main">Authority / Exam</th>
-                      <th className="py-3 px-4 font-bold text-text-main">Document Type</th>
-                      <th className="py-3 px-4 font-bold text-primary">Allowed Range</th>
-                      <th className="py-3 px-4 font-bold text-emerald-700">Dimensions / Format</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-semibold">
+                      <th className="py-3 px-3">Authority / Exam</th>
+                      <th className="py-3 px-3">Document Type</th>
+                      <th className="py-3 px-3">Allowed Range</th>
+                      <th className="py-3 px-3">Dimensions / Format</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker">
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">SSC (CGL, CHSL, MTS, GD)</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Candidate Signature</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">10 KB – 20 KB</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">4.0 cm × 2.0 cm (JPG)</td>
+                  <tbody className="divide-y divide-surface-darker text-text-main/80">
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">SSC (CGL, CHSL, MTS, GD)</td>
+                      <td className="py-3 px-3">Candidate Signature</td>
+                      <td className="py-3 px-3 font-bold text-primary">10.0 KB – 20.0 KB</td>
+                      <td className="py-3 px-3 font-medium text-emerald-700">4.0 cm × 2.0 cm (JPG)</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">UPSC (Civil Services, NDA, CDS)</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Signature &amp; Small Photo</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">20 KB – 50 KB (Sig 10–20 KB)</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">350 × 350 px (JPG)</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">UPSC (Civil Services, NDA, CDS)</td>
+                      <td className="py-3 px-3">Signature &amp; Small Photo</td>
+                      <td className="py-3 px-3 font-bold text-primary">10.0 KB – 20.0 KB (Sig)</td>
+                      <td className="py-3 px-3 font-medium text-emerald-700">350 × 350 px (JPG)</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">TNPSC (Group 1, 2, 4 OTR)</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Candidate Signature</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">10 KB – 20 KB</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">6.0 cm × 2.0 cm (JPG)</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">TNPSC (Group 1, 2, 4 OTR)</td>
+                      <td className="py-3 px-3">Candidate Signature</td>
+                      <td className="py-3 px-3 font-bold text-primary">10.0 KB – 20.0 KB</td>
+                      <td className="py-3 px-3 font-medium text-emerald-700">6.0 cm × 2.0 cm (JPG)</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">IBPS / SBI Bank PO &amp; Clerk</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Signature &amp; Left Thumb</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">10 KB – 20 KB</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">140 × 60 px (JPG)</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">IBPS / SBI Bank PO &amp; Clerk</td>
+                      <td className="py-3 px-3">Signature &amp; Left Thumb</td>
+                      <td className="py-3 px-3 font-bold text-primary">10.0 KB – 20.0 KB</td>
+                      <td className="py-3 px-3 font-medium text-emerald-700">140 × 60 px (JPG)</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Validation Notice:</strong> Government portals enforce both byte size (10.0–20.0 KB) and JPEG MIME format. Always verify against your active recruitment notification.
+                </p>
+              </div>
             </section>
 
-            {/* FAQ Accordion Section */}
+            {/* How to Use Section in 5 Steps */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Compress Image to 20 KB in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {HOW_TO_STEPS.map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      {s.step}
+                    </div>
+                    <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">{s.title}</h3>
+                    <p className="text-xs text-text-main/75 leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common 20 KB Upload Errors and How Kagazo Fixes Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Deep 10 FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div>
+              <div className="space-y-1">
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
                   Frequently Asked Questions (20 KB Image Compressor)
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Common queries about compressing images to 20 KB.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Comprehensive answers on file size calibration, portal standards, and privacy.
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
-                      <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                  <div key={idx} className="py-4 space-y-2">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q{idx + 1}.</span>
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/80 pl-6 leading-relaxed">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Sticky Right Sidebar Rail (32% Width) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            {/* Quick Switch Matrix */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Related Tools
-              </h3>
-
-              <div className="space-y-2">
+          {/* Sticky Sidebar */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-4">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related Compressors
+              </span>
+              <div className="space-y-1.5">
                 <Link
                   href="/tools/compress-image-to-50kb"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Compress Image to 50KB
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      20–50 KB passport photo sizing
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                  Compress Image to 50KB
                 </Link>
-
                 <Link
                   href="/tools/ssc-photo-signature-resizer"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      SSC Photo &amp; Signature Resizer
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      20–50 KB &amp; 10–20 KB, 3.5×4.5 cm
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                  SSC Photo &amp; Signature Resizer
                 </Link>
-
                 <Link
                   href="/tools/upsc-photo-signature-resizer"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      UPSC Photo &amp; Signature Resizer
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      20–300 KB, 350×350 px
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                  UPSC Photo &amp; Signature Resizer
                 </Link>
-
                 <Link
-                  href="/tools/image-to-pdf-200kb"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/compress-image-exact-kb"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="space-y-0.5">
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors block">
-                      Marksheet Image to PDF (&lt; 200 KB)
-                    </span>
-                    <span className="text-[11px] text-text-main/60">
-                      1-click marksheet to A4 PDF
-                    </span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-text-main/40 group-hover:text-primary transition-colors" />
+                  Compress to Exact KB
                 </Link>
               </div>
             </div>
 
-            {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* RAM Security & Privacy Shield */}
-            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-3">
-              <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
-                <Lock className="w-4 h-4 shrink-0" />
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-4 space-y-2">
+              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
+                <Lock className="w-3.5 h-3.5 shrink-0" />
                 <span>100% In-Memory RAM Privacy</span>
               </div>
-              <p className="text-[11px] sm:text-xs text-text-main/70 leading-relaxed">
-                Images are compressed in volatile RAM and immediately wiped. No image is ever saved to permanent storage or tracked.
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Images are processed in device memory. Zero signatures or biometric files are ever uploaded or saved.
               </p>
-              <div className="flex items-center gap-4 text-[11px] font-semibold text-text-main/60 pt-1">
-                <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> Zero Watermark
-                </span>
-                <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-primary" /> 100% Free
-                </span>
-              </div>
             </div>
           </aside>
         </div>

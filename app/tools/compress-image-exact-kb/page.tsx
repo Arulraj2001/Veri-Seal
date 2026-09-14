@@ -7,27 +7,27 @@ import {
   Zap,
   Lock,
   HelpCircle,
-  Camera,
-  ArrowRight,
-  CheckCircle2,
   Sliders,
   Sparkles,
-  Crop,
+  ArrowRight,
+  AlertTriangle,
+  CheckCircle2,
+  Info,
 } from 'lucide-react';
 import { UniversalImageCompressor } from '@/components/tools/UniversalImageCompressor';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Compress Image to Exact File Size (KB / MB) Online Free | Kagazo',
+  title: 'Compress Image to Exact KB Online Free | Custom KB Target Compressor | Kagazo',
   description:
-    'Compress any image to an exact target file size (50KB, 100KB, 200KB, 1MB or custom slider). 100% private client-side processing with zero quality loss or watermarks.',
+    'Compress any image to an exact custom KB size (e.g. 20 KB, 50 KB, 100 KB, 150 KB) online free. Precision binary search compression ensures strict portal compliance with zero watermark.',
   alternates: {
     canonical: 'https://kagazo.in/tools/compress-image-exact-kb',
   },
   openGraph: {
-    title: 'Compress Image to Exact File Size (KB/MB) Online Free | Kagazo',
+    title: 'Compress Image to Exact KB Online Free | Kagazo',
     description:
-      'Set any exact KB target. Smart quality bisection keeps text and faces crisp while strictly respecting file size limits.',
+      'Enter any exact target file size in KB and compress your image with byte-level accuracy.',
     url: 'https://kagazo.in/tools/compress-image-exact-kb',
     siteName: 'Kagazo',
     type: 'website',
@@ -36,29 +36,105 @@ export const metadata: Metadata = {
 
 const FAQS = [
   {
-    question: 'How does Kagazo compress images to an exact target file size?',
+    question: 'How does the exact KB compressor hit precise file sizes?',
     answer:
-      'Unlike generic online compressors that use arbitrary "Low/Medium/High" quality buttons, Kagazo runs a recursive 7-step quality bisection algorithm directly inside your browser. It calculates the exact JPEG compression matrix required to land within ±1.5 KB of your chosen target size.',
+      'Kagazo employs an iterative binary search compression engine running in local WebAssembly. By calculating the difference between current byte count and your target KB, it dynamically calibrates JPEG quantization matrices and chrominance tables until the output matches within 1–2% of your requested target size.',
   },
   {
-    question: 'Are my images uploaded to any remote server?',
+    question: 'What happens if I choose a target KB that is too small for the image resolution?',
     answer:
-      'No. Your photos, signatures, and documents are processed 100% client-side inside your browser’s volatile memory. Zero bytes leave your device, ensuring total security and privacy.',
+      'If you request a 5 KB target for a high-resolution 4000x3000 photo, pure compression alone cannot reach the limit without extreme pixelation. Kagazo intelligently scales down the pixel dimensions proportionally to reach your exact KB limit while maintaining clean visual clarity.',
   },
   {
-    question: 'Can I crop or straighten my photo before compressing?',
+    question: 'Can I specify any arbitrary number of kilobytes (e.g., 37 KB or 125 KB)?',
     answer:
-      'Yes! Click the "Crop & Frame" button to access the interactive studio viewport. You can pan, pinch-zoom, rotate 90°, or use the fine angle slider (-15° to +15°) to straighten camera photos before compression.',
+      'Yes! You can enter any custom integer value in kilobytes. Whether your application form specifies 30 KB, 75 KB, 150 KB, or 350 KB, Kagazo tunes the file to fit strictly within your boundary.',
   },
   {
-    question: 'Which image formats are supported?',
+    question: 'Does compressing to an exact KB alter the aspect ratio of the image?',
     answer:
-      'You can upload JPG, JPEG, PNG, and WebP images up to 30MB in size. The compressed output is formatted in clean, standard JPEG with an RFC-compliant 300 DPI header for universal portal compatibility.',
+      'Never. Kagazo strictly preserves the original geometric aspect ratio of your image. Your photos, signatures, and certificates will never appear stretched, squashed, or skewed.',
   },
   {
-    question: 'Is there any watermark or subscription fee?',
+    question: 'Which image formats can I compress to exact KB?',
     answer:
-      'None. Kagazo provides 100% free compression with zero watermarks, no account registration, and no hidden subscriptions.',
+      'You can upload JPG, PNG, WEBP, or HEIC files. The output is typically exported as a standards-compliant JPEG or WEBP to ensure maximum compression efficiency and compatibility with online portals.',
+  },
+  {
+    question: 'How does Kagazo ensure the final file does not exceed the specified limit by even 1 KB?',
+    answer:
+      'Portal file validators reject anything even 1 byte over the limit (e.g., 50.1 KB is rejected on a 50 KB ceiling). Kagazo sets an internal safe ceiling at 97% of your target KB, ensuring that filesystem block size rounding never triggers an accidental rejection.',
+  },
+  {
+    question: 'Can I use this tool for both photos and text-heavy document scans?',
+    answer:
+      'Yes. The engine automatically balances quantization tables depending on whether your image contains continuous photographic tones (faces, landscapes) or sharp contrast edges (signatures, text, marksheet numbers).',
+  },
+  {
+    question: 'Are my documents or images uploaded to any remote server during exact KB calibration?',
+    answer:
+      'Never. 100% of the iterative compression loop executes inside your browser’s volatile JavaScript memory. Your files never travel across the network.',
+  },
+  {
+    question: 'Is there any loss of metadata when compressing to exact KB?',
+    answer:
+      'Yes, non-essential EXIF metadata and thumbnails are stripped because they take up 50–500 KB of binary space. Stripping metadata allows the engine to dedicate almost all available bytes to visual image pixels.',
+  },
+  {
+    question: 'Is the exact KB compressor completely free with unlimited downloads?',
+    answer:
+      'Yes, 100% free with no registration, no subscription fees, and no watermarks. Process as many files as you need.',
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    step: 1,
+    title: 'Upload Any Image File',
+    desc: 'Select or drag-and-drop your photo, signature, or document scan (JPG, PNG, WEBP, HEIC supported).',
+  },
+  {
+    step: 2,
+    title: 'Enter Desired Target KB',
+    desc: 'Type your exact target file size in kilobytes (e.g., 20, 50, 100, 150) or adjust using the precision slider.',
+  },
+  {
+    step: 3,
+    title: 'Precision Binary-Search Compression',
+    desc: 'The engine iteratively calculates optimal quantization matrices to match your target file size in RAM.',
+  },
+  {
+    step: 4,
+    title: 'Real-Time Clarity Loupe Review',
+    desc: 'Inspect the live preview with our interactive loupe to verify that clarity and exact KB metrics match your goal.',
+  },
+  {
+    step: 5,
+    title: 'Download Calibrated File',
+    desc: 'Download your exact KB image instantly with zero watermarks, ready for guaranteed portal submission.',
+  },
+];
+
+const COMMON_ERRORS = [
+  {
+    badge: 'Error: "File size exceeds portal limit by 1 KB"',
+    title: 'Marginal Boundary Overflow',
+    desc: 'Setting target to exactly 50 KB can result in 50.2 KB due to filesystem clusters. Kagazo targets 97% of target KB to prevent rejection.',
+  },
+  {
+    badge: 'Error: Unrealistic Target Size vs Resolution',
+    title: 'Demanding 5 KB for 40MP Images',
+    desc: 'Shrinking 40 megapixels to 5 KB causes extreme degradation. Kagazo applies intelligent proportional downscaling to preserve readability.',
+  },
+  {
+    badge: 'Error: Text Illegibility on Scanned Forms',
+    title: 'Over-Compacted Text Documents',
+    desc: 'Compressing text documents too low blurs roll numbers. Kagazo preserves stroke contrast so verification officers can inspect records.',
+  },
+  {
+    badge: 'Error: Unsupported Format MIME Check',
+    title: 'Uploading PNG to JPEG-Only Portals',
+    desc: 'Many portals reject PNG files even if file size is compliant. Kagazo encodes compliant JFIF JPEG binaries for guaranteed portal acceptance.',
   },
 ];
 
@@ -67,39 +143,30 @@ export default function CompressImageExactKbPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
-        name: 'Compress Image to Exact File Size (KB/MB)',
+        '@type': 'WebApplication',
+        name: 'Compress Image to Exact KB Online',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/compress-image-exact-kb',
         offers: {
           '@type': 'Offer',
-          price: '0',
+          price: '0.00',
           priceCurrency: 'USD',
         },
         description:
-          'Compress any image to an exact custom KB or MB target online free. In-browser private processing.',
+          'Compress any image to custom exact KB size online free with precision binary search and zero watermark.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Compress an Image to an Exact File Size',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Your Photo or Image',
-            text: 'Drag and drop your image file into the compressor dropzone.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select Target Size (KB or MB)',
-            text: 'Use the slider or quick target buttons (50KB, 100KB, 200KB, 1MB) to set your desired ceiling.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Compressed File',
-            text: 'Preview with instant hover-zoom and download the verified file.',
-          },
-        ],
+        name: 'How to Compress Image to Exact KB Online in 5 Steps',
+        description:
+          'Step-by-step instructions to compress any image to a custom exact KB target.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -140,10 +207,8 @@ export default function CompressImageExactKbPage() {
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -160,247 +225,256 @@ export default function CompressImageExactKbPage() {
             Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Compress to Exact KB</span>
+          <span className="text-primary font-bold">Compress Image to Exact KB</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>High-Precision Client-Side Compressor</span>
+            <span>Precision Target-Size Calibration Studio</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
             <span>Compress Image to </span>
-            <span className="text-primary">Exact File Size (KB / MB)</span>
+            <span className="text-primary">Exact KB Online</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Choose your exact target file size. Our smart bisection engine optimizes image quality to strictly fit within your target without blurriness or distortion.
+            Enter any target file size in KB (e.g. 20 KB, 50 KB, 100 KB, 200 KB). Our precision binary-search engine locks your file to the exact byte limit with 100% in-browser privacy.
           </p>
         </header>
 
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (75% Width) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <UniversalImageCompressor
-              initialTargetKb={100}
-              isFixedTarget={false}
-              toolHeading="Custom Target Image Compressor"
-              toolSubheading="Drag the slider or choose a preset to compress strictly below your target size."
+              initialTargetKb={50}
+              toolHeading="Compress Image to Custom Exact KB"
+              toolSubheading="Enter any target file size in KB (e.g. 20 KB, 50 KB, 150 KB) for pixel-perfect binary calibration."
             />
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Feature Highlight: Why Precision Matters */}
+            {/* Key Differentiators Showcase */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-primary" />
-                Why Exact KB Targeting Beats Traditional Quality Sliders
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Custom Target Engine
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Algorithmic Precision for Strict Application Requirements
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Different government, university, and employment portals enforce arbitrary file size ceilings. Kagazo lets you input any custom kilobyte target and hits it with precision.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
-                  <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-md inline-block">
-                    The Problem with Competitors
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sliders className="w-4 h-4" /> Arbitrary Target KB
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Tools like TinyPNG, iLovePDF, and Smallpdf only offer vague &quot;Medium&quot; or &quot;Low&quot; settings. If a university portal requires &lt;100KB, you are left guessing and repeating compression 5 times.
+                  <p className="text-xs text-text-main/70">
+                    Input any target between 5 KB and 5000 KB for custom upload portal compliance.
                   </p>
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    The Kagazo Solution
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <ShieldCheck className="w-4 h-4" /> Zero Margin Overflow
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Kagazo calculates the exact mathematical quantization table needed to guarantee your file is under the target size on the very first try, retaining razor-sharp facial details and text clarity.
+                  <p className="text-xs text-text-main/70">
+                    Calculates safe byte margins so your file never overshoots your limit by even 1 byte.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Iterative compression runs in client-side RAM. Sensitive files are never uploaded.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Standard Target Size Reference Table */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
-                  Target File Size Specifications &amp; Use Cases
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Quick benchmark guide for choosing the right target KB limit for your documents.
-                </p>
+            {/* Technical Specification Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    Target KB vs. Resolution &amp; Quality Calibration Guide
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                    Optimal target sizes and visual quality expectations across document types.
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
+                  Target Guidelines
+                </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="border-b border-surface-darker bg-surface/60">
-                      <th className="py-3 px-4 font-bold text-text-main">Target Limit</th>
-                      <th className="py-3 px-4 font-bold text-text-main">Typical Use Case</th>
-                      <th className="py-3 px-4 font-bold text-primary">Algorithm Mode</th>
-                      <th className="py-3 px-4 font-bold text-emerald-700">Recommended Resolution</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-semibold">
+                      <th className="py-3 px-3">Target Size Range</th>
+                      <th className="py-3 px-3">Best Suited For</th>
+                      <th className="py-3 px-3">Expected Quality</th>
+                      <th className="py-3 px-3">Typical Dimensions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker">
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">20 KB</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Govt exam signatures &amp; thumbprints</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">Bi-directional padding &amp; shrink</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">300 × 120 px</td>
+                  <tbody className="divide-y divide-surface-darker text-text-main/80">
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">10 KB – 20 KB</td>
+                      <td className="py-3 px-3">Signatures &amp; Thumbprints</td>
+                      <td className="py-3 px-3 font-bold text-primary">High (Contrast boosted)</td>
+                      <td className="py-3 px-3 text-xs text-text-main/70">140×60 px to 400×200 px</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">50 KB</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Passport &amp; biometric exam photos</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">Face-centered aspect lock</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">350 × 450 px</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">20 KB – 50 KB</td>
+                      <td className="py-3 px-3">Passport &amp; ID Photos</td>
+                      <td className="py-3 px-3 font-bold text-primary">Very High (Clear facial features)</td>
+                      <td className="py-3 px-3 text-xs text-text-main/70">3.5 × 4.5 cm (300×400 px)</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">100 KB</td>
-                      <td className="py-3.5 px-4 text-text-main/80">ID cards, Aadhaar cards, PAN cards</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">7-step quality bisection</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">800 × 600 px</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">50 KB – 100 KB</td>
+                      <td className="py-3 px-3">Resume Headshots &amp; Avatars</td>
+                      <td className="py-3 px-3 font-bold text-primary">Excellent (Studio portrait look)</td>
+                      <td className="py-3 px-3 text-xs text-text-main/70">400×400 px to 600×600 px</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">200 KB – 1 MB</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Certificates, degree marksheets, resumes</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">Lossless DCT downsampling</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">1200 × 1600 px</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">100 KB – 200 KB</td>
+                      <td className="py-3 px-3">Marksheets &amp; Certificates</td>
+                      <td className="py-3 px-3 font-bold text-primary">Sharp (Legible small text)</td>
+                      <td className="py-3 px-3 text-xs text-text-main/70">A4 Document at 150–200 DPI</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Precision Advice:</strong> Enter a target KB approximately 3–5% below your portal maximum (e.g., enter 48 KB for a 50 KB limit) to ensure safe acceptance across all server operating systems.
+                </p>
+              </div>
             </section>
 
-            {/* FAQ Accordion Section */}
+            {/* How to Use Section in 5 Steps */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Compress Image to Exact KB in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {HOW_TO_STEPS.map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      {s.step}
+                    </div>
+                    <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">{s.title}</h3>
+                    <p className="text-xs text-text-main/75 leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common Exact KB Pitfalls and How Kagazo Fixes Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Deep 10 FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div>
+              <div className="space-y-1">
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions
+                  Frequently Asked Questions (Exact KB Compressor)
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Everything you need to know about precision image compression.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Precision file size targeting, algorithmic calibration, and quality control.
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
-                      <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                  <div key={idx} className="py-4 space-y-2">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q{idx + 1}.</span>
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/80 pl-6 leading-relaxed">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Compact Sticky Right Sidebar Rail (25% Width) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            {/* Quick Switch Matrix - High Density Single-Line List */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Target Size Shortcuts
-              </h3>
-
+          {/* Sticky Sidebar */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-4">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related Compressors
+              </span>
               <div className="space-y-1.5">
                 <Link
-                  href="/tools/compress-image-to-100kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/compress-image-to-20kb"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to 100KB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    100 KB
-                  </span>
+                  Compress Image to 20KB
                 </Link>
-
-                <Link
-                  href="/tools/compress-image-to-200kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to 200KB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    200 KB
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/compress-image-to-1mb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to 1MB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    1 MB
-                  </span>
-                </Link>
-
                 <Link
                   href="/tools/compress-image-to-50kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to 50KB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    50 KB
-                  </span>
+                  Compress Image to 50KB
                 </Link>
-
                 <Link
-                  href="/tools/change-image-dpi"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/compress-image-to-100kb"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Change DPI
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    300 DPI
-                  </span>
+                  Compress Image to 100KB
+                </Link>
+                <Link
+                  href="/tools/compress-image-to-200kb"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  Compress Image to 200KB
                 </Link>
               </div>
             </div>
 
-            {/* Compact Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* Sleek In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-4 space-y-2">
               <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
                 <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>100% In-Browser Privacy</span>
+                <span>100% In-Memory RAM Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                Your images are processed directly in RAM via WebAssembly. Files never touch any cloud server.
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Exact KB tuning is calculated entirely in browser volatile RAM. No images are ever uploaded or stored.
               </p>
-              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">✓ Zero Cloud Storage</span>
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">✓ Instant Speed</span>
-              </div>
             </div>
           </aside>
         </div>

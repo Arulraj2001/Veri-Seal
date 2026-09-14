@@ -7,25 +7,29 @@ import {
   Zap,
   Lock,
   HelpCircle,
-  FileCheck,
-  Building,
-  GraduationCap,
+  FileText,
+  Award,
+  ArrowRight,
+  AlertTriangle,
   CheckCircle2,
+  Sliders,
+  Sparkles,
+  Info,
 } from 'lucide-react';
 import { UniversalImageCompressor } from '@/components/tools/UniversalImageCompressor';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Compress Image to 200KB Online Free | High-Resolution Quality | Kagazo',
+  title: 'Compress Image to 200KB Online Free | Document & Marksheet Sizing | Kagazo',
   description:
-    'Compress any image, certificate scan, or document photo strictly under 200KB online free. Ideal for government portals, UPSC, SSC, and state PSC applications. 100% private.',
+    'Compress certificates, marksheet scans, degree diplomas, and Aadhaar cards to strictly under 200KB online free. Keep fine text razor-sharp with zero server uploads.',
   alternates: {
     canonical: 'https://kagazo.in/tools/compress-image-to-200kb',
   },
   openGraph: {
     title: 'Compress Image to 200KB Online Free | Kagazo',
     description:
-      'Reduce photo and certificate scans to strictly under 200KB without blur. Instant in-browser processing.',
+      'Compress scanned certificates and documents to strictly under 200KB while keeping text clear and legible.',
     url: 'https://kagazo.in/tools/compress-image-to-200kb',
     siteName: 'Kagazo',
     type: 'website',
@@ -34,29 +38,105 @@ export const metadata: Metadata = {
 
 const FAQS = [
   {
-    question: 'Why do government portals mandate 200KB for certificate uploads?',
+    question: 'Why do government exam portals mandate certificate scans under 200 KB?',
     answer:
-      'Government exam and recruitment portals (such as TNPSC, SSC, UPSC, and State PSCs) enforce strict 100KB–200KB limits on certificates, community papers, and marksheets. This guarantees readability while keeping server storage manageable for millions of applicants.',
+      'State and national examination commissions (such as UPSC, SSC, IBPS, State PSCs) store millions of candidate educational certificates, caste certificates, and identity cards. The 200 KB threshold strikes the ideal balance between low server storage costs and sufficient resolution for human verification officers to inspect roll numbers and signatures.',
   },
   {
-    question: 'Will text on my certificate or marksheet stay readable at 200KB?',
+    question: 'Will text and small numbers on my marksheet remain readable at 200 KB?',
     answer:
-      'Yes. 200KB is generous for document photos. Kagazo uses adaptive unsharp masking and 4:4:4 color preservation to ensure small text, registration numbers, and official stamps remain sharp and legible.',
+      'Yes. Kagazo applies intelligent high-pass stroke contrast filtering. Instead of blurring text like generic compressors, our engine preserves dark ink edges and sharp high-frequency details on white document backgrounds, ensuring roll numbers, grades, and official seals remain fully legible.',
   },
   {
-    question: 'Can I crop off messy desk backgrounds before compressing?',
+    question: 'Can I compress Aadhaar card and PAN card images to 200 KB safely?',
     answer:
-      'Yes! Open the "Crop & Edit Studio" on the page to freely frame, straighten, or crop out unwanted table or desk areas around your document with interactive handles.',
+      'Yes. Both identity cards are easily compressed to under 200 KB. Because all processing executes client-side in your web browser memory, your confidential identity documents, Aadhaar numbers, and addresses are never transmitted across the internet.',
   },
   {
-    question: 'Is this 200KB tool safe for confidential government documents?',
+    question: 'What resolution (DPI) should I scan certificates at for 200 KB output?',
     answer:
-      '100% secure. Processing is executed in your browser RAM using WebAssembly. Your documents are never uploaded to our servers, keeping your sensitive identity details completely private.',
+      'Scanning documents at 150 to 200 DPI in grayscale or RGB color produces optimal results for 200 KB output. If your scanner outputs a 300 DPI image (typically 3–8 MB), Kagazo optimizes the raster data to fit under 200 KB without requiring manual rescan.',
   },
   {
-    question: 'What file formats can I compress with this 200KB tool?',
+    question: 'Can I compress a photo taken with my mobile phone camera to 200 KB?',
     answer:
-      'You can upload JPG, JPEG, PNG, and WebP documents or photos. The compressed output is formatted in standard, RFC-compliant JPEG ready for instant upload to any official portal.',
+      'Yes. Upload any mobile phone camera snapshot. Kagazo strips heavy camera metadata, normalizes dynamic range, and compresses the 4–12 MB mobile photo to strictly under 200 KB in seconds.',
+  },
+  {
+    question: 'Should I convert my document to PDF or keep it as JPEG under 200 KB?',
+    answer:
+      'Check your specific exam portal notification. Some portals mandate JPG format for certificates, while others require single-page PDF. If your portal requires PDF, use our dedicated "Image to PDF 200KB" tool.',
+  },
+  {
+    question: 'Does this tool remove unnecessary EXIF and camera metadata?',
+    answer:
+      'Yes. Unnecessary camera EXIF tags, GPS location data, and embedded thumbnails are stripped during compression, freeing up valuable kilobytes for higher document image quality.',
+  },
+  {
+    question: 'Are my confidential government identity documents uploaded to any server?',
+    answer:
+      'Never. Kagazo operates 100% inside your browser’s volatile JavaScript memory. Your certificates, marksheets, and personal records are never saved to cloud storage or seen by anyone.',
+  },
+  {
+    question: 'Does Kagazo add any watermarks or stamps to my compressed document?',
+    answer:
+      'No. All downloads are 100% watermark-free, clean, and ready for official submission to government and academic portals.',
+  },
+  {
+    question: 'Is there any daily limit on the number of certificates I can compress?',
+    answer:
+      'Zero limits. You can compress unlimited marksheets, diplomas, identity cards, and receipts completely free.',
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    step: 1,
+    title: 'Upload Certificate or Marksheet Scan',
+    desc: 'Select or drag-and-drop your degree certificate, marksheet, or ID scan (JPG, PNG, WEBP, HEIC supported).',
+  },
+  {
+    step: 2,
+    title: 'Confirm 200 KB Target Limit',
+    desc: 'The tool defaults to a strict 200 KB ceiling, ensuring the output file complies with recruitment upload limits.',
+  },
+  {
+    step: 3,
+    title: 'Text Contrast & Stroke Enhancement',
+    desc: 'The engine enhances contrast on text strokes and numbers to maintain complete legibility.',
+  },
+  {
+    step: 4,
+    title: 'Inspect Quality & File Size',
+    desc: 'Use the interactive clarity loupe preview to verify that roll numbers, subjects, and seals are crisp.',
+  },
+  {
+    step: 5,
+    title: 'Download Verified Document',
+    desc: 'Download your compressed certificate image instantly with zero watermarks, ready for portal upload.',
+  },
+];
+
+const COMMON_ERRORS = [
+  {
+    badge: 'Error: "File size exceeds 200 KB limit"',
+    title: 'High-Resolution Scanner Bloat',
+    desc: 'Raw flatbed scans at 300 DPI produce 5–15 MB files that portals reject. Kagazo compresses your scan safely into the 160–190 KB sweet spot.',
+  },
+  {
+    badge: 'Error: Unreadable Roll Numbers & Marks',
+    title: 'Aggressive Generic Compression',
+    desc: 'Basic image compressors blur fine characters. Kagazo preserves high-contrast text edges so verification officers can clearly read every grade.',
+  },
+  {
+    badge: 'Error: Faint Ink / Official Seal Washout',
+    title: 'Over-Bleached Document Scans',
+    desc: 'Low-contrast stamps and signatures can disappear. Kagazo balances luminance levels to keep official government stamps and signatures legible.',
+  },
+  {
+    badge: 'Error: Dark Gray Background Shadow',
+    title: 'Uneven Ambient Camera Lighting',
+    desc: 'Photographing documents on desks creates dark edge shadows. Kagazo cleans background illumination to simulate a flatbed scanner output.',
   },
 ];
 
@@ -66,38 +146,29 @@ export default function CompressImageTo200KbPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Compress Image to 200KB Online Free',
+        name: 'Compress Image to 200KB Online',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/compress-image-to-200kb',
         offers: {
           '@type': 'Offer',
           price: '0.00',
-          priceCurrency: 'INR',
+          priceCurrency: 'USD',
         },
         description:
-          'Compress any certificate or document image strictly under 200KB online free. Fast, private, and watermark-free.',
+          'Compress marksheet scans, degree certificates, and ID cards to strictly under 200KB online free with zero watermark.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Compress an Image to 200KB',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Document or Photo',
-            text: 'Select your certificate, marksheet, or photo.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Automatic 200KB Calibration',
-            text: 'Kagazo compresses the file to land safely between 170KB and 198KB.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download & Submit',
-            text: 'Preview with instant zoom and download your portal-ready file.',
-          },
-        ],
+        name: 'How to Compress Image to 200 KB Online in 5 Steps',
+        description:
+          'Step-by-step instructions to compress document scans and certificates under 200 KB.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -138,10 +209,8 @@ export default function CompressImageTo200KbPage() {
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -165,7 +234,7 @@ export default function CompressImageTo200KbPage() {
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>Target Ceiling: Max 200 KB Guaranteed</span>
+            <span>Document &amp; Marksheet Compressor (Under 200 KB)</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
@@ -174,245 +243,240 @@ export default function CompressImageTo200KbPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Shrink certificate scans, marksheets, and photos to strictly under 200KB. Perfect for government portal uploads and identity verifications.
+            Compress marksheet scans, degree certificates, Aadhaar cards, and PAN cards to strictly <strong>under 200 KB</strong>. Keep fine text razor-sharp with 100% in-browser privacy.
           </p>
         </header>
 
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (75% Width) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <UniversalImageCompressor
-              initialTargetKb={200}
-              isFixedTarget={true}
+              initialTargetKb={200} isFixedTarget={true}
               toolHeading="Compress to Strictly Under 200 KB"
-              toolSubheading="Optimized for government portal submissions, educational marksheets, and ID scans."
+              toolSubheading="Perfect for marksheet scans, degree certificates, Aadhaar cards, and PAN cards."
             />
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Common 200KB Use Cases */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-5">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-primary" />
-                Where 200KB Image Limits Are Strictly Enforced
-              </h2>
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Document Legibility Engine
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Preserving Micro-Text and Official Stamps Under 200 KB
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Government verification portals require certificates to be under 200 KB while retaining total legibility for candidate names, roll numbers, and official signatures. Kagazo delivers sharp document images with zero server logging.
+              </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
-                    <Building className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-extrabold text-sm text-text-main">Govt Recruitment Portals</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    SSC, TNPSC, and State PSCs mandate 100KB–200KB limits for community, nativity, and degree certificates.
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <FileText className="w-4 h-4" /> Text Stroke Sharpening
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Maintains high contrast on printed numbers, grades, and cursive signatures without blur.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
-                    <GraduationCap className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-extrabold text-sm text-text-main">University Marksheets</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    College admissions and entrance exam portals require semester grade sheets compressed under 200KB.
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Award className="w-4 h-4" /> Government Exam Ready
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Optimized for UPSC, SSC, State PSC, and university portals enforcing 200 KB document limits.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
-                    <ShieldCheck className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-extrabold text-sm text-text-main">Banking &amp; KYC Proofs</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    SBI, IBPS, and bank loan verification portals enforce 200KB caps on passbook and address proofs.
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Confidential identity documents and academic records never leave your local device memory.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* 200KB Portal Requirement Matrix */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
-                  Official 200KB Document &amp; Certificate Upload Matrix
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Exact upload limits across state recruitment, university portals, and banking exams.
-                </p>
+            {/* Technical Specification Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    Government Portal 200KB Document Specifications
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                    Standard document upload limits across national and state examination boards.
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
+                  Document Matrix
+                </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="border-b border-surface-darker bg-surface/60">
-                      <th className="py-3 px-4 font-bold text-text-main">Authority / Portal</th>
-                      <th className="py-3 px-4 font-bold text-text-main">Accepted Certificate</th>
-                      <th className="py-3 px-4 font-bold text-primary">Allowed Range</th>
-                      <th className="py-3 px-4 font-bold text-emerald-700">Verification Requirement</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-semibold">
+                      <th className="py-3 px-3">Document Category</th>
+                      <th className="py-3 px-3">Typical Raw Size</th>
+                      <th className="py-3 px-3">Portal Maximum</th>
+                      <th className="py-3 px-3">Format &amp; Quality Target</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker">
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">TNPSC Group 1, 2, 4 OTR</td>
-                      <td className="py-3.5 px-4 text-text-main/80">SSLC / Community / Degree</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">100 KB – 200 KB</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Must be sharp and legible scan</td>
+                  <tbody className="divide-y divide-surface-darker text-text-main/80">
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">10th / 12th Marksheet Scan</td>
+                      <td className="py-3 px-3">2 MB – 6 MB</td>
+                      <td className="py-3 px-3 font-bold text-primary">Strictly &lt; 200 KB</td>
+                      <td className="py-3 px-3 font-medium text-emerald-700">JPEG / PDF (160–190 KB)</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">SSC (Combined Graduate Level)</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Caste / EWS Certificate</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">50 KB – 200 KB</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Clear official seal visible</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">College Degree / Diploma</td>
+                      <td className="py-3 px-3">3 MB – 8 MB</td>
+                      <td className="py-3 px-3 font-bold text-primary">Strictly &lt; 200 KB</td>
+                      <td className="py-3 px-3 font-medium text-emerald-700">Clear seal &amp; signature</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">UPSC Civil Services OTR</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Photo ID Card Scan</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">20 KB – 300 KB (Photo 200KB)</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Both sides clearly cropped</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">Aadhaar Card / PAN Card Scan</td>
+                      <td className="py-3 px-3">1 MB – 4 MB</td>
+                      <td className="py-3 px-3 font-bold text-primary">Strictly &lt; 200 KB</td>
+                      <td className="py-3 px-3 font-medium text-emerald-700">Color JPEG (300 DPI)</td>
                     </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-text-main">SBI / IBPS Bank Exam Portals</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Handwritten Declaration</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">50 KB – 100 KB / 200 KB</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Black ink on white paper</td>
+                    <tr className="hover:bg-surface/50 transition-colors">
+                      <td className="py-3 px-3 font-semibold text-text-main">Community / Caste Certificate</td>
+                      <td className="py-3 px-3">2 MB – 5 MB</td>
+                      <td className="py-3 px-3 font-bold text-primary">Strictly &lt; 200 KB</td>
+                      <td className="py-3 px-3 font-medium text-emerald-700">Legible tehsildar seal</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Verification Tip:</strong> After compression, zoom in on the marksheet roll number and official stamp to ensure complete legibility before final submission.
+                </p>
+              </div>
             </section>
 
-            {/* FAQ Accordion Section */}
+            {/* How to Use Section in 5 Steps */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Compress Image to 200 KB in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {HOW_TO_STEPS.map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      {s.step}
+                    </div>
+                    <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">{s.title}</h3>
+                    <p className="text-xs text-text-main/75 leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common 200 KB Document Upload Errors and How Kagazo Fixes Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Deep 10 FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div>
+              <div className="space-y-1">
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions (200KB Compressor)
+                  Frequently Asked Questions (200 KB Document Compressor)
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Clear answers about compressing images to 200KB.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Expert advice on marksheet compression, readability, and portal guidelines.
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
-                      <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                  <div key={idx} className="py-4 space-y-2">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q{idx + 1}.</span>
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/80 pl-6 leading-relaxed">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Compact Sticky Right Sidebar Rail (25% Width) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            {/* Quick Switch Matrix - High Density Single-Line List */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Other Targets
-              </h3>
-
+          {/* Sticky Sidebar */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-4">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related Tools
+              </span>
               <div className="space-y-1.5">
                 <Link
-                  href="/tools/compress-image-exact-kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Exact KB Slider
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    Custom
-                  </span>
-                </Link>
-
-                <Link
                   href="/tools/compress-image-to-100kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to 100KB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    100 KB
-                  </span>
+                  Compress Image to 100KB
                 </Link>
-
-                <Link
-                  href="/tools/compress-image-to-1mb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to 1MB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    1 MB
-                  </span>
-                </Link>
-
                 <Link
                   href="/tools/compress-image-to-50kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to 50KB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    50 KB
-                  </span>
+                  Compress Image to 50KB
                 </Link>
-
                 <Link
-                  href="/tools/change-image-dpi"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/image-to-pdf-200kb"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Change DPI
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    300 DPI
-                  </span>
+                  Marksheet Image to PDF
+                </Link>
+                <Link
+                  href="/tools/compress-image-exact-kb"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  Compress to Exact KB
                 </Link>
               </div>
             </div>
 
-            {/* Compact Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* Sleek In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-4 space-y-2">
               <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
                 <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>100% In-Browser Privacy</span>
+                <span>100% In-Memory RAM Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                Images are compressed on your local device. Zero data is ever sent to external cloud servers.
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Academic certificates and personal identity scans are processed in device RAM with zero server exposure.
               </p>
-              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">✓ Zero Server Upload</span>
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">✓ Instant Speed</span>
-              </div>
             </div>
           </aside>
         </div>

@@ -12,89 +12,156 @@ import {
   HelpCircle,
   CheckCircle2,
   FileImage,
-  Globe2,
-  Code2,
+  Download,
   Layers,
-  Copy,
+  Palette,
+  AlertTriangle,
+  Info,
 } from 'lucide-react';
 import { ImageConverterMatrixEngine } from '@/components/tools/ImageConverterMatrixEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'PNG to ICO Favicon Generator Online Free (16x16, 32x32, 48x48) | Kagazo',
+  title: 'PNG to ICO Converter Online Free | Multi-Size Favicon Maker | Kagazo',
   description:
-    'Convert PNG images to genuine multi-resolution Windows Favicon .ico files online for free. Automatically packages 16x16, 32x32, and 48x48 frames into a single binary with transparent alpha preservation and 100% browser privacy.',
+    'Convert PNG images to ICO favicon format online free. Pack multi-resolution frames (16x16, 32x32, 48x48) with full alpha transparency for websites and Windows apps.',
   alternates: {
     canonical: 'https://kagazo.in/tools/png-to-ico',
   },
   openGraph: {
-    title: 'PNG to ICO Favicon Generator Online Free | Kagazo',
+    title: 'PNG to ICO Converter Online Free | Kagazo',
     description:
-      'Generate multi-resolution 16x16, 32x32, 48x48 Windows Favicon ICO files with transparent alpha channels.',
+      'Generate multi-size Windows and website favicon.ico files from PNG images with zero cloud uploads.',
     url: 'https://kagazo.in/tools/png-to-ico',
     siteName: 'Kagazo',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'PNG to ICO Favicon Generator Online Free | Kagazo',
-    description:
-      'Generate true multi-resolution binary favicon.ico files with transparent alpha channels in your browser.',
-  },
 };
 
-const ICO_FRAME_SPECS = [
+const ICO_RESOLUTION_MATRIX = [
   {
-    dimension: '16 × 16 px',
-    bitDepth: '32-bit RGBA (8-bit alpha)',
-    platformTarget: 'Browser tabs, bookmark menus, URL history entries',
-    importance: 'Critical (Most frequently viewed icon on the web)',
+    dimensions: '16 × 16 px',
+    useCase: 'Browser Tab Favicon & Bookmark Lists',
+    significance: 'Standard micro-icon visible on web browser tabs',
   },
   {
-    dimension: '32 × 32 px',
-    bitDepth: '32-bit RGBA (8-bit alpha)',
-    platformTarget: 'Windows taskbar pinned items, Safari Reading List, new tab shortcuts',
-    importance: 'Essential (Prevents blurry scaling on desktop taskbars)',
+    dimensions: '32 × 32 px',
+    useCase: 'Browser Shortcut / Windows Taskbar',
+    significance: 'High-DPI browser tabs and desktop shortcut pin menus',
   },
   {
-    dimension: '48 × 48 px',
-    bitDepth: '32-bit RGBA (8-bit alpha)',
-    platformTarget: 'Windows desktop shortcuts, File Explorer medium/large icon view',
-    importance: 'Recommended (Crisp high-DPI desktop display representation)',
+    dimensions: '48 × 48 px',
+    useCase: 'Windows Desktop Icon View',
+    significance: 'Standard desktop icon view on Windows 10 and 11',
   },
   {
-    dimension: 'Binary Header',
-    bitDepth: 'ICONDIR + ICONDIRENTRY',
-    platformTarget: 'Microsoft Windows Shell and standard web browsers',
-    importance: 'Standards-compliant single-file multi-resolution payload',
+    dimensions: '64 × 64 to 256 × 256 px',
+    useCase: 'High-DPI Retina & Large Desktop Icons',
+    significance: 'Extra-large desktop icons and Windows Explorer previews',
   },
 ];
 
 const FAQS = [
   {
-    question: 'Why does a modern website need a multi-resolution favicon.ico instead of just a PNG?',
+    question: 'What is an ICO file and why is it needed for website favicons?',
     answer:
-      'Different operating systems and web browsers render site icons at varying screen pixel densities. A single PNG file often scales poorly, leading to blurry edges or jagged lines on desktop taskbars. A genuine multi-resolution favicon.ico encapsulates 16×16, 32×32, and 48×48 frames in one binary package, allowing browsers and Windows to automatically select the optimal raster without downsampling distortion.',
+      'An ICO (Icon) file is an image container format developed by Microsoft that can store multiple bitmap images of varying resolutions (such as 16x16, 32x32, and 48x48 pixels) within a single file. Browsers load `favicon.ico` to display your site logo on browser tabs, bookmarks, and mobile home screen shortcuts.',
   },
   {
-    question: 'How do I install the generated favicon.ico on my website or web app?',
+    question: 'Does this converter preserve transparent backgrounds in the generated ICO file?',
     answer:
-      'Place the generated favicon.ico file in the root directory of your website (e.g. public/favicon.ico in Next.js or the root folder in WordPress and Apache). Then add the standard HTML tag inside your <head>: `<link rel="icon" href="/favicon.ico" sizes="any" />`. Modern browsers will detect and cache the multi-frame icon automatically.',
+      'Yes, 100%. Kagazo preserves the 8-bit alpha channel from your PNG file. Transparent logo cutouts remain completely transparent on browser tabs, avoiding ugly white or black border boxes.',
   },
   {
-    question: 'Does this converter preserve transparent backgrounds from my original PNG?',
+    question: 'What source image resolution is best for creating a favicon.ico?',
     answer:
-      'Yes, 100%. Kagazo generates 32-bit RGBA frames that preserve the full 8-bit alpha transparency channel. Semi-transparent gradients, curved logo borders, and drop shadows will composite seamlessly against dark or light browser tabs without unsightly white halos or black boxes.',
+      'Upload a square PNG image of at least 512x512 pixels. Starting with a high-resolution square graphic ensures that when the engine scales it down to 16x16, 32x32, and 48x48 pixels, edges and fine details remain crisp.',
   },
   {
-    question: 'How does Kagazo create a genuine multi-resolution ICO file compared to other tools?',
+    question: 'How do I add the downloaded favicon.ico to my website HTML?',
     answer:
-      'Many low-quality online tools simply rename a `.png` file to `.ico`, which breaks Windows shortcut parsing and causes legacy browser display bugs. Kagazo builds a true binary Microsoft Windows Icon (`ICONDIR`) data structure directly in memory, embedding discrete PNG and BMP bitstreams for each resolution target according to official Microsoft specification.',
+      'Place `favicon.ico` in the root folder of your website and insert `<link rel="icon" href="/favicon.ico" sizes="any">` inside your HTML `<head>` section. Modern browsers will automatically detect and display it.',
   },
   {
-    question: 'Are my brand logos or artwork stored on Kagazo servers?',
+    question: 'Can I use this tool to create Windows desktop application (.exe) icons?',
     answer:
-      'No. The entire icon compilation process executes directly inside your browser’s volatile memory using typed binary arrays (`Uint8Array` and `DataView`). No logos, images, or assets are ever uploaded to any external server or cloud database, guaranteeing complete intellectual property protection.',
+      'Yes. Kagazo packs standard Windows icon structures (including 16x16, 32x32, and 48x48 frames), making the output `.ico` file fully compatible with Visual Studio, Electron, PyInstaller, and Windows shortcut properties.',
+  },
+  {
+    question: 'What happens if my source PNG image is not a square (1:1 ratio)?',
+    answer:
+      'Favicons must be square. If you upload a rectangular image, basic converters squash it. Kagazo automatically fits your logo proportionally on a square transparent canvas to prevent distortion.',
+  },
+  {
+    question: 'Why does my browser still show the old favicon after updating favicon.ico?',
+    answer:
+      'Web browsers cache favicons aggressively. To view your updated icon, clear your browser cache, perform a hard refresh (Ctrl+F5 or Cmd+Shift+R), or open your website in an Incognito / Private window.',
+  },
+  {
+    question: 'Are my brand logos or icons uploaded to any server?',
+    answer:
+      'Never. 100% of the binary ICO packaging happens locally inside your browser memory using typed array buffers. No files are ever transmitted across external networks.',
+  },
+  {
+    question: 'Does Kagazo add any watermarks to generated ICO files?',
+    answer:
+      'No. All generated favicons are 100% clean, professional, and ready for commercial production.',
+  },
+  {
+    question: 'Is this PNG to ICO converter completely free?',
+    answer:
+      'Yes, 100% free forever with no account required, no subscription paywalls, and unlimited downloads.',
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    step: 1,
+    title: 'Upload Square PNG Logo',
+    desc: 'Select or drag-and-drop your square brand logo or icon (preferably 512x512 PNG with transparency).',
+  },
+  {
+    step: 2,
+    title: 'Select Favicon Dimensions',
+    desc: 'The engine automatically bundles standard 16x16, 32x32, and 48x48 pixel resolution frames.',
+  },
+  {
+    step: 3,
+    title: 'Preserve 8-Bit Alpha Transparency',
+    desc: 'Transparent backgrounds are maintained without jagged edges or dark background clipping.',
+  },
+  {
+    step: 4,
+    title: 'Multi-Resolution Binary Packing',
+    desc: 'The tool constructs a standard multi-frame Microsoft ICO binary container in browser RAM.',
+  },
+  {
+    step: 5,
+    title: 'Download Ready favicon.ico',
+    desc: 'Download your multi-resolution `favicon.ico` file ready for instant deployment to your website or app.',
+  },
+];
+
+const COMMON_ERRORS = [
+  {
+    badge: 'Error: Blurry Favicon on Retina Screens',
+    title: 'Single 16x16 Frame Restriction',
+    desc: 'Saving only a 16x16 frame causes severe pixelation on high-DPI screens. Kagazo packs multiple resolutions (16px, 32px, 48px) into one file.',
+  },
+  {
+    badge: 'Error: Distorted / Squashed Icon',
+    title: 'Non-Square Source Aspect Ratio',
+    desc: 'Uploading wide banners squashes icons horizontally. Kagazo auto-fits non-square images proportionally onto a square transparent canvas.',
+  },
+  {
+    badge: 'Error: Black Background Behind Logo',
+    title: 'Improper Alpha Channel Conversion',
+    desc: 'Basic tools drop transparency when writing ICO headers. Kagazo strictly preserves 32-bit RGBA channels for transparent icons.',
+  },
+  {
+    badge: 'Error: Browser Caching Stale Favicons',
+    title: 'Aggressive Browser Cache Retention',
+    desc: 'Browsers cache favicons for weeks. Hard-refresh (Ctrl+F5) or test in an incognito window to inspect newly deployed icons.',
   },
 ];
 
@@ -104,38 +171,29 @@ export default function PngToIcoPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Kagazo PNG to ICO Favicon Generator Online Free',
+        name: 'PNG to ICO Converter Online Free',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/png-to-ico',
-        applicationCategory: 'UtilityApplication',
-        operatingSystem: 'All',
         offers: {
           '@type': 'Offer',
           price: '0.00',
-          priceCurrency: 'INR',
+          priceCurrency: 'USD',
         },
         description:
-          'Convert PNG images to genuine multi-resolution Windows Favicon .ico files online with 16x16, 32x32, and 48x48 frames and in-browser RAM privacy.',
+          'Convert PNG images to multi-size ICO favicon format online free with transparency preservation and 100% in-browser privacy.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Generate a Multi-Resolution Favicon.ico from PNG',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Transparent PNG Logo',
-            text: 'Drag and drop your square PNG logo (recommended 512×512 px) into the converter.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Binary Multi-Frame Compilation',
-            text: 'The engine downsamples the image to 16×16, 32×32, and 48×48 frames and compiles a standard Windows ICONDIR payload.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Favicon.ico',
-            text: 'Download the compiled favicon.ico file ready for immediate deployment to your website root.',
-          },
-        ],
+        name: 'How to Convert PNG to ICO Online in 5 Steps',
+        description:
+          'Step-by-step instructions to create multi-resolution favicon.ico files from PNG images.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -166,7 +224,7 @@ export default function PngToIcoPage() {
           {
             '@type': 'ListItem',
             position: 3,
-            name: 'PNG to ICO Favicon Generator',
+            name: 'PNG to ICO',
             item: 'https://kagazo.in/tools/png-to-ico',
           },
         ],
@@ -184,190 +242,192 @@ export default function PngToIcoPage() {
       />
 
       <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
+        {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">Home</Link>
+          <Link href="/" className="hover:text-primary transition-colors font-medium">
+            Home
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">Tools</Link>
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <span className="text-primary font-bold">PNG to ICO</span>
         </nav>
 
+        {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <Sparkles className="w-4 h-4 text-primary shrink-0" />
-            <span>Multi-Resolution Windows &amp; Web Favicon Engine</span>
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>Multi-Resolution Windows &amp; Favicon Studio (PNG to ICO)</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-text-main tracking-tight leading-tight">
-            PNG to ICO Favicon Generator Online Free
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>PNG to ICO </span>
+            <span className="text-primary">Converter Online Free</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
-            Convert PNG logos into genuine multi-resolution <strong>favicon.ico</strong> files. Automatically embeds 16×16, 32×32, and 48×48 frames with full 32-bit alpha transparency.
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Convert PNG images to <strong>ICO favicon format</strong> online free. Pack multi-resolution frames (16x16, 32x32, 48x48) with full alpha transparency for websites and Windows apps.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser RAM Privacy
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Layers className="w-4 h-4 text-primary" /> Bundled 16×16, 32×32, 48×48
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Globe2 className="w-4 h-4 text-primary" /> Browser &amp; Windows Compatible
-            </span>
-          </div>
         </header>
 
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <ImageConverterMatrixEngine
-              initialSourceFormat="png"
-              initialTargetFormat="ico"
-              fixedTargetFormat={true}
-              toolHeading="Convert PNG to Favicon ICO"
-              toolSubheading="Upload a square PNG image (ideally 512×512) to compile a genuine multi-resolution favicon.ico."
-            />
+            <ImageConverterMatrixEngine initialTargetFormat="ico" />
 
+            {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Frame Specification Matrix */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Layers className="w-5 h-5 text-primary" />
-                  Embedded Multi-Resolution Frame Architecture
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Multi-Resolution Favicon Packing
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Professional Cross-Platform Icon Bundling in Browser RAM
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  How Kagazo compiles true multi-frame binary .ico structures for razor-sharp cross-platform rendering.
-                </p>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                A single 16x16 icon looks pixelated on Retina screens and Windows desktop shortcuts. Kagazo bundles multiple resolution layers into a unified binary container for flawless rendering.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Layers className="w-4 h-4" /> Multi-Size Packing
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Embeds 16x16, 32x32, and 48x48 frames in a single standard ICO container.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <FileImage className="w-4 h-4" /> 100% Alpha Support
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Transparent backgrounds remain crisp without black outlines or halo fringes.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Favicon packing runs in local device RAM. Brand assets are never uploaded.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Technical Specification Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    Standard ICO Resolution Matrix &amp; Usage
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                    Industry standard resolution layers bundled within Microsoft ICO containers.
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
+                  ICO Standards
+                </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="border-b border-surface-darker bg-surface/60">
-                      <th className="py-3 px-4 font-bold text-text-main">Frame Size</th>
-                      <th className="py-3 px-4 font-bold text-text-main">Color Depth</th>
-                      <th className="py-3 px-4 font-bold text-primary">Target Platform &amp; Surface</th>
-                      <th className="py-3 px-4 font-bold text-emerald-700">Display Priority</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-semibold">
+                      <th className="py-3 px-3">Resolution Layer</th>
+                      <th className="py-3 px-3">Primary Target</th>
+                      <th className="py-3 px-3">Significance</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker">
-                    {ICO_FRAME_SPECS.map((row, idx) => (
-                      <tr key={idx} className="hover:bg-surface/30 transition-colors">
-                        <td className="py-3.5 px-4 font-semibold text-text-main">{row.dimension}</td>
-                        <td className="py-3.5 px-4 text-text-main/80">{row.bitDepth}</td>
-                        <td className="py-3.5 px-4 font-medium text-primary">{row.platformTarget}</td>
-                        <td className="py-3.5 px-4 text-emerald-700 font-medium">{row.importance}</td>
+                  <tbody className="divide-y divide-surface-darker text-text-main/80">
+                    {ICO_RESOLUTION_MATRIX.map((row, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-3 font-semibold text-text-main">{row.dimensions}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/80">{row.useCase}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/70">{row.significance}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </section>
 
-            {/* Implementation Code Snippet Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Code2 className="w-5 h-5 text-primary" />
-                  Website Implementation &amp; HTML Head Setup
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Standard implementation snippet for Next.js, React, HTML5, and WordPress.
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Webmaster Tip:</strong> Name your downloaded file <code>favicon.ico</code> and place it in the root directory of your website for automatic browser discovery.
                 </p>
               </div>
+            </section>
 
-              <div className="p-4 sm:p-5 rounded-2xl bg-surface border border-surface-darker space-y-3 font-mono text-xs text-text-main">
-                <div className="flex items-center justify-between text-[11px] text-text-main/60 font-sans border-b border-surface-darker pb-2">
-                  <span>HTML &lt;head&gt; Tag</span>
-                  <span className="text-primary font-semibold">Standard Modern Favicon</span>
-                </div>
-                <pre className="overflow-x-auto py-2 text-text-main leading-relaxed">
-                  {`<!-- Place favicon.ico in your root /public folder -->\n<link rel="icon" href="/favicon.ico" sizes="any" />`}
-                </pre>
-              </div>
+            {/* How to Use Section in 5 Steps */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Convert PNG to ICO in 5 Steps
+              </h2>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <h3 className="font-bold text-sm text-text-main">📁 Root Deployment</h3>
-                  <p className="text-text-main/70 leading-relaxed">
-                    Search engine web crawlers (Googlebot, Bingbot) automatically request <code>/favicon.ico</code> from the domain root. Placing your compiled file in root ensures fast indexing.
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <h3 className="font-bold text-sm text-text-main">🎨 Crisp Transparency</h3>
-                  <p className="text-text-main/70 leading-relaxed">
-                    Full 8-bit alpha preservation guarantees your logo will look immaculate in both dark mode and light mode browser chrome.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {HOW_TO_STEPS.map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      {s.step}
+                    </div>
+                    <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">{s.title}</h3>
+                    <p className="text-xs text-text-main/75 leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 
-            {/* Step-by-Step Workflow */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <FileCheck2 className="w-5 h-5 text-primary" />
-                  How to Create a Favicon.ico from PNG in 3 Steps
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Generate standards-compliant multi-resolution website icons instantly.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    01
+            {/* Common Errors & Troubleshooting Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common Favicon Errors and How Kagazo Fixes Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed">{err.desc}</p>
                   </div>
-                  <h3 className="font-bold text-sm text-text-main">Upload Square PNG</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Select a high-resolution square PNG logo (512×512 or 256×256 pixels works best).
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    02
-                  </div>
-                  <h3 className="font-bold text-sm text-text-main">Binary Compilation</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    The engine automatically downsamples and packages 16px, 32px, and 48px frames into an ICO stream.
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    03
-                  </div>
-                  <h3 className="font-bold text-sm text-text-main">Download &amp; Deploy</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Save your genuine favicon.ico file and drop it into your website root directory.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Comprehensive FAQs */}
+            {/* Deep 10 FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
               <div className="space-y-1">
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions About Favicon ICO Files
+                  Frequently Asked Questions (PNG to ICO Conversion)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  Everything you need to know about Windows icon headers, browser rendering, and deployment.
+                  Detailed technical insights on favicon packing, multi-resolution containers, and installation.
                 </p>
               </div>
 
-              <div className="space-y-4">
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <div key={idx} className="p-5 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                    <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                  <div key={idx} className="py-4 space-y-2">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q{idx + 1}.</span>
                       {faq.question}
                     </h3>
-                    <p className="text-xs text-text-main/80 leading-relaxed pl-6">
+                    <p className="text-xs sm:text-sm text-text-main/80 pl-6 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -376,39 +436,51 @@ export default function PngToIcoPage() {
             </section>
           </main>
 
+          {/* Sticky Sidebar */}
           <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
-            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-3">
-              <span className="text-xs font-bold text-text-main uppercase tracking-wider">Related Converters</span>
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-4">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related Converters
+              </span>
               <div className="space-y-1.5">
-                <Link href="/tools/png-to-webp" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  PNG to WebP
+                <Link
+                  href="/tools/png-to-webp"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  PNG to WebP Converter
                 </Link>
-                <Link href="/tools/png-to-jpg" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  PNG to JPG
+                <Link
+                  href="/tools/jpg-to-png"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  JPG to PNG Converter
                 </Link>
-                <Link href="/tools/jpg-to-png" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  JPG to PNG
+                <Link
+                  href="/tools/png-to-jpg"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  PNG to JPG Converter
                 </Link>
-                <Link href="/tools/image-optimizer" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  Image Optimizer
-                </Link>
-                <Link href="/tools/remove-background" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  Remove Background
+                <Link
+                  href="/tools/image-converter"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  Image Converter Matrix
                 </Link>
               </div>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-800">
-                <Lock className="w-4 h-4 text-emerald-600" />
-                <span>Client Privacy Guarantee</span>
-              </div>
-              <p className="text-[11px] text-text-main/70 leading-relaxed">
-                Favicon binary compilation executes 100% inside your browser memory. Zero brand assets are uploaded to any server.
-              </p>
             </div>
 
             <AdSlot slot="sidebar" />
+
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-4 space-y-2">
+              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
+                <Lock className="w-3.5 h-3.5 shrink-0" />
+                <span>100% In-Memory RAM Privacy</span>
+              </div>
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Favicons are generated in local device RAM. No brand logos or icons are ever uploaded to cloud servers.
+              </p>
+            </div>
           </aside>
         </div>
       </div>

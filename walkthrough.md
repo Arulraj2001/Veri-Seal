@@ -527,8 +527,124 @@ The root container widths of the following 5 Category 4 engines were updated to 
   - Injected complete `BreadcrumbList` structured data.
 
 ### Verification Results
-- **TypeScript Compiler**: `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)** across all 20 Category 4 tools.
-- **Ad Frequency & Placement**: Exactly 1 native ad between engine and content (`post_download`), 1 in sticky rail (`sidebar`), 0 internal duplicate engine ads, 0 stacked in-content ads (all 20 tools strictly `['post_download', 'sidebar']`).
-- **Data Completeness**: 20/20 tools verified with `2-Col: True`, `Table: True`, `FAQs: 5+`, `Schemas: True`.
+---
 
+## 8. Category 5: Developer & Code Studio (`developer_code`) Full Audit & Standardization
 
+### Scope & Criteria
+All 14 tools in Category 5 were comprehensively audited and upgraded to adhere to the gold-standard blueprint:
+1. **Full-Width Edge-to-Edge Alignment**: Verified that all 7 engine root containers (`JsonStudioEngine`, `HtmlCssJsMinifierEngine`, `SqlFormatterEngine`, `MarkdownStudioEngine`, `Base64StudioEngine`, `UrlEncoderEngine`, `HtmlEntityEngine`) use `w-full` with zero restrictive `max-w-*` constraints.
+2. **Standard Ad Placement & Zero Stacked Ads**: Exactly 1 post-action ad (`<AdSlot slot="post_download" />`) between engine and educational content, plus 1 sidebar ad (`<AdSlot slot="sidebar" />`) in the sticky sidebar rail. Zero in-content duplicate ads (`<AdSlot slot="in_content" />`).
+3. **Master 2-Column Responsive Layout**: `max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8`, centered hero header with badge, ambient glow, and sticky right rail (`aside lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28`).
+4. **Technical Specification & Comparison Tables**: Every tool page includes a responsive HTML `<table>` (RFC specifications, compression benchmarks, syntax escape matrices, encoding overheads).
+5. **Deep On-Page SEO & Structured Data**: Complete publish-ready technical guides, 5+ comprehensive FAQs (3–5 sentences each), and 4 JSON-LD schemas per tool (`WebApplication`, `HowTo`, `FAQPage`, `BreadcrumbList`).
+
+### Category 5 Tools Completed (14/14)
+1. **`/tools/json-formatter`**: Master 2-column layout, JSON vs JSON5 vs YAML specification table, common syntax errors guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+2. **`/tools/json-validator`**: Master 2-column layout, Error Diagnostics Matrix table (signatures, causes, fixes), RFC 8259 rules guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+3. **`/tools/json-beautifier`**: Master 2-column layout, Indentation Standards Matrix table (2-space, 4-space, Tab, Minified), key sorting guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+4. **`/tools/html-minifier`**: Master 2-column layout, HTML Minification Optimization Matrix table, Core Web Vitals (FCP/LCP) impact guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+5. **`/tools/css-minifier`**: Master 2-column layout, CSS AST Minification Benchmarks table, render-blocking stylesheet latency guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+6. **`/tools/js-minifier`**: Master 2-column layout, JavaScript AST Optimization Benchmarks table, Total Blocking Time (TBT) and Interaction to Next Paint (INP) guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+7. **`/tools/sql-formatter`**: Master 2-column layout, SQL Dialect Syntax & Feature Matrix table (ANSI, PostgreSQL, MySQL, T-SQL, BigQuery), CTEs and query optimization guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+8. **`/tools/markdown-to-html`**: Master 2-column layout, Markdown Syntax to Semantic HTML Mapping Matrix table, split-pane GFM guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+9. **`/tools/base64-encode`**: Master 2-column layout, Base64 Encoding Specifications & Overhead Matrix table (RFC 4648, URL-Safe, Data URIs), 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+10. **`/tools/base64-decode`**: Master 2-column layout, Base64 Decoding & Format Detection Matrix table, auto-padding correction guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+11. **`/tools/url-encode`**: Master 2-column layout, URI Reserved Characters & Percent-Encoding Matrix table (RFC 3986), parameter inspector guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+12. **`/tools/url-decode`**: Master 2-column layout, URL Percent-Decoding Matrix & Token Resolution table, URIError troubleshooting guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+13. **`/tools/html-entity-encoder`**: Master 2-column layout, HTML Entity Escaping & Security Threat Matrix table, OWASP XSS prevention guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+14. **`/tools/html-entity-decoder`**: Master 2-column layout, HTML Entity Decoding Matrix & Unicode Mapping table, double-escaping resolution guide, 5 deep FAQs, post-action AdSlot, and full JSON-LD schemas.
+
+### Automated Verification Results
+- **Layout & Ads Compliance**:
+  - `2-Column Grid (lg:grid-cols-12)`: 14/14 Tools (100%)
+  - `Post-Action Ad (<AdSlot slot="post_download" />)`: 14/14 Tools (Exactly 1 per tool)
+  - `Sidebar Ad (<AdSlot slot="sidebar" />)`: 14/14 Tools (Exactly 1 per tool)
+  - `In-Content Duplicate Ads (<AdSlot slot="in_content" />)`: 0 across all 14 tools (Zero stacked ads)
+  - `Technical Comparison Tables (<table>)`: 14/14 Tools (100%)
+  - `FAQ Count`: 14/14 Tools have at least 5 deep FAQs (100%)
+  - `Structured Schemas`: WebApplication (14/14), HowTo (14/14), FAQPage (14/14), BreadcrumbList (14/14)
+- **TypeScript Compiler**: `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)**.
+
+---
+
+## 9. Comprehensive Category 1 Benchmark Upgrade: Category 4 (20 Tools) & Category 5 (14 Tools)
+
+### The Category 1 Gold Standard Blueprint
+Every single tool across Category 4 (Image, Format & Media Tools) and Category 5 (Developer & Code Studio) was upgraded to match the exact visual layout, educational depth, and on-page SEO standards of the flagship Category 1 tools (`/tools/ssc-photo-signature-resizer`):
+
+1. **Two-Tone Animated Hero Header**:
+   - Live pulsing status indicator (`<span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />`).
+   - Two-tone H1 headline (`<span>... </span><span className="text-primary">...</span>`).
+   - Contextual lead paragraph highlighting privacy, zero-cloud RAM processing, and specific regulatory or technical standards.
+2. **Key Differentiators Showcase**:
+   - Dedicated 3-card feature grid with icons and technical benefits (`rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8`).
+3. **Official Technical / Specification Table**:
+   - Responsive HTML `<table>` detailing official portal rules, RFC standards, coordinate boundaries, or benchmark matrices.
+   - Authoritative notice alert box (`Info` or `ShieldCheck`) providing operator-level guidance.
+4. **Visible 5-Step Practical How-To Guide**:
+   - Dedicated visual `<section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">` with `<h2>How to [Action] in 5 Steps</h2>`.
+   - 5 numbered circular step cards (`1` to `5`, `w-7 h-7 rounded-full bg-primary text-white text-xs font-bold`) across a responsive grid (`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2`).
+5. **Common Errors & Troubleshooting Section**:
+   - Dedicated visual `<section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">` with `<h2>Common ... Errors and How Kagazo Fixes Them</h2>`.
+   - 4 actionable error cards with colored pill badges (`<span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">Error: ...</span>`).
+6. **10 Comprehensive FAQs**:
+   - Exactly 10 deep, authoritative FAQs per tool (3–5 sentences each, matching Q1 to Q10).
+7. **Complete Structured Data (JSON-LD)**:
+   - `WebApplication` / `SoftwareApplication` with free pricing offers.
+   - `HowTo` schema matching all 5 visible numbered steps.
+   - `FAQPage` schema matching all 10 deep FAQs.
+   - `BreadcrumbList` schema with Home &rarr; Tools &rarr; Tool Name breadcrumbs.
+8. **Strict Ad Placement & Layout**:
+   - Exactly 1 `<AdSlot slot="post_download" />` between engine and content.
+   - Exactly 1 `<AdSlot slot="sidebar" />` in the sticky sidebar rail.
+   - Zero `<AdSlot slot="in_content" />` or internal duplicate stacked ads.
+   - Master 2-column layout (`max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8`, sticky sidebar rail).
+
+### All 34 Upgraded Tools
+
+#### Category 5: Developer & Code Studio (14/14 Tools)
+1. [`app/tools/json-formatter/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/json-formatter/page.tsx)
+2. [`app/tools/json-validator/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/json-validator/page.tsx)
+3. [`app/tools/json-beautifier/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/json-beautifier/page.tsx)
+4. [`app/tools/html-minifier/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/html-minifier/page.tsx)
+5. [`app/tools/css-minifier/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/css-minifier/page.tsx)
+6. [`app/tools/js-minifier/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/js-minifier/page.tsx)
+7. [`app/tools/sql-formatter/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/sql-formatter/page.tsx)
+8. [`app/tools/markdown-to-html/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/markdown-to-html/page.tsx)
+9. [`app/tools/base64-encode/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/base64-encode/page.tsx)
+10. [`app/tools/base64-decode/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/base64-decode/page.tsx)
+11. [`app/tools/url-encode/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/url-encode/page.tsx)
+12. [`app/tools/url-decode/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/url-decode/page.tsx)
+13. [`app/tools/html-entity-encoder/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/html-entity-encoder/page.tsx)
+14. [`app/tools/html-entity-decoder/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/html-entity-decoder/page.tsx)
+
+#### Category 4: Image, Format & Media Tools (20/20 Tools)
+1. [`app/tools/compress-image-to-20kb/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/compress-image-to-20kb/page.tsx)
+2. [`app/tools/compress-image-to-50kb/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/compress-image-to-50kb/page.tsx)
+3. [`app/tools/compress-image-to-100kb/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/compress-image-to-100kb/page.tsx)
+4. [`app/tools/compress-image-to-200kb/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/compress-image-to-200kb/page.tsx)
+5. [`app/tools/compress-image-to-1mb/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/compress-image-to-1mb/page.tsx)
+6. [`app/tools/compress-image-exact-kb/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/compress-image-exact-kb/page.tsx)
+7. [`app/tools/change-image-dpi/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/change-image-dpi/page.tsx)
+8. [`app/tools/heic-to-jpg/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/heic-to-jpg/page.tsx)
+9. [`app/tools/remove-background/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/remove-background/page.tsx)
+10. [`app/tools/image-optimizer/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/image-optimizer/page.tsx)
+11. [`app/tools/image-converter/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/image-converter/page.tsx)
+12. [`app/tools/jpg-to-png/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/jpg-to-png/page.tsx)
+13. [`app/tools/png-to-jpg/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/png-to-jpg/page.tsx)
+14. [`app/tools/png-to-webp/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/png-to-webp/page.tsx)
+15. [`app/tools/webp-to-png/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/webp-to-png/page.tsx)
+16. [`app/tools/png-to-ico/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/png-to-ico/page.tsx)
+17. [`app/tools/batch-photo-resizer/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/batch-photo-resizer/page.tsx)
+18. [`app/tools/color-converter/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/color-converter/page.tsx)
+19. [`app/tools/color-picker/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/color-picker/page.tsx)
+20. [`app/tools/youtube-thumbnail-downloader/page.tsx`](file:///c:/Users/samue/OneDrive/Desktop/veriseal/app/tools/youtube-thumbnail-downloader/page.tsx)
+
+### Verification & Audit Results
+- **Automated Verification Script (`scratch/verify_all_34.py`)**:
+  - Category 5: **14/14 tools passed (100%)**
+  - Category 4: **20/20 tools passed (100%)**
+  - Total: **34/34 tools passed (100%)**
+- **TypeScript Compiler**:
+  - `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)**.

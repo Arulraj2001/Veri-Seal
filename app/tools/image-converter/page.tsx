@@ -8,55 +8,164 @@ import {
   Lock,
   Sparkles,
   ArrowRightLeft,
-  FileCheck,
-  Globe2,
-  Archive,
+  FileCheck2,
+  HelpCircle,
+  CheckCircle2,
+  FileImage,
+  Download,
+  Layers,
+  Palette,
+  AlertTriangle,
+  Info,
 } from 'lucide-react';
 import { ImageConverterMatrixEngine } from '@/components/tools/ImageConverterMatrixEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Image Converter Online Free - Convert PNG, JPG, WebP, ICO, BMP, GIF | Kagazo',
+  title: 'Free Image Converter Online | Convert JPG, PNG, WebP, ICO | Kagazo',
   description:
-    'Convert images online for free between PNG, JPG, WebP, ICO, BMP, and GIF. Generate real multi-resolution Favicon ICO files, batch convert photos, and download as ZIP with 100% in-browser RAM privacy.',
+    'Convert images between JPG, PNG, WebP, and ICO formats online free. Fast batch processing, custom quality sliders, transparency matte controls, and 100% in-browser privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/image-converter',
   },
   openGraph: {
-    title: 'Image Converter Online Free - Convert PNG, JPG, WebP, ICO | Kagazo',
+    title: 'Free Image Converter Online | Kagazo',
     description:
-      'Universal image format converter. Convert PNG to JPG, WebP to PNG, PNG to Favicon ICO, and more with 100% client privacy.',
+      'Universal image converter matrix for JPG, PNG, WebP, and ICO formats with zero cloud uploads.',
     url: 'https://kagazo.in/tools/image-converter',
     siteName: 'Kagazo',
     type: 'website',
   },
 };
 
+const FORMAT_MATRIX = [
+  {
+    format: 'JPEG (JPG)',
+    bestFor: 'Photos, camera snaps, exam submissions',
+    transparency: 'No (Solid background required)',
+    compression: 'Lossy DCT (50–80% smaller)',
+  },
+  {
+    format: 'PNG',
+    bestFor: 'Logos, vector icons, graphics with text',
+    transparency: 'Yes (Full 8-bit alpha channel)',
+    compression: 'Lossless DEFLATE (Pixel-perfect)',
+  },
+  {
+    format: 'WebP',
+    bestFor: 'Modern websites, Core Web Vitals, speed',
+    transparency: 'Yes (Lossy & lossless alpha)',
+    compression: 'Modern predictive coding (25–35% smaller than JPG)',
+  },
+  {
+    format: 'ICO',
+    bestFor: 'Website favicons, Windows desktop shortcuts',
+    transparency: 'Yes (Multi-resolution container)',
+    compression: 'Multi-frame container (16x16 to 256x256)',
+  },
+];
+
 const FAQS = [
   {
-    question: 'What image formats can I convert using Kagazo?',
+    question: 'Which image formats does Kagazo support for conversion?',
     answer:
-      'You can convert between PNG, JPG/JPEG, WebP, ICO (multi-res 16x16, 32x32, 48x48 Favicon), BMP, and GIF. All conversions run directly in your browser without uploading to any server.',
+      'Kagazo converts bi-directionally across all major web and system image formats, including JPEG (JPG), PNG, WebP, ICO, and HEIC. You can convert between any combination with custom quality controls and format-specific settings.',
   },
   {
-    question: 'How does Kagazo create a genuine multi-resolution ICO Favicon file?',
+    question: 'What happens to transparent backgrounds when converting PNG to JPG?',
     answer:
-      'Unlike generic online tools that merely rename a PNG file to .ico, Kagazo constructs a real binary ICONDIR structure containing 16×16, 32×32, and 48×48 pixel frames in a single file. This ensures crisp rendering on Windows taskbars, desktop shortcuts, and browser tabs.',
+      'Because the JPEG format does not support alpha transparency channels, transparent areas must be filled with a solid color. Kagazo automatically blends transparent pixels onto a pure white (#FFFFFF) background matte, preventing the ugly solid black backgrounds produced by basic converters.',
   },
   {
-    question: 'What happens to transparency when converting transparent PNG to JPG?',
+    question: 'Can I convert multiple images simultaneously in batch mode?',
     answer:
-      'Since the JPEG format does not support alpha transparency, Kagazo automatically paints a clean, solid white background behind your transparent artwork, ensuring your subject remains sharp without black artifact halos.',
+      'Yes. You can drag and drop dozens of images at once. Kagazo processes your files in parallel using multi-threaded browser web workers, allowing 1-click batch downloads with zero server delays.',
   },
   {
-    question: 'Can I batch convert multiple photos at once?',
+    question: 'How do I create a website favicon using this tool?',
     answer:
-      'Yes! You can drag and drop dozens of images simultaneously. You can download individual converted files or click "Download ZIP" to download everything in a single archive.',
+      'Select "ICO" as your target format and upload a square logo or icon. Kagazo packs multiple standard favicon resolutions (16x16, 32x32, 48x48) into a unified `favicon.ico` binary file ready for immediate website deployment.',
   },
   {
-    question: 'Is my data private and secure?',
+    question: 'Will converting between formats reduce the visual quality of my images?',
     answer:
-      '100%. Every conversion runs entirely in your local browser’s memory (RAM). Zero bytes are transmitted to external servers, making it 100% safe for confidential documents, IDs, and personal photos.',
+      'Converting to lossless formats like PNG preserves 100% of pixel fidelity. When converting to lossy formats like JPG or WebP, Kagazo lets you adjust the quality slider (defaulting to a crisp 90–95%), ensuring high visual sharpness without unnecessary file bloat.',
+  },
+  {
+    question: 'Can I convert mobile phone photos (iPhone HEIC or Android JPG)?',
+    answer:
+      'Yes. Upload photos directly from any smartphone. Kagazo normalizes mobile color spaces and exports universally compatible files ready for upload to portals or sharing on messaging apps.',
+  },
+  {
+    question: 'Are my private photos and graphics uploaded to any cloud server?',
+    answer:
+      'Never. 100% of the image transcoding algorithms run client-side inside your browser’s volatile memory using HTML5 Canvas and WebAssembly. No files are ever saved or transmitted across external networks.',
+  },
+  {
+    question: 'Does Kagazo add any watermarks or branding to converted images?',
+    answer:
+      'No. All exported files are 100% clean, watermark-free, and suitable for official government applications, e-commerce stores, and professional design projects.',
+  },
+  {
+    question: 'How fast is in-browser image conversion compared to cloud converters?',
+    answer:
+      'Because files do not need to be uploaded to a remote server and downloaded again, conversion happens instantly on your device hardware, making it up to 10x faster than cloud-based alternatives.',
+  },
+  {
+    question: 'Is this multi-format image converter completely free to use?',
+    answer:
+      'Yes, 100% free forever. No subscriptions, no credits, no registrations, and no daily conversion limits.',
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    step: 1,
+    title: 'Upload Source Images',
+    desc: 'Select or drag-and-drop your images in any format (JPG, PNG, WebP, HEIC, ICO supported).',
+  },
+  {
+    step: 2,
+    title: 'Select Desired Target Format',
+    desc: 'Choose your desired output format (JPG, PNG, WebP, or ICO) from the format switcher tabs.',
+  },
+  {
+    step: 3,
+    title: 'Configure Quality & Alpha Matte',
+    desc: 'Adjust the compression quality slider and choose matte background colors for transparent files.',
+  },
+  {
+    step: 4,
+    title: 'Instant In-Memory Transcoding',
+    desc: 'The client-side engine converts pixels and packages metadata in volatile device RAM.',
+  },
+  {
+    step: 5,
+    title: 'Download Converted Assets',
+    desc: 'Download your converted images individually or in batch with zero watermarks or file size restrictions.',
+  },
+];
+
+const COMMON_ERRORS = [
+  {
+    badge: 'Error: Black Background on PNG to JPG',
+    title: 'Missing Alpha Matte Channel',
+    desc: 'JPEG lacks transparency, causing raw convertors to render transparent pixels black. Kagazo automatically replaces transparency with pure white (#FFFFFF).',
+  },
+  {
+    badge: 'Error: Distorted Website Favicon (.ico)',
+    title: 'Non-Square Source Dimensions',
+    desc: 'Uploading rectangular images to ICO causes horizontal squashing. Ensure your source logo is square (1:1 aspect ratio) for clean favicon rendering.',
+  },
+  {
+    badge: 'Error: Browser Freezing on Bulk Uploads',
+    title: 'Memory Exhaustion on Massive Files',
+    desc: 'Converting 50 heavy camera files at once can strain memory. Kagazo queues processing through background web workers to keep your browser responsive.',
+  },
+  {
+    badge: 'Error: Color Shift on Social Media',
+    title: 'Display P3 / CMYK Incompatibility',
+    desc: 'Images saved in CMYK or Display P3 look dull on web portals. Kagazo normalizes color profiles to standard sRGB for consistent vibrant colors.',
   },
 ];
 
@@ -65,44 +174,30 @@ export default function ImageConverterPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
-        name: 'Image Converter Online Free',
-        applicationCategory: 'MultimediaApplication',
+        '@type': 'WebApplication',
+        name: 'Free Image Converter Online',
+        applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/image-converter',
         offers: {
           '@type': 'Offer',
-          price: '0',
+          price: '0.00',
           priceCurrency: 'USD',
         },
         description:
-          'Universal online image converter supporting PNG, JPG, WebP, Favicon ICO, BMP, and GIF with batch download and client privacy.',
+          'Convert images between JPG, PNG, WebP, and ICO formats online free with 100% in-browser privacy.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Convert Images Online for Free',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Your Image Files',
-            text: 'Drag and drop single or multiple image files into the converter workspace.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select Output Format',
-            text: 'Choose your desired target format: JPG, PNG, WebP, ICO (Favicon), BMP, or GIF.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Convert in Browser',
-            text: 'Click Convert All to transform all images instantly in local memory.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Converted Images',
-            text: 'Download individual files or export the entire batch as a ZIP archive.',
-          },
-        ],
+        name: 'How to Convert Images Online in 5 Steps',
+        description:
+          'Step-by-step instructions to convert image formats with quality and transparency controls.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -143,10 +238,8 @@ export default function ImageConverterPage() {
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -169,235 +262,229 @@ export default function ImageConverterPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <Sparkles className="w-4 h-4 text-primary shrink-0" />
-            <span>Universal Image Format Converter • Multi-Res Favicon Engine</span>
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>Universal Multi-Format Image Converter Studio</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-text-main tracking-tight leading-tight">
-            Universal Image Converter Online
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Free Image Converter &amp; </span>
+            <span className="text-primary">Format Matrix Online</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
-            Convert photos and graphics between <strong>PNG, JPG, WebP, ICO, BMP, and GIF</strong>.
-            Preserve transparency, bundle multi-resolution favicons, and batch export with zero server uploads.
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Convert images between <strong>JPG</strong>, <strong>PNG</strong>, <strong>WebP</strong>, and <strong>ICO</strong> formats with automatic white matte background handling and 100% in-browser privacy.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser RAM Privacy
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Zap className="w-4 h-4 text-primary" /> Instant Client Conversion
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Archive className="w-4 h-4 text-primary" /> Multi-File ZIP Download
-            </span>
-          </div>
         </header>
 
-        {/* Studio Grid */}
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <ImageConverterMatrixEngine
-              initialSourceFormat="png"
-              initialTargetFormat="jpg"
-              toolHeading="Universal Image Converter Workspace"
-              toolSubheading="Upload PNG, JPG, WebP, GIF, or BMP files to convert to any format with batch support."
-            />
+            <ImageConverterMatrixEngine />
 
+            {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Popular Conversion Pairs Quick Links */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <ArrowRightLeft className="w-5 h-5 text-primary" />
-                  Popular Image Conversion Formats
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Universal Transcoding
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  High-Speed In-Browser Image Conversion Across All Formats
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Dedicated high-speed conversion pathways optimized for specific web and design workflows.
-                </p>
               </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Different platforms require different image formats: government forms require JPG, logos require PNG, and modern websites require WebP. Kagazo converts between them smoothly with zero server uploads.
+              </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                {[
-                  { title: 'PNG to JPG', href: '/tools/png-to-jpg', badge: 'Popular' },
-                  { title: 'JPG to PNG', href: '/tools/jpg-to-png', badge: 'Lossless' },
-                  { title: 'PNG to WebP', href: '/tools/png-to-webp', badge: 'Web Best' },
-                  { title: 'WebP to PNG', href: '/tools/webp-to-png', badge: 'Alpha' },
-                  { title: 'PNG to ICO', href: '/tools/png-to-ico', badge: 'Favicon' },
-                  { title: 'HEIC to JPG', href: '/tools/heic-to-jpg', badge: 'iPhone' },
-                  { title: 'Image Optimizer', href: '/tools/image-optimizer', badge: 'Compress' },
-                  { title: 'Exact KB Resizer', href: '/tools/compress-image-exact-kb', badge: 'Portals' },
-                ].map((item, idx) => (
-                  <Link
-                    key={idx}
-                    href={item.href}
-                    className="p-3.5 rounded-2xl bg-surface hover:bg-primary-light/40 border border-surface-darker hover:border-primary/40 transition-all flex flex-col justify-between gap-2 group"
-                  >
-                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors">
-                      {item.title}
-                    </span>
-                    <span className="text-[10px] font-mono font-bold text-primary bg-primary/10 px-2 py-0.5 rounded w-fit">
-                      {item.badge}
-                    </span>
-                  </Link>
-                ))}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <ArrowRightLeft className="w-4 h-4" /> Multi-Format Matrix
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Seamlessly convert between JPG, PNG, WebP, and multi-resolution ICO favicons in 1 click.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Palette className="w-4 h-4" /> Smart White Matte
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Automatically fills transparent backgrounds with pure white (#FFFFFF) when converting to JPEG.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    All conversion algorithms run in local RAM. Private photos and brand assets are never transmitted.
+                  </p>
+                </div>
               </div>
             </section>
 
-            {/* Image Format Matrix Comparison Table */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <ArrowRightLeft className="w-5 h-5 text-primary" />
-                  Image Format Capability &amp; Architecture Matrix
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Technical characteristics and optimal use cases for each supported image container.
-                </p>
+            {/* Technical Specification Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    Image Format Characteristics &amp; Compatibility Matrix
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                    Comparison of compression efficiency, transparency support, and ideal use cases.
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
+                  Format Matrix
+                </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="border-b border-surface-darker bg-surface/60">
-                      <th className="py-3 px-4 font-bold text-text-main">Format</th>
-                      <th className="py-3 px-4 font-bold text-text-main">Compression</th>
-                      <th className="py-3 px-4 font-bold text-primary">Transparency</th>
-                      <th className="py-3 px-4 font-bold text-emerald-700">Primary Strength</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-semibold">
+                      <th className="py-3 px-3">Format</th>
+                      <th className="py-3 px-3">Best Suited For</th>
+                      <th className="py-3 px-3">Transparency (Alpha)</th>
+                      <th className="py-3 px-3">Compression Architecture</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker">
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-bold text-text-main">PNG</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Lossless DEFLATE</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">8-bit Alpha Channel</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Logos, screenshots &amp; razor-sharp text</td>
-                    </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-bold text-text-main">JPG / JPEG</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Lossy DCT (Quantized)</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">Not Supported (White Matte)</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Universal photos, exam forms &amp; minimal size</td>
-                    </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-bold text-text-main">WebP</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Lossy &amp; Lossless VP8</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">Full Alpha Support</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">Modern web performance &amp; Google SEO (LCP)</td>
-                    </tr>
-                    <tr className="hover:bg-surface/30 transition-colors">
-                      <td className="py-3.5 px-4 font-bold text-text-main">ICO</td>
-                      <td className="py-3.5 px-4 text-text-main/80">Binary Multi-Frame</td>
-                      <td className="py-3.5 px-4 font-medium text-primary">32-bit RGBA</td>
-                      <td className="py-3.5 px-4 text-emerald-700 font-medium">16×16, 32×32, 48×48 Windows Favicons</td>
-                    </tr>
+                  <tbody className="divide-y divide-surface-darker text-text-main/80">
+                    {FORMAT_MATRIX.map((row, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-3 font-semibold text-text-main">{row.format}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/80">{row.bestFor}</td>
+                        <td className="py-3 px-3 font-medium text-emerald-700">{row.transparency}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/70">{row.compression}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Conversion Tip:</strong> When converting images for government portal uploads (SSC, UPSC, TNPSC), select <strong>JPG</strong> to ensure compliance with strict portal validators.
+                </p>
+              </div>
             </section>
 
-            {/* FAQs Accordion */}
+            {/* How to Use Section in 5 Steps */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Convert Images in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {HOW_TO_STEPS.map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      {s.step}
+                    </div>
+                    <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">{s.title}</h3>
+                    <p className="text-xs text-text-main/75 leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common Image Conversion Errors and How Kagazo Fixes Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Deep 10 FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
               <div className="space-y-1">
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <FileCheck className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions
+                  <HelpCircle className="w-5 h-5 text-primary" />
+                  Frequently Asked Questions (Image Converter Matrix)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  Detailed technical answers regarding image conversion, quality, and security.
+                  Comprehensive insights on format compatibility, transparency preservation, and batch conversion.
                 </p>
               </div>
 
-              <div className="divide-y divide-surface-darker/70">
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <details key={idx} className="group py-4 first:pt-0 last:pb-0">
-                    <summary className="flex items-center justify-between cursor-pointer list-none font-bold text-sm sm:text-base text-text-main group-hover:text-primary transition-colors">
-                      <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform shrink-0 ml-4" />
-                    </summary>
-                    <p className="mt-3 text-xs sm:text-sm text-text-main/80 leading-relaxed pl-2 border-l-2 border-primary/30">
+                  <div key={idx} className="py-4 space-y-2">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q{idx + 1}.</span>
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/80 pl-6 leading-relaxed">
                       {faq.answer}
                     </p>
-                  </details>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Sticky Sidebar Rail */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-3 sm:p-3.5 space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-surface-darker">
-                <span className="text-xs font-bold text-text-main uppercase tracking-wider">
-                  Converters
-                </span>
-                <span className="text-[10px] bg-primary-light text-primary font-bold px-1.5 py-0.5 rounded">
-                  Fast
-                </span>
-              </div>
-
+          {/* Sticky Sidebar */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-4">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related Converters
+              </span>
               <div className="space-y-1.5">
                 <Link
-                  href="/tools/png-to-jpg"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <span className="text-[11px] font-bold text-text-main group-hover:text-primary truncate">
-                    PNG to JPG
-                  </span>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    JPG
-                  </span>
-                </Link>
-
-                <Link
                   href="/tools/jpg-to-png"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <span className="text-[11px] font-bold text-text-main group-hover:text-primary truncate">
-                    JPG to PNG
-                  </span>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    PNG
-                  </span>
+                  JPG to PNG Converter
                 </Link>
-
+                <Link
+                  href="/tools/png-to-jpg"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  PNG to JPG Converter
+                </Link>
                 <Link
                   href="/tools/png-to-webp"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <span className="text-[11px] font-bold text-text-main group-hover:text-primary truncate">
-                    PNG to WebP
-                  </span>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    WebP
-                  </span>
+                  PNG to WebP Converter
                 </Link>
-
                 <Link
                   href="/tools/png-to-ico"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <span className="text-[11px] font-bold text-text-main group-hover:text-primary truncate">
-                    PNG to ICO Favicon
-                  </span>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    ICO
-                  </span>
+                  PNG to ICO Favicon
                 </Link>
               </div>
             </div>
 
             <AdSlot slot="sidebar" />
 
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-4 space-y-2">
               <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
                 <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>100% In-Browser Privacy</span>
+                <span>100% In-Memory RAM Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                Files are converted inside local browser volatile RAM. No server transmission or storage.
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Images are converted locally using client-side WebAssembly. No files are ever saved or transmitted to cloud servers.
               </p>
             </div>
           </aside>

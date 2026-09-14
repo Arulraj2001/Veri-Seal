@@ -15,36 +15,32 @@ import {
   Download,
   Layers,
   Palette,
+  AlertTriangle,
+  Info,
 } from 'lucide-react';
 import { ImageConverterMatrixEngine } from '@/components/tools/ImageConverterMatrixEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'PNG to JPG Converter Online Free - Pure White Matte & Fast | Kagazo',
+  title: 'PNG to JPG Converter Online Free | Pure White Matte & Fast | Kagazo',
   description:
-    'Convert PNG images to high-quality JPG format online for free. Automatic pure white background matte leveling, adjustable compression quality, batch processing, and 100% in-browser RAM privacy.',
+    'Convert PNG images to high-quality JPG format online free. Automatic pure white background matte leveling, adjustable compression quality, batch processing, and 100% in-browser RAM privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/png-to-jpg',
   },
   openGraph: {
-    title: 'PNG to JPG Converter Online Free - Pure White Matte & Fast | Kagazo',
+    title: 'PNG to JPG Converter Online Free | Kagazo',
     description:
       'Convert PNG to JPG instantly with automatic transparent-to-white background handling, custom quality control, and zero server uploads.',
     url: 'https://kagazo.in/tools/png-to-jpg',
     siteName: 'Kagazo',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'PNG to JPG Converter Online Free | Kagazo',
-    description:
-      'Convert PNG graphics and photos to optimized JPG format with clean alpha flattening and instant batch export.',
-  },
 };
 
 const FORMAT_COMPARISON = [
   {
-    feature: 'Compression Type',
+    feature: 'Compression Architecture',
     png: 'Lossless DEFLATE (LZ77 + Huffman coding)',
     jpg: 'Lossy DCT (Discrete Cosine Transform)',
     advantage: 'JPG achieves 50% to 80% smaller file sizes for photos',
@@ -58,48 +54,118 @@ const FORMAT_COMPARISON = [
   {
     feature: 'File Size Efficiency',
     png: 'Heavy file size for detailed photographic imagery',
-    jpg: 'Extremely lightweight and web-optimized',
-    advantage: 'JPG dramatically speeds up web page load times & email attachments',
-  },
-  {
-    feature: 'Color Encoding',
-    png: 'RGB / RGBA up to 48-bit color depth',
-    jpg: 'YCbCr with configurable chroma subsampling (4:2:0)',
-    advantage: 'High perceptual quality with minimal storage footprint',
+    jpg: 'Highly compact, adjustable quality sliders (80–100%)',
+    advantage: 'Drastically speeds up upload time on online portal forms',
   },
   {
     feature: 'Portal Compatibility',
-    png: 'Often rejected by government & exam portals (SSC, UPSC, TNPSC)',
-    jpg: 'Universally accepted standard across all official systems',
-    advantage: 'Guaranteed 100% submission compliance for official forms',
+    png: 'Frequently rejected by Indian and US exam portals',
+    jpg: '100% accepted across SSC, UPSC, TNPSC, and visa portals',
+    advantage: 'Guaranteed compliance with strict government upload guidelines',
   },
 ];
 
 const FAQS = [
   {
-    question: 'Why does my transparent PNG get a white background when converted to JPG?',
+    question: 'How does Kagazo prevent black backgrounds when converting transparent PNG to JPG?',
     answer:
-      'The international JPEG standard does not possess an alpha transparency channel; every pixel in a JPEG must contain explicit color data. When converting transparent or semi-transparent PNG images, Kagazo automatically paints a clean, high-contrast pure white (#FFFFFF) background matte beneath your artwork. This prevents the ugly black borders or corrupted dark boxes that inferior converters produce.',
+      'The JPEG format has no native concept of transparency. When basic converters strip the alpha channel, transparent pixels default to solid black (RGB 0,0,0). Kagazo automatically composites transparent pixels against a calibrated pure white background (#FFFFFF) before encoding, ensuring your logos and signatures appear crisp on a clean white surface.',
   },
   {
-    question: 'Will converting PNG to JPG decrease the file size of my image?',
+    question: 'Why do government and recruitment portals strictly reject PNG files?',
     answer:
-      'Yes, in the vast majority of photographic and complex graphic cases, converting from PNG to JPG will reduce your file size by 50% to 85%. While PNG stores pixel-by-pixel mathematical data without discarding any nuance, JPG uses lossy Discrete Cosine Transform compression to eliminate color frequencies invisible to the human eye, resulting in a drastically lighter file that uploads swiftly.',
+      'Portals like SSC, UPSC, IBPS, and State PSCs use legacy document verification databases optimized exclusively for JPEG binaries. Submitting a PNG—even if manually renamed with a `.jpg` extension—fails server-side MIME type header validation and triggers an immediate upload rejection error.',
   },
   {
-    question: 'Can I choose the output quality of the converted JPG file?',
+    question: 'How much smaller will my file be after converting from PNG to JPG?',
     answer:
-      'Yes! Kagazo provides an interactive quality slider ranging from 10% to 100%. For standard digital use, website banners, and email attachments, a quality setting of 80% to 90% offers the sweet spot between tiny file size and crisp visual fidelity. If you are submitting photographs to government portals with strict maximum KB limits, you can lower the quality to meet exact thresholds.',
+      'For photographic imagery, portraits, and scanned documents, converting from PNG to JPG typically reduces file size by 60% to 85%. For example, a heavy 4 MB PNG photo usually converts into an optimized 400–700 KB JPG at high 92% quality.',
   },
   {
-    question: 'Are my converted photos stored on Kagazo servers or databases?',
+    question: 'Can I choose the output JPEG quality level?',
     answer:
-      'No. Kagazo operates with complete sovereign client privacy. All file reading, canvas pixel rendering, alpha blending, and JPEG compression occur entirely inside your web browser’s volatile RAM memory. Your images are never uploaded to any remote server, saved to cloud storage, or tracked across sessions.',
+      'Yes. Kagazo provides an interactive quality slider ranging from 70% (maximum compression) to 100% (highest fidelity). The default setting of 92% provides the optimal balance between visual clarity and compact file size.',
   },
   {
-    question: 'Can I batch convert multiple PNG files into JPG at the same time?',
+    question: 'How can I convert a transparent signature PNG for an exam application?',
     answer:
-      'Yes. You can drag and drop dozens of PNG images simultaneously into the conversion workspace. Kagazo processes each image concurrently on background threads and lets you download individual JPG images or export the entire set in a single organized ZIP archive with one click.',
+      'Upload your signature PNG directly. Kagazo automatically renders it on a solid white canvas and outputs a portal-compliant JPEG file. You can then use our "Compress Image to 20KB" tool if strict byte limits apply.',
+  },
+  {
+    question: 'Can I convert multiple PNG files at once in batch?',
+    answer:
+      'Yes. Drag and drop multiple PNG files simultaneously. The engine processes them in parallel using browser web workers, allowing you to download all converted JPGs in seconds.',
+  },
+  {
+    question: 'Are my confidential document scans or photos uploaded to any server?',
+    answer:
+      'Never. Kagazo performs all image decoding, alpha compositing, and JPEG encoding 100% client-side inside your browser’s volatile memory. Your files never travel across the internet.',
+  },
+  {
+    question: 'Does converting PNG to JPG introduce noticeable compression artifacts?',
+    answer:
+      'At our default 92% quality setting, lossy compression artifacts are virtually invisible to the human eye. Fine facial details, printed text, and handwriting remain crisp and clear.',
+  },
+  {
+    question: 'Does this converter work on mobile phones (iPhone and Android)?',
+    answer:
+      'Yes. The tool is fully responsive and runs smoothly inside mobile Safari, Chrome, and Samsung Internet with full touch-friendly drag-and-drop support.',
+  },
+  {
+    question: 'Is this PNG to JPG converter completely free with zero watermarks?',
+    answer:
+      'Yes, 100% free with no registration, no subscription fees, no watermarks, and no conversion limits.',
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    step: 1,
+    title: 'Upload PNG Images',
+    desc: 'Select or drag-and-drop your PNG graphics, transparent cutouts, or photo scans into the uploader.',
+  },
+  {
+    step: 2,
+    title: 'Automatic Pure White Matte',
+    desc: 'The engine automatically composites transparent background pixels against a pure white (#FFFFFF) matte.',
+  },
+  {
+    step: 3,
+    title: 'Tune JPEG Quality Slider',
+    desc: 'Adjust the compression quality slider (default 92%) to balance file size against visual sharpness.',
+  },
+  {
+    step: 4,
+    title: 'Instant In-Memory Encoding',
+    desc: 'The client-side engine encodes a standards-compliant JFIF JPEG binary in local device RAM.',
+  },
+  {
+    step: 5,
+    title: 'Download Portal-Ready JPG',
+    desc: 'Download your converted JPEG files ready for instant submission to government and employment portals.',
+  },
+];
+
+const COMMON_ERRORS = [
+  {
+    badge: 'Error: Black Background Behind Logos',
+    title: 'Raw Transparency Stripping',
+    desc: 'Converting PNG to JPG without a background matte renders transparent areas pitch black. Kagazo automatically adds a clean pure white (#FFFFFF) backdrop.',
+  },
+  {
+    badge: 'Error: "File format not supported (PNG)"',
+    title: 'Uploading PNG to JPEG-Only Portals',
+    desc: 'Exam portals like SSC and UPSC reject PNG files. Renaming the extension fails validation. Kagazo exports genuine JFIF standard JPEG binaries.',
+  },
+  {
+    badge: 'Error: Blurry Text on Low-Quality JPG',
+    title: 'Over-Compressing Text Graphics',
+    desc: 'Setting quality too low causes ringing noise around letters. Kagazo defaults to 92% quality to keep text and fine signature strokes sharp.',
+  },
+  {
+    badge: 'Error: Gray Fringe Around Transparent Edges',
+    title: 'Unpremultiplied Alpha Blending',
+    desc: 'Rough matting leaves dark outlines around cutouts. Kagazo uses premultiplied alpha compositing to ensure clean, seamless edge blending.',
   },
 ];
 
@@ -109,38 +175,29 @@ export default function PngToJpgPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Kagazo PNG to JPG Converter Online Free',
+        name: 'PNG to JPG Converter Online Free',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/png-to-jpg',
-        applicationCategory: 'UtilityApplication',
-        operatingSystem: 'All',
         offers: {
           '@type': 'Offer',
           price: '0.00',
-          priceCurrency: 'INR',
+          priceCurrency: 'USD',
         },
         description:
-          'Convert PNG images to high-quality JPG format with white background leveling, custom compression, and in-browser RAM privacy.',
+          'Convert PNG images to high-quality JPG format online free with pure white matte background handling and 100% in-browser privacy.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Convert PNG Images to JPG Online for Free',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload PNG Images',
-            text: 'Drag and drop one or multiple PNG graphics or photos into the conversion canvas.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Automatic White Matte Flattening',
-            text: 'The engine parses alpha channels and composites transparent regions onto clean #FFFFFF white.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download JPG Files',
-            text: 'Download individual converted JPG files or download all files packaged in a single ZIP file.',
-          },
-        ],
+        name: 'How to Convert PNG to JPG Online in 5 Steps',
+        description:
+          'Step-by-step instructions to convert PNG images to JPG format with white matte transparency handling.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -171,7 +228,7 @@ export default function PngToJpgPage() {
           {
             '@type': 'ListItem',
             position: 3,
-            name: 'PNG to JPG Converter',
+            name: 'PNG to JPG',
             item: 'https://kagazo.in/tools/png-to-jpg',
           },
         ],
@@ -189,189 +246,194 @@ export default function PngToJpgPage() {
       />
 
       <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
+        {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">Home</Link>
+          <Link href="/" className="hover:text-primary transition-colors font-medium">
+            Home
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">Tools</Link>
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <span className="text-primary font-bold">PNG to JPG</span>
         </nav>
 
+        {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <Sparkles className="w-4 h-4 text-primary shrink-0" />
-            <span>High-Fidelity PNG to JPEG Converter</span>
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>Alpha Flattening &amp; Compression Engine (PNG to JPG)</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-text-main tracking-tight leading-tight">
-            PNG to JPG Converter Online Free
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>PNG to JPG </span>
+            <span className="text-primary">Converter Online Free</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
-            Convert PNG graphics to lightweight, high-compatibility JPG images. Automatically blends transparent alpha channels onto a crisp pure white background with custom compression controls.
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Convert PNG graphics to <strong>JPG format</strong> with automatic pure white (#FFFFFF) background matte leveling. Slash file sizes by 50–80% with 100% in-browser privacy.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser RAM Privacy
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Palette className="w-4 h-4 text-primary" /> Automatic White Matte Fill
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Zap className="w-4 h-4 text-primary" /> Instant Batch ZIP Download
-            </span>
-          </div>
         </header>
 
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <ImageConverterMatrixEngine
-              initialSourceFormat="png"
-              initialTargetFormat="jpg"
-              fixedTargetFormat={true}
-              toolHeading="Convert PNG to JPG"
-              toolSubheading="Upload transparent or solid PNG files to convert to standard JPG format."
-            />
+            <ImageConverterMatrixEngine initialTargetFormat="jpg" />
 
+            {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Technical Format Comparison Table */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <ArrowRightLeft className="w-5 h-5 text-primary" />
-                  Technical Comparison: PNG vs JPG Format Specifications
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Clean Alpha Flattening
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Eliminating Black Transparency Artifacts in JPEG Conversions
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Detailed architectural differences between lossy JPEG and lossless PNG image encoding.
-                </p>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Because JPEG files do not support transparency, naive converters render transparent cutouts with solid black boxes. Kagazo blends transparent pixels onto pure white (#FFFFFF), producing clean, portal-compliant documents.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Palette className="w-4 h-4" /> Pure White Matte
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Replaces transparent alpha channels with solid white (#FFFFFF) for portal compliance.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Zap className="w-4 h-4" /> 50–80% Smaller Files
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Slashes heavy PNG byte bloat into lightweight, fast-loading JPEG binaries.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    All conversion executes in local device RAM. Sensitive files are never sent across the web.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Technical Specification Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    PNG vs. JPG Format Comparison Matrix
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                    Architectural comparison of compression efficiency, alpha channels, and portal compliance.
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
+                  Format Matrix
+                </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="border-b border-surface-darker bg-surface/60">
-                      <th className="py-3 px-4 font-bold text-text-main">Feature / Parameter</th>
-                      <th className="py-3 px-4 font-bold text-text-main">PNG (Source)</th>
-                      <th className="py-3 px-4 font-bold text-primary">JPG / JPEG (Output)</th>
-                      <th className="py-3 px-4 font-bold text-emerald-700">Conversion Benefit</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-semibold">
+                      <th className="py-3 px-3">Comparison Metric</th>
+                      <th className="py-3 px-3">PNG Format</th>
+                      <th className="py-3 px-3">JPG / JPEG Format</th>
+                      <th className="py-3 px-3">Conversion Advantage</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker">
+                  <tbody className="divide-y divide-surface-darker text-text-main/80">
                     {FORMAT_COMPARISON.map((row, idx) => (
-                      <tr key={idx} className="hover:bg-surface/30 transition-colors">
-                        <td className="py-3.5 px-4 font-semibold text-text-main">{row.feature}</td>
-                        <td className="py-3.5 px-4 text-text-main/80">{row.png}</td>
-                        <td className="py-3.5 px-4 font-medium text-primary">{row.jpg}</td>
-                        <td className="py-3.5 px-4 text-emerald-700 font-medium">{row.advantage}</td>
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-3 font-semibold text-text-main">{row.feature}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/80">{row.png}</td>
+                        <td className="py-3 px-3 font-medium text-emerald-700">{row.jpg}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/70">{row.advantage}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </section>
 
-            {/* Educational Alpha Flattening & Quality Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Layers className="w-5 h-5 text-primary" />
-                  How Kagazo Solves Transparent PNG to JPG Conversion
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Preventing black artifacts through automated 2D HTML5 canvas alpha compositing.
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Portal Rule:</strong> Government exam portals mandate JPG files. Converting signatures and ID photos from PNG to JPG ensures strict server-side MIME type compliance.
                 </p>
               </div>
+            </section>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <span className="w-6 h-6 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs">1</span>
-                  <h3 className="font-bold text-sm text-text-main">White Canvas Layering</h3>
-                  <p className="text-text-main/70 leading-relaxed">
-                    Prior to drawing your PNG, the engine initializes an offscreen HTML5 canvas flood-filled with pure RGB(255, 255, 255).
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <span className="w-6 h-6 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs">2</span>
-                  <h3 className="font-bold text-sm text-text-main">Alpha Pixel Blending</h3>
-                  <p className="text-text-main/70 leading-relaxed">
-                    Semi-transparent drop shadows and anti-aliased edge pixels blend naturally into the white background with zero jagged halos.
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <span className="w-6 h-6 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs">3</span>
-                  <h3 className="font-bold text-sm text-text-main">Quantized JPEG Export</h3>
-                  <p className="text-text-main/70 leading-relaxed">
-                    The composited image is encoded into standard JFIF/JPEG binary streams with optimal Huffman tables for lightning-fast delivery.
-                  </p>
-                </div>
+            {/* How to Use Section in 5 Steps */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Convert PNG to JPG in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {HOW_TO_STEPS.map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      {s.step}
+                    </div>
+                    <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">{s.title}</h3>
+                    <p className="text-xs text-text-main/75 leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 
-            {/* How-To Walkthrough */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <FileCheck2 className="w-5 h-5 text-primary" />
-                  3 Simple Steps to Convert PNG to JPG Online
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Fast, browser-native conversion workflow with zero registration required.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    01
+            {/* Common Errors & Troubleshooting Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common PNG to JPG Errors and How Kagazo Fixes Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed">{err.desc}</p>
                   </div>
-                  <h3 className="font-bold text-sm text-text-main">Upload PNG Files</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Drop PNG images from your computer, tablet, or smartphone directly into the upload area.
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    02
-                  </div>
-                  <h3 className="font-bold text-sm text-text-main">Adjust Quality Slider</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Fine-tune the output compression quality percentage to match your target file size or visual requirement.
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    03
-                  </div>
-                  <h3 className="font-bold text-sm text-text-main">Instant JPG Export</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Click download to save single files or grab all converted images in one bundled ZIP archive.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Comprehensive FAQs */}
+            {/* Deep 10 FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
               <div className="space-y-1">
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions About PNG to JPG Conversion
+                  Frequently Asked Questions (PNG to JPG Conversion)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  Everything you need to know about format compatibility, transparency handling, and compression artifacts.
+                  Detailed technical insights on alpha matting, quality calibration, and portal submission.
                 </p>
               </div>
 
-              <div className="space-y-4">
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <div key={idx} className="p-5 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                    <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                  <div key={idx} className="py-4 space-y-2">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q{idx + 1}.</span>
                       {faq.question}
                     </h3>
-                    <p className="text-xs text-text-main/80 leading-relaxed pl-6">
+                    <p className="text-xs sm:text-sm text-text-main/80 pl-6 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -380,39 +442,51 @@ export default function PngToJpgPage() {
             </section>
           </main>
 
+          {/* Sticky Sidebar */}
           <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
-            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-3">
-              <span className="text-xs font-bold text-text-main uppercase tracking-wider">Related Converters</span>
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-4">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related Converters
+              </span>
               <div className="space-y-1.5">
-                <Link href="/tools/jpg-to-png" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  JPG to PNG
+                <Link
+                  href="/tools/jpg-to-png"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  JPG to PNG Converter
                 </Link>
-                <Link href="/tools/png-to-webp" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  PNG to WebP
+                <Link
+                  href="/tools/png-to-webp"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  PNG to WebP Converter
                 </Link>
-                <Link href="/tools/png-to-ico" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  PNG to Favicon ICO
+                <Link
+                  href="/tools/compress-image-to-20kb"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  Compress to 20KB
                 </Link>
-                <Link href="/tools/image-optimizer" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  Image Optimizer
-                </Link>
-                <Link href="/tools/compress-image-to-50kb" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  Compress Image to 50KB
+                <Link
+                  href="/tools/image-converter"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  Image Converter Matrix
                 </Link>
               </div>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-800">
-                <Lock className="w-4 h-4 text-emerald-600" />
-                <span>Client Privacy Guarantee</span>
-              </div>
-              <p className="text-[11px] text-text-main/70 leading-relaxed">
-                Images are converted directly in your browser memory. No photos are ever uploaded to any cloud server.
-              </p>
             </div>
 
             <AdSlot slot="sidebar" />
+
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-4 space-y-2">
+              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
+                <Lock className="w-3.5 h-3.5 shrink-0" />
+                <span>100% In-Memory RAM Privacy</span>
+              </div>
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Images are converted locally in device RAM. No private photos or graphics are ever sent to remote servers.
+              </p>
+            </div>
           </aside>
         </div>
       </div>

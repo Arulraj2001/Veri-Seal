@@ -12,94 +12,160 @@ import {
   HelpCircle,
   CheckCircle2,
   FileImage,
-  Monitor,
+  Download,
   Layers,
-  Archive,
+  Palette,
+  AlertTriangle,
+  Info,
 } from 'lucide-react';
 import { ImageConverterMatrixEngine } from '@/components/tools/ImageConverterMatrixEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'WebP to PNG Converter Online Free - Unpack & Keep Transparency | Kagazo',
+  title: 'WebP to PNG Converter Online Free | Transparent & Lossless | Kagazo',
   description:
-    'Convert WebP images to universal lossless PNG format online for free. Retain full alpha transparency, unlock web photos for Photoshop, InDesign, and Word, with 100% in-browser RAM privacy.',
+    'Convert WebP images to high-quality PNG format online free. Preserve transparent alpha channels, restore maximum editing compatibility with zero server uploads.',
   alternates: {
     canonical: 'https://kagazo.in/tools/webp-to-png',
   },
   openGraph: {
     title: 'WebP to PNG Converter Online Free | Kagazo',
     description:
-      'Convert WebP to PNG format with full transparency preservation and zero server uploads. 100% private in-browser tool.',
+      'Convert WebP to PNG format with full transparency preservation and universal desktop software compatibility.',
     url: 'https://kagazo.in/tools/webp-to-png',
     siteName: 'Kagazo',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'WebP to PNG Converter Online Free | Kagazo',
-    description:
-      'Instantly unpack Google WebP graphics into standard transparent PNGs compatible with all legacy editors and desktop apps.',
-  },
 };
 
-const FORMAT_COMPARISON = [
+const WEBP_PNG_MATRIX = [
   {
-    feature: 'Legacy App Compatibility',
-    webp: 'Unsupported by legacy Adobe Photoshop, Word 2013, older CAD',
-    png: 'Universally supported by 100% of graphic design & office software',
-    advantage: 'PNG opens instantly in any desktop software or mobile viewer',
+    feature: 'Desktop Software Compatibility',
+    webp: 'Unsupported by older Photoshop, Illustrator, Office',
+    png: '100% universal across all legacy and modern software',
+    advantage: 'PNG opens seamlessly in all creative and office tools',
   },
   {
-    feature: 'Transparency Channel',
-    webp: 'VP8/VP8L alpha channel',
-    png: 'Standard 8-bit / 16-bit RGBA alpha channel',
-    advantage: 'Pixel-perfect transparent overlay compatibility in editing apps',
+    feature: 'Alpha Channel Extraction',
+    webp: 'VP8L encoded alpha bitstream',
+    png: 'Standard 32-bit RGBA uncompressed channel',
+    advantage: 'Kagazo extracts transparency with zero edge halo fringing',
   },
   {
-    feature: 'Color Bit Depth',
-    webp: '8-bit per channel color representation',
-    png: 'Supports up to 16-bit per channel (48-bit color depth)',
-    advantage: 'Ideal master format for photo manipulation and layering',
+    feature: 'Application & Exam Forms',
+    webp: 'Rejected by government portals and banks',
+    png: 'Widely accepted for document scans and transparent art',
+    advantage: 'Converts unopenable web downloads into usable desktop files',
   },
   {
-    feature: 'Editing Degradation',
-    webp: 'Lossy WebP degrades further upon repeated modifications',
-    png: 'True lossless storage; pixels never degrade across re-saves',
-    advantage: 'Freezes visual quality permanently during creative workflows',
-  },
-  {
-    feature: 'Print Reproduction',
-    webp: 'Incompatible with standard CMYK prepress software',
-    png: 'Easily mapped and converted for digital printing and brochures',
-    advantage: 'Ready for print publishing without format rejection errors',
+    feature: 'Lossless Editing Container',
+    webp: 'Re-saving introduces compression loss',
+    png: 'Lossless container preserves every pixel across edits',
+    advantage: 'Ideal master format for multi-layer graphic design',
   },
 ];
 
 const FAQS = [
   {
-    question: 'Why do older image editors and desktop apps fail to open WebP files?',
+    question: 'Why do I need to convert WebP images to PNG?',
     answer:
-      'WebP is a relatively modern format developed by Google that requires dedicated VP8/VP8L codec decoders. Legacy software packages—such as Adobe Photoshop CS6, Microsoft Office 2013, older versions of CorelDraw, and default Windows Photo Viewer—lack native WebP decoding libraries. Converting your downloaded WebP images to PNG restores 100% compatibility across all operating systems and creative suites.',
+      'While WebP is fantastic for fast web loading, many legacy desktop graphic design applications (like older Adobe Photoshop, CorelDRAW, Microsoft Office 2016, and CAD tools) cannot open `.webp` files. Converting to PNG restores universal compatibility so you can edit, print, and share your images anywhere.',
   },
   {
-    question: 'Does converting WebP back to PNG restore original photo quality?',
+    question: 'Does converting WebP to PNG preserve transparent cutouts and logos?',
     answer:
-      'If the original WebP image was encoded using lossy compression, converting it to PNG will not magically restore high-frequency details discarded during that lossy step. However, saving the decompressed pixel matrix into PNG freezes the graphic permanently, preventing any subsequent compression loss when you edit, crop, annotate, or export the artwork.',
+      'Yes, 100%. Kagazo decodes the WebP alpha bitstream in local browser memory and exports a 32-bit RGBA PNG file, preserving transparent backgrounds perfectly with zero black fringing or color clipping.',
   },
   {
-    question: 'Will converting WebP to PNG preserve transparent backgrounds?',
+    question: 'Why does the file size increase after converting WebP to PNG?',
     answer:
-      'Yes, absolutely. The conversion process preserves every pixel’s 8-bit alpha transparency channel. Cutouts, logos, icons, and transparent UI components maintain their exact transparent backgrounds without unwanted solid white or black borders.',
+      'WebP is a highly optimized modern compression format, whereas PNG is an uncompressed lossless format using the DEFLATE algorithm. Converting to PNG expands the compressed bitstream into full lossless raster data, naturally resulting in a larger byte count.',
   },
   {
-    question: 'Why does the converted PNG file often have a larger file size than the WebP?',
+    question: 'Can I open the converted PNG file in Adobe Photoshop without plugins?',
     answer:
-      'WebP utilizes advanced intra-frame predictive compression that minimizes byte counts for web transmission. PNG uses standard DEFLATE compression to store complete, un-quantized pixel structures for lossless reproduction. The resulting larger file size is completely normal and ensures maximum editing fidelity across graphic design applications.',
+      'Yes. PNG is universally supported across every version of Adobe Photoshop, Illustrator, InDesign, Canva, GIMP, and Paint.NET without requiring third-party plugins or codec patches.',
   },
   {
-    question: 'Are my converted images uploaded to Kagazo servers or stored anywhere?',
+    question: 'Can I convert multiple WebP images to PNG in batch mode?',
     answer:
-      'No. All decoding and re-encoding procedures happen strictly within your local browser’s volatile memory (RAM) via HTML5 Canvas APIs. Zero image files or metadata are ever transmitted over the network or stored in databases, ensuring absolute confidentiality for confidential documents and proprietary graphics.',
+      'Yes. Drag and drop multiple WebP files into Kagazo. Our engine processes them in parallel in local RAM and allows 1-click individual or batch downloads.',
+  },
+  {
+    question: 'Will converting WebP to PNG degrade image sharpness?',
+    answer:
+      'No. The conversion decodes the exact pixel grid from the WebP bitstream and encodes it losslessly into PNG, ensuring that visual detail and colors are 100% identical to the source file.',
+  },
+  {
+    question: 'Can I convert WebP images downloaded from websites on my phone?',
+    answer:
+      'Yes. When you download images from Chrome or Safari on mobile, they frequently save as WebP. Kagazo allows you to convert them directly on your iPhone or Android device into standard PNG files.',
+  },
+  {
+    question: 'Are my private files or graphic designs uploaded to remote cloud servers?',
+    answer:
+      'Never. Kagazo performs all decoding and PNG rasterization 100% client-side inside your browser’s volatile memory. Zero data is ever sent across external networks.',
+  },
+  {
+    question: 'Does Kagazo add any watermarks or stamps to converted PNGs?',
+    answer:
+      'No. All exported PNG files are completely clean, watermark-free, and ready for commercial or personal production.',
+  },
+  {
+    question: 'Is this WebP to PNG converter completely free?',
+    answer:
+      'Yes, 100% free with no registration, no subscription fees, and no conversion limits.',
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    step: 1,
+    title: 'Upload WebP Images',
+    desc: 'Select or drag-and-drop your WebP images or web downloads into the uploader.',
+  },
+  {
+    step: 2,
+    title: 'Automatic Format Configuration',
+    desc: 'The engine sets PNG as target, preparing 32-bit RGBA lossless encoding in device memory.',
+  },
+  {
+    step: 3,
+    title: 'Alpha Channel Extraction',
+    desc: 'The browser decodes the WebP bitstream and reconstructs the full alpha transparency channel.',
+  },
+  {
+    step: 4,
+    title: 'Inspect Live Canvas Preview',
+    desc: 'Review image resolution and transparent background checkerboard with our live loupe.',
+  },
+  {
+    step: 5,
+    title: 'Download Universal PNG',
+    desc: 'Download your lossless PNG files ready for editing in Photoshop, Illustrator, or office suites.',
+  },
+];
+
+const COMMON_ERRORS = [
+  {
+    badge: 'Error: "Cannot open file in Photoshop"',
+    title: 'Missing WebP Codec in Legacy Editors',
+    desc: 'Older versions of Photoshop CS6 and Office lack WebP decoders. Kagazo converts WebP into universal PNGs that open in any editor without plugins.',
+  },
+  {
+    badge: 'Error: File Size Expansion Surprise',
+    title: 'Lossless Container Inflation',
+    desc: 'PNG files are 2x–3x larger than WebP files because they do not discard data. This is normal and ensures maximum editing flexibility.',
+  },
+  {
+    badge: 'Error: Lost Transparent Alpha Channel',
+    title: 'Accidental JPG Export',
+    desc: 'Saving cutouts as JPG turns transparent backgrounds black. Always convert to PNG to keep transparent backgrounds intact.',
+  },
+  {
+    badge: 'Error: Damaged Scraped WebP Downloads',
+    title: 'Truncated Web Downloads',
+    desc: 'Partial web downloads can corrupt file headers. Kagazo inspects binary chunk headers to ensure valid pixel reconstruction.',
   },
 ];
 
@@ -109,38 +175,29 @@ export default function WebpToPngPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Kagazo WebP to PNG Converter Online Free',
+        name: 'WebP to PNG Converter Online Free',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/webp-to-png',
-        applicationCategory: 'UtilityApplication',
-        operatingSystem: 'All',
         offers: {
           '@type': 'Offer',
           price: '0.00',
-          priceCurrency: 'INR',
+          priceCurrency: 'USD',
         },
         description:
-          'Convert WebP images to universal lossless PNG format with transparency preservation, batch processing, and in-browser RAM privacy.',
+          'Convert WebP images to high-quality PNG format online free with transparency preservation and 100% in-browser privacy.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Convert WebP to PNG Online for Free',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload WebP Images',
-            text: 'Drag and drop WebP images directly into the converter workspace.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Decompress to Lossless PNG',
-            text: 'The browser decodes WebP frames into uncompressed RGBA pixel buffers and compiles clean PNG binaries.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download PNG Files',
-            text: 'Download individual converted PNG files or export all images in a single ZIP package.',
-          },
-        ],
+        name: 'How to Convert WebP to PNG Online in 5 Steps',
+        description:
+          'Step-by-step instructions to convert WebP images to universal lossless PNG format.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -171,7 +228,7 @@ export default function WebpToPngPage() {
           {
             '@type': 'ListItem',
             position: 3,
-            name: 'WebP to PNG Converter',
+            name: 'WebP to PNG',
             item: 'https://kagazo.in/tools/webp-to-png',
           },
         ],
@@ -189,186 +246,194 @@ export default function WebpToPngPage() {
       />
 
       <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
+        {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">Home</Link>
+          <Link href="/" className="hover:text-primary transition-colors font-medium">
+            Home
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">Tools</Link>
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <span className="text-primary font-bold">WebP to PNG</span>
         </nav>
 
+        {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <Sparkles className="w-4 h-4 text-primary shrink-0" />
-            <span>Lossless WebP to PNG Extraction</span>
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>High-Compatibility Image Restorer (WebP to PNG)</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-text-main tracking-tight leading-tight">
-            WebP to PNG Converter Online Free
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>WebP to PNG </span>
+            <span className="text-primary">Converter Online Free</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
-            Unpack downloaded WebP graphics into standard lossless PNG format. Compatible with Photoshop, desktop image viewers, Word documents, and print software with 100% alpha transparency.
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Convert WebP images to <strong>lossless PNG format</strong> online free. Restore 100% desktop software compatibility, preserve transparent alpha channels, and protect privacy.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser RAM Privacy
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Layers className="w-4 h-4 text-primary" /> Alpha Transparency Preserved
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Monitor className="w-4 h-4 text-primary" /> Universal Software Compatibility
-            </span>
-          </div>
         </header>
 
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <ImageConverterMatrixEngine
-              initialSourceFormat="webp"
-              initialTargetFormat="png"
-              fixedTargetFormat={true}
-              toolHeading="Convert WebP to PNG"
-              toolSubheading="Upload WebP images to convert to lossless transparent PNG format."
-            />
+            <ImageConverterMatrixEngine initialTargetFormat="png" />
 
+            {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Technical Specification Matrix */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <ArrowRightLeft className="w-5 h-5 text-primary" />
-                  Format Comparison: WebP vs Lossless PNG
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Universal Compatibility Restorer
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Unlocking Unopenable Web Downloads for Creative Software
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Understanding why unpacking WebP images into PNG is essential for creative editing and publishing.
-                </p>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Images downloaded from the modern web frequently save in WebP format, which many desktop design tools cannot open. Kagazo converts WebP into universal 32-bit RGBA PNG files in local browser RAM.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Layers className="w-4 h-4" /> 100% Alpha Preserved
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Transparent backgrounds and alpha channels extract cleanly with zero halo fringes.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <FileImage className="w-4 h-4" /> Photoshop &amp; Office Ready
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Opens natively in older Photoshop, Word, PowerPoint, and Illustrator without plugins.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    All conversion runs in local device RAM. Your downloaded images are never uploaded.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Technical Specification Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    WebP to PNG Conversion Matrix &amp; Compatibility
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                    Comparison of software support, transparency preservation, and editing capabilities.
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
+                  Conversion Matrix
+                </span>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="border-b border-surface-darker bg-surface/60">
-                      <th className="py-3 px-4 font-bold text-text-main">Feature / Parameter</th>
-                      <th className="py-3 px-4 font-bold text-text-main">WebP (Web Format)</th>
-                      <th className="py-3 px-4 font-bold text-primary">PNG (Production Format)</th>
-                      <th className="py-3 px-4 font-bold text-emerald-700">Conversion Benefit</th>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-semibold">
+                      <th className="py-3 px-3">Feature Metric</th>
+                      <th className="py-3 px-3">WebP Format</th>
+                      <th className="py-3 px-3">PNG Format</th>
+                      <th className="py-3 px-3">Conversion Advantage</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker">
-                    {FORMAT_COMPARISON.map((row, idx) => (
-                      <tr key={idx} className="hover:bg-surface/30 transition-colors">
-                        <td className="py-3.5 px-4 font-semibold text-text-main">{row.feature}</td>
-                        <td className="py-3.5 px-4 text-text-main/80">{row.webp}</td>
-                        <td className="py-3.5 px-4 font-medium text-primary">{row.png}</td>
-                        <td className="py-3.5 px-4 text-emerald-700 font-medium">{row.advantage}</td>
+                  <tbody className="divide-y divide-surface-darker text-text-main/80">
+                    {WEBP_PNG_MATRIX.map((row, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-3 font-semibold text-text-main">{row.feature}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/80">{row.webp}</td>
+                        <td className="py-3 px-3 font-medium text-emerald-700">{row.png}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/70">{row.advantage}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            </section>
 
-            {/* Software Compatibility & Workflow Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Monitor className="w-5 h-5 text-primary" />
-                  Everywhere You Can Use Converted PNG Files
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Solve format incompatibility across popular desktop editors and publishing tools.
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Editing Tip:</strong> When downloading web icons or logos that refuse to open in graphic design software, convert them to PNG for instant native compatibility.
                 </p>
               </div>
+            </section>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <h3 className="font-bold text-sm text-text-main">🎨 Adobe Creative Cloud</h3>
-                  <p className="text-text-main/70 leading-relaxed">
-                    Open graphics directly in Photoshop, Illustrator, and InDesign without missing plugin errors or color cast discrepancies.
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <h3 className="font-bold text-sm text-text-main">📄 Microsoft Office Suite</h3>
-                  <p className="text-text-main/70 leading-relaxed">
-                    Embed clean transparent logos and screenshots seamlessly into PowerPoint presentations, Word documents, and Excel sheets.
-                  </p>
-                </div>
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <h3 className="font-bold text-sm text-text-main">🖨️ Print &amp; Prepress</h3>
-                  <p className="text-text-main/70 leading-relaxed">
-                    Prepare digital assets for print shops, merchandise mockups, and corporate marketing collateral with zero compression noise.
-                  </p>
-                </div>
+            {/* How to Use Section in 5 Steps */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Convert WebP to PNG in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {HOW_TO_STEPS.map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      {s.step}
+                    </div>
+                    <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">{s.title}</h3>
+                    <p className="text-xs text-text-main/75 leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 
-            {/* 3-Step Workflow */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <FileCheck2 className="w-5 h-5 text-primary" />
-                  3 Quick Steps to Convert WebP to PNG Online
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Instant client-side decoding with zero upload wait times.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    01
+            {/* Common Errors & Troubleshooting Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common WebP to PNG Errors and How Kagazo Fixes Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed">{err.desc}</p>
                   </div>
-                  <h3 className="font-bold text-sm text-text-main">Select WebP Files</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Drag and drop single or multiple WebP files directly into the converter.
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    02
-                  </div>
-                  <h3 className="font-bold text-sm text-text-main">Lossless Decompression</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    The engine unpacks the image raster buffer with 100% alpha transparency preservation.
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <div className="w-10 h-10 rounded-2xl bg-primary/10 text-primary font-extrabold flex items-center justify-center text-sm">
-                    03
-                  </div>
-                  <h3 className="font-bold text-sm text-text-main">Download PNGs or ZIP</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Download each converted PNG individually or export all files as a single ZIP archive.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Comprehensive FAQs */}
+            {/* Deep 10 FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
               <div className="space-y-1">
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions About WebP to PNG
+                  Frequently Asked Questions (WebP to PNG Conversion)
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  Clear answers about software compatibility, file sizes, and transparency retention.
+                  Comprehensive guidance on transparency preservation, desktop software compatibility, and file size.
                 </p>
               </div>
 
-              <div className="space-y-4">
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <div key={idx} className="p-5 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                    <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                  <div key={idx} className="py-4 space-y-2">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q{idx + 1}.</span>
                       {faq.question}
                     </h3>
-                    <p className="text-xs text-text-main/80 leading-relaxed pl-6">
+                    <p className="text-xs sm:text-sm text-text-main/80 pl-6 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -377,39 +442,51 @@ export default function WebpToPngPage() {
             </section>
           </main>
 
+          {/* Sticky Sidebar */}
           <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
-            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-3">
-              <span className="text-xs font-bold text-text-main uppercase tracking-wider">Related Converters</span>
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-4">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related Converters
+              </span>
               <div className="space-y-1.5">
-                <Link href="/tools/png-to-webp" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  PNG to WebP
+                <Link
+                  href="/tools/png-to-webp"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  PNG to WebP Converter
                 </Link>
-                <Link href="/tools/png-to-jpg" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  PNG to JPG
+                <Link
+                  href="/tools/jpg-to-png"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  JPG to PNG Converter
                 </Link>
-                <Link href="/tools/jpg-to-png" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  JPG to PNG
+                <Link
+                  href="/tools/png-to-jpg"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  PNG to JPG Converter
                 </Link>
-                <Link href="/tools/png-to-ico" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  PNG to Favicon ICO
-                </Link>
-                <Link href="/tools/image-optimizer" className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-semibold text-text-main hover:text-primary transition-colors">
-                  Image Optimizer
+                <Link
+                  href="/tools/image-converter"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  Image Converter Matrix
                 </Link>
               </div>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-800">
-                <Lock className="w-4 h-4 text-emerald-600" />
-                <span>Client Privacy Guarantee</span>
-              </div>
-              <p className="text-[11px] text-text-main/70 leading-relaxed">
-                Images are converted directly inside your browser memory. No photos are ever uploaded to any cloud server.
-              </p>
             </div>
 
             <AdSlot slot="sidebar" />
+
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-4 space-y-2">
+              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
+                <Lock className="w-3.5 h-3.5 shrink-0" />
+                <span>100% In-Memory RAM Privacy</span>
+              </div>
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Images are converted in volatile device memory. No files are ever saved or transmitted to cloud databases.
+              </p>
+            </div>
           </aside>
         </div>
       </div>
