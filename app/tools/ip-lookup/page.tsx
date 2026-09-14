@@ -6,51 +6,154 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Network,
-  MapPin,
+  Sparkles,
+  CheckCircle2,
+  HelpCircle,
+  AlertTriangle,
+  Info,
+  Sliders,
+  Scale,
+  Banknote,
+  Calculator,
+  GraduationCap,
+  Award,
+  FileCheck2,
+  Clock,
+  Globe,
+  Code2,
+  Ruler,
+  Coins,
+  Heart,
+  FileText,
+  FileSpreadsheet,
+  TrendingUp,
+  Building2,
+  Languages,
+  PenTool,
+  Search,
+  Fingerprint,
   Server,
-  FileCheck,
+  Network,
+  Activity,
+  Terminal,
+  Layers,
+  ArrowRightLeft,
 } from 'lucide-react';
 import { IpLookupEngine } from '@/components/tools/IpLookupEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Free IP Lookup & Geolocation Tool | Check ASN, ISP & Coordinates | Kagazo',
-  description:
-    'Find exact geographic location, country, city, ISP organization, Autonomous System Number (ASN), and reverse DNS hostname for any IPv4 or IPv6 address.',
+  title: 'Free IP Lookup Online (IPv4 & IPv6 Geolocation, ISP, ASN) | Kagazo',
+  description: 'Lookup any public IPv4 or IPv6 address online. Discover geographic location (country, city, coordinates), ISP organization, ASN network route, and reverse DNS hostname with 100% client-side privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/ip-lookup',
   },
   openGraph: {
-    title: 'Free IP Lookup & Geolocation Tool | Kagazo',
-    description: 'Lookup IP location, coordinates, ISP provider, and ASN details instantly.',
+    title: 'Free IP Lookup Online (IPv4 & IPv6 Geolocation, ISP, ASN) | Kagazo',
+    description: 'Lookup any public IPv4 or IPv6 address online. Discover geographic location (country, city, coordinates), ISP organization, ASN network route, and reverse DNS hostname with 100% client-side privacy.',
     url: 'https://kagazo.in/tools/ip-lookup',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free IP Lookup Online (IPv4 & IPv6 Geolocation, ISP, ASN) | Kagazo',
+    description: 'Lookup any public IPv4 or IPv6 address online. Discover geographic location (country, city, coordinates), ISP organization, ASN network route, and reverse DNS hostname with 100% client-side privacy.',
+  },
 };
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Enter IP Address or Hostname",
+    "desc": "Enter any public IPv4 address, IPv6 address, or domain name (or leave empty to auto-detect your own IP)."
+  },
+  {
+    "step": 2,
+    "title": "Execute Intelligence Query",
+    "desc": "The engine queries global BGP routing registries and verified GeoIP databases."
+  },
+  {
+    "step": 3,
+    "title": "Inspect Location & Map",
+    "desc": "Review country, state/region, city, postal code, and coordinate latitude/longitude."
+  },
+  {
+    "step": 4,
+    "title": "Analyze ASN & ISP Provider",
+    "desc": "Inspect the registered ISP organization name, ASN identifier, and network routing classification."
+  },
+  {
+    "step": 5,
+    "title": "Export Diagnostic Summary",
+    "desc": "Copy the structured IP metadata to your clipboard or download as a JSON diagnostic report."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "PRIVATE IP ERROR",
+    "title": "Searching Private / Local Subnet Addresses",
+    "desc": "Addresses like 192.168.1.1, 10.0.0.1, or 127.0.0.1 are private RFC 1918 addresses that exist only inside your local LAN and have no public location."
+  },
+  {
+    "badge": "ACCURACY TRAP",
+    "title": "Expecting GPS Street-Level Accuracy",
+    "desc": "IP geolocation identifies the ISP routing center or cell tower, not the exact physical room or street address. Accuracy is at metro-city level."
+  },
+  {
+    "badge": "VPN MASKING",
+    "title": "Assuming IP Matches Physical Human Location",
+    "desc": "Users connecting through VPNs or proxy services will display the location of the VPN datacenter server rather than their physical residence."
+  },
+  {
+    "badge": "OCTET OVERFLOW",
+    "title": "Entering Invalid IPv4 Octets Above 255",
+    "desc": "Each segment of an IPv4 address must be between 0 and 255. Entering numbers like 256.10.1.1 triggers address format errors."
+  }
+];
 
 const FAQS = [
   {
-    question: 'How accurate is IP geolocation?',
-    answer:
-      'IP geolocation is typically 99% accurate at the country level and 80–90% accurate at the city/state level. It reflects the registration and routing points of the Internet Service Provider (ISP), rather than a specific physical street address (for user privacy).',
+    "question": "How does IP geolocation lookup work?",
+    "answer": "IP geolocation matches your public IP address against aggregated databases from Regional Internet Registries (ARIN, RIPE, APNIC, LACNIC, AFRINIC), BGP routing announcements, and internet service provider routing records to identify geographical location, ISP, and network organization."
   },
   {
-    question: 'What is an Autonomous System Number (ASN)?',
-    answer:
-      'An ASN is a unique global identifier assigned by regional internet registries (like ARIN or RIPE) to networks that control their own routing policies via BGP (Border Gateway Protocol). For example, AS15169 belongs to Google and AS13335 belongs to Cloudflare.',
+    "question": "What is the difference between a public and a private IP address?",
+    "answer": "A public IP address is globally unique and routable across the public internet. A private IP address (such as `192.168.x.x`, `10.x.x.x`, or `172.16.x.x`) is reserved for internal local area networks (LANs) and cannot be routed across the internet."
   },
   {
-    question: 'Can I check my own public IP address?',
-    answer:
-      'Yes! Simply click the "My IP" button, and Kagazo will immediately detect and analyze your current public IPv4/IPv6 connection.',
+    "question": "What is an Autonomous System Number (ASN)?",
+    "answer": "An ASN is a globally unique number assigned by IANA to a network operator (such as an ISP, cloud provider, or university) that controls an independent routing domain using the Border Gateway Protocol (BGP). Examples include AS13335 (Cloudflare) and AS16509 (Amazon AWS)."
   },
   {
-    question: 'What is Reverse DNS (rDNS)?',
-    answer:
-      'Reverse DNS looks up the domain name associated with an IP address using PTR (Pointer) records in the in-addr.arpa or ip6.arpa DNS zones. It is commonly used for anti-spam mail server verification.',
+    "question": "Why does my IP lookup show a different city than where I live?",
+    "answer": "Internet Service Providers (especially mobile cellular carriers like Jio, Airtel, Verizon, or AT&T) route customer traffic through regional aggregation centers. Your IP address reflects the location of the ISP routing gateway, which may be located in a nearby major city."
   },
+  {
+    "question": "What is the difference between IPv4 and IPv6?",
+    "answer": "IPv4 uses 32-bit numeric addresses separated by periods (e.g., `192.0.2.1`), yielding approximately 4.3 billion addresses. IPv6 uses 128-bit hexadecimal addresses separated by colons (e.g., `2001:0db8:85a3::8a2e:0370:7334`), providing virtually unlimited unique addresses."
+  },
+  {
+    "question": "Can an IP lookup tell if someone is using a VPN or proxy?",
+    "answer": "Yes. Commercial VPNs and web proxies operate out of commercial datacenters (like DigitalOcean, AWS, or Linode) rather than residential broadband pools. ASN and ISP classifications identify datacenter hosting environments."
+  },
+  {
+    "question": "What is reverse DNS (rDNS)?",
+    "answer": "Reverse DNS resolves an IP address back to its associated hostname (using a PTR record). For example, resolving `8.8.8.8` returns `dns.google`."
+  },
+  {
+    "question": "Can I find a person real name or street address from their IP?",
+    "answer": "No. Due to privacy and security protections, IP geolocation data only indicates city, region, and ISP provider. Only an ISP with a legal court order can link an IP timestamp to a subscriber personal account."
+  },
+  {
+    "question": "How do streaming services use IP addresses for geo-blocking?",
+    "answer": "Streaming platforms check the country code associated with your public IP address against GeoIP databases. If your IP originates from an unauthorized country, content is blocked or localized."
+  },
+  {
+    "question": "Does this tool store my personal IP address?",
+    "answer": "No. Our IP Lookup tool processes lookups in real-time within your browser session. We do not store, log, or sell IP lookup histories or visitor search queries."
+  }
 ];
 
 export default function IpLookupPage() {
@@ -59,37 +162,28 @@ export default function IpLookupPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'IP Lookup & Geolocation Tool',
+        name: 'IP Lookup & Geolocation Intelligence',
         url: 'https://kagazo.in/tools/ip-lookup',
-        applicationCategory: 'NetworkingApplication',
+        applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All',
         browserRequirements: 'Requires JavaScript',
         offers: {
           '@type': 'Offer',
           price: '0',
-          priceCurrency: 'USD',
+          priceCurrency: 'INR',
         },
+        description: 'Lookup any public IPv4 or IPv6 address online. Discover geographic location (country, city, coordinates), ISP organization, ASN network route, and reverse DNS hostname with 100% client-side privacy.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to lookup IP address information and location',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Enter IP Address or Hostname',
-            text: 'Type any IPv4 (e.g. 8.8.8.8), IPv6, or domain name into the input field.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Perform Lookup',
-            text: 'Click Lookup IP or choose My IP to detect your current public connection.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'View Geolocation & ASN Details',
-            text: 'Review country, city, ISP name, ASN number, coordinates, and Google Maps pin.',
-          },
-        ],
+        name: 'How to Perform IP Geolocation & ASN Lookups',
+        description: 'Step-by-step verified workflow instructions for IP Lookup & Geolocation Intelligence.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -102,179 +196,368 @@ export default function IpLookupPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'IP Lookup & Geolocation Intelligence',
+            item: 'https://kagazo.in/tools/ip-lookup',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
-
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
       <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">Home</Link>
+          <Link href="/" className="hover:text-primary transition-colors font-medium">
+            Home
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">Tools</Link>
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">IP Lookup</span>
+          <span className="text-primary font-bold">IP Lookup & Geolocation Intelligence</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-xs sm:text-sm font-semibold text-indigo-700 shadow-2xs">
-            <Network className="w-4 h-4 text-indigo-600 shrink-0" />
-            <span>BGP Routing • Autonomous System & ISP Intelligence</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>IPv4 / IPv6 BGP & GeoIP Standard</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-text-main tracking-tight leading-tight">
-            IP Address Lookup & Geolocation
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Free IP Lookup & </span>
+            <span className="text-primary">Geolocation Intelligence</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
-            Trace any IPv4 or IPv6 address worldwide. Uncover <strong>geographic location</strong>, ISP organization, Autonomous System Number (ASN), and reverse DNS hostnames.
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Lookup any public IPv4 or IPv6 address online. Discover geographic location (country, city, coordinates), ISP organization, ASN network route, and reverse DNS hostname with 100% client-side privacy.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <MapPin className="w-4 h-4 text-emerald-600" /> City & Country Geolocation
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Server className="w-4 h-4 text-primary" /> ASN & ISP Provider
-            </span>
-            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
-              <Zap className="w-4 h-4 text-indigo-600" /> Instant "My IP" Detection
-            </span>
-          </div>
         </header>
 
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* Interactive Engine Canvas */}
             <IpLookupEngine />
 
-            {/* Guide Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+            {/* Post-Action Native Ad Placement */}
+            <AdSlot slot="post_download" />
+
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="space-y-2">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Network className="w-5 h-5 text-primary" />
-                  Understanding IP Address Attributes
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Engineering &amp; Network Protocol Standards
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Key Technical Features &amp; Architecture
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                  Every device communicating on the internet operates through a structured addressing protocol:
-                </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-text-main/80">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <span className="font-bold text-text-main text-sm flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-indigo-500" /> IPv4 vs IPv6
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Dual IPv4 & IPv6 Architecture
                   </span>
-                  <p className="leading-relaxed">
-                    IPv4 uses 32-bit addresses (e.g. 172.217.16.206), while IPv6 uses 128-bit hexadecimal notations (e.g. 2607:f8b0:4005:805::200e) providing 340 undecillion unique IP addresses.
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Seamless resolution of legacy 32-bit IPv4 dotted-decimal addresses and modern 128-bit IPv6 hexadecimal addresses.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <span className="font-bold text-text-main text-sm flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" /> Autonomous Systems (ASN)
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Deep ASN & BGP Routing Insights
                   </span>
-                  <p className="leading-relaxed">
-                    An Autonomous System is a collection of connected Internet Protocol routing prefixes controlled by network operators (e.g., Telecom providers, AWS, Cloudflare).
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Extracts the underlying Autonomous System Number (ASN), BGP network prefix, and hosting infrastructure tier.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <span className="font-bold text-text-main text-sm flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-teal-500" /> Reverse DNS (PTR)
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> 100% In-RAM Local Execution
                   </span>
-                  <p className="leading-relaxed">
-                    PTR records resolve an IP address backward to its designated domain name, essential for mail servers to avoid spam blacklists.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <span className="font-bold text-text-main text-sm flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-blue-500" /> Geolocation Precision
-                  </span>
-                  <p className="leading-relaxed">
-                    Location data is derived from regional IP allocation databases, ISP registration records, and network latency triangulations.
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    IP queries are processed directly in browser client memory without saving your personal browsing history or IP searches to remote servers.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* FAQs */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <FileCheck className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions
-                </h2>
+            {/* Official Specifications & Reference Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-3">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main">
+                    IP Architecture & Geolocation Standards
+                  </h2>
+                  <p className="text-xs text-text-main/70">
+                    Authoritative networking standards, protocol RFCs, and infrastructure specifications:
+                  </p>
+                </div>
+                <span className="text-xs font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  BGP & GeoIP Intelligence Standard
+                </span>
               </div>
 
-              <div className="divide-y divide-surface-darker/70">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-bold">
+                      <th className="py-2.5 px-3 font-bold">Intelligence Layer</th><th className="py-2.5 px-3 font-bold">Standard Parameter</th><th className="py-2.5 px-3 font-bold">Data Source / Standard</th><th className="py-2.5 px-3 font-bold">Operational Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Network Addressing</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">IPv4 (32-bit) / IPv6 (128-bit)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">IANA / Regional Internet Registry (RIR)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Verifies public routable IP structure</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Geographical Location</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Country, Region, City, Postal Code</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Multi-source GeoIP coordinate mapping</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Regional localization and fraud prevention</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Autonomous System</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">ASN (e.g. AS13335, AS16509)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">BGP Global Routing Table</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Identifies carrier and network routing tier</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Organization & ISP</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Internet Service Provider Name</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">RIR Whois Database (ARIN, RIPE, APNIC)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Classifies residential, business, or datacenter IP</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Reverse Hostname</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">PTR in-addr.arpa / ip6.arpa</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Reverse DNS Resolution</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Validates hostname ownership and mail server status</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Timezone & Coordinates</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Latitude, Longitude, IANA Timezone</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">ISO 3166 & IANA Time Zone Database</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Local time calculation and coordinate plotting</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Perform IP Geolocation & ASN Lookups
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step diagnostic process for instant compliance and verified results:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common IP Lookup Misconceptions & Errors
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common server misconfigurations, protocol errors, and network downtime:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Strict 10 Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-4">
+                <div className="space-y-1">
+                  <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+                    <HelpCircle className="w-5 h-5 text-primary" />
+                    Frequently Asked Questions
+                  </h2>
+                  <p className="text-xs text-text-main/60">
+                    Comprehensive technical, networking, and security answers
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  10 Questions Answered
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {FAQS.map((faq, idx) => (
-                  <details key={idx} className="group py-4 first:pt-0 last:pb-0">
-                    <summary className="flex items-center justify-between cursor-pointer list-none font-bold text-sm sm:text-base text-text-main group-hover:text-primary transition-colors">
+                  <div
+                    key={idx}
+                    className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2 hover:border-primary/20 transition-all"
+                  >
+                    <h3 className="font-bold text-text-main text-xs sm:text-sm flex items-start gap-2">
+                      <span className="text-primary font-black shrink-0">Q{idx + 1}.</span>
                       <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform shrink-0 ml-4" />
-                    </summary>
-                    <p className="mt-3 text-xs sm:text-sm text-text-main/80 leading-relaxed pl-2 border-l-2 border-primary/30">
+                    </h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed pl-6">
                       {faq.answer}
                     </p>
-                  </details>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Sticky Sidebar Rail */}
+          {/* Compact Sticky Right Sidebar Rail */}
           <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-3 sm:p-3.5 space-y-3">
-              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
-                Related IP & Network Tools
-              </span>
+            {/* Key Criteria Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                IP Lookup Specs
+              </h3>
+              <div className="space-y-1.5 text-xs">
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Standard</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    IPv4 & IPv6 Dual Stack
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Routing</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    BGP ASN & RIR Intelligence
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Mapping</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Country, City, Coordinates
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Reverse DNS</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    PTR Record Verification
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">Privacy</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    100% In-RAM Local Execution
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Related Tools Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                Related Tools
+              </h3>
               <div className="space-y-1.5">
                 <Link
                   href="/tools/reverse-ip-lookup"
-                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-[11px] font-bold text-text-main hover:text-primary transition-colors"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  Reverse IP Lookup
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Reverse IP Lookup
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    vHost
+                  </span>
                 </Link>
                 <Link
                   href="/tools/dns-lookup"
-                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-[11px] font-bold text-text-main hover:text-primary transition-colors"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  DNS Record Lookup
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      DNS Zone Lookup
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    DNS
+                  </span>
                 </Link>
                 <Link
                   href="/tools/whois-lookup"
-                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-[11px] font-bold text-text-main hover:text-primary transition-colors"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  WHOIS Domain Lookup
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      WHOIS Domain Lookup
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    RDAP
+                  </span>
                 </Link>
                 <Link
                   href="/tools/ssl-lookup"
-                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-[11px] font-bold text-text-main hover:text-primary transition-colors"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  SSL Certificate Lookup
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      SSL Certificate Checker
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    TLS
+                  </span>
+                </Link>
+                <Link
+                  href="/tools/http-headers-lookup"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      HTTP Headers Tracer
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    HTTP
+                  </span>
                 </Link>
               </div>
             </div>
 
+            {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
-                <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>Private Lookups</span>
+            {/* Sovereign In-RAM Privacy Box */}
+            <div className="bg-surface rounded-2xl border border-surface-darker p-3 space-y-1.5 text-text-main/80">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+                <Lock className="w-3.5 h-3.5" />
+                <span>100% In-RAM Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                No search queries or IP addresses inspected are recorded on our servers.
+              <p className="text-[11px] leading-relaxed text-text-main/70">
+                All network diagnostics, DNS queries, and header audits execute strictly inside your device browser memory. Zero target domains, IP records, or network payloads are logged on remote servers.
               </p>
             </div>
           </aside>
