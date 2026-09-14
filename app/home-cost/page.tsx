@@ -20,19 +20,37 @@ import { AdSlot } from '@/components/ads/AdSlot';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Home Cost & Savings Intelligence Platform India | What Is Costing You Money?',
+  title: 'Household Cost Calculator India | Electricity, AC, Solar & Renovation Savings',
   description:
-    'Calculate and reduce your Indian household operating expenses. Live home electricity bill calculator with state tariff slabs, Inverter AC 3★ vs 5★ simulator, PM Surya Ghar solar rooftop sizing, BLDC fan ROI, and AI savings roadmap.',
+    "India's most detailed household cost calculator — electricity slab bills with real DISCOM rates (TANGEDCO, BESCOM, MSEDCL), 3★ vs 5★ AC payback, PM Surya Ghar solar subsidy up to ₹78,000, BLDC fan ROI, inverter sizing, and LPG vs induction comparison. Free, instant, built for Indian homes.",
+  keywords: [
+    'household cost calculator India',
+    'home electricity bill calculator India',
+    'Indian home expenses calculator',
+    'reduce electricity bill India',
+    'DISCOM slab tariff calculator India',
+    'PM Surya Ghar subsidy calculator',
+    'home cost savings India',
+    'AC electricity cost India',
+    'inverter battery sizing India',
+    'home renovation cost India',
+  ],
   alternates: {
     canonical: 'https://Kagazo.in/home-cost',
   },
   openGraph: {
-    title: 'Home Cost & Savings Intelligence Platform | Kagazo India',
+    title: 'Household Cost Calculator India | Electricity, AC, Solar & Renovation | Kagazo',
     description:
-      'Answer the ultimate homeowner question: What is costing me money at home, and what should I change to save money?',
+      'Answer the ultimate homeowner question: What is costing me money at home, and what should I change to save money? Real DISCOM tariffs, PM Surya Ghar subsidy, AC payback, and more.',
     url: 'https://Kagazo.in/home-cost',
     siteName: 'Kagazo',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Household Cost Calculator India | Electricity, AC, Solar & Renovation Savings',
+    description:
+      "India's free household cost intelligence platform — real DISCOM electricity slab bills, AC payback, PM Surya Ghar solar subsidy, and more.",
   },
 };
 
@@ -56,6 +74,16 @@ const FAQS = [
     question: 'How much subsidy does PM Surya Ghar Muft Bijli Yojana provide for rooftop solar?',
     answer:
       'Under the PM Surya Ghar scheme, the Central Government provides direct bank account (DBT) subsidies: ₹30,000 for 1 kW, ₹60,000 for 2 kW, and a maximum cap of ₹78,000 for 3 kW and above. For a typical 3 kW system costing ~₹1.95 Lakhs, net cost is reduced to ~₹1.17 Lakhs with full break-even payback in ~3.2 years.',
+  },
+  {
+    question: 'How do I read my electricity bill to find my sanctioned load and current slab?',
+    answer:
+      'Your sanctioned load (in kW) is printed on the top section of your DISCOM bill, near your consumer number. It determines your fixed demand charge each month. Your "units consumed" (kWh) for the billing period determines which tariff slab applies to you. If you consume fewer than the first slab threshold (e.g., 100 units in Tamil Nadu), you pay the lowest rate. Consuming more pushes additional units into progressively higher-rate slabs.',
+  },
+  {
+    question: 'What is the single biggest way to reduce home electricity bills in India?',
+    answer:
+      'For most Indian households, the air conditioner accounts for 40–60% of the summer electricity bill. The three highest-impact changes are: (1) Set your AC thermostat to 24°C instead of 20°C — saves ~24% of AC electricity, (2) Service the AC filters every 2 months — dirty filters increase consumption by 10–15%, and (3) Upgrade to a 5-Star Inverter AC from a non-inverter model — saves 30–40% annually. These three changes combined can reduce your summer bill by ₹2,000–₹5,000 per month.',
   },
 ];
 
@@ -103,6 +131,13 @@ export default function HomeCostLandingPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+        ],
+      },
+      {
         '@type': 'WebApplication',
         name: 'Kagazo Home Cost & Savings Intelligence Platform',
         url: 'https://Kagazo.in/home-cost',
@@ -114,7 +149,7 @@ export default function HomeCostLandingPage() {
           priceCurrency: 'INR',
         },
         description:
-          'Indian household operating expense optimizer, electricity bill calculator, and AI home savings advisor.',
+          'Indian household operating expense optimizer, electricity bill calculator with real DISCOM slab rates, AC payback simulator, PM Surya Ghar solar subsidy calculator, and AI home savings advisor.',
       },
       {
         '@type': 'FAQPage',
