@@ -115,7 +115,8 @@ export async function POST(req: NextRequest) {
       status: 200,
       headers: {
         'Content-Type': 'audio/mpeg',
-        'Content-Disposition': 'attachment; filename="kagazo-speech.mp3"',
+        'Content-Disposition': 'inline; filename="kagazo-speech.mp3"',
+        'Accept-Ranges': 'bytes',
         'Content-Length': audioBuffer.length.toString(),
         'Cache-Control': 'no-cache, no-store, must-revalidate',
       },

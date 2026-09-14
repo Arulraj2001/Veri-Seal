@@ -25,8 +25,16 @@ import {
   Radio,
   Clock,
   Mic,
+  Zap,
 } from 'lucide-react';
-import { POPULAR_NEURAL_VOICES, SAMPLE_SCRIPTS, type NeuralVoice } from '@/lib/tts-constants';
+import {
+  POPULAR_NEURAL_VOICES,
+  SAMPLE_SCRIPTS,
+  SITUATION_PRESETS,
+  type NeuralVoice,
+  type SituationPreset,
+} from '@/lib/tts-constants';
+import { enhancePunctuationAndCadence } from '@/lib/smart-punctuation';
 
 interface SentenceChunk {
   text: string;
@@ -36,42 +44,106 @@ interface SentenceChunk {
 
 export function TextToSpeechEngine() {
   const [text, setText] = React.useState(SAMPLE_SCRIPTS[0].text);
+  const [audioEngine, setAudioEngine] = React.useState<'studio' | 'device'>('studio');
   const [browserVoices, setBrowserVoices] = React.useState<SpeechSynthesisVoice[]>([]);
   const [selectedBrowserVoice, setSelectedBrowserVoice] = React.useState<string>('');
   const [selectedNeuralVoice, setSelectedNeuralVoice] = React.useState<string>(POPULAR_NEURAL_VOICES[0].id);
+
+  // Situation / Tone Preset
+  const [activePreset, setActivePreset] = React.useState<string | null>(null);
 
   // Audio parameters
   const [rate, setRate] = React.useState<number>(1);
   const [pitch, setPitch] = React.useState<number>(1);
   const [volume, setVolume] = React.useState<number>(1);
 
-  // Playback & highlighting states
-  const [isSpeaking, setIsSpeaking] = React.useState(false);
+  // Playback states
+  const [isPlaying, setIsPlaying] = React.useState(false);
   const [isPaused, setIsPaused] = React.useState(false);
+  const [isLoadingAudio, setIsLoadingAudio] = React.useState(false);
+
+  // Studio Audio Player element & state
+  const [audioDuration, setAudioDuration] = React.useState<number>(0);
+  const [audioCurrentTime, setAudioCurrentTime] = React.useState<number>(0);
+  const [audioBlobUrl, setAudioBlobUrl] = React.useState<string | null>(null);
+  const [generatedParamsKey, setGeneratedParamsKey] = React.useState<string>('');
+
+  // Device Voice Speech chunking & boundaries
   const [currentSentenceIndex, setCurrentSentenceIndex] = React.useState(0);
   const [totalSentences, setTotalSentences] = React.useState(1);
   const [activeWordStart, setActiveWordStart] = React.useState<number | null>(null);
   const [activeWordLength, setActiveWordLength] = React.useState<number>(0);
 
-  // UI modes
+  // UI modes & notifications
   const [viewMode, setViewMode] = React.useState<'editor' | 'karaoke'>('editor');
   const [copied, setCopied] = React.useState(false);
   const [cleanedToast, setCleanedToast] = React.useState(false);
+  const [enhancedToast, setEnhancedToast] = React.useState(false);
   const [isDragging, setIsDragging] = React.useState(false);
-
-  // MP3 Download states
-  const [isDownloadingMp3, setIsDownloadingMp3] = React.useState(false);
   const [downloadError, setDownloadError] = React.useState<string | null>(null);
-  const [generatedAudioUrl, setGeneratedAudioUrl] = React.useState<string | null>(null);
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const activeWordRef = React.useRef<HTMLSpanElement>(null);
+  const studioAudioRef = React.useRef<HTMLAudioElement | null>(null);
   const watchdogTimerRef = React.useRef<NodeJS.Timeout | null>(null);
   const currentChunkIndexRef = React.useRef(0);
   const chunksRef = React.useRef<SentenceChunk[]>([]);
-  const isSpeakingRef = React.useRef(false);
+  const isDeviceSpeakingRef = React.useRef(false);
 
-  // Load available system browser voices
+  const textRef = React.useRef(text);
+  React.useEffect(() => {
+    textRef.current = text;
+  }, [text]);
+
+  // Initialize Audio element once on mount
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const audio = new Audio();
+    studioAudioRef.current = audio;
+
+    audio.onloadedmetadata = () => {
+      setAudioDuration(audio.duration || 0);
+    };
+
+    audio.ontimeupdate = () => {
+      setAudioCurrentTime(audio.currentTime);
+      const currentText = textRef.current;
+      if (audio.duration > 0 && currentText.length > 0) {
+        // Estimate current character index for karaoke tracking
+        const progress = audio.currentTime / audio.duration;
+        const charIndex = Math.min(currentText.length - 1, Math.floor(progress * currentText.length));
+        // Find word boundary around charIndex
+        const nextSpace = currentText.indexOf(' ', charIndex);
+        const wordEnd = nextSpace === -1 ? currentText.length : nextSpace;
+        const lastSpace = currentText.lastIndexOf(' ', charIndex);
+        const wordStart = lastSpace === -1 ? 0 : lastSpace + 1;
+        setActiveWordStart(wordStart);
+        setActiveWordLength(Math.max(1, wordEnd - wordStart));
+      }
+    };
+
+    audio.onended = () => {
+      setIsPlaying(false);
+      setIsPaused(false);
+      setActiveWordStart(null);
+      setActiveWordLength(0);
+    };
+
+    audio.onerror = () => {
+      if (audio.src && audio.src !== window.location.href && !audio.src.endsWith('/')) {
+        setIsPlaying(false);
+        setIsPaused(false);
+        setIsLoadingAudio(false);
+      }
+    };
+
+    return () => {
+      audio.pause();
+      audio.src = '';
+    };
+  }, []);
+
+  // Load available system browser voices for offline mode
   React.useEffect(() => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
 
@@ -101,11 +173,11 @@ export function TextToSpeechEngine() {
   // Clean up object URL when component unmounts
   React.useEffect(() => {
     return () => {
-      if (generatedAudioUrl) {
-        URL.revokeObjectURL(generatedAudioUrl);
+      if (audioBlobUrl) {
+        URL.revokeObjectURL(audioBlobUrl);
       }
     };
-  }, [generatedAudioUrl]);
+  }, [audioBlobUrl]);
 
   // Auto-scroll to active word in karaoke teleprompter view
   React.useEffect(() => {
@@ -117,7 +189,10 @@ export function TextToSpeechEngine() {
     }
   }, [activeWordStart, viewMode]);
 
-  // Helper to split text into natural sentences with character offsets
+  // Invalidate audio cache whenever text, voice, rate, or pitch change
+  const currentParamsKey = `${text.trim()}__${selectedNeuralVoice}__${rate}__${pitch}`;
+
+  // Helper to split text into natural sentences
   const parseSentenceChunks = (sourceText: string): SentenceChunk[] => {
     const rawMatches = sourceText.match(/[^.!?\r\n]+(?:[.!?\r\n]+|$)/g);
     if (!rawMatches) return [{ text: sourceText, startOffset: 0, endOffset: sourceText.length }];
@@ -141,8 +216,8 @@ export function TextToSpeechEngine() {
     return results.length > 0 ? results : [{ text: sourceText, startOffset: 0, endOffset: sourceText.length }];
   };
 
-  // Chrome 15s freeze fix watchdog timer
-  const startWatchdog = () => {
+  // Watchdog timer for device browser speech synthesis
+  const startDeviceWatchdog = () => {
     if (watchdogTimerRef.current) clearInterval(watchdogTimerRef.current);
     watchdogTimerRef.current = setInterval(() => {
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -153,16 +228,17 @@ export function TextToSpeechEngine() {
     }, 10000);
   };
 
-  const stopWatchdog = () => {
+  const stopDeviceWatchdog = () => {
     if (watchdogTimerRef.current) {
       clearInterval(watchdogTimerRef.current);
       watchdogTimerRef.current = null;
     }
   };
 
-  const speakChunk = (chunkIndex: number) => {
+  // Device voice chunk player
+  const speakDeviceChunk = (chunkIndex: number) => {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-    if (!isSpeakingRef.current) return;
+    if (!isDeviceSpeakingRef.current) return;
 
     const chunks = chunksRef.current;
     if (chunkIndex >= chunks.length) {
@@ -194,18 +270,17 @@ export function TextToSpeechEngine() {
     };
 
     utterance.onend = () => {
-      if (!isSpeakingRef.current) return;
+      if (!isDeviceSpeakingRef.current) return;
       if (chunkIndex + 1 < chunks.length) {
-        speakChunk(chunkIndex + 1);
+        speakDeviceChunk(chunkIndex + 1);
       } else {
         handleStop();
       }
     };
 
     utterance.onerror = (err) => {
-      // Interrupted error occurs naturally when user clicks stop
       if (err.error !== 'interrupted' && err.error !== 'canceled') {
-        console.error('TTS playback error:', err);
+        console.error('Device TTS error:', err);
       }
       handleStop();
     };
@@ -213,79 +288,234 @@ export function TextToSpeechEngine() {
     window.speechSynthesis.speak(utterance);
   };
 
-  const handleSpeak = () => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+  // Main Play handler: Live Studio Neural Voice or Device Voice
+  const handlePlay = async () => {
+    if (!text.trim()) return;
 
+    // If currently paused, resume immediately
     if (isPaused) {
-      window.speechSynthesis.resume();
-      setIsPaused(false);
-      setIsSpeaking(true);
-      isSpeakingRef.current = true;
-      startWatchdog();
+      if (audioEngine === 'studio' && studioAudioRef.current) {
+        studioAudioRef.current.play();
+        setIsPlaying(true);
+        setIsPaused(false);
+      } else if (audioEngine === 'device' && typeof window !== 'undefined') {
+        window.speechSynthesis.resume();
+        setIsPlaying(true);
+        setIsPaused(false);
+        isDeviceSpeakingRef.current = true;
+        startDeviceWatchdog();
+      }
       return;
     }
 
-    window.speechSynthesis.cancel();
+    // Stop any ongoing playback before starting new
+    handleStop();
 
-    if (!text.trim()) return;
+    if (audioEngine === 'studio') {
+      // Check if we already have the audio buffer cached for current params
+      if (audioBlobUrl && generatedParamsKey === currentParamsKey && studioAudioRef.current) {
+        studioAudioRef.current.currentTime = 0;
+        studioAudioRef.current.volume = volume;
+        studioAudioRef.current.play();
+        setIsPlaying(true);
+        setIsPaused(false);
+        return;
+      }
 
-    const parsedChunks = parseSentenceChunks(text);
-    chunksRef.current = parsedChunks;
-    setTotalSentences(parsedChunks.length);
-    currentChunkIndexRef.current = 0;
-    setCurrentSentenceIndex(1);
+      // Synthesize fresh Studio Neural Voice live stream
+      setIsLoadingAudio(true);
+      setDownloadError(null);
 
-    isSpeakingRef.current = true;
-    setIsSpeaking(true);
-    setIsPaused(false);
-    startWatchdog();
+      try {
+        const response = await fetch('/api/tools/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: text.trim(),
+            voice: selectedNeuralVoice,
+            rate: rate,
+            pitch: pitch,
+          }),
+        });
 
-    speakChunk(0);
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.error || `Server synthesis returned HTTP ${response.status}`);
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const audioBlob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
+        if (audioBlobUrl) {
+          URL.revokeObjectURL(audioBlobUrl);
+        }
+        const newUrl = URL.createObjectURL(audioBlob);
+        setAudioBlobUrl(newUrl);
+        setGeneratedParamsKey(currentParamsKey);
+
+        const audio = studioAudioRef.current;
+        if (audio) {
+          audio.src = newUrl;
+          audio.volume = volume;
+          audio.load();
+          try {
+            await audio.play();
+            setIsPlaying(true);
+            setIsPaused(false);
+          } catch (playErr: any) {
+            console.warn('Audio play() blocked by browser policy/sink, falling back to device speech:', playErr);
+            if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+              const parsedChunks = parseSentenceChunks(text);
+              chunksRef.current = parsedChunks;
+              setTotalSentences(parsedChunks.length);
+              currentChunkIndexRef.current = 0;
+              setCurrentSentenceIndex(1);
+              isDeviceSpeakingRef.current = true;
+              setIsPlaying(true);
+              setIsPaused(false);
+              startDeviceWatchdog();
+              speakDeviceChunk(0);
+            }
+          }
+        }
+      } catch (err: any) {
+        console.error('Studio TTS fetch error:', err);
+        setDownloadError(
+          err.message || 'Could not stream Studio Voice. You can switch to Device Voice (offline) below.'
+        );
+      } finally {
+        setIsLoadingAudio(false);
+      }
+    } else {
+      // Device Voice (Offline)
+      if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+      const parsedChunks = parseSentenceChunks(text);
+      chunksRef.current = parsedChunks;
+      setTotalSentences(parsedChunks.length);
+      currentChunkIndexRef.current = 0;
+      setCurrentSentenceIndex(1);
+
+      isDeviceSpeakingRef.current = true;
+      setIsPlaying(true);
+      setIsPaused(false);
+      startDeviceWatchdog();
+
+      speakDeviceChunk(0);
+    }
   };
 
   const handlePause = () => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-    if (isSpeaking && !isPaused) {
-      window.speechSynthesis.pause();
+    if (audioEngine === 'studio' && studioAudioRef.current) {
+      studioAudioRef.current.pause();
+      setIsPlaying(false);
       setIsPaused(true);
-      stopWatchdog();
+    } else if (audioEngine === 'device' && typeof window !== 'undefined') {
+      window.speechSynthesis.pause();
+      setIsPlaying(false);
+      setIsPaused(true);
+      stopDeviceWatchdog();
     }
   };
 
   const handleStop = () => {
-    if (typeof window === 'undefined') return;
-    isSpeakingRef.current = false;
-    stopWatchdog();
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
-    setIsSpeaking(false);
+    setIsPlaying(false);
     setIsPaused(false);
     setActiveWordStart(null);
     setActiveWordLength(0);
-    setCurrentSentenceIndex(1);
-  };
 
-  const handleSpeedPill = (speed: number) => {
-    setRate(speed);
-    if (isSpeaking) {
-      handleStop();
+    if (studioAudioRef.current) {
+      studioAudioRef.current.pause();
+      studioAudioRef.current.currentTime = 0;
+    }
+
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      isDeviceSpeakingRef.current = false;
+      stopDeviceWatchdog();
+      window.speechSynthesis.cancel();
     }
   };
 
-  const handleResetSettings = () => {
-    setRate(1);
-    setPitch(1);
-    setVolume(1);
+  // Seek bar for studio audio
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const targetTime = parseFloat(e.target.value);
+    setAudioCurrentTime(targetTime);
+    if (studioAudioRef.current) {
+      studioAudioRef.current.currentTime = targetTime;
+    }
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  // Instant or fresh MP3 Download
+  const handleDownloadMp3 = async () => {
+    if (!text.trim()) return;
+
+    // If audio already synthesized with matching params, download in 0ms!
+    if (audioBlobUrl && generatedParamsKey === currentParamsKey) {
+      const link = document.createElement('a');
+      link.href = audioBlobUrl;
+      link.download = `kagazo-speech-${Date.now()}.mp3`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    setIsLoadingAudio(true);
+    setDownloadError(null);
+
+    try {
+      const response = await fetch('/api/tools/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: text.trim(),
+          voice: selectedNeuralVoice,
+          rate: rate,
+          pitch: pitch,
+        }),
+      });
+
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({}));
+        throw new Error(errJson.error || `Synthesis failed (HTTP ${response.status})`);
+      }
+
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBlob = new Blob([arrayBuffer], { type: 'audio/mpeg' });
+      const url = URL.createObjectURL(audioBlob);
+      setAudioBlobUrl(url);
+      setGeneratedParamsKey(currentParamsKey);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `kagazo-speech-${Date.now()}.mp3`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err: any) {
+      setDownloadError(err.message || 'Failed to download MP3.');
+    } finally {
+      setIsLoadingAudio(false);
+    }
   };
 
-  // Clean broken line breaks from PDF copies
+  // Situation / Tone Preset selector
+  const handleSelectPreset = (preset: SituationPreset) => {
+    handleStop();
+    setActivePreset(preset.id);
+    setRate(preset.rate);
+    setPitch(preset.pitch);
+  };
+
+  // Smart Punctuation & Breath Enhancer
+  const handleSmartPunctuation = () => {
+    if (!text.trim()) return;
+    const enhanced = enhancePunctuationAndCadence(text);
+    setText(enhanced);
+    handleStop();
+    setEnhancedToast(true);
+    setTimeout(() => setEnhancedToast(false), 2500);
+  };
+
+  // Clean PDF Line Breaks
   const handleCleanLineBreaks = () => {
     if (!text.trim()) return;
     const cleaned = text
@@ -294,11 +524,25 @@ export function TextToSpeechEngine() {
       .filter(Boolean)
       .join('\n\n');
     setText(cleaned);
+    handleStop();
     setCleanedToast(true);
     setTimeout(() => setCleanedToast(false), 2500);
   };
 
-  // File import handling (.txt, .md, .csv, .json)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleResetSettings = () => {
+    handleStop();
+    setActivePreset(null);
+    setRate(1);
+    setPitch(1);
+    setVolume(1);
+  };
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -313,15 +557,6 @@ export function TextToSpeechEngine() {
     };
     reader.readAsText(file);
     if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -341,56 +576,19 @@ export function TextToSpeechEngine() {
     reader.readAsText(file);
   };
 
-  // Studio-grade MP3 synthesis & download
-  const handleDownloadMp3 = async () => {
-    if (!text.trim()) return;
-    setIsDownloadingMp3(true);
-    setDownloadError(null);
-
-    try {
-      const response = await fetch('/api/tools/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: text.trim(),
-          voice: selectedNeuralVoice,
-          rate: rate,
-          pitch: pitch,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorJson = await response.json().catch(() => ({}));
-        throw new Error(errorJson.error || `Server synthesis failed (HTTP ${response.status})`);
-      }
-
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      setGeneratedAudioUrl(url);
-
-      // Trigger automatic browser download
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `kagazo-speech-${Date.now()}.mp3`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (err: any) {
-      console.error('MP3 download error:', err);
-      setDownloadError(err.message || 'Failed to generate studio MP3. Please check your network and try again.');
-    } finally {
-      setIsDownloadingMp3(false);
-    }
-  };
-
   const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
   const charCount = text.length;
-  // Estimated reading duration based on 150 words/min divided by rate
   const estimatedSeconds = Math.round((wordCount / (150 * (rate || 1))) * 60);
   const estimatedMin = Math.floor(estimatedSeconds / 60);
   const estimatedSec = estimatedSeconds % 60;
   const listenDurationStr =
     estimatedMin > 0 ? `${estimatedMin}m ${estimatedSec}s listen` : `${estimatedSec}s listen`;
+
+  const formatSeconds = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
 
   // Render text for Karaoke View
   const renderKaraokeContent = () => {
@@ -420,7 +618,7 @@ export function TextToSpeechEngine() {
     <div className="w-full space-y-6">
       {/* Top Quick Actions Bar */}
       <div className="bg-[#12141A] border border-[#262833] rounded-2xl p-4 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* Statistics & Badges */}
+        {/* Statistics & Engine Indicator */}
         <div className="flex flex-wrap items-center gap-3 text-xs">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#1A1C24] border border-[#2E313D] text-gray-300 font-medium">
             <FileText className="w-3.5 h-3.5 text-[#E6570B]" />
@@ -434,15 +632,43 @@ export function TextToSpeechEngine() {
             <span>{listenDurationStr}</span>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-950/40 border border-emerald-800/40 text-emerald-400 font-medium text-[11px]">
-            <Radio className="w-3 h-3 animate-pulse" />
-            <span>Studio MP3 + Instant Preview</span>
+          {/* Engine Selector: Studio Neural HD vs Device Offline */}
+          <div className="flex items-center gap-1 bg-[#0E0F14] p-1 rounded-xl border border-[#2E313D]">
+            <button
+              onClick={() => {
+                handleStop();
+                setAudioEngine('studio');
+              }}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
+                audioEngine === 'studio'
+                  ? 'bg-emerald-600 text-white shadow-sm'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+              title="Broadcast-quality neural voice with natural inflections"
+            >
+              <Mic className="w-3 h-3" />
+              <span>Studio Neural HD</span>
+            </button>
+            <button
+              onClick={() => {
+                handleStop();
+                setAudioEngine('device');
+              }}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
+                audioEngine === 'device'
+                  ? 'bg-[#E6570B] text-white shadow-sm'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+              title="Local device speech engine (100% offline, zero data)"
+            >
+              <Radio className="w-3 h-3" />
+              <span>Device Voice (Offline)</span>
+            </button>
           </div>
         </div>
 
-        {/* Action Buttons: Import, Clean Line Breaks, Clear */}
+        {/* Action Buttons: Smart Punctuation, Clean PDF Breaks, Import, Copy */}
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          {/* Hidden File Input */}
           <input
             ref={fileInputRef}
             type="file"
@@ -451,22 +677,32 @@ export function TextToSpeechEngine() {
             className="hidden"
           />
 
+          {/* Smart Punctuation & Breath Enhancer */}
+          <button
+            onClick={handleSmartPunctuation}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-600/20 to-orange-600/20 hover:from-amber-600/30 hover:to-orange-600/30 border border-amber-500/40 text-amber-300 hover:text-white rounded-xl transition-all font-semibold"
+            title="Expand abbreviations, add natural breathing commas, and format cadence"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>{enhancedToast ? 'Tone & Cadence Enhanced!' : 'Smart Punctuation'}</span>
+          </button>
+
+          <button
+            onClick={handleCleanLineBreaks}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1A1C24] hover:bg-[#252836] border border-[#2E313D] text-gray-300 hover:text-white rounded-xl transition-colors font-medium"
+            title="Clean broken PDF line wraps into smooth continuous paragraphs"
+          >
+            <Wand2 className="w-3.5 h-3.5 text-gray-400" />
+            <span>{cleanedToast ? 'Line Breaks Cleaned!' : 'Clean PDF Breaks'}</span>
+          </button>
+
           <button
             onClick={() => fileInputRef.current?.click()}
             className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1A1C24] hover:bg-[#252836] border border-[#2E313D] text-gray-300 hover:text-white rounded-xl transition-colors font-medium"
             title="Import text or script file (.txt, .md, .csv)"
           >
             <Upload className="w-3.5 h-3.5 text-[#E6570B]" />
-            <span>Import File</span>
-          </button>
-
-          <button
-            onClick={handleCleanLineBreaks}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1A1C24] hover:bg-[#252836] border border-[#2E313D] text-gray-300 hover:text-white rounded-xl transition-colors font-medium"
-            title="Clean broken PDF line breaks into smooth paragraphs"
-          >
-            <Wand2 className="w-3.5 h-3.5 text-amber-400" />
-            <span>{cleanedToast ? 'Line Breaks Cleaned!' : 'Clean PDF Breaks'}</span>
+            <span>Import</span>
           </button>
 
           <button
@@ -492,27 +728,64 @@ export function TextToSpeechEngine() {
         </div>
       </div>
 
-      {/* Main Playback & Studio MP3 Control Center */}
+      {/* Situation & Mood Tone Presets */}
+      <div className="bg-[#12141A] border border-[#262833] rounded-2xl p-4 shadow-xl space-y-2">
+        <div className="flex items-center justify-between text-xs text-gray-400">
+          <span className="flex items-center gap-1.5 font-semibold text-gray-200">
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            <span>Speaking Tone & Situation Presets</span>
+          </span>
+          <span className="text-[11px] text-gray-500">Auto-tunes speed, pitch, and pauses for your context</span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          {SITUATION_PRESETS.map((preset) => {
+            const isSelected = activePreset === preset.id;
+            return (
+              <button
+                key={preset.id}
+                onClick={() => handleSelectPreset(preset)}
+                className={`p-2.5 rounded-xl border text-left transition-all ${
+                  isSelected
+                    ? 'bg-gradient-to-b from-amber-500/20 to-orange-500/10 border-amber-500/60 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500/40'
+                    : 'bg-[#161822] hover:bg-[#1C1E2B] border-[#262833] text-gray-300'
+                }`}
+              >
+                <div className="flex items-center gap-1.5 mb-1">
+                  <span className="text-sm">{preset.icon}</span>
+                  <span className={`text-xs font-bold truncate ${isSelected ? 'text-white' : 'text-gray-200'}`}>
+                    {preset.name}
+                  </span>
+                </div>
+                <p className="text-[10px] text-gray-400 line-clamp-1">{preset.desc}</p>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main Playback & Live Studio Control Center */}
       <div className="bg-[#12141A] border border-[#262833] rounded-2xl p-5 shadow-xl space-y-5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#262833] pb-5">
           {/* Primary Controls */}
           <div className="flex flex-wrap items-center gap-3">
-            {!isSpeaking ? (
+            {!isPlaying ? (
               <button
-                onClick={handleSpeak}
-                disabled={!text.trim()}
+                onClick={handlePlay}
+                disabled={!text.trim() || isLoadingAudio}
                 className="flex items-center gap-2 px-6 py-2.5 bg-[#E6570B] hover:bg-[#d04e0a] text-white rounded-xl text-sm font-bold shadow-lg shadow-[#E6570B]/25 transition-all disabled:opacity-50"
               >
-                <Play className="w-4 h-4 fill-white" />
-                <span>Play Voice</span>
-              </button>
-            ) : isPaused ? (
-              <button
-                onClick={handleSpeak}
-                className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold shadow-lg shadow-emerald-600/25 transition-all"
-              >
-                <Play className="w-4 h-4 fill-white" />
-                <span>Resume</span>
+                {isLoadingAudio ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <span>Connecting Neural Audio...</span>
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-4 h-4 fill-white" />
+                    <span>{isPaused ? 'Resume Play' : 'Play Live Voice'}</span>
+                  </>
+                )}
               </button>
             ) : (
               <button
@@ -526,7 +799,7 @@ export function TextToSpeechEngine() {
 
             <button
               onClick={handleStop}
-              disabled={!isSpeaking && !isPaused}
+              disabled={!isPlaying && !isPaused}
               className="flex items-center gap-1.5 px-4 py-2.5 bg-[#1A1C24] hover:bg-[#252836] border border-[#2E313D] text-white rounded-xl text-xs font-semibold transition-colors disabled:opacity-40"
             >
               <Square className="w-3.5 h-3.5 fill-current" />
@@ -536,30 +809,21 @@ export function TextToSpeechEngine() {
             {/* Studio MP3 Download Button */}
             <button
               onClick={handleDownloadMp3}
-              disabled={isDownloadingMp3 || !text.trim()}
+              disabled={isLoadingAudio || !text.trim()}
               className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-emerald-600/20 transition-all disabled:opacity-50"
-              title="Download studio-grade broadcast MP3 generated via neural synthesis"
+              title="Download 24kHz studio MP3 audio"
             >
-              {isDownloadingMp3 ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin text-white" />
-                  <span>Synthesizing Studio MP3...</span>
-                </>
-              ) : (
-                <>
-                  <Download className="w-4 h-4 text-white" />
-                  <span>Download Studio MP3</span>
-                  <span className="hidden sm:inline text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-mono font-normal">
-                    24kHz HD
-                  </span>
-                </>
-              )}
+              <Download className="w-4 h-4 text-white" />
+              <span>Download Studio MP3</span>
+              <span className="hidden sm:inline text-[10px] bg-white/20 px-1.5 py-0.5 rounded font-mono font-normal">
+                24kHz HD
+              </span>
             </button>
           </div>
 
-          {/* Audio Waveform & Speech Chunk Progress Status */}
+          {/* Audio Waveform & Status */}
           <div className="flex items-center gap-3 self-start lg:self-auto">
-            {isSpeaking && totalSentences > 1 && (
+            {audioEngine === 'device' && isPlaying && totalSentences > 1 && (
               <div className="px-3 py-1 bg-[#1A1C24] border border-[#2E313D] rounded-xl text-[11px] font-mono text-gray-300">
                 Sentence {currentSentenceIndex} of {totalSentences}
               </div>
@@ -567,20 +831,28 @@ export function TextToSpeechEngine() {
 
             <div className="flex items-center gap-1.5 h-8 px-4 bg-[#0E0F14] border border-[#262833] rounded-xl">
               <span className="text-[11px] font-mono text-gray-400 mr-2">
-                {isSpeaking && !isPaused ? 'Speaking...' : isPaused ? 'Paused' : isDownloadingMp3 ? 'Synthesizing...' : 'Ready'}
+                {isLoadingAudio
+                  ? 'Synthesizing...'
+                  : isPlaying
+                  ? 'Playing Live'
+                  : isPaused
+                  ? 'Paused'
+                  : 'Ready'}
               </span>
               {[0.4, 0.9, 0.6, 1.0, 0.5, 0.8, 0.3].map((h, i) => (
                 <span
                   key={i}
                   className={`w-1 rounded-full transition-all duration-300 ${
-                    isSpeaking && !isPaused
-                      ? 'bg-[#E6570B] animate-pulse'
-                      : isDownloadingMp3
-                      ? 'bg-emerald-500 animate-bounce'
+                    isPlaying
+                      ? audioEngine === 'studio'
+                        ? 'bg-emerald-400 animate-pulse'
+                        : 'bg-[#E6570B] animate-pulse'
+                      : isLoadingAudio
+                      ? 'bg-amber-400 animate-bounce'
                       : 'bg-[#2E313D]'
                   }`}
                   style={{
-                    height: isSpeaking && !isPaused ? `${h * 22}px` : isDownloadingMp3 ? `${h * 16}px` : '4px',
+                    height: isPlaying ? `${h * 22}px` : isLoadingAudio ? `${h * 16}px` : '4px',
                     animationDelay: `${i * 120}ms`,
                   }}
                 />
@@ -589,31 +861,70 @@ export function TextToSpeechEngine() {
           </div>
         </div>
 
-        {/* Error Alert if MP3 Download Failed */}
-        {downloadError && (
-          <div className="flex items-center gap-2 p-3 bg-rose-950/40 border border-rose-800/50 rounded-xl text-rose-300 text-xs">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
-            <span>{downloadError}</span>
+        {/* Live Audio Scrubber for Studio Neural Engine */}
+        {audioEngine === 'studio' && audioDuration > 0 && (
+          <div className="bg-[#0E0F14] border border-[#262833] rounded-xl p-3 flex items-center gap-3 text-xs">
+            <span className="font-mono text-gray-400 text-[11px] shrink-0">
+              {formatSeconds(audioCurrentTime)}
+            </span>
+            <input
+              type="range"
+              min="0"
+              max={audioDuration || 1}
+              step="0.1"
+              value={audioCurrentTime}
+              onChange={handleSeek}
+              className="w-full accent-emerald-500 cursor-pointer"
+            />
+            <span className="font-mono text-gray-400 text-[11px] shrink-0">
+              {formatSeconds(audioDuration)}
+            </span>
           </div>
         )}
 
-        {/* Generated MP3 Inline Player */}
-        {generatedAudioUrl && (
-          <div className="p-4 bg-emerald-950/20 border border-emerald-800/40 rounded-xl space-y-2">
-            <div className="flex items-center justify-between text-xs text-emerald-400 font-medium">
-              <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-emerald-400" />
-                Studio MP3 Ready &bull; High Bitrate 24kHz
-              </span>
-              <a
-                href={generatedAudioUrl}
-                download={`kagazo-speech-${Date.now()}.mp3`}
-                className="text-[11px] underline hover:text-emerald-300"
-              >
-                Download Again
-              </a>
+        {/* Inline Audio Player Bar for Studio Neural HD */}
+        {audioEngine === 'studio' && audioBlobUrl && (
+          <div className="bg-[#0E0F14] border border-emerald-800/40 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 text-emerald-400 font-medium shrink-0">
+              <Mic className="w-4 h-4 text-emerald-400" />
+              <span>Studio Neural Audio Ready (24kHz HD)</span>
             </div>
-            <audio controls src={generatedAudioUrl} className="w-full h-8" />
+            <audio
+              controls
+              src={audioBlobUrl}
+              className="w-full sm:w-80 h-8"
+              onPlay={() => {
+                setIsPlaying(true);
+                setIsPaused(false);
+              }}
+              onPause={() => {
+                setIsPlaying(false);
+                setIsPaused(true);
+              }}
+              onEnded={() => {
+                setIsPlaying(false);
+                setIsPaused(false);
+              }}
+            />
+          </div>
+        )}
+
+        {/* Error Alert */}
+        {downloadError && (
+          <div className="flex items-center justify-between p-3 bg-rose-950/40 border border-rose-800/50 rounded-xl text-rose-300 text-xs">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
+              <span>{downloadError}</span>
+            </div>
+            <button
+              onClick={() => {
+                setAudioEngine('device');
+                setDownloadError(null);
+              }}
+              className="px-2 py-1 bg-rose-900/60 hover:bg-rose-900 rounded-lg text-[11px] font-semibold text-white underline"
+            >
+              Switch to Device Voice
+            </button>
           </div>
         )}
 
@@ -624,13 +935,16 @@ export function TextToSpeechEngine() {
             <label className="text-gray-400 flex items-center justify-between font-medium">
               <span className="flex items-center gap-1">
                 <Mic className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Studio MP3 Voice</span>
+                <span>Studio Neural Voice</span>
               </span>
-              <span className="text-[10px] text-emerald-400 font-mono">Neural HD</span>
+              <span className="text-[10px] text-emerald-400 font-mono">24kHz HD</span>
             </label>
             <select
               value={selectedNeuralVoice}
-              onChange={(e) => setSelectedNeuralVoice(e.target.value)}
+              onChange={(e) => {
+                handleStop();
+                setSelectedNeuralVoice(e.target.value);
+              }}
               className="w-full bg-[#1A1C24] border border-[#2E313D] rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-emerald-500 truncate cursor-pointer"
             >
               {POPULAR_NEURAL_VOICES.map((v) => (
@@ -641,23 +955,24 @@ export function TextToSpeechEngine() {
             </select>
           </div>
 
-          {/* Browser Preview Voice */}
+          {/* Browser Preview Voice (When using device engine) */}
           <div className="space-y-1.5">
             <label className="text-gray-400 flex items-center justify-between font-medium">
               <span className="flex items-center gap-1">
                 <Languages className="w-3.5 h-3.5 text-[#E6570B]" />
-                <span>Browser Voice</span>
+                <span>Device Offline Voice</span>
               </span>
-              <span className="text-[10px] text-gray-500 font-mono">Instant Preview</span>
+              <span className="text-[10px] text-gray-500 font-mono">Installed Voice</span>
             </label>
             <select
               value={selectedBrowserVoice}
-              onChange={(e) => setSelectedBrowserVoice(e.target.value)}
+              onChange={(e) => {
+                handleStop();
+                setSelectedBrowserVoice(e.target.value);
+              }}
               className="w-full bg-[#1A1C24] border border-[#2E313D] rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-[#E6570B] truncate cursor-pointer"
             >
-              {browserVoices.length === 0 && (
-                <option value="">Default System Voice</option>
-              )}
+              {browserVoices.length === 0 && <option value="">Default System Voice</option>}
               {browserVoices.map((v) => (
                 <option key={v.name} value={v.name} className="bg-[#1A1C24] text-xs">
                   {v.name} ({v.lang})
@@ -680,15 +995,23 @@ export function TextToSpeechEngine() {
               max="2.0"
               step="0.05"
               value={rate}
-              onChange={(e) => setRate(parseFloat(e.target.value))}
+              onChange={(e) => {
+                handleStop();
+                setActivePreset(null);
+                setRate(parseFloat(e.target.value));
+              }}
               className="w-full accent-[#E6570B] cursor-pointer"
             />
-            {/* Quick Speed Selector Pills */}
+            {/* Quick Speed Pills */}
             <div className="flex items-center justify-between gap-1 pt-0.5">
               {[0.75, 1.0, 1.25, 1.5, 2.0].map((s) => (
                 <button
                   key={s}
-                  onClick={() => handleSpeedPill(s)}
+                  onClick={() => {
+                    handleStop();
+                    setActivePreset(null);
+                    setRate(s);
+                  }}
                   className={`px-1.5 py-0.5 text-[10px] rounded font-mono transition-colors ${
                     rate === s
                       ? 'bg-[#E6570B] text-white font-bold'
@@ -715,7 +1038,9 @@ export function TextToSpeechEngine() {
                 >
                   <RotateCcw className="w-2.5 h-2.5" /> Reset
                 </button>
-                <span className="font-mono text-white">{pitch}x &bull; {Math.round(volume * 100)}%</span>
+                <span className="font-mono text-white">
+                  {pitch}x &bull; {Math.round(volume * 100)}%
+                </span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2 pt-1">
@@ -726,7 +1051,11 @@ export function TextToSpeechEngine() {
                 step="0.05"
                 value={pitch}
                 title="Vocal Pitch"
-                onChange={(e) => setPitch(parseFloat(e.target.value))}
+                onChange={(e) => {
+                  handleStop();
+                  setActivePreset(null);
+                  setPitch(parseFloat(e.target.value));
+                }}
                 className="w-full accent-[#E6570B] cursor-pointer"
               />
               <input
@@ -736,7 +1065,13 @@ export function TextToSpeechEngine() {
                 step="0.05"
                 value={volume}
                 title="Audio Volume"
-                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                onChange={(e) => {
+                  const val = parseFloat(e.target.value);
+                  setVolume(val);
+                  if (studioAudioRef.current) {
+                    studioAudioRef.current.volume = val;
+                  }
+                }}
                 className="w-full accent-[#E6570B] cursor-pointer"
               />
             </div>
@@ -788,7 +1123,7 @@ export function TextToSpeechEngine() {
             >
               <Eye className="w-3.5 h-3.5" />
               <span>Live Karaoke Follower</span>
-              {isSpeaking && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />}
+              {isPlaying && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />}
             </button>
           </div>
         </div>
@@ -796,8 +1131,11 @@ export function TextToSpeechEngine() {
         {/* Workspace Body: Editor or Karaoke Highlighting */}
         {viewMode === 'editor' ? (
           <div
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setIsDragging(true);
+            }}
+            onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
             className={`relative transition-all ${
               isDragging ? 'ring-2 ring-[#E6570B] bg-[#E6570B]/5' : ''
@@ -813,7 +1151,7 @@ export function TextToSpeechEngine() {
               value={text}
               onChange={(e) => {
                 setText(e.target.value);
-                if (isSpeaking) handleStop();
+                if (isPlaying) handleStop();
               }}
               placeholder="Type, paste, or drop your script, speech, article, or dialogue here (up to 6,000 characters for Studio MP3)..."
               className="w-full h-72 p-5 bg-[#0E0F14] text-gray-100 font-sans text-sm sm:text-base leading-relaxed resize-y focus:outline-none focus:ring-1 focus:ring-[#E6570B]"
@@ -836,10 +1174,10 @@ export function TextToSpeechEngine() {
           <div className="flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5 text-[#E6570B]" />
             <span>
-              Tip: Click &quot;Live Karaoke Follower&quot; while playing to follow the real-time glowing word teleprompter!
+              Live Studio Neural Audio connects in real-time &bull; Click &quot;Smart Punctuation&quot; to enhance cadence
             </span>
           </div>
-          <span className="text-gray-500">Auto-chunking active &bull; No 15s Chrome freeze</span>
+          <span className="text-gray-500">24kHz Broadcast Quality &bull; Zero Lag on Replay</span>
         </div>
       </div>
     </div>

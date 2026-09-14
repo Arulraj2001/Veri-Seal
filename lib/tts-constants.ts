@@ -47,3 +47,64 @@ export const SAMPLE_SCRIPTS = [
     text: 'Artificial intelligence transforms natural language processing through transformer architectures, enabling speech synthesis with unprecedented human-like inflections and natural pauses.',
   },
 ];
+
+export interface SituationPreset {
+  id: string;
+  name: string;
+  icon: string;
+  desc: string;
+  rate: number;
+  pitch: number;
+}
+
+export const SITUATION_PRESETS: SituationPreset[] = [
+  {
+    id: 'news',
+    name: 'News & Anchor',
+    icon: '🎙️',
+    desc: 'Crisp, articulate broadcast delivery',
+    rate: 1.05,
+    pitch: 1.0,
+  },
+  {
+    id: 'audiobook',
+    name: 'Story & Audiobook',
+    icon: '🎧',
+    desc: 'Warm, expressive with natural narrative breath pauses',
+    rate: 0.88,
+    pitch: 0.95,
+  },
+  {
+    id: 'support',
+    name: 'Customer Support',
+    icon: '🤝',
+    desc: 'Friendly, reassuring, and patient conversation',
+    rate: 0.95,
+    pitch: 1.05,
+  },
+  {
+    id: 'youtube',
+    name: 'YouTube & Explainer',
+    icon: '⚡',
+    desc: 'High-energy, punchy, engaging presentation',
+    rate: 1.18,
+    pitch: 1.1,
+  },
+  {
+    id: 'calm',
+    name: 'Calm & Meditation',
+    icon: '🧘',
+    desc: 'Slow, soothing, and relaxing cadence',
+    rate: 0.8,
+    pitch: 0.9,
+  },
+  {
+    id: 'academic',
+    name: 'Academic & Lecture',
+    icon: '🎓',
+    desc: 'Clear, structured, easy to follow',
+    rate: 0.98,
+    pitch: 1.0,
+  },
+];
+
