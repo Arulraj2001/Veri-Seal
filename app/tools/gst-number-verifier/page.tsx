@@ -2,119 +2,182 @@ import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
-  Building2,
-  ChevronRight,
   ShieldCheck,
+  ChevronRight,
   Zap,
-  HelpCircle,
+  Lock,
   Sparkles,
   CheckCircle2,
+  HelpCircle,
+  AlertTriangle,
+  Info,
+  Sliders,
+  Scale,
+  Banknote,
+  Calculator,
+  GraduationCap,
+  Award,
+  FileCheck2,
+  Clock,
+  Globe,
+  Code2,
+  Ruler,
+  Coins,
+  Heart,
   FileText,
-  CreditCard,
-  MapPin,
-  ExternalLink,
+  FileSpreadsheet,
+  TrendingUp,
+  Building2,
+  Languages,
+  PenTool,
+  Search,
+  Fingerprint,
 } from 'lucide-react';
 import GstinVerifierEngine from '@/components/tools/GstinVerifierEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'GST Number (GSTIN) Instant Verifier & Taxpayer Lookup | Free MOD 36',
-  description:
-    'Mathematically verify 15-digit Indian GST numbers online for free. Decode state codes, embedded business PAN, and entity registration numbers with official MOD 36 checksum calculation to detect fake GST bills.',
+  title: 'GST Number (GSTIN) Instant Verifier & Taxpayer Lookup | Free MOD 36 | Kagazo',
+  description: 'Mathematically verify 15-digit Indian GST numbers online for free. Decode state codes, embedded business PAN, and entity registration numbers with official MOD 36 checksum calculation to detect fake GST bills.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/gst-number-verifier',
+    canonical: 'https://kagazo.in/tools/gst-number-verifier',
   },
   openGraph: {
-    title: 'Free GST Number (GSTIN) Verifier | Kagazo',
-    description:
-      'Verify Indian GSTIN numbers, decode State & PAN, and validate MOD 36 checksum instantly.',
-    url: 'https://Kagazo.in/tools/gst-number-verifier',
+    title: 'GST Number (GSTIN) Instant Verifier & Taxpayer Lookup | Free MOD 36 | Kagazo',
+    description: 'Mathematically verify 15-digit Indian GST numbers online for free. Decode state codes, embedded business PAN, and entity registration numbers with official MOD 36 checksum calculation to detect fake GST bills.',
+    url: 'https://kagazo.in/tools/gst-number-verifier',
     siteName: 'Kagazo',
     type: 'website',
-    images: [
-      {
-        url: `/api/og?title=${encodeURIComponent('GST Number (GSTIN) Instant Verifier')}&subtitle=${encodeURIComponent('Taxpayer Lookup & Free ISO/IEC 7064 MOD 36 Checksum')}&type=tool`,
-        width: 1200,
-        height: 630,
-      },
-    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GST Number (GSTIN) Instant Verifier & Taxpayer Lookup | Free MOD 36 | Kagazo',
+    description: 'Mathematically verify 15-digit Indian GST numbers online for free. Decode state codes, embedded business PAN, and entity registration numbers with official MOD 36 checksum calculation to detect fake GST bills.',
   },
 };
 
-const POPULAR_STATE_CODES = [
-  { code: '33', state: 'Tamil Nadu', region: 'South' },
-  { code: '27', state: 'Maharashtra', region: 'West' },
-  { code: '29', state: 'Karnataka', region: 'South' },
-  { code: '07', state: 'Delhi', region: 'North' },
-  { code: '24', state: 'Gujarat', region: 'West' },
-  { code: '09', state: 'Uttar Pradesh', region: 'North' },
-  { code: '36', state: 'Telangana', region: 'South' },
-  { code: '37', state: 'Andhra Pradesh', region: 'South' },
-  { code: '32', state: 'Kerala', region: 'South' },
-  { code: '19', state: 'West Bengal', region: 'East' },
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Enter 15-Character GSTIN",
+    "desc": "Type or paste the 15-character GST number printed on your invoice or purchase order."
+  },
+  {
+    "step": 2,
+    "title": "State Code Verification",
+    "desc": "The engine validates the first two digits against official Indian Census state codes."
+  },
+  {
+    "step": 3,
+    "title": "Extract Embedded PAN",
+    "desc": "Inspect characters 3 to 12 to verify business structure (Company, Firm, Individual, LLP)."
+  },
+  {
+    "step": 4,
+    "title": "Calculate MOD 36 Checksum",
+    "desc": "The algorithm computes the expected 15th digit and compares it with your supplier number."
+  },
+  {
+    "step": 5,
+    "title": "Audit Invoice Legality",
+    "desc": "Confirm active mathematical validity and launch direct verification on the GST Portal."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Checksum Mismatch (MOD 36)",
+    "title": "Fabricated or Typo-Riddled GSTIN on Invoice",
+    "desc": "Fraudulent vendors often fabricate a random 15-character string. Kagazo runs the official MOD 36 formula to immediately catch fake checksums and unverified vendor invoices."
+  },
+  {
+    "badge": "Error: Confusing O with 0 or I with 1",
+    "title": "Alphanumeric OCR Transcription Mistakes",
+    "desc": "Scanning printed bills frequently misreads the number zero (0) as the letter (O) or one (1) as (I). Kagazo flags structural pattern violations based on expected alphanumeric slots."
+  },
+  {
+    "badge": "Error: 14th Character Not \"Z\"",
+    "title": "Missing the Mandatory Default Constant",
+    "desc": "Under Indian GST specifications, character 14 is hardcoded to \"Z\" by statutory mandate. Any number with a different 14th character is structurally invalid."
+  },
+  {
+    "badge": "Error: Booking ITC on Inactive GSTIN",
+    "title": "Claiming Tax Credits on Cancelled Registrations",
+    "desc": "If a supplier registration was cancelled prior to the invoice date, tax authorities disallow Input Tax Credit under Section 16(2)(c). Always verify active registration status."
+  }
 ];
 
 const FAQS = [
   {
-    question: 'How do I know if a GST number on an invoice is genuine or fake?',
-    answer:
-      'A valid GSTIN must strictly follow the 15-character statutory format: 2 state digits + 10 PAN characters + 1 entity count + "Z" + 1 MOD 36 checksum character. Fake or forged GST numbers almost always fail the mathematical ISO/IEC 7064 MOD 36 algorithm. Kagazo computes this check instantly in your browser.',
+    "question": "What is a GSTIN and how is it constructed?",
+    "answer": "A Goods and Services Tax Identification Number (GSTIN) is a unique 15-digit alphanumeric identifier assigned to every registered taxpayer in India under the GST Act. It consists of: State Code (2 digits) + PAN (10 chars) + Entity Code (1 char) + \"Z\" (1 char) + Checksum (1 char)."
   },
   {
-    question: 'What is the consequence of accepting a fake GST invoice?',
-    answer:
-      'If you pay GST to a vendor holding an invalid or cancelled GSTIN, the Goods and Services Tax Network (GSTN) will deny your Input Tax Credit (ITC) under Section 16(2) of the CGST Act. You may also face penalty interest up to 18% per annum.',
+    "question": "How does the MOD 36 Checksum calculation work?",
+    "answer": "The 15th character is computed using a weighted polynomial algorithm (ISO 7064 Mod 37, 36) applied to the preceding 14 characters. It provides instantaneous offline mathematical verification that the number was generated by the GSTN portal."
   },
   {
-    question: 'What information is embedded inside a 15-digit GSTIN?',
-    answer:
-      'The first 2 digits represent the State Code (e.g., 33 for Tamil Nadu). The next 10 characters (digits 3 to 12) represent the Permanent Account Number (PAN) of the taxpayer. The 13th character represents the number of business vertical registrations in that state. The 14th character is always "Z" by default, and the 15th is an error-detecting checksum.',
+    "question": "Can I check the business entity type from the GSTIN?",
+    "answer": "Yes. The 4th character of the embedded PAN indicates entity type: \"C\" for Company, \"P\" for Person/Individual, \"H\" for HUF, \"F\" for Partnership Firm, \"A\" for Association of Persons, \"T\" for Trust, and \"L\" for Local Authority."
   },
   {
-    question: 'Is any searched GSTIN stored or tracked by Kagazo?',
-    answer:
-      'No. All validation algorithms, state mappings, and checksum calculations execute strictly in client-side JavaScript inside your browser. No taxpayer or vendor numbers are logged on our servers.',
+    "question": "What happens if I accept a tax invoice with an invalid or fake GSTIN?",
+    "answer": "Under Section 16(2)(c) of the CGST Act, you cannot claim Input Tax Credit (ITC) for taxes paid on fake or invalid invoices. The tax department will demand reversal of ITC along with 18% annual interest and penalties."
   },
+  {
+    "question": "Is my searched GST number logged or shared on your servers?",
+    "answer": "No. Kagazo performs all structural and mathematical checksum validations entirely client-side inside your browser JavaScript engine. Zero vendor GSTINs or business queries are logged on our servers."
+  },
+  {
+    "question": "What are the official state codes for major Indian states in GSTIN?",
+    "answer": "Common state codes include: 33 for Tamil Nadu, 27 for Maharashtra, 29 for Karnataka, 07 for Delhi, 09 for Uttar Pradesh, 24 for Gujarat, 19 for West Bengal, 32 for Kerala, 36 for Telangana, and 37 for Andhra Pradesh."
+  },
+  {
+    "question": "What does the 13th character represent in a GSTIN?",
+    "answer": "The 13th character represents the registration count of that specific PAN holder within that state. It begins with \"1\" for the first registration, \"2\" for the second vertical, up to \"9\", and then continues as \"A\", \"B\", etc."
+  },
+  {
+    "question": "Can I verify the live filing status of a supplier on the official portal?",
+    "answer": "Yes. After performing instant structural and checksum verification on Kagazo, you can click through to the official GST Portal (services.gst.gov.in) to inspect active/cancelled status and GSTR-3B return filing history."
+  },
+  {
+    "question": "Why is the 14th character always the letter \"Z\"?",
+    "answer": "The 14th character was reserved as the default constant \"Z\" in the original GST Council architecture to allow future expansion of registration types without breaking existing 15-digit database schemas."
+  },
+  {
+    "question": "Does this tool verify composition scheme dealers?",
+    "answer": "Composition dealers have standard 15-digit GSTINs that pass mathematical MOD 36 verification. However, composition dealers cannot issue Tax Invoices or collect GST from customers; they must issue a \"Bill of Supply\"."
+  }
 ];
 
-export default function GstinVerifierPage() {
+export default function GstNumberVerifierPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Kagazo GST Number (GSTIN) Instant Verifier',
-        url: 'https://Kagazo.in/tools/gst-number-verifier',
-        applicationCategory: 'UtilityApplication',
+        name: 'GST Number (GSTIN) Instant Verifier',
+        url: 'https://kagazo.in/tools/gst-number-verifier',
+        applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
+        browserRequirements: 'Requires JavaScript',
         offers: {
           '@type': 'Offer',
-          price: '0.00',
+          price: '0',
           priceCurrency: 'INR',
         },
-        description:
-          'Validate 15-digit Indian GST numbers, decode State and PAN details, and check MOD 36 checksum.',
+        description: 'Mathematically verify 15-digit Indian GST numbers online for free. Decode state codes, embedded business PAN, and entity registration numbers with official MOD 36 checksum calculation to detect fake GST bills.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Check if a GST Number is Valid',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Enter 15-Digit GSTIN',
-            text: 'Type or paste the 15-character GST number printed on your invoice or bill.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Verify Checksum & State',
-            text: 'Inspect the computed MOD 36 checksum and verify that the registered State matches your vendor.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Check Live Portal Status',
-            text: 'Click Official GST Portal to inspect active filing history and return compliance.',
-          },
-        ],
+        name: 'How to Verify a GST Number in 5 Steps',
+        description: 'Step-by-step verified workflow instructions for GST Number (GSTIN) Instant Verifier.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -127,21 +190,42 @@ export default function GstinVerifierPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'GST Number (GSTIN) Instant Verifier',
+            item: 'https://kagazo.in/tools/gst-number-verifier',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
-
-      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -149,167 +233,290 @@ export default function GstinVerifierPage() {
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Verification Tools
+            Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold truncate">GSTIN Verifier</span>
+          <span className="text-primary font-bold">GST Number (GSTIN) Instant Verifier</span>
         </nav>
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>15-Digit Anatomy Breakdown • MOD 36 Checksum</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>GST Number (GSTIN) Instant Verifier & </span>
+            <span className="text-primary">MOD 36 Taxpayer Lookup</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Mathematically verify 15-digit Indian GST numbers online for free. Decode state codes, embedded business PAN, and entity registration numbers with official MOD 36 checksum calculation to detect fake GST bills.
+          </p>
+        </header>
+
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                <Building2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>GST Council &amp; GSTN ISO/IEC 7064 Standard</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                GST Number (GSTIN) Instant Verifier
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Validate 15-digit Indian GST numbers, decode registered State and business PAN details, and mathematically verify the official <strong>MOD 36 error-detection checksum</strong> to prevent fake invoice fraud and protect your Input Tax Credit (ITC).
-              </p>
-            </div>
-
-            {/* Privacy Badge */}
-            <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 dark:text-emerald-200 font-medium">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>
-                <strong>100% Client-Side Algorithm Privacy:</strong> All GSTIN checks run directly inside your browser. No searched vendor numbers or invoice data are logged on our servers.
-              </span>
-            </div>
-
-            {/* Core Interactive Tool Engine */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* Interactive Engine Canvas */}
             <GstinVerifierEngine />
 
-            {/* State Code Reference Cheatsheet */}
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center justify-between border-b border-surface-darker/60 dark:border-slate-800 pb-4">
-                <div className="flex items-center gap-2.5">
-                  <MapPin className="w-5 h-5 text-emerald-600" />
-                  <h3 className="text-lg font-bold text-foreground">
-                    Indian GST State Code Reference Table
-                  </h3>
+            {/* Post-Action Native Ad Placement */}
+            <AdSlot slot="post_download" />
+
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Engineering &amp; Compliance Excellence
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 rounded-full border border-emerald-200 dark:border-emerald-800">
-                  State Prefix
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Key Technical Features &amp; Architecture
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> MOD 36 Checksum Engine
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Mathematically validates the 15th checksum character using the official GST Council MOD 36 polynomial algorithm.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Embedded PAN Extraction
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Instantly isolates and decodes the 10-character business PAN, entity classification, and state jurisdiction code.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-primary" /> Fake Invoice Protection
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Verify supplier tax credentials before booking Input Tax Credit (ITC) under CGST Act Section 16(2)(c).
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Official Specifications & Reference Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-3">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main">
+                    15-Character Indian GSTIN Structural Anatomy (GST Rules 2017)
+                  </h2>
+                  <p className="text-xs text-text-main/70">
+                    Authoritative standards, formatting thresholds, and official regulatory guidelines:
+                  </p>
+                </div>
+                <span className="text-xs font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  Statutory Architecture
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-                {POPULAR_STATE_CODES.map((item) => (
-                  <div
-                    key={item.code}
-                    className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700 text-center"
-                  >
-                    <span className="text-lg font-mono font-black text-emerald-600 dark:text-emerald-400 block">
-                      {item.code}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-bold">
+                      <th className="py-2.5 px-3 font-bold">Character Position</th><th className="py-2.5 px-3 font-bold">Designated Purpose</th><th className="py-2.5 px-3 font-bold">Valid Value Range & Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Characters 1 & 2</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">State / Union Territory Code</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">01 (J&K) to 38 (Ladakh) based on Indian Census 2011</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Characters 3 to 12</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Permanent Account Number (PAN)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">10-character alphanumeric legal PAN of business entity</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Character 13</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Entity Registration Number</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">1 to 9, then A to Z representing registration count in that state</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Character 14</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Default Alphabetical Constant</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Letter "Z" by default (reserved for future statutory use)</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Character 15</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Check Digit (MOD 36 Checksum)</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Alphanumeric character calculated using ISO 7064 Mod 37, 36</td></tr>
+                    <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors"><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">ITC Compliance Rule</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Valid Active GSTIN Required</td><td className="py-2 px-3 border-b border-surface-darker/50 dark:border-slate-800/80">Non-compliant invoices trigger 100% ITC reversal + interest</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Verify a GST Number in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant compliance and verified results:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block truncate">
-                      {item.state}
-                    </span>
-                    <span className="text-[10px] text-slate-400 font-medium">
-                      {item.region} India
-                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
                 ))}
               </div>
-            </div>
+            </section>
 
-            {/* FAQ Accordion */}
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center gap-2.5 border-b border-surface-darker/60 dark:border-slate-800 pb-4">
-                <HelpCircle className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-lg font-bold text-foreground">Frequently Asked Questions</h3>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common GSTIN Verification Errors & Invoice Fraud
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common formatting errors, legal omissions, and calculation pitfalls:
+                </p>
               </div>
-              <div className="space-y-4">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Strict 10 Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center justify-between border-b border-surface-darker pb-4">
+                <div className="space-y-1">
+                  <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
+                    <HelpCircle className="w-5 h-5 text-primary" />
+                    Frequently Asked Questions
+                  </h2>
+                  <p className="text-xs text-text-main/60">
+                    Comprehensive technical, legal, and operational answers
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20">
+                  10 Questions Answered
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {FAQS.map((faq, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/80 space-y-1.5"
+                    className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2 hover:border-primary/20 transition-all"
                   >
-                    <h4 className="font-bold text-foreground text-sm flex items-start gap-2">
-                      <span className="text-emerald-600 font-extrabold">Q:</span>
-                      {faq.question}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
+                    <h3 className="font-bold text-text-main text-xs sm:text-sm flex items-start gap-2">
+                      <span className="text-primary font-black shrink-0">Q{idx + 1}.</span>
+                      <span>{faq.question}</span>
+                    </h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed pl-6">
                       {faq.answer}
                     </p>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
+          </main>
 
-          {/* Right Sidebar (32%) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* Input Tax Credit Card */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-800 dark:text-white text-sm flex items-center gap-2">
-                <Zap className="w-4 h-4 text-emerald-600" />
-                <span>Input Tax Credit (ITC) Protection</span>
+          {/* Compact Sticky Right Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
+            {/* Key Criteria Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                GSTIN Criteria
               </h3>
-              <div className="space-y-3 text-xs text-slate-600 dark:text-slate-300">
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
-                  <div className="font-bold text-slate-800 dark:text-white">Verify Before Invoice Payment</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
-                    Never release payment on handwritten or unverified GST invoices without verifying the 15-digit GSTIN.
+              <div className="space-y-1.5 text-xs">
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">15-Digit Format</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    State (2) + PAN (10) + Entity (1) + Z (1) + Check (1).
                   </div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
-                  <div className="font-bold text-slate-800 dark:text-white">GSTR-2B Matching</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
-                    Ensure vendor files GSTR-1 on time so the invoice reflects in your monthly GSTR-2B auto-drafted statement.
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">MOD 36 Engine</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    ISO 7064 Mod 37, 36 mathematical validation.
+                  </div>
+                </div>
+                <div className="p-2 rounded-xl bg-surface border border-surface-darker space-y-0.5">
+                  <div className="font-bold text-text-main text-[11px]">ITC Safe</div>
+                  <div className="text-[10px] text-text-main/60 leading-tight">
+                    Verify vendor validity before booking input tax credit.
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Related Tools */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-800 dark:text-white text-sm flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
-                <span>Related Verification Tools</span>
+            {/* Related Tools Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                Related Tools
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <Link
-                  href="/tools/aadhaar-pan-kyc-merge"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-700 transition-colors"
+                  href="/tools/ifsc-code-finder"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-emerald-600" />
-                    Aadhaar + PAN Single PDF KYC
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      IFSC Code & Branch Finder
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Banking
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
-                  href="/tools/affidavit-generator"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-700 transition-colors"
+                  href="/tools/salary-slip-generator"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-emerald-600" />
-                    Bilingual Affidavit Generator
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Monthly Salary Slip Generator
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Payroll
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
                 <Link
-                  href="/tools/mask-aadhaar"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-700 transition-colors"
+                  href="/tools/income-tax-calculator-2025-26"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    Official Masked Aadhaar Redactor
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Income Tax Calculator FY 2025-26
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    Tax
                   </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
                 </Link>
               </div>
             </div>
 
-            {/* Ad Space (Ostrune Exclusive) */}
+            {/* Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
-          </div>
+
+            {/* Sovereign In-RAM Privacy Box */}
+            <div className="bg-surface rounded-2xl border border-surface-darker p-3 space-y-1.5 text-text-main/80">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-primary">
+                <Lock className="w-3.5 h-3.5" />
+                <span>100% In-RAM Privacy</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-text-main/70">
+                All calculations and security operations occur strictly inside your device browser memory. Zero records, identity details, or files are sent to remote cloud servers.
+              </p>
+            </div>
+          </aside>
         </div>
       </div>
     </div>
