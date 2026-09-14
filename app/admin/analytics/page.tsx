@@ -62,6 +62,23 @@ export default function AdminAnalyticsPage() {
     load();
   }, [range]);
 
+  const totalVolume = React.useMemo(() => {
+    return data?.time_series_30d.reduce((sum, item) => sum + item.total, 0) || 0;
+  }, [data]);
+
+  const totalValid = React.useMemo(() => {
+    return data?.time_series_30d.reduce((sum, item) => sum + item.valid, 0) || 0;
+  }, [data]);
+
+  const validRatioBadge = totalVolume > 0
+    ? `${((totalValid / totalVolume) * 100).toFixed(1)}% Valid Ratio`
+    : 'Baseline Initialized (0 Records)';
+
+  const currentUsers = React.useMemo(() => {
+    if (!data || !data.user_growth_90d.length) return 2;
+    return data.user_growth_90d[data.user_growth_90d.length - 1].users;
+  }, [data]);
+
   if (loading || !data) {
     return (
       <div className="py-24 text-center">
@@ -119,7 +136,7 @@ export default function AdminAnalyticsPage() {
             </p>
           </div>
           <span className="text-[11px] font-bold text-success bg-success-light px-2.5 py-1 rounded-lg">
-            94.8% Valid Ratio
+            {validRatioBadge}
           </span>
         </div>
 
@@ -179,25 +196,35 @@ export default function AdminAnalyticsPage() {
             </div>
           </div>
 
-          <div className="h-72 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data.doc_types_top10} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E5E7EB" />
-                <XAxis type="number" tick={{ fontSize: 10 }} stroke="#9CA3AF" />
-                <YAxis dataKey="name" type="category" tick={{ fontSize: 9 }} width={130} stroke="#9CA3AF" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: '12px',
-                    fontSize: '12px',
-                  }}
-                />
-                <Legend wrapperStyle={{ fontSize: '11px' }} />
-                <Bar dataKey="this_month" fill="#E6570B" name="This Month" radius={[0, 4, 4, 0]} />
-                <Bar dataKey="last_month" fill="#D1D5DB" name="Last Month" radius={[0, 4, 4, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          {data.doc_types_top10.length === 0 ? (
+            <div className="h-72 w-full flex flex-col items-center justify-center text-center p-6 border border-dashed border-surface-darker rounded-2xl">
+              <FileCheck2 className="w-8 h-8 text-text-main/25 mb-2" />
+              <p className="text-xs font-bold text-text-main/70">No Document Verifications Yet</p>
+              <p className="text-[11px] text-text-main/50 max-w-xs mt-1">
+                Top document categories will populate automatically as users verify Aadhaar, PAN, and state certificates.
+              </p>
+            </div>
+          ) : (
+            <div className="h-72 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data.doc_types_top10} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E5E7EB" />
+                  <XAxis type="number" tick={{ fontSize: 10 }} stroke="#9CA3AF" />
+                  <YAxis dataKey="name" type="category" tick={{ fontSize: 9 }} width={130} stroke="#9CA3AF" />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#FFFFFF',
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                    }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: '11px' }} />
+                  <Bar dataKey="this_month" fill="#E6570B" name="This Month" radius={[0, 4, 4, 0]} />
+                  <Bar dataKey="last_month" fill="#D1D5DB" name="Last Month" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          )}
         </div>
 
         {/* Chart 3: Status Breakdown Pie Chart (5 cols) */}
@@ -211,26 +238,36 @@ export default function AdminAnalyticsPage() {
             </p>
           </div>
 
-          <div className="h-56 w-full my-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={data.status_breakdown}
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={75}
-                  innerRadius={45}
-                  paddingAngle={4}
-                  dataKey="value"
-                >
-                  {data.status_breakdown.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={{ borderRadius: '12px', fontSize: '12px' }} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
+          {data.status_breakdown.every((s) => s.value === 0) ? (
+            <div className="h-56 w-full flex flex-col items-center justify-center text-center p-6 border border-dashed border-surface-darker rounded-2xl my-2">
+              <ShieldCheck className="w-8 h-8 text-success/30 mb-2" />
+              <p className="text-xs font-bold text-text-main/70">Awaiting Verifications</p>
+              <p className="text-[11px] text-text-main/50 max-w-xs mt-1">
+                Status ratios (Valid vs Invalid vs Warning) will record as documents are evaluated.
+              </p>
+            </div>
+          ) : (
+            <div className="h-56 w-full my-2">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={data.status_breakdown}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={75}
+                    innerRadius={45}
+                    paddingAngle={4}
+                    dataKey="value"
+                  >
+                    {data.status_breakdown.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={{ borderRadius: '12px', fontSize: '12px' }} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          )}
 
           <div className="space-y-1.5 pt-3 border-t border-surface-darker text-[11px]">
             {data.status_breakdown.map((s) => (
@@ -258,7 +295,7 @@ export default function AdminAnalyticsPage() {
               <p className="text-xs text-text-main/60 mt-0.5">Cumulative verified account registrations</p>
             </div>
             <span className="text-[11px] font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md">
-              +1,845 Users
+              {currentUsers} Active Users (Day 1)
             </span>
           </div>
 
@@ -297,17 +334,27 @@ export default function AdminAnalyticsPage() {
             </span>
           </div>
 
-          <div className="h-60 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data.top_states}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                <XAxis dataKey="state" tick={{ fontSize: 9 }} stroke="#9CA3AF" interval={0} />
-                <YAxis tick={{ fontSize: 10 }} stroke="#9CA3AF" />
-                <Tooltip contentStyle={{ borderRadius: '12px', fontSize: '12px' }} />
-                <Bar dataKey="count" fill="#E6570B" name="Verifications" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          {data.top_states.length === 0 ? (
+            <div className="h-60 w-full flex flex-col items-center justify-center text-center p-6 border border-dashed border-surface-darker rounded-2xl">
+              <MapPin className="w-8 h-8 text-text-main/25 mb-2" />
+              <p className="text-xs font-bold text-text-main/70">Awaiting Regional Traffic</p>
+              <p className="text-[11px] text-text-main/50 max-w-xs mt-1">
+                State certificates from Tamil Nadu, Karnataka, AP, UP, etc. will show regional distribution here.
+              </p>
+            </div>
+          ) : (
+            <div className="h-60 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data.top_states}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                  <XAxis dataKey="state" tick={{ fontSize: 9 }} stroke="#9CA3AF" interval={0} />
+                  <YAxis tick={{ fontSize: 10 }} stroke="#9CA3AF" />
+                  <Tooltip contentStyle={{ borderRadius: '12px', fontSize: '12px' }} />
+                  <Bar dataKey="count" fill="#E6570B" name="Verifications" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          )}
         </div>
       </div>
 
@@ -322,7 +369,9 @@ export default function AdminAnalyticsPage() {
               Live cryptographic evaluation log stream with signer authority and timestamp
             </p>
           </div>
-          <span className="text-xs text-text-main/50 font-medium">50 Live Records</span>
+          <span className="text-xs text-text-main/50 font-medium">
+            {data.activity_log.length} Live Records
+          </span>
         </div>
 
         <div className="overflow-x-auto mt-4 max-h-96">
@@ -338,49 +387,61 @@ export default function AdminAnalyticsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-darker/50 font-medium">
-              {data.activity_log.map((log) => (
-                <tr key={log.id} className="hover:bg-surface/40 transition-colors">
-                  <td className="py-2.5 px-3 text-text-main/60 whitespace-nowrap">
-                    {new Date(log.timestamp).toLocaleTimeString('en-IN', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                    })}
-                  </td>
-                  <td className="py-2.5 px-3 font-mono text-[11px] text-text-main font-semibold">
-                    {log.id}
-                  </td>
-                  <td className="py-2.5 px-3 font-bold text-text-main whitespace-nowrap">
-                    {log.doc_type}
-                  </td>
-                  <td className="py-2.5 px-3 whitespace-nowrap">
-                    {log.status === 'VALID' && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-light text-success text-[10px] font-bold uppercase">
-                        <CheckCircle2 className="w-3 h-3" />
-                        <span>VALID</span>
-                      </span>
-                    )}
-                    {log.status === 'INVALID' && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-light text-error text-[10px] font-bold uppercase">
-                        <XCircle className="w-3 h-3" />
-                        <span>INVALID</span>
-                      </span>
-                    )}
-                    {log.status === 'UNKNOWN' && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-warning-light text-warning text-[10px] font-bold uppercase">
-                        <AlertTriangle className="w-3 h-3" />
-                        <span>UNKNOWN</span>
-                      </span>
-                    )}
-                  </td>
-                  <td className="py-2.5 px-3 text-text-main/80 truncate max-w-xs">
-                    {log.signer}
-                  </td>
-                  <td className="py-2.5 px-3 text-right font-mono text-[11px] text-text-main/50">
-                    {log.ip_hash}
+              {data.activity_log.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="py-12 text-center text-text-main/50">
+                    <Clock className="w-6 h-6 mx-auto mb-2 text-text-main/30" />
+                    <p className="font-bold text-xs text-text-main/70">No Verification Activity Logged Yet</p>
+                    <p className="text-[11px] text-text-main/40 mt-1 max-w-sm mx-auto">
+                      Real cryptographic evaluation logs will stream here live as citizens verify certificates and documents.
+                    </p>
                   </td>
                 </tr>
-              ))}
+              ) : (
+                data.activity_log.map((log) => (
+                  <tr key={log.id} className="hover:bg-surface/40 transition-colors">
+                    <td className="py-2.5 px-3 text-text-main/60 whitespace-nowrap">
+                      {new Date(log.timestamp).toLocaleTimeString('en-IN', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                      })}
+                    </td>
+                    <td className="py-2.5 px-3 font-mono text-[11px] text-text-main font-semibold">
+                      {log.id}
+                    </td>
+                    <td className="py-2.5 px-3 font-bold text-text-main whitespace-nowrap">
+                      {log.doc_type}
+                    </td>
+                    <td className="py-2.5 px-3 whitespace-nowrap">
+                      {log.status === 'VALID' && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-success-light text-success text-[10px] font-bold uppercase">
+                          <CheckCircle2 className="w-3 h-3" />
+                          <span>VALID</span>
+                        </span>
+                      )}
+                      {log.status === 'INVALID' && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-light text-error text-[10px] font-bold uppercase">
+                          <XCircle className="w-3 h-3" />
+                          <span>INVALID</span>
+                        </span>
+                      )}
+                      {log.status === 'UNKNOWN' && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-warning-light text-warning text-[10px] font-bold uppercase">
+                          <AlertTriangle className="w-3 h-3" />
+                          <span>UNKNOWN</span>
+                        </span>
+                      )}
+                    </td>
+                    <td className="py-2.5 px-3 text-text-main/80 truncate max-w-xs">
+                      {log.signer}
+                    </td>
+                    <td className="py-2.5 px-3 text-right font-mono text-[11px] text-text-main/50">
+                      {log.ip_hash}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

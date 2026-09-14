@@ -14,95 +14,54 @@ export async function GET(req: Request) {
 
     const now = new Date();
 
-    // Chart 1: Verifications over time (30 days)
+    // Chart 1: Verifications over time (30 days) - clean starting baseline
     const timeSeries = Array.from({ length: 30 }).map((_, i) => {
       const d = new Date(now.getTime() - (29 - i) * 24 * 3600 * 1000);
       const dayStr = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
-      const valid = Math.floor(190 + Math.sin(i / 2.5) * 70 + (i % 6) * 12);
-      const invalid = Math.floor(10 + (i % 4) * 4);
-      const unknown = Math.floor(6 + (i % 3) * 3);
       return {
         date: dayStr,
-        valid,
-        invalid,
-        unknown,
-        total: valid + invalid + unknown,
+        valid: 0,
+        invalid: 0,
+        unknown: 0,
+        total: 0,
       };
     });
 
-    // Chart 2: Doc type breakdown (Top 10: This month vs Last month)
-    const docTypesTop10 = [
-      { name: 'e-Aadhaar Letter', this_month: 4820, last_month: 4100 },
-      { name: 'Income Tax e-PAN', this_month: 2450, last_month: 2150 },
-      { name: 'TNeGA Community Cert', this_month: 1890, last_month: 1620 },
-      { name: 'TNeGA Nativity Cert', this_month: 1340, last_month: 1200 },
-      { name: 'MeeSeva Revenue Cert', this_month: 1140, last_month: 980 },
-      { name: 'Parivahan RC / DL', this_month: 890, last_month: 810 },
-      { name: 'DigiLocker Marks Sheet', this_month: 760, last_month: 620 },
-      { name: 'EPFO UAN Passbook', this_month: 620, last_month: 550 },
-      { name: 'Passport Verification', this_month: 480, last_month: 410 },
-      { name: 'High Court Orders', this_month: 310, last_month: 280 },
-    ];
+    // Chart 2: Doc type breakdown (Top 10) - clean starting baseline
+    const docTypesTop10: Array<{ name: string; this_month: number; last_month: number }> = [];
 
-    // Chart 3: Status Breakdown
+    // Chart 3: Status Breakdown - clean starting baseline
     const statusBreakdown = [
-      { name: 'VALID (CCA Root Verified)', value: 12100, color: '#10B981' },
-      { name: 'INVALID (Modified / Tampered)', value: 520, color: '#EF4444' },
-      { name: 'UNKNOWN (Self-Signed / Untrusted)', value: 340, color: '#F59E0B' },
-      { name: 'ERROR (Corrupted / Encrypted)', value: 80, color: '#6B7280' },
+      { name: 'VALID (CCA Root Verified)', value: 0, color: '#10B981' },
+      { name: 'INVALID (Modified / Tampered)', value: 0, color: '#EF4444' },
+      { name: 'UNKNOWN (Self-Signed / Untrusted)', value: 0, color: '#F59E0B' },
+      { name: 'ERROR (Corrupted / Encrypted)', value: 0, color: '#6B7280' },
     ];
 
-    // Chart 4: User Growth (90 days)
+    // Chart 4: User Growth (90 days) - starting from beginning (0 to 2 Admins)
     const userGrowth = Array.from({ length: 12 }).map((_, i) => {
       const d = new Date(now.getTime() - (11 - i) * 7.5 * 24 * 3600 * 1000);
       const weekLabel = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+      // Clean start: 0 users earlier, 2 admins registered at launch
+      const usersCount = i >= 10 ? 2 : 0;
       return {
         date: weekLabel,
-        users: Math.floor(450 + i * 125 + (i * i * 3)),
+        users: usersCount,
       };
     });
 
-    // Chart 5: Top States Breakdown
-    const topStates = [
-      { state: 'Tamil Nadu', count: 4890 },
-      { state: 'Andhra Pradesh', count: 2450 },
-      { state: 'Karnataka', count: 2180 },
-      { state: 'Maharashtra', count: 1870 },
-      { state: 'Telangana', count: 1650 },
-      { state: 'Uttar Pradesh', count: 1320 },
-      { state: 'Kerala', count: 980 },
-      { state: 'Gujarat', count: 740 },
-    ];
+    // Chart 5: Top States Breakdown - clean starting baseline
+    const topStates: Array<{ state: string; count: number }> = [];
 
-    // Table: Recent Activity Log (50 items)
-    const activityLog = Array.from({ length: 50 }).map((_, i) => {
-      const d = new Date(now.getTime() - i * 18 * 60 * 1000);
-      const docTypes = [
-        'UIDAI e-Aadhaar Letter',
-        'Income Tax Department e-PAN',
-        'Tamil Nadu e-Sevai Community Certificate',
-        'Parivahan RC / Driving Licence',
-        'DigiLocker Verified Marks Sheet',
-        'High Court Certified Order',
-      ];
-      const statuses: Array<'VALID' | 'INVALID' | 'UNKNOWN' | 'ERROR'> = [
-        'VALID',
-        'VALID',
-        'VALID',
-        'VALID',
-        'INVALID',
-        'UNKNOWN',
-      ];
-
-      return {
-        id: `act-${5000 - i}`,
-        doc_type: docTypes[i % docTypes.length],
-        status: statuses[i % statuses.length],
-        timestamp: d.toISOString(),
-        signer: 'CCA India / NIC Sub-CA',
-        ip_hash: `103.24.**.${(i * 7) % 255}`,
-      };
-    });
+    // Table: Recent Activity Log - clean starting baseline (0 records)
+    const activityLog: Array<{
+      id: string;
+      doc_type: string;
+      status: string;
+      timestamp: string;
+      signer: string;
+      ip_hash: string;
+    }> = [];
 
     return NextResponse.json({
       time_series_30d: timeSeries,

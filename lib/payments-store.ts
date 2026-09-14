@@ -16,59 +16,7 @@ export interface PaymentItem {
   expiry_date?: string;
 }
 
-export const inMemoryPayments: PaymentItem[] = [
-  {
-    id: 'PR-8921',
-    user_id: 'usr-suresh',
-    name: 'Advocate Suresh Menon',
-    email: 'suresh.law@madrasbar.in',
-    plan: 'pro',
-    amount: 199,
-    upi_txn_id: '428901238910',
-    screenshot_url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80',
-    submitted: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
-    status: 'pending',
-  },
-  {
-    id: 'PR-8920',
-    user_id: 'usr-karthik',
-    name: 'Karthik Raja (CSC Center)',
-    email: 'csc.karthik@tnonline.in',
-    plan: 'business',
-    amount: 2499,
-    upi_txn_id: '428812903847',
-    screenshot_url: 'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=600&q=80',
-    submitted: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
-    status: 'pending',
-  },
-  {
-    id: 'PR-8919',
-    user_id: 'usr-pooja',
-    name: 'Pooja Bhattacharya',
-    email: 'pooja.ca@auditfirm.com',
-    plan: 'pro',
-    amount: 199,
-    upi_txn_id: '428756192834',
-    screenshot_url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80',
-    submitted: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
-    status: 'approved',
-    expiry_date: '2027-09-10',
-    admin_note: 'Verified with HDFC statement',
-  },
-  {
-    id: 'PR-8918',
-    user_id: 'usr-manoj',
-    name: 'Manoj Kumar',
-    email: 'manoj.fake@test.com',
-    plan: 'pro',
-    amount: 199,
-    upi_txn_id: '000000000000',
-    screenshot_url: 'https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=600&q=80',
-    submitted: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
-    status: 'rejected',
-    admin_note: 'Invalid UTR reference number not found in bank ledger.',
-  },
-];
+export const inMemoryPayments: PaymentItem[] = [];
 
 export async function getAllPayments(): Promise<PaymentItem[]> {
   try {

@@ -13,42 +13,7 @@ export interface ContactMessage {
   updated_at?: string;
 }
 
-// In-memory fallback messages for instant readiness
-let memoryMessages: ContactMessage[] = [
-  {
-    id: 'msg-seed-1',
-    name: 'Kavitha R',
-    email: 'kavitha.tnega@gmail.com',
-    phone: '+91 98401 23456',
-    subject: 'Verification Assistance',
-    message: 'We have 450 community certificates issued by Salem district revenue department. Can we integrate your bulk verification API to validate Deputy Tahsildar signatures in our scholarship portal?',
-    status: 'unread',
-    admin_notes: null,
-    created_at: new Date(Date.now() - 3 * 3600 * 1000).toISOString(),
-  },
-  {
-    id: 'msg-seed-2',
-    name: 'Rajesh Sharma',
-    email: 'rajesh.sharma@fintechpay.in',
-    phone: '+91 98200 98765',
-    subject: 'API & Enterprise Access',
-    message: 'Looking to purchase the Business Enterprise Tier for our onboarding KYC platform. We need automated e-Aadhaar and e-PAN signature integrity verification with high uptime.',
-    status: 'unread',
-    admin_notes: null,
-    created_at: new Date(Date.now() - 14 * 3600 * 1000).toISOString(),
-  },
-  {
-    id: 'msg-seed-3',
-    name: 'Anand Kumar',
-    email: 'anand.k@outlook.com',
-    phone: null,
-    subject: 'Add New State Certificate',
-    message: 'I have a domicile certificate from Uttar Pradesh e-District (edistrict.up.gov.in). Does Kagazo verify signatures issued by UP CeG Sub-CA?',
-    status: 'read',
-    admin_notes: 'Confirmed UP CeG uses NIC CA 2014, verified working.',
-    created_at: new Date(Date.now() - 36 * 3600 * 1000).toISOString(),
-  },
-];
+let memoryMessages: ContactMessage[] = [];
 
 export async function saveContactMessage(data: {
   name: string;
