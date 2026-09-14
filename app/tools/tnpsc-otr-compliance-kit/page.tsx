@@ -136,12 +136,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload 3 OTR Assets",
+    "desc": "Select photo, signature, and left thumb impression files simultaneously."
+  },
+  {
+    "step": 2,
+    "title": "Automatic OTR Calibration",
+    "desc": "Photo (20\u201350 KB, 200\u00d7230 px), Signature (10\u201320 KB), Thumb (10\u201350 KB)."
+  },
+  {
+    "step": 3,
+    "title": "Add Name & Date Banner",
+    "desc": "Embeds applicant name and date of photo on the photograph bottom strip."
+  },
+  {
+    "step": 4,
+    "title": "Verify 300 DPI & Dimensions",
+    "desc": "Ensures all 3 assets match TNPSC One Time Registration server criteria."
+  },
+  {
+    "step": 5,
+    "title": "Batch Download All 3",
+    "desc": "Download verified assets ready for direct upload to tnpscexams.in."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Signature Under 10 KB",
+    "title": "TNPSC Portal Signature Under 10 KB Error",
+    "desc": "Cropping signatures closely drops file size to 6 KB. Kagazo pads to safe 14 KB."
+  },
+  {
+    "badge": "Error: Missing Name and DOP Strip",
+    "title": "Photo Lacks Applicant Name and Date",
+    "desc": "TNPSC OTR requires name and date of photo printed on photo. Kagazo embeds this automatically."
+  },
+  {
+    "badge": "Error: Thumb Impression Smudged",
+    "title": "Unreadable Biometric Ridge Detail",
+    "desc": "Over-inked thumb prints get rejected. Kagazo sharpens ridge contrast."
+  },
+  {
+    "badge": "Error: Marksheet / ID Out of Range",
+    "title": "Certificate Over 200 KB Ceiling",
+    "desc": "TNPSC documents must be strictly between 100 KB and 200 KB. Kagazo compresses to safe 180 KB."
+  }
+];
+
 export default function TnpscOtrComplianceKitPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'TNPSC OTR Photo, Signature & Thumb Compliance Kit',
         url: 'https://kagazo.in/tools/tnpsc-otr-compliance-kit',
         applicationCategory: 'UtilitiesApplication',
@@ -157,28 +209,12 @@ export default function TnpscOtrComplianceKitPage() {
       {
         '@type': 'HowTo',
         name: 'How to Prepare Full TNPSC OTR Dossier (Photo, Signature & Thumb)',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Frame Photo & Add Name/Date Banner',
-            text: 'Upload portrait into 3.5 × 4.5 cm guide, enter candidate name in capital letters, and pick recent photo date.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Calibrate Signature (10–20 KB)',
-            text: 'Upload signature snapshot. Kagazo locks file size strictly between 12 KB and 18 KB.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Sharpen Left Thumb Impression',
-            text: 'Upload thumb impression to sharpen friction ridges and conform to 10–50 KB limits.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download 3-in-1 Verified OTR Bundle',
-            text: 'Download all three verified JPEG files ready for direct upload on tnpscexams.in.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -235,6 +271,7 @@ export default function TnpscOtrComplianceKitPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
             <Sparkles className="w-4 h-4 text-primary" />
             <span>Official Tamil Nadu PSC Recruitment 2026 Standards</span>
           </div>
@@ -359,120 +396,51 @@ export default function TnpscOtrComplianceKitPage() {
               </div>
             </section>
 
-            {/* Step-by-Step How-To Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="border-b border-surface-darker pb-4">
-                <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  How to Prepare Your Complete TNPSC OTR Dossier
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Complete TNPSC OTR Compliance in 5 Steps
                 </h2>
-                <p className="text-xs text-text-main/60 mt-0.5">
-                  Follow these 4 simple steps to complete your biometric preparation in one go
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <span>Upload Photo &amp; Enter Name/Date</span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Frame your passport portrait within the 3.5 × 4.5 cm guide. Enter your name in capital block letters and select your recent photograph date to generate the official white bottom banner.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      2
-                    </span>
-                    <span>Upload &amp; Calibrate Signature</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Upload your signature written on clean white paper. The engine automatically locks the file size between 12 KB and 18 KB, preventing &quot;under 10 KB&quot; portal errors.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      3
-                    </span>
-                    <span>Enhance Left Thumb Impression</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Upload your left thumb impression. Our enhancer sharpens ridge detail and ensures the output file stays comfortably within the 10 KB to 50 KB boundary.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      4
-                    </span>
-                    <span>Download Complete OTR Kit</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Click <strong>Download Complete OTR Kit</strong> to receive all three compliant files sequentially named, ready for direct upload on the TNPSC OTR portal.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Portal Errors & Solutions */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="border-b border-surface-darker pb-4">
-                <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Common TNPSC Portal Upload Errors &amp; Technical Fixes
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common TNPSC OTR Compliance Errors and How Kagazo Fixes Them
                 </h2>
-                <p className="text-xs text-text-main/60 mt-0.5">
-                  Resolving common validation hurdles on tnpscexams.in
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="text-amber-600 font-extrabold">Error:</span>
-                    <span>&quot;Signature file size must be between 10 KB and 20 KB&quot;</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-6">
-                    <strong>The Cause:</strong> When users crop signatures to 6.0 × 2.0 cm, web compressors over-compress to 4–8 KB, which fails the TNPSC minimum byte check.
-                  </p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed pl-6">
-                    <strong>Kagazo Solution:</strong> Our bi-directional padding loop checks if the signature is under 10 KB and safely elevates it into the 13–18 KB zone without blurring pen strokes.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="text-amber-600 font-extrabold">Error:</span>
-                    <span>&quot;Photograph rejected during scrutiny: Missing Name and Date strip&quot;</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-6">
-                    <strong>The Cause:</strong> Uploading a regular studio passport photograph without the required candidate name and capture date strip.
-                  </p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed pl-6">
-                    <strong>Kagazo Solution:</strong> The engine automatically draws a clean white strip at the bottom and typesets your name in crisp block letters alongside the formatted date.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="text-amber-600 font-extrabold">Error:</span>
-                    <span>&quot;Certificate PDF size exceeds 200 KB&quot; (SSLC / PSTM / Community)</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-6">
-                    <strong>The Cause:</strong> Scanned marksheets and certificates often export at 400 KB to 2 MB from mobile scanning apps.
-                  </p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed pl-6">
-                    <strong>Kagazo Solution:</strong> Use Kagazo’s pre-calibrated [Compress PDF to 200KB](/tools/compress-pdf-to-200kb) tool to lock certificate PDFs strictly between 100 KB and 200 KB.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 

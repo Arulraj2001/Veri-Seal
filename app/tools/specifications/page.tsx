@@ -292,6 +292,58 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Search Your Target Exam",
+    "desc": "Type exam acronym (UPSC, SSC, IBPS, RRB, NEET, GATE) in search bar."
+  },
+  {
+    "step": 2,
+    "title": "Review Dimensions & KB",
+    "desc": "Inspect exact millimeter dimensions, pixel resolutions, and KB brackets."
+  },
+  {
+    "step": 3,
+    "title": "Check Background & Ink Rules",
+    "desc": "Verify background color (white vs light grey) and signature ink (black vs blue)."
+  },
+  {
+    "step": 4,
+    "title": "Check Special Requirements",
+    "desc": "Check if Name and Date of Photo (DOP) banner or live webcam capture is required."
+  },
+  {
+    "step": 5,
+    "title": "1-Click Launch Tool",
+    "desc": "Click \"Resize Now\" to launch pre-calibrated tool with exact rules pre-configured."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Applying Generic Passport Specs",
+    "title": "Assuming All Exams Use Same Rules",
+    "desc": "SSC uses 20\u201350 KB, while UPSC allows 300 KB. Always verify against specific board rules."
+  },
+  {
+    "badge": "Error: Ignoring Signature Ink Colors",
+    "title": "Uploading Blue Ink When Black is Mandated",
+    "desc": "GATE, IBPS, and RRB strictly demand black ink. Kagazo alerts you to ink rules."
+  },
+  {
+    "badge": "Error: Missing Mandatory Name Banner",
+    "title": "Failing to Add Name & Date on Photo",
+    "desc": "UPSC, NEET, and TNPSC reject photos without name strips. Kagazo embeds them."
+  },
+  {
+    "badge": "Error: Undersized File Rejection",
+    "title": "File Falling Below Minimum KB Floor",
+    "desc": "Portals reject files below 10 KB or 20 KB. Kagazo uses bi-directional padding."
+  }
+];
+
 export default function ExamSpecificationRadarPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -309,6 +361,16 @@ export default function ExamSpecificationRadarPage() {
         },
         description:
           'Interactive search database of official photo, signature, and document specifications for 40+ Indian government and entrance exams.',
+      },
+      {
+        '@type': 'HowTo',
+        name: 'How to Check Exam Photo Specs in 5 Steps',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -365,6 +427,7 @@ export default function ExamSpecificationRadarPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
             <Compass className="w-4 h-4 text-primary" />
             <span>Interactive Recruitment Portal Guidelines (2026 Edition)</span>
           </div>
@@ -444,7 +507,7 @@ export default function ExamSpecificationRadarPage() {
             <ExamSpecificationRadar />
 
             {/* Post-Action Native AdSlot */}
-            <AdSlot slot="in_content" />
+            <AdSlot slot="post_download" />
 
             {/* Official Specifications Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
@@ -503,120 +566,51 @@ export default function ExamSpecificationRadarPage() {
               </div>
             </section>
 
-            {/* Universal Golden Rules Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="border-b border-surface-darker pb-4">
-                <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  Universal Golden Rules for Exam Photo Compliance
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Check Exam Photo Specs in 5 Steps
                 </h2>
-                <p className="text-xs text-text-main/60 mt-0.5">
-                  Follow these four non-negotiable standards to prevent immediate portal rejection
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <span>Plain White Background</span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Over 90% of Indian exam commissions mandate a clean white or light off-white background. Colored walls, bedsheets, curtains, or outdoor backgrounds trigger automated reject flags in AI screening filters.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      2
-                    </span>
-                    <span>No Headwear or Spectacles</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Caps, hats, and sunglasses are strictly prohibited. Religious headgear is allowed only if facial features from forehead to chin and both ears remain fully visible. Candidates should avoid glasses to prevent flash glare.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      3
-                    </span>
-                    <span>No Signatures in CAPITAL Letters</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Signatures must be in natural, fluid cursive/running handwriting. Both IBPS and SSC explicitly disqualify candidates who sign using detached block/capital letters. Use dark black ink on unlined white paper.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      4
-                    </span>
-                    <span>Binary JPEG Encoding (Not Renamed PNG)</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Portals read binary file headers to verify genuine JPEG formatting. Renaming a `.png` or `.webp` file extension to `.jpg` will cause server upload errors. Always export via a true JPEG encoder.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Troubleshooting & Portal Errors Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="border-b border-surface-darker pb-4">
-                <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Common Portal Upload Errors &amp; Exact Technical Fixes
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Exam Application Spec Errors and How Kagazo Fixes Them
                 </h2>
-                <p className="text-xs text-text-main/60 mt-0.5">
-                  How to resolve the most frequent errors encountered on government recruitment gateways
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="text-amber-600 font-extrabold">Error:</span>
-                    <span>&quot;File size must be between 10 KB and 20 KB&quot; (SSC / IBPS / Sarathi)</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-6">
-                    <strong>The Cause:</strong> When users crop a small signature, ordinary compression tools shrink the file to 5–8 KB, falling below the mandatory 10 KB floor limit.
-                  </p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed pl-6">
-                    <strong>Kagazo Solution:</strong> Our bi-directional padding algorithm detects undersized images and inserts safe, standard-compliant JPEG metadata markers to elevate the file into the 14–18 KB safe zone without visual distortion.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="text-amber-600 font-extrabold">Error:</span>
-                    <span>&quot;Uploaded image does not match required aspect ratio&quot; (RRB / GATE / NEET)</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-6">
-                    <strong>The Cause:</strong> Uploading a standard vertical passport photo to portals requiring landscape (Railway RRB 4:3) or postcard formats (NEET 4&quot; × 6&quot;).
-                  </p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed pl-6">
-                    <strong>Kagazo Solution:</strong> Every Kagazo tool features hardcoded aspect ratio guides matching each commission’s exact digital frame requirements.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="text-amber-600 font-extrabold">Error:</span>
-                    <span>&quot;Resolution must be 300 DPI / 200 DPI&quot; (MoRTH Sarathi / PAN Card)</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-6">
-                    <strong>The Cause:</strong> Mobile camera images and standard web tools omit the binary DPI density marker, leaving files at the default 72 DPI screen resolution.
-                  </p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed pl-6">
-                    <strong>Kagazo Solution:</strong> Kagazo explicitly injects binary density tags (`0x012C` for 300 DPI, `0x00C8` for 200 DPI, or `0x0258` for 600 DPI) into the JPEG APP0 stream.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 

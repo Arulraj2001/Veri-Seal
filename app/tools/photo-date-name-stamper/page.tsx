@@ -110,12 +110,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Passport Photo",
+    "desc": "Select your passport photo in JPG, PNG, or HEIC format."
+  },
+  {
+    "step": 2,
+    "title": "Enter Candidate Name",
+    "desc": "Type your full name exactly as registered in your exam application."
+  },
+  {
+    "step": 3,
+    "title": "Select Date of Photo (DOP)",
+    "desc": "Pick the date photo was taken; auto-populates to today's date."
+  },
+  {
+    "step": 4,
+    "title": "Choose Strip Style",
+    "desc": "Select black text on white strip or white text on black strip."
+  },
+  {
+    "step": 5,
+    "title": "Download Stamped JPEG",
+    "desc": "Download compliant photo with crisp name and date banner ready for upload."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Banner Covering Chin",
+    "title": "Date Strip Obscuring Facial Features",
+    "desc": "Stamping text over the chin triggers rejection. Kagazo adds a dedicated bottom gutter."
+  },
+  {
+    "badge": "Error: Mismatched Name Spelling",
+    "title": "Name Differs from Application Form",
+    "desc": "Discrepancies cause disqualification. Always verify spelling against matriculation certificate."
+  },
+  {
+    "badge": "Error: Outdated Date of Photo",
+    "title": "DOP Older Than 3 Months",
+    "desc": "Commissions require photos taken within 3 months of notification date."
+  },
+  {
+    "badge": "Error: Blurry Pixelated Text",
+    "title": "Low-Resolution Font Rendering",
+    "desc": "Crude editors blur small text. Kagazo renders crisp anti-aliased vector typography."
+  }
+];
+
 export default function PhotoDateNameStamperPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Exam Photo Name & Date (DOP) Stamper',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -363,115 +415,51 @@ export default function PhotoDateNameStamperPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-primary" />
-                Step-by-Step: How to Add Name and Date to Your Passport Photo
-              </h2>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Stamp Name & Date on Photo in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">1</span>
-                    Upload Passport Photograph
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Upload a clear front-facing portrait taken against a plain light background. Ensure both ears are visible, eyes look straight into the camera, and no glasses reflect flash glare.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">2</span>
-                    Enter Candidate Name in CAPS
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Type your full name in BLOCK CAPITAL LETTERS exactly as spelled on your 10th standard / Matriculation certificate. Avoid abbreviations unless present on official records.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">3</span>
-                    Select Date of Photograph (DOP)
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Choose the date your photo was captured. Use the built-in validator to confirm it falls within the 10-day window for UPSC or 90-day window for SSC notifications.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">4</span>
-                    Adjust Face Alignment &amp; Download
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Use the vertical slider to position your face upward so the white banner rests cleanly below your chin and collar. Click Download to receive your pre-compressed 20–50 KB photo.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Errors & Fixes */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common Portal Rejection Errors &amp; Exact Solutions
-              </h2>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Name & Date Stamping Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Photograph without Date of Photograph (DOP)"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Uploading a regular passport photo without candidate name and capture date strip on portals requiring explicit DOP verification.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Use Kagazo to automatically stamp your name and recent capture date onto a white bottom banner before uploading.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Date of photo is older than prescribed notification window"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Stamping a date older than 10 days for UPSC ORA or older than 3 months for SSC applications.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Select today's date or a date within the active application period using our 1-click validity presets.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Facial features or chin obscured by banner"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Fixed-height banners in simple photo editors cover the candidate's chin or mouth, causing facial recognition failure.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Use Kagazo's vertical pan slider to nudge your face upward, leaving ample margin between your chin and the banner.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Photo file size exceeds 50 KB"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Adding text in graphic editors exports uncompressed 200 KB – 1 MB files that exceed government portal ceilings.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo applies iterative binary search compression to ensure the final stamped JPEG stays strictly within 20 KB – 50 KB.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 

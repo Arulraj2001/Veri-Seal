@@ -108,12 +108,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Thumb Print Photo",
+    "desc": "Select phone photo or scanner image of your ink thumb impression."
+  },
+  {
+    "step": 2,
+    "title": "Select Left Thumb (LTI)",
+    "desc": "Indian portals standardly require Left Thumb Impression (LTI)."
+  },
+  {
+    "step": 3,
+    "title": "Ridge Sharpening Filter",
+    "desc": "Enhances dermatoglyphic friction ridge contrast and clears ink smudges."
+  },
+  {
+    "step": 4,
+    "title": "Enforce Portal Limits",
+    "desc": "Locks 240\u00d7240 px square dimensions and 10\u201320 KB / 10\u201350 KB file size."
+  },
+  {
+    "step": 5,
+    "title": "Download Verified LTI JPEG",
+    "desc": "Download high-contrast thumb impression ready for portal upload."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Smudged Unreadable Ridges",
+    "title": "Ink Smudge Obscuring Biometric Loops",
+    "desc": "Too much stamp ink turns prints into black blobs. Kagazo isolates ridge contours."
+  },
+  {
+    "badge": "Error: Right Thumb Uploaded",
+    "title": "Wrong Hand Impression Disqualification",
+    "desc": "Exams strictly require Left Thumb Impression (LTI) unless physically disabled."
+  },
+  {
+    "badge": "Error: File Under 10 KB Rejected",
+    "title": "Undersized File Size Error",
+    "desc": "Portals reject files below 10 KB. Kagazo injects safe padding to maintain compliance."
+  },
+  {
+    "badge": "Error: Faint Incomplete Print",
+    "title": "Dry Ink Pad Producing Faint Scan",
+    "desc": "Insufficient pressure causes missing ridges. Kagazo deepens ink contrast."
+  }
+];
+
 export default function ThumbImpressionPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Left Thumb Impression (LTI) Resizer & Sharpener',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -360,115 +412,51 @@ export default function ThumbImpressionPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-primary" />
-                Step-by-Step: How to Take and Format a Clean Thumb Impression
-              </h2>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Resize Thumb Impressions in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">1</span>
-                    Ink Your Left Thumb Lightly
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Use a standard blue or black stamp pad. Press your left thumb gently onto the ink pad. Dab lightly on scrap paper once to remove excess ink and avoid blotches.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">2</span>
-                    Roll Thumb on Unlined Paper
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Gently roll your thumb from left to right on clean white unruled paper without slipping. Take 2–3 impressions and pick the one with the clearest ridge pattern.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">3</span>
-                    Capture Close-Up Photo
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Hold your smartphone camera directly above the print in bright daylight. Ensure the camera focuses sharply on individual fingerprint friction ridges.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">4</span>
-                    Enhance &amp; Download (20–50 KB)
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Upload to Kagazo, adjust the sharpness slider, and download your 240×240 px JPG file, automatically locked between 20 KB and 50 KB.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Errors & Fixes */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common Thumb Impression Rejection Errors &amp; Exact Fixes
-              </h2>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Thumb Impression Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "File size less than 20 KB or greater than 50 KB"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> High-resolution mobile photos are 2–5 MB, while over-compressed thumbnails fall below 20 KB.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo uses bi-directional compression to ensure your file stays strictly between 22 KB and 48 KB.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Dimensions must be 240 × 240 pixels"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Uploading rectangular or non-square crops to banking portals that mandate 1:1 square aspect ratio.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo hardcodes the output to an exact 240×240 pixel canvas.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Friction ridges not distinct / smudged ink"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Heavy pressure on the stamp pad causes ink to flood the dermal valleys, creating a solid blotch.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Re-stamp lightly, upload to Kagazo, and increase the ridge sharpening slider.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Invalid File Format: Only JPG allowed"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Uploading PNG or PDF files of scanned fingerprint documents.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo strictly exports standards-compliant JPEG files with official JFIF markers.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 

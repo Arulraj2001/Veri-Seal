@@ -111,12 +111,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Select NSDL or UTIITSL Mode",
+    "desc": "Choose PAN Photo (213\u00d7213 px, under 50 KB) or PAN Signature (400\u00d7200 px, under 50 KB)."
+  },
+  {
+    "step": 2,
+    "title": "Upload Scanned Asset",
+    "desc": "Upload your photo or signature scan in any image format."
+  },
+  {
+    "step": 3,
+    "title": "Verify 300 DPI Resolution",
+    "desc": "NSDL requires exact 300 DPI for photo and 600 DPI for signature."
+  },
+  {
+    "step": 4,
+    "title": "Auto Size Compression",
+    "desc": "Compresses output strictly under 50 KB or under 30 KB per portal rules."
+  },
+  {
+    "step": 5,
+    "title": "Download Compliant JPEG",
+    "desc": "Download verified JPEG ready for upload to onlineservices.nsdl.com."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Non-213x213 px Dimensions",
+    "title": "NSDL Strict 213x213 Pixel Lock",
+    "desc": "NSDL and UTIITSL portals reject photos that differ from 213\u00d7213 px by even 1 pixel."
+  },
+  {
+    "badge": "Error: File Exceeds 50 KB",
+    "title": "PAN Portal Upload Size Error",
+    "desc": "PAN portals enforce a strict 50 KB maximum ceiling. Kagazo compresses to safe 30 KB."
+  },
+  {
+    "badge": "Error: Blue Ink Signature Used",
+    "title": "NSDL Mandates Black Ink Signatures",
+    "desc": "PAN applications require black ink on white paper. Kagazo darkens signature strokes."
+  },
+  {
+    "badge": "Error: Low DPI Flagged",
+    "title": "Resolution Below 300 DPI",
+    "desc": "NSDL scanners check internal DPI metadata. Kagazo embeds true 300/600 DPI JFIF headers."
+  }
+];
+
 export default function PanCardPhotoSignatureResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'NSDL & UTIITSL PAN Card Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -347,93 +399,49 @@ export default function PanCardPhotoSignatureResizerPage() {
               </div>
             </section>
 
-            {/* How-to Steps Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Sliders className="w-5 h-5 text-primary" />
-                  How to Resize Your PAN Card Photo &amp; Signature in 4 Steps
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format PAN Card Photo & Signature in 5 Steps
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  Complete the entire process in under 60 seconds — no software installation required.
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
 
-              <ol className="space-y-4">
-                {[
-                  {
-                    step: '1',
-                    title: 'Upload your passport photograph',
-                    desc: 'Click the photo upload area and select a clear, front-facing photo with a white or light background. Accepted sources: selfie, studio photo scan, or phone camera shot. Any size is accepted — Kagazo handles the reduction.',
-                  },
-                  {
-                    step: '2',
-                    title: 'Crop to the 213×213 square guide',
-                    desc: 'Use the on-screen crop guide to center your face. Your face should occupy 70–80% of the frame. Eyes should be clearly visible, no heavy headwear (except for religious reasons), and no glasses with colored lenses.',
-                  },
-                  {
-                    step: '3',
-                    title: 'Upload your signature and enable the ink booster',
-                    desc: 'Upload a clear photo of your signature on white paper. Toggle the B&W Ink Clarity Booster — it removes background yellow tint, paper shadows, and converts gray ink strokes to deep black using Otsu adaptive thresholding.',
-                  },
-                  {
-                    step: '4',
-                    title: 'Download your verified PAN Kit',
-                    desc: 'Click Download to get: (a) the 213×213 px photo at 300 DPI, strictly under 30 KB; and (b) the 400×200 px signature at 600 DPI, under 60 KB. Both files are JPEG with correct JFIF binary headers for immediate upload to NSDL or UTIITSL.',
-                  },
-                ].map((item) => (
-                  <li key={item.step} className="flex gap-4">
-                    <div className="w-8 h-8 rounded-xl bg-primary text-white font-black text-sm flex items-center justify-center shrink-0 mt-0.5">
-                      {item.step}
-                    </div>
-                    <div>
-                      <p className="font-bold text-text-main text-sm">{item.title}</p>
-                      <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed mt-0.5">{item.desc}</p>
-                    </div>
-                  </li>
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
                 ))}
-              </ol>
+              </div>
             </section>
 
-            {/* Common Errors & Fixes */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Top 4 PAN Card Upload Errors &amp; Fixes
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common PAN Card Upload Errors and How Kagazo Fixes Them
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  These portal errors are responsible for over 90% of PAN application photo rejections.
+                  Avoid common application mistakes that trigger instant portal rejection:
                 </p>
               </div>
 
-              <div className="space-y-3">
-                {[
-                  {
-                    error: '"Resolution must be 300 DPI" (Protean portal)',
-                    fix: 'Your photo\'s JFIF header reports 72 DPI (web default). Kagazo writes the 300 DPI binary marker directly into the file header.',
-                  },
-                  {
-                    error: '"File size exceeds 30 KB limit"',
-                    fix: 'Phone camera photos are typically 2–8 MB. Kagazo uses iterative JPEG quality reduction to land between 18–28 KB — within the safe zone.',
-                  },
-                  {
-                    error: '"Image dimensions are incorrect (must be 213×213)"',
-                    fix: 'Generic resizers create 213×213 px images but embed different DPI values, which changes the physical cm size during portal validation. Kagazo crops and resizes precisely.',
-                  },
-                  {
-                    error: '"Signature not legible / background not white"',
-                    fix: 'Phone photos of signatures have gray backgrounds and faint ink. Enable the B&W Otsu Booster to produce a pure white background with crisp black ink.',
-                  },
-                ].map((item, idx) => (
-                  <div key={idx} className="rounded-2xl border border-surface-darker bg-surface/40 p-4 space-y-1">
-                    <p className="text-xs font-bold text-red-700 dark:text-red-400">
-                      ✗ Error: {item.error}
-                    </p>
-                    <p className="text-xs sm:text-sm text-text-main/80">
-                      <span className="text-emerald-700 font-bold">✓ Fix: </span>
-                      {item.fix}
-                    </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
                 ))}
               </div>
@@ -484,9 +492,6 @@ export default function PanCardPhotoSignatureResizerPage() {
                 ))}
               </div>
             </section>
-
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

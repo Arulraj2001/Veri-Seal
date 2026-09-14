@@ -108,12 +108,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Passport Photo",
+    "desc": "Select your frontal passport photo."
+  },
+  {
+    "step": 2,
+    "title": "Upload Scanned Signature",
+    "desc": "Select your black ink signature scan."
+  },
+  {
+    "step": 3,
+    "title": "Choose Board Preset",
+    "desc": "Select State Board layout: Photo on top, signature at bottom with clean divider."
+  },
+  {
+    "step": 4,
+    "title": "Adjust Gutter & File Size",
+    "desc": "Engine locks unified dimensions and compresses under 50 KB / 100 KB."
+  },
+  {
+    "step": 5,
+    "title": "Download Combined Slip",
+    "desc": "Download single combined JPEG slip ready for portal submission."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Distorted Aspect Ratios",
+    "title": "Stretched Photo or Squashed Signature",
+    "desc": "Manual merging distorts faces. Kagazo locks proportional dimensions for both assets."
+  },
+  {
+    "badge": "Error: File Exceeds Single Attachment Cap",
+    "title": "Combined File Too Large for Portal",
+    "desc": "Combining two images doubles file weight. Kagazo compresses combined slip under 50 KB."
+  },
+  {
+    "badge": "Error: Overlapping Signature on Photo",
+    "title": "Signature Covering Face or Shoulders",
+    "desc": "Portals require clear separation. Kagazo provides a clean white gutter divider."
+  },
+  {
+    "badge": "Error: Uneven Background Colors",
+    "title": "Mismatched Paper Backgrounds",
+    "desc": "Different paper shades look untidy. Kagazo whitens both asset backgrounds uniformly."
+  }
+];
+
 export default function PhotoSignatureJoinerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Combined Photo & Signature Slip Maker',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -360,115 +412,51 @@ export default function PhotoSignatureJoinerPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-primary" />
-                Step-by-Step: How to Create Your Combined Slip
-              </h2>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Join Photo & Signature in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">1</span>
-                    Select Board Preset
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Choose your target board preset: MP Vyapam (3-in-1 template), UPSSSC (2-in-1 composite), or Kerala PSC.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">2</span>
-                    Upload Photo &amp; Signature
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Upload your passport photo into Slot 1 and your signature into Slot 2. Enter candidate name and date if required.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">3</span>
-                    Add Declaration (if applicable)
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    For MP Vyapam, upload your handwritten declaration snippet into Slot 3. The engine automatically balances margin gutters.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">4</span>
-                    Download Unified JPEG
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Click Download to export your clean, unified JPEG slip, pre-compressed strictly under your board’s KB limit.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Errors & Fixes */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common Combined Slip Rejection Errors &amp; Solutions
-              </h2>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Photo & Signature Joiner Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Combined slip file size exceeds 200 KB"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Stacking multi-part high-resolution phone scans manually produces heavy 500 KB – 2 MB images.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo’s binary-search compression keeps the unified slip strictly within 100 KB – 190 KB.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Signature or declaration cut off at borders"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Manual copy-pasting in MS Paint fails to respect official border margin gutters.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo applies automated boundary gutters to ensure zero text or signature clipping.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Typed declaration rejected during scrutiny"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Inserting computer-typed text instead of an authentic handwritten specimen.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Write the declaration by hand with a black pen, snap a photo, and upload to Slot 3.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "UPSSSC file size exceeds 50 KB"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> UPSSSC enforces a strict 50 KB ceiling on the combined 3.5×6.0 cm image.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo’s UPSSSC preset optimizes image payload safely between 30 KB and 48 KB.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 

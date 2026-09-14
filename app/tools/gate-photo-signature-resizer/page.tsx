@@ -114,12 +114,64 @@ const GATE_FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Select GATE Preset",
+    "desc": "Choose GATE Photo (5\u2013200 KB, 480\u00d7640 px) or GATE Signature (5\u2013200 KB, 160\u00d7560 px)."
+  },
+  {
+    "step": 2,
+    "title": "Upload Scanned File",
+    "desc": "Select passport photo or black ink signature scan in any image format."
+  },
+  {
+    "step": 3,
+    "title": "Verify 60%\u201370% Face Coverage",
+    "desc": "Position crown and chin inside GOAPS biometric guide lines."
+  },
+  {
+    "step": 4,
+    "title": "Auto Aspect Ratio Lock",
+    "desc": "Locks 3.5:4.5 aspect ratio for photo and 3.5:1 ratio for signature."
+  },
+  {
+    "step": 5,
+    "title": "Download GOAPS Compliant JPEG",
+    "desc": "Save verified JPEG file ready for instant upload to IIT GOAPS servers."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: GOAPS Resolution Mismatch",
+    "title": "Dimensions Outside 480x640 Window",
+    "desc": "GOAPS automated validator checks exact pixel ratios. Kagazo locks compliant dimensions."
+  },
+  {
+    "badge": "Error: Blue Ink Signature Used",
+    "title": "GATE Mandates Black Ink Signatures Only",
+    "desc": "IIT organizers strictly reject blue ink signatures. Kagazo binarizes ink to pure black."
+  },
+  {
+    "badge": "Error: File Exceeds 200 KB",
+    "title": "GOAPS Upload Error: File Too Large",
+    "desc": "High-resolution scans exceed 200 KB. Kagazo compresses cleanly into the 50\u2013150 KB sweet spot."
+  },
+  {
+    "badge": "Error: Shadow Behind Ears",
+    "title": "Uneven Lighting on Background",
+    "desc": "Flash shadows cause GOAPS scrutinizer rejection. Kagazo whitens the background canvas."
+  }
+];
+
 export default function GatePhotoSignatureResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'GATE & JAM Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -135,33 +187,12 @@ export default function GatePhotoSignatureResizerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Format GATE & JAM Photos for GOAPS Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Select GATE Photo or Signature Preset',
-            text: 'Choose GATE Photo (70-88% face coverage) or GATE Signature (3.15-3.95 aspect ratio lock).',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Your Image',
-            text: 'Upload phone photo or scanned signature. Supports JPG, PNG, WEBP, and HEIC.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Face Height & Ratio Framing',
-            text: 'Center your face so chin to head crown occupies 70-85% of the 3.5x4.5cm frame.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'GOAPS Algorithmic Calibration',
-            text: 'Kagazo automatically frames signature to a 3.55:1 canvas, satisfying GOAPS mathematical ratio checks.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Verified JPEG',
-            text: 'Inspect with clarity preview and download portal-compliant JPEG ready for GOAPS upload.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -173,6 +204,19 @@ export default function GatePhotoSignatureResizerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'GATE & JAM Photo & Signature Resizer',
+            item: 'https://kagazo.in/tools/gate-photo-signature-resizer',
+          },
+        ],
       },
     ],
   };
@@ -354,113 +398,53 @@ export default function GatePhotoSignatureResizerPage() {
               </div>
             </section>
 
-            {/* How to Use Section */}
+            {/* Visible 5-Step Practical How-To Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                How to Format GATE &amp; JAM Images in 5 Steps
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format GATE & JAM GOAPS Photo in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Preset</h3>
-                  <p className="text-xs text-text-main/75">
-                    Choose <strong>GATE Photo (70–85% Face)</strong> or <strong>GATE Signature (3.55:1 Ratio)</strong>.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    2
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Photo or Scan</h3>
-                  <p className="text-xs text-text-main/75">
-                    Drop your image. Accepts JPG, PNG, WEBP, and Apple HEIC directly.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    3
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Calibrate Face Height</h3>
-                  <p className="text-xs text-text-main/75">
-                    Ensure the face occupies roughly 75% of the height, from chin to the top of hair.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    4
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Mathematical Ratio Lock</h3>
-                  <p className="text-xs text-text-main/75">
-                    Kagazo automatically aligns signature canvas to 3.55:1, avoiding the GOAPS aspect ratio rejection.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    5
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download GOAPS JPEG</h3>
-                  <p className="text-xs text-text-main/75">
-                    Download the verified JPEG file, sized between 5–200 KB, ready for instant upload on the GOAPS candidate portal.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Errors Section */}
+            {/* Common Errors & Troubleshooting Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common GOAPS Upload Errors and How Kagazo Fixes Them
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common GATE GOAPS Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: &quot;Aspect ratio of signature not between 3.15 and 3.95&quot;
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Standard signatures cropped square or 2:1 are rejected by GOAPS code. Kagazo centers your signature on a calibrated 3.55:1 canvas, guaranteeing zero rejection.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: &quot;Face not detected&quot; or Face Too Small
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Studio passport photos with 50% face coverage fail GOAPS automated face-detection. Crop tightly so your face spans 70–88% of the frame height.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Spectacles and Glare Rejection
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    GOAPS uses automated spectacle detection. Glasses of any type are prohibited. Always capture a fresh photo without spectacles before uploading.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Faint or Blurry Pen Strokes
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Signatures written with light ballpoint pens can be illegible at low resolution. Our Xerox boost filter deepens strokes while cleaning the paper background.
-                  </p>
-                </div>
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
-
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

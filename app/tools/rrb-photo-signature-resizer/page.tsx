@@ -114,12 +114,64 @@ const RRB_FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Select RRB Mode",
+    "desc": "Choose RRB Photo (20\u201350 KB, 35\u00d745 mm) or RRB Signature (10\u201340 KB, 50\u00d720 mm)."
+  },
+  {
+    "step": 2,
+    "title": "Upload Portrait or Sign",
+    "desc": "Upload smartphone photo or signature scan from your computer or phone."
+  },
+  {
+    "step": 3,
+    "title": "Align Plain White Background",
+    "desc": "Ensure neutral white background with straight frontal gaze and ears visible."
+  },
+  {
+    "step": 4,
+    "title": "Calibrate Size & DPI",
+    "desc": "The engine compresses image streams while embedding true 300 DPI headers."
+  },
+  {
+    "step": 5,
+    "title": "Download Compliant JPEG",
+    "desc": "Save verified JPEG ready for immediate upload to rrbapply.gov.in."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Dark Background Gradients",
+    "title": "Background Color Rejection on RRB Portal",
+    "desc": "RRB requires plain light white background. Kagazo eliminates room shadows and wall tints."
+  },
+  {
+    "badge": "Error: Signature Under 10 KB",
+    "title": "Undersized Signature Rejection",
+    "desc": "RRB requires signature between 10 KB and 40 KB. Kagazo uses safe padding to maintain compliance."
+  },
+  {
+    "badge": "Error: Caps or Dark Goggles",
+    "title": "Headwear Obscuring Facial Biometrics",
+    "desc": "Railway boards reject photos with hats or dark glasses. Clear frontal portraits are mandatory."
+  },
+  {
+    "badge": "Error: Faint Blue Ink Signatures",
+    "title": "Low Contrast Signature Scrutiny Failure",
+    "desc": "RRB mandates black ink on white paper. Kagazo darkens signature strokes."
+  }
+];
+
 export default function RrbPhotoSignatureResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Railway RRB Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -135,33 +187,12 @@ export default function RrbPhotoSignatureResizerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Resize Photo and Signature for Railway RRB Portal Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Select RRB Landscape Photo or Signature',
-            text: 'Choose RRB Photo (320x240 px landscape, 20–50 KB) or RRB Signature (160x80 px, 10–40 KB).',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Photo or Scan',
-            text: 'Upload smartphone photo or signature scan. Supports JPG, PNG, WEBP, and HEIC.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Landscape 4:3 Framing',
-            text: 'Center your face so both ears are visible, filling 60–70% of the 320x240 px landscape frame.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Automated Size Lock',
-            text: 'Kagazo locks exact pixel boundaries and optimizes file size into the safe 20–50 KB or 10–40 KB window.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Verified JPEG',
-            text: 'Inspect with clarity loupe and download the compliant JPEG ready for rrbapply.gov.in.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -173,6 +204,19 @@ export default function RrbPhotoSignatureResizerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Railway RRB Photo & Signature Resizer',
+            item: 'https://kagazo.in/tools/rrb-photo-signature-resizer',
+          },
+        ],
       },
     ],
   };
@@ -354,113 +398,53 @@ export default function RrbPhotoSignatureResizerPage() {
               </div>
             </section>
 
-            {/* How to Use Section */}
+            {/* Visible 5-Step Practical How-To Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                How to Format Railway RRB Photos in 5 Steps
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format Railway RRB Photo & Signature in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select RRB Preset</h3>
-                  <p className="text-xs text-text-main/75">
-                    Choose <strong>RRB Photo (320×240 Landscape)</strong> or <strong>RRB Signature (160×80)</strong>.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    2
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Any Photo</h3>
-                  <p className="text-xs text-text-main/75">
-                    Drop your vertical smartphone photo or scan. Kagazo will crop it into the landscape 4:3 frame.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    3
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Frame Head &amp; Shoulders</h3>
-                  <p className="text-xs text-text-main/75">
-                    Center face horizontally so ears and shoulders fit within the 320x240 px landscape frame.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    4
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Auto Size Tuning</h3>
-                  <p className="text-xs text-text-main/75">
-                    Kagazo calibrates file size into the safe 20–50 KB (photo) or 10–40 KB (signature) range.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    5
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download Verified JPEG</h3>
-                  <p className="text-xs text-text-main/75">
-                    Review file dimensions and size, then download the verified JPEG ready for upload to rrbapply.gov.in.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Errors Section */}
+            {/* Common Errors & Troubleshooting Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common Railway RRB Rejections and How to Prevent Them
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Railway RRB Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Rejection for Capital Letter Signatures
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Writing your name in CAPITAL (BLOCK) letters leads to immediate cancellation. RRB requires natural running handwriting in black or dark blue ink.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Portrait Instead of Landscape
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Uploading a 240x320 portrait photo fails the automated portal validator. Our preset specifically enforces the required 320 pixels width by 240 pixels height.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Signature File Size Below 10 KB
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Tightly cropped signatures often collapse to 4–7 KB. The RRB upload form throws an error under 10 KB. Kagazo safely pads signatures into the 15–35 KB window.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Non-White Background or Shadows
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Outdoor selfies, blue backgrounds, or harsh shadows behind the ears violate RRB CEN instructions. Take your photo against an even, well-lit white wall.
-                  </p>
-                </div>
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
-
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

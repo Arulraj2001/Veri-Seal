@@ -115,12 +115,64 @@ const UPSC_FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Choose Photo or Signature",
+    "desc": "Select UPSC Photo (350\u20131000 px, max 300 KB) or UPSC Signature preset."
+  },
+  {
+    "step": 2,
+    "title": "Upload Image File",
+    "desc": "Select portrait photo or signature scan; all image formats supported."
+  },
+  {
+    "step": 3,
+    "title": "Add Name & Date Banner",
+    "desc": "Type candidate name and date photo was taken; Kagazo renders official white-on-black strip."
+  },
+  {
+    "step": 4,
+    "title": "Auto Aspect Ratio Lock",
+    "desc": "Locks 1:1 square ratio for photos and standard 3:1 ratio for signatures."
+  },
+  {
+    "step": 5,
+    "title": "Download ORA Ready JPEG",
+    "desc": "Download compliant JPEG verified strictly under 300 KB for the UPSC ORA portal."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Missing Name & DOP Banner",
+    "title": "No Name and Date Printed on Photo",
+    "desc": "UPSC ORA requires candidate name and date embedded in the JPEG. Kagazo renders this automatically."
+  },
+  {
+    "badge": "Error: File Exceeds 300 KB",
+    "title": "File Size Exceeds Maximum Limit",
+    "desc": "High-resolution smartphone photos exceed 300 KB. Kagazo compresses to a safe 180\u2013240 KB window."
+  },
+  {
+    "badge": "Error: Non-Square Photo Dimensions",
+    "title": "Aspect Ratio Mismatch in ORA Portal",
+    "desc": "UPSC mandates 1:1 square dimensions between 350x350 and 1000x1000 px. Kagazo enforces square cropping."
+  },
+  {
+    "badge": "Error: Illegible Signature Stroke",
+    "title": "Faint Pencil or Gel Pen Scans",
+    "desc": "UPSC requires clear black ink. Kagazo's Xerox filter enhances stroke contrast."
+  }
+];
+
 export default function UpscPhotoSignatureResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'UPSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -136,33 +188,12 @@ export default function UpscPhotoSignatureResizerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Resize Photo and Signature for UPSC ORA Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Select Photo or Signature Preset',
-            text: 'Choose UPSC Photo (with Name & DOP Banner) or UPSC Scanned Signature.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Enter Name and Photograph Date',
-            text: 'Type your full applicant name and date taken within the official 10-day freshness window.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Your Photo or Signature',
-            text: 'Drag & drop your smartphone photo or scan. Kagazo accepts JPG, PNG, WEBP, and HEIC.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Square 1:1 Aspect Ratio Cropping',
-            text: 'Center your face to occupy ~75% of the frame, leaving room at the bottom for the banner strip.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download ORA-Compliant JPEG',
-            text: 'Download the verified JPEG file with embedded banner, sized under 300 KB and strictly above 350x350 px.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -174,6 +205,19 @@ export default function UpscPhotoSignatureResizerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'UPSC Photo & Signature Resizer',
+            item: 'https://kagazo.in/tools/upsc-photo-signature-resizer',
+          },
+        ],
       },
     ],
   };
@@ -360,136 +404,53 @@ export default function UpscPhotoSignatureResizerPage() {
               </div>
             </section>
 
-            {/* How to Use Section */}
+            {/* Visible 5-Step Practical How-To Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                How to Resize and Add Name &amp; Date for UPSC in 5 Steps
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    1
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Preset</h3>
-                  <p className="text-xs text-text-main/75">
-                    Click <strong>UPSC Photo</strong> (with Name &amp; Date banner) or <strong>UPSC Signature</strong>.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    2
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Enter Name &amp; Date</h3>
-                  <p className="text-xs text-text-main/75">
-                    Type your full name and the photograph date (within 10 days of application submission).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    3
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Photo or Scan</h3>
-                  <p className="text-xs text-text-main/75">
-                    Drop your image. Accepts JPG, PNG, WEBP, and iPhone HEIC files directly without prior conversion.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    4
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Crop to 1:1 Square</h3>
-                  <p className="text-xs text-text-main/75">
-                    Center face so both ears are visible, occupying 75% of space with bottom margin for the banner.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    5
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download ORA-Ready JPEG</h3>
-                  <p className="text-xs text-text-main/75">
-                    Kagazo generates the banner-embedded JPEG, locking resolution above 350×350 px and under 300 KB for instant upload.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Common Errors Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common UPSC ORA Upload Rejections and How to Avoid Them
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: &quot;Resolution less than 350x350 pixels&quot;
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Normal compressors shrink pixel width to reduce size, falling below 350 px. Kagazo keeps a calibrated 500×500 px canvas, completely avoiding resolution errors.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Missing Name and Date Strip
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Typing your name into the ORA form text box does not fulfill the requirement. The banner must be burned into the JPEG pixels. Use our tool or the{' '}
-                    <Link href="/tools/photo-date-name-stamper" className="text-primary font-semibold hover:underline">
-                      Photo Date &amp; Name Stamper
-                    </Link>.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Date of Photograph Older than 10 Days
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Entering an older date triggers disqualification during document verification. Make sure the date entered represents a capture within 10 days of your submission.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: File Size Exceeds 300 KB
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Smartphones produce 3–8 MB photos. Kagazo uses adaptive JPEG compression to maintain sharp facial clarity while guaranteeing the final file is under 300 KB.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Contextual Certificate Support Callout */}
-            <div className="p-6 rounded-3xl bg-surface border border-surface-darker flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-primary" />
-                  Need to compress UPSC Degree, Caste, or Age Proof PDFs under 300 KB?
-                </h3>
-                <p className="text-xs text-text-main/70">
-                  UPSC ORA enforces a strict 300 KB maximum limit on all uploaded educational and identity PDF documents.
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format UPSC Photo & Signature in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
-              <Link
-                href="/tools/compress-pdf-to-300kb"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-dark transition-all shrink-0"
-              >
-                Compress PDF to 300KB
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common UPSC ORA Upload Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

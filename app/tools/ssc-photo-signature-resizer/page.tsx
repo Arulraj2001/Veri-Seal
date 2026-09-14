@@ -113,12 +113,64 @@ const SSC_FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Select Asset Preset",
+    "desc": "Choose SSC Photo (20\u201350 KB, 3.5\u00d74.5 cm) or SSC Signature (10\u201320 KB, 4.0\u00d72.0 cm)."
+  },
+  {
+    "step": 2,
+    "title": "Upload Any Image",
+    "desc": "Select smartphone photo, scanner output, or HEIC file; no prior conversion needed."
+  },
+  {
+    "step": 3,
+    "title": "Frame & Center",
+    "desc": "Center face with both ears visible (75% coverage). For signatures, crop outer borders."
+  },
+  {
+    "step": 4,
+    "title": "Auto Size Tuning",
+    "desc": "The engine applies targeted compression and safe JFIF padding into the valid window."
+  },
+  {
+    "step": 5,
+    "title": "Download Verified JPEG",
+    "desc": "Inspect file size in KB with our clarity loupe and download the verified JPEG."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Under 10 KB Rejection",
+    "title": "File size should be between 10 KB and 20 KB",
+    "desc": "Cropping signatures closely drops file size under 10 KB. Kagazo injects safe JFIF padding."
+  },
+  {
+    "badge": "Error: Block Letter Signature",
+    "title": "Signature in Capital / Block Letters",
+    "desc": "SSC disallows capital letters. Cursive writing in black or dark blue ink is mandatory."
+  },
+  {
+    "badge": "Error: Spectacles / Glasses",
+    "title": "Glasses Prohibited by SSC Guidelines",
+    "desc": "Spectacles cause glare that fails biometric matching. Capture photos without glasses."
+  },
+  {
+    "badge": "Error: PNG / WEBP Upload",
+    "title": "Portal Rejecting Non-JPEG Formats",
+    "desc": "SSC only accepts true JPEG binaries. Kagazo automatically converts all inputs to JPEG."
+  }
+];
+
 export default function SscPhotoSignatureResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'SSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -134,33 +186,12 @@ export default function SscPhotoSignatureResizerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Resize Photo and Signature for SSC Portal Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Choose SSC Photo or Signature',
-            text: 'Select SSC Photo (20-50KB, 3.5x4.5cm) or SSC Signature (10-20KB, 4.0x2.0cm).',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Your Image',
-            text: 'Drag and drop or select your photo or signature scan. Supports JPG, PNG, WEBP, and HEIC.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Adjust Framing & Enhancement',
-            text: 'Kagazo centers the face or handwriting, enhances contrast, and cleans background tints.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Bi-directional File Size Calibration',
-            text: 'Large files are compressed while undersized files below 10KB/20KB are padded into safe compliance.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Compliant JPEG',
-            text: 'Inspect with high-resolution clarity loupe and download the portal-ready JPEG file.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -172,6 +203,19 @@ export default function SscPhotoSignatureResizerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'SSC Photo & Signature Resizer',
+            item: 'https://kagazo.in/tools/ssc-photo-signature-resizer',
+          },
+        ],
       },
     ],
   };
@@ -358,140 +402,53 @@ export default function SscPhotoSignatureResizerPage() {
               </div>
             </section>
 
-            {/* How to Use Section */}
+            {/* Visible 5-Step Practical How-To Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                How to Format SSC Photos &amp; Signatures in 5 Steps
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    1
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Asset Preset</h3>
-                  <p className="text-xs text-text-main/75">
-                    Click the <strong>SSC Photo</strong> tab (20–50 KB, 3.5×4.5 cm) or <strong>SSC Signature</strong> tab (10–20 KB, 4.0×2.0 cm).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    2
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Any Image</h3>
-                  <p className="text-xs text-text-main/75">
-                    Select your smartphone photo, scanner output, or iPhone HEIC file. No prior format conversion needed.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    3
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Frame &amp; Center</h3>
-                  <p className="text-xs text-text-main/75">
-                    Center face so both ears are visible, covering ~75% of canvas. For signatures, crop outer borders.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    4
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Auto Size Tuning</h3>
-                  <p className="text-xs text-text-main/75">
-                    The engine applies targeted JPEG compression and bi-directional padding, landing safely in the target range.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    5
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Inspect &amp; Download Verified JPEG</h3>
-                  <p className="text-xs text-text-main/75">
-                    Review your final file size in KB with our clarity loupe preview, then download the verified JPEG ready for instant upload on the SSC application portal.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* SSC Rejection Prevention Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common SSC Upload Errors and How Kagazo Fixes Them
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: &quot;File size should be between 10 KB and 20 KB&quot;
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Cropping signatures closely drops file size to 4–8 KB. The SSC validation script rejects anything under 10.0 KB. Kagazo injects safe JFIF structural padding to lock signatures safely between 12 KB and 18 KB. Or use our{' '}
-                    <Link href="/tools/compress-image-to-20kb" className="text-primary font-semibold hover:underline">
-                      Compress Image to 20 KB
-                    </Link>{' '}
-                    tool.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Signature in Capital / Block Letters
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    SSC explicitly disallows capital letter signatures. Ensure your handwritten signature uses normal cursive writing. If ink is faint, our Xerox boost deepens strokes to pure black.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Faint Pen or Yellow Scanner Cast
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Camera captures under indoor bulb lighting leave yellowish shadows. If our preset doesn&apos;t clear heavy shadows, use our dedicated{' '}
-                    <Link href="/tools/signature-cleaner-extractor" className="text-primary font-semibold hover:underline">
-                      Black Ink Signature Extractor &amp; Enhancer
-                    </Link>.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Facial Distortion / Wrong Aspect Ratio
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Generic resizers squash faces into awkward dimensions. Kagazo preserves your true biometric aspect ratio with white border padding rather than geometrical stretching.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Contextual Certificate Support Callout */}
-            <div className="p-6 rounded-3xl bg-surface border border-surface-darker flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-primary" />
-                  Need to compress caste, EWS, or marksheets for SSC?
-                </h3>
-                <p className="text-xs text-text-main/70">
-                  SSC application forms require educational certificates and category proofs as compressed PDF documents.
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format SSC Photo & Signature in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
-              <Link
-                href="/tools/ssc-pdf-compressor"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-dark transition-all shrink-0"
-              >
-                SSC PDF Compressor
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common SSC Upload Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

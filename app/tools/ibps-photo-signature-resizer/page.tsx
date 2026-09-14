@@ -137,12 +137,64 @@ const IBPS_FAQS = [
 const IBPS_DECLARATION_TEXT =
   'I, _______ (Name of the candidate), hereby declare that all the information submitted by me in the application form is correct, true and valid. I will present the supporting documents as and when required.';
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Select Banking Preset",
+    "desc": "Choose IBPS Photo (20\u201350 KB), Signature (10\u201320 KB), or Declaration (50\u2013100 KB)."
+  },
+  {
+    "step": 2,
+    "title": "Upload Scanned Document",
+    "desc": "Upload photo or black ink signature scan from any phone or scanner."
+  },
+  {
+    "step": 3,
+    "title": "Verify Dimensions & Ink",
+    "desc": "Photo 200\u00d7230 px, signature 140\u00d760 px; black ink on white paper."
+  },
+  {
+    "step": 4,
+    "title": "Auto Range Calibration",
+    "desc": "Engine ensures file stays strictly within mandatory 20\u201350 KB or 10\u201320 KB window."
+  },
+  {
+    "step": 5,
+    "title": "Download Verified JPEG",
+    "desc": "Save verified JPEG ready for upload on ibpsonline.ibps.in."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Signature Under 10 KB",
+    "title": "IBPS Portal Rejection: File Below 10 KB",
+    "desc": "Tight signature crops fall below 10 KB. Kagazo adds safe JFIF padding to hit 12\u201318 KB."
+  },
+  {
+    "badge": "Error: Capital Letter Signature",
+    "title": "Block Letter Signature Disqualification",
+    "desc": "IBPS explicitly bans capital letter signatures. Natural running handwriting is required."
+  },
+  {
+    "badge": "Error: Blue Ink Signature Used",
+    "title": "IBPS Mandates Black Ink Signatures",
+    "desc": "Bank scrutiny rejects blue ink signatures. Kagazo deepens ink to pure black."
+  },
+  {
+    "badge": "Error: Declaration Over 100 KB",
+    "title": "Handwritten Declaration Upload Failure",
+    "desc": "Declarations must be strictly between 50 KB and 100 KB. Kagazo locks this exact range."
+  }
+];
+
 export default function IbpsPhotoSignatureResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'IBPS Photo, Signature, Thumb & Declaration Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -158,33 +210,12 @@ export default function IbpsPhotoSignatureResizerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Resize All 4 IBPS Uploads Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Select Document Preset',
-            text: 'Choose Photo (20–50 KB), Signature (10–20 KB), Left Thumb (20–50 KB), or Declaration (50–100 KB).',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Scanned File',
-            text: 'Upload phone photo or scanner file. Accepts JPG, PNG, WEBP, and Apple HEIC directly.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Contrast & Ink Enhancement',
-            text: 'Our Xerox filter darkens handwriting strokes and thumbprint ridges while clearing background shadows.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Automated Size Calibration',
-            text: 'File sizes are locked into the exact IBPS band, preventing both undersize floor and oversize errors.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Verified JPEGs',
-            text: 'Download portal-ready JPEG files ready for instant upload on ibps.in and sbi.co.in/careers.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -196,6 +227,19 @@ export default function IbpsPhotoSignatureResizerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'IBPS Photo, Signature, Thumb & Declaration Resizer',
+            item: 'https://kagazo.in/tools/ibps-photo-signature-resizer',
+          },
+        ],
       },
     ],
   };
@@ -331,113 +375,53 @@ export default function IbpsPhotoSignatureResizerPage() {
               </div>
             </section>
 
-            {/* How to Use Section */}
+            {/* Visible 5-Step Practical How-To Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                How to Format All 4 Banking Uploads in 5 Steps
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format IBPS Photo & Signature in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Document Preset</h3>
-                  <p className="text-xs text-text-main/75">
-                    Click <strong>Photo</strong>, <strong>Signature</strong>, <strong>Left Thumb</strong>, or <strong>Declaration</strong>.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    2
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Photo or Scan</h3>
-                  <p className="text-xs text-text-main/75">
-                    Drop your phone capture or scanner image. Supports JPG, PNG, WEBP, and Apple HEIC directly.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    3
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Auto Crop Framing</h3>
-                  <p className="text-xs text-text-main/75">
-                    Kagazo automatically frames the document into official pixel boundaries (e.g. 800×400 px for declaration).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    4
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Ink Contrast Booster</h3>
-                  <p className="text-xs text-text-main/75">
-                    Darkens faint black pen ink and thumb ridges while bleaching shadowy paper to clean white.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    5
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download Compliant JPEG</h3>
-                  <p className="text-xs text-text-main/75">
-                    Review final KB and resolution with our clarity loupe, then download verified JPEGs ready for upload to ibps.in.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Errors Section */}
+            {/* Common Errors & Troubleshooting Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common IBPS Banking Upload Mistakes and How to Avoid Them
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common IBPS Bank Exam Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Typed Handwritten Declaration
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Typing and printing the text leads to disqualification during manual scrutiny. It must be written by hand in natural cursive English handwriting.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Left Thumb File Size Under 20 KB
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    IBPS requires LTI to be between 20 KB and 50 KB. Scans under 20.0 KB are blocked by the portal. Kagazo safely pads LTI files into the 25–40 KB range.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Blue Ink Signature
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    IBPS explicitly requires black ink for candidate signatures. Our Xerox filter converts and enhances strokes into deep black ink.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Signatures in Capital / Block Letters
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Block letter signatures are rejected across all IBPS recruitment rounds. Sign in natural running script.
-                  </p>
-                </div>
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
-
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

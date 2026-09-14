@@ -109,12 +109,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Passbook or Cheque",
+    "desc": "Select photo or scan of your bank passbook front page or cancelled cheque."
+  },
+  {
+    "step": 2,
+    "title": "Set Under 500 KB Limit",
+    "desc": "EPFO Unified Portal requires files strictly under 500 KB (and above 100 KB)."
+  },
+  {
+    "step": 3,
+    "title": "Verify Bank Account Clarity",
+    "desc": "Account number, candidate name, and IFSC code must be clearly readable."
+  },
+  {
+    "step": 4,
+    "title": "In-Memory Stream Optimization",
+    "desc": "Engine whitens paper texture while sharpening printed account digits."
+  },
+  {
+    "step": 5,
+    "title": "Download EPFO Ready JPEG",
+    "desc": "Download verified JPEG ready for upload on unifiedportal-mem.epfindia.gov.in."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: File Exceeds 500 KB",
+    "title": "EPFO Portal Rejection: File Over 500 KB",
+    "desc": "High-resolution smartphone photos exceed 500 KB. Kagazo compresses to a safe 300\u2013400 KB."
+  },
+  {
+    "badge": "Error: Blurry Bank Account Digits",
+    "title": "Claim Rejected: Illegible Passbook Scan",
+    "desc": "Field offices reject claims if account number is blurred. Kagazo sharpens numerical text."
+  },
+  {
+    "badge": "Error: Missing Bank Seal or Stamp",
+    "title": "Passbook Lacks Official Bank Attestation",
+    "desc": "EPFO requires official round seal and signature on passbook front page."
+  },
+  {
+    "badge": "Error: PDF Upload Attempted",
+    "title": "EPFO Portal Demands JPEG Format",
+    "desc": "Bank document upload section only accepts JPEG/JPG format. Kagazo outputs standard JPEG."
+  }
+];
+
 export default function EpfoPassbookResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'EPFO Passbook & Cancelled Cheque Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -330,96 +382,52 @@ export default function EpfoPassbookResizerPage() {
               </div>
             </section>
 
-            {/* Rejection Prevention Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Top 4 Reasons EPFO Rejects Bank Cheque / Passbook Uploads — and Fixes
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Resize EPFO Passbook & Cheque in 5 Steps
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  Follow these guidelines to ensure your online PF withdrawal claim is settled without delay.
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
 
-              <div className="space-y-3">
-                {[
-                  {
-                    error: '"Image Not Clear / Name Not Legible"',
-                    fix: 'Aggressive JPEG compression blurs pre-printed bank text. Kagazo\'s adaptive text-contrast filter preserves dark ink on light paper, keeping name and IFSC crisp.',
-                  },
-                  {
-                    error: '"Cheque name does not match UAN member name"',
-                    fix: 'If your bank account is in a different name (maiden name, initials), update your name in UAN profile to match the bank records before filing the claim. This is a portal-data mismatch, not an image quality issue.',
-                  },
-                  {
-                    error: '"File size exceeds limit" (>500 KB)',
-                    fix: 'Phone camera photos are 2–8 MB. Upload to Kagazo — it uses iterative JPEG quality search to land at 380–480 KB, safely under the 500 KB limit with headroom.',
-                  },
-                  {
-                    error: '"Invalid file format" despite using JPEG',
-                    fix: 'iPhone and some Android apps save HEIC or WebP with a .jpg extension. Kagazo detects the true format by reading the file magic bytes and converts to genuine JPEG automatically.',
-                  },
-                ].map((item, idx) => (
-                  <div key={idx} className="rounded-2xl border border-surface-darker bg-surface/40 p-4 space-y-1">
-                    <p className="text-xs font-bold text-red-700 dark:text-red-400">
-                      ✗ Rejection: {item.error}
-                    </p>
-                    <p className="text-xs sm:text-sm text-text-main/80">
-                      <span className="text-emerald-700 font-bold">✓ Fix: </span>
-                      {item.fix}
-                    </p>
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* How-to Steps Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Sliders className="w-5 h-5 text-primary" />
-                  How to Compress Your Cheque / Passbook for EPFO in 4 Steps
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common EPFO Upload Errors and How Kagazo Fixes Them
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  The complete process takes under 60 seconds — no software installation or account required.
+                  Avoid common application mistakes that trigger instant portal rejection:
                 </p>
               </div>
 
-              <ol className="space-y-4">
-                {[
-                  {
-                    step: '1',
-                    title: 'Photograph your document in bright light',
-                    desc: 'Place the cancelled cheque or passbook on a flat white surface. Hold your phone directly above — no tilt, no angle distortion. Use bright natural daylight or a direct desk lamp to eliminate shadows. Ensure the entire document is visible within the frame.',
-                  },
-                  {
-                    step: '2',
-                    title: 'Upload to Kagazo EPFO Resizer',
-                    desc: 'Click "Upload" and select your document photo. Any file size is accepted — 3 MB, 8 MB, or larger. The tool\'s file size limit is only on the output, not the input.',
-                  },
-                  {
-                    step: '3',
-                    title: 'Check the text clarity in the preview',
-                    desc: 'Verify in the preview that your account holder name, account number, IFSC code, and branch are clearly visible. Enable the Bank Text Clarity Booster if any text appears gray or blurry — especially the 11-character IFSC code.',
-                  },
-                  {
-                    step: '4',
-                    title: 'Download and upload to EPFO portal',
-                    desc: 'Click Download — get a JPEG file strictly under 500 KB (typically 380–480 KB), ready for immediate upload to the EPFO Unified Member Portal (member.epfindia.gov.in) for Form 19, 31, or 10C claims.',
-                  },
-                ].map((item) => (
-                  <li key={item.step} className="flex gap-4">
-                    <div className="w-8 h-8 rounded-xl bg-primary text-white font-black text-sm flex items-center justify-center shrink-0 mt-0.5">
-                      {item.step}
-                    </div>
-                    <div>
-                      <p className="font-bold text-text-main text-sm">{item.title}</p>
-                      <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed mt-0.5">{item.desc}</p>
-                    </div>
-                  </li>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
                 ))}
-              </ol>
+              </div>
             </section>
 
             {/* Use Cases Section */}
@@ -467,9 +475,6 @@ export default function EpfoPassbookResizerPage() {
                 ))}
               </div>
             </section>
-
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

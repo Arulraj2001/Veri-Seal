@@ -115,12 +115,64 @@ const TNPSC_FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Select TNPSC Mode",
+    "desc": "Choose TNPSC Photo (20\u201350 KB, 3.5\u00d74.5 cm) or TNPSC Signature (10\u201320 KB)."
+  },
+  {
+    "step": 2,
+    "title": "Upload Asset Image",
+    "desc": "Upload photo or signature in any image format."
+  },
+  {
+    "step": 3,
+    "title": "Add Name & Date Banner",
+    "desc": "Type applicant name and photo date for the mandatory bottom banner."
+  },
+  {
+    "step": 4,
+    "title": "Enforce OTR Dimensions",
+    "desc": "Calibrates photo to 200\u00d7230 px and signature to 130\u00d760 px at 300 DPI."
+  },
+  {
+    "step": 5,
+    "title": "Download ORA Ready JPEG",
+    "desc": "Save verified JPEG ready for upload to tnpscexams.in."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Missing Name & Date Strip",
+    "title": "TNPSC Mandates Name & DOP on Photo",
+    "desc": "TNPSC requires applicant name and date of photo printed at bottom. Kagazo embeds this automatically."
+  },
+  {
+    "badge": "Error: Signature Under 10 KB",
+    "title": "TNPSC OTR Signature Under 10 KB Rejected",
+    "desc": "Signature files under 10 KB are rejected by the portal script. Kagazo pads to safe 14 KB."
+  },
+  {
+    "badge": "Error: Non-White Background",
+    "title": "Background Color Disqualification",
+    "desc": "TNPSC requires plain light white background with zero shadows behind ears."
+  },
+  {
+    "badge": "Error: File Exceeds 50 KB",
+    "title": "Photo Size Exceeds 50 KB Ceiling",
+    "desc": "High-resolution smartphone cameras produce oversized files. Kagazo compresses to safe 35 KB."
+  }
+];
+
 export default function TnpscPhotoSignatureResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'TNPSC Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -136,33 +188,12 @@ export default function TnpscPhotoSignatureResizerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Resize Photo and Signature for TNPSC OTR Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Select Photo or Signature Mode',
-            text: 'Choose TNPSC Photo (with Name & Date Strip) or TNPSC Signature (10–20 KB).',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Enter Candidate Details',
-            text: 'Type candidate name (as per SSLC marksheet) and date of photo capture.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Scanned File',
-            text: 'Upload phone photo or scanner capture. Supports JPG, PNG, WEBP, and HEIC.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Crop & Contrast Calibration',
-            text: 'Kagazo centers the image, embeds the high-contrast strip, and darkens ink strokes.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Guaranteed Output',
-            text: 'Download verified JPEG files compliant with 20–50 KB and 10–20 KB OTR bounds.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -174,6 +205,19 @@ export default function TnpscPhotoSignatureResizerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'TNPSC Photo & Signature Resizer',
+            item: 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
+          },
+        ],
       },
     ],
   };
@@ -350,133 +394,53 @@ export default function TnpscPhotoSignatureResizerPage() {
               </div>
             </section>
 
-            {/* How to Use Section */}
+            {/* Visible 5-Step Practical How-To Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                How to Format TNPSC Photos &amp; Signatures in 5 Steps
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    1
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Preset</h3>
-                  <p className="text-xs text-text-main/75">
-                    Click <strong>TNPSC Photo (with Strip)</strong> or <strong>TNPSC Signature (10–20 KB)</strong>.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    2
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Enter Name &amp; Date</h3>
-                  <p className="text-xs text-text-main/75">
-                    Type candidate full name in block letters (as in SSLC) and date taken within the last 3 months.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    3
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload Photo or Scan</h3>
-                  <p className="text-xs text-text-main/75">
-                    Drop your phone capture or scanner file. Supports JPG, PNG, WEBP, and Apple HEIC directly.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    4
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Strip Mount &amp; Sizing</h3>
-                  <p className="text-xs text-text-main/75">
-                    Kagazo automatically mounts the clean white strip and locks file size into the 20–50 KB or 10–20 KB window.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    5
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download Verified JPEG</h3>
-                  <p className="text-xs text-text-main/75">
-                    Review your output with our clarity loupe, then download verified JPEGs ready for upload to your TNPSC OTR profile.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Common Errors Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common TNPSC OTR Upload Mistakes and How to Avoid Them
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Missing Name and Date Strip
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Uploading a plain passport photo without the bottom strip causes certificate verification failure. Use our tool to automatically mount the compliant strip.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Signature File Size Below 10 KB
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Cropping signatures to 3.5×1.5 cm often reduces files to 4–8 KB. The OTR portal flags files under 10.0 KB. Kagazo safely pads signatures into the 12–18 KB range.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Name Mismatch with SSLC Record
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Spelling mistakes or missing initials on the strip cause identity mismatches during document verification. Type your name exactly as registered in your OTR profile.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Photograph Older than 3 Months
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    TNPSC mandates recent photos. The date printed on the strip must be within 3 months of the notification release date.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Contextual Certificate Support Callout */}
-            <div className="p-6 rounded-3xl bg-surface border border-surface-darker flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
-                <h3 className="text-sm font-bold text-text-main flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-primary" />
-                  Need to compress TNPSC Marksheets, Community, or PSTM PDFs under 200 KB?
-                </h3>
-                <p className="text-xs text-text-main/70">
-                  The TNPSC OTR portal requires educational, community, and special category certificates to be between 100 KB and 200 KB in PDF format.
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format TNPSC Photo & Signature in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
-              <Link
-                href="/tools/tnpsc-pdf-compressor"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-dark transition-all shrink-0"
-              >
-                TNPSC PDF Compressor
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common TNPSC OTR Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

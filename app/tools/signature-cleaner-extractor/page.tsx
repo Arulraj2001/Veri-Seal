@@ -109,12 +109,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Signature Photo",
+    "desc": "Select phone camera snapshot of your signature on paper."
+  },
+  {
+    "step": 2,
+    "title": "Ruled Line Eraser Active",
+    "desc": "Automatically detects and erases horizontal notebook lines behind ink."
+  },
+  {
+    "step": 3,
+    "title": "Blue-to-Black Conversion",
+    "desc": "Converts faint blue ink into deep, rich black ink required by portals."
+  },
+  {
+    "step": 4,
+    "title": "Paper Whitening & Binarize",
+    "desc": "Removes yellow lighting gradients and desk shadows completely."
+  },
+  {
+    "step": 5,
+    "title": "Download Pure Black Signature",
+    "desc": "Download verified signature strictly under 20 KB with crisp strokes."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Ruled Notebook Lines Visible",
+    "title": "Signature Disqualified by Portal OCR",
+    "desc": "Signing on ruled paper interferes with automated verification. Kagazo erases lined patterns."
+  },
+  {
+    "badge": "Error: Shadow Cast Across Signature",
+    "title": "Mobile Camera Shadow Degrading Contrast",
+    "desc": "Overhead phone shadows create dark patches. Kagazo normalizes paper luminance."
+  },
+  {
+    "badge": "Error: Broken Incomplete Strokes",
+    "title": "Over-Thresholding Erasing Fine Curves",
+    "desc": "Crude binarizers break thin pen lines. Kagazo uses adaptive hysteresis filtering."
+  },
+  {
+    "badge": "Error: Blue Ink Rejected by Portal",
+    "title": "Exams Mandating Black Ink Only",
+    "desc": "GATE, IBPS, and SSC require black ink. Kagazo converts blue ink to solid black."
+  }
+];
+
 export default function SignatureExtractorPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Black Ink Signature Extractor & Enhancer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -361,115 +413,51 @@ export default function SignatureExtractorPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Guide */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-primary" />
-                Step-by-Step: How to Clean and Extract Your Signature
-              </h2>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Clean and Extract Signatures in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">1</span>
-                    Upload Signature Snapshot
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Take a clear smartphone photo of your signature written on paper (even lined notebook paper or with a blue pen) and upload it to Kagazo.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">2</span>
-                    Enable Filters &amp; Threshold
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Toggle "Remove Ruled Lines" to erase horizontal notebook lines, and "Convert Blue to Black" to convert blue ink into dense India Black.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">3</span>
-                    Choose Your Exam Preset
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Select your target portal preset: SSC (140×60 px, 10–20 KB), UPSC (350×350 px, 20–50 KB), or IBPS (140×60 px, 10–20 KB).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">4</span>
-                    Download Clean JPEG
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Click Download to export your clean, high-contrast black ink signature on pure #FFFFFF white paper, sized and ready for upload.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Errors & Fixes */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common Portal Signature Errors &amp; Exact Solutions
-              </h2>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Signature Scanning Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Signature not clear / background not white"
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Phone camera captured yellow desk light, shadow of your hand, or grayish paper texture.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo’s Otsu adaptive filter converts all background paper pixels to pure #FFFFFF white.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Signature file size less than 10 KB"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Cropping a small signature in standard apps produces a 5–8 KB file, triggering SSC/IBPS floor rejection.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Kagazo applies bi-directional file size padding to safely position your file between 12 KB and 18 KB.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Ruled lines visible across signature strokes"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Signing on standard school or college lined notebooks causes OCR line-crossing rejections.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Enable the Ruled Line Eraser to subtract horizontal blue and red lines without breaking pen strokes.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
-                    Error: "Signature in Capital Letters Disqualified"
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    <strong>Cause:</strong> Printing name in block capitals instead of signing in natural running script.
-                  </p>
-                  <p className="text-xs text-emerald-700 font-medium">
-                    <strong>Fix:</strong> Sign your name naturally in running/cursive handwriting on paper, photograph it, and upload to Kagazo.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 

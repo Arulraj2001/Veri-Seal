@@ -132,12 +132,64 @@ const NEET_FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Choose NEET Mode",
+    "desc": "Select NEET Passport (10\u2013200 KB) or 4x6\" Postcard (10\u2013200 KB, 4\u00d76 inch)."
+  },
+  {
+    "step": 2,
+    "title": "Upload Candidate Portrait",
+    "desc": "Upload camera photo; white background with 80% face coverage required."
+  },
+  {
+    "step": 3,
+    "title": "Add Mandatory Name & DOP",
+    "desc": "Type applicant name and date of photo; Kagazo embeds required bottom strip."
+  },
+  {
+    "step": 4,
+    "title": "Auto Size & DPI Scaling",
+    "desc": "Scales image to 300 DPI print quality while keeping file size under 200 KB."
+  },
+  {
+    "step": 5,
+    "title": "Download NTA Compliant JPEG",
+    "desc": "Save verified JPEG ready for submission on exams.nta.ac.in/NEET."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Missing Name & Date Strip",
+    "title": "NTA Rejection: Photo Lacks Name & DOP",
+    "desc": "NEET UG strictly mandates applicant name and date of photo printed at the bottom."
+  },
+  {
+    "badge": "Error: Face Coverage Under 80%",
+    "title": "Face Too Small on Canvas",
+    "desc": "NTA requires 80% face coverage showing ears against a white background. Kagazo enforces exact framing."
+  },
+  {
+    "badge": "Error: Postcard Aspect Ratio Mismatch",
+    "title": "Postcard Not 4x6 Inches Ratio",
+    "desc": "Admit card requires a 4\u00d76 inch postcard photo pasted on the attendance sheet."
+  },
+  {
+    "badge": "Error: File Exceeds 200 KB",
+    "title": "NTA Portal Upload Blocked",
+    "desc": "High-resolution phone cameras produce 5 MB JPEGs. Kagazo compresses to under 200 KB."
+  }
+];
+
 export default function NeetPhotoSignatureResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'NEET Photo, Postcard & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -153,33 +205,12 @@ export default function NeetPhotoSignatureResizerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Resize NEET Postcard Photo, Passport Photo & LTI Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Select Upload Type',
-            text: 'Choose Postcard Photo (4"×6", 50–300 KB), Passport Photo (10–50 KB), Signature (4–30 KB), or Left Thumb (10–50 KB).',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Your Image',
-            text: 'Upload your studio photograph, running signature, or thumb impression scan. Supports JPG, PNG, WEBP, and HEIC.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Frame with 80% Face Coverage',
-            text: 'Center your face ensuring 80% coverage with both ears clearly visible on a white background.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Automated Size & Contrast Calibration',
-            text: 'Kagazo calibrates file size into the exact NTA range and boosts ink contrast for thumb impressions.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Verified Output',
-            text: 'Download portal-ready JPEG files verified for instant upload on exams.nta.ac.in/NEET.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -191,6 +222,19 @@ export default function NeetPhotoSignatureResizerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'NEET Photo, Postcard & Signature Resizer',
+            item: 'https://kagazo.in/tools/neet-photo-signature-resizer',
+          },
+        ],
       },
     ],
   };
@@ -362,113 +406,53 @@ export default function NeetPhotoSignatureResizerPage() {
               </div>
             </section>
 
-            {/* How to Use Section */}
+            {/* Visible 5-Step Practical How-To Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                How to Prepare All NEET UG Uploads in 5 Steps
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format NEET Postcard & Passport Photo in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Select Asset Tab</h3>
-                  <p className="text-xs text-text-main/75">
-                    Click <strong>Postcard (4×6&quot;)</strong>, <strong>Passport Photo</strong>, <strong>Signature</strong>, or <strong>Left Thumb</strong>.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    2
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Upload High-Res Scan</h3>
-                  <p className="text-xs text-text-main/75">
-                    Drop your phone capture or scanner file. Accepts JPG, PNG, WEBP, and Apple HEIC directly.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    3
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Frame 80% Face Space</h3>
-                  <p className="text-xs text-text-main/75">
-                    Center face to occupy 80% of canvas with both ears clearly visible on a plain white backdrop.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    4
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Bi-Directional Sizing</h3>
-                  <p className="text-xs text-text-main/75">
-                    Kagazo calibrates file size into the safe target band (50–300 KB for postcard, 10–50 KB for others).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2 sm:col-span-2 lg:col-span-2">
-                  <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                    5
-                  </div>
-                  <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">Download Compliant JPEG</h3>
-                  <p className="text-xs text-text-main/75">
-                    Review file dimensions and KB count with our clarity loupe, then download verified JPEGs for the NTA portal.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Common Errors Section */}
+            {/* Common Errors & Troubleshooting Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-amber-500" />
-                Common NEET Application Rejection Traps and How to Fix Them
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common NEET Photo Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Uploading Passport Photo as Postcard
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    A 3.5×4.5 cm passport photo lacks print resolution for the 4×6 inch proforma. NTA requires a true 4×6 inch photo (50–300 KB).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Signatures in Capital Letters
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    NTA explicitly rejects signatures in BLOCK or capital letters. Always sign with natural cursive handwriting in black ink.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Left Thumb Scan Below 10 KB
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Close cropping makes thumb impressions drop to 4–8 KB. Kagazo uses safe padding to ensure the file stays above the 10 KB threshold.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
-                    Error: Wearing Spectacles or Tinted Glasses
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80">
-                    Glasses are strictly disallowed in NEET photos due to flash glare. Take a fresh photograph without glasses on a clean white background.
-                  </p>
-                </div>
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
-
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

@@ -153,12 +153,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Written Declaration",
+    "desc": "Select phone photo of your handwritten declaration text."
+  },
+  {
+    "step": 2,
+    "title": "Select Banking Proforma",
+    "desc": "Choose IBPS, SBI, or RBI standard declaration wording check."
+  },
+  {
+    "step": 3,
+    "title": "Erase Notebook Lines",
+    "desc": "Cleans horizontal paper lines and removes yellow room lighting shadows."
+  },
+  {
+    "step": 4,
+    "title": "Lock 50 KB \u2013 100 KB Window",
+    "desc": "Engine calibrates file size strictly between 50 KB and 100 KB at 800\u00d7400 px."
+  },
+  {
+    "step": 5,
+    "title": "Download Verified JPEG",
+    "desc": "Download high-contrast black-and-white declaration ready for portal upload."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Declaration in Capital Letters",
+    "title": "Block Letter Declaration Disqualification",
+    "desc": "IBPS and SBI strictly disqualify declarations written in capital/block letters."
+  },
+  {
+    "badge": "Error: File Below 50 KB Floor",
+    "title": "Declaration File Too Small",
+    "desc": "Banking portals require declarations between 50 KB and 100 KB. Kagazo pads to safe 75 KB."
+  },
+  {
+    "badge": "Error: Declaration Typed Instead of Written",
+    "title": "Computer Printouts Rejected",
+    "desc": "Declaration must be handwritten by applicant in candidate's own handwriting."
+  },
+  {
+    "badge": "Error: Blue Ink or Ruled Lines",
+    "title": "Faint Blue Ink on Notebook Paper",
+    "desc": "Portals require black ink on white unruled paper. Kagazo darkens text and cleans lines."
+  }
+];
+
 export default function HandwrittenDeclarationPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Kagazo IBPS & SBI Handwritten Declaration Scanner',
         url: 'https://kagazo.in/tools/handwritten-declaration-scanner',
         applicationCategory: 'UtilitiesApplication',
@@ -174,28 +226,12 @@ export default function HandwrittenDeclarationPage() {
       {
         '@type': 'HowTo',
         name: 'How to Scan and Resize Handwritten Declaration for IBPS & SBI',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Write Verbatim Declaration in Running Script',
-            text: 'Write the official English statement on clean white unruled paper using a black ink pen in your natural cursive handwriting.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Photo or Draw On Biometric Pad',
-            text: 'Upload a smartphone photo of your handwritten paper or use the on-screen touchscreen pad.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Eliminate Ruled Lines & Whiten Background',
-            text: 'Enable AI ruling line removal to strip notebook lines and eliminate camera shadows.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download 50KB–100KB Compliant JPG',
-            text: 'Download the verified 800×400 px JPEG locked strictly between 50 KB and 100 KB for direct TCS iON upload.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -252,6 +288,7 @@ export default function HandwrittenDeclarationPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
             <PenTool className="w-4 h-4 text-primary" />
             <span>Official IBPS &amp; SBI Recruitment 2026 Standards</span>
           </div>
@@ -408,119 +445,51 @@ export default function HandwrittenDeclarationPage() {
               </div>
             </section>
 
-            {/* Step-by-Step How-To */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="border-b border-surface-darker pb-4">
-                <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  Step-by-Step: How to Prepare Your IBPS Declaration
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Scan Handwritten Declarations in 5 Steps
                 </h2>
-                <p className="text-xs text-text-main/60 mt-0.5">
-                  Follow these 5 simple steps for guaranteed first-time portal acceptance
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <span>Write on Clean White Paper</span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Use a clean, unruled sheet of plain white A4 paper. Write the verbatim statement using a dark black ballpoint or gel pen in your natural running hand.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      2
-                    </span>
-                    <span>Capture Clear Snapshot</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Take a clear, direct smartphone photo in bright daylight. Avoid casting hand or device shadows across the written lines.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      3
-                    </span>
-                    <span>Upload &amp; Frame 800 × 400 px</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Upload your snapshot to Kagazo. Our engine automatically locks the official 2:1 landscape crop box (800 × 400 px).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      4
-                    </span>
-                    <span>Purge Lines &amp; Whiten Background</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    If you wrote on notebook paper, enable the Ruled Line Subtractor to dissolve blue lines and boost black ink contrast to pure flatbed white.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5 sm:col-span-2">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-black">
-                      5
-                    </span>
-                    <span>Download 50–100 KB Compliant JPEG</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Download the verified JPEG file locked between 65 KB and 85 KB, ready for direct, instant upload to the IBPS or SBI application portal.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Troubleshooting Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="border-b border-surface-darker pb-4">
-                <h2 className="text-lg font-bold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Common Banking Declaration Upload Errors &amp; Fixes
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Declaration Errors and How Kagazo Fixes Them
                 </h2>
-                <p className="text-xs text-text-main/60 mt-0.5">
-                  Troubleshooting common TCS iON upload validation failures
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="text-amber-600 font-extrabold">Error:</span>
-                    <span>&quot;Handwritten declaration size should be between 50 KB and 100 KB&quot;</span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-6">
-                    <strong>The Cause:</strong> Basic online resizers aggressively compress text documents down to 25–40 KB, triggering an automatic server-side rejection.
-                  </p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed pl-6">
-                    <strong>Kagazo Fix:</strong> Our algorithm targets a 75 KB center point with high-chroma sampling, preventing the file from dropping below 50 KB or exceeding 100 KB.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                  <div className="flex items-center gap-2 font-bold text-sm text-text-main">
-                    <span className="text-amber-600 font-extrabold">Error:</span>
-                    <span>&quot;File format not supported / Must be JPG or JPEG&quot;</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-6">
-                    <strong>The Cause:</strong> Many phone scanners save documents as PDF or PNG files.
-                  </p>
-                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-medium leading-relaxed pl-6">
-                    <strong>Kagazo Fix:</strong> Kagazo encodes directly into standard baseline JPEG with 200 DPI metadata tags, accepted universally across all banking gateways.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 

@@ -111,12 +111,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Select DL Photo or Signature",
+    "desc": "Choose Sarathi Photo (35\u00d745 mm, 20\u201350 KB) or Signature (20\u00d750 mm, 10\u201320 KB)."
+  },
+  {
+    "step": 2,
+    "title": "Upload Photo or Scan",
+    "desc": "Select smartphone portrait or signature photo in any format."
+  },
+  {
+    "step": 3,
+    "title": "Apply B&W Contrast Filter",
+    "desc": "Purges desk shadows and yellow camera tints from paper scans."
+  },
+  {
+    "step": 4,
+    "title": "Bi-Directional Size Lock",
+    "desc": "Compresses oversized files under limit and pads undersized signatures above 10 KB."
+  },
+  {
+    "step": 5,
+    "title": "Download RTO Ready JPEG",
+    "desc": "Download verified JPEG ready for upload on sarathi.parivahan.gov.in."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Signature Under 10 KB",
+    "title": "Sarathi Portal Signature Under 10 KB Rejected",
+    "desc": "Sarathi Parivahan enforces a strict 10 KB floor. Kagazo safely pads files to 14 KB."
+  },
+  {
+    "badge": "Error: Wrong Aspect Ratio",
+    "title": "Signature Not 20x50 mm (2.5:1 Ratio)",
+    "desc": "Signatures must be landscape 2.5:1 ratio. Kagazo locks exact millimeter dimensions."
+  },
+  {
+    "badge": "Error: Non-White Background",
+    "title": "Yellow Camera Tint or Desk Shading",
+    "desc": "MoRTH requires pure white background. Kagazo whitens paper automatically."
+  },
+  {
+    "badge": "Error: File Exceeds 50 KB",
+    "title": "Photo Size Exceeds 50 KB Limit",
+    "desc": "RTO portals reject photos over 50 KB. Kagazo compresses into the 25\u201340 KB sweet spot."
+  }
+];
+
 export default function SarathiDrivingLicenceResizerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Sarathi Parivahan Driving Licence Photo & Signature Resizer',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -339,90 +391,49 @@ export default function SarathiDrivingLicenceResizerPage() {
               </div>
             </section>
 
-            {/* How-to Steps Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Sliders className="w-5 h-5 text-primary" />
-                  How to Resize Your Photo &amp; Signature for Sarathi Parivahan in 4 Steps
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Format Sarathi DL Photo & Signature in 5 Steps
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/70">
-                  The complete process takes under 60 seconds — no software to install or account to create.
+                  Follow this verified 5-step process for instant recruitment portal compliance:
                 </p>
               </div>
 
-              <ol className="space-y-4">
-                {[
-                  {
-                    step: '1',
-                    title: 'Upload your passport photograph',
-                    desc: 'Click "Upload Photo" and select any image: studio photo scan, selfie, or phone camera shot. Ensure a plain white or light-colored background. Colored walls, textured backgrounds, and busy patterns cause RTO officer rejection.',
-                  },
-                  {
-                    step: '2',
-                    title: 'Adjust the 35×45 mm crop frame',
-                    desc: 'Center your face in the crop guide. Your face should fill at least 70% of the frame from chin to crown. Ears should be visible, no sunglasses, and no colored headwear.',
-                  },
-                  {
-                    step: '3',
-                    title: 'Upload your signature and clean it',
-                    desc: 'Sign on clean white paper in dark blue or black gel pen. Photograph it and upload. Kagazo\'s ink clarity booster removes shadows and converts the background to pure white — critical for RTO officer legibility checks.',
-                  },
-                  {
-                    step: '4',
-                    title: 'Download your Sarathi Kit',
-                    desc: 'Download the 35×45 mm photo (20–50 KB, 300 DPI) and 20×50 mm signature (10–20 KB, 300 DPI) as individual JPEG files or a single ZIP. Both files pass Sarathi 4.0\'s strict automated server validation.',
-                  },
-                ].map((item) => (
-                  <li key={item.step} className="flex gap-4">
-                    <div className="w-8 h-8 rounded-xl bg-primary text-white font-black text-sm flex items-center justify-center shrink-0 mt-0.5">
-                      {item.step}
-                    </div>
-                    <div>
-                      <p className="font-bold text-text-main text-sm">{item.title}</p>
-                      <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed mt-0.5">{item.desc}</p>
-                    </div>
-                  </li>
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
                 ))}
-              </ol>
+              </div>
             </section>
 
-            {/* Common Errors & Fixes */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
               <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Top Sarathi Parivahan Upload Errors &amp; How to Fix Them
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Sarathi Parivahan Errors and How Kagazo Fixes Them
                 </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common application mistakes that trigger instant portal rejection:
+                </p>
               </div>
 
-              <div className="space-y-3">
-                {[
-                  {
-                    error: '"File size is out of bounds" for signature',
-                    fix: 'Signature must be strictly 10–20 KB. Standard tools produce 7 KB or 22 KB. Kagazo uses binary-search JPEG encoding to target 12–18 KB every time.',
-                  },
-                  {
-                    error: '"Photo file exceeds 50 KB limit"',
-                    fix: 'Phone camera photos are 2–8 MB. Kagazo compresses to 28–45 KB while preserving face clarity using progressive JPEG encoding.',
-                  },
-                  {
-                    error: '"Invalid image format" for JPEG files',
-                    fix: 'Some phones save HEIC or WebP with a .jpg extension. Kagazo auto-converts all formats to genuine JPEG before resizing.',
-                  },
-                  {
-                    error: 'RTO officer rejection: "Photo not recent / background colored"',
-                    fix: 'Photos must be recent (within 3–6 months) with a white/light plain background. Reshoot with a plain white wall or sheet as background before uploading.',
-                  },
-                ].map((item, idx) => (
-                  <div key={idx} className="rounded-2xl border border-surface-darker bg-surface/40 p-4 space-y-1">
-                    <p className="text-xs font-bold text-red-700 dark:text-red-400">
-                      ✗ Error: {item.error}
-                    </p>
-                    <p className="text-xs sm:text-sm text-text-main/80">
-                      <span className="text-emerald-700 font-bold">✓ Fix: </span>
-                      {item.fix}
-                    </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
                   </div>
                 ))}
               </div>
@@ -473,9 +484,6 @@ export default function SarathiDrivingLicenceResizerPage() {
                 ))}
               </div>
             </section>
-
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
