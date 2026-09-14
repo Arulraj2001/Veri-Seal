@@ -53,6 +53,26 @@ const FAQS = [
     answer:
       '100% secure. Processing runs entirely in volatile RAM memory. Zero files are saved on disk or exposed to any third party.',
   },
+  {
+    question: 'Which portals require files strictly under 2MB?',
+    answer:
+      'Supreme Court & High Court e-filing portals, MCA (Ministry of Corporate Affairs) company incorporation forms, GeM (Government e-Marketplace) tender bids, and university thesis submissions universally enforce a 2MB attachment limit.',
+  },
+  {
+    question: 'Can I delete annexures or blank exhibit pages before compressing to 2MB?',
+    answer:
+      'Yes! Use the built-in Page Selector to preview and exclude any unnecessary pages, immediately freeing up byte budget for your critical petition or contract clauses.',
+  },
+  {
+    question: 'Will high-resolution CAD drawings and charts remain legible?',
+    answer:
+      'Yes. At 2MB, architectural blueprints and data charts retain sharp line definition, avoiding the blurred edges common on generic compression tools.',
+  },
+  {
+    question: 'Is there any fee or watermark added to the 2MB PDF?',
+    answer:
+      'Kagazo is 100% free with unlimited usage and zero watermarks, keeping all legal filings clean and formal.',
+  },
 ];
 
 export default function CompressPdfTo2MbPage() {

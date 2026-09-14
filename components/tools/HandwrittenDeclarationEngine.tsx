@@ -22,7 +22,6 @@ import {
   FileCheck2,
 } from 'lucide-react';
 import { QualityProofEngine } from '@/components/tools/QualityProofEngine';
-import { AdSlot } from '@/components/ads/AdSlot';
 
 interface ExamPreset {
   id: string;
@@ -777,9 +776,6 @@ export default function HandwrittenDeclarationEngine() {
           )}
         </div>
       </div>
-
-      {/* Official Partner Slot (Ostrune) */}
-      <AdSlot slot="in_content" />
     </div>
   );
 }

@@ -108,7 +108,7 @@ export default function PassportPhotoSheetPage() {
         }}
       />
 
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -116,33 +116,33 @@ export default function PassportPhotoSheetPage() {
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Photo Studio Suite
+            Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <span className="text-primary font-bold truncate">Passport Photo Sheet Maker</span>
         </nav>
 
         {/* Hero Header */}
-        <div className="space-y-3 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200">
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-xs sm:text-sm font-semibold text-purple-700 shadow-2xs">
             <Printer className="w-3.5 h-3.5 text-purple-600" />
             <span>Cyber Cafe &amp; Studio Production Engine</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-            Passport Photo Sheet Maker (4×6&quot; &amp; A4 at 300 DPI)
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Passport Photo Sheet Maker </span>
+            <span className="text-primary">— 4×6&quot; &amp; A4 (300 DPI)</span>
           </h1>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
             Tile passport photos onto standard 4×6&quot; (8 photos for ₹5 lab print) or A4 sheets (32 photos). Multi-subject support with scissor cutting guidelines, candidate name &amp; DOP stamp, and pure client-side PDF download.
           </p>
-        </div>
 
-        {/* In-Memory Privacy Assurance Banner */}
-        <div className="flex items-center gap-3 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium max-w-xl shadow-2xs">
-          <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>
-            <strong>100% In-Memory RAM Processing:</strong> Rendered entirely inside your browser. Zero photos uploaded to any server.
-          </span>
-        </div>
+          <div className="flex items-center justify-center gap-2 text-xs text-emerald-800 font-medium bg-emerald-50 border border-emerald-200 py-1.5 px-4 rounded-full w-fit mx-auto shadow-2xs">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>100% In-Memory RAM Processing: Rendered entirely inside your browser. Zero photos uploaded.</span>
+          </div>
+        </header>
 
         {/* THE MASTER STUDIO ENGINE (Full Width) */}
         <div>

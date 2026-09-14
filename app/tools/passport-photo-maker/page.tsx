@@ -14,37 +14,120 @@ import {
   AlertTriangle,
   Globe2,
   Sparkles,
+  Layers,
+  Scissors,
 } from 'lucide-react';
 import { PassportPhotoStudioEngine } from '@/components/tools/PassportPhotoStudioEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Passport Photo Maker Online Free (35×45 mm & 2×2 in) | 300 DPI Sheet | Kagazo',
+  title: 'Passport Photo Maker Online Free (35×45mm & 2×2") | 4×6 Print Sheet | Kagazo',
   description:
-    'Create official passport size photos online free for Indian Passport (Passport Seva Kendra, 35x45 mm), US Visa (2x2 in), UK, Canada, and Schengen. 300 DPI JFIF output with printable 4x6" 8-photo sheet and name/date stamp.',
+    'Create official passport size photos online free for Indian Passport (35x45 mm, 300 DPI), US Visa (2x2"), UK & Schengen. 8-photo 4x6" print sheet, 100% free RAM privacy.',
+  keywords: [
+    'passport photo maker online free',
+    'indian passport photo size 35x45 mm online',
+    'passport size photo maker with 4x6 print sheet',
+    'us visa photo maker 2x2 online free',
+    'passport seva photo resizer 20 to 50 kb',
+    'schengen visa photo 35x45 free',
+    'uk passport photo hmpo 35x45 online',
+    'passport photo background to white free',
+    'create 8 passport photos on 4x6 sheet free',
+    'passport photo maker at home mobile',
+    'canadian passport photo 50x70 online',
+    'official biometric passport photo creator',
+  ],
   alternates: {
     canonical: 'https://kagazo.in/tools/passport-photo-maker',
   },
   openGraph: {
-    title: 'Passport Photo Maker Online Free (35×45 mm & 2×2 in) | Kagazo',
+    title: 'Passport Photo Maker Online Free (35×45mm & 2×2") | Kagazo',
     description:
       'Generate compliant 35x45mm Indian passport & international visa photos at 300 DPI with printable 4x6 sheet. 100% private in-browser tool.',
     url: 'https://kagazo.in/tools/passport-photo-maker',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Passport Photo Maker Online Free (35×45mm & 2×2") | Kagazo',
+    description:
+      'Create official 35x45mm Indian passport & 2x2" visa photos with printable 4x6 sheets. 100% free in-browser RAM privacy.',
+  },
 };
+
+const COUNTRY_SPECS = [
+  {
+    country: 'Indian Passport (Passport Seva / MEA)',
+    dims: '35 mm × 45 mm (413 × 531 px)',
+    faceRatio: '70%–80% (25 mm to 35 mm)',
+    bg: 'Pure Plain White',
+    onlineSize: '20 KB to 50 KB (300 DPI)',
+    route: '/tools/passport-photo-maker',
+  },
+  {
+    country: 'United States (Passport / DS-160 / DV Lottery)',
+    dims: '2" × 2" (51 × 51 mm / 600 × 600 px)',
+    faceRatio: '50%–69% (1" to 1 3/8")',
+    bg: 'Plain White or Off-White',
+    onlineSize: '10 KB to 240 KB (300 DPI)',
+    route: '/tools/us-passport-photo',
+  },
+  {
+    country: 'United Kingdom (HMPO / British Visa)',
+    dims: '35 mm × 45 mm (413 × 531 px)',
+    faceRatio: '29 mm to 34 mm (Crown to Chin)',
+    bg: 'Light Grey or Plain Cream',
+    onlineSize: '50 KB to 10 MB (300 DPI)',
+    route: '/tools/uk-passport-photo',
+  },
+  {
+    country: 'Schengen Visa (France, Germany, 29 EU States)',
+    dims: '35 mm × 45 mm (413 × 531 px)',
+    faceRatio: '70%–80% (32 mm to 36 mm)',
+    bg: 'Uniform Light Grey / Neutral',
+    onlineSize: '30 KB to 150 KB (300 DPI)',
+    route: '/tools/schengen-visa-photo',
+  },
+  {
+    country: 'Canada (Passport / PR Card / Express Entry)',
+    dims: '50 mm × 70 mm (591 × 827 px)',
+    faceRatio: '31 mm to 36 mm (Chin to Crown)',
+    bg: 'Pure White or Light-Coloured',
+    onlineSize: '60 KB to 4 MB (300 DPI)',
+    route: '/tools/canadian-passport-photo',
+  },
+  {
+    country: 'Australia (Passport / eVisitor Visa)',
+    dims: '35 mm × 45 mm (413 × 531 px)',
+    faceRatio: '32 mm to 36 mm (Chin to Crown)',
+    bg: 'Plain White or Light Grey',
+    onlineSize: 'Max 2 MB (300 DPI)',
+    route: '/tools/passport-photo-maker',
+  },
+];
 
 const FAQS = [
   {
     question: 'What are the official photo requirements for Indian Passport (Passport Seva Kendra)?',
     answer:
-      'For domestic Indian passport applications through Passport Seva Kendra (PSK) or Indian missions abroad, the photograph must measure 35 × 45 mm (width × height) at 300 DPI. The background must be pure plain white with zero shadows or borders, and the face must occupy 60% to 70% of the picture height (chin to crown).',
+      'For Indian passport applications through Passport Seva Kendra (PSK) or overseas missions (VFS / BLS), the photograph must measure 35 × 45 mm (width × height) at 300 DPI (413 × 531 pixels). The background must be pure plain white with zero shadows or borders, and the face must occupy 70% to 80% of the picture height (25 mm to 35 mm from chin to crown of head).',
   },
   {
-    question: 'How does printing a 4×6" photo sheet save money at local studios or photo labs?',
+    question: 'How does printing a 4×6" photo sheet save money at local studios or print kiosks?',
     answer:
-      'Photo studios and cyber cafes typically charge ₹80 to ₹150 for 8 passport photos. When you download Kagazo’s printable 4×6" sheet (tiling 8 identical 35×45 mm photos with scissor cutting lines), you can print it as a standard 4×6 photo print at any photo kiosk or digital studio for just ₹5 to ₹10, saving over 90% of the cost!',
+      'Photo studios and cyber cafes typically charge ₹80 to ₹150 for 8 passport photos. When you download Kagazo’s printable 4×6" sheet (tiling 8 identical 35×45 mm photos with scissor cutting lines), you can print it as a standard 4×6" glossy photo print at any local digital studio or photo kiosk for just ₹5 to ₹10, saving over 90% of the cost!',
+  },
+  {
+    question: 'Can I take a compliant passport photo with my smartphone at home?',
+    answer:
+      'Yes! Stand 3 to 4 feet away from a plain white or light wall in bright, even daylight. Look straight into the camera lens with a neutral expression and mouth closed. Avoid selfies as wide-angle front phone lenses distort facial features. Upload the photo to Kagazo, align your face within the biometric guide, and download.',
+  },
+  {
+    question: 'Are eyeglasses allowed in passport and visa photos?',
+    answer:
+      'Under current MEA India, U.S. Department of State, and international ICAO rules, eyeglasses and spectacles are strictly prohibited in passport photos to prevent flash reflection and eye obstruction. Only medically certified exemptions signed by a physician are accepted.',
   },
   {
     question: 'Can I add Candidate Name and Date of Photo (DOP) for exam portal uploads?',
@@ -52,9 +135,24 @@ const FAQS = [
       'Yes! Many recruitment bodies (UPSC, SSC, State Police, Railway RRB) mandate that the applicant name and date the photo was taken (DOP) be printed on a clear white strip at the bottom of the photo. Simply toggle the "Add Name & Date Strip" option in the studio controls.',
   },
   {
+    question: 'Can I smile in my passport photo?',
+    answer:
+      'Consular authorities mandate a neutral facial expression with both eyes open, looking directly into the camera, and mouth closed. Smiling that shows teeth, squinting, or frowning causes automated biometric facial matching errors at airport e-Gates.',
+  },
+  {
+    question: 'What clothing should I wear for a passport photo?',
+    answer:
+      'Wear dark, everyday clothing (such as a navy blue, black, or dark grey collared shirt) that contrasts sharply against the white background. Avoid white shirts (which blend into the background), uniforms, camouflage, and low-cut tops.',
+  },
+  {
+    question: 'Are religious head coverings like turbans or hijabs allowed?',
+    answer:
+      'Yes, religious headgear is permitted if worn daily for religious beliefs, provided the face from the bottom of the chin to the top of the forehead and both facial edges remain completely visible without shadows.',
+  },
+  {
     question: 'Can I create visa photos for the US, UK, Schengen, and Canada using this tool?',
     answer:
-      'Yes. Kagazo includes a multi-country preset switcher. You can switch to US Visa / DS-160 (2×2 inch, 600×600 px), UK Passport (35×45 mm, light grey background), Schengen Visa (35×45 mm, 70-80% face ratio), Canadian Passport / PR (50×70 mm), Australia, or Singapore with 1 click.',
+      'Yes! Kagazo includes a multi-country preset switcher. You can switch to US Visa / DS-160 (2×2 inch, 600×600 px), UK Passport (35×45 mm, light grey background), Schengen Visa (35×45 mm, 70–80% face ratio), Canadian Passport / PR (50×70 mm), Australia, or Singapore with 1 click.',
   },
   {
     question: 'Are my biometric photos uploaded or stored on your servers?',
@@ -69,14 +167,14 @@ export default function PassportPhotoMakerPage() {
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'Passport Photo Maker Online Free',
+        name: 'Kagazo Passport Photo Maker Online Free',
+        url: 'https://kagazo.in/tools/passport-photo-maker',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://kagazo.in/tools/passport-photo-maker',
         offers: {
           '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
+          price: '0.00',
+          priceCurrency: 'INR',
         },
         description:
           'Official 35x45mm Indian passport photo maker and international visa photo creator with 300 DPI JFIF output and printable 4x6 sheets.',
@@ -98,12 +196,12 @@ export default function PassportPhotoMakerPage() {
           {
             '@type': 'HowToStep',
             name: 'Align Biometric Face Frame',
-            text: 'Position your face within the 60%-70% biometric head height guides and adjust brightness if needed.',
+            text: 'Position your crown and chin inside the 70%–80% biometric caliper guidelines.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Photo & 4x6 Sheet',
-            text: 'Download the 300 DPI compliant JPEG for online portals or the printable 4x6" 8-photo card for physical submission.',
+            name: 'Download 300 DPI Photo or 4x6" Sheet',
+            text: 'Download the verified digital JPEG or save the 8-photo 4x6" sheet for ₹5 kiosk printing.',
           },
         ],
       },
@@ -118,6 +216,19 @@ export default function PassportPhotoMakerPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Passport Photo Maker',
+            item: 'https://kagazo.in/tools/passport-photo-maker',
+          },
+        ],
+      },
     ],
   };
 
@@ -126,7 +237,7 @@ export default function PassportPhotoMakerPage() {
       {/* Ambient glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
+      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -143,18 +254,19 @@ export default function PassportPhotoMakerPage() {
             Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Passport Photo Maker</span>
+          <span className="text-primary font-bold truncate">Passport Photo Maker</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <Sparkles className="w-4 h-4 text-primary shrink-0" />
-            <span>Official MEA 35×45mm &amp; International Visa Standards • 300 DPI</span>
+            <Camera className="w-4 h-4 text-primary" />
+            <span>ICAO Doc 9303 &amp; Passport Seva Kendra Compliant</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-text-main tracking-tight leading-tight">
-            Passport Photo Maker Online Free
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Passport Photo Maker </span>
+            <span className="text-primary">Online Free (35×45mm &amp; 2×2&quot;)</span>
           </h1>
 
           <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">

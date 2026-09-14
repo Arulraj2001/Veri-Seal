@@ -20,7 +20,6 @@ import {
   Trash2,
 } from 'lucide-react';
 import { printIsolatedDocument } from '@/lib/print-utils';
-import { AdSlot } from '@/components/ads/AdSlot';
 
 type SheetType = '4x6_passport_8' | '4x6_combo' | 'a4_batch_32' | 'single_passport';
 
@@ -550,9 +549,6 @@ export default function CollegePhotoStudioEngine() {
           </div>
         </div>
       </div>
-
-      {/* Dynamic Ostrune Agency Ad Banner */}
-      <AdSlot slot="in_content" />
     </div>
   );
 }

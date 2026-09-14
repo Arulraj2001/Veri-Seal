@@ -14,62 +14,142 @@ import {
   Sparkles,
   AlertTriangle,
   Award,
+  Globe2,
 } from 'lucide-react';
 import { UscisPhotoCheckerEngine } from '@/components/tools/UscisPhotoCheckerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'DV Lottery Photo Tool 2026 / 2027 Online Free (Official 600×600 px) | Kagazo',
+  title: 'DV Lottery Photo Tool 2026 / 2027 | Official 600×600 px Checker | Kagazo',
   description:
-    'Free official DV Lottery 2026 & 2027 photo tool. Validate 600x600 px dimensions, 50%–69% head height ratio, 300 DPI, plain white background, and file size under 240 KB in browser RAM.',
+    'Validate & format your photo for the official DV-2026 & DV-2027 Green Card Lottery. 600x600 px square, 50%–69% head height, under 240 KB, 100% free RAM privacy.',
+  keywords: [
+    'dv lottery photo tool 2026 official free',
+    'diversity visa photo validator 600x600 online',
+    'dv lottery photo checker under 240 kb',
+    'green card lottery photo size in pixels',
+    'how to check dv 2027 photo compliance',
+    'dv lottery disqualification photo reasons',
+    'us diversity visa photo requirements 2026',
+    'official green card lottery photo crop tool',
+  ],
   alternates: {
     canonical: 'https://kagazo.in/tools/dv-lottery-photo-tool',
   },
   openGraph: {
-    title: 'DV Lottery Photo Tool 2026 / 2027 Online Free | Kagazo',
+    title: 'DV Lottery Photo Tool 2026 / 2027 | Official 600×600 px Checker | Kagazo',
     description:
       'Check and crop photos for the US Diversity Visa (Green Card) Lottery. 600x600 px, 50%-69% head height, 300 DPI, zero cloud upload.',
     url: 'https://kagazo.in/tools/dv-lottery-photo-tool',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DV Lottery Photo Tool 2026 / 2027 | Official 600×600 px Checker | Kagazo',
+    description:
+      'Format and validate your official DV-2026 & DV-2027 Green Card Lottery photo with 100% in-browser RAM privacy.',
+  },
 };
 
-const FAQS = [
+const DV_REQUIREMENTS = [
   {
-    question: 'What are the exact photo specifications for DV Lottery 2026 / 2027?',
-    answer:
-      'The US State Department mandates that every DV Lottery entry photo must be exactly 600 × 600 pixels (1:1 square ratio) in JPEG format, with 24-bit sRGB color. The head height (from bottom of chin to top of head) must be between 50% and 69% of the total height (300 to 414 pixels). The file size must not exceed 240 KB (minimum 60 KB).',
+    parameter: 'Pixel Dimensions',
+    officialRule: 'Strictly 600 × 600 pixels (Square 1:1 ratio @ 300 DPI)',
+    disqualificationRisk: 'Immediate upload rejection if rectangular or uncropped',
   },
   {
-    question: 'Can I use the official US State Department photo tool on my phone?',
-    answer:
-      'The official State Department website tool frequently fails to load or crashes on modern smartphone browsers because it relies on legacy web components. Kagazo’s DV Lottery Photo Tool runs 100% on HTML5 Canvas and WebAssembly, working seamlessly across all iPhones, Android phones, tablets, and desktop computers.',
+    parameter: 'Head Height',
+    officialRule: '50% to 69% of image height (300 to 414 pixels chin to crown)',
+    disqualificationRisk: 'Automated AI filter flags head size out of proportion',
   },
   {
-    question: 'Can I submit last year’s photo for the new DV Lottery registration?',
-    answer:
-      'No. The State Department strictly mandates that your photograph must have been taken within the last 6 months to reflect your current appearance. Submitting the same photo from a previous year will lead to immediate disqualification.',
+    parameter: 'Eye Level Position',
+    officialRule: '56% to 69% from the bottom edge (336 to 414 pixels)',
+    disqualificationRisk: 'Tilted or low-angle portrait leads to silent entry rejection',
   },
   {
-    question: 'How should baby or toddler photos be taken for the DV Lottery?',
-    answer:
-      'No other person may be in the photo, and the child must look directly at the camera with eyes open. A common trick is to lay the baby on a plain white sheet on their back, photographing from directly above, or placing a white sheet over a car seat.',
+    parameter: 'File Size Ceiling',
+    officialRule: 'Strictly 240 KB or less (Maximum 245,760 bytes)',
+    disqualificationRisk: 'State Dept submission portal immediately aborts upload',
   },
   {
-    question: 'Are hats, turbans, or religious head coverings permitted?',
-    answer:
-      'Head coverings worn for religious purposes are permitted, provided the full facial oval from the bottom of the chin to the top of the forehead and both edges of the face are clearly visible without casting shadows.',
+    parameter: 'Photo Recency',
+    officialRule: 'Taken within the last 6 months to reflect current appearance',
+    disqualificationRisk: 'Reusing photos from prior years results in lifetime lottery ban',
+  },
+  {
+    parameter: 'Background Tone',
+    officialRule: 'Plain white or off-white with zero shadows behind ears/neck',
+    disqualificationRisk: 'Wall textures, doorway frames, or colored paint disqualify',
+  },
+  {
+    parameter: 'Eyeglasses Rule',
+    officialRule: 'Strictly prohibited without exception (Banned since Nov 2016)',
+    disqualificationRisk: 'Entries with reading or prescription glasses are thrown out',
   },
 ];
 
-export default function DvLotteryPhotoToolPage() {
+const FAQS = [
+  {
+    question: 'What are the exact photo specifications for the DV-2026 / DV-2027 Lottery?',
+    answer:
+      'The photo must be a square JPEG image measuring exactly 600 × 600 pixels. The head must measure between 300 and 414 pixels (50% to 69% of image height), and eye height must be between 336 and 414 pixels from the bottom edge. File size must be under 240 KB in 24-bit sRGB color.',
+  },
+  {
+    question: 'Can I reuse the photo I submitted in last year’s DV Lottery?',
+    answer:
+      'NO! The U.S. Department of State uses facial recognition algorithms across previous lottery cycles. Submitting a photo from an earlier DV entry results in immediate, automatic disqualification without appeal.',
+  },
+  {
+    question: 'Why do over 30% of DV Lottery entries get disqualified for photos?',
+    answer:
+      'Most disqualified applicants never know they were rejected because the initial submission form accepts any image that meets basic file parameters. However, during automated post-entry screening, non-compliant head ratios, shadows, or eyeglasses result in silent disqualification.',
+  },
+  {
+    question: 'Can I use AI photo generators or beauty filters for my DV Lottery photo?',
+    answer:
+      'Strictly NO. Any AI manipulation, face slimming, skin smoothing, or artificial background replacement that creates pixel anomalies can cause automated disqualification for photo alteration.',
+  },
+  {
+    question: 'Can I wear glasses or sunglasses in the DV Lottery photo?',
+    answer:
+      'No. Eyeglasses have been completely banned in U.S. visa and diversity visa photos since 2016. Entries with eyeglasses are automatically disqualified.',
+  },
+  {
+    question: 'How does Kagazo keep my photo under 240 KB?',
+    answer:
+      'Our client-side canvas compressor optimizes JPEG quantization tables to guarantee your file lands between 90 KB and 150 KB, well within the 240 KB ceiling.',
+  },
+  {
+    question: 'Does my spouse and each child need a photo?',
+    answer:
+      'Yes. An individual compliant photo must be submitted for every person listed on your DV Lottery entry (principal applicant, spouse, and each unmarried child under 21).',
+  },
+  {
+    question: 'Can I smile in my DV Lottery photo?',
+    answer:
+      'A natural, unexaggerated expression with both eyes open and mouth closed is required. Avoid big smiles showing teeth, as parting your lips can alter biometric landmark coordinates.',
+  },
+  {
+    question: 'What should the background look like?',
+    answer:
+      'The background must be flat, untextured white or off-white with no shadows cast by the applicant’s head, shoulders, or ears. Use diffuse daylight for best results.',
+  },
+  {
+    question: 'Is Kagazo’s DV Lottery photo tool safe to use?',
+    answer:
+      'Yes! Unlike online tools that store your lottery photos on cloud servers, Kagazo runs 100% in your device’s volatile RAM memory. Zero bytes leave your browser.',
+  },
+];
+
+export default function DvLotteryPhotoPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'DV Lottery Photo Tool 2026/2027',
+        name: 'DV Lottery Photo Tool 2026 / 2027 (Official 600×600 px)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/dv-lottery-photo-tool',
@@ -79,26 +159,36 @@ export default function DvLotteryPhotoToolPage() {
           priceCurrency: 'USD',
         },
         description:
-          'Official photo validator and cropper for the US Diversity Visa Green Card Lottery. 600x600 px @ 300 DPI.',
+          'Validate & format your photo for the official DV-2026 & DV-2027 Green Card Lottery. 600x600 px square, 50%–69% head height, under 240 KB, 100% free RAM privacy.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Prepare a Compliant DV Lottery Photo',
+        name: 'How to Prepare a Compliant Photo for the DV Lottery',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Upload Portrait Photo',
-            text: 'Upload a recent portrait photo taken in good lighting against a plain white background.',
+            name: 'Snap a Fresh Portrait',
+            text: 'Take a photo within the last 6 months against a plain white wall without glasses.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Check Head Height & Eye Zone',
-            text: 'Ensure the head fits within the 50% to 69% oval guide and eyes fall in the designated eye zone.',
+            name: 'Upload to Kagazo Studio',
+            text: 'Kagazo configures the 600x600 px square canvas with 300 DPI density.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download 600×600 px JPEG',
-            text: 'Export the verified JPEG file guaranteed under 240 KB and 300 DPI for immediate registration.',
+            name: 'Align 50%–69% Head Height',
+            text: 'Position your head between the 300 and 414 pixel biometric guides.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Verify Eye Level Line',
+            text: 'Ensure eyes intersect the 56% to 69% horizontal guideline.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Verified JPEG',
+            text: 'Export the 600x600 px JPEG strictly under 240 KB for submission on dvprogram.state.gov.',
           },
         ],
       },
@@ -113,15 +203,43 @@ export default function DvLotteryPhotoToolPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Passport & Visa Photo Lab',
+            item: 'https://kagazo.in/tools/passport-photo-maker',
+          },
+          {
+            '@type': 'ListItem',
+            position: 4,
+            name: 'DV Lottery Photo Tool',
+            item: 'https://kagazo.in/tools/dv-lottery-photo-tool',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient glow */}
+      {/* Ambient glow effect */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -130,199 +248,415 @@ export default function DvLotteryPhotoToolPage() {
       <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
+          <Link href="/" className="hover:text-primary transition-colors">
             Home
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/40" />
+          <Link href="/tools" className="hover:text-primary transition-colors">
             Tools
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">DV Lottery Photo Tool</span>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/40" />
+          <Link
+            href="/tools/passport-photo-maker"
+            className="hover:text-primary transition-colors"
+          >
+            Passport & Visa Photo Lab
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/40" />
+          <span className="font-semibold text-text-main">DV Lottery Photo Tool</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>US State Dept Diversity Visa 2026 / 2027 Validator</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-extrabold shadow-2xs">
+            <ShieldCheck className="w-4 h-4 text-emerald-700" />
+            <span>DV-2026 & DV-2027 Ready</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>DV Lottery Photo Tool </span>
-            <span className="text-primary">2026 / 2027 Online Free</span>
+            <span>DV Lottery Photo Tool 2026 / 2027 </span>
+            <span className="text-primary">(600×600 px)</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Validate 600×600 px dimensions, 50%–69% head height ratio, and 300 DPI for the US Green Card Lottery. Guaranteed compliance with zero rejection.
+          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
+            Format and validate your official photograph for the U.S. Diversity Visa Green Card Lottery
+            (DV-2026 & DV-2027). Verifies strict 600 × 600 pixel square resolution, 50%–69% head height
+            ratio, under 240 KB file size limit, and plain white background with zero cloud uploads.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full border border-surface-darker">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              600 × 600 px (1:1 Ratio)
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full border border-surface-darker">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              50%–69% Head Height Oval
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full border border-surface-darker">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              Strictly &lt;240 KB Ceiling
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full border border-surface-darker">
+              <Lock className="w-3.5 h-3.5 text-primary" />
+              100% In-Browser RAM Privacy
+            </span>
+          </div>
         </header>
 
-        {/* 2-Column Responsive Layout */}
+        {/* Main Grid: Tool Engine (9 cols) + Quick Info Sidebar (3 cols) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Studio Column (col-span-9 / col-span-10) */}
+          {/* Main Content Area */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <UscisPhotoCheckerEngine
-              defaultMode="dv_lottery"
-              toolHeading="Official DV Lottery Photo Validator Studio"
-              toolSubheading="Upload portrait photo. Crop to official 600×600 px (300 DPI) with State Dept head height boundaries."
-            />
+            {/* Interactive Engine Container */}
+            <UscisPhotoCheckerEngine />
 
-            {/* Post-Action Native AdSlot */}
+            {/* Post-Download Ad Slot */}
             <AdSlot slot="post_download" />
 
-            {/* Disqualification Prevention Checklist */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Award className="w-5 h-5 text-primary" />
-                  How to Ensure Your DV Lottery Entry Is Not Disqualified
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Over 20% of DV lottery submissions are disqualified during electronic entry due to bad photos.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md inline-block">
-                    ✅ Exact 600 × 600 Pixels
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Square aspect ratio (1:1). Rectangular or skewed photos are rejected automatically by the portal validator.
+            {/* Value Pillars */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                Why Format Your DV Lottery Photo on Kagazo?
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm mb-3">
+                    600
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Official DV Specification Lock</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Enforces the exact 600 × 600 pixel square dimensions mandated on dvprogram.state.gov.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md inline-block">
-                    ✅ Head Height 50% - 69%
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    The head must measure between 300 and 414 pixels from chin to top of hair. No extreme close-ups or far-away shots.
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm mb-3">
+                    50–69
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Head Height Calculator</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Ensures your head measures between 300 and 414 pixels from chin to hair crown.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md inline-block">
-                    ✅ File Size &lt; 240 KB
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Kagazo automatically compresses the output to ~140 KB, well within the 60 KB to 240 KB limit.
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm mb-3">
+                    &lt;240
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Strict 240 KB File Budget</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Compresses phone snapshots into the compliant 80 KB to 160 KB zone to avoid upload aborts.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-sm mb-3">
+                    24-Bit
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">True 24-Bit sRGB Color</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Preserves natural skin tones and prevents disqualification caused by color cast errors.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-rose-100 flex items-center justify-center text-rose-700 font-bold text-sm mb-3">
+                    Real
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Zero AI Alterations</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Formats your photo purely through geometric framing without AI modification.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm mb-3">
+                    <Lock className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">100% In-Browser Privacy</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Your lottery photo never touches an external server. Processed entirely in volatile RAM.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* Official DV Requirements & Disqualification Risks Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div className="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                    <FileCheck className="w-6 h-6 text-primary" />
+                    Official DV Lottery Photo Requirements & Disqualification Risks
+                  </h2>
+                  <p className="text-sm text-text-main/70 mt-1">
+                    Avoid silent disqualification by meeting all Electronic Diversity Visa criteria.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-3 py-1 rounded-full">
+                  DV-2026/2027
+                </span>
+              </div>
 
-            {/* FAQ Accordion Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main/80 font-bold">
+                      <th className="py-3 px-4">Requirement Parameter</th>
+                      <th className="py-3 px-4">Official State Department Standard</th>
+                      <th className="py-3 px-4">Automated Disqualification Risk</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker text-text-main/75">
+                    {DV_REQUIREMENTS.map((item, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-4 font-semibold text-text-main whitespace-nowrap">
+                          {item.parameter}
+                        </td>
+                        <td className="py-3 px-4 font-medium text-emerald-700">{item.officialRule}</td>
+                        <td className="py-3 px-4 text-red-800/90 font-medium">{item.disqualificationRisk}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Step-by-Step Instructions */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                <Camera className="w-6 h-6 text-primary" />
+                Step-by-Step: How to Format Your DV Lottery Photo
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      1
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Snap Fresh Photo</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Take a photo taken within the last 6 months against a plain white wall. Do not wear eyeglasses.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      2
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Upload to Tool</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Upload your picture. Kagazo automatically locks the canvas to an exact 600 × 600 px square.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      3
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Align Head Oval</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Align your chin and the top of your hair within the 50% to 69% (300–414 px) biometric markers.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      4
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Verify Eye Line</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Ensure your eyes are centered along the horizontal guideline (56% to 69% from the bottom).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      5
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Check White BG</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Confirm that the background is uniformly white without dark shadows cast behind your ears.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      6
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Export &lt;240 KB</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Download your validated 600×600 px JPEG file, perfectly sized under the 240 KB upload limit.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Disqualification Prevention & Troubleshooting */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                <AlertTriangle className="w-6 h-6 text-amber-500" />
+                DV Lottery Silent Disqualification Traps & How to Avoid Them
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                    Disqualification: Reused Photos
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Re-uploading an image used in a previous DV Lottery entry results in instant disqualification.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Advice:</strong> Take a brand new photo every single lottery cycle without exception.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                    Disqualification: AI Smoothing & Filters
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Using beauty filters, face retouching apps, or synthetic backgrounds creates pixel anomalies.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Standard:</strong> Formats your real photo purely through geometric framing without AI modification.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                    Disqualification: Missing Family Members
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Failing to submit individual compliant photos for a spouse or every child under 21 voids the entry.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Tip:</strong> Use our tool to calibrate photos for each family member separately.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
               <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                  <HelpCircle className="w-6 h-6 text-primary" />
+                  Frequently Asked Questions (DV Lottery Photo Tool)
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Frequently asked questions regarding the US Diversity Visa Lottery photo requirements.
+                <p className="text-sm text-text-main/70 mt-1">
+                  Everything you need to know about Green Card lottery photo specifications, disqualification risks, and rules.
                 </p>
               </div>
 
-              <div className="space-y-3">
-                {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
+              <div className="divide-y divide-surface-darker">
+                {FAQS.map((faq, index) => (
+                  <div key={index} className="py-4 first:pt-0 last:pb-0 space-y-2">
+                    <h3 className="text-sm font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-mono text-xs mt-0.5">0{index + 1}.</span>
                       <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/75 pl-5 leading-relaxed">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Compact Sticky Right Sidebar Rail (col-span-3 / col-span-2) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Related Tools
-              </h3>
+          {/* Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6">
+            {/* Quick Actions Rail */}
+            <div className="bg-white rounded-3xl border border-surface-darker p-4 sm:p-5 shadow-card space-y-3">
+              <span className="text-xs font-extrabold text-text-main/60 uppercase tracking-wider block px-1">
+                Related US Tools
+              </span>
 
               <div className="space-y-1.5">
                 <Link
                   href="/tools/uscis-photo-checker"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      USCIS Checker
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      USCIS Photo Checker
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    US Visa
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    600px
                   </span>
                 </Link>
 
                 <Link
                   href="/tools/us-passport-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      US Passport 2x2"
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      US Passport Photo
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    2×2 in
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    2×2&quot;
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/schengen-visa-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-white-background"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Schengen Visa
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      White Background AI
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    35×45mm
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    White
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/change-image-dpi"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-photo-maker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Change DPI
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Global Passport Studio
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    300 DPI
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    50+
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/compress-image-exact-kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-photo-sheet-maker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to Exact KB
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Passport Sheet Maker
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    KB Limit
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    4×6&quot;
                   </span>
                 </Link>
               </div>
@@ -331,21 +665,25 @@ export default function DvLotteryPhotoToolPage() {
             {/* Compact Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
-                <Lock className="w-3.5 h-3.5 shrink-0" />
+            {/* Sovereign RAM Privacy Box */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-2.5">
+              <div className="flex items-center gap-2 text-primary font-bold text-xs">
+                <Lock className="w-4 h-4 shrink-0" />
                 <span>100% In-Browser Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                Biometric audits and 4×6 sheet rendering execute locally in client-side RAM. No photos are ever uploaded.
+              <p className="text-xs text-text-main/70 leading-relaxed">
+                DV Lottery photos are processed in volatile RAM. Zero cloud storage, zero facial scanning
+                harvesting.
               </p>
-              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
+              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-1">
                 <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-                  ✓ 300 DPI Tagged
+                  ✓ DV-2026/2027
                 </span>
                 <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-                  ✓ DV-2026/27 Approved
+                  ✓ 600×600 px
+                </span>
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
+                  ✓ &lt;240 KB Safe
                 </span>
               </div>
             </div>

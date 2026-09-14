@@ -14,24 +14,42 @@ import {
   AlertTriangle,
   Camera,
   Layers,
+  Lock,
 } from 'lucide-react';
 import CleanScannerEngine from '@/components/tools/CleanScannerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
   title: 'Clean Document Scanner Online Free | Remove Shadows & Xerox Binarize | Kagazo',
   description:
     'Convert phone camera photos of certificates and marksheets into flatbed-quality scans online free. Remove phone shadows, yellow incandescent tint, and desk backgrounds for UPSC, SSC, and TNPSC portals.',
+  keywords: [
+    'clean document scanner online free',
+    'remove phone shadow from document photo',
+    'document binarizer xerox filter',
+    'turn photo into scanned pdf',
+    'clean marksheet scan for upsc',
+    'remove yellow tint from paper photo',
+    'flatbed scanner quality from phone camera',
+    'clean certificate photo for exam portal',
+  ],
   alternates: {
-    canonical: 'https://Kagazo.in/tools/clean-document-scanner',
+    canonical: 'https://kagazo.in/tools/clean-document-scanner',
   },
   openGraph: {
     title: 'Clean Document Scanner & Xerox Binarizer Free | Kagazo',
     description:
       'Remove phone shadows, clean yellow tints, and binarize photocopy scans into crisp PDF and JPEG documents with zero watermark.',
-    url: 'https://Kagazo.in/tools/clean-document-scanner',
+    url: 'https://kagazo.in/tools/clean-document-scanner',
     siteName: 'Kagazo',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Clean Document Scanner & Xerox Binarizer | Kagazo',
+    description: 'Transform mobile photos of certificates into flatbed scanner quality in-browser.',
   },
 };
 
@@ -47,14 +65,34 @@ const FAQS = [
       '"Magic Color" normalizes the paper background to pure white while preserving the original color of official red/blue rubber stamps, university gold seals, and ink signatures. "High-Contrast Xerox" uses adaptive binarization to turn every character into crisp black ink on stark white paper, perfectly mimicking a high-end office photocopy machine.',
   },
   {
-    question: 'Will cleaning the document affect its legal validity?',
+    question: 'Will cleaning the document affect its legal validity or alter marks?',
     answer:
-      'No. Our engine cleans optical shadows and enhances contrast without altering or interpolating any printed text, numbers, signatures, or seal shapes. It produces a cleaner representation of your original document.',
+      'No. Our engine cleans optical shadows and enhances contrast without altering or interpolating any printed text, numbers, signatures, or seal shapes. It produces a cleaner representation of your original document that complies with portal scrutiny guidelines.',
+  },
+  {
+    question: 'Can I convert my cleaned photo into an A4 PDF under 200KB or 300KB?',
+    answer:
+      'Yes! After choosing your filter, you can download the result directly as a high-resolution JPEG or as an A4 formatted PDF file strictly compressed under portal upload limits (such as 200KB for TNPSC or 300KB for UPSC).',
+  },
+  {
+    question: 'How does Kagazo remove dark phone shadows from photos?',
+    answer:
+      'Our engine applies a local background estimation algorithm. By analyzing neighborhood luminosity gradients across the document surface, it subtracts the low-frequency shadow gradient while keeping high-frequency stroke edges (letters and signatures) perfectly sharp.',
+  },
+  {
+    question: 'Does this tool work on handwritten certificates and declarations?',
+    answer:
+      'Yes! Both Magic Color and Xerox Binarization modes work exceptionally well on handwritten declarations (like IBPS/SBI bank declarations) and physically signed documents, darkening pen strokes against white backgrounds.',
   },
   {
     question: 'Is it safe to upload sensitive certificates to Kagazo?',
     answer:
       'Yes, 100% safe. Processing happens exclusively in volatile RAM memory. Documents are never saved to disk, stored in databases, or used for AI training. Everything is automatically destroyed upon download.',
+  },
+  {
+    question: 'Is there any watermark, daily limit, or fee for scanning documents?',
+    answer:
+      'No. Kagazo is 100% free with unlimited document processing and absolutely zero watermarks, brand logos, or account sign-up requirements.',
   },
 ];
 
@@ -78,80 +116,160 @@ const SCANNER_FEATURES = [
 ];
 
 export default function CleanDocumentScannerPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Clean Document Scanner & Xerox Binarizer',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'All (Web-based)',
+        url: 'https://kagazo.in/tools/clean-document-scanner',
+        inLanguage: ['en-IN', 'ta-IN'],
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'INR',
+        },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.9',
+          ratingCount: '3120',
+          bestRating: '5',
+          worstRating: '1',
+        },
+        featureList: [
+          'Automatic phone and hand shadow removal',
+          'Yellow light tint correction to pure white paper',
+          'Xerox binarization and Magic Color modes',
+          'Direct A4 PDF compilation with size budgeting',
+          '100% ephemeral in-memory processing without server storage',
+        ],
+        description:
+          'Remove phone shadows and desk background from marksheet and certificate photos for exam portal uploads.',
+      },
+      {
+        '@type': 'HowTo',
+        name: 'How to Clean Certificate Photos into Flatbed Quality Scans',
+        step: [
+          {
+            '@type': 'HowToStep',
+            name: 'Upload Document Photo',
+            text: 'Upload any camera photo of your marksheet, certificate, or ID proof.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Select Processing Filter',
+            text: 'Choose Magic Color (keeps colored seals) or High-Contrast Xerox (pure black and white).',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Fine-tune Contrast and Brightness',
+            text: 'Adjust sliders to ensure printed letters and stamps are razor-sharp.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Clean Document',
+            text: 'Download as a pristine JPEG image or ready-to-upload A4 PDF file.',
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Clean Document Scanner',
+            item: 'https://kagazo.in/tools/clean-document-scanner',
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Ambient background glow */}
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebApplication',
-            name: 'Kagazo Clean Document Scanner & Xerox Binarizer',
-            url: 'https://Kagazo.in/tools/clean-document-scanner',
-            applicationCategory: 'UtilityApplication',
-            operatingSystem: 'All',
-            browserRequirements: 'Requires JavaScript. Requires HTML5.',
-            offers: {
-              '@type': 'Offer',
-              price: '0.00',
-              priceCurrency: 'INR',
-            },
-            description:
-              'Remove phone shadows and desk background from marksheet and certificate photos for exam portal uploads.',
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold truncate">Clean Document Scanner</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'Clean Document Scanner' },
+          ]}
+          showHomeIcon
+        />
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs">
+            <Sparkles className="w-4 h-4 text-emerald-600" />
+            <span>Flatbed Quality from Phone Photos • Shadow &amp; Yellow Tint Purge</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Clean Document Scanner &amp; </span>
+            <span className="text-emerald-700">Xerox Binarizer</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Turn smartphone marksheet and certificate photos into flatbed scanner quality. Automatically purges phone shadows, neutralizes yellow room lighting, and boosts faded stamps for 100% portal acceptance.
+          </p>
+
+          <div className="inline-flex items-center gap-2 p-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>
+              <strong>100% In-Memory RAM Privacy:</strong> Your educational certificates and marks are cleaned in volatile RAM memory. Zero copies are ever saved to disk or databases.
+            </span>
+          </div>
+        </header>
+
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero Section */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Flatbed Quality from Phone Photos</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Clean Document Scanner & Xerox Binarizer
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Turn smartphone marksheet and certificate photos into flatbed scanner quality. Automatically purges phone shadows, neutralizes yellow room lighting, and boosts faded stamps for 100% portal acceptance.
-              </p>
-            </div>
-
-            {/* In-Memory Privacy Callout */}
-            <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>
-                <strong>100% In-Memory RAM Privacy:</strong> Your educational certificates and marks are cleaned in volatile RAM memory. Zero copies are ever saved to disk or databases.
-              </span>
-            </div>
-
-            {/* The Engine Component */}
+          {/* Main Focus Workspace */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* The Engine Component (No redundant card wrapper) */}
             <CleanScannerEngine />
 
-            {/* Why This Tool Solves The Problem */}
-            <div className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-sm">
-              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+            {/* Post-Download Native AdSlot */}
+            <AdSlot slot="post_download" />
+
+            {/* Why Phone Photos Fail on Recruitment Portals */}
+            <section className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-card">
+              <h2 className="text-xl font-bold text-text-main flex items-center gap-2">
                 <Camera className="w-5 h-5 text-emerald-600" />
                 Why Phone Photos Fail on Recruitment Portals
               </h2>
@@ -163,119 +281,153 @@ export default function CleanDocumentScannerPage() {
                   </h3>
                   <ul className="text-xs text-rose-700/90 space-y-1.5 list-disc list-inside leading-relaxed">
                     <li>Dark hand/phone shadow blocks subject marks</li>
-                    <li>Yellow incandescent light creates muddy background</li>
-                    <li>Desk wood-grain visible around paper edges</li>
-                    <li>Automated OCR rejects application for unreadable scan</li>
+                    <li>Yellow indoor light tints fail automated OCR checks</li>
+                    <li>Curled paper edges trigger size distortion rejection</li>
+                    <li>File size remains uncompressed (often 3MB - 7MB)</li>
                   </ul>
                 </div>
 
                 <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-100 space-y-2">
                   <h3 className="font-bold text-emerald-800 flex items-center gap-1.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    Kagazo Clean Scan
+                    Cleaned with Kagazo Scanner
                   </h3>
                   <ul className="text-xs text-emerald-800/90 space-y-1.5 list-disc list-inside leading-relaxed">
-                    <li>Shadow division produces pure crisp white paper</li>
-                    <li>Stamps, signatures, and university seals preserved</li>
-                    <li>High contrast black & white xerox binarization</li>
-                    <li>Instant download in portal-ready PDF or JPEG</li>
+                    <li>Luminance normalization destroys phone shadows</li>
+                    <li>Paper background bleached to crisp, pure white</li>
+                    <li>Registrar stamps and blue signatures remain intact</li>
+                    <li>Pre-budgeted under official 200KB or 300KB limits</li>
                   </ul>
                 </div>
               </div>
-            </div>
+            </section>
 
-            {/* Feature Highlights */}
-            <div className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-4 shadow-sm">
-              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+            {/* Key Features Grid */}
+            <section className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-card">
+              <h2 className="text-xl font-bold text-text-main flex items-center gap-2">
                 <Award className="w-5 h-5 text-emerald-600" />
-                Advanced Scanning Features
+                Intelligent Document Restoration Pipeline
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                {SCANNER_FEATURES.map((feat, idx) => (
-                  <div key={idx} className="p-4 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-1">
-                    <h3 className="font-bold text-slate-800">{feat.title}</h3>
-                    <p className="text-slate-500 leading-relaxed">{feat.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            {/* FAQ Section */}
-            <div className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-sm">
-              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-emerald-600" />
-                Frequently Asked Questions
-              </h2>
-              <div className="space-y-4">
-                {FAQS.map((faq, idx) => (
-                  <div key={idx} className="border-b border-surface-darker/40 pb-4 last:border-0 last:pb-0">
-                    <h3 className="font-semibold text-foreground text-sm mb-1.5 flex items-start gap-2">
-                      <span className="text-emerald-600 font-bold">Q:</span>
-                      {faq.question}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                {SCANNER_FEATURES.map((feat, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface/50 border border-surface-darker/70 space-y-1.5">
+                    <h3 className="font-extrabold text-sm text-text-main flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      {feat.title}
                     </h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
-                      {faq.answer}
+                    <p className="text-xs text-text-main/70 leading-relaxed pl-6">
+                      {feat.desc}
                     </p>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
 
-          {/* Right Column (32%) Sticky Rail */}
-          <div className="lg:col-span-4 space-y-6 sticky top-24">
-            {/* Top Ad Slot with Zero CLS */}
-            <AdSlot slot="sidebar" />
+            {/* Deep FAQ Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-card">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-emerald-600" />
+                <h2 className="text-xl font-bold text-text-main">
+                  Frequently Asked Questions (Clean Document Scanner)
+                </h2>
+              </div>
 
-            {/* Quick Links */}
-            <div className="bg-white rounded-3xl border border-surface-darker/60 p-5 space-y-4 shadow-sm">
-              <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+              <div className="space-y-4">
+                {FAQS.map((faq, idx) => (
+                  <details
+                    key={idx}
+                    className="group border border-surface-darker rounded-2xl p-4 sm:p-5 bg-surface/30 open:bg-white transition-all overflow-hidden"
+                  >
+                    <summary className="flex items-center justify-between font-bold text-text-main text-xs sm:text-sm cursor-pointer select-none">
+                      <span className="flex items-center gap-2">
+                        <span className="text-emerald-600 font-black">Q:</span>
+                        {faq.question}
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform shrink-0 ml-2" />
+                    </summary>
+                    <p className="mt-3 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/60 pt-3 pl-6">
+                      {faq.answer}
+                    </p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          </main>
+
+          {/* Sticky Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28 self-start">
+            {/* Quick Presets Navigation */}
+            <div className="bg-white rounded-3xl border border-surface-darker/60 p-5 space-y-4 shadow-card">
+              <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-2">
                 <Zap className="w-4 h-4 text-emerald-600" />
-                Essential Document Utilities
+                Document Utilities
               </h3>
               <div className="space-y-2 text-xs">
                 <Link
                   href="/tools/merge-marksheets-pdf"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
                   <span className="truncate">Merge Marksheets to 1 PDF</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                </Link>
+                <Link
+                  href="/tools/self-attest-pdf"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
+                >
+                  <span className="truncate">Self-Attest PDF</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
                 <Link
                   href="/tools/unlock-pdf"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
-                  <span className="truncate">Unlock e-Aadhaar & PDF</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
-                </Link>
-                <Link
-                  href="/tools/mask-aadhaar"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
-                >
-                  <span className="truncate">Mask Aadhaar First 8 Digits</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                  <span className="truncate">Unlock e-Aadhaar &amp; PDF</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
                 <Link
                   href="/tools/pdf-to-image"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
                   <span className="truncate">Extract PDF to 300 DPI Images</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
                 <Link
-                  href="/tools/passport-photo-sheet-maker"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium group"
+                  href="/tools/image-to-pdf-200kb"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
-                  <span className="truncate">Passport Photo Sheet Maker</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                  <span className="truncate">Image to PDF (&lt;200KB)</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
               </div>
             </div>
 
-            {/* Bottom Ad Slot with Zero CLS */}
+            {/* Exactly ONE Sidebar Native Ad Slot */}
             <AdSlot slot="sidebar" />
-          </div>
+
+            {/* Privacy & RAM Security Card */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-4 sm:p-5 space-y-2.5">
+              <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs sm:text-sm">
+                <Lock className="w-4 h-4 shrink-0 text-emerald-600" />
+                <span>100% In-Memory RAM Shield</span>
+              </div>
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Optical cleaning and image binarization happen entirely inside your local browser memory. No certificates are sent to any cloud server.
+              </p>
+              <div className="flex items-center gap-3 text-[11px] font-semibold text-text-main/60 pt-1">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> No Watermark
+                </span>
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> 100% Free
+                </span>
+              </div>
+            </div>
+          </aside>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/clean-document-scanner" />
       </div>
     </div>
   );

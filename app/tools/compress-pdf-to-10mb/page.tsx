@@ -53,6 +53,26 @@ const FAQS = [
     answer:
       'Yes! Kagazo includes an interactive Page Selector. Simply click "Select Pages" after uploading your document to preview all pages and exclude redundant cover pages, index sheets, or blank pages.',
   },
+  {
+    question: 'Can I compress 100+ page annual reports or legal case files to 10MB?',
+    answer:
+      'Yes! Kagazo handles heavy multi-page documents (100–300+ pages) smoothly using streaming in-memory optimization without crashing your browser or exhausting RAM.',
+  },
+  {
+    question: 'Are confidential enterprise audits, contracts, and blueprints secure?',
+    answer:
+      '100% private. All processing occurs in volatile system memory and files are destroyed immediately upon download. Zero server persistence or third-party sharing.',
+  },
+  {
+    question: 'Can I compress multiple heavy files simultaneously?',
+    answer:
+      'Yes! Drop multiple PDF files into our batch compressor. Each document is optimized individually to strictly under 10MB and ready for instant download.',
+  },
+  {
+    question: 'Is there any watermark or subscription requirement?',
+    answer:
+      'Zero watermarks and 100% free forever with unlimited document uploads.',
+  },
 ];
 
 export default function CompressPdfTo10MbPage() {

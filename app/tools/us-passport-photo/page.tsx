@@ -13,47 +13,142 @@ import {
   Printer,
   FileCheck,
   AlertTriangle,
+  Globe2,
+  Sparkles,
+  Layers,
+  Scissors,
 } from 'lucide-react';
 import { PassportPhotoStudioEngine } from '@/components/tools/PassportPhotoStudioEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'US Passport Photo Maker Online Free (2x2 in) | 300 DPI & DS-160 | Kagazo',
+  title: 'US Passport & Visa Photo Maker (2×2") | DS-160 600×600 px | Kagazo',
   description:
-    'Create official 2x2 inch (51x51 mm) US passport and visa photos online free at 300 DPI. 100% compliant with U.S. Dept of State & DS-160 standards with printable 4x6 sheet. Save $17 on CVS/Walgreens.',
+    'Create official 2x2 inch (600x600 px @ 300 DPI) US passport, DS-160 visa, and Green Card photos. 50%–69% head height verification, 4x6" printable sheet, 100% free.',
+  keywords: [
+    'us passport photo maker 2x2 online free',
+    'ds 160 visa photo 600x600 px resizer',
+    'us passport photo printable 4x6 sheet free',
+    'us visa photo head size 50 to 69 percent',
+    'us green card photo resizer under 240 kb',
+    'us state department photo requirements',
+    'cvs walgreens passport photo 4x6 print coupon',
+    'us passport photo eyeglasses banned rule',
+    'ds 260 photo dimensions online free',
+    'us citizenship photo 2x2 n400 resizer',
+  ],
   alternates: {
     canonical: 'https://kagazo.in/tools/us-passport-photo',
   },
   openGraph: {
-    title: 'US Passport Photo Maker Online Free (2x2 in) | Kagazo',
+    title: 'US Passport & Visa Photo Maker (2×2") | DS-160 600×600 px | Kagazo',
     description:
-      'Generate compliant 2x2 inch US passport photos at 300 DPI with printable 4x6 sheet. 100% private in-browser tool.',
+      'Generate compliant 2x2 inch US passport and visa photos at 300 DPI with printable 4x6 sheet. 100% private in-browser tool.',
     url: 'https://kagazo.in/tools/us-passport-photo',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'US Passport & Visa Photo Maker (2×2") | DS-160 600×600 px | Kagazo',
+    description:
+      'Create official 2x2 inch US passport & visa photos with printable 4x6 sheets. 100% free in-browser RAM privacy.',
+  },
 };
+
+const US_PHOTO_SPECS = [
+  {
+    parameter: 'Physical Dimensions',
+    officialRule: '2" × 2" inches (51 mm × 51 mm)',
+    commonFailure: 'Uploading standard rectangular 35×45mm photos',
+  },
+  {
+    parameter: 'Digital Dimensions',
+    officialRule: '600 × 600 pixels minimum (up to 1200×1200 px @ 300 DPI)',
+    commonFailure: 'Uploading non-square images with mismatched aspect ratios',
+  },
+  {
+    parameter: 'Head Height Ratio',
+    officialRule: '50% to 69% of total height (1" to 1 3/8" / 28–35 mm)',
+    commonFailure: 'Taking photos too close (face >70%) or too far away (<50%)',
+  },
+  {
+    parameter: 'Eye Level Position',
+    officialRule: '56% to 69% from the bottom of the photo (28 mm to 35 mm)',
+    commonFailure: 'Camera tilted downward or upward away from direct eye line',
+  },
+  {
+    parameter: 'Digital File Size',
+    officialRule: 'Strictly under 240 KB (Minimum 10 KB, 24-bit sRGB JPEG)',
+    commonFailure: 'Portal rejection: "File size exceeds maximum limit of 240 KB"',
+  },
+  {
+    parameter: 'Background Color',
+    officialRule: 'Plain White or Off-White (Zero shadows, uniform illumination)',
+    commonFailure: 'Cast shadows behind ears, door frames, or colored walls',
+  },
+  {
+    parameter: 'Eyeglasses',
+    officialRule: 'Strictly prohibited (Effective Nov 1, 2016; medical waiver only)',
+    commonFailure: 'Flash reflection on lenses, tinted glass, or frame covering iris',
+  },
+  {
+    parameter: 'Facial Expression',
+    officialRule: 'Neutral expression, mouth closed, both eyes open facing camera',
+    commonFailure: 'Open-mouthed smiles showing teeth or tilted head posture',
+  },
+];
 
 const FAQS = [
   {
-    question: 'What are the official U.S. Department of State photo requirements?',
+    question: 'What are the official U.S. Department of State photo dimensions in inches, mm, and pixels?',
     answer:
-      'The photo must be 2×2 inches (51×51 mm) square, taken within the last 6 months. The head height from the bottom of the chin to the top of the head must be between 1 inch and 1 3/8 inches (50% to 69% of the image height). The background must be pure white or off-white with zero shadows.',
+      'The official physical size is 2 × 2 inches (51 × 51 mm). For online DS-160 visa, DS-260, and Diversity Visa (DV) lottery applications, the digital image must be a 1:1 square measuring at least 600 × 600 pixels (up to 1200 × 1200 pixels) at 300 DPI, in sRGB JPEG format with a file size strictly under 240 KB.',
   },
   {
-    question: 'Are eyeglasses allowed in US passport photos?',
+    question: 'Are eyeglasses allowed in US passport and visa photos?',
     answer:
-      'NO. Effective November 1, 2016, eyeglasses are strictly prohibited in US passport and visa photos, even if you wear them daily. The only rare exception is with a signed medical certificate for urgent ophthalmic surgery recovery.',
+      'NO. Effective November 1, 2016, eyeglasses are strictly prohibited in all U.S. passport and visa photographs, even if you wear them daily. The only rare exception is for urgent medical conditions (such as recent eye surgery), which requires a signed explanatory letter from an ophthalmologist.',
   },
   {
-    question: 'How does the printable 4×6" sheet save $17 at CVS or Walgreens?',
+    question: 'How do I verify that my head height is between 50% and 69%?',
     answer:
-      'CVS, Walgreens, and Rite Aid charge $16.99 to $18.99 for two 2×2 passport photos. When you download Kagazo’s 4×6" sheet (tiling 6 identical 2×2" photos), you can print it as a standard 4×6 glossy photo print at any pharmacy or photo kiosk for just $0.35 to $0.40, saving over 97%!',
+      'The U.S. Department of State mandates that your head (from the bottom of your chin to the top of your hair) must occupy between 1 inch and 1 3/8 inches (50% to 69%) of the photo. Kagazo’s interactive biometric framing overlay draws official guideline markers so you can center and scale your head to the exact 50%–69% target zone.',
   },
   {
-    question: 'Does this meet requirements for online DS-160 and Green Card Lottery (DV Lottery)?',
+    question: 'Why does the CEAC DS-160 portal reject photos with "File size exceeds 240 KB"?',
     answer:
-      'Yes. Kagazo’s single photo output is 600×600 pixels @ 300 DPI in sRGB color space, bisected under 240 KB in JPEG format, perfectly matching the strict technical gate of the CEAC DS-160 portal and the Diversity Immigrant Visa (DV) lottery.',
+      'The Department of State consular electronic application portal has a hard 240 KB file ceiling. High-resolution smartphone cameras produce 3 MB to 8 MB JPEGs, triggering immediate rejection. Kagazo automatically balances compression so your 600×600 px photo is saved between 80 KB and 180 KB at crisp 300 DPI, safely below the 240 KB limit.',
+  },
+  {
+    question: 'How does Kagazo’s 4×6" sheet save $17 at Walgreens or CVS?',
+    answer:
+      'CVS, Walgreens, and Rite Aid charge $16.99 to $18.99 for two 2×2" passport photos. When you download Kagazo’s printable 4×6" photo card (which tiles 6 identical 2×2" photos with millimeter cut guides), you can order a standard 4×6" photo print at the same store or photo kiosk for just $0.35 to $0.40, saving over 97%!',
+  },
+  {
+    question: 'Can I smile in my US passport photo?',
+    answer:
+      'While a gentle, unexaggerated smile is technically acceptable under 22 CFR 51.26, the U.S. State Department strongly recommends a neutral facial expression with both eyes open and mouth closed. Broad grins that show teeth or crinkle your eyes can trigger automatic biometric rejections during consular facial recognition checks.',
+  },
+  {
+    question: 'What clothing should I wear for a US passport or visa picture?',
+    answer:
+      'Wear normal, everyday civilian clothing in darker solid colors (such as navy blue, black, or burgundy) to contrast against the white background. Do NOT wear white shirts (which blend into the background), uniforms, clothing resembling a uniform, or camouflage attire.',
+  },
+  {
+    question: 'Are hats or religious head coverings permitted?',
+    answer:
+      'Hats and casual headbands are not allowed. Religious head coverings (such as hijabs, yarmulkes, or turbans) are permitted if worn daily for religious purposes, provided they do not obscure any part of your face from the bottom of your chin to the top of your forehead, or cast shadows across your features.',
+  },
+  {
+    question: 'How should infants and babies be photographed for US passports?',
+    answer:
+      'Lay the baby on their back on a clean white sheet or cover a car seat with a white cloth. Ensure no hands, toys, pacifiers, or supporting parents are visible in the frame. The infant should be looking toward the camera. For newborns under 1 year, partially open eyes are acceptable.',
+  },
+  {
+    question: 'Does Kagazo store, process, or sell my biometric facial photos?',
+    answer:
+      'Never. Kagazo operates with zero-upload in-browser processing. Your portrait is cropped, scaled, verified, and converted into 300 DPI JPEGs entirely inside your browser’s volatile RAM. No image data is ever transmitted to our servers or saved in any database.',
   },
 ];
 
@@ -63,7 +158,7 @@ export default function UsPassportPhotoPage() {
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'US Passport Photo Maker Online Free',
+        name: 'US Passport & Visa Photo Maker Online Free',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/us-passport-photo',
@@ -73,26 +168,36 @@ export default function UsPassportPhotoPage() {
           priceCurrency: 'USD',
         },
         description:
-          'Official 2x2 inch US passport and visa photo maker with biometric oval guides, 300 DPI JFIF output, and 4x6 print sheets.',
+          'Official 2x2 inch (600x600 px @ 300 DPI) US passport, DS-160 visa, and Green Card photo maker with 50-69% head ratio guides and printable 4x6 sheets.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Make a US Passport Photo at Home',
+        name: 'How to Create an Official US Passport Photo at Home',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Upload Photo or Take a Selfie',
-            text: 'Take a front-facing photo against a light wall with no eyeglasses.',
+            name: 'Take a Frontal Portrait',
+            text: 'Stand 4 feet in front of a plain white wall in natural indirect daylight without eyeglasses.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Align Biometric Face Oval',
-            text: 'Use Kagazo’s official 50-69% head height guide to align eyes and chin.',
+            name: 'Upload to Kagazo Studio',
+            text: 'Select your photo. Kagazo locks the canvas to an exact 2x2 inch square at 300 DPI.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Photo & 4x6 Sheet',
-            text: 'Download the 600x600px 300 DPI JPEG or printable 4x6 sheet.',
+            name: 'Align Biometric 50%–69% Head Guidelines',
+            text: 'Position your head so the top of your hair touches the crown marker and your chin rests on the base guide.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download DS-160 Digital JPEG',
+            text: 'Download the 600x600 px image calibrated under 240 KB for instant consular portal upload.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Printable 4x6" Sheet',
+            text: 'Export a 6-photo 4x6" card to print at Walgreens, CVS, or Walmart for 35 cents.',
           },
         ],
       },
@@ -107,6 +212,35 @@ export default function UsPassportPhotoPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Passport & Visa Photo Lab',
+            item: 'https://kagazo.in/tools/passport-photo-maker',
+          },
+          {
+            '@type': 'ListItem',
+            position: 4,
+            name: 'US Passport Photo Maker (2x2")',
+            item: 'https://kagazo.in/tools/us-passport-photo',
+          },
+        ],
+      },
     ],
   };
 
@@ -115,7 +249,7 @@ export default function UsPassportPhotoPage() {
       {/* Ambient glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
+      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -132,237 +266,425 @@ export default function UsPassportPhotoPage() {
             Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">US Passport Photo Maker</span>
+          <Link
+            href="/tools/passport-photo-maker"
+            className="hover:text-primary transition-colors font-medium"
+          >
+            Passport &amp; Visa Photo Lab
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <span className="text-primary font-bold truncate">US Passport Photo (2×2&quot;)</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>🇺🇸 U.S. Dept of State • 2×2 in (51×51 mm) @ 300 DPI</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-xs sm:text-sm font-extrabold text-emerald-800 shadow-2xs">
+            <ShieldCheck className="w-4 h-4 text-emerald-700" />
+            <span>22 CFR 51.26 Compliant • 600 × 600 px @ 300 DPI • Under 240 KB DS-160</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>US Passport Photo Maker </span>
-            <span className="text-primary">Online Free</span>
+            <span>US Passport &amp; Visa Photo Maker </span>
+            <span className="text-primary">(2&quot; × 2&quot; / 600×600 px)</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Create official 2×2" US passport and visa photos at 300 DPI. Guaranteed biometric compliance with head height guides and printable 4×6" sheets. Save $17 on CVS &amp; Walgreens prints.
+          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
+            Format, validate, and download 100% compliant U.S. passport, DS-160 nonimmigrant visa,
+            and DV Lottery photos meeting strict Department of State and USCIS guidelines. Features 2×2
+            inch (600 × 600 px) square calibration, 50%–69% head height lock, under 240 KB file size
+            optimization, and printable 4×6&quot; 6-photo sheets.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" /> State Dept 22 CFR 51.26
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Globe2 className="w-4 h-4 text-primary" /> 600 × 600 px @ 300 DPI
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Lock className="w-4 h-4 text-emerald-600" /> 100% In-Browser RAM Privacy
+            </span>
+          </div>
         </header>
 
-        {/* 2-Column Responsive Layout */}
+        {/* Studio Grid (Main Engine + Sticky Sidebar) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (83.3% Width on XL, 75% on LG) */}
+          {/* Main Content Area */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <PassportPhotoStudioEngine
-              defaultCountryId="us-passport"
-              toolHeading="US Passport & Visa Photo Studio"
-              toolSubheading="Upload your selfie or portrait. Align your face with the 50-69% biometric oval, rotate/deskew, and download 300 DPI files."
-            />
+            {/* Interactive Engine Container */}
+            <PassportPhotoStudioEngine defaultCountryId="us-passport" />
 
-            {/* Post-Download Native AdSlot */}
+            {/* Post-Download Ad Slot */}
             <AdSlot slot="post_download" />
 
-            {/* Price Comparison vs CVS/Walgreens */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-5">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <DollarSign className="w-5 h-5 text-emerald-600" />
-                Cost Comparison: Kagazo vs Pharmacy Photo Studios
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <span className="text-xs font-bold text-text-main/60 block">CVS / Walgreens / Post Office</span>
-                  <div className="text-2xl font-black text-rose-600 font-mono">$16.99 – $18.99</div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Charges premium rate for 2 printed photos. Long waits in line with zero digital copy included.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <span className="text-xs font-bold text-text-main/60 block">Commercial Online Photo Apps</span>
-                  <div className="text-2xl font-black text-amber-600 font-mono">$9.99 – $14.99</div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Heavy subscription traps, weekly recurring fees, and watermark paywalls on download.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-emerald-50/60 border-2 border-emerald-500/40 space-y-2 relative">
-                  <span className="text-xs font-bold text-emerald-800 block">Kagazo + 4×6" Kiosk Print</span>
-                  <div className="text-2xl font-black text-emerald-700 font-mono">$0.35 (6 Photos!)</div>
-                  <p className="text-xs text-emerald-900/80 leading-relaxed">
-                    Download our 4×6 sheet for 100% free, print at Walgreens/CVS photo kiosk as standard print. Save 98%!
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Official Biometric Guidelines */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-5">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-primary" />
-                Key U.S. Passport Photo Rules (Bureau of Consular Affairs)
-              </h2>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-1.5">
-                  <div className="flex items-center gap-2 text-rose-600 font-bold text-xs">
-                    <AlertTriangle className="w-4 h-4 shrink-0" />
-                    <span>No Eyeglasses Allowed</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Eyeglasses of any kind (reading glasses, tinted, or clear prescription) are strictly prohibited by the US Department of State.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-1.5">
-                  <div className="flex items-center gap-2 text-primary font-bold text-xs">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    <span>Head Size 1 to 1 3/8 Inches</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    The distance between the bottom of your chin and top of your head must occupy between 50% and 69% of the photo height.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-1.5">
-                  <div className="flex items-center gap-2 text-primary font-bold text-xs">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    <span>Plain White / Off-White Background</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Background must be uniform with zero shadows, textures, furniture, or other people visible in frame.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-1.5">
-                  <div className="flex items-center gap-2 text-primary font-bold text-xs">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    <span>Neutral Facial Expression</span>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Natural unforced expression with both eyes clearly open, mouth closed, and looking directly into camera lens.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
-
-            {/* FAQ Accordion Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+            {/* Value Pillars */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
               <div>
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions (US Passport Photo)
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  Why Make Your US Passport Photos on Kagazo?
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Answers to top questions regarding US passport photo guidelines and printing.
+                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                  Engineered to meet exact Bureau of Consular Affairs and CEAC portal technical requirements.
                 </p>
               </div>
 
-              <div className="space-y-3">
-                {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm mb-2.5">
+                    2&quot;
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">Strict 2×2&quot; Square Lock</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Locks exact 1:1 aspect ratio and 600×600 px minimum resolution mandated by the U.S.
+                    Department of State.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm mb-2.5">
+                    50%
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">50%–69% Head Height Guide</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Interactive biometric caliper verifies your head measures between 1&quot; and 1 3/8&quot;
+                    (28–35 mm) from chin to crown.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm mb-2.5">
+                    240
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">DS-160 &lt;240 KB Budget Lock</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Intelligently compresses output between 80 KB and 180 KB to prevent CEAC portal
+                    upload errors.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-sm mb-2.5">
+                    <DollarSign className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">Save $17 on Drugstore Prints</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Generates an 6-photo 4×6&quot; sheet. Print at CVS, Walgreens, or Walmart for $0.35
+                    instead of paying $16.99.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-rose-100 flex items-center justify-center text-rose-700 font-bold text-sm mb-2.5">
+                    300
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">Embedded 300 DPI JFIF</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Writes binary 300 DPI tags directly into the JPEG APP0 segment to pass automated consular
+                    scanners.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm mb-2.5">
+                    <Lock className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">Zero-Upload RAM Security</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Your biometric facial photos are processed locally on your device. Zero cloud uploads,
+                    zero tracking.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Official US Passport & Visa Photo Specifications Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <FileCheck className="w-5 h-5 text-primary" />
+                    Official U.S. Passport &amp; Visa Photo Requirements (22 CFR 51.26)
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                    Verified against the Bureau of Consular Affairs and USCIS guidelines.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded-lg">
+                  State Dept Standard
+                </span>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main/80 font-bold">
+                      <th className="py-3 px-3.5">Parameter</th>
+                      <th className="py-3 px-3.5">Official Department of State Rule</th>
+                      <th className="py-3 px-3.5">Common Failure Point</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker text-text-main/75">
+                    {US_PHOTO_SPECS.map((spec, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-3.5 font-semibold text-text-main whitespace-nowrap">
+                          {spec.parameter}
+                        </td>
+                        <td className="py-3 px-3.5 font-medium text-emerald-700">{spec.officialRule}</td>
+                        <td className="py-3 px-3.5 text-text-main/70">{spec.commonFailure}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Step-by-Step Instructions */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-primary" />
+                  Step-by-Step: How to Take and Create a US Passport Photo at Home
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                  Follow these proven steps to take a fully compliant passport photo without expensive studio visits.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      1
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Capture Portrait</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Stand 4 feet away against a plain white wall in natural daylight. Remove eyeglasses and keep expression neutral.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      2
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Upload to Studio</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Select your image. Kagazo locks the canvas to an exact 2&quot; × 2&quot; square with 300 DPI calibration.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      3
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Align 50%–69% Oval</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Scale and pan so the top of your hair touches the crown guide and your chin touches the lower line.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      4
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Download DS-160 JPG</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Export the single 600×600 px photo compressed under 240 KB for CEAC portal or DV lottery submission.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      5
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Download 4×6&quot; Sheet</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Download the 6-photo 4×6 inch gang sheet ready to print at Walgreens or CVS for 35 cents.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      6
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Cut and Submit</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Use clean scissors to cut along the millimeter borders. Staple 2 copies to Form DS-11 or DS-82.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Rejection Prevention & Troubleshooting */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-amber-500" />
+                  Why US Passport Photos Get Rejected &amp; How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                  Department of State automated facial recognition scanners enforce these non-negotiable checks.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
+                    Rejection: Eyeglasses Detected
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Wearing reading glasses or prescription frames causes instant refusal under 22 CFR 51.26 due to lens glare.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Warning:</strong> Our tool explicitly alerts you to remove all spectacles before calibrating your photo.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
+                    Rejection: File Size Exceeds 240 KB
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> The CEAC DS-160 portal throws an error if an uploaded image exceeds 240 KB.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Fix:</strong> Automatically compresses the 600×600 px image into the safe 80–180 KB window at 300 DPI.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
+                    Rejection: Head Size Out of Range
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Photos where the head takes up less than 50% or more than 69% of image height fail biometric scanning.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Fix:</strong> Concentric guidelines show the precise 1&quot; to 1 3/8&quot; range for foolproof alignment.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <HelpCircle className="w-5 h-5 text-primary" />
+                  Frequently Asked Questions (US Passport &amp; DS-160 Photo)
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                  Everything you need to know about US passport guidelines, print sheets, and DS-160 rules.
+                </p>
+              </div>
+
+              <div className="divide-y divide-surface-darker">
+                {FAQS.map((faq, index) => (
+                  <div key={index} className="py-4 first:pt-0 last:pb-0 space-y-1.5">
+                    <h3 className="text-sm font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-mono text-xs mt-0.5">0{index + 1}.</span>
                       <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/75 pl-5 leading-relaxed">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Ultra-Compact Sticky Right Sidebar Rail (16.7% Width on XL, 25% on LG) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            {/* Quick Switch Matrix - High Density Single-Line List */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[10px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5 px-1">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Other Passport Tools
-              </h3>
+          {/* Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6">
+            {/* Quick Actions Rail */}
+            <div className="bg-white rounded-3xl border border-surface-darker p-4 sm:p-5 shadow-card space-y-3">
+              <span className="text-[10px] font-extrabold text-text-main/60 uppercase tracking-wider block px-1">
+                Related Visa Tools
+              </span>
 
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <Link
-                  href="/tools/uk-passport-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/uscis-photo-checker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <div className="flex items-center gap-1.5 min-w-0 pr-1">
-                    <span className="text-xs shrink-0">🇬🇧</span>
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      UK Passport
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      USCIS Photo Checker
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    35×45
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    AI
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/schengen-visa-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/dv-lottery-photo-tool"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <div className="flex items-center gap-1.5 min-w-0 pr-1">
-                    <span className="text-xs shrink-0">🇪🇺</span>
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Schengen Visa
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      DV Lottery Photo Tool
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    35×45
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    DV
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/canadian-passport-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-white-background"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <div className="flex items-center gap-1.5 min-w-0 pr-1">
-                    <span className="text-xs shrink-0">🇨🇦</span>
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Canada Photo
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      White Background
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    50×70
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    White
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/compress-image-exact-kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-photo-maker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <div className="flex items-center gap-1.5 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress KB
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Global Passport Studio
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    DS-160
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    50+
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/change-image-dpi"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-photo-sheet-maker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <div className="flex items-center gap-1.5 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Change DPI
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Passport Sheet Maker
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    300 DPI
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    4×6&quot;
                   </span>
                 </Link>
               </div>
@@ -371,18 +693,26 @@ export default function UsPassportPhotoPage() {
             {/* Compact Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* Sleek In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-primary font-bold text-[11px]">
-                <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>100% In-Memory Privacy</span>
+            {/* Sovereign RAM Privacy Box */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-2.5">
+              <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
+                <Lock className="w-4 h-4 shrink-0" />
+                <span>100% In-Browser Privacy</span>
               </div>
-              <p className="text-[10px] text-text-main/70 leading-tight">
-                Rendered locally in browser RAM via WebAssembly. Zero uploads to servers.
+              <p className="text-xs text-text-main/70 leading-normal">
+                Your U.S. visa and passport photos are cropped and processed exclusively in client-side RAM.
+                Zero cloud storage or facial harvesting.
               </p>
-              <div className="flex flex-wrap items-center gap-1 text-[9px] font-bold text-emerald-700 pt-0.5">
-                <span className="bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.5 rounded">✓ Zero Server Upload</span>
-                <span className="bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.5 rounded">✓ 300 DPI</span>
+              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-1">
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-lg">
+                  ✓ 2×2&quot; (51×51 mm)
+                </span>
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-lg">
+                  ✓ 600×600 px @ 300 DPI
+                </span>
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-lg">
+                  ✓ &lt;240 KB DS-160
+                </span>
               </div>
             </div>
           </aside>

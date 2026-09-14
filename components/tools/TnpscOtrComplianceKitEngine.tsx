@@ -22,7 +22,6 @@ import {
   Trash2,
 } from 'lucide-react';
 import { printIsolatedDocument } from '@/lib/print-utils';
-import { AdSlot } from '@/components/ads/AdSlot';
 import { binarySearchJpeg } from '@/lib/image-engine';
 
 interface ProcessedAsset {
@@ -948,9 +947,6 @@ export default function TnpscOtrComplianceKitEngine() {
           </div>
         </div>
       </div>
-
-      {/* Dynamic Ostrune Agency Ad Banner */}
-      <AdSlot slot="in_content" />
     </div>
   );
 }

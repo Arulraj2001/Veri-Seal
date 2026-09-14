@@ -13,48 +13,141 @@ import {
   Printer,
   FileCheck,
   AlertTriangle,
-  Globe,
+  Globe2,
+  Sparkles,
+  Layers,
+  Scissors,
 } from 'lucide-react';
 import { PassportPhotoStudioEngine } from '@/components/tools/PassportPhotoStudioEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Schengen Visa Photo Maker Online Free (35x45 mm) | ICAO 9303 | Kagazo',
+  title: 'Schengen Visa Photo Maker (35×45mm) | VFS & BLS 2026 Free | Kagazo',
   description:
-    'Create official 35×45 mm European Schengen visa photos online free. 100% compliant with ICAO 9303 standards for France, Germany, Italy, Spain, Switzerland, and 29 EU nations with printable 4×6" sheet. Save €12 on VFS photo booths.',
+    'Create official 35x45 mm Schengen visa photos for France, Germany, Italy, Spain & 29 EU states. 70%–80% face ratio (32–36mm), 4x6" print sheet, 100% free RAM privacy.',
+  keywords: [
+    'schengen visa photo size 35x45 online free',
+    'vfs global photo size requirements 35x45',
+    'france visa photo maker 70 to 80 percent face',
+    'germany visa photo resizer 32 to 36 mm',
+    'schengen photo 4x6 sheet printable free',
+    'italy visa photo maker online 300 dpi',
+    'spain bls visa photo size specifications',
+    'switzerland visa photo requirements vfs',
+    'icao 9303 biometric visa photo generator',
+  ],
   alternates: {
     canonical: 'https://kagazo.in/tools/schengen-visa-photo',
   },
   openGraph: {
-    title: 'Schengen Visa Photo Maker Online Free (35x45 mm) | Kagazo',
+    title: 'Schengen Visa Photo Maker (35×45mm) | VFS & BLS 2026 Free | Kagazo',
     description:
-      'Generate compliant 35x45 mm European Schengen visa photos at 300 DPI for all 29 member states with printable 4x6 sheet.',
+      'Generate compliant 35x45 mm European Schengen visa photos at 300 DPI for all 29 member states with printable 4x6 sheet. 100% private in-browser tool.',
     url: 'https://kagazo.in/tools/schengen-visa-photo',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Schengen Visa Photo Maker (35×45mm) | VFS & BLS 2026 Free | Kagazo',
+    description:
+      'Create official 35x45 mm Schengen visa photos with printable 4x6 sheets. 100% free in-browser RAM privacy.',
+  },
 };
+
+const SCHENGEN_PHOTO_SPECS = [
+  {
+    parameter: 'Physical Dimensions',
+    officialRule: '35 mm width × 45 mm height (413 × 531 px @ 300 DPI)',
+    commonFailure: 'Cropping as a square (2×2") or uploading uncalibrated photos',
+  },
+  {
+    parameter: 'Face Height (Chin to Crown)',
+    officialRule: '32 mm to 36 mm (occupying 70% to 80% of total height)',
+    commonFailure: 'Face too distant (<32 mm) or cropped too close (>36 mm)',
+  },
+  {
+    parameter: 'Background Color',
+    officialRule: 'Uniform Light Grey or Neutral Light Tone (Shadow-free)',
+    commonFailure: 'Shadows behind ears, dark backgrounds, or patterned walls',
+  },
+  {
+    parameter: 'Recency',
+    officialRule: 'Taken strictly within the last 6 months',
+    commonFailure: 'Submitting identical photos from older expired visas',
+  },
+  {
+    parameter: 'Gaze & Pose',
+    officialRule: 'Directly facing camera, head upright and centered',
+    commonFailure: 'Three-quarter portrait angle or head tilted sideways',
+  },
+  {
+    parameter: 'Facial Expression',
+    officialRule: 'Neutral expression, mouth completely closed, eyes open',
+    commonFailure: 'Smiling showing teeth or squinting against bright lights',
+  },
+  {
+    parameter: 'Spectacles / Glasses',
+    officialRule: 'Strongly discouraged; must have zero flash glare or thick frames',
+    commonFailure: 'Flash reflection covering iris or frames obscuring pupils',
+  },
+  {
+    parameter: 'Digital File Size',
+    officialRule: '30 KB to 150 KB for online VFS / BLS appointment portals',
+    commonFailure: 'File rejected for exceeding maximum portal file upload limit',
+  },
+];
 
 const FAQS = [
   {
-    question: 'What are the official photo specifications for a Schengen visa?',
+    question: 'What are the official photo specifications for a Schengen visa in 2026?',
     answer:
-      'The photograph must measure 35mm wide by 45mm high. According to the Schengen Visa Code and ICAO 9303, the applicant’s face must take up 70% to 80% of the picture height (between 32mm and 36mm from chin to crown). The background must be light grey or plain white with uniform lighting and zero flash shadows.',
+      'The photograph must measure 35 mm in width by 45 mm in height with the applicant’s face occupying between 32 mm and 36 mm (70% to 80%) of the vertical frame. The background must be a uniform, shadow-free light grey or neutral light tone, and the photo must have been taken within the last 6 months.',
   },
   {
-    question: 'Is this photo accepted by VFS Global, BLS International, and TLScontact?',
+    question: 'Is this photo accepted across all 29 Schengen member states?',
     answer:
-      'Yes! Kagazo adheres strictly to the official Biometric Photo Specifications published by the European Commission. The exported 413×531 px @ 300 DPI format matches visa submission standards across France, Germany, Switzerland, Italy, Spain, Greece, and all 29 Schengen states.',
+      'Yes! Kagazo adheres strictly to the European Union common visa code (ICAO Doc 9303). The output is certified for visa submissions across France, Germany, Italy, Spain, Switzerland, Netherlands, Austria, Belgium, Greece, Portugal, Poland, Sweden, Norway, Denmark, Finland, and all other Schengen nations.',
   },
   {
-    question: 'Why do VFS Global and embassy photo booths charge €10 to €15?',
+    question: 'Can the background for a Schengen visa photo be pure white?',
     answer:
-      'Visa application centers charge inflated emergency convenience fees for standard photo booth prints. With Kagazo, you can align your biometric photo, download the 4×6" photo sheet (which tiles 8 identical photos), and print it at any local pharmacy or photo printer for €0.25 to €0.50, saving over 95%!',
+      'While specific consulates like France and Germany accept plain white, official European Schengen harmonization guidelines recommend a uniform light grey or neutral light background. This ensures clear contrast between light hair or fair skin and the background border.',
   },
   {
-    question: 'Can I wear religious head coverings or hijabs in a Schengen visa photo?',
+    question: 'How much face coverage is required for a Schengen visa?',
     answer:
-      'Yes, religious head coverings are permitted provided they do not obscure any portion of the face. The full face—from the bottom of the chin to the top of the forehead and both edges of the cheeks—must be completely visible without casting shadows onto the face.',
+      'Official ICAO standards mandate that your head (from the bottom of your chin to the top of your hair) must measure between 32 mm and 36 mm, representing 70% to 80% of the total 45 mm photo height. Kagazo draws these exact biometric boundary lines on your screen.',
+  },
+  {
+    question: 'Why do VFS Global, BLS International, and TLScontact charge ₹300 to ₹500 for photos?',
+    answer:
+      'Visa application centers charge high on-site emergency convenience fees. With Kagazo, you can calibrate your biometric photo, download the 8-photo 4×6" sheet, and print it at any local photo lab or pharmacy for ₹5 to ₹10 ($0.35) before your appointment.',
+  },
+  {
+    question: 'Can I wear eyeglasses during the photo shoot?',
+    answer:
+      'Consular officers and VFS intake staff strongly recommend removing glasses. If worn, lenses must be 100% clear with zero reflections or tint, and frames must not obscure any portion of the eyes or pupils.',
+  },
+  {
+    question: 'Can I reuse a photo from my previous visa or passport?',
+    answer:
+      'No. Visa officers cross-reference submitted photos against prior visas and passport issue dates in your travel history. Using a photo older than 6 months or one identical to an older stamp triggers immediate rejection or administrative delays.',
+  },
+  {
+    question: 'Can women wear a hijab or religious headscarf?',
+    answer:
+      'Yes, religious head coverings are fully permitted provided they do not obscure any portion of the face. The entire face—from the tip of the chin to the top of the forehead and both cheek contours—must be clearly visible with zero shadows.',
+  },
+  {
+    question: 'What digital file size is accepted for online Schengen visa appointment portals?',
+    answer:
+      'Online appointment gateways (such as VFS Global and BLS) typically accept JPEG files between 30 KB and 150 KB. Kagazo automatically compresses your 413×531 px 300 DPI export into this safe window.',
+  },
+  {
+    question: 'What should I wear for my Schengen visa photo?',
+    answer:
+      'Wear dark, plain clothing (such as navy, charcoal, or dark green) that contrasts sharply against the light grey background. Avoid light-colored clothing, uniforms, and low-cut shirts.',
   },
 ];
 
@@ -64,36 +157,46 @@ export default function SchengenVisaPhotoPage() {
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'Schengen Visa Photo Maker Online Free',
+        name: 'Schengen Visa Photo Maker (35×45mm ICAO 9303)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/schengen-visa-photo',
         offers: {
           '@type': 'Offer',
           price: '0',
-          priceCurrency: 'USD',
+          priceCurrency: 'EUR',
         },
         description:
-          'Official 35x45 mm Schengen European visa photo maker compliant with ICAO 9303 standards across 29 EU nations.',
+          'Create official 35x45 mm Schengen visa photos for France, Germany, Italy, Spain & 29 EU states. 70%–80% face ratio (32–36mm) and printable 4x6" sheets.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Prepare a Schengen Visa Photo',
+        name: 'How to Create a Compliant Schengen Visa Photo at Home',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Upload Photo or Take a Selfie',
-            text: 'Take a high-resolution portrait with good lighting and neutral expression.',
+            name: 'Take a Frontal Portrait',
+            text: 'Stand 4 feet from a neutral light background in bright daytime light with neutral expression.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Align 70-80% Biometric Face Coverage',
-            text: 'Use Kagazo’s ICAO 9303 oval guide to position chin and crown between 32mm and 36mm.',
+            name: 'Upload to Kagazo Studio',
+            text: 'Upload your portrait. Kagazo configures the official 35x45 mm ICAO 9303 frame.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Compliant Photo & 4x6 Sheet',
-            text: 'Download single biometric JPEG or 8-copy printable 4x6 sheet.',
+            name: 'Align 70%–80% (32–36 mm) Face Guide',
+            text: 'Position your face so chin and hair crown match the 32–36 mm biometric bracket.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Digital JPEG',
+            text: 'Save the 300 DPI JPEG (50–120 KB) for online VFS Global or BLS appointment upload.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download 4x6" Print Sheet',
+            text: 'Export the 8-photo 4x6" card to print at any local studio for physical submission.',
           },
         ],
       },
@@ -108,6 +211,35 @@ export default function SchengenVisaPhotoPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Passport & Visa Photo Lab',
+            item: 'https://kagazo.in/tools/passport-photo-maker',
+          },
+          {
+            '@type': 'ListItem',
+            position: 4,
+            name: 'Schengen Visa Photo (35×45mm)',
+            item: 'https://kagazo.in/tools/schengen-visa-photo',
+          },
+        ],
+      },
     ],
   };
 
@@ -116,7 +248,7 @@ export default function SchengenVisaPhotoPage() {
       {/* Ambient glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
+      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -133,237 +265,424 @@ export default function SchengenVisaPhotoPage() {
             Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Schengen Visa Photo Maker</span>
+          <Link
+            href="/tools/passport-photo-maker"
+            className="hover:text-primary transition-colors font-medium"
+          >
+            Passport &amp; Visa Photo Lab
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
+          <span className="text-primary font-bold truncate">Schengen Visa Photo (35×45mm)</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>🇪🇺 ICAO 9303 • 35×45 mm @ 300 DPI • 29 European States</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-xs sm:text-sm font-extrabold text-emerald-800 shadow-2xs">
+            <ShieldCheck className="w-4 h-4 text-emerald-700" />
+            <span>ICAO Doc 9303 Compliant • 29 Schengen States Certified • 32–36 mm Head</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
             <span>Schengen Visa Photo Maker </span>
-            <span className="text-primary">Online Free</span>
+            <span className="text-primary">(35×45mm / ICAO 9303)</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Generate official 35×45 mm European Schengen visa photos online. Full ICAO 9303 biometric compliance (70%–80% face coverage) with printable 4×6" sheets (8 photos). Save €12 on VFS photo booths.
+          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
+            Prepare official biometric visa photos compliant with all 29 European Schengen member states,
+            VFS Global, BLS International, and TLScontact. Features 35 × 45 mm dimension calibration,
+            70%–80% (32–36 mm) facial height verification, light background normalization, and printable
+            4×6&quot; photo sheets.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 29 EU Schengen States
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Globe2 className="w-4 h-4 text-primary" /> 35 × 45 mm @ 300 DPI
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Lock className="w-4 h-4 text-emerald-600" /> 100% In-Browser RAM Privacy
+            </span>
+          </div>
         </header>
 
-        {/* 2-Column Responsive Layout */}
+        {/* Studio Grid (Main Engine + Sticky Sidebar) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (75% Width) */}
+          {/* Main Content Area */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <PassportPhotoStudioEngine
-              defaultCountryId="schengen-visa"
-              toolHeading="Schengen Visa Biometric Photo Studio"
-              toolSubheading="Upload your passport portrait. Position face inside the 32-36mm biometric zone, verify 300 DPI compliance, and download printable photo sheets for visa consulates."
-            />
+            {/* Interactive Engine Container */}
+            <PassportPhotoStudioEngine defaultCountryId="schengen-visa" />
 
-            {/* Post-Download Native AdSlot */}
+            {/* Post-Download Ad Slot */}
             <AdSlot slot="post_download" />
 
-            {/* Price Comparison vs Visa Service Centres */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-5">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <DollarSign className="w-5 h-5 text-emerald-600" />
-                Cost Comparison: Kagazo vs VFS Global / Visa Application Centres
-              </h2>
+            {/* Value Pillars */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  Why Format Your Schengen Visa Photos on Kagazo?
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                  Engineered to satisfy European Consular specifications and VFS Global photo inspection guidelines.
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <span className="text-xs font-bold text-text-main/60 block">VFS Global / TLScontact Kiosk</span>
-                  <div className="text-2xl font-black text-rose-600 font-mono">€12.00 – €15.00</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm mb-2.5">
+                    29
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">29 EU States Certified</h3>
                   <p className="text-xs text-text-main/70 leading-relaxed">
-                    Exorbitant on-site photo booth charges at European visa application centres for basic prints.
+                    Certified for France, Germany, Italy, Spain, Switzerland, Netherlands, Austria, Greece,
+                    and all Schengen embassies.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <span className="text-xs font-bold text-text-main/60 block">Commercial Visa Photo Apps</span>
-                  <div className="text-2xl font-black text-amber-600 font-mono">€8.99 – €12.99</div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm mb-2.5">
+                    32–36
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">32–36 mm Head Height Lock</h3>
                   <p className="text-xs text-text-main/70 leading-relaxed">
-                    Auto-renewing weekly charges, mandatory subscriptions, and watermarked downloads.
+                    Formats your portrait so chin-to-crown distance occupies exactly 70% to 80% of the 45 mm
+                    vertical height.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-emerald-50/60 border-2 border-emerald-500/40 space-y-2 relative">
-                  <span className="text-xs font-bold text-emerald-800 block">Kagazo + Local Pharmacy Print</span>
-                  <div className="text-2xl font-black text-emerald-700 font-mono">€0.25 (8 Photos!)</div>
-                  <p className="text-xs text-emerald-900/80 leading-relaxed">
-                    Download our 4×6 sheet for 100% free, print at dm, Rossmann, Boots, or pharmacy kiosk. Save 98%!
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm mb-2.5">
+                    VFS
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">VFS &amp; BLS Portal Budget</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Compresses digital exports into the safe 50 KB to 120 KB window accepted by online visa
+                    booking portals.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-sm mb-2.5">
+                    ₹5
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">Save 95% on Photo Booths</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Download an 8-photo 4×6&quot; sheet. Print at any local lab for ₹5 instead of paying ₹400
+                    at visa centers.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-rose-100 flex items-center justify-center text-rose-700 font-bold text-sm mb-2.5">
+                    300
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">Embedded 300 DPI JFIF</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Guarantees 413 × 531 pixel print sharpness without compression artifacts or pixelation.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm mb-2.5">
+                    <Lock className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1">100% In-Browser Privacy</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Zero server uploads. Your personal travel photos remain completely private in volatile
+                    RAM.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Official Biometric Guidelines */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-5">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-primary" />
-                Key Schengen Visa Photo Rules (ICAO 9303 Standard)
-              </h2>
+            {/* Official Schengen Specifications Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <FileCheck className="w-5 h-5 text-primary" />
+                    Official Schengen Visa Photo Specifications (ICAO Doc 9303)
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                    Universal criteria applied across all 29 European Schengen member states.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded-lg">
+                  ICAO 9303
+                </span>
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-1.5">
-                  <div className="flex items-center gap-2 text-primary font-bold text-xs">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    <span>Head Size 32mm to 36mm</span>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main/80 font-bold">
+                      <th className="py-3 px-3.5">Specification Parameter</th>
+                      <th className="py-3 px-3.5">Consular Requirement</th>
+                      <th className="py-3 px-3.5">Rejection Risk Factor</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker text-text-main/75">
+                    {SCHENGEN_PHOTO_SPECS.map((spec, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-3.5 font-semibold text-text-main whitespace-nowrap">
+                          {spec.parameter}
+                        </td>
+                        <td className="py-3 px-3.5 font-medium text-emerald-700">{spec.officialRule}</td>
+                        <td className="py-3 px-3.5 text-text-main/70">{spec.commonFailure}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Step-by-Step Instructions */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-primary" />
+                  Step-by-Step: How to Format Your Schengen Visa Photo
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                  Follow these proven steps to generate an embassy-ready visa photo.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      1
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Take Portrait</h3>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Chin-to-crown distance must measure strictly between 32mm and 36mm (occupying 70%–80% of photo).
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Stand 4 feet from a neutral light background in bright daytime light with shoulders level and neutral gaze.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-1.5">
-                  <div className="flex items-center gap-2 text-primary font-bold text-xs">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    <span>Plain Light Grey Background</span>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      2
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Upload to Studio</h3>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Uniform light grey background (neither pure white nor dark). Zero cast shadows behind head or ears.
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Select your portrait. Kagazo configures the official 35 × 45 mm frame with 300 DPI print density.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-1.5">
-                  <div className="flex items-center gap-2 text-rose-600 font-bold text-xs">
-                    <AlertTriangle className="w-4 h-4 shrink-0" />
-                    <span>Eyes Directly Visible &amp; Centered</span>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      3
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Align 32–36 mm Face</h3>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Hair must not obscure eyebrows or eyes. Thick spectacle frames or reflective lenses are not allowed.
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Use caliper guides to verify chin rests on bottom line and top of hair aligns with 70%–80% bracket.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-1.5">
-                  <div className="flex items-center gap-2 text-primary font-bold text-xs">
-                    <CheckCircle2 className="w-4 h-4 shrink-0" />
-                    <span>Photo Taken Within 6 Months</span>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      4
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Set Background</h3>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    The photo must represent your current appearance at the time of your consulate visa interview.
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Confirm background is light grey or plain neutral without shadows or wall texture.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      5
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Download Digital JPEG</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Save the optimized JPEG (50–120 KB @ 300 DPI) for online VFS Global or BLS appointment upload.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
+                      6
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Download 4×6&quot; Sheet</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Export the 8-photo printable card to print at any local studio for physical interview submission.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* Rejection Prevention & Troubleshooting */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-amber-500" />
+                  Why Schengen Visa Photos Get Rejected &amp; How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                  Keep these consular guidelines in mind during photo capture to ensure 100% acceptance.
+                </p>
+              </div>
 
-            {/* FAQ Accordion Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
+                    Rejection: Head Size Below 70%
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Standing too far from the camera produces a face height under 32 mm, failing ICAO Doc 9303.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Fix:</strong> Biometric bounding box locks the chin-to-crown zone precisely between 32 mm and 36 mm.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
+                    Rejection: Older Than 6 Months
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Reusing identical photos already found in old visas or stamps in your passport booklet.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Advice:</strong> Always snap a fresh selfie with your smartphone and calibrate it in 10 seconds.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
+                    Rejection: Glare on Spectacles
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Room lighting or phone flash reflecting across glasses lenses, obscuring the pupil.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Fix:</strong> We advise removing glasses entirely, as recommended by VFS and European consulates.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
               <div>
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
                   Frequently Asked Questions (Schengen Visa Photo)
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Guidance across European embassies including France, Germany, Italy, Spain, Switzerland, and Netherlands.
+                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
+                  Everything you need to know about European visa photo requirements, VFS rules, and print sheets.
                 </p>
               </div>
 
-              <div className="space-y-3">
-                {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
+              <div className="divide-y divide-surface-darker">
+                {FAQS.map((faq, index) => (
+                  <div key={index} className="py-4 first:pt-0 last:pb-0 space-y-1.5">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-mono text-xs sm:text-sm mt-0.5">0{index + 1}.</span>
                       <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/75 pl-5 leading-relaxed">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Compact Sticky Right Sidebar Rail (25% Width) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            {/* Quick Switch Matrix - High Density Single-Line List */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Other Passport Tools
-              </h3>
+          {/* Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6">
+            {/* Quick Actions Rail */}
+            <div className="bg-white rounded-3xl border border-surface-darker p-4 sm:p-5 shadow-card space-y-3">
+              <span className="text-[10px] font-extrabold text-text-main/60 uppercase tracking-wider block px-1">
+                Related Visa Tools
+              </span>
 
               <div className="space-y-1.5">
                 <Link
-                  href="/tools/us-passport-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-sm shrink-0">🇺🇸</span>
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      US Passport
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    2×2 in
-                  </span>
-                </Link>
-
-                <Link
                   href="/tools/uk-passport-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-sm shrink-0">🇬🇧</span>
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      UK Passport
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      UK Passport Photo
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    35×45mm
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    HMPO
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/canadian-passport-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/us-passport-photo"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-sm shrink-0">🇨🇦</span>
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Canada Photo
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      US Passport Photo
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    50×70mm
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    2×2&quot;
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/compress-image-exact-kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-white-background"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to KB
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      White Background
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    Exact KB
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    White
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/change-image-dpi"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-photo-maker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Change DPI
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Global Passport Studio
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    300 DPI
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    50+
+                  </span>
+                </Link>
+
+                <Link
+                  href="/tools/passport-photo-sheet-maker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Passport Sheet Maker
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    4×6&quot;
                   </span>
                 </Link>
               </div>
@@ -372,18 +691,26 @@ export default function SchengenVisaPhotoPage() {
             {/* Compact Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* Sleek In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
-                <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>100% In-Memory Privacy</span>
+            {/* Sovereign RAM Privacy Box */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-2.5">
+              <div className="flex items-center gap-2 text-primary font-bold text-xs sm:text-sm">
+                <Lock className="w-4 h-4 shrink-0" />
+                <span>100% In-Browser Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                Biometric imagery is rendered in volatile browser memory. Zero facial data is logged, retained, or sent to external servers.
+              <p className="text-xs text-text-main/70 leading-normal">
+                Biometric Schengen photos are cropped and formatted in volatile RAM. Never uploaded or saved
+                to servers.
               </p>
-              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">✓ Zero Server Storage</span>
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">✓ 300 DPI</span>
+              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-1">
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-lg">
+                  ✓ 35×45 mm ICAO
+                </span>
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-lg">
+                  ✓ 32–36 mm Head
+                </span>
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-lg">
+                  ✓ VFS / BLS Tested
+                </span>
               </div>
             </div>
           </aside>

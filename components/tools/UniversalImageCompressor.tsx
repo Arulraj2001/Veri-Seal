@@ -22,7 +22,6 @@ import {
 import { cn } from '@/lib/utils';
 import { processImageClient, type ProcessImageResult } from '@/lib/image-engine';
 import { ImageStudioViewport, type CropState, type StudioEdits } from './studio/ImageStudioViewport';
-import { AdSlot } from '@/components/ads/AdSlot';
 import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 export interface UniversalImageCompressorProps {
@@ -471,11 +470,6 @@ export function UniversalImageCompressor({
           </div>
         </div>
       )}
-
-      {/* Ad Slot */}
-      <div className="pt-2">
-        <AdSlot slot="post_download" />
-      </div>
     </div>
   );
 }

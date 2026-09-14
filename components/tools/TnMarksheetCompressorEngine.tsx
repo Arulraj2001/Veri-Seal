@@ -21,7 +21,6 @@ import {
 } from 'lucide-react';
 import { printIsolatedDocument } from '@/lib/print-utils';
 import { createPdfFromJpeg, createMultiPagePdfFromJpegs } from '@/lib/pdf-utils';
-import { AdSlot } from '@/components/ads/AdSlot';
 
 interface MarksheetSide {
   file: File | null;
@@ -602,8 +601,6 @@ export default function TnMarksheetCompressorEngine() {
         </div>
       </div>
 
-      {/* Dynamic Ostrune Agency Ad Banner */}
-      <AdSlot slot="in_content" />
     </div>
   );
 }

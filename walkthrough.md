@@ -228,6 +228,45 @@ Result: 28 / 28 Routes Returned HTTP 200 OK!
 
 ---
 
+## Walkthrough: Category 2 (Passport & Visa Photo Lab) & Category 1 Standardization
+
+All 12 tools in **Category 2: Passport & Visa Photo Lab** and all tools in **Category 1: Exam & Recruitment Photos** have been thoroughly standardized, audited, and optimized:
+1. **Eliminated Redundant Double Card Wrapping (Image 2)**: Removed redundant outer card wrappers (`<div className="bg-white rounded-3xl border border-surface-darker p-4 sm:p-6 shadow-card">`) from 11 tools so engines sit directly in `<main>`, unlocking maximum horizontal and vertical space with single-card clarity.
+2. **Eliminated Duplicate Stacked Ads (Image 1)**: Removed internal `AdSlot` components from engine footers (`HandwrittenDeclarationEngine`, `CollegePhotoStudioEngine`, `TnpscOtrComplianceKitEngine`, and `ImageResizerEngine`) so pages never render two Ostrune sponsored ads stacked back-to-back.
+3. **Fixed Navbar Clearance**: Unified all pages with `pt-28 pb-20`, ambient glow, and centered hero headers with preserved custom badge colors.
+4. **Code-Level Verification**: Clean `npx tsc --noEmit` build (exit code 0). Zero browser subagent usage.
+
+---
+
+## 1. Issues Identified & Resolved
+
+### Issue A: Double Card Wrapping / Nested Borders (Image 2)
+- **Problem**: In tools like `formal-attire-changer`, `stamp-size-photo-maker`, `biometric-face-aligner`, etc., the tool page wrapped the interactive engine inside `<div className="bg-white rounded-3xl border border-surface-darker p-4 sm:p-6 shadow-card">`. Since each engine already renders its own full-width card with borders, shadows, and headers, this created a redundant "card inside a card" with double borders and nested padding (`p-4 sm:p-6`), squeezing the workspace.
+- **Solution**: Removed the redundant wrapper div across all 11 affected tools:
+  - `formal-attire-changer`
+  - `stamp-size-photo-maker`
+  - `us-passport-photo`
+  - `uk-passport-photo`
+  - `schengen-visa-photo`
+  - `canadian-passport-photo`
+  - `uscis-photo-checker`
+  - `dv-lottery-photo-tool`
+  - `passport-white-background`
+  - `biometric-face-aligner`
+  - `college-admission-photo-maker`
+- **Result**: The engines now occupy the full column width without redundant margins, providing a larger, cleaner, and more spacious interface.
+
+### Issue B: Duplicate Stacked Sponsored Ads (Image 1)
+- **Problem**: In pages like `handwritten-declaration-scanner` and `college-admission-photo-maker`, the interactive engine contained an internal `<AdSlot slot="in_content" />` at its bottom, while the parent `page.tsx` also rendered `<AdSlot slot="post_download" />` immediately below the engine. This caused two sponsored ads (Ostrune Agency) to appear stacked right on top of each other.
+- **Solution**: Removed internal AdSlots from the following engines:
+  - `components/tools/HandwrittenDeclarationEngine.tsx` (removed duplicate `in_content` AdSlot)
+  - `components/tools/CollegePhotoStudioEngine.tsx` (removed duplicate `in_content` AdSlot)
+  - `components/tools/TnpscOtrComplianceKitEngine.tsx` (removed duplicate `in_content` AdSlot)
+  - `components/tools/ImageResizerEngine.tsx` (removed internal `post_download` AdSlot)
+- **Result**: Exactly one native ad now renders between the tool engine and the content section, eliminating back-to-back duplicate ads.
+
+---
+
 ## Phase 4: Advanced Custom Exam Tools & Zero-Rejection Engine (32 Tools Total)
 
 ### 1. New Production Processing Engines

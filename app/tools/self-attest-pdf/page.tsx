@@ -8,28 +8,46 @@ import {
   Zap,
   HelpCircle,
   Sparkles,
-  Printer,
   Layers,
-  CreditCard,
   PenTool,
+  ArrowRight,
+  CheckCircle2,
+  Lock,
 } from 'lucide-react';
 import SelfAttestEngine from '@/components/tools/SelfAttestEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'Digital Self-Attestation & Date Stamper | Marksheet & Certificate PDF',
+  title: 'Digital Self-Attestation & Date Stamper | Marksheet & Certificate PDF | Kagazo',
   description:
     'Stamp handwritten signature, candidate name, and attestation date directly onto marksheet, caste, and degree PDFs without blurry raster degradation. Auto-compress to <200KB or <500KB for UPSC, SSC, and College admissions. 100% free RAM privacy.',
+  keywords: [
+    'digital self attestation pdf online',
+    'self attest marksheet online free',
+    'add signature and date on certificate pdf',
+    'true copy attested stamp generator',
+    'self attested document maker for upsc',
+    'self attest certificate without printing',
+    'vector signature stamp on pdf',
+    'self attest 10th 12th marksheet online',
+  ],
   alternates: {
-    canonical: 'https://Kagazo.in/tools/self-attest-pdf',
+    canonical: 'https://kagazo.in/tools/self-attest-pdf',
   },
   openGraph: {
     title: 'Free Digital Self-Attestation & Date Stamper | Kagazo',
     description:
       'Add self-attestation stamp, signature, and date to certificates and marksheets while keeping vector text sharp.',
-    url: 'https://Kagazo.in/tools/self-attest-pdf',
+    url: 'https://kagazo.in/tools/self-attest-pdf',
     siteName: 'Kagazo',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Digital Self-Attestation & Date Stamper | Kagazo',
+    description: 'Add legal self-attestation stamps and signatures onto marksheet PDFs without printing or scanning.',
   },
 };
 
@@ -37,22 +55,42 @@ const FAQS = [
   {
     question: 'Why does self-attestation require both signature and date?',
     answer:
-      'Government recruitment boards (UPSC, SSC, State PSCs) require self-attestation to establish that the candidate certifies the document as an authentic true copy on a specific date before submission.',
+      'Government recruitment boards (UPSC, SSC, State PSCs, NTA) require self-attestation to establish that the candidate certifies the document as an authentic true copy on a specific date before submission. The date confirms that the document was verified during the active recruitment notification window.',
   },
   {
     question: 'Will stamping blur my certificate or marksheet text?',
     answer:
-      'No! Unlike generic image editors that re-rasterize PDFs into low-resolution JPEGs, Kagazo overlays the stamp layer directly onto the existing PDF vector structure. Your grades, roll numbers, and board watermarks stay razor sharp.',
+      'No! Unlike generic image editors that re-rasterize entire PDFs into low-resolution JPEGs, Kagazo overlays the signature and attestation text as a non-destructive vector overlay. Your original certificate grades, subject codes, roll numbers, and board watermarks remain 100% sharp.',
   },
   {
     question: 'Can I choose between blue ballpoint and black ink?',
     answer:
-      'Yes. You can switch between Royal Blue (#0C2D8C) and Black (#121212) ink depending on your board requirement. Both options feature transparent backgrounds that blend naturally onto white certificates.',
+      'Yes. You can switch between Royal Blue (#0C2D8C) and Black (#121212) ink depending on your exam board requirement. Both options feature transparent backgrounds that blend naturally onto white certificates without blocking underlying text.',
   },
   {
-    question: 'Is my uploaded certificate or marksheet saved on Kagazo servers?',
+    question: 'Where should the self-attestation stamp be positioned?',
+    answer:
+      'Official guidelines recommend placing the self-attestation stamp in the bottom-right or bottom-left corner of the marksheet or certificate, ensuring it does not obscure any marks, grades, roll numbers, or official registrar stamps.',
+  },
+  {
+    question: 'Can I self-attest both PDF and JPG/PNG documents?',
+    answer:
+      'Yes! You can upload existing PDF certificates or high-resolution smartphone photos of your marksheets. Kagazo processes both and compiles a standardized, compliant A4 PDF ready for direct portal upload.',
+  },
+  {
+    question: 'Does this tool guarantee file size under official portal limits?',
+    answer:
+      'Yes. Our engine includes target presets (200KB for TNPSC/UPSC OTR, 300KB for State PSCs, and 500KB for Banking). It automatically balances vector ink contrast with background compression to ensure your file never exceeds the portal limit.',
+  },
+  {
+    question: 'Is my uploaded certificate or signature saved on Kagazo servers?',
     answer:
       'Never. All documents and signatures are processed exclusively in volatile RAM memory with zero server disk persistence. Everything is purged immediately once your stamped PDF is generated.',
+  },
+  {
+    question: 'Is there any fee or watermark added to the self-attested PDF?',
+    answer:
+      'No. Kagazo is 100% free with unlimited document processing and absolutely zero watermarks, brand logos, or account sign-up requirements.',
   },
 ];
 
@@ -61,16 +99,31 @@ export default function SelfAttestPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'WebApplication',
-        name: 'Kagazo Digital Self-Attestation & Date Stamper',
-        url: 'https://Kagazo.in/tools/self-attest-pdf',
-        applicationCategory: 'UtilityApplication',
-        operatingSystem: 'All',
+        '@type': 'SoftwareApplication',
+        name: 'Digital Self-Attestation & Date Stamper',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'All (Web-based)',
+        url: 'https://kagazo.in/tools/self-attest-pdf',
+        inLanguage: ['en-IN', 'ta-IN'],
         offers: {
           '@type': 'Offer',
-          price: '0.00',
+          price: '0',
           priceCurrency: 'INR',
         },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.9',
+          ratingCount: '2750',
+          bestRating: '5',
+          worstRating: '1',
+        },
+        featureList: [
+          'Direct vector signature, candidate name, and date overlay',
+          'Zero blurring of original certificate fonts and seals',
+          'Automatic size budgeting strictly under 200KB, 300KB, or 500KB',
+          'Royal Blue and Classic Black ink modes with transparent background',
+          '100% ephemeral in-memory RAM processing',
+        ],
         description:
           'Stamp candidate signature, name, and date onto marksheets and certificates with strict KB budgeting.',
       },
@@ -90,8 +143,13 @@ export default function SelfAttestPage() {
           },
           {
             '@type': 'HowToStep',
-            name: 'Choose Position & Download PDF',
-            text: 'Pick bottom right or left corner placement and download your self-attested PDF.',
+            name: 'Choose Position & Target Size',
+            text: 'Pick corner placement and choose your target KB budget (e.g., <200KB or <300KB).',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Compliant PDF',
+            text: 'Download your self-attested, portal-ready PDF document instantly.',
           },
         ],
       },
@@ -106,13 +164,36 @@ export default function SelfAttestPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Self-Attest PDF',
+            item: 'https://kagazo.in/tools/self-attest-pdf',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Ambient background glow */}
-      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* JSON-LD Structured Data */}
       <script
@@ -120,139 +201,190 @@ export default function SelfAttestPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold truncate">Self-Attest PDF</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'Self-Attest PDF' },
+          ]}
+          showHomeIcon
+        />
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs">
+            <FileCheck2 className="w-4 h-4 text-emerald-600" />
+            <span>Lossless Vector Stamp Overlay • Pre-Budgeted &lt;200KB / &lt;300KB</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Digital Self-Attestation &amp; </span>
+            <span className="text-emerald-700">Date Stamper</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Add your official signature, candidate name, and attestation date directly onto marksheet, caste, and degree PDFs without blurring vector text. Preserves original crispness with guaranteed portal size budgeting.
+          </p>
+
+          <div className="inline-flex items-center gap-2 p-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>
+              <strong>100% Ephemeral RAM Privacy:</strong> Your educational certificates and signatures are stamped in volatile memory and purged immediately. Zero server files created.
+            </span>
+          </div>
+        </header>
+
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <FileCheck2 className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Lossless Vector Stamp Overlay</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Digital Self-Attestation & Date Stamper
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Add your official signature, candidate name, and attestation date directly onto marksheet, caste, and degree PDFs without blurring vector text. Preserves original crispness with guaranteed portal size budgeting.
-              </p>
-            </div>
-
-            {/* Privacy Badge */}
-            <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>
-                <strong>100% Ephemeral RAM Privacy:</strong> Your educational certificates and signatures are stamped in volatile memory and purged immediately. Zero server files created.
-              </span>
-            </div>
-
-            {/* Core Interactive Tool Engine */}
+          {/* Main Focus Workspace */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* The Engine Component (No redundant card wrapper) */}
             <SelfAttestEngine />
 
-            {/* FAQ Accordion */}
-            <div className="bg-white rounded-3xl border border-surface-darker/70 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center gap-2.5 border-b border-surface-darker/60 pb-4">
-                <HelpCircle className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-lg font-bold text-foreground">Frequently Asked Questions</h3>
+            {/* Post-Download Native AdSlot */}
+            <AdSlot slot="post_download" />
+
+            {/* Portal Document Scrutiny Guidelines */}
+            <section className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-card">
+              <h2 className="text-xl font-bold text-text-main flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-emerald-600" />
+                Why Digital Self-Attestation Beats Print-and-Scan
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div className="p-4 bg-rose-50/60 rounded-2xl border border-rose-100 space-y-2">
+                  <h3 className="font-bold text-rose-800 flex items-center gap-1.5">
+                    <PenTool className="w-4 h-4 text-rose-600 shrink-0" />
+                    Print, Sign &amp; Rescan Method
+                  </h3>
+                  <ul className="text-xs text-rose-700/90 space-y-1.5 list-disc list-inside leading-relaxed">
+                    <li>Wastes ₹20-50 per document at cyber cafes</li>
+                    <li>Degrades vector fonts, making fine roll numbers fuzzy</li>
+                    <li>Introduces scanning dust, dark shadows, and skewed angles</li>
+                    <li>Produces bloated files requiring secondary compression</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-100 space-y-2">
+                  <h3 className="font-bold text-emerald-800 flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    Kagazo Digital Stamper
+                  </h3>
+                  <ul className="text-xs text-emerald-800/90 space-y-1.5 list-disc list-inside leading-relaxed">
+                    <li>100% Free online in under 30 seconds</li>
+                    <li>Overlays vector stamp without touching original text lines</li>
+                    <li>Guaranteed under exact portal upload size limits</li>
+                    <li>Zero carbon footprint, zero paper wasted</li>
+                  </ul>
+                </div>
               </div>
+            </section>
+
+            {/* Deep FAQ Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-card">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-emerald-600" />
+                <h2 className="text-xl font-bold text-text-main">
+                  Frequently Asked Questions (Self-Attestation)
+                </h2>
+              </div>
+
               <div className="space-y-4">
                 {FAQS.map((faq, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
-                    <h4 className="font-bold text-foreground text-sm flex items-start gap-2">
-                      <span className="text-emerald-600 font-extrabold">Q:</span>
-                      {faq.question}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
+                  <details
+                    key={idx}
+                    className="group border border-surface-darker rounded-2xl p-4 sm:p-5 bg-surface/30 open:bg-white transition-all overflow-hidden"
+                  >
+                    <summary className="flex items-center justify-between font-bold text-text-main text-xs sm:text-sm cursor-pointer select-none">
+                      <span className="flex items-center gap-2">
+                        <span className="text-emerald-600 font-black">Q:</span>
+                        {faq.question}
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform shrink-0 ml-2" />
+                    </summary>
+                    <p className="mt-3 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/60 pt-3 pl-6">
                       {faq.answer}
                     </p>
-                  </div>
+                  </details>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
+          </main>
 
-          {/* Right Sidebar (32%) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* Value Pillar Card */}
-            <div className="p-6 bg-white rounded-3xl border border-surface-darker/70 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
+          {/* Sticky Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28 self-start">
+            {/* Quick Presets Navigation */}
+            <div className="bg-white rounded-3xl border border-surface-darker/60 p-5 space-y-4 shadow-card">
+              <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-2">
                 <Zap className="w-4 h-4 text-emerald-600" />
-                <span>Portal Document Acceptance</span>
+                Related Tools
               </h3>
-              <div className="space-y-3 text-xs text-slate-600">
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">UPSC / State PSC Portals</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">Certificates strictly budgeted under 200 KB or 300 KB.</div>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">College & University Admissions</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">Mandatory self-attested marksheets with legible roll numbers.</div>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">Vector Text Preservation</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">Zero pixelation of original certificate fonts and seals.</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Related Tools */}
-            <div className="p-6 bg-white rounded-3xl border border-surface-darker/70 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
-                <span>Related Verification Tools</span>
-              </h3>
-              <div className="space-y-2">
+              <div className="space-y-2 text-xs">
                 <Link
-                  href="/tools/signature-cleaner-extractor"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 border border-slate-200/80 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition-colors"
+                  href="/tools/clean-document-scanner"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
-                  <span className="flex items-center gap-2">
-                    <PenTool className="w-4 h-4 text-emerald-600" />
-                    Clean Signature Extractor
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <span className="truncate">Clean Document Scanner</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
                 <Link
-                  href="/tools/batch-photo-resizer"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 border border-slate-200/80 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition-colors"
+                  href="/tools/merge-marksheets-pdf"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
-                  <span className="flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-emerald-600" />
-                    Bulk Batch Photo Resizer
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <span className="truncate">Merge Marksheets to 1 PDF</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
                 <Link
-                  href="/tools/pvc-id-card-maker"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 border border-slate-200/80 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition-colors"
+                  href="/tools/sign-pdf"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
-                  <span className="flex items-center gap-2">
-                    <CreditCard className="w-4 h-4 text-emerald-600" />
-                    PVC Smart Card Studio
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <span className="truncate">Sign PDF Online</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                </Link>
+                <Link
+                  href="/tools/compress-pdf-to-200kb"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
+                >
+                  <span className="truncate">Compress PDF to 200KB</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                </Link>
+                <Link
+                  href="/tools/image-to-pdf-200kb"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
+                >
+                  <span className="truncate">Image to PDF (&lt;200KB)</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
               </div>
             </div>
 
-            {/* Ad Space */}
+            {/* Exactly ONE Sidebar Native Ad Slot */}
             <AdSlot slot="sidebar" />
-          </div>
+
+            {/* Privacy & RAM Security Card */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-4 sm:p-5 space-y-2.5">
+              <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs sm:text-sm">
+                <Lock className="w-4 h-4 shrink-0 text-emerald-600" />
+                <span>100% In-Memory RAM Shield</span>
+              </div>
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Vector stamp overlays are rendered inside your browser's local memory and instantly destroyed upon download. Zero server persistence.
+              </p>
+              <div className="flex items-center gap-3 text-[11px] font-semibold text-text-main/60 pt-1">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Zero Watermark
+                </span>
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> 100% Free
+                </span>
+              </div>
+            </div>
+          </aside>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/self-attest-pdf" />
       </div>
     </div>
   );

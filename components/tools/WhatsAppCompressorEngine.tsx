@@ -22,7 +22,6 @@ import {
   RefreshCw,
   Trash2,
 } from 'lucide-react';
-import { AdSlot } from '@/components/ads/AdSlot';
 
 export default function WhatsAppCompressorEngine() {
   const [file, setFile] = useState<File | null>(null);
@@ -500,10 +499,6 @@ export default function WhatsAppCompressorEngine() {
           </div>
         </div>
 
-        {/* Ad Placement */}
-        <div className="p-6 border-t border-slate-100 dark:border-slate-800">
-          <AdSlot slot="in_content" />
-        </div>
       </div>
     </div>
   );

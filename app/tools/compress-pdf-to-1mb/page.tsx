@@ -53,6 +53,26 @@ const FAQS = [
     answer:
       '100% secure. Processing is conducted in volatile in-memory storage. Zero copies are stored on permanent disk or shared with any third party.',
   },
+  {
+    question: 'When should I use 1MB compression instead of 200KB or 300KB?',
+    answer:
+      'Use the 1MB preset for multi-page documents (5–20 pages) like employment resumes, annual financial reports, multi-semester grade transcripts, and legal agreements where maximum photographic detail and high DPI printing clarity are paramount.',
+  },
+  {
+    question: 'Does this 1MB tool comply with Passport Seva and Visa portal limits?',
+    answer:
+      'Yes. The Passport Seva Kendra (PSK) portal and international visa portals (Schengen, UK VFS, US Consular) enforce a strict 1MB (1024KB) ceiling for address proofs and financial affidavits. Our engine ensures your file never crosses this boundary.',
+  },
+  {
+    question: 'Can I compress multiple PDF documents to under 1MB simultaneously?',
+    answer:
+      'Yes! Drag and drop multiple PDF files into the batch upload zone. Each document is compressed individually to under 1MB and can be downloaded in 1 click.',
+  },
+  {
+    question: 'Is there any watermark or file size limit for 1MB compression?',
+    answer:
+      'You can upload source PDFs up to 50MB completely free with zero watermarks and no mandatory account sign-up.',
+  },
 ];
 
 export default function CompressPdfTo1MbPage() {

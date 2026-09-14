@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 import { printIsolatedDocument } from '@/lib/print-utils';
 import { createPdfFromJpeg } from '@/lib/pdf-utils';
-import { AdSlot } from '@/components/ads/AdSlot';
 
 export default function TnEsevaiCertificateEngine() {
   // Upload State
@@ -463,8 +462,6 @@ export default function TnEsevaiCertificateEngine() {
         </div>
       </div>
 
-      {/* Dynamic Ostrune Agency Ad Banner */}
-      <AdSlot slot="in_content" />
     </div>
   );
 }

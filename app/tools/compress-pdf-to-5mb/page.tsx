@@ -54,6 +54,26 @@ const FAQS = [
     answer:
       'Completely secure. All processing runs in volatile RAM memory. Your files are never stored on permanent hard drives, shared with AI trainers, or accessible to anyone else.',
   },
+  {
+    question: 'Can I compress architecture portfolios and design lookbooks to 5MB?',
+    answer:
+      'Yes! Architecture and creative portfolios with rendering images can be compressed to strictly under 5MB for smooth email delivery to prospective employers and client pitches.',
+  },
+  {
+    question: 'Can I remove unnecessary appendices or cover pages before compressing?',
+    answer:
+      'Yes! Use our built-in Page Selector to preview and exclude any unnecessary pages, immediately freeing up byte budget for your core research findings.',
+  },
+  {
+    question: 'Can I compress multiple heavy documents in a single batch?',
+    answer:
+      'Yes! Drag and drop multiple thesis chapters or tender annexures simultaneously. Kagazo will optimize each file under the 5MB ceiling in parallel.',
+  },
+  {
+    question: 'Is there any fee or watermark on the compressed 5MB document?',
+    answer:
+      'Kagazo is 100% free with unlimited document compression and zero watermarks.',
+  },
 ];
 
 export default function CompressPdfTo5MbPage() {

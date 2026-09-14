@@ -24,7 +24,6 @@ import {
   type CompressionResponseData,
   type PdfPageInfo,
 } from '@/lib/api';
-import { AdSlot } from '@/components/ads/AdSlot';
 import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 export interface UniversalPdfCompressorProps {
@@ -565,11 +564,6 @@ export function UniversalPdfCompressor({
           </div>
         </div>
       )}
-
-      {/* Ad Slot */}
-      <div className="pt-2">
-        <AdSlot slot="post_download" />
-      </div>
     </div>
   );
 }

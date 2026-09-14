@@ -7,49 +7,104 @@ import {
   ShieldCheck,
   Zap,
   HelpCircle,
-  FileText,
+  FileCheck,
+  CheckCircle2,
+  AlertTriangle,
+  Lock,
+  Award,
+  Sliders,
   Image as ImageIcon,
 } from 'lucide-react';
 import PhotoSignatureJoinerEngine from '@/components/tools/PhotoSignatureJoinerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Combined Photo & Signature Slip Maker | MP PEB, UPSSSC, Kerala PSC',
+  title: 'Combined Photo & Signature Slip Maker | MP Vyapam, UPSSSC | Kagazo',
   description:
-    'Join Passport Photo, Signature, and Declaration into a single official application slip for MP PEB / Vyapam (400x500px, <100KB), UPSSSC, Rajasthan RSMSSB, and Kerala PSC with Name & Date (DOP) strips. 100% free RAM privacy.',
+    'Join passport photo, signature, and declaration into a single template slip for MP Vyapam (PEB), UPSSSC, and Kerala PSC. Strictly under 200 KB, automated gutters, zero uploads free.',
+  keywords: [
+    'mp vyapam template photo signature joiner',
+    'upsssc photo and signature joiner online',
+    'combine photo and signature into single image',
+    'photo signature joiner online free',
+    'kerala psc photo signature joiner',
+    'attach photo and signature in one box',
+    'mp peb declaration template slip maker',
+    'combine passport photo and signature under 100kb',
+    'photo signature merge tool for competitive exams',
+    'upsssc combined photo signature 3.5x6.0 cm',
+    'vyapam profile template slip generator',
+    'joint photo and signature slip maker free',
+  ],
   alternates: {
-    canonical: 'https://Kagazo.in/tools/photo-signature-joiner',
+    canonical: 'https://kagazo.in/tools/photo-signature-joiner',
   },
   openGraph: {
-    title: 'Free Combined Photo & Signature Slip Maker | Kagazo',
+    title: 'Combined Photo & Signature Slip Maker | MP Vyapam & UPSSSC | Kagazo',
     description:
-      'Combine passport photo and signature into a single image slip for MP Vyapam, UPSSSC, and state recruitment portals.',
-    url: 'https://Kagazo.in/tools/photo-signature-joiner',
+      'Join photo, signature, and handwritten declaration into a single composite template slip for MP Vyapam, UPSSSC, and Kerala PSC. 100% free.',
+    url: 'https://kagazo.in/tools/photo-signature-joiner',
     siteName: 'Kagazo',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Combined Photo & Signature Slip Maker | MP Vyapam, UPSSSC | Kagazo',
+    description:
+      'Combine passport photo and signature into a single official template slip for MP Vyapam and UPSSSC. Zero server uploads.',
   },
 };
 
 const FAQS = [
   {
-    question: 'Which exams require a combined single photo and signature slip?',
+    question: 'Which recruitment exams require a single combined photo and signature slip?',
     answer:
-      'Madhya Pradesh Professional Examination Board (MP PEB / Vyapam), Uttar Pradesh Subordinate Services (UPSSSC), Rajasthan RSMSSB, and Kerala PSC require a single composite image file containing candidate photo, signature, and in some cases handwritten declaration text.',
+      'State boards such as the Madhya Pradesh Employees Selection Board (MP ESB / MP Vyapam), Uttar Pradesh Subordinate Services Selection Commission (UPSSSC), Rajasthan Staff Selection Board (RSMSSB), and Kerala Public Service Commission mandate uploading a single composite image containing the candidate photograph and signature together.',
   },
   {
-    question: 'What are the exact dimensions for MP PEB (Vyapam) template slips?',
+    question: 'What are the exact dimensions for an MP Vyapam (MP ESB) template slip?',
     answer:
-      'MP PEB specifies an image width of 400 pixels and height of 500 pixels strictly under 100 KB in JPEG format. The top section holds the photograph, the middle holds the signature, and the bottom holds the handwritten self-declaration.',
+      'MP Vyapam requires a composite image measuring approximately 400 × 500 pixels (or 700 × 900 px depending on resolution) strictly between 100 KB and 200 KB in JPEG format. The top section holds the photo, the middle holds the signature, and the bottom section contains a 2-line handwritten self-declaration in Hindi or English.',
   },
   {
-    question: 'Can I add my Name and Date of Photo (DOP) on the slip?',
+    question: 'What are the required dimensions for UPSSSC combined photo and signature?',
     answer:
-      'Yes! You can enter your candidate name and date of photo in the text fields, and our engine automatically stamps an official white banner strip directly below your photo.',
+      'UPSSSC requires the candidate photo (3.5 cm width × 4.5 cm height) stacked vertically above the signature (3.5 cm width × 1.5 cm height), creating a single combined image measuring 3.5 cm in width by 6.0 cm in height, with total file size strictly under 50 KB.',
   },
   {
-    question: 'Is my photo or signature stored on your server?',
+    question: 'Can I add my Candidate Name and Date of Photograph (DOP) on the combined slip?',
     answer:
-      'No. The composition, scaling, and compression occur strictly inside temporary computer memory (RAM) and are deleted immediately upon completion.',
+      'Yes! Kagazo includes automated name and date stamping. You can enter your full name in capital letters and the capture date, and the engine automatically embeds the official white strip directly below your photo inside the composite template.',
+  },
+  {
+    question: 'Why does MP Vyapam reject combined slips created in MS Paint?',
+    answer:
+      'Applicants creating slips manually in MS Paint often miscalculate margin gutters, causing the signature or declaration text to be cut off by portal border validators. Additionally, uncompressed Paint exports frequently exceed the 200 KB ceiling. Kagazo automates borders and locks file size strictly under 200 KB.',
+  },
+  {
+    question: 'Can I type the self-declaration text instead of writing it by hand?',
+    answer:
+      'No. Both MP Vyapam and banking authorities explicitly require the declaration to be handwritten in the candidate’s own natural handwriting. Applications with typed or computer-generated declaration text are summarily rejected during document verification.',
+  },
+  {
+    question: 'Can I use this tool to combine just a photo and signature without a declaration?',
+    answer:
+      'Yes! You can toggle between "2-in-1 Mode" (Photo + Signature, ideal for UPSSSC and Kerala PSC) and "3-in-1 Mode" (Photo + Signature + Declaration, required for MP Vyapam).',
+  },
+  {
+    question: 'What file format is generated by this combined slip maker?',
+    answer:
+      'Kagazo exports standards-compliant JPEG/JPG files with embedded DPI headers, fully compatible with all state government recruitment upload gateways.',
+  },
+  {
+    question: 'How do I ensure the combined image stays under the 50 KB limit for UPSSSC?',
+    answer:
+      'Select the UPSSSC preset. Kagazo’s binary search compression engine automatically modulates quantization tables to place the final image safely between 30 KB and 48 KB without pixelating your photo or signature.',
+  },
+  {
+    question: 'Are my uploaded photo, signature, or personal declaration saved on your server?',
+    answer:
+      'Never. Kagazo performs all canvas assembly, text rendering, and image encoding 100% inside your device’s volatile RAM memory. Zero images are saved or transmitted to external servers. When you close the browser tab, all data is permanently erased.',
   },
 ];
 
@@ -58,37 +113,51 @@ export default function PhotoSignatureJoinerPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'WebApplication',
-        name: 'Kagazo Combined Photo & Signature Slip Maker',
-        url: 'https://Kagazo.in/tools/photo-signature-joiner',
-        applicationCategory: 'UtilityApplication',
-        operatingSystem: 'All',
+        '@type': 'SoftwareApplication',
+        name: 'Combined Photo & Signature Slip Maker',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'All (Web-based)',
+        url: 'https://kagazo.in/tools/photo-signature-joiner',
         offers: {
           '@type': 'Offer',
-          price: '0.00',
+          price: '0',
           priceCurrency: 'INR',
         },
         description:
-          'Join passport photo and signature into a single composite slip for MP PEB, UPSSSC, and Kerala PSC.',
+          'Combine passport photo, signature, and handwritten declaration into a single template slip for MP Vyapam, UPSSSC, and Kerala PSC online applications.',
+        featureList: [
+          'Official MP Vyapam (PEB) 3-in-1 template slip layout',
+          'UPSSSC 3.5x6.0 cm vertical composite preset (<50KB)',
+          'Automated border gutters and alignment grids',
+          'Candidate Name and Date of Photo (DOP) banner integration',
+          'Strict under 200 KB and under 50 KB compression locks',
+          '100% in-browser RAM privacy',
+        ],
       },
       {
         '@type': 'HowTo',
-        name: 'How to Combine Photo and Signature into Single Box for MP PEB and UPSSSC',
+        name: 'How to Combine Photo and Signature into a Single Template Slip',
+        totalTime: 'PT1M',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Upload Photo & Signature',
-            text: 'Upload your passport photo in slot 1 and signature in slot 2.',
+            name: 'Select Exam Board Preset',
+            text: 'Choose your target format: MP Vyapam (3-in-1), UPSSSC (2-in-1), or Kerala PSC.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Select Exam Preset',
-            text: 'Choose MP PEB (400x500px), UPSSSC (350x500px), or Kerala PSC.',
+            name: 'Upload Photo and Signature',
+            text: 'Upload your passport photo into Slot 1 and your clean signature into Slot 2.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Composite Slip',
-            text: 'Click Create Combined Slip and download your verified JPEG.',
+            name: 'Add Declaration (if required)',
+            text: 'For MP Vyapam, upload your handwritten self-declaration snippet.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Combined Slip',
+            text: 'Download the unified JPEG slip, pre-compressed strictly under the target portal ceiling.',
           },
         ],
       },
@@ -102,6 +171,19 @@ export default function PhotoSignatureJoinerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Tools', item: 'https://kagazo.in/tools' },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Photo & Signature Slip Maker',
+            item: 'https://kagazo.in/tools/photo-signature-joiner',
+          },
+        ],
       },
     ],
   };
@@ -117,7 +199,7 @@ export default function PhotoSignatureJoinerPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -125,119 +207,471 @@ export default function PhotoSignatureJoinerPage() {
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
+            Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold truncate">Photo & Signature Slip Maker</span>
+          <span className="text-primary font-bold">Photo &amp; Signature Slip Maker</span>
         </nav>
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <ImageIcon className="w-3.5 h-3.5 text-emerald-600" />
-                <span>MP Vyapam, UPSSSC & Kerala PSC Layout</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Combined Photo & Signature Slip Maker
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Combine your passport photo, signature, and optional handwritten declaration into a single official template box for MP PEB / Vyapam (400×500 px, &lt;100KB), UPSSSC, and Kerala PSC with Name & Date of Photo (DOP) strips.
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span>MP Vyapam (PEB), UPSSSC &amp; Kerala PSC Official Layouts</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Combined Photo &amp; Signature </span>
+            <span className="text-primary">Slip Maker</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Join your passport photograph, signature, and optional handwritten self-declaration into a unified composite template box for <strong>MP Vyapam (MP ESB), UPSSSC (3.5×6.0 cm), and Kerala PSC</strong>. Features automated border alignment and under-200 KB size optimization.
+          </p>
+
+          {/* Key differentiator pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs font-bold">
+            {[
+              '✓ MP Vyapam 3-in-1 Layout',
+              '✓ UPSSSC 3.5×6.0 cm Preset',
+              '✓ Automated Margin Gutters',
+              '✓ Under 200 KB & 50 KB Auto-Lock',
+              '✓ 100% In-RAM Privacy',
+            ].map((tag) => (
+              <span
+                key={tag}
+                className="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 px-3 py-1 rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </header>
+
+        {/* Value Pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="p-5 bg-white rounded-3xl border border-surface-darker/70 shadow-xs flex items-start gap-4">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+              <ImageIcon className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-slate-800">State Board Presets</h2>
+              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                Pre-calibrated layouts matching official portal guidelines for MP, UP, and Kerala.
               </p>
             </div>
+          </div>
 
-            {/* In-Memory Privacy */}
-            <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>
-                <strong>100% In-Memory RAM Privacy:</strong> Your photos and signatures are assembled exclusively in computer RAM memory. Zero images are saved or archived on our servers.
-              </span>
+          <div className="p-5 bg-white rounded-3xl border border-surface-darker/70 shadow-xs flex items-start gap-4">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+              <Sliders className="w-5 h-5" />
             </div>
+            <div>
+              <h2 className="text-sm font-bold text-slate-800">Automated Gutters</h2>
+              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                Prevents candidate names, signatures, and declaration text from being cut off.
+              </p>
+            </div>
+          </div>
 
-            {/* Core Tool Engine */}
+          <div className="p-5 bg-white rounded-3xl border border-surface-darker/70 shadow-xs flex items-start gap-4">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-slate-800">100% In-RAM Privacy</h2>
+              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                Photos, signatures, and text are assembled strictly in browser memory. Zero cloud storage.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* 2-Column Responsive Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Main Studio Column */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <PhotoSignatureJoinerEngine />
 
-            {/* FAQ Accordion */}
-            <div className="bg-white rounded-3xl border border-surface-darker/70 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center gap-2.5 border-b border-surface-darker/60 pb-4">
-                <HelpCircle className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-lg font-bold text-foreground">Frequently Asked Questions</h3>
+            {/* Post-Action Native AdSlot */}
+            <AdSlot slot="post_download" />
+
+            {/* Official Specifications Cheatsheet */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <Award className="w-5 h-5 text-primary" />
+                  Combined Slip Guidelines Across State Recruitment Boards
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Verified parameters for online application uploads across state boards requiring unified slips.
+                </p>
               </div>
-              <div className="space-y-4">
-                {FAQS.map((faq, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
-                    <h4 className="font-bold text-foreground text-sm flex items-start gap-2">
-                      <span className="text-emerald-600 font-extrabold">Q:</span>
-                      {faq.question}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
-                      {faq.answer}
-                    </p>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs sm:text-sm text-left border-collapse min-w-[560px]">
+                  <thead>
+                    <tr className="bg-surface text-text-main font-bold border-b border-surface-darker">
+                      <th className="py-3 px-4">State Recruitment Board</th>
+                      <th className="py-3 px-4">Required Slip Structure</th>
+                      <th className="py-3 px-4">Permitted File Size</th>
+                      <th className="py-3 px-4">Standard Dimensions</th>
+                      <th className="py-3 px-4">Key Verification Rule</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker font-medium text-text-main/80">
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-4 font-bold text-primary">MP Vyapam (MP ESB)</td>
+                      <td className="py-3 px-4 font-bold">Photo + Signature + Declaration</td>
+                      <td className="py-3 px-4 font-bold">Strictly 100 KB to 200 KB</td>
+                      <td className="py-3 px-4 font-mono">Standard Template Grid</td>
+                      <td className="py-3 px-4">Must include handwritten declaration</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-4 font-bold text-primary">UPSSSC (Uttar Pradesh)</td>
+                      <td className="py-3 px-4">Photo at Top + Signature at Bottom</td>
+                      <td className="py-3 px-4 font-bold">Strictly Under 50 KB</td>
+                      <td className="py-3 px-4 font-mono">Width 3.5 cm × Height 6.0 cm</td>
+                      <td className="py-3 px-4">Candidate name in Hindi below sign</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-4 font-bold text-primary">Kerala PSC Thulasi</td>
+                      <td className="py-3 px-4">Photo with Name/Date + Signature Strip</td>
+                      <td className="py-3 px-4">Under 100 KB</td>
+                      <td className="py-3 px-4 font-mono">150 px × 200 px (or 300×400)</td>
+                      <td className="py-3 px-4">Name and Date below photograph</td>
+                    </tr>
+                    <tr className="hover:bg-surface/50">
+                      <td className="py-3 px-4 font-bold text-primary">RSMSSB (Rajasthan)</td>
+                      <td className="py-3 px-4">Photo &amp; Signature Joint Dossier</td>
+                      <td className="py-3 px-4">Under 100 KB</td>
+                      <td className="py-3 px-4 font-mono">Prescribed Board Grid</td>
+                      <td className="py-3 px-4">Light background, unruled signature</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="bg-amber-50 border border-amber-200/80 rounded-2xl p-4 flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                <div className="text-xs text-amber-900 leading-relaxed">
+                  <strong>State Board Notice:</strong> For MP Vyapam, ensure your handwritten self-declaration is written in running cursive in your own handwriting. Typed text or declarations written in capital letters will result in cancellation of your candidature.
+                </div>
+              </div>
+            </section>
+
+            {/* Step-by-Step Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <FileCheck className="w-5 h-5 text-primary" />
+                Step-by-Step: How to Create Your Combined Slip
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">1</span>
+                    Select Board Preset
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Choose your target board preset: MP Vyapam (3-in-1 template), UPSSSC (2-in-1 composite), or Kerala PSC.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">2</span>
+                    Upload Photo &amp; Signature
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Upload your passport photo into Slot 1 and your signature into Slot 2. Enter candidate name and date if required.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">3</span>
+                    Add Declaration (if applicable)
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    For MP Vyapam, upload your handwritten declaration snippet into Slot 3. The engine automatically balances margin gutters.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2 text-primary font-bold text-sm">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs">4</span>
+                    Download Unified JPEG
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Click Download to export your clean, unified JPEG slip, pre-compressed strictly under your board’s KB limit.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Common Errors & Fixes */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common Combined Slip Rejection Errors &amp; Solutions
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
+                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+                    Error: "Combined slip file size exceeds 200 KB"
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    <strong>Cause:</strong> Stacking multi-part high-resolution phone scans manually produces heavy 500 KB – 2 MB images.
+                  </p>
+                  <p className="text-xs text-emerald-700 font-medium">
+                    <strong>Fix:</strong> Kagazo’s binary-search compression keeps the unified slip strictly within 100 KB – 190 KB.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
+                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+                    Error: "Signature or declaration cut off at borders"
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    <strong>Cause:</strong> Manual copy-pasting in MS Paint fails to respect official border margin gutters.
+                  </p>
+                  <p className="text-xs text-emerald-700 font-medium">
+                    <strong>Fix:</strong> Kagazo applies automated boundary gutters to ensure zero text or signature clipping.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
+                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+                    Error: "Typed declaration rejected during scrutiny"
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    <strong>Cause:</strong> Inserting computer-typed text instead of an authentic handwritten specimen.
+                  </p>
+                  <p className="text-xs text-emerald-700 font-medium">
+                    <strong>Fix:</strong> Write the declaration by hand with a black pen, snap a photo, and upload to Slot 3.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
+                  <div className="font-bold text-xs text-red-600 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+                    Error: "UPSSSC file size exceeds 50 KB"
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    <strong>Cause:</strong> UPSSSC enforces a strict 50 KB ceiling on the combined 3.5×6.0 cm image.
+                  </p>
+                  <p className="text-xs text-emerald-700 font-medium">
+                    <strong>Fix:</strong> Kagazo’s UPSSSC preset optimizes image payload safely between 30 KB and 48 KB.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Real World Use Cases */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                State Board Exam Use Cases
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {[
+                  {
+                    title: 'MP Vyapam / ESB MP Profile',
+                    desc: 'Create the official 3-in-1 template slip containing photo, signature, and declaration for MP police, patwari, and teachers.',
+                  },
+                  {
+                    title: 'UPSSSC PET & Lekhpal',
+                    desc: 'Format candidate photo and signature stacked vertically strictly under 50 KB for UPSSSC application portals.',
+                  },
+                  {
+                    title: 'Kerala PSC Thulasi Profile',
+                    desc: 'Combine candidate photograph with date and name strip directly above signature for Kerala PSC OTR.',
+                  },
+                  {
+                    title: 'RSMSSB Rajasthan Exams',
+                    desc: 'Prepare combined joint dossiers for Rajasthan Staff Selection Board competitive recruitment tests.',
+                  },
+                  {
+                    title: 'OSSC & OSSSC Odisha',
+                    desc: 'Join passport photo and signature into single template boxes for Odisha staff selection portals.',
+                  },
+                  {
+                    title: 'CSC & Cyber Cafe Operators',
+                    desc: 'Generate compliant state board template slips in 30 seconds without manual layout editing in Photoshop.',
+                  },
+                ].map((item, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1">
+                    <h3 className="text-xs font-bold text-text-main">{item.title}</h3>
+                    <p className="text-[11px] text-text-main/70 leading-normal">{item.desc}</p>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
 
-          {/* Right Sidebar (32%) */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="p-6 bg-white rounded-3xl border border-surface-darker/70 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-                <Zap className="w-4 h-4 text-emerald-600" />
-                <span>Supported State Exam Formats</span>
-              </h3>
-              <div className="space-y-3 text-xs text-slate-600">
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">MP PEB / Vyapam (ESB MP)</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">400 × 500 px • &lt; 100 KB • Photo + Sign + Declaration</div>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">UPSSSC PET & Lekhpal</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">350 × 500 px • &lt; 50 KB • Name under signature</div>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">Kerala PSC Thulasi Profile</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">300 × 400 px • &lt; 40 KB • Name & Date under photo</div>
-                </div>
+            {/* Privacy & Security Architecture */}
+            <section className="bg-gradient-to-br from-primary-light/40 via-surface to-surface rounded-3xl border border-primary/20 p-6 sm:p-8 space-y-4">
+              <div className="flex items-center gap-2 text-primary font-bold text-base">
+                <Lock className="w-5 h-5" />
+                <span>Zero Server Uploads: 100% In-Browser Privacy Architecture</span>
               </div>
-            </div>
+              <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
+                Kagazo performs all multi-image composition, canvas stitching, and JPEG quantization locally inside your web browser’s volatile RAM. Zero personal photographs, legal signatures, or handwritten declarations are transmitted over the internet or stored on cloud servers. Data is permanently purged from memory when you close or refresh this tab.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1 text-[11px] font-bold text-primary">
+                <span className="bg-white border border-primary/20 px-2.5 py-1 rounded-full">✓ No Cloud Storage</span>
+                <span className="bg-white border border-primary/20 px-2.5 py-1 rounded-full">✓ No Image Persistence</span>
+                <span className="bg-white border border-primary/20 px-2.5 py-1 rounded-full">✓ Instant RAM Purge</span>
+              </div>
+            </section>
 
-            <div className="p-6 bg-white rounded-3xl border border-surface-darker/70 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-800 text-xs uppercase tracking-wider">
-                Related Exam Tools
+            {/* FAQs */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-2 border-b border-surface-darker pb-4">
+                <HelpCircle className="w-5 h-5 text-primary" />
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main">Frequently Asked Questions</h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {FAQS.map((faq, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
+                    <h3 className="font-bold text-xs sm:text-sm text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q:</span>
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed pl-5">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </main>
+
+          {/* Compact Sticky Right Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
+            {/* Quick Switch Matrix */}
+            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
+              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-primary" />
+                Related Tools
               </h3>
-              <div className="space-y-2 text-xs">
+
+              <div className="space-y-1.5">
+                <Link
+                  href="/tools/photo-date-name-stamper"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Photo Date Stamper
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
+                    DOP
+                  </span>
+                </Link>
+
                 <Link
                   href="/tools/signature-cleaner-extractor"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span>Black Ink Signature Extractor</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Black Ink Sig Extractor
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
+                    No Lines
+                  </span>
                 </Link>
+
                 <Link
-                  href="/tools/passport-photo-sheet-maker"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium"
+                  href="/tools/handwritten-declaration-scanner"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span>Passport Photo Sheet Maker</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      IBPS Declaration
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
+                    50–100KB
+                  </span>
                 </Link>
+
                 <Link
                   href="/tools/thumb-impression-resizer"
-                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-foreground font-medium"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
-                  <span>Left Thumb Impression Enhancer</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Thumb Impression
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
+                    240×240
+                  </span>
+                </Link>
+
+                <Link
+                  href="/tools/compress-image-to-200kb"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Compress to 200KB
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
+                    200 KB
+                  </span>
+                </Link>
+
+                <Link
+                  href="/tools/specifications"
+                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                >
+                  <div className="flex items-center gap-2 min-w-0 pr-1">
+                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      All Exam Radar
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
+                    40+ Exams
+                  </span>
                 </Link>
               </div>
             </div>
 
+            {/* Compact Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
-          </div>
+
+            {/* Sovereign RAM Privacy Box */}
+            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
+              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
+                <Lock className="w-3.5 h-3.5 shrink-0" />
+                <span>100% In-Browser Privacy</span>
+              </div>
+              <p className="text-[11px] text-text-main/70 leading-normal">
+                Multi-part composite slips are assembled strictly in client memory. Zero server uploads.
+              </p>
+              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
+                  ✓ MP Vyapam
+                </span>
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
+                  ✓ UPSSSC 50KB
+                </span>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </div>
   );
 }
+

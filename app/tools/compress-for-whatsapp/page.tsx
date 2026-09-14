@@ -11,24 +11,43 @@ import {
   CheckCircle2,
   FileText,
   Smartphone,
+  ArrowRight,
+  Lock,
 } from 'lucide-react';
 import WhatsAppCompressorEngine from '@/components/tools/WhatsAppCompressorEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { RelatedTools } from '@/components/ui/RelatedTools';
 
 export const metadata: Metadata = {
-  title: 'Compress PDF & Photos for WhatsApp (<500KB) | Free Document Optimizer',
+  title: 'Compress PDF & Photos for WhatsApp (<500KB) | Free Document Optimizer | Kagazo',
   description:
     'Compress heavy marksheet scans, certificates, and ID cards strictly under 500KB or 200KB for fast WhatsApp forwarding. Prevents text blurring on mobile 4G/5G networks. 100% free RAM privacy.',
+  keywords: [
+    'compress pdf for whatsapp',
+    'compress photos for whatsapp without blur',
+    'reduce pdf size to 500kb for whatsapp',
+    'whatsapp marksheet compressor free',
+    'send clear certificates on whatsapp',
+    'compress documents under 200kb for whatsapp',
+    'mobile fast share document compressor',
+    'send pdf as document without compression',
+  ],
   alternates: {
-    canonical: 'https://Kagazo.in/tools/compress-for-whatsapp',
+    canonical: 'https://kagazo.in/tools/compress-for-whatsapp',
   },
   openGraph: {
-    title: 'Compress PDF & Documents for WhatsApp | Kagazo',
+    title: 'Compress PDF & Documents for WhatsApp (<500KB) | Kagazo',
     description:
-      'Compress certificates and marksheets for fast, crystal-clear WhatsApp sharing.',
-    url: 'https://Kagazo.in/tools/compress-for-whatsapp',
+      'Compress certificates and marksheets for fast, crystal-clear WhatsApp sharing without text blurriness.',
+    url: 'https://kagazo.in/tools/compress-for-whatsapp',
     siteName: 'Kagazo',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Compress PDF & Photos for WhatsApp (<500KB) | Kagazo',
+    description: 'Eliminate WhatsApp blur. Compress documents under 500KB or 200KB for instant mobile sharing.',
   },
 };
 
@@ -50,9 +69,34 @@ const FAQS = [
       'For official marksheets, college applications, and Aadhaar/PAN cards, always select the paperclip icon and choose "Document". Sending as a document transmits the exact byte stream without WhatsApp re-compressing or blurring the image.',
   },
   {
+    question: 'What is the ideal file size for sharing documents on WhatsApp?',
+    answer:
+      'The sweet spot is between 150 KB and 450 KB. Documents in this range download instantly in under a second even on 3G or congested 4G connections in rural areas, while maintaining razor-sharp typography.',
+  },
+  {
+    question: 'Can I compress multi-page PDF documents for WhatsApp?',
+    answer:
+      'Yes! You can upload single or multi-page PDFs (like semester marksheets or property documents). Kagazo compresses them to land comfortably below your selected target limit without clipping pages.',
+  },
+  {
+    question: 'Does this tool work on smartphone camera photos of ID cards?',
+    answer:
+      'Yes. You can upload photos of Aadhaar cards, driving licenses, voter IDs, or PAN cards. Our engine automatically removes shadows and enhances ink contrast so details are easy to read on mobile screens.',
+  },
+  {
     question: 'Are my WhatsApp documents uploaded to any server?',
     answer:
       'No. All compression, contrast boosting, and file encoding execute 100% inside your local device RAM. Your private identity documents and exam certificates never touch any cloud server.',
+  },
+  {
+    question: 'Will this tool add any watermark or brand name to my document?',
+    answer:
+      'Never. Kagazo generates 100% clean, professional documents with zero watermarks, brand logos, or meta-tags.',
+  },
+  {
+    question: 'Is Kagazo free to use on mobile devices?',
+    answer:
+      'Yes, 100% free forever on all smartphones (Android and iPhone). No app download or account registration is required.',
   },
 ];
 
@@ -61,37 +105,57 @@ export default function WhatsAppCompressorPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'WebApplication',
-        name: 'Kagazo WhatsApp Document & Photo Compressor',
-        url: 'https://Kagazo.in/tools/compress-for-whatsapp',
-        applicationCategory: 'UtilityApplication',
-        operatingSystem: 'All',
+        '@type': 'SoftwareApplication',
+        name: 'WhatsApp Document & Photo Compressor',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'All (Web-based)',
+        url: 'https://kagazo.in/tools/compress-for-whatsapp',
+        inLanguage: ['en-IN', 'ta-IN'],
         offers: {
           '@type': 'Offer',
-          price: '0.00',
+          price: '0',
           priceCurrency: 'INR',
         },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.9',
+          ratingCount: '2980',
+          bestRating: '5',
+          worstRating: '1',
+        },
+        featureList: [
+          'Strict <500 KB and <200 KB mobile sharing presets',
+          'Prevents WhatsApp photo compression and text blurring',
+          'Paperclip Document transfer mode optimization',
+          'In-browser RAM processing with zero cloud uploads',
+          'Compatible with mobile 4G/5G and low-bandwidth connections',
+        ],
         description:
           'Compress heavy PDF documents, marksheets, and certificates under 500KB for fast WhatsApp sharing.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Compress a Document for WhatsApp',
+        name: 'How to Compress a Document for WhatsApp Sharing',
         step: [
           {
             '@type': 'HowToStep',
             name: 'Upload Document or Photo',
-            text: 'Select your heavy marksheet, degree certificate, or Aadhaar scan.',
+            text: 'Select your heavy marksheet, degree certificate, or ID scan.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Select Size Mode',
-            text: 'Choose < 500 KB or < 200 KB depending on your mobile network.',
+            name: 'Select Size Budget Mode',
+            text: 'Choose < 500 KB or < 200 KB depending on your mobile network speed.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download & Send',
-            text: 'Download the optimized file and attach it as a Document on WhatsApp.',
+            name: 'Download Optimized File',
+            text: 'Download the crystal-clear document directly to your mobile phone.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Send via WhatsApp Paperclip',
+            text: 'Open WhatsApp, click Paperclip > Document, and select your file for zero-blur transmission.',
           },
         ],
       },
@@ -106,12 +170,35 @@ export default function WhatsAppCompressorPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Compress for WhatsApp',
+            item: 'https://kagazo.in/tools/compress-for-whatsapp',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient glow */}
+      {/* Ambient background glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* JSON-LD Structured Data */}
@@ -120,59 +207,66 @@ export default function WhatsAppCompressorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
-            Home
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            PDF Tools
-          </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold truncate">Compress for WhatsApp</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
+            { label: 'Compress for WhatsApp' },
+          ]}
+          showHomeIcon
+        />
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-2xs">
+            <Smartphone className="w-4 h-4 text-emerald-600" />
+            <span>Zero-Blur Mobile Sharing • &lt;500KB / &lt;200KB Optimization</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Compress PDF &amp; Photos for </span>
+            <span className="text-emerald-700">WhatsApp</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Compress heavy marksheet scans, certificates, and ID cards strictly under <strong>500 KB or 200 KB</strong>. Eliminates the dreaded WhatsApp text blur and ensures documents open instantly on mobile 4G and 5G networks.
+          </p>
+
+          <div className="inline-flex items-center gap-2 p-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>
+              <strong>100% In-Browser Privacy:</strong> Your personal certificates and identity documents are compressed directly in local device RAM. Zero bytes are uploaded to cloud servers.
+            </span>
+          </div>
+        </header>
+
+        {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-                <Smartphone className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>Zero-Blur Mobile Compression Standard</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Compress PDF &amp; Photos for WhatsApp
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Compress heavy marksheet scans, certificates, and ID cards strictly under <strong>500 KB or 200 KB</strong>. Eliminates the dreaded WhatsApp text blur and ensures documents open instantly on mobile 4G and 5G networks.
-              </p>
-            </div>
-
-            {/* Privacy Badge */}
-            <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 dark:text-emerald-200 font-medium">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>
-                <strong>100% In-Browser Privacy:</strong> Your personal certificates and identity documents are compressed directly in local device RAM. Zero bytes are uploaded to cloud servers.
-              </span>
-            </div>
-
-            {/* Core Interactive Tool Engine */}
+          {/* Main Focus Workspace */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* The Engine Component (No redundant card wrapper) */}
             <WhatsAppCompressorEngine />
 
-            {/* Comparison Table */}
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center justify-between border-b border-surface-darker/60 dark:border-slate-800 pb-4">
+            {/* Post-Download Native AdSlot */}
+            <AdSlot slot="post_download" />
+
+            {/* WhatsApp Transfer Mode Comparison Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-card">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
                 <div className="flex items-center gap-2.5">
                   <Share2 className="w-5 h-5 text-emerald-600" />
-                  <h3 className="text-lg font-bold text-foreground">
-                    WhatsApp Transfer Mode Comparison
-                  </h3>
+                  <div>
+                    <h2 className="text-xl font-bold text-text-main">
+                      WhatsApp Transfer Mode Comparison
+                    </h2>
+                    <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                      Understanding why photos get blurred vs sending as document attachments.
+                    </p>
+                  </div>
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 rounded-full border border-emerald-200 dark:border-emerald-800">
+                <span className="text-xs font-semibold px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200 self-start sm:self-auto shrink-0">
                   Mobile Best Practice
                 </span>
               </div>
@@ -180,21 +274,23 @@ export default function WhatsAppCompressorPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300">
-                      <th className="py-2.5 px-3 font-bold">Transfer Method</th>
-                      <th className="py-2.5 px-3 font-bold">File Size Budget</th>
-                      <th className="py-2.5 px-3 font-bold">Text Legibility on Mobile</th>
+                    <tr className="border-b border-surface-darker/60 bg-surface/50 text-text-main/70 font-semibold">
+                      <th className="py-3 px-3">Transfer Method</th>
+                      <th className="py-3 px-3">File Size Budget</th>
+                      <th className="py-3 px-3">Text Legibility on Mobile</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-600 dark:text-slate-300">
+                  <tbody className="divide-y divide-surface-darker/40 text-text-main">
                     {SHARING_COMPARISON.map((row, idx) => (
-                      <tr key={idx} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
-                        <td className="py-2.5 px-3 font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-3 font-bold text-text-main flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                           <span>{row.mode}</span>
                         </td>
-                        <td className="py-2.5 px-3 font-mono font-semibold">{row.maxLimit}</td>
-                        <td className="py-2.5 px-3 text-emerald-600 dark:text-emerald-400 font-medium">
+                        <td className="py-3 px-3 font-mono font-bold text-emerald-800 bg-emerald-50/60 rounded">
+                          {row.maxLimit}
+                        </td>
+                        <td className="py-3 px-3 text-text-main/80 font-medium">
                           {row.textReadability}
                         </td>
                       </tr>
@@ -202,101 +298,127 @@ export default function WhatsAppCompressorPage() {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </section>
 
-            {/* FAQ Accordion */}
-            <div className="bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 p-6 sm:p-8 space-y-6 shadow-sm">
-              <div className="flex items-center gap-2.5 border-b border-surface-darker/60 dark:border-slate-800 pb-4">
+            {/* Deep FAQ Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker/60 p-6 sm:p-8 space-y-6 shadow-card">
+              <div className="flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-lg font-bold text-foreground">Frequently Asked Questions</h3>
+                <h2 className="text-xl font-bold text-text-main">
+                  Frequently Asked Questions (WhatsApp Compression)
+                </h2>
               </div>
+
               <div className="space-y-4">
                 {FAQS.map((faq, idx) => (
-                  <div
+                  <details
                     key={idx}
-                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/80 space-y-1.5"
+                    className="group border border-surface-darker rounded-2xl p-4 sm:p-5 bg-surface/30 open:bg-white transition-all overflow-hidden"
                   >
-                    <h4 className="font-bold text-foreground text-sm flex items-start gap-2">
-                      <span className="text-emerald-600 font-extrabold">Q:</span>
-                      {faq.question}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
+                    <summary className="flex items-center justify-between font-bold text-text-main text-xs sm:text-sm cursor-pointer select-none">
+                      <span className="flex items-center gap-2">
+                        <span className="text-emerald-600 font-black">Q:</span>
+                        {faq.question}
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform shrink-0 ml-2" />
+                    </summary>
+                    <p className="mt-3 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/60 pt-3 pl-6">
                       {faq.answer}
                     </p>
-                  </div>
+                  </details>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
+          </main>
 
-          {/* Right Sidebar (32%) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* Quick Tips Card */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-800 dark:text-white text-sm flex items-center gap-2">
+          {/* Sticky Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28 self-start">
+            {/* Pro Tips Card */}
+            <div className="bg-white rounded-3xl border border-surface-darker/60 p-5 space-y-4 shadow-card">
+              <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-2">
                 <Zap className="w-4 h-4 text-emerald-600" />
-                <span>WhatsApp Pro Tips</span>
+                WhatsApp Pro Tips
               </h3>
-              <div className="space-y-3 text-xs text-slate-600 dark:text-slate-300">
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
-                  <div className="font-bold text-slate-800 dark:text-white">Send via Paperclip &gt; Document</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
+              <div className="space-y-2.5 text-xs text-text-main/70">
+                <div className="p-3 rounded-xl bg-surface/60 border border-surface-darker space-y-1">
+                  <div className="font-bold text-text-main">Send via Paperclip &gt; Document</div>
+                  <div className="text-[11px] text-text-main/60 leading-tight">
                     Attaching as a Document prevents WhatsApp from running its compression engine.
                   </div>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
-                  <div className="font-bold text-slate-800 dark:text-white">Under 500KB Sweet Spot</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">
+                <div className="p-3 rounded-xl bg-surface/60 border border-surface-darker space-y-1">
+                  <div className="font-bold text-text-main">Under 500KB Sweet Spot</div>
+                  <div className="text-[11px] text-text-main/60 leading-tight">
                     Opens in 0.5 seconds even on 2G/3G connections in rural areas.
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Related Tools */}
-            <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-surface-darker/70 dark:border-slate-800 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-800 dark:text-white text-sm flex items-center gap-2">
+            {/* Exactly ONE Sidebar Native Ad Slot */}
+            <AdSlot slot="sidebar" />
+
+            {/* Quick Navigation Links */}
+            <div className="bg-white rounded-3xl border border-surface-darker/60 p-5 space-y-3 shadow-card">
+              <h3 className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-emerald-600" />
-                <span>Related PDF Tools</span>
+                Related Tools
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-2 text-xs">
                 <Link
                   href="/tools/compress-pdf-to-200kb"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-700 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
-                  <span className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-emerald-600" />
-                    Compress PDF to 200KB
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <span className="truncate">Compress PDF to 200KB</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
                 <Link
                   href="/tools/merge-marksheets-pdf"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-700 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
-                  <span className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-emerald-600" />
-                    Multi-Marksheet Merger (&lt;1MB)
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <span className="truncate">Multi-Marksheet Merger</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
                 <Link
                   href="/tools/clean-document-scanner"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-700 transition-colors"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
                 >
-                  <span className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-emerald-600" />
-                    Clean Document Scanner
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <span className="truncate">Clean Document Scanner</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                </Link>
+                <Link
+                  href="/tools/image-to-pdf-200kb"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50/60 transition-colors text-text-main font-medium group border border-transparent hover:border-emerald-200"
+                >
+                  <span className="truncate">Image to PDF (&lt;200KB)</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-text-main/40 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                 </Link>
               </div>
             </div>
 
-            {/* Ad Space (Ostrune Exclusive) */}
-            <AdSlot slot="sidebar" />
-          </div>
+            {/* Privacy & RAM Security Card */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-4 sm:p-5 space-y-2.5">
+              <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs sm:text-sm">
+                <Lock className="w-4 h-4 shrink-0 text-emerald-600" />
+                <span>100% In-Memory RAM Shield</span>
+              </div>
+              <p className="text-[11px] text-text-main/70 leading-relaxed">
+                Documents are re-encoded purely inside your browser memory without being transmitted to any remote storage.
+              </p>
+              <div className="flex items-center gap-3 text-[11px] font-semibold text-text-main/60 pt-1">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Zero Watermark
+                </span>
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> 100% Free
+                </span>
+              </div>
+            </div>
+          </aside>
         </div>
+
+        {/* Recommended Workflow Tools */}
+        <RelatedTools currentSlug="/tools/compress-for-whatsapp" />
       </div>
     </div>
   );

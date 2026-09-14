@@ -107,13 +107,15 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'compress pdf to 200kb for tnpsc',
       'compress pdf to 200kb for ssc',
       'pdf size reducer 200kb free',
+      'compress certificate pdf below 200 kb',
+      'online pdf compressor 200 kb without losing quality',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
         question: 'Why do Indian portals strictly demand PDFs under 200 KB?',
         answer:
-          'Recruitment servers like TNPSC OTR and SSC handle millions of concurrent applicant submissions. They set a hard ceiling of 200 KB to optimize database storage. If a document is even 201 KB, the upload crashes. Kagazo compresses your file to a safe 180 KB buffer so it never fails.',
+          'Recruitment servers like TNPSC OTR and SSC handle millions of concurrent applicant submissions. They set a hard ceiling of 200 KB to optimize database storage and network bandwidth. If a document is even 201 KB, the upload crashes. Kagazo compresses your file to a safe 180 KB buffer so it never fails.',
       },
       {
         question: 'Will compressing my PDF to 200KB make text blurry?',
@@ -129,6 +131,26 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         question: 'Can I delete blank or extra pages before compressing?',
         answer:
           'Yes. Use our built-in Page Selector to preview and exclude any unnecessary pages, immediately cutting file size by 50% before image compression even begins.',
+      },
+      {
+        question: 'How do I ensure my document stays between 100 KB and 200 KB?',
+        answer:
+          'Our 200KB preset specifically targets 180 KB. This lands perfectly in the 100 KB to 200 KB sweet spot required by TNPSC and state portals, avoiding both the upper ceiling and lower legibility floor.',
+      },
+      {
+        question: 'Will government rubber stamps and digital signature QR codes remain clear?',
+        answer:
+          'Yes. The engine applies an edge-preserving sharpening kernel specifically to official stamps, holograms, and QR blocks so document verification officers and automated scanners can verify them without errors.',
+      },
+      {
+        question: 'Is my uploaded certificate or marksheet stored on your server?',
+        answer:
+          'Never. Processing executes entirely within volatile RAM memory and files are purged immediately upon download. Zero data persistence, zero privacy leaks.',
+      },
+      {
+        question: 'Is there any fee, daily limit, or watermark added to the PDF?',
+        answer:
+          'Kagazo is 100% free with no daily limits, no watermark, and no mandatory account registration.',
       },
     ],
     relatedTools: [
@@ -162,18 +184,46 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'reduce pdf size to 100kb',
       'pdf compressor 100kb',
       'make pdf 100kb',
+      'compress marksheet to 100kb',
+      'pdf file size reducer under 100 kb free',
+      'how to compress pdf to 100kb without losing quality',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
         question: 'How does Kagazo achieve 100KB without destroying text quality?',
         answer:
-          'Kagazo removes invisible XML metadata, duplicates fonts, and uses 8-bit high-contrast monochrome rendering for scanned documents. This strips color noise while keeping black text razor-sharp.',
+          'Kagazo removes invisible XML metadata, duplicate fonts, and unnecessary color profiles. For scanned documents, it applies 8-bit high-contrast monochrome rendering that strips color noise while keeping black text razor-sharp.',
       },
       {
         question: 'What portals require PDFs under 100 KB?',
         answer:
-          'Many state scholarship portals, railway recruitment boards (RRB), and university admission forms enforce a strict 100 KB upper boundary.',
+          'Many state scholarship portals (NSP, e-Kalyan), railway recruitment boards (RRB document uploads), high court clerk registrations, and university admission forms enforce a strict 100 KB upper boundary.',
+      },
+      {
+        question: 'Can multi-page documents fit under 100 KB?',
+        answer:
+          'Yes, up to 2-3 pages can comfortably compress under 100 KB using our aggressive text-mode quantization. If your PDF has 5+ pages, consider deleting blank cover pages using our Page Selector first.',
+      },
+      {
+        question: 'Will scanned signatures remain identifiable at 100KB?',
+        answer:
+          'Yes. The engine isolates pen stroke contrasts against the paper background, ensuring that candidate signatures and initials do not dissolve into pixelated artifacts.',
+      },
+      {
+        question: 'Can I compress multiple files to 100KB simultaneously?',
+        answer:
+          'Yes! Drag and drop multiple files into batch mode. Kagazo processes each document individually under the strict 100 KB ceiling and lets you download them all in 1 click.',
+      },
+      {
+        question: 'Are my confidential documents safe on Kagazo?',
+        answer:
+          '100% secure. Everything executes in volatile ephemeral RAM memory and is destroyed immediately after compression. No permanent server copies are ever created.',
+      },
+      {
+        question: 'Is this tool completely free with zero watermarks?',
+        answer:
+          'Yes, completely free forever with zero watermarks, brand logos, or subscriptions.',
       },
     ],
     relatedTools: [
@@ -206,18 +256,46 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'neet certificate pdf compress 300kb',
       'reduce pdf to 300kb for upsc',
       'nta neet document size 300kb',
+      'upsc daf pdf compressor',
+      'compress degree certificate to 300kb',
+      'online pdf compressor 300 kb free',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
         question: 'Why does UPSC require certificate PDFs between 20KB and 300KB?',
         answer:
-          'The UPSC Online Application portal enforces a strict limit: files must be at least 20 KB and no more than 300 KB. Our 300KB preset targets 250 KB, placing your file right in the optimal safe zone.',
+          'The UPSC Online Application portal (ORA & DAF) enforces a strict rule: files must be at least 20 KB and no more than 300 KB. Our 300KB preset targets 250 KB, placing your file right in the optimal safe zone.',
       },
       {
         question: 'Can I compress my Aadhaar and Degree transcript together for UPSC DAF?',
         answer:
           'Yes! You can upload both documents simultaneously in our batch mode and download them ready for DAF submission.',
+      },
+      {
+        question: 'Does NTA NEET UG mandate 300KB for category certificates?',
+        answer:
+          'Yes. NTA guidelines specify that SC/ST/OBC-NCL/EWS/PwD certificates must be in PDF format between 50 KB and 300 KB. Our tool targets 240 KB for guaranteed zero-error uploads.',
+      },
+      {
+        question: 'Will university registrar seals and signatures remain legible?',
+        answer:
+          'Yes. At 300KB, the document has plenty of byte budget for 200+ DPI resolution. Kagazo preserves crisp contrast on official stamps, signatures, and university serial numbers.',
+      },
+      {
+        question: 'Can I exclude unwanted pages before compressing to 300KB?',
+        answer:
+          'Yes, click the Page Selector to preview and exclude blank pages or disclaimers, optimizing the byte budget for your primary qualification pages.',
+      },
+      {
+        question: 'Are my UPSC DAF certificates private and safe?',
+        answer:
+          '100% confidential. Processing takes place purely in browser RAM. Your roll numbers, caste certificates, and marksheets are never saved on server disks.',
+      },
+      {
+        question: 'Does Kagazo add any watermark or cost anything?',
+        answer:
+          'Zero watermarks and 100% free forever with unlimited usage.',
       },
     ],
     relatedTools: [
@@ -249,13 +327,41 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'epfo uan passbook pdf compress 500kb',
       'reduce pdf to 500kb online',
       'pdf compressor 500kb',
+      'compress bank statement to 500kb',
+      'epfo kyc document compressor 500 kb',
+      'compress multi page pdf below 500kb',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
         question: 'What is the EPFO UAN KYC PDF size limit?',
         answer:
-          'The EPFO Unified Member Portal requires scanned bank passbooks and cancelled cheques to be in PDF format and strictly less than 500 KB.',
+          'The EPFO Unified Member Portal requires scanned bank passbooks and cancelled cheques to be in PDF format and strictly less than 500 KB with bank IFSC and account number clearly readable.',
+      },
+      {
+        question: 'Can I compress a multi-page bank statement under 500 KB?',
+        answer:
+          'Yes! Kagazo easily compresses 4 to 8 pages of bank statements or passbook entries under 500 KB while retaining tabular line sharpness and transaction numbers.',
+      },
+      {
+        question: 'Why do judicial and court e-filing portals require 500KB?',
+        answer:
+          'High Court and district court e-filing systems require affidavits, vakalatnamas, and annexures under 500 KB to avoid database bottlenecks during bulk hearings.',
+      },
+      {
+        question: 'Will scanned stamp paper text remain sharp?',
+        answer:
+          'Yes. Our compressor preserves high-contrast text edges so non-judicial stamp paper text, notary seals, and advocate signatures remain 100% legible.',
+      },
+      {
+        question: 'Is my financial data and passbook secure?',
+        answer:
+          '100% private. All processing occurs in volatile RAM memory. Zero bytes of your bank statements or passbooks are saved to disk or third-party servers.',
+      },
+      {
+        question: 'Are there any watermarks or hidden charges?',
+        answer:
+          'None. Kagazo is 100% free with unlimited document compression and zero watermarks.',
       },
     ],
     relatedTools: [
@@ -288,6 +394,9 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'compress pdf for tnpsc 200kb',
       'tnpsc community certificate compress 200kb',
       'tnpsc group 4 certificate upload size',
+      'tnpsc pstm certificate pdf 200kb',
+      'tnpsc sslc marksheet compress online',
+      'tamil nadu psc pdf compressor free',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
@@ -300,6 +409,31 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         question: 'How do I compress my Tamil Nadu community certificate?',
         answer:
           'Upload your downloaded e-District Community Certificate. Our tool optimizes it to 180 KB while keeping the Tahsildar digital signature QR code and NIC seal crisp.',
+      },
+      {
+        question: 'Why does TNPSC reject marksheets below 100 KB?',
+        answer:
+          'TNPSC scrutiny officers require clear resolution to verify student registration numbers, subject marks, and school headmaster seals. Files under 100 KB are often rejected for lack of legibility. Kagazo targets 180 KB to keep you safely in the accepted bracket.',
+      },
+      {
+        question: 'Can I compress my PSTM (Persons Studied in Tamil Medium) certificate?',
+        answer:
+          'Yes! Upload your PSTM certificate scan. The engine enhances the Headmaster / Principal signature and school seal while keeping total file size comfortably below 200 KB.',
+      },
+      {
+        question: 'Can I compress multiple certificates together for Group 4 / Group 2?',
+        answer:
+          'Yes! Use our batch mode to drop your SSLC, HSC, Community, and PSTM certificates together. All will be processed strictly under 200 KB and downloaded in 1 click.',
+      },
+      {
+        question: 'Is my personal information and certificate data safe?',
+        answer:
+          '100% private. All processing executes in volatile in-browser RAM. Your certificates are never saved or stored on any server.',
+      },
+      {
+        question: 'Does this tool add watermarks or require payment?',
+        answer:
+          'Kagazo is 100% free with zero watermarks and no registration required.',
       },
     ],
     relatedTools: [
@@ -331,6 +465,9 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'upsc daf pdf size 300kb',
       'upsc otr document size',
       'compress certificate for upsc',
+      'upsc cse daf 1 document upload limit',
+      'upsc educational qualification pdf compress',
+      'upsc civil services pdf compressor free',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
@@ -338,6 +475,36 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
         question: 'What is the UPSC DAF PDF file size limit?',
         answer:
           'UPSC requires documents to be between 20 KB and 300 KB. Our engine targets 250 KB to ensure compliance and zero application rejection.',
+      },
+      {
+        question: 'What documents need to be uploaded for UPSC CSE DAF-1?',
+        answer:
+          'UPSC DAF-1 requires: Certificate of Age Proof (10th marksheet), Educational Qualification Certificate (Degree/Provisional), Category Certificate (OBC-NCL/SC/ST/EWS), and PwBD certificate if applicable. All must be in separate single PDFs under 300 KB.',
+      },
+      {
+        question: 'Will university seals and Controller of Examination signatures remain clear?',
+        answer:
+          'Yes. Our UPSC preset utilizes a 200+ DPI text sharpening matrix to keep fine registrar seals and signature strokes completely crisp.',
+      },
+      {
+        question: 'Can I compress my OBC-NCL certificate with annexures to under 300 KB?',
+        answer:
+          'Yes. Even multi-page category certificates with non-creamy layer declarations can be compressed under 300 KB with 100% legibility.',
+      },
+      {
+        question: 'Can I remove blank pages before submitting to UPSC?',
+        answer:
+          'Yes, use the Page Selector to exclude blank backsides or disclaimers, focusing the file size solely on substantive certificate text.',
+      },
+      {
+        question: 'Are candidate certificates secure on Kagazo?',
+        answer:
+          '100% secure. Files are processed exclusively in volatile ephemeral RAM memory and wiped immediately upon download. No server disk storage.',
+      },
+      {
+        question: 'Is this UPSC tool free without watermarks?',
+        answer:
+          'Yes, 100% free with zero watermarks or branding.',
       },
     ],
     relatedTools: [
@@ -369,13 +536,46 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'ssc cgl document upload size',
       'ssc chsl certificate compress 200kb',
       'compress pdf for ssc',
+      'ssc mts document verification pdf',
+      'ssc cpo certificate upload limit',
+      'staff selection commission pdf compressor 200kb',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
         question: 'What is the SSC document upload size limit?',
         answer:
-          'SSC candidate documents must be in PDF format and strictly below 200 KB (usually between 50 KB and 200 KB).',
+          'SSC candidate documents must be in PDF format and strictly below 200 KB (usually between 50 KB and 200 KB). Our preset targets 175 KB for safe submission.',
+      },
+      {
+        question: 'Which SSC examinations are supported by this tool?',
+        answer:
+          'All SSC portals including SSC CGL (Combined Graduate Level), SSC CHSL (10+2), SSC MTS, SSC GD Constable, SSC CPO (Sub-Inspector), and SSC Selection Posts.',
+      },
+      {
+        question: 'How do I compress Class 10 marksheet for SSC Date of Birth proof?',
+        answer:
+          'Upload your 10th marksheet scan. Kagazo sharpens the date of birth field, roll number, and school board seal while compressing the document safely to ~175 KB.',
+      },
+      {
+        question: 'Will caste certificates (SC/ST/OBC/EWS) remain legible for Document Verification (DV)?',
+        answer:
+          'Yes. Scrutiny officers check the issuing authority designation and validity year. Kagazo protects these critical stamp lines from over-compression.',
+      },
+      {
+        question: 'Can I batch-compress all my certificates for SSC Document Verification?',
+        answer:
+          'Yes! Upload your 10th, 12th, Degree, and Caste certificate together. Kagazo will compress each file under 200 KB simultaneously.',
+      },
+      {
+        question: 'Is my personal data protected during compression?',
+        answer:
+          '100% protected. Files are processed entirely in browser memory. Zero server storage, zero third-party tracking.',
+      },
+      {
+        question: 'Is this service completely free?',
+        answer:
+          'Yes, 100% free with zero watermarks or signups.',
       },
     ],
     relatedTools: [
@@ -408,18 +608,51 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'compress pdf exact size',
       'batch pdf compressor free',
       'pdf size reducer without losing quality',
+      'compress pdf to custom kb',
+      'best free pdf compressor 2026',
+      'pdf compressor no watermark unlimited',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
         question: 'How does Kagazo compare to iLovePDF and 11zon?',
         answer:
-          'iLovePDF forces vague compression levels (Extreme/Recommended) and cannot guarantee exact file sizes like 200KB. 11zon has exact sizes but is cluttered with ads and popups. Kagazo gives you exact target limits, batch compression, page deletion, and zero ads—100% free forever.',
+          'iLovePDF forces vague compression levels (Extreme/Recommended) and cannot guarantee exact file sizes like 200KB. 11zon has exact sizes but is cluttered with aggressive ads and popups. Kagazo gives you exact target limits, batch compression, page deletion, and clean fast performance—100% free forever.',
+      },
+      {
+        question: 'How does the exact target slider work?',
+        answer:
+          'Our binary search quantization engine estimates the byte budget needed for the file and iteratively adjusts compression levels until the resulting PDF lands comfortably below your selected target limit without unnecessary quality loss.',
+      },
+      {
+        question: 'Can I remove individual pages before compressing?',
+        answer:
+          'Yes! Click the Page Selector to preview all pages and click to exclude blank cover sheets, disclaimers, or redundant pages to instantly reduce the file size.',
+      },
+      {
+        question: 'Does this tool support batch compression for multiple PDFs?',
+        answer:
+          'Yes! You can drop 5, 10, or more PDF files at once. All will be compressed to your target size simultaneously and downloaded in 1 click or as a single ZIP.',
       },
       {
         question: 'Are files stored on Kagazo servers?',
         answer:
-          'Never. All processing happens in-memory and is wiped immediately after your download starts. Zero disk storage, 100% privacy.',
+          'Never. All processing happens in volatile RAM memory and is wiped immediately after your download starts. Zero disk storage, 100% privacy.',
+      },
+      {
+        question: 'Will fine vector text lines or scanned stamps be blurred?',
+        answer:
+          'No. Kagazo separates vector text from raster images, preserving text crispness while intelligently optimizing photographic regions.',
+      },
+      {
+        question: 'Is there any file size limit on uploads?',
+        answer:
+          'You can upload files up to 50MB per document for fast client-side in-memory compression.',
+      },
+      {
+        question: 'Does Kagazo add any watermark to the compressed PDF?',
+        answer:
+          'Zero watermarks. Your documents remain completely clean and professional.',
       },
     ],
     relatedTools: [
@@ -453,18 +686,46 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
       'upsc otr pdf compressor 300kb',
       'ssc pdf size reducer 200kb',
       'neet certificate pdf compress',
+      'sarkari exam pdf compressor free',
+      'ibps certificate upload size reducer',
+      'railway rrb document pdf compress 100kb',
     ],
     portalTableSpecs: COMMON_PORTALS,
     faqs: [
       {
         question: 'Why do Indian exam portals reject files above 200KB or 300KB?',
         answer:
-          'State and central recruitment portals enforce hard storage limits to process millions of candidates smoothly. Kagazo guarantees your file is strictly within bounds.',
+          'State and central recruitment portals enforce hard storage limits to process millions of candidates smoothly. Uploading a file even 1 KB over the limit causes instant server rejection. Kagazo guarantees your file is strictly within the safe threshold.',
       },
       {
-        question: 'Will fine marksheet lines or seals be blurred?',
+        question: 'Which government exams are supported by this compressor?',
         answer:
-          'No. Our high-resolution Lanczos algorithm keeps text and stamps sharp. You can inspect the Page 1 preview before downloading.',
+          'All major Indian exams: UPSC Civil Services (DAF & OTR), SSC (CGL, CHSL, MTS, GD), TNPSC (Group 1, 2, 4, VAO), NTA NEET UG, IBPS / SBI Bank PO, Railway RRB, and State PSCs across India.',
+      },
+      {
+        question: 'Will fine marksheet lines, grades, or seals be blurred?',
+        answer:
+          'No. Our high-resolution Lanczos algorithm keeps text, numbers, and rubber stamps sharp. You can inspect the Page 1 preview before downloading.',
+      },
+      {
+        question: 'How do I choose between 100KB, 200KB, and 300KB presets?',
+        answer:
+          'Use the Quick Switch buttons or presets: Choose 200KB for TNPSC and SSC, 300KB for UPSC and NEET, and 100KB for State Scholarships or RRB uploads.',
+      },
+      {
+        question: 'Can I upload camera photos of my marksheets?',
+        answer:
+          'Yes! Kagazo accepts both PDF files and camera photos (JPG/PNG), converting and compressing them into a standard compliant A4 PDF.',
+      },
+      {
+        question: 'Are candidate certificates and roll numbers private on Kagazo?',
+        answer:
+          '100% private. Processing executes exclusively in ephemeral RAM memory. Your files never touch server disks or third-party cloud storage.',
+      },
+      {
+        question: 'Is this exam tool free with zero watermarks?',
+        answer:
+          'Yes, completely free forever with zero watermarks and no login required.',
       },
     ],
     relatedTools: [
@@ -475,4 +736,3 @@ export const TOOL_CONFIGS: Record<string, ToolConfig> = {
     ],
   },
 };
-

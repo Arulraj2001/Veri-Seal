@@ -22,7 +22,6 @@ import {
 import { cn } from '@/lib/utils';
 import { resizeImage, type ImageResizeResponse } from '@/lib/api';
 import { QualityProofEngine } from './QualityProofEngine';
-import { AdSlot } from '@/components/ads/AdSlot';
 import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 export interface CustomPreset {
@@ -646,9 +645,6 @@ export function ImageResizerEngine({
             isPdf={false}
             dimensions={{ width: result.width_px, height: result.height_px, unit: 'px' }}
           />
-
-          {/* Official Agency Partner Slot */}
-          <AdSlot slot="post_download" />
         </div>
       )}
     </div>

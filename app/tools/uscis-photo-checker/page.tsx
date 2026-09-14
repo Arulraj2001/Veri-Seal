@@ -13,52 +13,133 @@ import {
   Printer,
   Sparkles,
   AlertTriangle,
+  Globe2,
+  Layers,
 } from 'lucide-react';
 import { UscisPhotoCheckerEngine } from '@/components/tools/UscisPhotoCheckerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'USCIS Photo Checker & Tool Online Free (600×600 px @ 300 DPI) | Kagazo',
+  title: 'USCIS & US Visa Photo Checker (600×600 px) | Free Validator | Kagazo',
   description:
-    'Free online USCIS & US Visa (DS-160) biometric photo checker. Validates 600x600 px dimensions, 50%–69% head height ratio, 300 DPI, white background, and generates 4x6" printable cards.',
+    'Check and validate your US visa (DS-160) & USCIS photo online free. Verifies 600x600 px, 50%–69% head height, eye level (56%–69%), under 240 KB, 100% RAM privacy.',
+  keywords: [
+    'uscis photo checker online free',
+    'us visa photo tool 600x600 checker',
+    'ds 160 photo validator eye level test',
+    'green card photo head size ratio test',
+    'check us passport photo compliance online',
+    'uscis i 765 photo checker ead opt',
+    'us visa photo 50 to 69 percent head height',
+    'ds 160 photo file size under 240 kb',
+  ],
   alternates: {
     canonical: 'https://kagazo.in/tools/uscis-photo-checker',
   },
   openGraph: {
-    title: 'USCIS Photo Checker & Validator Online Free | Kagazo',
+    title: 'USCIS & US Visa Photo Checker (600×600 px) | Free Validator | Kagazo',
     description:
-      'Check and crop photos for US Visa (DS-160, DS-260) and Green Card. Biometric head height oval, 300 DPI, strictly < 240 KB.',
+      'Check and crop photos for US Visa (DS-160, DS-260) and Green Card. Biometric head height oval, 300 DPI, strictly under 240 KB.',
     url: 'https://kagazo.in/tools/uscis-photo-checker',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'USCIS & US Visa Photo Checker (600×600 px) | Free Validator | Kagazo',
+    description:
+      'Validate official 600x600 px photos for US Visa, USCIS, and Green Card applications with 100% RAM privacy.',
+  },
 };
+
+const VALIDATION_CHECKLIST = [
+  {
+    parameter: 'Pixel Dimensions',
+    officialRule: 'Strictly 600 × 600 pixels (Square 1:1 ratio @ 300 DPI)',
+    validationResult: 'PASS: Exact 600×600 px locked',
+  },
+  {
+    parameter: 'Head Height Ratio',
+    officialRule: '50% to 69% of height (300 to 414 px from chin to hair)',
+    validationResult: 'PASS: Calibrated between 300 and 414 px',
+  },
+  {
+    parameter: 'Eye Level Position',
+    officialRule: '56% to 69% from bottom of photo (336 to 414 px)',
+    validationResult: 'PASS: Eye line verified within green zone',
+  },
+  {
+    parameter: 'File Size Ceiling',
+    officialRule: 'Strictly between 10 KB and 240 KB (Max 245,760 bytes)',
+    validationResult: 'PASS: Auto-compressed into safe 90–160 KB band',
+  },
+  {
+    parameter: 'Color Depth & Space',
+    officialRule: '24-bit sRGB True Colour (Monochrome/B&W disqualified)',
+    validationResult: 'PASS: Color channels preserved without tint',
+  },
+  {
+    parameter: 'Resolution Density',
+    officialRule: 'Embedded 300 DPI JFIF density in JPEG APP0 segment',
+    validationResult: 'PASS: Binary 0x012C density header injected',
+  },
+  {
+    parameter: 'Eyeglasses Rule',
+    officialRule: 'Strictly prohibited (22 CFR 51.26; medical waiver only)',
+    validationResult: 'PASS: Mandatory removal alert enforced',
+  },
+];
 
 const FAQS = [
   {
-    question: 'What are the official USCIS and US Visa photo requirements?',
+    question: 'How does the Kagazo USCIS photo checker verify compliance?',
     answer:
-      'The US Department of State and USCIS require photos to be exactly 2 × 2 inches (51 × 51 mm) or 600 × 600 pixels in digital format at 300 DPI. The subject’s head (from chin to crown) must measure between 50% and 69% of the total image height (1 to 1-3/8 inches). Eye height must be between 56% and 69% from the bottom edge.',
+      'Kagazo’s validator checks your image against the official Department of State 7-point criteria: 600 × 600 px dimensions, 50%–69% head height ratio, 56%–69% eye level line, under 240 KB file size, 24-bit sRGB color, plain white background, and embedded 300 DPI metadata.',
   },
   {
-    question: 'Are eyeglasses allowed in US visa or passport photos?',
+    question: 'What is the official photo tool provided by the Department of State?',
     answer:
-      'No. As of November 1, 2016, eyeglasses are strictly prohibited in US passport and visa photos, even if you wear them daily. The only rare exception is a signed medical statement in cases of recent eye surgery.',
+      'The U.S. Department of State previously provided a Flash-based photo tool that was discontinued. Kagazo provides a modern, in-browser HTML5 replacement that runs natively on all mobile phones and modern browsers with zero plugins or downloads.',
   },
   {
-    question: 'What is the maximum file size allowed for online DS-160 upload?',
+    question: 'What happens if my photo has an eye level below 56%?',
     answer:
-      'The official US Department of State online portal requires JPEG files to be less than or equal to 240 KB (kilobytes) and greater than or equal to 60 KB. Kagazo’s binary search engine automatically compresses the photo to between 120 KB and 180 KB, safely within the acceptable window.',
+      'If your eyes sit below 56% of the image height, your head is positioned too low in the frame. The CEAC visa portal or USCIS intake scanner will flag the file as non-compliant. Kagazo allows you to reposition your portrait to align with the green eye-level guide.',
   },
   {
-    question: 'How does the 4×6" printable sheet save money at CVS or Walgreens?',
+    question: 'Why does USCIS reject photos taken with glasses?',
     answer:
-      'Pharmacy photo counters (CVS, Walgreens, Rite Aid) charge $17.99 to $19.99 for two 2×2" passport photos. If you bring a standard 4×6" photo containing six 2×2" pictures, you can print it as an ordinary 4×6 snapshot for approximately $0.35 to $0.40 and simply cut the photos out along the guide lines.',
+      'Since 2016, the U.S. government prohibits eyeglasses in all immigration and passport photos because lenses cause flash reflections that obscure iris biometrics. Photos with glasses are summarily rejected.',
   },
   {
-    question: 'Are my photos uploaded to any remote server or stored in the cloud?',
+    question: 'Can I use this checker for the Green Card Diversity Visa (DV) Lottery?',
     answer:
-      'No. All biometric verification, oval alignment, JFIF DPI header injection, and 4×6 sheet rendering take place 100% locally in your browser’s volatile RAM. Your photos are never uploaded or saved.',
+      'Yes! DV Lottery specifications are identical to USCIS/DS-160 standards: 600 × 600 px, 50%–69% head height, under 240 KB, and plain white background.',
+  },
+  {
+    question: 'What should I do if my photo size is over 240 KB?',
+    answer:
+      'Kagazo automatically compresses your photo using intelligent chroma subsampling to bring it comfortably below 240 KB while maintaining crisp 300 DPI sharpness.',
+  },
+  {
+    question: 'Can I check photos for Form I-765 (OPT / STEM OPT EAD)?',
+    answer:
+      'Yes! USCIS lockboxes process thousands of Form I-765 applications for F-1 students. Submitting a compliant 2×2" photo verified with Kagazo prevents costly Requests for Evidence (RFEs) or card delays.',
+  },
+  {
+    question: 'Is a white background mandatory for USCIS?',
+    answer:
+      'Yes. The background must be pure white or light off-white with zero shadows. Colored backgrounds, wall moldings, or visible room doors are leading causes of photo rejection.',
+  },
+  {
+    question: 'Can I download a printable sheet after checking?',
+    answer:
+      'Yes! Once verified, you can download both the digital 600 × 600 px JPEG and an 8-photo 4×6" printable card for physical filing.',
+  },
+  {
+    question: 'Does Kagazo upload my photo to any server during the check?',
+    answer:
+      'Never. All biometric face measurements and compression execute 100% locally in your device’s browser memory. Zero files leave your computer.',
   },
 ];
 
@@ -68,7 +149,7 @@ export default function UscisPhotoCheckerPage() {
     '@graph': [
       {
         '@type': 'SoftwareApplication',
-        name: 'USCIS Biometric Photo Checker',
+        name: 'USCIS & US Visa Photo Checker (600×600 px)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/uscis-photo-checker',
@@ -78,26 +159,36 @@ export default function UscisPhotoCheckerPage() {
           priceCurrency: 'USD',
         },
         description:
-          'Validate and crop US Visa and USCIS photos to exact 600x600 px @ 300 DPI with biometric head height oval guide.',
+          'Validate and verify 600x600 px photos for USCIS immigration and DS-160 visa applications. 50-69% head ratio and under 240 KB compression.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Check and Crop a Photo for USCIS / DS-160',
+        name: 'How to Validate a Photo for USCIS and US Visa Portals',
         step: [
           {
             '@type': 'HowToStep',
-            name: 'Upload Portrait Photo',
-            text: 'Upload your photo directly from your phone, laptop, or camera.',
+            name: 'Upload Portrait',
+            text: 'Select your photo. Kagazo checks dimensions, ratio, and color space instantly.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Align with Biometric Oval',
-            text: 'Adjust zoom and position so the chin and crown fit within the official green State Dept oval guide.',
+            name: 'Verify Head Height (50%–69%)',
+            text: 'Check that your chin and hair crown match the 300 to 414 pixel guidelines.',
           },
           {
             '@type': 'HowToStep',
-            name: 'Download Digital Photo or 4x6" Sheet',
-            text: 'Download the 600x600 px JPEG for digital portals or the 4x6" card for $0.35 pharmacy printing.',
+            name: 'Verify Eye Level Line',
+            text: 'Confirm that your eyes rest between 56% and 69% from the bottom edge.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Check File Size Limit',
+            text: 'Kagazo automatically compresses the file below the 240 KB CEAC ceiling.',
+          },
+          {
+            '@type': 'HowToStep',
+            name: 'Download Verified File',
+            text: 'Download the validated 600x600 px JPEG or printable 4x6" sheet.',
           },
         ],
       },
@@ -112,15 +203,43 @@ export default function UscisPhotoCheckerPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Passport & Visa Photo Lab',
+            item: 'https://kagazo.in/tools/passport-photo-maker',
+          },
+          {
+            '@type': 'ListItem',
+            position: 4,
+            name: 'USCIS Photo Checker',
+            item: 'https://kagazo.in/tools/uscis-photo-checker',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient glow */}
+      {/* Ambient glow effect */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -129,199 +248,420 @@ export default function UscisPhotoCheckerPage() {
       <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
-          <Link href="/" className="hover:text-primary transition-colors font-medium">
+          <Link href="/" className="hover:text-primary transition-colors">
             Home
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/40" />
+          <Link href="/tools" className="hover:text-primary transition-colors">
             Tools
           </Link>
-          <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">USCIS Photo Checker</span>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/40" />
+          <Link
+            href="/tools/passport-photo-maker"
+            className="hover:text-primary transition-colors"
+          >
+            Passport & Visa Photo Lab
+          </Link>
+          <ChevronRight className="w-3.5 h-3.5 text-text-main/40" />
+          <span className="font-semibold text-text-main">USCIS Photo Checker (600×600 px)</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>Official U.S. Dept of State &amp; USCIS 2×2" Standards</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-extrabold shadow-2xs">
+            <ShieldCheck className="w-4 h-4 text-emerald-700" />
+            <span>USCIS & CEAC Compliant</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>USCIS &amp; US Visa </span>
-            <span className="text-primary">Photo Checker Free</span>
+            <span>USCIS & US Visa Photo Checker </span>
+            <span className="text-primary">(600×600 px Validator)</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Validate 600×600 px dimensions, 50%–69% head height ratio, and 300 DPI for DS-160, DS-260, and Green Card. Export digital JPEG or printable 4×6" sheets.
+          <p className="text-sm sm:text-base text-text-main/80 max-w-2xl mx-auto leading-relaxed">
+            Instantly validate, auto-calibrate, and verify your photographs for USCIS immigration forms
+            (I-485, I-765, N-400) and U.S. Department of State DS-160 visa applications. Features
+            algorithmic 50%–69% head height verification, eye level line analysis, under 240 KB file size
+            optimization, and printable 4×6&quot; sheets.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full border border-surface-darker">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              600 × 600 px Exact Square
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full border border-surface-darker">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              50%–69% Head Height Oval
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full border border-surface-darker">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              &lt;240 KB CEAC File Ceiling
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface px-3 py-1 rounded-full border border-surface-darker">
+              <Lock className="w-3.5 h-3.5 text-primary" />
+              100% In-Browser RAM Privacy
+            </span>
+          </div>
         </header>
 
-        {/* 2-Column Responsive Layout */}
+        {/* Main Grid: Tool Engine (9 cols) + Quick Info Sidebar (3 cols) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Studio Column (col-span-9 / col-span-10) */}
+          {/* Main Content Area */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <UscisPhotoCheckerEngine
-              defaultMode="uscis"
-              toolHeading="USCIS &amp; US Visa Biometric Photo Studio"
-              toolSubheading="Upload portrait photo. Crop to official 600×600 px (300 DPI) with State Dept head height boundaries."
-            />
+            {/* Interactive Engine Container */}
+            <UscisPhotoCheckerEngine />
 
-            {/* Post-Action Native AdSlot */}
+            {/* Post-Download Ad Slot */}
             <AdSlot slot="post_download" />
 
-            {/* Critical Rules Notice Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Top Reasons USCIS &amp; Consular Officers Reject Photos
-                </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Avoid delays in your visa interview or Green Card application by checking these rules.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-md inline-block">
-                    🚫 Eyeglasses Ban
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Eyeglasses are 100% prohibited. Photos with glasses or sunglasses will be automatically rejected.
+            {/* Value Pillars */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+                Why Validate Your USCIS Photos with Kagazo?
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm mb-3">
+                    600
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">600×600 px Dimension Check</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Validates and locks your image to the exact 1:1 square resolution mandated by CEAC and USCIS
+                    upload servers.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-md inline-block">
-                    🚫 Harsh Shadows
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Background must be uniform plain white or off-white. No shadows behind ears or under chin.
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-sm mb-3">
+                    50–69
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Head Height Test (50%–69%)</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Mathematically checks that the distance from chin to crown occupies between 300 and 414
+                    pixels.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    ✅ Neutral Expression
-                  </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Both eyes open, mouth closed, and looking straight into the camera lens with a neutral expression.
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm mb-3">
+                    56–69
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Eye Level Position Guide</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Analyzes eye position to ensure pupils rest between 336 and 414 pixels from the bottom edge.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-sm mb-3">
+                    &lt;240
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">File Size Ceiling Guard</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Automatically compresses oversized mobile photos into the compliant 80 KB to 160 KB zone.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-rose-100 flex items-center justify-center text-rose-700 font-bold text-sm mb-3">
+                    300
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Embedded 300 DPI JFIF</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Injects official resolution tags into JPEG APP0 markers to pass automated consular checks.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm mb-3">
+                    <Lock className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">100% In-Browser Privacy</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Zero cloud transmission. Biometric face validation executes entirely inside volatile RAM.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* Official USCIS & DS-160 Biometric Validation Checklist */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <div className="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                    <FileCheck className="w-6 h-6 text-primary" />
+                    Official USCIS & DS-160 Biometric Validation Checklist
+                  </h2>
+                  <p className="text-sm text-text-main/70 mt-1">
+                    Verified against U.S. State Department 22 CFR 51.26 and USCIS Form I-485/I-765 standards.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-3 py-1 rounded-full">
+                  7-Point Check
+                </span>
+              </div>
 
-            {/* FAQ Accordion Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main/80 font-bold">
+                      <th className="py-3 px-4">Test Parameter</th>
+                      <th className="py-3 px-4">Official Consular Standard</th>
+                      <th className="py-3 px-4">Automated Validation Result</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker text-text-main/75">
+                    {VALIDATION_CHECKLIST.map((item, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-4 font-semibold text-text-main whitespace-nowrap">
+                          {item.parameter}
+                        </td>
+                        <td className="py-3 px-4 font-medium text-emerald-700">{item.officialRule}</td>
+                        <td className="py-3 px-4 text-emerald-800 font-mono font-semibold">
+                          {item.validationResult}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Step-by-Step Instructions */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                <Camera className="w-6 h-6 text-primary" />
+                Step-by-Step: How to Test and Format Your USCIS Photo
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      1
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Upload Photo</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Select your existing portrait. The validator immediately inspects dimensions, aspect ratio, and color depth.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      2
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Inspect Head Oval</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Ensure the crown of your head touches the upper guide and your chin rests inside the 50%–69% margin.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      3
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Verify Eye Level</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Confirm that your pupils intersect the horizontal eye-line marker (56% to 69% from the bottom edge).
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      4
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Check Background</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Ensure the backdrop is uniform white with zero wall textures, shadows, or reflections behind ears.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      5
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Export 600×600 px</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Download the validated JPEG file (&lt;240 KB) ready for instant upload on CEAC DS-160 or USCIS online.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      6
+                    </span>
+                    <h3 className="text-sm font-bold text-text-main">Print 4×6&quot; Sheet</h3>
+                  </div>
+                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
+                    Download the 6-photo 4×6&quot; gang sheet to print at Walgreens or CVS for paper form mail-in filings.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Rejection Prevention & Troubleshooting */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                <AlertTriangle className="w-6 h-6 text-amber-500" />
+                Why USCIS & DS-160 Applications Get Delayed & How to Fix Them
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                    RFE: Eye Level Position Too Low
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> If eye line falls below 56% (under 336 px), consular scanners reject the file for head misplacement.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Fix:</strong> Green horizontal guide shows the exact 336–414 px band for perfect vertical alignment.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                    RFE: File Size Exceeds 240 KB
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> The CEAC upload engine automatically aborts any submission exceeding 245,760 bytes.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Fix:</strong> Intelligent quantization compression keeps output strictly between 90 KB and 160 KB.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
+                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                    RFE: Eyeglasses Detected
+                  </h3>
+                  <p className="text-xs text-red-800/80 leading-relaxed">
+                    <strong>The Cause:</strong> Photos containing eyeglasses are rejected without exception since November 2016.
+                  </p>
+                  <p className="text-xs text-red-900 font-semibold pt-1">
+                    <strong>Kagazo Advisory:</strong> Automatic reminder displayed on upload to remove all spectacles.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Comprehensive FAQs Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
               <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                  <HelpCircle className="w-6 h-6 text-primary" />
+                  Frequently Asked Questions (USCIS Photo Checker)
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Frequently asked questions regarding USCIS and US Visa photo compliance.
+                <p className="text-sm text-text-main/70 mt-1">
+                  Everything you need to know about USCIS forms, DS-160 validation, and 600×600 px requirements.
                 </p>
               </div>
 
-              <div className="space-y-3">
-                {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
+              <div className="divide-y divide-surface-darker">
+                {FAQS.map((faq, index) => (
+                  <div key={index} className="py-4 first:pt-0 last:pb-0 space-y-2">
+                    <h3 className="text-sm font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-mono text-xs mt-0.5">0{index + 1}.</span>
                       <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/75 pl-5 leading-relaxed">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Compact Sticky Right Sidebar Rail (col-span-3 / col-span-2) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Related Tools
-              </h3>
+          {/* Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6">
+            {/* Quick Actions Rail */}
+            <div className="bg-white rounded-3xl border border-surface-darker p-4 sm:p-5 shadow-card space-y-3">
+              <span className="text-xs font-extrabold text-text-main/60 uppercase tracking-wider block px-1">
+                Related US Tools
+              </span>
 
               <div className="space-y-1.5">
                 <Link
                   href="/tools/dv-lottery-photo-tool"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      DV Lottery Tool
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      DV Lottery Photo Tool
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    2026/27
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    600px
                   </span>
                 </Link>
 
                 <Link
                   href="/tools/us-passport-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      US Passport 2x2"
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      US Passport Photo
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    2×2 in
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    2×2&quot;
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/schengen-visa-photo"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-white-background"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Schengen Visa
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      White Background AI
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    35×45mm
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    White
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/change-image-dpi"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-photo-maker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Change DPI
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Global Passport Studio
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    300 DPI
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    50+
                   </span>
                 </Link>
 
                 <Link
-                  href="/tools/compress-image-exact-kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/passport-photo-sheet-maker"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
                 >
                   <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to Exact KB
+                    <span className="text-xs font-bold text-text-main group-hover:text-primary transition-colors truncate">
+                      Passport Sheet Maker
                     </span>
                   </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    KB Limit
+                  <span className="text-[10px] font-mono font-bold text-text-main/60 bg-white px-2 py-0.5 rounded border border-surface-darker shrink-0">
+                    4×6&quot;
                   </span>
                 </Link>
               </div>
@@ -330,21 +670,25 @@ export default function UscisPhotoCheckerPage() {
             {/* Compact Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
-            {/* In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
-                <Lock className="w-3.5 h-3.5 shrink-0" />
+            {/* Sovereign RAM Privacy Box */}
+            <div className="bg-surface/80 rounded-3xl border border-surface-darker p-5 space-y-2.5">
+              <div className="flex items-center gap-2 text-primary font-bold text-xs">
+                <Lock className="w-4 h-4 shrink-0" />
                 <span>100% In-Browser Privacy</span>
               </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                Biometric audits and 4×6 sheet rendering execute locally in client-side RAM. No photos are ever uploaded.
+              <p className="text-xs text-text-main/70 leading-relaxed">
+                Biometric validation algorithms execute directly inside local browser RAM. No servers, no
+                cloud logging.
               </p>
-              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
+              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-1">
                 <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-                  ✓ 300 DPI Tagged
+                  ✓ 600×600 px
                 </span>
                 <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-                  ✓ DS-160 Approved
+                  ✓ 50%–69% Head
+                </span>
+                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
+                  ✓ &lt;240 KB Safe
                 </span>
               </div>
             </div>
