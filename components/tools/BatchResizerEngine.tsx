@@ -93,7 +93,7 @@ export default function BatchResizerEngine() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="w-full space-y-8">
       {/* Upload Zone */}
       <div className="bg-white rounded-3xl border border-surface-darker/80 p-6 sm:p-8 shadow-sm">
         <input

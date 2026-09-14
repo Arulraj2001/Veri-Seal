@@ -229,7 +229,7 @@ export function ColorPickerEngine({ defaultHex = '#E6570B' }: { defaultHex?: str
   };
 
   return (
-    <div className="space-y-6">
+    <div className="w-full space-y-6">
       {/* Interactive Color Studio */}
       <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 sm:p-8 space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">

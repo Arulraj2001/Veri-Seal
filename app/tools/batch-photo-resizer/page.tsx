@@ -11,47 +11,94 @@ import {
   Archive,
   Printer,
   FileCheck2,
+  CheckCircle2,
+  Users,
+  Download,
 } from 'lucide-react';
 import BatchResizerEngine from '@/components/tools/BatchResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Bulk Batch Photo Resizer & ZIP Downloader | Cyber Cafe Multi-Applicant Hub',
+  title: 'Bulk Batch Photo Resizer & ZIP Downloader | Cyber Cafe Multi-Applicant Hub | Kagazo',
   description:
     'Resize up to 50 candidate passport photos and signatures in 1 click for SSC, UPSC, and Banking exams. In-memory parallel batch compression with automatic structured ZIP download. 100% free RAM privacy.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/batch-photo-resizer',
+    canonical: 'https://kagazo.in/tools/batch-photo-resizer',
   },
   openGraph: {
     title: 'Free Bulk Batch Photo Resizer & ZIP Downloader | Kagazo',
     description:
       'High-speed batch photo and signature resizer for Cyber Cafe and CSC operators. Process up to 50 applicant photos instantly.',
-    url: 'https://Kagazo.in/tools/batch-photo-resizer',
+    url: 'https://kagazo.in/tools/batch-photo-resizer',
     siteName: 'Kagazo',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free Bulk Batch Photo Resizer & ZIP Downloader | Kagazo',
+    description:
+      'Resize up to 50 candidate photos and signatures simultaneously in volatile browser RAM with structured ZIP export.',
+  },
 };
+
+const BATCH_SPECS = [
+  {
+    exam: 'SSC CGL / CHSL / MTS',
+    photoSpec: '3.5 × 4.5 cm (20–50 KB, 300 DPI)',
+    sigSpec: '4.0 × 2.0 cm (10–20 KB, 300 DPI)',
+    namingConvention: 'candidate_name_ssc_photo.jpg',
+  },
+  {
+    exam: 'UPSC Civil Services / NDA',
+    photoSpec: '3.5 × 4.5 cm (20–300 KB, 300 DPI)',
+    sigSpec: '3.5 × 1.5 cm (20–300 KB, 300 DPI)',
+    namingConvention: 'candidate_name_upsc_photo.jpg',
+  },
+  {
+    exam: 'IBPS PO / Clerk / SBI',
+    photoSpec: '4.5 × 3.5 cm (20–50 KB, 300 DPI)',
+    sigSpec: '140 × 60 px (10–20 KB, 300 DPI)',
+    namingConvention: 'candidate_name_ibps_photo.jpg',
+  },
+  {
+    exam: 'TNPSC OTR (Group 1, 2, 4)',
+    photoSpec: '3.5 × 4.5 cm (20–50 KB with Name/DOP)',
+    sigSpec: '3.5 × 1.5 cm (10–20 KB, 300 DPI)',
+    namingConvention: 'candidate_name_tnpsc_photo.jpg',
+  },
+  {
+    exam: 'Railway RRB NTPC / Group D',
+    photoSpec: '320 × 240 px (20–50 KB, 300 DPI)',
+    sigSpec: '160 × 80 px (10–40 KB, 300 DPI)',
+    namingConvention: 'candidate_name_rrb_photo.jpg',
+  },
+];
 
 const FAQS = [
   {
     question: 'How many files can I process simultaneously in a single batch?',
     answer:
-      'You can upload and compress up to 50 candidate photos or signatures at once. The engine automatically processes each image in parallel and packs them into a single clean ZIP archive.',
+      'You can upload, calibrate, and compress up to 50 candidate photos or signatures at once. The engine automatically processes each image in parallel through client-side HTML5 canvas worker threads and bundles them into a clean, organized ZIP archive in just 2 to 4 seconds.',
   },
   {
-    question: 'Are applicant photos saved on Kagazo servers?',
+    question: 'Are applicant photos or signatures saved on Kagazo servers?',
     answer:
-      'Never. All photos are processed in volatile RAM memory with zero server disk persistence. Once your ZIP file is downloaded, all in-memory buffers are instantly purged.',
+      'Never. Kagazo strictly operates with zero-cloud RAM processing. All files are loaded directly into browser memory buffers, processed client-side via hardware-accelerated WebAssembly and Canvas APIs, and purged immediately after the ZIP archive is generated. No citizen data is ever uploaded or stored.',
   },
   {
     question: 'Can I resize both photos and signatures together in one batch?',
     answer:
-      'We recommend running photos under the Photo preset (e.g. SSC Photo 350x450 px) and signatures in a second batch under the Signature preset (e.g. SSC Signature 140x60 px) to ensure exact aspect ratio calibration.',
+      'For optimum aspect ratio precision, we recommend running photographs in one batch under the Photo preset (e.g., 3.5 × 4.5 cm, 20–50 KB) and signatures in a second batch under the Signature preset (e.g., 140 × 60 px, 10–20 KB). This ensures that portrait and landscape aspect ratios are never distorted.',
   },
   {
-    question: 'Does the ZIP file rename the processed files?',
+    question: 'Does the ZIP download retain proper filenames for each candidate?',
     answer:
-      'Yes! The engine appends the preset specification code (e.g., candidate1_ssc_photo.jpg) so CSC operators can easily organize applicants without confusing files.',
+      'Yes! The engine appends the target specification code and index to each file (e.g., candidate1_ssc_photo.jpg, candidate2_ssc_photo.jpg) so Cyber Cafe and CSC operators can easily map processed files back to the respective candidate registration forms without administrative confusion.',
+  },
+  {
+    question: 'Does this bulk tool inject required 300 DPI headers into the exported files?',
+    answer:
+      'Yes. Every processed image inside the downloaded ZIP file contains valid JFIF binary density markers (0x012C / 300 DPI). This eliminates common recruitment portal validation rejections that flag images lacking high-resolution camera metadata.',
   },
 ];
 
@@ -62,7 +109,7 @@ export default function BatchResizerPage() {
       {
         '@type': 'WebApplication',
         name: 'Kagazo Bulk Batch Photo Resizer & ZIP Downloader',
-        url: 'https://Kagazo.in/tools/batch-photo-resizer',
+        url: 'https://kagazo.in/tools/batch-photo-resizer',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All',
         offers: {
@@ -80,17 +127,17 @@ export default function BatchResizerPage() {
           {
             '@type': 'HowToStep',
             name: 'Select Multiple Photos',
-            text: 'Choose up to 50 applicant passport photos or signature images from your device.',
+            text: 'Choose up to 50 applicant passport photos or signature images from your local device storage.',
           },
           {
             '@type': 'HowToStep',
             name: 'Select Exam Preset',
-            text: 'Pick target exam preset such as SSC, UPSC, IBPS, or RRB.',
+            text: 'Pick target exam preset such as SSC, UPSC, IBPS, or Railway RRB to enforce strict byte and pixel boundaries.',
           },
           {
             '@type': 'HowToStep',
             name: 'Batch Process & Download ZIP',
-            text: 'Click Process All and download the compressed ZIP archive containing all compliant images.',
+            text: 'Click Process All and download the consolidated ZIP archive containing all compliant candidate photos ready for portal upload.',
           },
         ],
       },
@@ -104,6 +151,29 @@ export default function BatchResizerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Bulk Batch Photo Resizer',
+            item: 'https://kagazo.in/tools/batch-photo-resizer',
+          },
+        ],
       },
     ],
   };
@@ -119,7 +189,7 @@ export default function BatchResizerPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -127,130 +197,184 @@ export default function BatchResizerPage() {
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <Link href="/tools" className="hover:text-primary transition-colors font-medium">
-            Exam Tools
+            Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
           <span className="text-primary font-bold truncate">Bulk Batch Photo Resizer</span>
         </nav>
 
-        {/* Main Grid: 68% Left Focus + 32% Right Sidebar */}
+        {/* Hero Header */}
+        <header className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs sm:text-sm font-semibold shadow-2xs">
+            <Layers className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>Cyber Cafe &amp; CSC Multi-Applicant Production Engine</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
+            <span>Bulk Batch Photo Resizer </span>
+            <span className="text-primary">&amp; ZIP Downloader</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
+            Resize, crop, and compress up to 50 applicant photos or signatures simultaneously. Zero server disk persistence with instant structured ZIP download pre-calibrated for SSC, UPSC, Banking, and State PSC portals.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser RAM Privacy
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Users className="w-4 h-4 text-primary" /> Up to 50 Files Simultaneously
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Download className="w-4 h-4 text-primary" /> Instant 1-Click ZIP Export
+            </span>
+          </div>
+        </header>
+
+        {/* 2-Column Responsive Layout Blueprint */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column (68%) */}
-          <div className="lg:col-span-8 space-y-10">
-            {/* Header Hero */}
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <Layers className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Cyber Cafe & CSC Multi-Applicant Hub</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground tracking-tight leading-tight">
-                Bulk Batch Photo Resizer & ZIP Downloader
-              </h1>
-              <p className="text-base text-muted-foreground leading-relaxed">
-                Resize, crop, and compress up to 50 applicant photos or signatures simultaneously. Zero server disk persistence with instant structured ZIP download pre-calibrated for SSC, UPSC, and Banking portals.
-              </p>
-            </div>
-
-            {/* Privacy Badge */}
-            <div className="flex items-center gap-3 p-3.5 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-xs text-emerald-900 font-medium">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-              <span>
-                <strong>100% In-Memory RAM Privacy:</strong> Every photo is processed in temporary volatile memory and purged instantly. Zero images are saved to disk or server logs.
-              </span>
-            </div>
-
-            {/* Core Interactive Tool Engine */}
+          {/* Main Primary Workspace */}
+          <main className="lg:col-span-9 xl:col-span-10 space-y-8">
+            {/* Interactive Engine Container */}
             <BatchResizerEngine />
 
-            {/* FAQ Accordion */}
-            <div className="bg-white rounded-3xl border border-surface-darker/70 p-6 sm:p-8 space-y-6 shadow-sm">
+            {/* Post-Download Native Sponsor AdSlot */}
+            <AdSlot slot="post_download" />
+
+            {/* Multi-Applicant Batch Standards Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-1">
+                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                  <FileCheck2 className="w-5 h-5 text-primary" />
+                  Official Exam Batch Specifications Reference
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Standard upload limits applied automatically during parallel batch processing.
+                </p>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs sm:text-sm text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface/50 text-text-main font-bold">
+                      <th className="p-3.5">Recruitment Authority</th>
+                      <th className="p-3.5">Photo Dimension &amp; Size</th>
+                      <th className="p-3.5">Signature Dimension &amp; Size</th>
+                      <th className="p-3.5">ZIP Output Format</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker/60 text-text-main/80">
+                    {BATCH_SPECS.map((spec, idx) => (
+                      <tr key={idx} className="hover:bg-surface/30 transition-colors">
+                        <td className="p-3.5 font-bold text-text-main">{spec.exam}</td>
+                        <td className="p-3.5 font-mono text-emerald-700 font-bold">{spec.photoSpec}</td>
+                        <td className="p-3.5 font-mono">{spec.sigSpec}</td>
+                        <td className="p-3.5 font-mono text-text-main/70">{spec.namingConvention}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Why Batch Processing Matters */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
+                <Zap className="w-6 h-6 text-emerald-600" />
+                Why Cyber Cafes &amp; CSC Centers Choose Kagazo Bulk Resizer
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm mb-3">
+                    50x
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Zero Single-Click Fatigue</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Process 50 candidates in 3 seconds. Stop uploading and downloading 50 individual photos one by one.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm mb-3">
+                    ZIP
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Structured ZIP Archive</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Instantly packs all compliant files into one clean ZIP file ready for extraction on counter workstations.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm mb-3">
+                    DPI
+                  </div>
+                  <h3 className="text-sm font-bold text-text-main mb-1.5">Embedded 300 DPI JFIF</h3>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Every file receives true binary DPI headers ensuring 100% acceptance on central government application servers.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Comprehensive FAQs */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
               <div className="flex items-center gap-2.5 border-b border-surface-darker/60 pb-4">
                 <HelpCircle className="w-5 h-5 text-emerald-600" />
-                <h3 className="text-lg font-bold text-foreground">Frequently Asked Questions</h3>
+                <h2 className="text-lg sm:text-xl font-bold text-text-main">Frequently Asked Questions</h2>
               </div>
               <div className="space-y-4">
                 {FAQS.map((faq, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
-                    <h4 className="font-bold text-foreground text-sm flex items-start gap-2">
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
+                    <h3 className="font-bold text-text-main text-sm flex items-start gap-2">
                       <span className="text-emerald-600 font-extrabold">Q:</span>
                       {faq.question}
-                    </h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed pl-5">
-                      {faq.answer}
-                    </p>
+                    </h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed pl-5">{faq.answer}</p>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
+          </main>
 
-          {/* Right Sidebar (32%) */}
-          <div className="lg:col-span-4 space-y-6">
-            {/* Value Pillar Card */}
-            <div className="p-6 bg-white rounded-3xl border border-surface-darker/70 shadow-sm space-y-4">
-              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-                <Zap className="w-4 h-4 text-emerald-600" />
-                <span>Cyber Cafe Efficiency Perks</span>
-              </h3>
-              <div className="space-y-3 text-xs text-slate-600">
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">50 Photos in 3 Seconds</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">High-speed parallel RAM processing saves CSC queues.</div>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">Single ZIP Stream</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">No clicking 50 individual download buttons.</div>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                  <div className="font-bold text-slate-800">100% Guaranteed Pass</div>
-                  <div className="text-[11px] text-slate-500 mt-0.5">Exact byte limits prevent portal form rejection.</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Related Tools */}
-            <div className="p-6 bg-white rounded-3xl border border-surface-darker/70 shadow-sm space-y-3">
-              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-emerald-600" />
-                <span>Related CSC Tools</span>
-              </h3>
-              <div className="space-y-2">
+          {/* Sticky Right Sidebar Rail */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
+            {/* Quick Navigation / Related Tools */}
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-3">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related CSC Tools
+              </span>
+              <div className="space-y-1.5">
+                <Link
+                  href="/tools/passport-photo-sheet-maker"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-[11px] font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  4×6&quot; Photo Sheet Maker
+                </Link>
                 <Link
                   href="/tools/pvc-id-card-maker"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 border border-slate-200/80 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition-colors"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-[11px] font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <span className="flex items-center gap-2">
-                    <Printer className="w-4 h-4 text-emerald-600" />
-                    PVC Smart Card Studio
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  PVC Smart Card Studio
                 </Link>
                 <Link
                   href="/tools/self-attest-pdf"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 border border-slate-200/80 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition-colors"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-[11px] font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <span className="flex items-center gap-2">
-                    <FileCheck2 className="w-4 h-4 text-emerald-600" />
-                    Digital Self-Attestation
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  Digital Self-Attestation
                 </Link>
                 <Link
                   href="/tools/specifications"
-                  className="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 border border-slate-200/80 text-xs font-semibold text-slate-700 hover:text-emerald-700 transition-colors"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-[11px] font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <span className="flex items-center gap-2">
-                    <Archive className="w-4 h-4 text-emerald-600" />
-                    Exam Spec Radar
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  Exam Spec Radar (40+ Exams)
                 </Link>
               </div>
             </div>
 
-            {/* Ad Space */}
+            {/* Sidebar AdSlot */}
             <AdSlot slot="sidebar" />
-          </div>
+          </aside>
         </div>
       </div>
     </div>

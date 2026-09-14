@@ -487,3 +487,42 @@ A nationwide rebrand from **VeriSeal** to **Kagazo** (`kagazo.in`) was executed 
 ### Verification
 - `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)**.
 - Verified that all engines in Categories 1, 2, and 3 now align edge-to-edge with the post-download sponsor ad and subsequent specification tables/sections.
+
+---
+
+## 7. Category 4: Image & Media Studio (`media_studio`) Full Audit & Standardization
+
+### Scope & Criteria
+All 20 tools in Category 4 were comprehensively audited and upgraded to adhere to the gold-standard blueprint:
+1. **Full-Width Edge-to-Edge Alignment**: Fixed container widths across all Category 4 engines to ensure `w-full` inside `<main className="lg:col-span-9 xl:col-span-10 space-y-8">`.
+2. **Single-Card Architecture**: Seamless integration directly inside `<main>` without redundant nested borders or layout squeezing.
+3. **Zero Duplicate Stacked Ads**: Exactly one `<AdSlot slot="post_download" />` between engine and educational content, plus `<AdSlot slot="sidebar" />` in the sticky sidebar.
+4. **Master 2-Column Responsive Layout**: `max-w-7xl 2xl:max-w-[1536px] mx-auto space-y-8`, centered hero header with preserved custom badges, `pt-28 pb-20`, ambient glow, sticky right sidebar rail (`aside lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28`).
+5. **Deep On-Page SEO & Content**: Complete structured JSON-LD schemas (`WebApplication`, `HowTo`, `FAQPage`, `BreadcrumbList`), technical specification/comparison tables, and 5+ comprehensive FAQs (3–5 sentences each).
+
+### Engine Width Standardizations
+The root container widths of the following 5 Category 4 engines were updated to `w-full`:
+1. `components/tools/BatchResizerEngine.tsx`: Line 96 &rarr; `w-full space-y-8`.
+2. `components/tools/ImageOptimizerEngine.tsx`: Line 355 &rarr; `w-full space-y-6`.
+3. `components/tools/ImageConverterMatrixEngine.tsx`: Line 327 &rarr; `w-full space-y-6`.
+4. `components/tools/YoutubeThumbnailEngine.tsx`: Line 209 &rarr; `w-full space-y-6`.
+5. `components/tools/ColorPickerEngine.tsx`: Line 232 &rarr; `w-full space-y-6`.
+
+### Spoke Pages Standardized & Upgraded
+- **`/tools/batch-photo-resizer`**: Upgraded to master 2-column layout with centered hero header, preset specification table, structured JSON-LD schemas, and 5 deep FAQs.
+- **`/tools/color-converter`**: Upgraded to master 2-column layout with 8-format color matrix comparison table, WCAG 2.2 accessibility guidelines, structured JSON-LD schemas, and 5 deep FAQs.
+- **`/tools/jpg-to-png`**: Upgraded to master 2-column layout with DCT vs DEFLATE comparison table, generation loss prevention guide, structured JSON-LD schemas, and 5 deep FAQs.
+- **`/tools/png-to-jpg`**: Upgraded to master 2-column layout with automated pure white matte leveling guide, PNG vs JPEG format comparison table, structured JSON-LD schemas, and 5 deep FAQs.
+- **`/tools/png-to-webp`**: Upgraded to master 2-column layout with next-gen WebP predictive coding breakdown, Core Web Vitals (LCP) performance matrix table, structured JSON-LD schemas, and 5 deep FAQs.
+- **`/tools/webp-to-png`**: Upgraded to master 2-column layout with legacy desktop software compatibility matrix (Photoshop CS6, InDesign, Word, CAD), alpha transparency retention guide, structured JSON-LD schemas, and 5 deep FAQs.
+- **`/tools/png-to-ico`**: Upgraded to master 2-column layout with multi-resolution Windows icon frame specification table (16×16, 32×32, 48×48), HTML `<head>` implementation snippet, structured JSON-LD schemas, and 5 deep FAQs.
+- **`/tools/color-picker`**: Added 5th deep FAQ on digital RGB vs print CMYK, updated to `WebApplication` schema, and added `BreadcrumbList` structured data.
+- **`/tools/youtube-thumbnail-downloader`**: Added 5th deep FAQ on 16:9 aspect ratios and max resolution standards, updated to `WebApplication` schema, and added `BreadcrumbList` structured data.
+- **`/tools/image-optimizer`**: Added `BreadcrumbList` structured data and verified full-width alignment.
+- **`/tools/image-converter`**: Added `BreadcrumbList` structured data and verified full-width alignment.
+- **All Compressor & DPI Spokes** (`/tools/compress-image-to-20kb`, `...-50kb`, `...-exact-kb`, `...-100kb`, `...-200kb`, `...-1mb`, `/tools/change-image-dpi`, `/tools/heic-to-jpg`, `/tools/remove-background`): Verified 100% compliance with full-width alignment, single-card layout, zero stacked ads, and complete SEO schemas.
+
+### Verification Results
+- **TypeScript Compiler**: `npx tsc --noEmit` &rarr; **0 errors (Exit code 0)** across all 20 Category 4 tools.
+- **Ad Frequency & Placement**: Exactly 1 native ad between engine and content (`post_download`), 1 in sticky rail (`sidebar`), 0 internal duplicate engine ads.
+

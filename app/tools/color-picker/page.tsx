@@ -35,17 +35,27 @@ const FAQS = [
   {
     question: 'What color formats does the Kagazo Color Picker support?',
     answer:
-      'Kagazo converts colors in real-time across 8 models: HEX (#RRGGBB), HEXA (with alpha channel), RGB, RGBA, HSL, HSLA, HSV / HSB, and print CMYK (Cyan, Magenta, Yellow, Key Black).',
+      'Kagazo converts colors in real-time across 8 models: HEX (#RRGGBB), HEXA (with alpha channel), RGB, RGBA, HSL, HSLA, HSV / HSB, and print CMYK (Cyan, Magenta, Yellow, Key Black). All calculations are synchronized instantly as you manipulate any slider or input field.',
   },
   {
     question: 'How do I extract a color palette from my own uploaded image or logo?',
     answer:
-      'Scroll to the "Image Eyedropper & Palette Extractor" section and upload any image (JPG, PNG, WebP). The engine will automatically generate 8 dominant color swatches, and you can click anywhere on the image with the precision cursor to sample individual pixels.',
+      'Scroll to the "Image Eyedropper & Palette Extractor" section and upload any image (JPG, PNG, WebP). The engine will automatically generate 8 dominant color swatches, and you can click anywhere on the image with the precision cursor to sample individual pixels with zero quality loss.',
   },
   {
     question: 'What is the WCAG contrast ratio, and why is it important for web design?',
     answer:
-      'The Web Content Accessibility Guidelines (WCAG 2.1) require a minimum contrast ratio of 4.5:1 for normal text (Level AA) and 7.0:1 for enhanced contrast (Level AAA) to ensure people with visual impairments can read content comfortably.',
+      'The Web Content Accessibility Guidelines (WCAG 2.1) require a minimum contrast ratio of 4.5:1 for normal text (Level AA) and 7.0:1 for enhanced contrast (Level AAA) to ensure people with visual impairments can read content comfortably. Kagazo displays real-time compliance badges against pure white and rich black backgrounds.',
+  },
+  {
+    question: 'How does digital RGB convert into CMYK for physical print materials?',
+    answer:
+      'RGB represents additive light emitted by screens, whereas CMYK represents subtractive ink absorption on paper. Kagazo calculates standard four-color process ink percentages (Cyan, Magenta, Yellow, and Key Black) so graphic designers can bridge the gap between digital mockups and commercial print orders.',
+  },
+  {
+    question: 'Are my uploaded images or custom color palettes saved to any server?',
+    answer:
+      'No. The Color Picker runs 100% inside your browser’s volatile memory. When you upload photos for palette extraction, the image is rendered onto an in-memory HTML5 canvas and never transmitted across the network, guaranteeing total confidentiality.',
   },
 ];
 
@@ -54,15 +64,15 @@ export default function ColorPickerPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Color Picker and Palette Studio',
         applicationCategory: 'DesignApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/color-picker',
         offers: {
           '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
+          price: '0.00',
+          priceCurrency: 'INR',
         },
         description:
           'Online color picker and format converter supporting HEX, RGB, HSL, CMYK, WCAG accessibility contrast checker, and image palette extraction.',
@@ -98,6 +108,29 @@ export default function ColorPickerPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Color Picker',
+            item: 'https://kagazo.in/tools/color-picker',
+          },
+        ],
       },
     ],
   };

@@ -60,6 +60,11 @@ const FAQS = [
     answer:
       'Older YouTube videos (especially those uploaded before 2012) or videos where the uploader never assigned a custom high-resolution cover may only have 480×360 (HQ) or 640×480 (SD) auto-generated captures from the video stream.',
   },
+  {
+    question: 'What are the recommended dimensions and aspect ratio for YouTube thumbnails?',
+    answer:
+      'YouTube recommends a 16:9 aspect ratio with exact pixel dimensions of 1280×720 (minimum width of 640 pixels). Supported upload formats include JPG, GIF, or PNG, with a maximum file size limit of 2MB for standard videos.',
+  },
 ];
 
 export default function YoutubeThumbnailDownloaderPage() {
@@ -67,15 +72,15 @@ export default function YoutubeThumbnailDownloaderPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'YouTube Thumbnail Downloader HD',
         applicationCategory: 'MultimediaApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/youtube-thumbnail-downloader',
         offers: {
           '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
+          price: '0.00',
+          priceCurrency: 'INR',
         },
         description:
           'Free online tool to extract and download high-resolution YouTube thumbnails in 1080p, 720p, 480p, and WebP format.',
@@ -116,6 +121,29 @@ export default function YoutubeThumbnailDownloaderPage() {
             text: faq.answer,
           },
         })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'YouTube Thumbnail Downloader',
+            item: 'https://kagazo.in/tools/youtube-thumbnail-downloader',
+          },
+        ],
       },
     ],
   };

@@ -324,7 +324,7 @@ export function ImageConverterMatrixEngine({
   const selectedFile = files.find((f) => f.id === selectedId) || files[0] || null;
 
   return (
-    <div className="space-y-6">
+    <div className="w-full space-y-6">
       {/* Dropzone */}
       <div
         onDragOver={(e) => {

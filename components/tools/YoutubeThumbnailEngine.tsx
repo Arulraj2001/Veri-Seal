@@ -206,7 +206,7 @@ export function YoutubeThumbnailEngine() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="w-full space-y-6">
       {/* Search Input Box */}
       <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 sm:p-8 space-y-4">
         <div className="space-y-1.5">
