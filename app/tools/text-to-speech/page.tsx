@@ -43,50 +43,50 @@ import { TextToSpeechEngine } from '@/components/tools/TextToSpeechEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Free Text to Speech Online (Natural Voice TTS & Audio Player) | Kagazo',
-  description: 'Convert text to natural speech online for free using the W3C Web Speech API. Features multiple languages, customizable pitch and speech speed, and 100% client-side privacy without sending audio to servers.',
+  title: 'Free Text to Speech Online (Download Studio MP3 & Natural TTS) | Kagazo',
+  description: 'Convert text to natural speech online for free. Download studio-grade MP3 audio, enjoy real-time karaoke word tracking, smart sentence chunking, and instant in-browser playback with zero subscriptions.',
   alternates: {
     canonical: 'https://kagazo.in/tools/text-to-speech',
   },
   openGraph: {
-    title: 'Free Text to Speech Online (Natural Voice TTS & Audio Player) | Kagazo',
-    description: 'Convert text to natural speech online for free using the W3C Web Speech API. Features multiple languages, customizable pitch and speech speed, and 100% client-side privacy without sending audio to servers.',
+    title: 'Free Text to Speech Online (Download Studio MP3 & Natural TTS) | Kagazo',
+    description: 'Convert text to natural speech online for free. Download studio-grade MP3 audio, enjoy real-time karaoke word tracking, smart sentence chunking, and instant in-browser playback with zero subscriptions.',
     url: 'https://kagazo.in/tools/text-to-speech',
     siteName: 'Kagazo',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free Text to Speech Online (Natural Voice TTS & Audio Player) | Kagazo',
-    description: 'Convert text to natural speech online for free using the W3C Web Speech API. Features multiple languages, customizable pitch and speech speed, and 100% client-side privacy without sending audio to servers.',
+    title: 'Free Text to Speech Online (Download Studio MP3 & Natural TTS) | Kagazo',
+    description: 'Convert text to natural speech online for free. Download studio-grade MP3 audio, enjoy real-time karaoke word tracking, smart sentence chunking, and instant in-browser playback with zero subscriptions.',
   },
 };
 
 const HOW_TO_STEPS = [
   {
     "step": 1,
-    "title": "Enter or Paste Text",
-    "desc": "Type or paste the article, script, essay, or dialogue into the speech text workspace."
+    "title": "Enter, Paste, or Import Text",
+    "desc": "Type or paste your article, script, or dialogue into the speech text workspace, or use \"Import File\" to load .txt and .md documents."
   },
   {
     "step": 2,
-    "title": "Select Preferred Voice",
-    "desc": "Choose from the dropdown list of available native system voices matching your desired language and accent."
+    "title": "Clean Line Breaks if Copied from PDF",
+    "desc": "Click \"Clean PDF Breaks\" to automatically merge fragmented lines into smooth natural paragraphs for continuous reading."
   },
   {
     "step": 3,
-    "title": "Adjust Rate & Pitch",
-    "desc": "Use the interactive sliders to set your desired reading speed (1.0x normal) and vocal pitch."
+    "title": "Select Voice, Speed & Pitch",
+    "desc": "Choose your preferred Studio Neural Voice (US, UK, Indian English, Hindi, Tamil, etc.) and fine-tune playback speed from 0.5x to 2.0x."
   },
   {
     "step": 4,
-    "title": "Click Play to Listen",
-    "desc": "Hit \"Play\" or \"Speak\" to initiate immediate, crystal-clear voice narration."
+    "title": "Listen with Live Karaoke Follower",
+    "desc": "Click \"Play Voice\" to listen immediately in your browser with real-time glowing word-by-word karaoke highlighting and smart sentence chunking."
   },
   {
     "step": 5,
-    "title": "Control Audio Playback",
-    "desc": "Pause, resume, or cancel playback at any time using the responsive audio control buttons."
+    "title": "Download Studio-Grade MP3",
+    "desc": "Click \"Download Studio MP3\" to instantly generate and export a crystal-clear 24kHz MP3 audio file for your videos, podcasts, or offline listening."
   }
 ];
 
@@ -116,15 +116,15 @@ const COMMON_ERRORS = [
 const FAQS = [
   {
     "question": "How does this online text-to-speech tool work without an API key or account?",
-    "answer": "Our tool utilizes the W3C Web Speech API (`window.speechSynthesis`), a modern web standard built directly into Google Chrome, Apple Safari, Microsoft Edge, and Mozilla Firefox. Because speech synthesis runs using your device native voice engines, it requires no external API keys, accounts, or subscriptions."
+    "answer": "Our tool combines native browser speech synthesis (W3C Web Speech API) for instant zero-latency playback with free server-side neural speech synthesis for crystal-clear broadcast MP3 audio. Everything is 100% free with no accounts, subscriptions, or API keys required."
   },
   {
     "question": "Which voices and languages are available on this tool?",
-    "answer": "The available voices depend on your device operating system (Windows, macOS, iOS, Android). Typical installations include high-quality neural voices for English (US, UK, Australia, India), Spanish, French, German, Italian, Portuguese, Hindi, Japanese, and Chinese."
+    "answer": "We offer over 20 top broadcast neural voices including English (US Jenny, US Guy, UK Sonia, Indian English Neerja), Hindi (Swara, Madhur), Tamil (Pallavi, Valluvar), Telugu (Shruti), Spanish, French, German, Japanese, and Chinese, plus full access to all voices installed on your device."
   },
   {
     "question": "Can I change the voice speed and pitch?",
-    "answer": "Yes. Use the interactive sliders to adjust speed from 0.5x (slow, deliberate speech) up to 2.0x (speed-listening) and modify the vocal pitch from 0.5 (deeper tone) to 2.0 (higher pitch)."
+    "answer": "Yes. Use the interactive sliders and quick speed pills (0.75x, 1.0x, 1.25x, 1.5x, 2.0x) to adjust reading speed and vocal pitch to your preference."
   },
   {
     "question": "Why does speech sometimes stop in Google Chrome on long articles?",
@@ -136,23 +136,23 @@ const FAQS = [
   },
   {
     "question": "Does this work on mobile devices like iPhone and Android?",
-    "answer": "Yes. It works natively on iOS Safari using Apple's high-quality Siri voices, and on Android Chrome using Google Speech Services."
+    "answer": "Yes. It works seamlessly across iOS Safari, Android Chrome, Windows, macOS, and Linux on any modern browser."
   },
   {
-    "question": "Can I download the spoken audio as an MP3 file?",
-    "answer": "The browser Web Speech API streams audio directly to your speaker hardware rather than rendering an audio file. To record the audio into an MP3 or WAV file, you can capture your system audio using free software like Audacity or a browser audio capture extension."
+    "question": "Can I download the synthesized speech as an MP3 file?",
+    "answer": "Yes! Click the \"Download Studio MP3\" button to generate and export a high-fidelity 24kHz MP3 audio file. It is completely free, unlimited, and ready for use in presentations, video voiceovers, or offline study."
   },
   {
     "question": "Can I use the synthesized voice for YouTube videos or podcasts?",
-    "answer": "Yes. Because the voices are rendered by your own operating system (such as Microsoft Windows, Apple macOS, or Android), licensing terms correspond to your OS license, which generally permits personal, educational, and commercial narration."
+    "answer": "Yes. The generated MP3 audio and browser voices can be freely used for personal, educational, and commercial voiceover projects, YouTube narrations, and podcasts."
   },
   {
-    "question": "Is my text sent to any cloud server for processing?",
-    "answer": "No. All speech synthesis happens 100% locally on your device hardware. Your text never leaves your browser, ensuring absolute privacy for sensitive documents, scripts, and personal notes."
+    "question": "Is my text private and secure?",
+    "answer": "Yes. In-browser playback runs entirely on your device with zero data transmission. When generating an MP3, your text is processed securely in memory to return the audio stream and is never saved, tracked, or used to train models."
   },
   {
-    "question": "Is there a limit on how much text I can listen to?",
-    "answer": "No. You can paste and listen to entire book chapters, research papers, and articles without any word count restrictions."
+    "question": "Is there a limit on how much text I can listen to or download?",
+    "answer": "Browser playback has no character limit. For studio MP3 downloads, you can synthesize up to 6,000 characters per conversion (approximately 1,000 words), and you can generate as many MP3 files as you wish without daily caps."
   }
 ];
 

@@ -7,6 +7,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    serverComponentsExternalPackages: ['msedge-tts'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
