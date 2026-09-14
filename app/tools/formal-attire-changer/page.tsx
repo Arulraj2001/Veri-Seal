@@ -128,12 +128,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Casual Portrait",
+    "desc": "Select photo wearing a t-shirt, casual sweater, or polo shirt."
+  },
+  {
+    "step": 2,
+    "title": "Select Formal Suit or Blazer",
+    "desc": "Choose from corporate dark suits, ties, and professional blazers for men and women."
+  },
+  {
+    "step": 3,
+    "title": "Align Neckline & Collar",
+    "desc": "Position formal collar naturally around your neck and shoulders."
+  },
+  {
+    "step": 4,
+    "title": "Match Skin Tone & Lighting",
+    "desc": "AI blends suit shadows and collar edges with your existing lighting."
+  },
+  {
+    "step": 5,
+    "title": "Download Professional Photo",
+    "desc": "Save compliant high-resolution portrait ready for visa and job portals."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Casual T-Shirt or Hoodie",
+    "title": "Inappropriate Attire for Official Passports",
+    "desc": "Consulates recommend business or formal attire; round-neck tees look unprofessional."
+  },
+  {
+    "badge": "Rejection: White Shirt Blending In",
+    "title": "Loss of Shoulder Definition",
+    "desc": "White clothing disappears into white backgrounds. Kagazo provides dark navy and charcoal suits."
+  },
+  {
+    "badge": "Rejection: Military or Police Uniform",
+    "title": "Uniforms Prohibited by Passport Rules",
+    "desc": "State Dept and MEA strictly ban uniforms in passport photos. Civilian suits are required."
+  },
+  {
+    "badge": "Rejection: Unnatural Floating Neckline",
+    "title": "Poor Collar Alignment",
+    "desc": "Mismatched suit templates look fake. Kagazo aligns collar curves with neck anatomy."
+  }
+];
+
 export default function FormalAttireChangerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Formal Suit & Attire Changer for Passport Photo',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -149,28 +201,12 @@ export default function FormalAttireChangerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Add a Formal Suit to Your Passport Photo',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Casual Portrait',
-            text: 'Upload a clear selfie or portrait wearing a collarless shirt.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select Suit Style',
-            text: 'Pick from dark navy business suits, blazers, or formal collared shirts.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Align Neckline and Collar',
-            text: 'Drag and scale the suit handles to snap the collar right below your chin.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Studio Portrait',
-            text: 'Export the high-resolution formal portrait ready for passport or exam upload.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -249,6 +285,7 @@ export default function FormalAttireChangerPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-extrabold shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>Passport & Exam Approved</span>
           </div>
@@ -409,123 +446,51 @@ export default function FormalAttireChangerPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <Camera className="w-6 h-6 text-primary" />
-                Step-by-Step: How to Add a Formal Suit to Your Portrait
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      1
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload Portrait</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Upload a front-facing photo wearing a collarless shirt or t-shirt for clean neck alignment.
-                  </p>
-                </div>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Add Formal Attire to Photos in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      2
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Pick Suit Style</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select from executive navy suits, formal blazers, collared dress shirts, or ties.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Adjust Scale & Neck</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Use handles to scale the shoulders and position the collar right under your chin line.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Balance Colors</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Fine-tune brightness and contrast to match your head lighting with the suit fabric.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download Portrait</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Save the formal portrait in high-resolution 300 DPI JPEG format with zero watermarks.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Tile on 4×6&quot; Sheet</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Open our Passport Photo Maker to print 8 physical copies of your new formal photo for ₹5.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Quality & Alignment Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <AlertTriangle className="w-6 h-6 text-amber-500" />
-                Tips for Achieving a Seamless, Realistic Suit Fit
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-blue-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                    Tip 1: Wear a Collarless T-Shirt
-                  </h3>
-                  <p className="text-xs text-blue-800/80 leading-relaxed">
-                    If your original photo has a high collar, it may poke out behind the suit lapels. Wear a simple round neck or scoop neck for easiest alignment.
-                  </p>
-                </div>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Attire Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-blue-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                    Tip 2: Match Shoulder Width
-                  </h3>
-                  <p className="text-xs text-blue-800/80 leading-relaxed">
-                    Do not make the suit shoulders wider than your natural build. Keep suit width aligned with your actual torso proportion.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-blue-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                    Tip 3: Straight Upright Posture
-                  </h3>
-                  <p className="text-xs text-blue-800/80 leading-relaxed">
-                    Take your portrait facing straight into the camera. Avoid leaning or tilting sideways for the most natural suit drape.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

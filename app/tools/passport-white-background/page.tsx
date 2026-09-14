@@ -133,12 +133,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Mobile Photo",
+    "desc": "Select any portrait taken in your room, office, or outdoors."
+  },
+  {
+    "step": 2,
+    "title": "AI Edge Segmentation",
+    "desc": "Neural network isolates hair strands, shoulders, and ears from background."
+  },
+  {
+    "step": 3,
+    "title": "Replace with Pure Consular White",
+    "desc": "Replaces cluttered background with pure RGB (255, 255, 255) white."
+  },
+  {
+    "step": 4,
+    "title": "Inspect with Clarity Loupe",
+    "desc": "Zoom in around ears and hair to confirm clean edge contours."
+  },
+  {
+    "step": 5,
+    "title": "Download 300 DPI Photo",
+    "desc": "Export clean photo ready for passport and visa cropping."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Halo Around Dark Hair",
+    "title": "Jagged White Edges on Silhouette",
+    "desc": "Crude background removers create blurry halos. Kagazo uses sub-pixel alpha matting."
+  },
+  {
+    "badge": "Rejection: Shadow Cast on Background",
+    "title": "Uneven Dark Shading Behind Subject",
+    "desc": "Real shadows cause portal rejection. Kagazo generates a pure flat white canvas."
+  },
+  {
+    "badge": "Rejection: Cut-Off Ears or Shoulders",
+    "title": "Aggressive AI Cropping Body Parts",
+    "desc": "Poor algorithms clip ear tips. Kagazo preserves complete anatomical contours."
+  },
+  {
+    "badge": "Rejection: Off-White Cream Discoloration",
+    "title": "Non-Compliant Background Tone",
+    "desc": "Many portals require pure hex #FFFFFF white. Kagazo guarantees absolute RGB(255,255,255)."
+  }
+];
+
 export default function PassportWhiteBackgroundPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Convert Photo Background to White for Passport & Visa',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -154,33 +206,12 @@ export default function PassportWhiteBackgroundPage() {
       {
         '@type': 'HowTo',
         name: 'How to Convert a Photo Background to Pure White for Passport & Visa',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Casual Portrait',
-            text: 'Select your photo taken against any home wall or indoor background.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Automatic Subject Segmentation',
-            text: 'Our in-browser segmentation algorithm separates your face, hair, and clothing from the backdrop.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Choose Background Color',
-            text: 'Select Pure White (#FFFFFF) for Indian/US or Light Grey for UK/Schengen.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Inject 300 DPI Headers',
-            text: 'Kagazo embeds binary 300 DPI JFIF density tags directly into the JPEG file.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Full-Resolution JPG',
-            text: 'Download your studio-quality portrait with zero watermarks.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -259,6 +290,7 @@ export default function PassportWhiteBackgroundPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-extrabold shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>Official Pure White (#FFFFFF)</span>
           </div>
@@ -415,132 +447,51 @@ export default function PassportWhiteBackgroundPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <Camera className="w-6 h-6 text-primary" />
-                Step-by-Step: How to Convert Your Photo Background to White
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      1
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload Photo</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select your portrait taken against any indoor wall, door, or curtain.
-                  </p>
-                </div>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Convert Photo Background to White in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      2
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Auto-Segmentation</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Client-side algorithm identifies subject boundaries and isolates hair and shoulders in RAM.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Choose Background</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select Pure White (#FFFFFF) for India/US or Light Grey for UK/Schengen.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Refine Edges</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Fine-tune edge feathering to ensure hair strands look realistic and sharp against white.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Inject 300 DPI</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Kagazo embeds binary 300 DPI JFIF density markers directly into the JPEG stream.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download Free</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Save the studio-quality image with zero watermarks for online passport or visa upload.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Rejection Prevention & Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <AlertTriangle className="w-6 h-6 text-amber-500" />
-                Background Rejection Reasons & How Kagazo Prevents Them
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Rejection: Background Shadows
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Flash or room lights casting dark silhouettes behind the subject’s head or ears.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Completely eliminates shadows and fills the space with uniform #FFFFFF white.
-                  </p>
-                </div>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Background Rejection Reasons and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Rejection: Jagged &quot;Sticker&quot; Edges
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Crude background erasers creating harsh pixelated contours around hair and shoulders.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Sub-pixel alpha blending ensures natural transitions between hair and backdrop.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Rejection: Yellow Room Tint
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Incandescent or warm domestic bulbs turning white walls yellow or beige in photos.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Replaces the entire backdrop with pure clinical white matching consular standards.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

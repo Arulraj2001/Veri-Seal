@@ -152,12 +152,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Capture Frontal Portrait",
+    "desc": "Stand 4 feet in front of a plain white wall in even natural daylight without eyeglasses."
+  },
+  {
+    "step": 2,
+    "title": "Select 2x2\" US Standard",
+    "desc": "Kagazo locks the canvas to an exact 2x2 inch square at 300 DPI (600x600 px)."
+  },
+  {
+    "step": 3,
+    "title": "Align 50%\u201369% Head Markers",
+    "desc": "Scale so head height measures between 1\" and 1 3/8\" (28\u201335 mm) from chin to crown."
+  },
+  {
+    "step": 4,
+    "title": "Enforce <240 KB DS-160 Limit",
+    "desc": "Engine compresses output between 80 KB and 180 KB for instant CEAC portal upload."
+  },
+  {
+    "step": 5,
+    "title": "Download Photo or 4x6\" Sheet",
+    "desc": "Export digital JPEG or 6-photo 4x6\" card to print at Walgreens or CVS for 35 cents."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Eyeglasses Detected",
+    "title": "Spectacles Prohibited under 22 CFR 51.26",
+    "desc": "Glasses cause instant refusal at consular portals due to lens glare and facial obscuration."
+  },
+  {
+    "badge": "Rejection: File Size Exceeds 240 KB",
+    "title": "CEAC Portal Upload Failure",
+    "desc": "DS-160 and DV Lottery reject images over 240 KB. Kagazo compresses within 80\u2013180 KB."
+  },
+  {
+    "badge": "Rejection: Head Size Out of Range",
+    "title": "Head Height Outside 50%\u201369% Zone",
+    "desc": "Photos where head is smaller than 1\" or larger than 1 3/8\" fail automated State Dept checks."
+  },
+  {
+    "badge": "Rejection: Non-White Background",
+    "title": "Off-White Wall Tint or Cast Shadows",
+    "desc": "State Dept mandates pure white or off-white background with zero patterns or shadows."
+  }
+];
+
 export default function UsPassportPhotoPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'US Passport & Visa Photo Maker Online Free',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -173,33 +225,12 @@ export default function UsPassportPhotoPage() {
       {
         '@type': 'HowTo',
         name: 'How to Create an Official US Passport Photo at Home',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Take a Frontal Portrait',
-            text: 'Stand 4 feet in front of a plain white wall in natural indirect daylight without eyeglasses.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload to Kagazo Studio',
-            text: 'Select your photo. Kagazo locks the canvas to an exact 2x2 inch square at 300 DPI.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Align Biometric 50%–69% Head Guidelines',
-            text: 'Position your head so the top of your hair touches the crown marker and your chin rests on the base guide.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download DS-160 Digital JPEG',
-            text: 'Download the 600x600 px image calibrated under 240 KB for instant consular portal upload.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Printable 4x6" Sheet',
-            text: 'Export a 6-photo 4x6" card to print at Walgreens, CVS, or Walmart for 35 cents.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -279,6 +310,7 @@ export default function UsPassportPhotoPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-xs sm:text-sm font-extrabold text-emerald-800 shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>22 CFR 51.26 Compliant • 600 × 600 px @ 300 DPI • Under 240 KB DS-160</span>
           </div>
@@ -440,144 +472,51 @@ export default function UsPassportPhotoPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Camera className="w-5 h-5 text-primary" />
-                  Step-by-Step: How to Take and Create a US Passport Photo at Home
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Create an Official US Passport Photo in 5 Steps
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
-                  Follow these proven steps to take a fully compliant passport photo without expensive studio visits.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Capture Portrait</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Stand 4 feet away against a plain white wall in natural daylight. Remove eyeglasses and keep expression neutral.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      2
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload to Studio</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select your image. Kagazo locks the canvas to an exact 2&quot; × 2&quot; square with 300 DPI calibration.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Align 50%–69% Oval</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Scale and pan so the top of your hair touches the crown guide and your chin touches the lower line.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download DS-160 JPG</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Export the single 600×600 px photo compressed under 240 KB for CEAC portal or DV lottery submission.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download 4×6&quot; Sheet</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Download the 6-photo 4×6 inch gang sheet ready to print at Walgreens or CVS for 35 cents.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Cut and Submit</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Use clean scissors to cut along the millimeter borders. Staple 2 copies to Form DS-11 or DS-82.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Rejection Prevention & Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Why US Passport Photos Get Rejected &amp; How Kagazo Fixes Them
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common US Passport Photo Rejections and How Kagazo Fixes Them
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
-                  Department of State automated facial recognition scanners enforce these non-negotiable checks.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: Eyeglasses Detected
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Wearing reading glasses or prescription frames causes instant refusal under 22 CFR 51.26 due to lens glare.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Warning:</strong> Our tool explicitly alerts you to remove all spectacles before calibrating your photo.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: File Size Exceeds 240 KB
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> The CEAC DS-160 portal throws an error if an uploaded image exceeds 240 KB.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Automatically compresses the 600×600 px image into the safe 80–180 KB window at 300 DPI.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: Head Size Out of Range
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Photos where the head takes up less than 50% or more than 69% of image height fail biometric scanning.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Concentric guidelines show the precise 1&quot; to 1 3/8&quot; range for foolproof alignment.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

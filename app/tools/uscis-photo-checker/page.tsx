@@ -143,12 +143,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload US Photo",
+    "desc": "Select your existing 2x2\" or 600x600 px photo for automated compliance testing."
+  },
+  {
+    "step": 2,
+    "title": "Instant Biometric Scan",
+    "desc": "Algorithms evaluate pixel dimensions, aspect ratio, and eye level."
+  },
+  {
+    "step": 3,
+    "title": "Head Proportion Analysis",
+    "desc": "Checks that head height is within official 50%\u201369% (1\" to 1 3/8\") limits."
+  },
+  {
+    "step": 4,
+    "title": "Background & Lighting Check",
+    "desc": "Analyzes background luminance, color uniformity, and shadow levels."
+  },
+  {
+    "step": 5,
+    "title": "Review Report & Download",
+    "desc": "Inspect pass/fail badges for each parameter and download calibrated photo."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Eye Level Below 56%",
+    "title": "Eyes Positioned Too Low in Frame",
+    "desc": "US State Dept requires eyes located between 56% and 69% from the bottom of the photo."
+  },
+  {
+    "badge": "Rejection: Image Dimensions Not Square",
+    "title": "Non-1:1 Aspect Ratio",
+    "desc": "USCIS and DS-160 require strict 1:1 square dimensions (min 600x600 px)."
+  },
+  {
+    "badge": "Rejection: File Size Exceeding 240 KB",
+    "title": "Consular Server Upload Failure",
+    "desc": "Photos over 240 KB fail CEAC validation. Kagazo recompresses to safe 100\u2013180 KB."
+  },
+  {
+    "badge": "Rejection: Low DPI Metadata",
+    "title": "Resolution Flagged Below 300 DPI",
+    "desc": "Scanners flag files without 300 DPI metadata. Kagazo injects true JFIF headers."
+  }
+];
+
 export default function UscisPhotoCheckerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'USCIS & US Visa Photo Checker (600×600 px)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -164,33 +216,12 @@ export default function UscisPhotoCheckerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Validate a Photo for USCIS and US Visa Portals',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Portrait',
-            text: 'Select your photo. Kagazo checks dimensions, ratio, and color space instantly.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Verify Head Height (50%–69%)',
-            text: 'Check that your chin and hair crown match the 300 to 414 pixel guidelines.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Verify Eye Level Line',
-            text: 'Confirm that your eyes rest between 56% and 69% from the bottom edge.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Check File Size Limit',
-            text: 'Kagazo automatically compresses the file below the 240 KB CEAC ceiling.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Verified File',
-            text: 'Download the validated 600x600 px JPEG or printable 4x6" sheet.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -269,6 +300,7 @@ export default function UscisPhotoCheckerPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-extrabold shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>USCIS & CEAC Compliant</span>
           </div>
@@ -429,132 +461,51 @@ export default function UscisPhotoCheckerPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <Camera className="w-6 h-6 text-primary" />
-                Step-by-Step: How to Test and Format Your USCIS Photo
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      1
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload Photo</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select your existing portrait. The validator immediately inspects dimensions, aspect ratio, and color depth.
-                  </p>
-                </div>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Test and Validate Your USCIS Photo in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      2
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Inspect Head Oval</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Ensure the crown of your head touches the upper guide and your chin rests inside the 50%–69% margin.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Verify Eye Level</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Confirm that your pupils intersect the horizontal eye-line marker (56% to 69% from the bottom edge).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Check Background</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Ensure the backdrop is uniform white with zero wall textures, shadows, or reflections behind ears.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Export 600×600 px</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Download the validated JPEG file (&lt;240 KB) ready for instant upload on CEAC DS-160 or USCIS online.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Print 4×6&quot; Sheet</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Download the 6-photo 4×6&quot; gang sheet to print at Walgreens or CVS for paper form mail-in filings.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Rejection Prevention & Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <AlertTriangle className="w-6 h-6 text-amber-500" />
-                Why USCIS & DS-160 Applications Get Delayed & How to Fix Them
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    RFE: Eye Level Position Too Low
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> If eye line falls below 56% (under 336 px), consular scanners reject the file for head misplacement.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Green horizontal guide shows the exact 336–414 px band for perfect vertical alignment.
-                  </p>
-                </div>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common USCIS Photo Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    RFE: File Size Exceeds 240 KB
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> The CEAC upload engine automatically aborts any submission exceeding 245,760 bytes.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Intelligent quantization compression keeps output strictly between 90 KB and 160 KB.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    RFE: Eyeglasses Detected
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Photos containing eyeglasses are rejected without exception since November 2016.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Advisory:</strong> Automatic reminder displayed on upload to remove all spectacles.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

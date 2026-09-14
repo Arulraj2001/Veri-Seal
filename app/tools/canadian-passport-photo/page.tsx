@@ -145,12 +145,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Capture Portrait in Soft Light",
+    "desc": "Stand 4 feet from a plain white or light wall with neutral expression."
+  },
+  {
+    "step": 2,
+    "title": "50x70mm Canadian Standard Active",
+    "desc": "Engine calibrates canvas to 50x70 mm at 300 DPI (591x827 px)."
+  },
+  {
+    "step": 3,
+    "title": "Align 31mm\u201336mm Head Length",
+    "desc": "Enforce IRCC requirements from chin to natural crown of head."
+  },
+  {
+    "step": 4,
+    "title": "Verify White Uniform Background",
+    "desc": "Eliminates shadows behind ears and shoulders."
+  },
+  {
+    "step": 5,
+    "title": "Download Photo or Print Card",
+    "desc": "Export single JPEG or print-ready 4x6\" card formatted for Canadian passport submission."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Wrong Aspect Ratio (35x45mm used)",
+    "title": "Canadian Passport Requires 50x70mm",
+    "desc": "Canada rejects standard 35x45mm photos; 50mm width \u00d7 70mm height is strictly mandatory."
+  },
+  {
+    "badge": "Rejection: Head Length Exceeding 36mm",
+    "title": "Face Too Large on 70mm Canvas",
+    "desc": "IRCC requires head height strictly between 31mm and 36mm."
+  },
+  {
+    "badge": "Rejection: Cast Shadows on Shoulders",
+    "title": "Uneven Lighting Behind Applicant",
+    "desc": "Canadian passport examiners reject photos with shadows on face or background."
+  },
+  {
+    "badge": "Rejection: Altered Facial Features",
+    "title": "Airbrushing or AI Skin Smoothing",
+    "desc": "IRCC prohibits any digital alterations or beauty filters."
+  }
+];
+
 export default function CanadianPassportPhotoPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Canadian Passport & PR Photo Maker (50×70mm IRCC)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -166,33 +218,12 @@ export default function CanadianPassportPhotoPage() {
       {
         '@type': 'HowTo',
         name: 'How to Make an IRCC Compliant Canadian Passport Photo at Home',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Take a Frontal Portrait',
-            text: 'Stand 4 feet from a plain white or light-colored wall in even daytime light with neutral expression.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload to Kagazo Studio',
-            text: 'Select your photo. Kagazo configures the official 50x70 mm (5:7 ratio) canvas at 300 DPI.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Align 31–36 mm Face Height',
-            text: 'Position your face so the distance from chin to crown aligns within the 31–36 mm calipers.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Digital JPEG',
-            text: 'Export the 591x827 px 300 DPI JPEG for online IRCC Express Entry or Citizenship portals.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download 4x6" Print Card',
-            text: 'Export a 4-photo 4x6" card to print at Walmart or Shoppers Drug Mart for 39 cents.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -272,6 +303,7 @@ export default function CanadianPassportPhotoPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-xs sm:text-sm font-extrabold text-emerald-800 shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>IRCC Canada Compliant • 50 × 70 mm (31–36 mm Face) • PR &amp; Express Entry</span>
           </div>
@@ -433,144 +465,51 @@ export default function CanadianPassportPhotoPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Camera className="w-5 h-5 text-primary" />
-                  Step-by-Step: How to Format Your Canadian Passport Photo
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Make a Canadian Passport Photo in 5 Steps
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
-                  Follow these step-by-step instructions for quick approval on all Canadian applications.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Take Portrait</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Stand 4 feet from a white wall in natural indirect daylight with a neutral facial expression.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      2
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload to Studio</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select your image. Kagazo locks the canvas to the unique 50 × 70 mm Canadian proportion.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Align 31–36 mm Face</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Adjust zoom so the chin-to-crown measurement matches the 31–36 mm guide, preserving top clearance.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Verify White Background</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Confirm that background is clean and shadow-free with zero texture or wall discoloration.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download Digital JPEG</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Export the 591 × 827 px JPEG file for IRCC Express Entry, PR card, or citizenship portal uploads.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download 4×6&quot; Sheet</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Save the 4-photo 4×6 inch gang sheet to print at Walmart or Shoppers Drug Mart for paper submissions.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Rejection Prevention & Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Why Canadian Passport Photos Get Rejected &amp; How Kagazo Fixes Them
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Canadian Passport Photo Rejections and How Kagazo Fixes Them
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
-                  Keep these IRCC rules in mind to avoid rejection notices.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: Wrong Aspect Ratio
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Submitting standard 35×45 mm or 2×2" US photos to IRCC causes immediate administrative return.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Locks the exact 50 mm × 70 mm (5:7 ratio) canvas mandated across Canada.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: Face Length Exceeds 36 mm
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Cropping too close so the chin-to-crown measurement exceeds 36 mm (51% of total height).
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Visual caliper bounds constrain the face strictly inside the 31–36 mm bracket.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: Non-Compliant Studio Stamp
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> For mail applications, the back of one photo must carry the studio address and date taken.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Tip:</strong> For online portals, no stamp is required; for mail, our print sheet leaves room for date notes.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

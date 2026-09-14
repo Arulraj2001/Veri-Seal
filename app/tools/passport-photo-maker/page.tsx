@@ -161,12 +161,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Capture Frontal Portrait",
+    "desc": "Take a well-lit photo against a plain light wall looking straight into the camera."
+  },
+  {
+    "step": 2,
+    "title": "Select Country Standard",
+    "desc": "Choose Indian Passport (35x45 mm), US Visa (2x2 in), UK, Schengen, or Canada."
+  },
+  {
+    "step": 3,
+    "title": "Align Biometric Caliper",
+    "desc": "Position your crown and chin inside the 70%\u201380% biometric guideline calipers."
+  },
+  {
+    "step": 4,
+    "title": "Instant 300 DPI Injection",
+    "desc": "Our engine embeds 300 DPI binary JFIF headers in client-side browser RAM."
+  },
+  {
+    "step": 5,
+    "title": "Download Photo or 4x6\" Sheet",
+    "desc": "Save verified digital JPEG or download the 8-photo 4x6\" sheet for \u20b95 printing."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Face Proportion Out of Bounds",
+    "title": "Head Coverage Below 70% or Above 80%",
+    "desc": "MEA India and ICAO mandate 25mm to 35mm head height. Kagazo calipers enforce exact framing."
+  },
+  {
+    "badge": "Rejection: Shadows on Background",
+    "title": "Dark Wall Gradients or Ear Shadows",
+    "desc": "Passport Seva Kendra mandates plain white background with zero shadows or patterns."
+  },
+  {
+    "badge": "Rejection: Eyeglasses & Reflections",
+    "title": "Glasses Prohibited by Consular Guidelines",
+    "desc": "Wearing spectacles triggers automated refusal due to lens glare and iris blockage."
+  },
+  {
+    "badge": "Rejection: Low Resolution 72 DPI File",
+    "title": "Browser Default 72 DPI Header Rejected",
+    "desc": "Embassy scanners require true 300 DPI. Kagazo writes 0x012C density markers."
+  }
+];
+
 export default function PassportPhotoMakerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Kagazo Passport Photo Maker Online Free',
         url: 'https://kagazo.in/tools/passport-photo-maker',
         applicationCategory: 'UtilitiesApplication',
@@ -181,29 +233,13 @@ export default function PassportPhotoMakerPage() {
       },
       {
         '@type': 'HowTo',
-        name: 'How to Make an Official Passport Photo Online at Home',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Photo or Take a Frontal Portrait',
-            text: 'Take a clear, well-lit photo against a plain white or light background looking straight into the camera.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select Country Specification',
-            text: 'Choose Indian Passport (35x45 mm), US Visa (2x2 in), UK, Schengen, or Canada.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Align Biometric Face Frame',
-            text: 'Position your crown and chin inside the 70%–80% biometric caliper guidelines.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download 300 DPI Photo or 4x6" Sheet',
-            text: 'Download the verified digital JPEG or save the 8-photo 4x6" sheet for ₹5 kiosk printing.',
-          },
-        ],
+        name: 'How to Make an Official Passport Photo Online in 5 Steps',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -260,7 +296,7 @@ export default function PassportPhotoMakerPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
-            <Camera className="w-4 h-4 text-primary" />
+            <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
             <span>ICAO Doc 9303 &amp; Passport Seva Kendra Compliant</span>
           </div>
 
@@ -301,6 +337,50 @@ export default function PassportPhotoMakerPage() {
 
             {/* Post Download Ad Slot */}
             <AdSlot slot="post_download" />
+
+            
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Consular Studio Presets
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Official MEA India, US Visa &amp; International ICAO Standards
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Over 30% of online visa and passport applications are rejected due to incorrect aspect ratios, shadows, or invalid DPI metadata. Kagazo enforces exact millimeter framing with in-browser RAM privacy.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> True 300 DPI JFIF
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Embeds authentic 0x012C density tags into JPEG binary headers to clear automated consular scanners.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 4×6" Printable Sheets
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Tiles 8 identical passport photos with millimeter cut guides to print at any kiosk for ₹5.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Your biometric facial photograph is processed purely in local device RAM with zero cloud uploads.
+                  </p>
+                </div>
+              </div>
+            </section>
 
             {/* Official Specifications Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
@@ -369,7 +449,56 @@ export default function PassportPhotoMakerPage() {
             </section>
 
             {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            
+
+            
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Make an Official Passport Photo Online in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Passport Photo Rejections and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* FAQ Accordion Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

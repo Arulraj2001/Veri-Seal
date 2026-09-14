@@ -130,12 +130,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Photo",
+    "desc": "Upload candidate portrait for stamp size or NEET postcard formatting."
+  },
+  {
+    "step": 2,
+    "title": "Choose Stamp or Postcard Preset",
+    "desc": "Select 20x25mm (Stamp Size) or 4x6\" Postcard (NEET UG)."
+  },
+  {
+    "step": 3,
+    "title": "Crop Face & Adjust Margins",
+    "desc": "Position head and shoulders within standardized frame guides."
+  },
+  {
+    "step": 4,
+    "title": "Add Name & Date Banner",
+    "desc": "Add applicant name and date of photo strip as required by exam boards."
+  },
+  {
+    "step": 5,
+    "title": "Download Photo or Print Grid",
+    "desc": "Export single high-resolution image or printable multi-photo sheet."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Using Passport Photo for Stamp Box",
+    "title": "Passport Size (35x45mm) Too Big",
+    "desc": "Pasting 35x45mm photos onto 20x25mm application form boxes spills over signature lines."
+  },
+  {
+    "badge": "Rejection: Missing NEET Name & Date Banner",
+    "title": "NTA Exam Disqualification",
+    "desc": "NEET UG strictly mandates candidate name and date of photo printed at bottom."
+  },
+  {
+    "badge": "Rejection: Wrong Aspect Ratio on Postcard",
+    "title": "NEET Postcard Not 4x6 Inches",
+    "desc": "NEET admit cards require a physical 4\u00d76 inch postcard photo pasted on attendance sheet."
+  },
+  {
+    "badge": "Rejection: Blurry Small-Format Printing",
+    "title": "Pixelation on Small 20x25mm Prints",
+    "desc": "Low-res images blur when printed small. Kagazo renders at true 300 DPI."
+  }
+];
+
 export default function StampSizePhotoPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Stamp Size Photo Maker & NEET Postcard Studio',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -257,6 +309,7 @@ export default function StampSizePhotoPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-xs sm:text-sm font-extrabold text-emerald-800 shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>16 on 4×6&quot; for ₹5 • 20 × 25 mm &amp; NEET 4×6&quot; Postcard</span>
           </div>
@@ -419,135 +472,51 @@ export default function StampSizePhotoPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Camera className="w-5 h-5 text-primary" />
-                  Step-by-Step: How to Make Stamp Size &amp; NEET Postcard Photos
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Make Stamp Size Photos in 5 Steps
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
-                  Follow these simple steps to generate print-ready photo cards in seconds.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload Photo</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select your front-facing portrait. Image loads in local memory with zero server transfer.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      2
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Choose Format</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select Stamp Size (20×25 mm) or NEET 4×6 Postcard from the mode selector.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Align Face Center</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Scale and pan your face inside the framing guide so eyes and chin are well positioned.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Name &amp; DOP Banner</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    For NEET UG, enter candidate name, roll number, and date to generate the official bottom strip.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download Sheet</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Download the 16-photo 4×6&quot; sheet (or single NEET postcard JPEG) at true 300 DPI.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Print at Lab for ₹5</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Take the sheet to any local studio or print kiosk. Request a 4×6&quot; print and cut with scissors.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Application Notes & Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Important Application Guidelines for Stamp &amp; NEET Photos
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Stamp Photo Errors and How Kagazo Fixes Them
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
-                  Keep these official rules in mind to avoid rejection during verification.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/60 space-y-1.5">
-                  <h3 className="text-sm font-bold text-emerald-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-                    NEET Exam Hall Verification
-                  </h3>
-                  <p className="text-xs text-emerald-800/80 leading-relaxed">
-                    The 4×6&quot; postcard photo must be identical to the passport photo uploaded in your NEET application. The invigilator signs across the postcard in the exam hall.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-200/60 space-y-1.5">
-                  <h3 className="text-sm font-bold text-blue-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-blue-600"></span>
-                    Railway Pass (MST) Rules
-                  </h3>
-                  <p className="text-xs text-blue-800/80 leading-relaxed">
-                    Indian Railways ticketing counters require 20 × 25 mm stamp size photos. Affix one to the railway identity card and have it counter-stamped by the booking clerk.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-purple-50/50 border border-purple-200/60 space-y-1.5">
-                  <h3 className="text-sm font-bold text-purple-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-purple-600"></span>
-                    Combo Sheets for College
-                  </h3>
-                  <p className="text-xs text-purple-800/80 leading-relaxed">
-                    If your college admission requires both passport and stamp photos, use our College Admission Studio to get 4 passport + 8 stamp photos on one ₹5 card.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

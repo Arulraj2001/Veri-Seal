@@ -143,12 +143,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Entry Photo",
+    "desc": "Upload candidate portrait for DV-2026 / DV-2027 Green Card lottery check."
+  },
+  {
+    "step": 2,
+    "title": "Automated Rules Validation",
+    "desc": "Verifies 600x600 px, 24-bit sRGB color, and under 240 KB ceiling."
+  },
+  {
+    "step": 3,
+    "title": "Check Biometric Head Height",
+    "desc": "Verifies head occupies 50% to 69% of picture height."
+  },
+  {
+    "step": 4,
+    "title": "Verify Eyeglasses & Background",
+    "desc": "Confirms zero spectacles, neutral expression, and pure white background."
+  },
+  {
+    "step": 5,
+    "title": "Download Validated JPEG",
+    "desc": "Save compliant 600x600 px photo ready for submission on dvprogram.state.gov."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Disqualification: Reusing Previous Photo",
+    "title": "Automated Facial Match Against Past Entries",
+    "desc": "State Dept disqualifies entries reusing photos from previous DV lotteries. Photo must be <6 months old."
+  },
+  {
+    "badge": "Disqualification: Spectacles / Glasses Detected",
+    "title": "Immediate Disqualification on DV Portal",
+    "desc": "Wearing eyeglasses on DV entry photos triggers disqualification without notification."
+  },
+  {
+    "badge": "Disqualification: Heavy Digital Editing",
+    "title": "Excessive Retouching Flagged by AI",
+    "desc": "Altering facial features, moles, or eye color violates DV lottery rules."
+  },
+  {
+    "badge": "Disqualification: Compression Artifacts",
+    "title": "Over-Compressed Artifacts in Face Area",
+    "desc": "Images compressed below 10 KB or with blurry blocking fail consular inspection."
+  }
+];
+
 export default function DvLotteryPhotoPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'DV Lottery Photo Tool 2026 / 2027 (Official 600×600 px)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -164,33 +216,12 @@ export default function DvLotteryPhotoPage() {
       {
         '@type': 'HowTo',
         name: 'How to Prepare a Compliant Photo for the DV Lottery',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Snap a Fresh Portrait',
-            text: 'Take a photo within the last 6 months against a plain white wall without glasses.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload to Kagazo Studio',
-            text: 'Kagazo configures the 600x600 px square canvas with 300 DPI density.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Align 50%–69% Head Height',
-            text: 'Position your head between the 300 and 414 pixel biometric guides.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Verify Eye Level Line',
-            text: 'Ensure eyes intersect the 56% to 69% horizontal guideline.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Verified JPEG',
-            text: 'Export the 600x600 px JPEG strictly under 240 KB for submission on dvprogram.state.gov.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -269,6 +300,7 @@ export default function DvLotteryPhotoPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-extrabold shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>DV-2026 & DV-2027 Ready</span>
           </div>
@@ -424,132 +456,51 @@ export default function DvLotteryPhotoPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <Camera className="w-6 h-6 text-primary" />
-                Step-by-Step: How to Format Your DV Lottery Photo
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      1
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Snap Fresh Photo</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Take a photo taken within the last 6 months against a plain white wall. Do not wear eyeglasses.
-                  </p>
-                </div>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Prepare DV Lottery Photos in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      2
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload to Tool</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Upload your picture. Kagazo automatically locks the canvas to an exact 600 × 600 px square.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Align Head Oval</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Align your chin and the top of your hair within the 50% to 69% (300–414 px) biometric markers.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Verify Eye Line</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Ensure your eyes are centered along the horizontal guideline (56% to 69% from the bottom).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Check White BG</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Confirm that the background is uniformly white without dark shadows cast behind your ears.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Export &lt;240 KB</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Download your validated 600×600 px JPEG file, perfectly sized under the 240 KB upload limit.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Disqualification Prevention & Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <AlertTriangle className="w-6 h-6 text-amber-500" />
-                DV Lottery Silent Disqualification Traps & How to Avoid Them
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Disqualification: Reused Photos
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Re-uploading an image used in a previous DV Lottery entry results in instant disqualification.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Advice:</strong> Take a brand new photo every single lottery cycle without exception.
-                  </p>
-                </div>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common DV Lottery Photo Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Disqualification: AI Smoothing & Filters
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Using beauty filters, face retouching apps, or synthetic backgrounds creates pixel anomalies.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Standard:</strong> Formats your real photo purely through geometric framing without AI modification.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Disqualification: Missing Family Members
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Failing to submit individual compliant photos for a spouse or every child under 21 voids the entry.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Tip:</strong> Use our tool to calibrate photos for each family member separately.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

@@ -138,12 +138,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Portrait Photo",
+    "desc": "Select your portrait photo for automated ICAO biometric alignment."
+  },
+  {
+    "step": 2,
+    "title": "Automated Eye & Tilt Leveling",
+    "desc": "Detects eye horizontal axis and automatically corrects head tilt."
+  },
+  {
+    "step": 3,
+    "title": "Center Facial Symmetry",
+    "desc": "Centers bridge of nose and eyes along the vertical optical center."
+  },
+  {
+    "step": 4,
+    "title": "Scale to Consular Head Ratio",
+    "desc": "Scales face so crown-to-chin distance matches 70%\u201380% (or 50%\u201369%)."
+  },
+  {
+    "step": 5,
+    "title": "Download Aligned Photo",
+    "desc": "Export properly framed 300 DPI JPEG for instant passport application."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Head Tilted Beyond 5 Degrees",
+    "title": "Off-Axis Head Pose Refusal",
+    "desc": "e-Gates require level eyes. Kagazo automatically rotates head to exact 0-degree horizontal alignment."
+  },
+  {
+    "badge": "Rejection: Off-Center Facial Position",
+    "title": "Face Shifted to Left or Right",
+    "desc": "Biometric scanners require nose centered on vertical axis. Kagazo centers features perfectly."
+  },
+  {
+    "badge": "Rejection: Aspect Ratio Distortion",
+    "title": "Stretched or Squashed Facial Features",
+    "desc": "Manual resizing stretches faces. Kagazo locks proportional aspect ratios."
+  },
+  {
+    "badge": "Rejection: Eyes Blocked or Looking Away",
+    "title": "Non-Frontal Gaze Rejection",
+    "desc": "Candidates must look directly into camera lens with both eyes visible."
+  }
+];
+
 export default function BiometricFaceAlignerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'ICAO Biometric Passport Face & Head Aligner',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -159,33 +211,12 @@ export default function BiometricFaceAlignerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Align Head and Eye Level for Biometric Passports',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Frontal Portrait',
-            text: 'Select your photo. Kagazo renders the calibrated ICAO Doc 9303 alignment guide.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select Country Standard',
-            text: 'Choose Indian Passport (70%–80%), US Visa (50%–69%), or Schengen.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Align Crown and Chin Lines',
-            text: 'Scale and move your image so your chin rests on the base guide and hair crown matches the top line.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Level Head Tilt',
-            text: 'Use the tilt slider to ensure your pupils are perfectly horizontal.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download 300 DPI JPEG',
-            text: 'Export the validated, biometric-aligned image with embedded 300 DPI headers.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -264,6 +295,7 @@ export default function BiometricFaceAlignerPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-extrabold shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>ICAO Doc 9303 Compliant</span>
           </div>
@@ -423,132 +455,51 @@ export default function BiometricFaceAlignerPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <Camera className="w-6 h-6 text-primary" />
-                Step-by-Step: How to Align Your Face to ICAO Biometric Standards
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      1
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload Photo</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select your front-facing portrait. The tool instantly loads the calibrated caliper grid.
-                  </p>
-                </div>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Align Biometric Face Photos in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      2
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Select Country</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Choose Indian Passport (70–80%), US Visa (50–69%), or Canadian Passport (44–51%).
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Scale Head Height</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Zoom your photo until the chin rests on the base guide and the top of your hair aligns with the crown line.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Level Eye Axis</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Use the tilt slider to straighten any head slant so both pupils align with the eye horizon line.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Center Horizontally</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Align your nose bridge and mouth along the vertical center axis for perfect symmetrical balance.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download 300 DPI</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Export the certified biometric portrait with embedded 300 DPI metadata and zero watermarks.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Rejection Prevention & Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <AlertTriangle className="w-6 h-6 text-amber-500" />
-                Biometric Scanning Failure Reasons & How to Avoid Them
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Rejection: Face Occupies &lt;60% of Frame
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Photograph taken from too far away results in low inter-pupillary distance, failing e-Gate recognition.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Calipers mandate zooming until head occupies at least 70% of vertical height.
-                  </p>
-                </div>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Biometric Alignment Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Rejection: Head Tilted Sideways
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Even a slight 3-degree head tilt skews facial symmetry landmarks and biometric feature vectors.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Eye horizon line and tilt correction slider let you level pupils perfectly.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-red-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600"></span>
-                    Rejection: Chin or Hair Cut Off
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Over-zooming so that hair touches the upper border or chin touches the lower border.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Clear margin guides ensure adequate headroom and chin space.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

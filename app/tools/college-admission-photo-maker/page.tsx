@@ -127,12 +127,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Student Photo",
+    "desc": "Select smartphone portrait of student for college admission portal."
+  },
+  {
+    "step": 2,
+    "title": "Select University Specification",
+    "desc": "Choose target institution (IIT, DU, Anna University, TNEA, State Boards)."
+  },
+  {
+    "step": 3,
+    "title": "Calibrate File Size & Dimensions",
+    "desc": "Automatically compresses within 20 KB to 50 KB or 100 KB portal limits."
+  },
+  {
+    "step": 4,
+    "title": "Add Roll Number / Name Strip",
+    "desc": "Add student name, registration number, or date of photo strip."
+  },
+  {
+    "step": 5,
+    "title": "Download Digital JPEG & Print Sheet",
+    "desc": "Save photo for portal upload and 16-photo sheet for college ID cards."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: File Size Exceeds 50 KB Limit",
+    "title": "University Portal Upload Failure",
+    "desc": "College registration servers block photos over 50 KB. Kagazo compresses to safe 35 KB."
+  },
+  {
+    "badge": "Rejection: Casual Selfie Uploaded",
+    "title": "Filters & Poses Disqualifying Candidate",
+    "desc": "Colleges reject duck-face selfies and peace signs. Kagazo frames formal frontal portraits."
+  },
+  {
+    "badge": "Rejection: Low-Resolution Admit Card Print",
+    "title": "Blurry Photo on Hall Ticket",
+    "desc": "Poor resolution prevents exam hall invigilator verification. Kagazo guarantees 300 DPI clarity."
+  },
+  {
+    "badge": "Rejection: Non-Standard Pixel Dimensions",
+    "title": "Portal Validator Error",
+    "desc": "University portals require exact dimensions (e.g. 200x230 px or 3.5x4.5 cm). Kagazo matches presets."
+  }
+];
+
 export default function CollegePhotoMakerPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'College Admission Photo Sheet Studio',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -148,33 +200,12 @@ export default function CollegePhotoMakerPage() {
       {
         '@type': 'HowTo',
         name: 'How to Create a College Admission Photo Sheet',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Candidate Portrait',
-            text: 'Upload a front-facing selfie or photo taken in bright daylight.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select Sheet Layout',
-            text: 'Choose Combo 4x6" (Passport + Stamp), 8-Passport 4x6", or Bulk A4 30-Photo.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Add Name & Date Banner',
-            text: 'Optionally embed candidate name and date of photo for university counseling.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download 300 DPI Sheet',
-            text: 'Export the high-resolution JPEG gang sheet with scissor cut guides.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Print at Lab for ₹5',
-            text: 'Order a standard 4x6" print at any lab and cut the photos with scissors.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -253,6 +284,7 @@ export default function CollegePhotoMakerPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs sm:text-sm font-extrabold shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>Save Over ₹120 per Set</span>
           </div>
@@ -414,123 +446,51 @@ export default function CollegePhotoMakerPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <Camera className="w-6 h-6 text-primary" />
-                Step-by-Step: How to Make Your College Admission Photo Sheet
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      1
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload Photo</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Upload a front-facing selfie or camera portrait with a neutral facial expression.
-                  </p>
-                </div>
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Make College Admission Photos in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      2
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Pick Sheet Layout</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select Combo 4×6&quot; (Passport + Stamp), 8-Passport 4×6&quot;, or Bulk A4 30-Photo sheet.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Name & DOP Strip</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Enter candidate full name and date to generate the official bottom verification strip.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Check White BG</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Verify the background is uniform white (#FFFFFF) with zero room clutter or shadows.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download Sheet</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Download the 300 DPI printable JPEG with dashed cutting margins and zero watermarks.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Print for ₹5</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Take the sheet to any local studio or print kiosk. Order a glossy print and cut with scissors.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Admission Dossier Tips */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-3">
-                <AlertTriangle className="w-6 h-6 text-amber-500" />
-                Admission Dossier Photo Checklist for Students
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                    Identity Card & Library Pass
-                  </h3>
-                  <p className="text-xs text-emerald-800/80 leading-relaxed">
-                    Most Indian colleges require 2 stamp photos for library cards and 1 stamp photo for the student ID pass.
-                  </p>
-                </div>
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common College Photo Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
+                </p>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-blue-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
-                    Admission Register & Hostel Form
-                  </h3>
-                  <p className="text-xs text-blue-800/80 leading-relaxed">
-                    Admission forms and warden hostel dossiers require standard 35 × 45 mm passport photos. Keep at least 6 copies handy.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-purple-50/50 border border-purple-200/60 space-y-2">
-                  <h3 className="text-xs font-bold text-purple-900 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
-                    Counseling Verification (DOP)
-                  </h3>
-                  <p className="text-xs text-purple-800/80 leading-relaxed">
-                    For counseling (JoSAA, TNEA, NEET), having your candidate name and date of photo printed helps prevent physical document mix-ups.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 

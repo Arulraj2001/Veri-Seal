@@ -151,12 +151,64 @@ const FAQS = [
   },
 ];
 
+
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Capture Frontal Portrait",
+    "desc": "Face camera directly with neutral expression and mouth closed in soft light."
+  },
+  {
+    "step": 2,
+    "title": "35x45mm Schengen Preset Active",
+    "desc": "Standardized for all 29 European Schengen member states at 300 DPI."
+  },
+  {
+    "step": 3,
+    "title": "Align 32mm\u201336mm Caliper",
+    "desc": "Ensure head occupies 70% to 80% of total picture height."
+  },
+  {
+    "step": 4,
+    "title": "Light Grey / White Background",
+    "desc": "Enforces uniform neutral background required by European consulates."
+  },
+  {
+    "step": 5,
+    "title": "Download Photo or Print Sheet",
+    "desc": "Export single photo or 8-photo 4x6\" sheet for VFS / TLScontact."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Rejection: Head Under 32mm",
+    "title": "Face Too Small in Frame",
+    "desc": "Schengen consulates strictly mandate 32mm to 36mm face height (70%\u201380%)."
+  },
+  {
+    "badge": "Rejection: Eyeglass Frame Reflections",
+    "title": "Spectacle Frames Obscuring Eyes",
+    "desc": "Frames covering any part of the eyes or tinted lenses cause immediate visa refusal."
+  },
+  {
+    "badge": "Rejection: Busy Background Pattern",
+    "title": "Non-Neutral Background Texture",
+    "desc": "Wallpapers or colored curtains trigger automated rejection by Schengen visa systems."
+  },
+  {
+    "badge": "Rejection: Photo Older than 6 Months",
+    "title": "Outdated Physical Appearance",
+    "desc": "Consulates compare visa photos against previous travel stamps; recent photos are mandatory."
+  }
+];
+
 export default function SchengenVisaPhotoPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Schengen Visa Photo Maker (35×45mm ICAO 9303)',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
@@ -172,33 +224,12 @@ export default function SchengenVisaPhotoPage() {
       {
         '@type': 'HowTo',
         name: 'How to Create a Compliant Schengen Visa Photo at Home',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Take a Frontal Portrait',
-            text: 'Stand 4 feet from a neutral light background in bright daytime light with neutral expression.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Upload to Kagazo Studio',
-            text: 'Upload your portrait. Kagazo configures the official 35x45 mm ICAO 9303 frame.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Align 70%–80% (32–36 mm) Face Guide',
-            text: 'Position your face so chin and hair crown match the 32–36 mm biometric bracket.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Digital JPEG',
-            text: 'Save the 300 DPI JPEG (50–120 KB) for online VFS Global or BLS appointment upload.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download 4x6" Print Sheet',
-            text: 'Export the 8-photo 4x6" card to print at any local studio for physical submission.',
-          },
-        ],
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -278,6 +309,7 @@ export default function SchengenVisaPhotoPage() {
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-300 text-xs sm:text-sm font-extrabold text-emerald-800 shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
             <ShieldCheck className="w-4 h-4 text-emerald-700" />
             <span>ICAO Doc 9303 Compliant • 29 Schengen States Certified • 32–36 mm Head</span>
           </div>
@@ -438,144 +470,51 @@ export default function SchengenVisaPhotoPage() {
               </div>
             </section>
 
-            {/* Step-by-Step Instructions */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <Camera className="w-5 h-5 text-primary" />
-                  Step-by-Step: How to Format Your Schengen Visa Photo
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Make a Schengen Visa Photo in 5 Steps
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
-                  Follow these proven steps to generate an embassy-ready visa photo.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed consular acceptance:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      1
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
                     </span>
-                    <h3 className="text-sm font-bold text-text-main">Take Portrait</h3>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
                   </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Stand 4 feet from a neutral light background in bright daytime light with shoulders level and neutral gaze.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      2
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Upload to Studio</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Select your portrait. Kagazo configures the official 35 × 45 mm frame with 300 DPI print density.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      3
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Align 32–36 mm Face</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Use caliper guides to verify chin rests on bottom line and top of hair aligns with 70%–80% bracket.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      4
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Set Background</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Confirm background is light grey or plain neutral without shadows or wall texture.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      5
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download Digital JPEG</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Save the optimized JPEG (50–120 KB @ 300 DPI) for online VFS Global or BLS appointment upload.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shrink-0">
-                      6
-                    </span>
-                    <h3 className="text-sm font-bold text-text-main">Download 4×6&quot; Sheet</h3>
-                  </div>
-                  <p className="text-xs text-text-main/70 leading-relaxed pl-8">
-                    Export the 8-photo printable card to print at any local studio for physical interview submission.
-                  </p>
-                </div>
+                ))}
               </div>
             </section>
 
-            {/* Rejection Prevention & Troubleshooting */}
-            <section className="bg-white rounded-3xl border border-surface-darker p-6 sm:p-8 shadow-card space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-amber-500" />
-                  Why Schengen Visa Photos Get Rejected &amp; How Kagazo Fixes Them
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Schengen Visa Photo Rejections and How Kagazo Fixes Them
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-1">
-                  Keep these consular guidelines in mind during photo capture to ensure 100% acceptance.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common passport photo mistakes that trigger application rejection:
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: Head Size Below 70%
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Standing too far from the camera produces a face height under 32 mm, failing ICAO Doc 9303.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> Biometric bounding box locks the chin-to-crown zone precisely between 32 mm and 36 mm.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: Older Than 6 Months
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Reusing identical photos already found in old visas or stamps in your passport booklet.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Advice:</strong> Always snap a fresh selfie with your smartphone and calibrate it in 10 seconds.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-red-50/50 border border-red-200/60 space-y-2">
-                  <h3 className="text-sm font-bold text-red-900 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                    Rejection: Glare on Spectacles
-                  </h3>
-                  <p className="text-xs text-red-800/80 leading-relaxed">
-                    <strong>The Cause:</strong> Room lighting or phone flash reflecting across glasses lenses, obscuring the pupil.
-                  </p>
-                  <p className="text-xs text-red-900 font-semibold pt-1">
-                    <strong>Kagazo Fix:</strong> We advise removing glasses entirely, as recommended by VFS and European consulates.
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
 
