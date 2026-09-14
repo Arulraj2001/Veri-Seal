@@ -1,264 +1,342 @@
-'use client';
-
-import { Breadcrumb } from '@/components/ui/Breadcrumb';
-import * as React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { EvVsPetrolEngine } from '@/components/vehicle-os/engines/EvVsPetrolEngine';
 import {
   Zap,
   TrendingDown,
-  Clock,
   Sparkles,
-  CheckCircle2,
-  AlertTriangle,
   ArrowRight,
   ShieldCheck,
   Fuel,
+  HelpCircle,
   Coins,
+  CheckCircle2,
+  Cpu,
 } from 'lucide-react';
-import { calculateEvVsPetrol } from '@/lib/vehicle-os/calculations';
-import { EvVsPetrolInputs, EvVsPetrolResult } from '@/lib/vehicle-os/types';
-import { AffiliateRecommendationBox } from '@/components/vehicle-os/AffiliateRecommendationBox';
-import { getAffiliatesByCategory } from '@/lib/vehicle-os/affiliate-config';
+
+export const metadata: Metadata = {
+  title: 'EV vs Petrol Break Even Calculator India | True TCO & Payback Sizer | Kagazo',
+  description:
+    'Calculate the exact months to break even on an Electric Vehicle (EV) vs Petrol car in India. Accounts for DISCOM domestic electricity slabs, DC fast charging, and maintenance deltas.',
+  keywords: [
+    'ev vs petrol calculator india',
+    'electric car break even months india',
+    'nexon ev vs petrol nexon cost comparison',
+    'ev running cost per km vs petrol',
+    'is ev worth buying in india calculator',
+    'tata tiago ev vs petrol running cost',
+    'electric vehicle tco calculator india',
+    'ev charging cost vs petrol bill india',
+  ],
+  alternates: {
+    canonical: 'https://Kagazo.in/vehicle-os/ev-vs-petrol',
+  },
+  openGraph: {
+    title: 'EV vs Petrol Break-Even Calculator | Kagazo Vehicle OS',
+    description:
+      'Discover when your EV becomes cheaper than a petrol car based on your daily commute and home electricity tariff.',
+    url: 'https://Kagazo.in/vehicle-os/ev-vs-petrol',
+    siteName: 'Kagazo',
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'EV vs Petrol Payback Calculator India | Kagazo',
+    description:
+      'Enter your daily driving distance to see the exact break-even timeline and 5-year net savings of buying an EV.',
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://Kagazo.in',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Vehicle OS',
+      item: 'https://Kagazo.in/vehicle-os',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'EV vs Petrol Break-Even Calculator',
+      item: 'https://Kagazo.in/vehicle-os/ev-vs-petrol',
+    },
+  ],
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to Calculate Your EV vs Petrol Break-Even Horizon in India',
+  description:
+    'Step-by-step methodology to determine whether an electric vehicle pays back its upfront premium based on your monthly commute.',
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: 'Determine the On-Road Upfront Premium',
+      text: 'Calculate the difference between the EV on-road price and its closest ICE petrol trim equivalent (typically ₹3,50,000 to ₹5,00,000 in India).',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Compute Monthly Energy Running Costs',
+      text: 'Multiply monthly km by the petrol price per km (~₹7.20/km at 14 km/L) versus EV home charging rate (~₹1.10/km at 7.2 km/kWh and ₹7.50/unit DISCOM slab).',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Factor In Public Fast Charging Tariffs',
+      text: 'Adjust your average energy cost if 15%–25% of your charging occurs at commercial highway DC fast chargers (₹18–₹24 per unit).',
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Calculate Months to Full Amortization',
+      text: 'Divide the upfront price premium by your total monthly running savings (fuel savings + periodic service savings).',
+    },
+  ],
+};
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Kagazo EV vs Petrol Break-Even Calculator',
+  url: 'https://Kagazo.in/vehicle-os/ev-vs-petrol',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Any',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'INR',
+  },
+  description:
+    'Interactive financial model determining EV break-even months based on Indian DISCOM tariffs, battery efficiency, and commuting patterns.',
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What is the real running cost per kilometre of an EV vs a petrol car in India?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'At domestic state DISCOM electricity rates of ₹7.00 to ₹8.50 per unit (kWh), a modern EV like the Tata Nexon.ev consumes ~138 Wh/km, resulting in an energy cost of ₹1.05 to ₹1.25 per km. In contrast, an equivalent 1.2L turbo-petrol compact SUV giving 13.5 km/L in city traffic costs ~₹7.50 per km (with petrol at ₹102/L). This gives an operating cost advantage of over ₹6.20 per km driven.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How many monthly kilometres do I need to drive for an EV to make financial sense?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'In India, if you drive over 1,200 km per month (~40 km per day), an EV will typically recover its ₹3.5L to ₹4.5L price premium within 38 to 48 months. If you drive less than 600 km per month, the break-even timeline extends beyond 7 years, making an EV harder to justify purely on financial return.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How does relying heavily on public DC fast chargers affect EV savings?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Public commercial DC fast charging costs between ₹18 and ₹24 per kWh (plus 18% GST). At ₹22/kWh, your EV running cost increases to ₹3.05 per km. While still cheaper than petrol (₹7.50/km), heavily relying on public stations reduces your monthly savings by ~35% and extends break-even duration by 14 to 18 months.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Are EV periodic service costs truly cheaper than petrol or diesel?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. EVs have no engine oil, oil filters, spark plugs, timing belts, fuel injectors, or clutch assemblies. Scheduled periodic services are largely limited to AC cabin pollen filters, brake fluid flushes every 2 years, coolant top-ups, and suspension inspections. Annual scheduled service for a mass-market EV averages ₹3,500 to ₹5,500 compared to ₹8,500 to ₹14,000 for an ICE vehicle.',
+      },
+    },
+  ],
+};
+
+const FAQS = [
+  {
+    q: 'What is the real running cost per kilometre of an EV vs a petrol car in India?',
+    a: 'At domestic state DISCOM electricity rates of ₹7.00 to ₹8.50 per unit (kWh), a modern EV like the Tata Nexon.ev consumes ~138 Wh/km, resulting in an energy cost of ₹1.05 to ₹1.25 per km. In contrast, an equivalent 1.2L turbo-petrol compact SUV giving 13.5 km/L in city traffic costs ~₹7.50 per km (with petrol at ₹102/L). This gives an operating cost advantage of over ₹6.20 per km driven.',
+  },
+  {
+    q: 'How many monthly kilometres do I need to drive for an EV to make financial sense?',
+    a: 'In India, if you drive over 1,200 km per month (~40 km per day), an EV will typically recover its ₹3.5L to ₹4.5L price premium within 38 to 48 months. If you drive less than 600 km per month, the break-even timeline extends beyond 7 years, making an EV harder to justify purely on financial return.',
+  },
+  {
+    q: 'How does relying heavily on public DC fast chargers affect EV savings?',
+    a: 'Public commercial DC fast charging costs between ₹18 and ₹24 per kWh (plus 18% GST). At ₹22/kWh, your EV running cost increases to ₹3.05 per km. While still cheaper than petrol (₹7.50/km), heavily relying on public stations reduces your monthly savings by ~35% and extends break-even duration by 14 to 18 months.',
+  },
+  {
+    q: 'Are EV periodic service costs truly cheaper than petrol or diesel?',
+    a: 'Yes. EVs have no engine oil, oil filters, spark plugs, timing belts, fuel injectors, or clutch assemblies. Scheduled periodic services are largely limited to AC cabin pollen filters, brake fluid flushes every 2 years, coolant top-ups, and suspension inspections. Annual scheduled service for a mass-market EV averages ₹3,500 to ₹5,500 compared to ₹8,500 to ₹14,000 for an ICE vehicle.',
+  },
+];
+
+const RELATED_TOOLS = [
+  {
+    title: 'EV Home Charging Cost Calculator',
+    description: 'Calculate exact unit consumption and monthly electricity bill impact under your state DISCOM slab.',
+    href: '/vehicle-os/ev-home-charging',
+    badge: 'Charging Sizer',
+  },
+  {
+    title: 'Home Charger Installation Guide',
+    description: 'Check sanction load, MCB rating, earthing resistance (&lt;2 ohms), and RWA society approval rules.',
+    href: '/vehicle-os/home-charger-guide',
+    badge: 'Installation Guide',
+  },
+  {
+    title: 'Cost Reality Checker (TCO)',
+    description: 'Full 5-year Total Cost of Ownership including loan EMI interest, insurance depreciation, and consumables.',
+    href: '/vehicle-os/cost-reality-checker',
+    badge: 'TCO Analyzer',
+  },
+];
 
 export default function EvVsPetrolBreakEvenPage() {
-  const [inputs, setInputs] = React.useState<EvVsPetrolInputs>({
-    petrolCarPrice: 1320000, // Tata Nexon Creative
-    evCarPrice: 1790000, // Tata Nexon.ev Empowered
-    monthlyKm: 1200,
-    petrolPrice: 102,
-    petrolMileage: 14.2,
-    electricityTariffPerUnit: 7.5, // Indian domestic state DISCOM slab
-    evEfficiencyKmPerKwh: 7.2, // ~138 Wh/km
-    homeChargingPercent: 80,
-    publicChargingTariffPerUnit: 22.0, // Commercial DC fast charger
-    annualPetrolMaintenance: 9500,
-    annualEvMaintenance: 4500,
-    ownershipYears: 5,
-  });
-
-  const result: EvVsPetrolResult = React.useMemo(() => {
-    return calculateEvVsPetrol(inputs);
-  }, [inputs]);
-
   return (
-    <div className="space-y-8 max-w-6xl mx-auto">
-      {/* Breadcrumb Navigation */}
-      <Breadcrumb
-        items={[
-          { label: 'Home', href: '/' },
-          { label: 'Vehicle OS', href: '/vehicle-os' },
-          { label: 'EV vs Petrol / Diesel TCO Sizer' },
-        ]}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      {/* Header */}
-      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-3">
-        <div className="flex items-center gap-2">
-          <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black uppercase tracking-wider">
-            ⚡ Deep Decision Engine #3
-          </span>
-          <span className="text-xs font-semibold text-slate-500">Amortization &amp; Tariff Intelligence</span>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      <div className="space-y-8 max-w-6xl mx-auto">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Vehicle OS', href: '/vehicle-os' },
+            { label: 'EV vs Petrol / Diesel TCO Sizer' },
+          ]}
+        />
+
+        {/* Header */}
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black uppercase tracking-wider">
+              ⚡ Deep Decision Engine #3
+            </span>
+            <span className="text-xs font-semibold text-slate-500">Amortization &amp; Tariff Intelligence</span>
+          </div>
+
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            EV vs Petrol Break-Even — At Your Driving Pattern, When Does EV Become Cheaper?
+          </h1>
+
+          <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
+            Electric vehicles carry a substantial initial price premium. This engine models your exact daily driving distance, home DISCOM electricity tariffs, public DC fast charging ratios, and maintenance savings to determine the exact month you recover the upfront price gap.
+          </p>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          EV vs Petrol Break-Even — At Your Driving Pattern, When Does EV Become Cheaper?
-        </h1>
+        {/* Interactive Engine Component */}
+        <EvVsPetrolEngine />
 
-        <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
-          Electric vehicles carry a substantial initial price premium. This engine models your exact daily driving distance, home DISCOM electricity tariffs, public DC fast charging ratios, and maintenance savings to determine the exact month you recover the upfront price gap.
-        </p>
-      </div>
-
-      {/* Grid: Inputs Left, Output Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Inputs */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm space-y-5">
-            <h2 className="text-sm font-black text-slate-900 flex items-center gap-1.5 border-b border-slate-100 pb-3">
-              <Coins className="w-4 h-4 text-emerald-600" />
-              <span>Purchase Price &amp; Driving Commute</span>
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Petrol Vehicle On-Road (₹)</label>
-                <input
-                  type="number"
-                  value={inputs.petrolCarPrice}
-                  onChange={(e) => setInputs({ ...inputs, petrolCarPrice: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Equivalent EV On-Road (₹)</label>
-                <input
-                  type="number"
-                  value={inputs.evCarPrice}
-                  onChange={(e) => setInputs({ ...inputs, evCarPrice: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Monthly Driving Distance (km)</label>
-                <input
-                  type="number"
-                  value={inputs.monthlyKm}
-                  onChange={(e) => setInputs({ ...inputs, monthlyKm: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Petrol Real Mileage (km/L)</label>
-                <input
-                  type="number"
-                  step="0.5"
-                  value={inputs.petrolMileage}
-                  onChange={(e) => setInputs({ ...inputs, petrolMileage: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-              </div>
+        {/* Educational / Deep-Dive Section */}
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-600">
+              <Cpu className="w-4 h-4" />
+              <span>EV Ownership Economics in India</span>
             </div>
-
-            <h2 className="text-sm font-black text-slate-900 flex items-center gap-1.5 border-b border-slate-100 pb-3 pt-2">
-              <Zap className="w-4 h-4 text-emerald-600" />
-              <span>Electricity Tariffs &amp; Charging Mix</span>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              Understanding the 3 Pillars of Electric Vehicle Payback
             </h2>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Purchasing an EV in India is primarily an upfront capital allocation decision that trades a higher down-payment for microscopic recurring operating costs. Here is how the key financial vectors interact:
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">EV Real Efficiency (km / kWh)</label>
-                <input
-                  type="number"
-                  step="0.2"
-                  value={inputs.evEfficiencyKmPerKwh}
-                  onChange={(e) => setInputs({ ...inputs, evEfficiencyKmPerKwh: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-                <span className="text-[10px] text-slate-400 mt-0.5 block">Tiago EV: 8.5, Nexon.ev: 7.2 km/kWh</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="text-xs font-black text-slate-900 uppercase">1. The Energy Spread</div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                With petrol retailing at ~₹100–₹105/L and domestic electricity averaging ₹6–₹8.50/unit, every single kilometre driven saves ₹5.50 to ₹6.50 in direct energy expenditure when charged overnight at home.
+              </p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="text-xs font-black text-slate-900 uppercase">2. State Subsidies &amp; Road Tax</div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Several Indian states offer 0% road tax and registration fee waivers on EVs (saving ₹1.2 Lakh to ₹2.2 Lakh over ICE road tax), narrowing the real on-road upfront acquisition premium dramatically.
+              </p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <div className="text-xs font-black text-slate-900 uppercase">3. Battery Longevity &amp; Resale</div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Modern LFP (Lithium Iron Phosphate) battery chemistry used by major Indian OEMs retains &gt;80% capacity over 2,000–3,000 cycles (equivalent to 3,00,000+ km), debunking early battery replacement fears.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* FAQs Section */}
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="flex items-center gap-2">
+            <HelpCircle className="w-5 h-5 text-emerald-600" />
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              Frequently Asked Questions on EV vs Petrol Economics
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {FAQS.map((faq, i) => (
+              <div key={i} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+                <h3 className="text-sm font-bold text-slate-900">{faq.q}</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">{faq.a}</p>
               </div>
+            ))}
+          </div>
+        </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Home Electricity Tariff (₹ / unit)</label>
-                <input
-                  type="number"
-                  step="0.5"
-                  value={inputs.electricityTariffPerUnit}
-                  onChange={(e) => setInputs({ ...inputs, electricityTariffPerUnit: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-                <span className="text-[10px] text-slate-400 mt-0.5 block">State domestic slab (₹6 - ₹9)</span>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Home vs Public Charging Ratio</label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="range"
-                    min="20"
-                    max="100"
-                    step="5"
-                    value={inputs.homeChargingPercent}
-                    onChange={(e) => setInputs({ ...inputs, homeChargingPercent: parseInt(e.target.value) })}
-                    className="w-full accent-emerald-600"
-                  />
-                  <span className="text-xs font-mono font-bold text-emerald-700 shrink-0">
-                    {inputs.homeChargingPercent}% Home
+        {/* Related Tools Internal Linking */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-emerald-600" />
+            <span>Explore Related EV &amp; Ownership Tools</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {RELATED_TOOLS.map((tool, idx) => (
+              <Link
+                key={idx}
+                href={tool.href}
+                className="group p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-emerald-500/40 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div className="space-y-2">
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    {tool.badge}
                   </span>
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">
+                    {tool.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{tool.description}</p>
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Public DC Fast Charge Rate (₹/kWh)</label>
-                <input
-                  type="number"
-                  value={inputs.publicChargingTariffPerUnit}
-                  onChange={(e) => setInputs({ ...inputs, publicChargingTariffPerUnit: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-                <span className="text-[10px] text-slate-400 mt-0.5 block">Highway stations (₹18 - ₹24)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Output */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white border-2 border-slate-900 rounded-3xl p-6 shadow-md space-y-5">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                Break-Even Verdict
-              </span>
-              <h2 className="text-xl font-black text-slate-900 mt-1">
-                {result.breakEvenMonths <= 60
-                  ? `Break-even in ~${result.breakEvenMonths} Months`
-                  : 'Break-even > 5 Years'}
-              </h2>
-            </div>
-
-            {/* Output cards */}
-            <div className="space-y-3 font-mono text-xs">
-              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 flex justify-between items-center">
-                <span className="text-slate-600">EV Upfront Price Premium:</span>
-                <span className="font-bold text-slate-900">+₹{(result.upfrontPriceDifference / 100000).toFixed(2)} Lakh</span>
-              </div>
-
-              <div className="bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-200 flex justify-between items-center">
-                <span className="text-emerald-900 font-bold">Monthly Operational Savings:</span>
-                <span className="font-black text-emerald-700 text-sm">
-                  +₹{result.totalMonthlySavings.toLocaleString('en-IN')} / mo
-                </span>
-              </div>
-
-              <div className="p-3.5 rounded-2xl border border-slate-200 space-y-1.5 text-slate-600">
-                <div className="flex justify-between items-center">
-                  <span>Monthly Petrol Bill:</span>
-                  <span className="text-slate-900">₹{result.monthlyPetrolFuelCost.toLocaleString('en-IN')}</span>
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-emerald-600 group-hover:translate-x-0.5 transition-transform">
+                  <span>Open Tool</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </div>
-                <div className="flex justify-between items-center">
-                  <span>Monthly EV Electricity Bill:</span>
-                  <span className="text-emerald-700 font-bold">₹{result.monthlyEvEnergyCost.toLocaleString('en-IN')}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>Monthly Maintenance Delta:</span>
-                  <span className="text-emerald-700 font-bold">+₹{result.monthlyMaintenanceSavings.toLocaleString('en-IN')}</span>
-                </div>
-              </div>
-
-              <div className="bg-slate-900 text-white p-4 rounded-2xl space-y-1">
-                <div className="text-[10px] text-slate-400 font-sans font-bold uppercase">5-Year Net Cash In Pocket</div>
-                <div className="text-2xl font-black text-emerald-400">
-                  {result.fiveYearNetSavings >= 0 ? '+' : ''}₹{result.fiveYearNetSavings.toLocaleString('en-IN')}
-                </div>
-                <div className="text-[10px] text-slate-400 font-sans">
-                  After completely recovering the ₹{(result.upfrontPriceDifference / 100000).toFixed(1)}L price gap
-                </div>
-              </div>
-            </div>
-
-            {/* Recommendation */}
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs text-slate-700 leading-relaxed font-medium">
-              {result.recommendation}
-            </div>
-
-            {/* Environmental Metric */}
-            <div className="flex items-center gap-2 text-xs text-emerald-800 bg-emerald-50/60 p-3 rounded-xl border border-emerald-200">
-              <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>
-                Net Clean Air Impact: <strong>{result.co2SavedKgPerYear.toLocaleString('en-IN')} kg of CO₂</strong> saved per year.
-              </span>
-            </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Contextual Affiliate Box */}
-      <AffiliateRecommendationBox
-        deals={getAffiliatesByCategory('ev-charger')}
-        title="Planning to Buy an EV? Certified Home AC Wallbox Chargers"
-        contextHint="Fast 7.4kW Type-2 chargers with automatic overnight scheduling and MCB earth leakage protection:"
-      />
-    </div>
+    </>
   );
 }

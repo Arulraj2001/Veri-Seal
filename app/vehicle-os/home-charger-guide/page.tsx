@@ -1,224 +1,313 @@
-'use client';
-
-import { Breadcrumb } from '@/components/ui/Breadcrumb';
-import * as React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import { HomeChargerGuideEngine } from '@/components/vehicle-os/engines/HomeChargerGuideEngine';
 import {
   BatteryCharging,
   Zap,
-  CheckCircle2,
-  AlertTriangle,
+  TrendingDown,
+  Sparkles,
   ArrowRight,
   ShieldCheck,
-  Sparkles,
-  Info,
+  HelpCircle,
+  Wrench,
+  CheckCircle2,
 } from 'lucide-react';
-import { AffiliateRecommendationBox } from '@/components/vehicle-os/AffiliateRecommendationBox';
-import { getAffiliatesByCategory } from '@/lib/vehicle-os/affiliate-config';
+
+export const metadata: Metadata = {
+  title: 'EV Home Charger Guide India | 16A Socket vs 7.4kW Wallbox Decision Tool | Kagazo',
+  description:
+    'Should you buy a ₹40,000 7.4kW AC Wallbox or use a standard ₹2,500 16A socket? Check charging hours, DISCOM sanctioned load upgrades, RWA NOC rules, and earthing requirements.',
+  keywords: [
+    'ev home charger installation guide india',
+    '16a socket vs 7kw wallbox charging time',
+    'sanctioned load upgrade for ev charger india',
+    'rwa noc for ev charging apartment basement',
+    'earthing resistance for ev charger ohms',
+    'tata nexon ev home charging setup cost',
+    'ac wallbox 7.4kw installation cost india',
+    'single phase vs 3 phase ev charger home',
+  ],
+  alternates: {
+    canonical: 'https://Kagazo.in/vehicle-os/home-charger-guide',
+  },
+  openGraph: {
+    title: 'EV Home Charger Decision Tool | Kagazo Vehicle OS',
+    description:
+      'Compare 16A industrial sockets vs 7.4kW wallboxes based on your daily commute, battery capacity, and home electrical capacity.',
+    url: 'https://Kagazo.in/vehicle-os/home-charger-guide',
+    siteName: 'Kagazo',
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'EV Home Charger Guide India | Kagazo',
+    description:
+      'Evaluate whether your electrical connection needs an upgrade before buying an EV home charger.',
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://Kagazo.in',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Vehicle OS',
+      item: 'https://Kagazo.in/vehicle-os',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'EV Home Charger Guide',
+      item: 'https://Kagazo.in/vehicle-os/home-charger-guide',
+    },
+  ],
+};
+
+const webAppSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Kagazo EV Home Charger Decision Tool',
+  url: 'https://Kagazo.in/vehicle-os/home-charger-guide',
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'INR',
+  },
+  description:
+    'Decision engine evaluating 16A plug top-up times vs 7.4kW wallboxes, electrical sanction load limits, and apartment NOC steps.',
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Can a standard 16A socket recharge my daily commuting distance overnight?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. A standard 16A (3.3 kW) industrial socket delivers ~2.8 kW continuously to the vehicle. Over an 8-hour overnight sleep window, it supplies ~22.4 kWh of energy, which yields 150 to 175 km of real-world driving range. If your daily commute is under 70 km, a 16A socket easily replenishes your vehicle in 3.5 to 4 hours.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What sanctioned load is required to install a 7.4kW AC Wallbox at home?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A 7.4 kW charger draws ~32 Amperes on single-phase supply. If your home has a 3 kW or 5 kW sanctioned load, running the charger alongside a domestic air conditioner or water geyser will trip the main service cut-out fuse. You must apply for a load enhancement to at least 8 kW (single-phase) or 10 kW (3-phase) with your state electricity DISCOM.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What are the legal guidelines for EV charger installation in Indian apartment societies?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Under the Ministry of Power guidelines (2022 amendments), Resident Welfare Associations (RWAs) and Apartment Owners Associations (AOAs) cannot arbitrarily deny permission for EV charger installation in designated allotted parking slots. The resident is responsible for running a dedicated armored cable from their individual meter to the parking bay.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What earthing resistance is required for EV chargers in India?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'All EV manufacturers and IS 17017 standards require dedicated earthing with a measured resistance of less than 2 Ohms (maximum permissible threshold is 5 Ohms). If earthing resistance is too high or neutral-to-earth voltage exceeds 4V, modern EV on-board chargers refuse to initiate charging and illuminate a red fault indicator.',
+      },
+    },
+  ],
+};
+
+const FAQS = [
+  {
+    q: 'Can a standard 16A socket recharge my daily commuting distance overnight?',
+    a: 'Yes. A standard 16A (3.3 kW) industrial socket delivers ~2.8 kW continuously to the vehicle. Over an 8-hour overnight sleep window, it supplies ~22.4 kWh of energy, which yields 150 to 175 km of real-world driving range. If your daily commute is under 70 km, a 16A socket easily replenishes your vehicle in 3.5 to 4 hours.',
+  },
+  {
+    q: 'What sanctioned load is required to install a 7.4kW AC Wallbox at home?',
+    a: 'A 7.4 kW charger draws ~32 Amperes on single-phase supply. If your home has a 3 kW or 5 kW sanctioned load, running the charger alongside a domestic air conditioner or water geyser will trip the main service cut-out fuse. You must apply for a load enhancement to at least 8 kW (single-phase) or 10 kW (3-phase) with your state electricity DISCOM.',
+  },
+  {
+    q: 'What are the legal guidelines for EV charger installation in Indian apartment societies?',
+    a: 'Under the Ministry of Power guidelines (2022 amendments), Resident Welfare Associations (RWAs) and Apartment Owners Associations (AOAs) cannot arbitrarily deny permission for EV charger installation in designated allotted parking slots. The resident is responsible for running a dedicated armored cable from their individual meter to the parking bay.',
+  },
+  {
+    q: 'What earthing resistance is required for EV chargers in India?',
+    a: 'All EV manufacturers and IS 17017 standards require dedicated earthing with a measured resistance of less than 2 Ohms (maximum permissible threshold is 5 Ohms). If earthing resistance is too high or neutral-to-earth voltage exceeds 4V, modern EV on-board chargers refuse to initiate charging and illuminate a red fault indicator.',
+  },
+];
+
+const RELATED_TOOLS = [
+  {
+    title: 'EV Home Charging Cost Calculator',
+    description: 'Calculate monthly electricity bill impact based on domestic DISCOM tariffs and conversion losses.',
+    href: '/vehicle-os/ev-home-charging',
+    badge: 'Cost Sizer',
+  },
+  {
+    title: 'EV vs Petrol Break-Even Calculator',
+    description: 'Find out the exact payback month and 5-year net savings of switching from petrol to electric.',
+    href: '/vehicle-os/ev-vs-petrol',
+    badge: 'TCO Comparison',
+  },
+  {
+    title: 'Battery Replacement & Degradation',
+    description: 'Calculate 12V auxiliary and high-voltage traction battery aging, warranty limits, and replacement costs.',
+    href: '/vehicle-os/battery-replacement',
+    badge: 'Battery Health',
+  },
+];
 
 export default function HomeChargerDecisionPage() {
-  const [batteryKwh, setBatteryKwh] = React.useState<number>(30.0);
-  const [dailyKm, setDailyKm] = React.useState<number>(45);
-  const [electricalSanctionedKw, setElectricalSanctionedKw] = React.useState<number>(5); // e.g. 3kW, 5kW, 8kW
-  const [parkingType, setParkingType] = React.useState<'dedicated-garage' | 'open-stilt' | 'apartment-basement'>('dedicated-garage');
-  const [desiredOvernightHours, setDesiredOvernightHours] = React.useState<number>(8);
-
-  // Computations
-  // Daily energy needed = (dailyKm / 7.5) * 1.15
-  const dailyKwhNeeded = Number(((dailyKm / 7.2) * 1.15).toFixed(1));
-
-  // Option 1: Standard 16A 3-Pin Socket (3.3kW AC)
-  // Continuous real output: ~2.8kW
-  const hours16A = Number((dailyKwhNeeded / 2.8).toFixed(1));
-  const fullCharge16AHours = Number((batteryKwh / 2.8).toFixed(1));
-
-  // Option 2: 7.4kW AC Fast Wallbox
-  // Continuous real output: ~6.8kW
-  const hours7Kw = Number((dailyKwhNeeded / 6.8).toFixed(1));
-  const fullCharge7KwHours = Number((batteryKwh / 6.8).toFixed(1));
-
-  // Verdict recommendation
-  const canRelyOn16A = hours16A <= desiredOvernightHours;
-  const needsSanctionLoadUpgrade = electricalSanctionedKw < 7;
-
   return (
-    <div className="space-y-8 max-w-6xl mx-auto">
-      {/* Breadcrumb Navigation */}
-      <Breadcrumb
-        items={[
-          { label: 'Home', href: '/' },
-          { label: 'Vehicle OS', href: '/vehicle-os' },
-          { label: 'EV Home Charger Guide' },
-        ]}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      {/* Header */}
-      <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-3">
-        <div className="flex items-center gap-2">
-          <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-black uppercase tracking-wider">
-            EV Hardware Intelligence
-          </span>
-          <span className="text-xs font-semibold text-slate-500">16A Socket vs 7.4kW Wallbox</span>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
+      <div className="space-y-8 max-w-6xl mx-auto">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Vehicle OS', href: '/vehicle-os' },
+            { label: 'EV Home Charger Guide' },
+          ]}
+        />
+
+        {/* Header */}
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-black uppercase tracking-wider">
+              EV Hardware Intelligence
+            </span>
+            <span className="text-xs font-semibold text-slate-500">16A Socket vs 7.4kW Wallbox</span>
+          </div>
+
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Home Charger Decision Tool — What Charger Setup Do I Actually Need?
+          </h1>
+
+          <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
+            Do you actually need to spend ₹40,000 on an expensive 7.4kW AC Wallbox, or does a standard ₹2,500 16-ampere industrial socket easily refill your daily commute overnight? Model your charging window and grid sanctioned load.
+          </p>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Home Charger Decision Tool — What Charger Setup Do I Actually Need?
-        </h1>
+        {/* Interactive Engine Component */}
+        <HomeChargerGuideEngine />
 
-        <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
-          Do you actually need to spend ₹40,000 on an expensive 7.4kW AC Wallbox, or does a standard ₹2,500 16-ampere industrial socket easily refill your daily commute overnight? Model your charging window and grid sanctioned load.
-        </p>
-      </div>
-
-      {/* Grid: Inputs Left, Output Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm space-y-5">
-            <h2 className="text-sm font-black text-slate-900 flex items-center gap-1.5 border-b border-slate-100 pb-3">
-              <Zap className="w-4 h-4 text-amber-600" />
-              <span>EV &amp; Electrical Grid Capacity</span>
+        {/* Electrical Compliance & Setup Guide */}
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-600">
+              <Wrench className="w-4 h-4" />
+              <span>Electrical Infrastructure Compliance</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              4-Step Physical Installation Checklist for Indian Homes
             </h2>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Charging an EV draws continuous high current over 4 to 8 hours. Never plug into regular household extension cords. Follow these safety mandates:
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">EV Battery Size (kWh)</label>
-                <input
-                  type="number"
-                  step="0.5"
-                  value={batteryKwh}
-                  onChange={(e) => setBatteryKwh(parseFloat(e.target.value) || 0)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Daily Commute (km)</label>
-                <input
-                  type="number"
-                  value={dailyKm}
-                  onChange={(e) => setDailyKm(parseFloat(e.target.value) || 0)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Home Sanctioned Load (kW)
-                </label>
-                <input
-                  type="number"
-                  value={electricalSanctionedKw}
-                  onChange={(e) => setElectricalSanctionedKw(parseFloat(e.target.value) || 0)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-                <span className="text-[10px] text-slate-400 mt-0.5 block">Check on your electricity bill</span>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Available Overnight Window (Hours)
-                </label>
-                <input
-                  type="number"
-                  value={desiredOvernightHours}
-                  onChange={(e) => setDesiredOvernightHours(parseFloat(e.target.value) || 0)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-              </div>
-
-              <div className="sm:col-span-2">
-                <label className="block text-xs font-bold text-slate-700 mb-1">Parking Situation</label>
-                <select
-                  value={parkingType}
-                  onChange={(e) => setParkingType(e.target.value as any)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                >
-                  <option value="dedicated-garage">Individual House / Private Gated Garage</option>
-                  <option value="open-stilt">Stilt Ground Parking (Common Meter Access)</option>
-                  <option value="apartment-basement">Multi-Storey Apartment Basement (RWA NOC Required)</option>
-                </select>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div className="text-xs font-black text-slate-900 uppercase">1. Dedicated Wiring</div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Use 4 sq. mm copper wire for 16A sockets (up to 30m) or 6 to 10 sq. mm armored cable for 7.4kW wallboxes direct from meter distribution.
+              </p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div className="text-xs font-black text-slate-900 uppercase">2. MCB &amp; RCCB Protection</div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Install a dedicated C-Curve 20A MCB with a Type-A 30mA residual current circuit breaker (RCCB) to prevent earth leakage risks.
+              </p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div className="text-xs font-black text-slate-900 uppercase">3. Chemical Earth Pit</div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Ensure a dedicated copper plate or chemical pipe earth electrode with measured ground resistance strictly below 2 Ohms.
+              </p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <div className="text-xs font-black text-slate-900 uppercase">4. RWA NOC Process</div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Submit an application citing Central Electricity Authority (CEA) regulations with the wiring route and sub-meter placement map.
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Right Output */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white border-2 border-slate-900 rounded-3xl p-6 shadow-md space-y-5">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                Setup Recommendation
-              </span>
-              <h2 className="text-xl font-black text-slate-900 mt-1">
-                {canRelyOn16A ? '🔌 Standard 16A 3.3kW Socket Suffices' : '⚡ 7.4kW Fast Wallbox Recommended'}
-              </h2>
-            </div>
+        {/* FAQs Section */}
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="flex items-center gap-2">
+            <HelpCircle className="w-5 h-5 text-amber-600" />
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              Frequently Asked Questions on EV Charger Installation
+            </h2>
+          </div>
 
-            <p className="text-xs text-slate-600 leading-relaxed font-medium">
-              To replenish your {dailyKm} km daily commute, your vehicle requires <strong>{dailyKwhNeeded} kWh</strong> of electrical energy.
-            </p>
-
-            {/* Speed Comparison */}
-            <div className="space-y-3 font-mono text-xs">
-              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1">
-                <div className="font-bold text-slate-900 font-sans flex justify-between">
-                  <span>Option A: 16A Industrial Socket (3.3kW)</span>
-                  <span className="text-emerald-700">Cost: ~₹2,500</span>
-                </div>
-                <div className="text-[11px] text-slate-600 flex justify-between">
-                  <span>Daily commute top-up:</span>
-                  <span className="font-bold text-slate-900">{hours16A} Hours</span>
-                </div>
-                <div className="text-[11px] text-slate-600 flex justify-between">
-                  <span>0 to 100% full charge:</span>
-                  <span className="font-bold text-slate-900">{fullCharge16AHours} Hours</span>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {FAQS.map((faq, i) => (
+              <div key={i} className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+                <h3 className="text-sm font-bold text-slate-900">{faq.q}</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">{faq.a}</p>
               </div>
+            ))}
+          </div>
+        </div>
 
-              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1">
-                <div className="font-bold text-slate-900 font-sans flex justify-between">
-                  <span>Option B: 7.4kW Fast AC Wallbox</span>
-                  <span className="text-amber-700">Cost: ~₹35,000+</span>
+        {/* Related Tools Internal Linking */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-amber-600" />
+            <span>Explore Related EV &amp; Vehicle Tools</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {RELATED_TOOLS.map((tool, idx) => (
+              <Link
+                key={idx}
+                href={tool.href}
+                className="group p-5 rounded-3xl bg-white border border-slate-200/80 hover:border-amber-500/40 hover:shadow-md transition-all flex flex-col justify-between"
+              >
+                <div className="space-y-2">
+                  <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                    {tool.badge}
+                  </span>
+                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-amber-600 transition-colors">
+                    {tool.title}
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{tool.description}</p>
                 </div>
-                <div className="text-[11px] text-slate-600 flex justify-between">
-                  <span>Daily commute top-up:</span>
-                  <span className="font-bold text-slate-900">{hours7Kw} Hours</span>
+                <div className="mt-4 flex items-center gap-1 text-xs font-bold text-amber-600 group-hover:translate-x-0.5 transition-transform">
+                  <span>Open Tool</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </div>
-                <div className="text-[11px] text-slate-600 flex justify-between">
-                  <span>0 to 100% full charge:</span>
-                  <span className="font-bold text-slate-900">{fullCharge7KwHours} Hours</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Grid Warning */}
-            {needsSanctionLoadUpgrade && (
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-xs text-amber-900 space-y-1">
-                <div className="font-bold flex items-center gap-1">
-                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                  <span>Sanctioned Load Warning:</span>
-                </div>
-                <p className="text-[11px] leading-relaxed">
-                  Installing a 7.4kW Wallbox on a {electricalSanctionedKw}kW sanctioned meter will trip your main MCB if running along with household ACs. You must apply for a DISCOM load enhancement to 8kW or 10kW.
-                </p>
-              </div>
-            )}
-
-            <div className="flex items-start gap-1.5 text-[10px] text-slate-400 pt-1">
-              <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-              <span>
-                * We do not provide electrical installation certificates. Always hire a certified licensed electrician to install dedicated 4 sq.mm copper wiring and earth pit resistance &lt; 5 ohms.
-              </span>
-            </div>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Contextual Affiliate Box */}
-      <AffiliateRecommendationBox
-        deals={getAffiliatesByCategory('ev-charger')}
-        title="Verified Home EV Chargers &amp; Wallboxes"
-        contextHint="Shop safety-certified Type-2 EV wallbox units compatible with all Indian electric cars:"
-      />
-    </div>
+    </>
   );
 }

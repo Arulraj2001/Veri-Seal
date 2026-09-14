@@ -1,38 +1,114 @@
-'use client';
-
-import { Breadcrumb } from '@/components/ui/Breadcrumb';
-import * as React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  BatteryCharging,
-  AlertTriangle,
-  CheckCircle2,
-  HelpCircle,
-  ExternalLink,
-  ShieldCheck,
-  Zap,
-  Info,
-} from 'lucide-react';
-import { evaluateBattery } from '@/lib/vehicle-os/calculations';
-import { BatteryAssessmentInputs, BatteryAssessmentResult } from '@/lib/vehicle-os/types';
-import { AffiliateRecommendationBox } from '@/components/vehicle-os/AffiliateRecommendationBox';
-import { getAffiliatesByCategory } from '@/lib/vehicle-os/affiliate-config';
+import { Breadcrumb } from '@/components/ui/Breadcrumb';
+import BatteryReplacementEngine from '@/components/vehicle-os/engines/BatteryReplacementEngine';
+import { BatteryCharging, HelpCircle, ChevronRight, Disc, Car, Wrench } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Car Battery Replacement & Health Sizer India | Amaron vs Exide Scrap Rebate Guide',
+  description:
+    'Evaluate battery age, cold-cranking lag, and terminal voltage to prevent sudden highway strandings. Calculate replacement costs across Amaron and Exide after claiming ₹800–₹1,000 old battery scrap exchange rebate.',
+  keywords: [
+    'car battery replacement cost calculator India',
+    'Amaron vs Exide car battery price with scrap exchange',
+    'car battery life calculator India',
+    'signs car battery is dying India',
+    'old car battery scrap value price rupees',
+    'car resting voltage 12.6V battery health',
+    'cold cranking amps sluggish morning start',
+    'car battery doorstep replacement warranty India',
+  ],
+  alternates: {
+    canonical: 'https://Kagazo.in/vehicle-os/battery-replacement',
+  },
+  openGraph: {
+    title: 'Car Battery Replacement & Health Sizer India | Scrap Rebate Guide',
+    description:
+      'Is your car battery due for replacement? Test resting voltage and cranking lag to prevent highway stranding, with scrap rebate calculation.',
+    url: 'https://Kagazo.in/vehicle-os/battery-replacement',
+    siteName: 'Kagazo',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Car Battery Replacement Sizer India | Amaron vs Exide Guide',
+    description:
+      'Diagnose battery health, calculate remaining months, and claim up to ₹1,000 old battery scrap rebate.',
+  },
+};
+
+const FAQS = [
+  {
+    question: 'How long does a 12V car battery last in Indian weather conditions?',
+    answer:
+      'In India, lead-acid car batteries typically last between 3 to 4 years (36–48 months). Extreme summer ambient temperatures (above 40°C in North and Central India) accelerate electrolyte evaporation and internal grid corrosion, causing batteries in hot regions to fail closer to the 36-month mark.',
+  },
+  {
+    question: 'How much scrap rebate should I get for my old dead car battery in India?',
+    answer:
+      'Authorized battery retailers and doorstep fitment providers in India legally offer between ₹700 and ₹1,100 as an instant scrap rebate / exchange discount for your old dead battery (depending on whether it is a smaller 35Ah hatchback battery or a larger 65Ah SUV battery). Never let the garage keep your old battery for free!',
+  },
+  {
+    question: 'What is a healthy resting voltage reading for a car battery?',
+    answer:
+      'Measured with a digital multimeter when the car has been turned off for at least 4 hours: 12.6V or higher represents 100% full charge, 12.4V represents roughly 75% charge, 12.2V indicates 50% charge (requires immediate charging), and anything below 12.0V means the battery is deeply discharged with sulfated plates and needs replacement.',
+  },
+  {
+    question: 'What are the classic warning signs that a car battery is about to die?',
+    answer:
+      '(1) Sluggish, delayed starter motor cranking on the first cold morning start, (2) Dashboard lights and infotainment screen flickering or dimming when cranking, (3) Power windows rolling up noticeably slower with the engine off, and (4) The white circular "Magic Eye" indicator on top of the battery casing turning clear, red, or black.',
+  },
+];
+
+const RELATED_TOOLS = [
+  { href: '/vehicle-os/tyre-replacement', label: 'Car Tyre Replacement & Health Sizer', icon: Disc },
+  { href: '/vehicle-os/cost-reality-checker', label: '5-Year True Ownership Cost Reality', icon: Car },
+  { href: '/vehicle-os/service-quote-fairness', label: 'Car Service Quote Fairness Checker', icon: Wrench },
+];
 
 export default function BatteryReplacementPage() {
-  const [inputs, setInputs] = React.useState<BatteryAssessmentInputs>({
-    vehicleAgeYears: 4,
-    batteryAgeMonths: 38,
-    crankingSluggish: true,
-    voltageReading: 12.1,
-    hasElectricalAddOns: false,
-  });
-
-  const result: BatteryAssessmentResult = React.useMemo(() => {
-    return evaluateBattery(inputs);
-  }, [inputs]);
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://Kagazo.in/vehicle-os' },
+          { '@type': 'ListItem', position: 3, name: 'Battery Replacement Decision Tool', item: 'https://Kagazo.in/vehicle-os/battery-replacement' },
+        ],
+      },
+      {
+        '@type': 'WebApplication',
+        name: 'Car Battery Replacement & Health Decision Tool',
+        url: 'https://Kagazo.in/vehicle-os/battery-replacement',
+        applicationCategory: 'AutomotiveApplication',
+        operatingSystem: 'All',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'INR',
+        },
+        description:
+          'Diagnose 12V automotive battery health, prevent highway stranding, and calculate old battery scrap rebates in India.',
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
+      },
+    ],
+  };
 
   return (
     <div className="space-y-8 max-w-6xl mx-auto">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumb Navigation */}
       <Breadcrumb
         items={[
@@ -41,6 +117,7 @@ export default function BatteryReplacementPage() {
           { label: 'Battery Health & Replacement Sizer' },
         ]}
       />
+
       {/* Header */}
       <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-3">
         <div className="flex items-center gap-2">
@@ -51,7 +128,7 @@ export default function BatteryReplacementPage() {
         </div>
 
         <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Battery Replacement Decision Tool — Is My Battery Actually Due?
+          Car Battery Replacement Decision Tool India — Is My Battery Actually Due?
         </h1>
 
         <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
@@ -59,135 +136,79 @@ export default function BatteryReplacementPage() {
         </p>
       </div>
 
-      {/* Grid: Inputs Left, Verdict Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Inputs */}
-        <div className="lg:col-span-6 space-y-6">
-          <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm space-y-5">
-            <h2 className="text-sm font-black text-slate-900 flex items-center gap-1.5 border-b border-slate-100 pb-3">
-              <BatteryCharging className="w-4 h-4 text-amber-600" />
-              <span>Battery Diagnostics</span>
-            </h2>
+      {/* Interactive Engine */}
+      <BatteryReplacementEngine />
 
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Battery Age (Months)</label>
-                  <input
-                    type="number"
-                    value={inputs.batteryAgeMonths}
-                    onChange={(e) => setInputs({ ...inputs, batteryAgeMonths: parseInt(e.target.value) || 0 })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                  />
-                  <span className="text-[10px] text-slate-400 mt-0.5 block">Indian average life is 36-48 months</span>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Vehicle Age (Years)</label>
-                  <input
-                    type="number"
-                    value={inputs.vehicleAgeYears}
-                    onChange={(e) => setInputs({ ...inputs, vehicleAgeYears: parseInt(e.target.value) || 0 })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Resting Voltage Reading (V) — Optional
-                </label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value={inputs.voltageReading || ''}
-                  onChange={(e) => setInputs({ ...inputs, voltageReading: parseFloat(e.target.value) || undefined })}
-                  placeholder="e.g. 12.6V is 100%, 12.2V is 50%"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-bold text-slate-900"
-                />
-              </div>
-
-              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-bold text-slate-900">Sluggish / Hesitant Cold Cranking?</div>
-                  <div className="text-[10px] text-slate-500">Starter motor struggles during first morning start</div>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={inputs.crankingSluggish}
-                  onChange={(e) => setInputs({ ...inputs, crankingSluggish: e.target.checked })}
-                  className="h-4 w-4 rounded accent-red-600"
-                />
-              </div>
-
-              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-bold text-slate-900">Heavy Aftermarket Accessories?</div>
-                  <div className="text-[10px] text-slate-500">24x7 hardwired dashcam, subwoofers, high-wattage HIDs</div>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={inputs.hasElectricalAddOns}
-                  onChange={(e) => setInputs({ ...inputs, hasElectricalAddOns: e.target.checked })}
-                  className="h-4 w-4 rounded accent-amber-600"
-                />
-              </div>
-            </div>
-          </div>
+      {/* Educational Guide */}
+      <section className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+            How to Prevent Unscheduled Battery Failures in Indian Summers
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Why battery dead-stop happens without warning and how to stay ahead.
+          </p>
         </div>
 
-        {/* Right Output */}
-        <div className="lg:col-span-6 space-y-6">
-          <div className="bg-white border-2 border-slate-900 rounded-3xl p-6 shadow-md space-y-5">
-            <div>
-              <span className="text-[10px] font-black uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-                Battery Status Verdict
-              </span>
-              <h2 className="text-xl font-black text-slate-900 mt-1">{result.headline}</h2>
-            </div>
-
-            <p className="text-xs text-slate-600 leading-relaxed font-medium">
-              {result.description}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
+          <div className="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl space-y-2">
+            <h3 className="text-sm font-extrabold text-slate-900">1. Clean Terminal Corrosion (White Powder)</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Bluish-white copper sulfate powder on battery terminals creates electrical resistance that mimics a dead battery. Pour warm water over terminals and apply a thin layer of petroleum jelly.
             </p>
-
-            <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100">
-              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-                <div className="text-[10px] font-bold text-slate-500 uppercase">Estimated Months Left</div>
-                <div className="text-xl font-black text-slate-900 mt-0.5">
-                  ~{result.estimatedMonthsLeft} Months
-                </div>
-              </div>
-
-              <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-                <div className="text-[10px] font-bold text-slate-500 uppercase">Old Battery Scrap Rebate</div>
-                <div className="text-xl font-black text-emerald-700 mt-0.5">
-                  ₹800 – ₹1,000 Off
-                </div>
-              </div>
-            </div>
-
-            {/* Preventive Action Tips */}
-            <div className="space-y-2 pt-2 border-t border-slate-100">
-              <span className="text-xs font-black text-slate-900">Maintenance &amp; Action Advice:</span>
-              <ul className="space-y-1.5 text-xs text-slate-600">
-                {result.preventiveTips.map((tip, idx) => (
-                  <li key={idx} className="flex items-start gap-1.5">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>{tip}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
+
+          <div className="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl space-y-2">
+            <h3 className="text-sm font-extrabold text-slate-900">2. Parasitic Drain from Dashcams</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              24x7 parking-mode dashcams hardwired to the fuse box constantly pull 200–300mA. If parked for 4+ days without driving, the battery discharges below the 11.8V critical starting threshold.
+            </p>
+          </div>
+
+          <div className="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl space-y-2">
+            <h3 className="text-sm font-extrabold text-slate-900">3. Claim Your Scrap Value Discount</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Lead acid batteries contain recyclable lead plates. Authorized retailers are legally required to discount ₹800–₹1,000 off your new battery bill upon returning the old casing.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-8 space-y-6 shadow-sm">
+        <div className="flex items-center gap-2.5 border-b border-slate-200/60 pb-4">
+          <HelpCircle className="w-5 h-5 text-amber-600" />
+          <h3 className="text-lg font-bold text-slate-900">Frequently Asked Questions</h3>
+        </div>
+        <div className="space-y-4">
+          {FAQS.map((faq, idx) => (
+            <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+              <h4 className="font-bold text-slate-900 text-sm flex items-start gap-2">
+                <span className="text-amber-600 font-extrabold">Q:</span>
+                {faq.question}
+              </h4>
+              <p className="text-xs text-slate-600 leading-relaxed pl-5">{faq.answer}</p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Contextual Affiliate Box */}
-      <AffiliateRecommendationBox
-        deals={getAffiliatesByCategory('battery')}
-        title="Doorstep Car Battery Replacement Deals"
-        contextHint="Genuine Amaron and Exide models delivered within 2 hours with free installation and instant old battery scrap rebate:"
-      />
+      {/* Related Tools */}
+      <div className="space-y-4">
+        <h3 className="text-base font-bold text-slate-800">Related Vehicle OS Tools</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {RELATED_TOOLS.map((tool) => {
+            const Icon = tool.icon;
+            return (
+              <Link key={tool.href} href={tool.href} className="flex items-center gap-3 p-4 bg-white border border-slate-200 hover:border-amber-400 rounded-2xl transition-all group shadow-xs">
+                <Icon className="w-4 h-4 text-amber-600 shrink-0" />
+                <span className="text-sm font-semibold text-slate-700 group-hover:text-amber-700 leading-tight">{tool.label}</span>
+                <ChevronRight className="w-3.5 h-3.5 text-slate-400 ml-auto shrink-0 group-hover:text-amber-600 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
