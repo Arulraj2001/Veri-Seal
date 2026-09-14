@@ -6,104 +6,187 @@ import {
   ChevronRight,
   Zap,
   Lock,
-  Award,
   HelpCircle,
+  CheckCircle2,
+  Sparkles,
+  AlertTriangle,
+  Info,
+  Sliders,
+  FileCheck,
   FileText,
-  ArrowRight,
+  Camera,
   Image as ImageIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { ImageToPdfEngine } from '@/components/tools/ImageToPdfEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
   title: 'Image to PDF Converter under 200KB Free | Exact Size Guarantee | Kagazo',
-  description:
-    'Convert marksheet photos, certificates, and ID cards directly to PDF strictly under 200 KB online free. 1-click in-memory conversion with Xerox ink boost and A4 formatting. Guaranteed compliance for TNPSC, UPSC, and SSC.',
+  description: 'Convert marksheet photos, certificates, and ID cards directly to PDF strictly under 200 KB online free. 1-click in-memory conversion with Xerox ink boost and A4 formatting.',
   alternates: {
-    canonical: 'https://Kagazo.in/tools/image-to-pdf-200kb',
+    canonical: 'https://kagazo.in/tools/image-to-pdf-200kb',
   },
   openGraph: {
-    title: 'Image to PDF Converter under 200KB Online Free | Kagazo',
-    description:
-      'Directly convert smartphone marksheet photos to PDF under 200 KB in 1 click. Zero paywalls, no watermarks, RAM-only processing.',
-    url: 'https://Kagazo.in/tools/image-to-pdf-200kb',
+    title: 'Image to PDF Converter under 200KB Free | Exact Size Guarantee | Kagazo',
+    description: 'Convert marksheet photos, certificates, and ID cards directly to PDF strictly under 200 KB online free. 1-click in-memory conversion with Xerox ink boost and A4 formatting.',
+    url: 'https://kagazo.in/tools/image-to-pdf-200kb',
     siteName: 'Kagazo',
     type: 'website',
   },
 };
 
-const FAQS = [
+const SPEC_ROWS = [
   {
-    question: 'How do I convert a marksheet photo directly to a PDF under 200 KB?',
-    answer:
-      'Simply drag and drop your smartphone photo or scanned certificate into the Kagazo upload box. Our engine automatically crops the borders, enhances ink contrast, and compresses the PDF to strictly under 200 KB in a single pass.',
+    "authority": "TNPSC OTR Portal",
+    "docType": "SSLC / HSC Marksheet Photo to PDF",
+    "officialLimit": "100 KB to 200 KB",
+    "targetUsed": "180 KB",
+    "notes": "Strict enforcement: Both sides of marksheet must fit under 200 KB."
   },
   {
-    question: 'Can I combine Front and Back pages of a marksheet into one PDF?',
-    answer:
-      'Yes! You can upload multiple images (e.g. Front and Back of your Degree certificate or 10th marksheet). Kagazo combines them into a multi-page A4 PDF while ensuring the total file size remains strictly under 200 KB.',
+    "authority": "SSC CGL / CHSL",
+    "docType": "Educational Qualification Proofs",
+    "officialLimit": "50 KB to 200 KB",
+    "targetUsed": "175 KB",
+    "notes": "Roll numbers and university controller signatures must be sharp."
   },
   {
-    question: 'Why do recruitment portals mandate PDF format under 200 KB?',
-    answer:
-      'Government servers (such as TNPSC, UPSC, SSC, and NTA) enforce a strict 200 KB or 300 KB ceiling to save database storage across millions of applicants while ensuring the certificate text and seals remain legible.',
+    "authority": "State PSC Recruitment",
+    "docType": "Community & Domicile Proofs",
+    "officialLimit": "100 KB to 200 KB",
+    "targetUsed": "180 KB",
+    "notes": "Official round seal and dispatch numbers must remain legible."
   },
   {
-    question: 'Will my marksheet text become blurry after compression?',
-    answer:
-      'No. Our engine uses Lanczos downsampling and selective JPEG quantization that preserves high-frequency text edges and official government seals, unlike generic tools that blur text.',
-  },
-  {
-    question: 'Are my uploaded certificates saved on your servers?',
-    answer:
-      'No. Kagazo operates entirely in system memory (RAM). Your certificates, marksheets, and ID proofs are never written to permanent disk storage, ensuring 100% privacy and security.',
-  },
+    "authority": "TNEA Engineering",
+    "docType": "10th & 12th Standard Certificate Photos",
+    "officialLimit": "100 KB to 200 KB",
+    "targetUsed": "185 KB",
+    "notes": "Requires clean white background without cast phone shadows."
+  }
 ];
 
-export default function ImageToPdf200KbPage() {
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload Marksheet Photos",
+    "desc": "Select one or more JPG, PNG, or HEIC photos of your marksheet or certificate."
+  },
+  {
+    "step": 2,
+    "title": "Choose Enhancement Mode",
+    "desc": "Select Color, Grayscale, or Xerox Ink Boost to enhance contrast and eliminate shadows."
+  },
+  {
+    "step": 3,
+    "title": "Set A4 Page Dimensions",
+    "desc": "The engine automatically centers each image onto an A4 page with standard margins."
+  },
+  {
+    "step": 4,
+    "title": "Target 200 KB Locked",
+    "desc": "Our engine compresses the image stream using Lanczos resampling to land under 200 KB."
+  },
+  {
+    "step": 5,
+    "title": "Inspect & Download",
+    "desc": "Preview the output PDF with our high-resolution zoom loupe and download in 1 click."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: 201 KB File Size Rejection",
+    "title": "Exceeding 200 KB Threshold",
+    "desc": "Generic photo converters produce 300KB+ files. Kagazo enforces a strict 180 KB target."
+  },
+  {
+    "badge": "Error: Phone Shadow Obscuring Text",
+    "title": "Dark Mobile Camera Silhouette",
+    "desc": "Overhead phone shadows trigger scrutiny rejection. Kagazo removes uneven illumination."
+  },
+  {
+    "badge": "Error: Blurry Marksheet Roll Number",
+    "title": "Aggressive Compression Artifacts",
+    "desc": "Crude JPEG compression pixelates numbers. Kagazo isolates text edges for crisp rendering."
+  },
+  {
+    "badge": "Error: Front & Back Mismatched Scales",
+    "title": "Unequal Aspect Ratios on Dual Sides",
+    "desc": "Taking photos at different distances creates awkward pages. Kagazo standardizes both to A4."
+  }
+];
+
+const FAQS = [
+  {
+    "question": "How do I convert a marksheet photo directly to a PDF under 200 KB?",
+    "answer": "Drag and drop your smartphone photo or scanned certificate into Kagazo. Our engine automatically crops borders, enhances ink contrast, and compresses the output PDF strictly under 200 KB in a single pass."
+  },
+  {
+    "question": "Can I combine Front and Back pages of a marksheet into one 200 KB PDF?",
+    "answer": "Yes! Upload multiple images (e.g. Front and Back of your degree certificate). Kagazo compiles them into a multi-page A4 PDF while ensuring the total file size remains strictly under 200 KB."
+  },
+  {
+    "question": "Why do recruitment portals mandate PDF format under 200 KB?",
+    "answer": "Government servers (such as TNPSC, UPSC, and SSC) enforce a 200 KB ceiling to save database storage across millions of applicants while ensuring certificate text and seals remain legible."
+  },
+  {
+    "question": "Will my marksheet text become blurry after compression?",
+    "answer": "No. Our engine uses Lanczos downsampling and selective quantization that preserves high-frequency text edges and official seals, avoiding blurry artifacts."
+  },
+  {
+    "question": "Are my uploaded certificates saved on your servers?",
+    "answer": "No. Kagazo operates entirely in system memory (RAM). Your certificates, marksheets, and ID proofs are never written to permanent disk storage, ensuring 100% privacy."
+  },
+  {
+    "question": "What image formats can I upload for conversion?",
+    "answer": "You can upload JPG, JPEG, PNG, WEBP, and Apple HEIC photos taken with any smartphone or digital camera."
+  },
+  {
+    "question": "Does Kagazo add any watermark or logo to the generated PDF?",
+    "answer": "Never. The converted PDF is 100% clean and free of watermarks, logos, or author branding."
+  },
+  {
+    "question": "How does the Xerox Ink Boost filter work?",
+    "answer": "The Xerox Ink Boost filter increases contrast between printed ink and paper, whitening yellowed background paper and deepening text characters for maximum readability."
+  },
+  {
+    "question": "Can I reorder pages if I upload multiple photos?",
+    "answer": "Yes. You can drag and rearrange pages before generating the final PDF to ensure your front and back sheets appear in the correct sequence."
+  },
+  {
+    "question": "Does this tool work on mobile phones without installing an app?",
+    "answer": "Yes. Kagazo is fully responsive and runs in Chrome, Safari, and Firefox directly on iOS and Android smartphones."
+  }
+];
+
+export default function ToolPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
-        name: 'Image to PDF Converter under 200KB',
+        '@type': 'WebApplication',
+        name: 'Image to PDF Converter under 200KB Free | Exact Size Guarantee | Kagazo',
         applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
-        url: 'https://Kagazo.in/tools/image-to-pdf-200kb',
+        url: 'https://kagazo.in/tools/image-to-pdf-200kb',
         offers: {
           '@type': 'Offer',
           price: '0',
-          priceCurrency: 'INR',
+          priceCurrency: 'USD',
         },
-        description:
-          'Convert marksheet photos, certificates, and ID cards directly to PDF strictly under 200 KB online free.',
+        description: 'Convert marksheet photos, certificates, and ID cards directly to PDF strictly under 200 KB online free. 1-click in-memory conversion with Xerox ink boost and A4 formatting.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Convert Image to PDF under 200 KB Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Marksheet Photos',
-            text: 'Upload 1 or more images of your certificate or marksheet (Front & Back).',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Select Preset & Target',
-            text: 'Choose color or Xerox Ink Boost and confirm target size under 200 KB.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: '1-Click In-Memory Conversion',
-            text: 'Click convert to generate an A4 formatted PDF strictly under 200 KB.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Inspect & Download',
-            text: 'Verify clarity with the hover zoom loupe, then download directly.',
-          },
-        ],
+        name: 'How to Convert Image to PDF Under 200KB in 5 Steps',
+        description: 'Follow these steps to turn your marksheet photos into a compliant 200 KB PDF:',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -116,15 +199,36 @@ export default function ImageToPdf200KbPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Image to PDF 200KB',
+            item: 'https://kagazo.in/tools/image-to-pdf-200kb',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -137,274 +241,239 @@ export default function ImageToPdf200KbPage() {
             Home
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <Link href="/tools/pdf-compressor" className="hover:text-primary transition-colors font-medium">
-            Free Tools
+          <Link href="/tools" className="hover:text-primary transition-colors font-medium">
+            Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Image to PDF under 200KB</span>
+          <span className="text-primary font-bold truncate">Image to PDF 200KB</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>Strict Under 200 KB Guarantee • Multi-Image Merge</span>
+            <span>Direct Photo-to-PDF Under 200 KB Gateway Standard</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>Image to PDF Converter </span>
-            <span className="text-primary">under 200KB</span>
+            <span>Convert Image to PDF </span>
+            <span className="text-primary">Under 200KB Free</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Convert smartphone photos of marksheets, community certificates, and ID proofs directly into a compliant PDF strictly under 200 KB in a single click.
+            Convert smartphone photos of certificates, marksheets, and identity proofs directly into an A4 PDF strictly under 200 KB. 100% private in-browser RAM conversion.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser Privacy
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <FileCheck className="w-4 h-4 text-primary" /> TNPSC • UPSC • SSC Compliant
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Zap className="w-4 h-4 text-primary" /> Instant In-Memory Processing
+            </span>
+          </div>
         </header>
 
         {/* 2-Column Responsive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8 items-start">
-          {/* Main Focus Workspace (80% - 83.3% Desktop Width) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <ImageToPdfEngine initialTargetKb={200} />
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Official Marksheet Upload Limits Table */}
+            {/* Key Differentiators Showcase */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
-                <div>
-                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5 text-primary" />
-                    Indian Exam Marksheet &amp; Certificate PDF Rules
-                  </h2>
-                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                    Official limits enforced across central and state recruitment portals.
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Direct Photo-to-PDF Architecture
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Auto-Cropping & Ink Enhancement for Mobile Marksheets
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Smartphone photos taken on beds or tables fail portal verification due to shadows and skewed angles. Kagazo straightens, binarizes, and compiles photos into an exact 200 KB A4 PDF.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Exact 200 KB Ceiling
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Calibrated safe zone between 160 KB and 190 KB ensures zero portal rejections.
                   </p>
                 </div>
-                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
-                  Verified Specs
-                </span>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Front & Back Merging
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Upload dual-sided marksheets; our engine compiles both into a unified 200 KB PDF.
+                  </p>
+                </div>
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 100% In-Browser Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Personal identification and academic credentials never leave your browser RAM.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* Official Technical / Specification Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
+              <div className="space-y-2">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Government Portal Document Upload Limits & Image Standards
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Official parameters for image-to-PDF conversion across major examination bodies:
+                </p>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs sm:text-sm border-collapse">
-                  <thead>
-                    <tr className="border-b border-surface-darker bg-surface text-text-main">
-                      <th className="py-3 px-3 font-bold">Portal / Examination</th>
-                      <th className="py-3 px-3 font-bold">Document Type</th>
-                      <th className="py-3 px-3 font-bold">Strict Ceiling</th>
-                      <th className="py-3 px-3 font-bold">Format</th>
+              <div className="overflow-x-auto border border-surface-darker rounded-2xl">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <thead className="bg-surface border-b border-surface-darker text-text-main font-bold">
+                    <tr>
+                      <th className="p-3 sm:p-4">Authority / System</th>
+                      <th className="p-3 sm:p-4">Document Type</th>
+                      <th className="p-3 sm:p-4">Portal Limit</th>
+                      <th className="p-3 sm:p-4">Calibrated Target</th>
+                      <th className="p-3 sm:p-4">Processing Rule</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-surface-darker/70 text-text-main">
-                    <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold">TNPSC (Group 1, 2, 4, VAO)</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Community, SSLC Marksheet</td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md">
-                          &lt; 200 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">PDF</td>
-                    </tr>
-                    <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold">UPSC (Civil Services OTR)</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Degree, Age Proof Certificate</td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200">
-                          20 – 300 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">PDF</td>
-                    </tr>
-                    <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold">SSC (CGL, CHSL, MTS)</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Category &amp; Education Proof</td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md">
-                          &lt; 200 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">PDF</td>
-                    </tr>
-                    <tr className="hover:bg-surface/50">
-                      <td className="py-3.5 px-3 font-bold">IBPS (PO, Clerk, SO)</td>
-                      <td className="py-3.5 px-3 text-text-main/70">Handwritten Declaration &amp; Certificate</td>
-                      <td className="py-3.5 px-3">
-                        <span className="font-bold text-primary bg-primary-light px-2.5 py-1 rounded-md">
-                          &lt; 200 KB
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-3 font-mono">PDF</td>
-                    </tr>
+                  <tbody className="divide-y divide-surface-darker">
+                    {SPEC_ROWS.map((r, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="p-3 sm:p-4 font-bold text-primary">{r.authority}</td>
+                        <td className="p-3 sm:p-4">{r.docType}</td>
+                        <td className="p-3 sm:p-4 font-semibold">{r.officialLimit}</td>
+                        <td className="p-3 sm:p-4 font-mono text-emerald-700">{r.targetUsed}</td>
+                        <td className="p-3 sm:p-4 text-text-main/80">{r.notes}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
-            </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
-
-            {/* Why Kagazo is Better */}
-            <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">1-Click Direct to &lt;200KB</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  No need to convert to PDF first and then find a second compressor. Converts smartphone marksheets directly to compliant &lt;200KB PDF in one pass.
-                </p>
-              </div>
-
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Award className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">100% Free Forever</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  No hourly limits, no subscription walls, and no watermarks added. Built permanently for students and cyber cafe operators.
-                </p>
-              </div>
-
-              <div className="p-6 bg-white rounded-3xl border border-surface-darker shadow-xs space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary-light text-primary flex items-center justify-center border border-primary/20">
-                  <Lock className="w-6 h-6" />
-                </div>
-                <h3 className="font-extrabold text-text-main text-base sm:text-lg">RAM-Only Privacy</h3>
-                <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
-                  Your confidential marksheets and identity certificates are processed in RAM and never written to permanent disk storage.
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Technical Advisory:</strong> Recruitment portals will reject PDF documents converted from mobile photos if background shadows obscure serial numbers or signatures.
                 </p>
               </div>
             </section>
 
-            {/* Hyper-Targeted FAQ Accordion */}
+            {/* Visible 5-Step Practical How-To Guide */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2 pb-2 border-b border-surface-darker/60">
-                <HelpCircle className="w-5 h-5 text-primary" />
-                Frequently Asked Questions
-              </h2>
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Convert Image to PDF Under 200KB in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed portal compliance:
+                </p>
+              </div>
 
-              <div className="space-y-3 pt-2">
-                {FAQS.map((faq, index) => (
-                  <details
-                    key={index}
-                    className="group border border-surface-darker rounded-2xl bg-surface/40 p-4 sm:p-5 open:bg-surface transition-all cursor-pointer"
-                  >
-                    <summary className="font-bold text-sm sm:text-base text-text-main list-none flex items-center justify-between">
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Document Conversion Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common conversion mistakes that cause portal upload rejections:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 10 Comprehensive FAQs */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Authoritative answers regarding format conversions, document quality, and portal standards:
+                </p>
+              </div>
+
+              <div className="divide-y divide-surface-darker">
+                {FAQS.map((faq, idx) => (
+                  <div key={idx} className="py-4 space-y-1.5">
+                    <h3 className="text-sm font-bold text-text-main flex items-start gap-2">
+                      <HelpCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                       <span>{faq.question}</span>
-                      <span className="text-primary text-xl transition-transform group-open:rotate-180 font-bold">▾</span>
-                    </summary>
-                    <p className="text-xs sm:text-sm text-text-main/80 mt-3 leading-relaxed">
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/75 leading-relaxed pl-6">
                       {faq.answer}
                     </p>
-                  </details>
+                  </div>
                 ))}
               </div>
             </section>
-
-            {/* Cross-Link to PDF Compressor */}
-            <aside className="p-6 sm:p-8 rounded-3xl bg-surface border border-primary/30 shadow-card flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="space-y-1.5 text-center sm:text-left">
-                <h3 className="text-base sm:text-lg font-extrabold text-text-main flex items-center gap-2 justify-center sm:justify-start">
-                  <FileText className="w-5 h-5 text-primary" />
-                  Already have a large PDF certificate?
-                </h3>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Use our PDF Compressor to compress existing PDF files directly to under 200 KB or 100 KB.
-                </p>
-              </div>
-              <Link
-                href="/tools/compress-pdf-to-200kb"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-primary hover:bg-primary-hover text-white font-extrabold text-sm shadow-md transition-all shrink-0 cursor-pointer"
-              >
-                Compress PDF to 200KB
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </aside>
           </main>
 
-          {/* Right Sticky Sidebar (Compact 16.7% - 20% Width) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-24 self-start">
-            {/* Quick Switch Card */}
-            <div className="p-3.5 bg-white rounded-2xl border border-surface-darker shadow-card space-y-2.5">
-              <div className="flex items-center justify-between">
-                <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                  <Zap className="w-3.5 h-3.5 text-primary" />
-                  Quick Tools
+          {/* Sticky Sidebar (col-span-3 / col-span-2) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6">
+            <div className="sticky top-28 space-y-6">
+              <AdSlot slot="sidebar" />
+
+              <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/70">
+                  Related Tools
                 </h3>
-                <span className="text-[9px] font-extrabold text-primary bg-primary-light px-1.5 py-0.2 rounded-full border border-primary/20">
-                  Instant
-                </span>
-              </div>
-              <div className="space-y-1">
-                {[
-                  { name: 'Img to PDF <200KB', href: '/tools/image-to-pdf-200kb', active: true, tag: '200KB' },
-                  { name: 'Compress PDF 200KB', href: '/tools/compress-pdf-to-200kb', active: false, tag: 'PDF' },
-                  { name: 'Compress PDF 100KB', href: '/tools/compress-pdf-to-100kb', active: false, tag: '100KB' },
-                  { name: 'TNPSC Photo & Sig', href: '/tools/tnpsc-photo-signature-resizer', active: false, tag: 'TNPSC' },
-                  { name: 'TNPSC PDF Compress', href: '/tools/tnpsc-pdf-compressor', active: false, tag: 'Gov' },
-                  { name: 'Master PDF Tool', href: '/tools/pdf-compressor', active: false, tag: 'All' },
-                ].map((item, idx) => (
-                  <Link
-                    key={idx}
-                    href={item.href}
-                    className={cn(
-                      'flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-bold transition-all border leading-tight',
-                      item.active
-                        ? 'bg-primary-light border-primary/40 text-primary shadow-2xs'
-                        : 'bg-surface/40 border-surface-darker hover:border-primary/40 hover:bg-white text-text-main'
-                    )}
-                  >
-                    <span className="truncate pr-1 text-[11px]">{item.name}</span>
-                    <span
-                      className={cn(
-                        'text-[9px] px-1 py-0.2 rounded font-semibold shrink-0 font-mono',
-                        item.active ? 'bg-primary text-white' : 'bg-surface border border-surface-darker text-text-main/60'
-                      )}
-                    >
-                      {item.tag}
-                    </span>
+                <div className="flex flex-col gap-2 text-xs">
+                  <Link href="/tools/image-to-pdf-300kb" className="text-primary hover:underline font-medium">
+                    Image to PDF 300KB
                   </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Slot A: Sticky Sidebar Display Unit */}
-            <AdSlot slot="sidebar" />
-
-            {/* Official Portal CheatSheet */}
-            <div className="p-3.5 bg-white rounded-2xl border border-surface-darker shadow-card space-y-2">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-                PDF Limits
-              </h3>
-              <div className="space-y-1.5 text-xs divide-y divide-surface-darker/60">
-                <div className="pt-1.5 flex items-center justify-between text-[11px]">
-                  <span className="font-semibold text-text-main">TNPSC</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.2 rounded">&lt; 200 KB</span>
-                </div>
-                <div className="pt-1.5 flex items-center justify-between text-[11px]">
-                  <span className="font-semibold text-text-main">UPSC</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.2 rounded">20-300 KB</span>
-                </div>
-                <div className="pt-1.5 flex items-center justify-between text-[11px]">
-                  <span className="font-semibold text-text-main">SSC / IBPS</span>
-                  <span className="font-mono font-bold text-primary bg-primary-light px-1.5 py-0.2 rounded">&lt; 200 KB</span>
+                  <Link href="/tools/compress-pdf-to-200kb" className="text-primary hover:underline font-medium">
+                    Compress PDF to 200KB
+                  </Link>
+                  <Link href="/tools/tnpsc-pdf-compressor" className="text-primary hover:underline font-medium">
+                    TNPSC PDF Compressor
+                  </Link>
+                  <Link href="/tools/merge-marksheets-pdf" className="text-primary hover:underline font-medium">
+                    Merge Marksheets PDF
+                  </Link>
+                  <Link href="/tools/clean-document-scanner" className="text-primary hover:underline font-medium">
+                    Clean Document Scanner
+                  </Link>
                 </div>
               </div>
-            </div>
-
-            {/* Privacy Shield */}
-            <div className="p-3 rounded-2xl bg-surface/60 border border-surface-darker space-y-1">
-              <div className="flex items-center gap-1.5 text-text-main font-black text-[11px]">
-                <Lock className="w-3.5 h-3.5 text-primary" />
-                <span>In-Memory Privacy</span>
-              </div>
-              <p className="text-[10px] text-text-main/70 leading-normal">
-                Files converted in local memory. Never saved to disk.
-              </p>
             </div>
           </aside>
         </div>

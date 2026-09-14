@@ -7,70 +7,167 @@ import {
   Zap,
   Lock,
   HelpCircle,
-  Smartphone,
   CheckCircle2,
-  FileImage,
-  FileText,
-  Sliders,
   Sparkles,
-  FilePlus2,
+  AlertTriangle,
+  Info,
+  Sliders,
+  FileCheck,
+  FileText,
+  Camera,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { HeicConverterEngine } from '@/components/tools/HeicConverterEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Convert Apple HEIC to PDF Online Free (Batch & 100% Private) | Kagazo',
-  description:
-    'Convert iPhone and iPad .HEIC photos directly into a single, high-resolution A4 PDF document online free. 100% private in-browser RAM conversion with zero server uploads.',
+  title: 'Convert Apple HEIC to PDF Online Free | Batch iPhone Converter | Kagazo',
+  description: 'Convert iPhone and iPad .HEIC photos directly into a single, high-resolution A4 PDF document online free. 100% private in-browser RAM conversion with zero server uploads.',
   alternates: {
     canonical: 'https://kagazo.in/tools/heic-to-pdf',
   },
   openGraph: {
-    title: 'Convert Apple HEIC to PDF Online Free | Kagazo',
-    description:
-      'Combine multiple Apple iPhone .HEIC photos into a unified A4 PDF document in client-side RAM. Instant download, zero cloud uploads.',
+    title: 'Convert Apple HEIC to PDF Online Free | Batch iPhone Converter | Kagazo',
+    description: 'Convert iPhone and iPad .HEIC photos directly into a single, high-resolution A4 PDF document online free. 100% private in-browser RAM conversion with zero server uploads.',
     url: 'https://kagazo.in/tools/heic-to-pdf',
     siteName: 'Kagazo',
     type: 'website',
   },
 };
 
-const FAQS = [
+const SPEC_ROWS = [
   {
-    question: 'How do I convert multiple iPhone HEIC photos into a single PDF?',
-    answer:
-      'Simply drag and drop all your .heic photos into the Kagazo dropzone above. Ensure the "A4 PDF" format tab is selected, then click "Convert All". Our client-side engine will decode each photo and assemble them into a multi-page A4 PDF ready for instant download.',
+    "authority": "Indian Government Portals (UPSC/SSC/TNPSC)",
+    "docType": "Certificate & Marksheet Uploads",
+    "officialLimit": "PDF / JPG Only (HEIC Blocked)",
+    "targetUsed": "Standard A4 PDF",
+    "notes": "Native .HEIC files trigger invalid format errors on all portals."
   },
   {
-    question: 'Are my personal iPhone photos or documents uploaded to any remote server?',
-    answer:
-      'No. Your documents and photos never leave your device. All HEIC decompression and PDF page assembly run 100% locally inside your browser’s memory using WebAssembly and jsPDF. Zero files are stored or uploaded.',
+    "authority": "Corporate Expense & HR Gateways",
+    "docType": "Invoice & Reimbursement Receipts",
+    "officialLimit": "A4 Multi-Page PDF",
+    "targetUsed": "Compiled Multi-Page PDF",
+    "notes": "Consolidates multiple single receipts into one cohesive document."
   },
   {
-    question: 'Will my photos fit properly on standard A4 paper when printed?',
-    answer:
-      'Yes. Our engine automatically calculates the exact aspect ratio of each photo and centers it with standard 10mm margins on A4 paper dimensions (210mm × 297mm). This guarantees that neither text nor edges are clipped when printed or submitted.',
+    "authority": "Legal & Court Registries",
+    "docType": "Evidence Exhibits & Photos",
+    "officialLimit": "Archival PDF/A Format",
+    "targetUsed": "High-Res PDF",
+    "notes": "Preserves original photo metadata and high-DPI image quality."
   },
   {
-    question: 'What is the file size limit for converting HEIC to PDF?',
-    answer:
-      'Because all processing takes place locally in your device RAM, there are no artificial file size caps. You can easily merge up to 50 high-resolution iPhone camera photos into a unified PDF document.',
-  },
-  {
-    question: 'Can I also download the converted photos as separate JPG files?',
-    answer:
-      'Yes! You can switch the format selector pill from "A4 PDF" to "JPG" at any time to download the photos as individual high-res JPEGs or as a single bundled ZIP archive.',
-  },
+    "authority": "University Admissions",
+    "docType": "Diplomas & High School Certificates",
+    "officialLimit": "PDF under 1MB - 2MB",
+    "targetUsed": "Optimized PDF",
+    "notes": "Ensures easy readability for evaluators without format issues."
+  }
 ];
 
-export default function HeicToPdfPage() {
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload HEIC Photos",
+    "desc": "Select one or more .heic photos from your iPhone photo library or Mac/PC."
+  },
+  {
+    "step": 2,
+    "title": "Select A4 PDF Target",
+    "desc": "Choose the PDF output tab to compile photos into a multi-page document."
+  },
+  {
+    "step": 3,
+    "title": "Review Page Sequence",
+    "desc": "Reorder photo thumbnails so receipts or certificate pages appear in correct order."
+  },
+  {
+    "step": 4,
+    "title": "In-Memory Conversion",
+    "desc": "Click Convert All. WebAssembly decodes HEIC bytes directly in your browser RAM."
+  },
+  {
+    "step": 5,
+    "title": "Download Unified PDF",
+    "desc": "Download your compiled A4 PDF document instantly with zero watermarks."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Unsupported HEIC Extension",
+    "title": "Portal Rejecting .HEIC Files",
+    "desc": "Indian portals strictly reject .HEIC files. Converting to standard PDF solves this instantly."
+  },
+  {
+    "badge": "Error: Clipped Photo Borders on Print",
+    "title": "Photos Cut Off When Printed",
+    "desc": "Raw photos lack print margins. Kagazo automatically adds 10mm print-safe margins on A4."
+  },
+  {
+    "badge": "Error: Massive File Size on iPhone Photos",
+    "title": "12MP Camera Photos Exceeding Limits",
+    "desc": "iPhone photos average 3-5MB each. Kagazo balances resolution to keep total file size reasonable."
+  },
+  {
+    "badge": "Error: Cloud Privacy Concerns",
+    "title": "Uploading Personal Photos to Unknown Servers",
+    "desc": "Many online converters store photos. Kagazo processes 100% locally with zero uploads."
+  }
+];
+
+const FAQS = [
+  {
+    "question": "How do I convert multiple iPhone HEIC photos into a single PDF?",
+    "answer": "Drag and drop all your .heic photos into the Kagazo dropzone above. Ensure the \"A4 PDF\" format tab is selected, then click \"Convert All\". Our client-side engine decodes each photo and assembles them into a multi-page A4 PDF."
+  },
+  {
+    "question": "Are my personal iPhone photos or documents uploaded to any remote server?",
+    "answer": "No. Your documents and photos never leave your device. All HEIC decompression and PDF page assembly run 100% locally inside your browser\u2019s memory using WebAssembly. Zero files are stored or uploaded."
+  },
+  {
+    "question": "Will my photos fit properly on standard A4 paper when printed?",
+    "answer": "Yes. Our engine automatically calculates the exact aspect ratio of each photo and centers it with standard 10mm margins on A4 paper dimensions (210mm \u00d7 297mm). This guarantees that neither text nor edges are clipped."
+  },
+  {
+    "question": "What is the file size limit for converting HEIC to PDF?",
+    "answer": "Because all processing takes place locally in your device RAM, there are no artificial file size caps. You can easily merge up to 50 high-resolution iPhone camera photos into a unified PDF document."
+  },
+  {
+    "question": "Can I also download the converted photos as separate JPG files?",
+    "answer": "Yes! If you need individual image files instead of a combined PDF, you can switch to the JPG tab and download high-resolution JPEG files."
+  },
+  {
+    "question": "Why does my government portal reject .HEIC photos?",
+    "answer": "Government portal servers were built to accept standard MIME types like image/jpeg and application/pdf. They do not have native decoders for Apple\u2019s proprietary HEIF container, resulting in format errors."
+  },
+  {
+    "question": "Does this tool work on Windows PCs and Android devices?",
+    "answer": "Yes. You can open and convert HEIC photos transferred from an iPhone on any Windows, Mac, Linux, Android, or ChromeOS browser."
+  },
+  {
+    "question": "Does Kagazo add any watermark or logo to the PDF?",
+    "answer": "No. Every PDF generated is 100% clean and watermark-free."
+  },
+  {
+    "question": "How fast is the conversion process?",
+    "answer": "Because files are not uploaded to a remote server over the internet, conversion happens almost instantaneously using your device CPU."
+  },
+  {
+    "question": "Can I convert live photos and portrait mode shots?",
+    "answer": "Yes. The still image component of Live Photos and Portrait Mode photos are decoded seamlessly."
+  }
+];
+
+export default function ToolPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
-        name: 'Apple HEIC to A4 PDF Converter',
-        applicationCategory: 'BusinessApplication',
+        '@type': 'WebApplication',
+        name: 'Convert Apple HEIC to PDF Online Free | Batch iPhone Converter | Kagazo',
+        applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/heic-to-pdf',
         offers: {
@@ -78,29 +175,18 @@ export default function HeicToPdfPage() {
           price: '0',
           priceCurrency: 'USD',
         },
-        description:
-          'Convert multiple Apple iPhone and iPad HEIC photos into a unified A4 PDF document online free directly in browser RAM.',
+        description: 'Convert iPhone and iPad .HEIC photos directly into a single, high-resolution A4 PDF document online free. 100% private in-browser RAM conversion with zero server uploads.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Convert Apple HEIC Photos into a Single PDF Document',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload iPhone HEIC Photos',
-            text: 'Select or drag-and-drop .heic images from your iPhone or Mac.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Verify Page Order & Settings',
-            text: 'Preview thumbnail order and ensure A4 PDF format is selected.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Merged PDF',
-            text: 'Click Convert All and download your combined A4 PDF document instantly.',
-          },
-        ],
+        name: 'How to Convert iPhone HEIC to PDF in 5 Steps',
+        description: 'Convert your Apple iPhone photos into an A4 PDF document in seconds:',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -113,15 +199,36 @@ export default function HeicToPdfPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'HEIC to PDF Converter',
+            item: 'https://kagazo.in/tools/heic-to-pdf',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -138,7 +245,7 @@ export default function HeicToPdfPage() {
             Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">HEIC to PDF Converter</span>
+          <span className="text-primary font-bold truncate">HEIC to PDF Converter</span>
         </nav>
 
         {/* Hero Header */}
@@ -156,198 +263,216 @@ export default function HeicToPdfPage() {
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
             Merge multiple iPhone receipts, scanned certificate photos, and documents directly into a print-ready A4 PDF. Zero cloud uploads, zero watermarks.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser Privacy
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <FileCheck className="w-4 h-4 text-primary" /> iPhone & iPad HEIC Compatible
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Zap className="w-4 h-4 text-primary" /> Instant In-Memory Processing
+            </span>
+          </div>
         </header>
 
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Studio Column (col-span-9 / col-span-10) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
-            <HeicConverterEngine
-              defaultFormat="pdf"
-              toolHeading="Apple HEIC to A4 PDF Converter Studio"
-              toolSubheading="Upload iPhone photos. Each photo is decoded and centered on an A4 page inside your browser's memory."
-            />
+            <HeicConverterEngine defaultFormat="pdf" toolHeading="Apple HEIC to A4 PDF Converter Studio" toolSubheading="Upload iPhone photos. Each photo is decoded and centered on an A4 page inside your browser's memory." />
 
-            {/* Post-Action Native AdSlot */}
+            {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Explanatory Guide Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <FilePlus2 className="w-5 h-5 text-primary" />
-                  Why Convert iPhone HEIC Photos to an A4 PDF Document?
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Client-Side HEIC Decoding
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Direct In-Browser HEIC Decompression & A4 PDF Layout
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  Save time and pass strict government portal upload requirements effortlessly.
-                </p>
               </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Government and corporate portals do not accept Apple .HEIC format photos. Kagazo decodes HEIC containers directly in browser memory using WebAssembly and compiles them into standard A4 PDF pages.
+              </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    Job &amp; Exam Portals
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> True In-Browser Decoding
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Most government portals (UPSC, SSC, TNPSC, NSDL) strictly prohibit .HEIC files and require multi-page documents to be combined into a single PDF.
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Uses libheif compiled to WebAssembly to decompress Apple HEIC files locally.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    Standard A4 Alignment
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> A4 Centering & Margins
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Kagazo automatically scales and centers each photo to standard international A4 dimensions (210 × 297 mm) with uniform margins so it prints perfectly.
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Automatically centers iPhone photos with standard 10mm margins for printing.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    Complete Confidentiality
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 100% Private Processing
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Financial statements, identity proofs, and academic certificates remain 100% private in your device RAM without being sent to external clouds.
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Your photos never travel over the network or get stored on remote servers.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
-
-            {/* FAQ Accordion Section */}
+            {/* Official Technical / Specification Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions
+              <div className="space-y-2">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Apple HEIC vs. Standard PDF Portal Compatibility
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Frequently asked questions about compiling iPhone HEIC photos into PDF files.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Technical differences between iOS native capture and government portal requirements:
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="overflow-x-auto border border-surface-darker rounded-2xl">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <thead className="bg-surface border-b border-surface-darker text-text-main font-bold">
+                    <tr>
+                      <th className="p-3 sm:p-4">Authority / System</th>
+                      <th className="p-3 sm:p-4">Document Type</th>
+                      <th className="p-3 sm:p-4">Portal Limit</th>
+                      <th className="p-3 sm:p-4">Calibrated Target</th>
+                      <th className="p-3 sm:p-4">Processing Rule</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    {SPEC_ROWS.map((r, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="p-3 sm:p-4 font-bold text-primary">{r.authority}</td>
+                        <td className="p-3 sm:p-4">{r.docType}</td>
+                        <td className="p-3 sm:p-4 font-semibold">{r.officialLimit}</td>
+                        <td className="p-3 sm:p-4 font-mono text-emerald-700">{r.targetUsed}</td>
+                        <td className="p-3 sm:p-4 text-text-main/80">{r.notes}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Technical Advisory:</strong> Most application portals will display "Invalid File Format" if you attempt to upload raw .HEIC photos taken on an iPhone.
+                </p>
+              </div>
+            </section>
+
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Convert iPhone HEIC to PDF in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed portal compliance:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Document Conversion Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common conversion mistakes that cause portal upload rejections:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 10 Comprehensive FAQs */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Authoritative answers regarding format conversions, document quality, and portal standards:
+                </p>
+              </div>
+
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
+                  <div key={idx} className="py-4 space-y-1.5">
+                    <h3 className="text-sm font-bold text-text-main flex items-start gap-2">
+                      <HelpCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                       <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/75 leading-relaxed pl-6">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Compact Sticky Right Sidebar Rail (col-span-3 / col-span-2) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            {/* Quick Switch Matrix */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Related Tools
-              </h3>
+          {/* Sticky Sidebar (col-span-3 / col-span-2) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6">
+            <div className="sticky top-28 space-y-6">
+              <AdSlot slot="sidebar" />
 
-              <div className="space-y-1.5">
-                <Link
-                  href="/tools/heic-to-jpg"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      HEIC to JPG
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    JPG
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/image-to-pdf-200kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Image to PDF (200KB)
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    A4 PDF
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/pdf-compressor"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Master PDF Compressor
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    PDF
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/compress-image-exact-kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Exact KB Tool
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    KB Target
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/change-image-dpi"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Change DPI
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    300 DPI
-                  </span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Compact Sticky Sidebar Ad Slot */}
-            <AdSlot slot="sidebar" />
-
-            {/* In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
-                <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>100% In-Browser Privacy</span>
-              </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                Photos are compiled directly into a PDF inside browser RAM using jsPDF. Your sensitive documents never touch any external server.
-              </p>
-              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-                  ✓ Zero Server Upload
-                </span>
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-                  ✓ Instant Download
-                </span>
+              <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/70">
+                  Related Tools
+                </h3>
+                <div className="flex flex-col gap-2 text-xs">
+                  <Link href="/tools/image-to-pdf-200kb" className="text-primary hover:underline font-medium">
+                    Image to PDF 200KB
+                  </Link>
+                  <Link href="/tools/pdf-to-image" className="text-primary hover:underline font-medium">
+                    PDF to Image Converter
+                  </Link>
+                  <Link href="/tools/clean-document-scanner" className="text-primary hover:underline font-medium">
+                    Clean Document Scanner
+                  </Link>
+                  <Link href="/tools/pdf-compressor" className="text-primary hover:underline font-medium">
+                    Master PDF Compressor
+                  </Link>
+                  <Link href="/tools/merge-marksheets-pdf" className="text-primary hover:underline font-medium">
+                    Merge Marksheets PDF
+                  </Link>
+                </div>
               </div>
             </div>
           </aside>

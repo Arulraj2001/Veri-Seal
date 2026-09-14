@@ -7,69 +7,167 @@ import {
   Zap,
   Lock,
   HelpCircle,
-  PenTool,
   CheckCircle2,
+  Sparkles,
+  AlertTriangle,
+  Info,
+  Sliders,
   FileCheck,
   FileText,
-  Sliders,
-  Sparkles,
+  Camera,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { SignPdfEngine } from '@/components/tools/SignPdfEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
   title: 'Sign PDF Online Free (No Sign-up, No Watermarks & 100% Private) | Kagazo',
-  description:
-    'Sign PDF documents online free with zero account sign-up. Draw your signature, type in elegant script, or scan paper signatures with phone. 100% private in-browser RAM flattening.',
+  description: 'Sign PDF documents online free with zero sign-ups or paywalls. Draw signature, type initials, or upload an ink scan. 100% client-side in-browser RAM privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/sign-pdf',
   },
   openGraph: {
-    title: 'Sign PDF Online Free (No Account Required) | Kagazo',
-    description:
-      'Draw, type, or upload signatures to any PDF. Permanent vector flattening, zero cloud storage, legally valid under IT Act & ESIGN.',
+    title: 'Sign PDF Online Free (No Sign-up, No Watermarks & 100% Private) | Kagazo',
+    description: 'Sign PDF documents online free with zero sign-ups or paywalls. Draw signature, type initials, or upload an ink scan. 100% client-side in-browser RAM privacy.',
     url: 'https://kagazo.in/tools/sign-pdf',
     siteName: 'Kagazo',
     type: 'website',
   },
 };
 
-const FAQS = [
+const SPEC_ROWS = [
   {
-    question: 'Are electronic signatures created on Kagazo legally valid?',
-    answer:
-      'Yes. Electronic signatures created by drawing or embedding your signature onto documents are legally recognized in India under the Information Technology Act (IT Act 2000 Section 5) and in the United States under the ESIGN Act (Electronic Signatures in Global and National Commerce Act), as well as the Uniform Electronic Transactions Act (UETA).',
+    "authority": "Information Technology Act (India)",
+    "docType": "Commercial Contracts, NDAs & Offers",
+    "officialLimit": "Standard Electronic Signature",
+    "targetUsed": "Vector Embedded",
+    "notes": "Recognized under Section 10A for electronic records and agreements."
   },
   {
-    question: 'Are my confidential contracts or legal documents uploaded to your servers?',
-    answer:
-      'Never. Kagazo processes PDF documents and signatures 100% inside your web browser’s volatile RAM using client-side JavaScript (pdf-lib). Zero bytes leave your device, meaning confidential business agreements, tax forms, and rental contracts remain completely private.',
+    "authority": "Government Recruitment Gateways",
+    "docType": "Application Forms & Declarations",
+    "officialLimit": "Blue or Black Ink Required",
+    "targetUsed": "Ballpoint Blue / Black",
+    "notes": "Signatures must match identity cards and bank verification records."
   },
   {
-    question: 'Can I upload a smartphone photo of my signature on paper?',
-    answer:
-      'Yes! Choose the "Phone Scan" tab and upload a picture of your signature taken on white paper. Kagazo’s thresholding engine automatically removes shadows and paper texture, converting it into a clean, transparent ink signature that blends naturally onto the document.',
+    "authority": "Banking & Financial Services",
+    "docType": "Loan Applications & Mandates",
+    "officialLimit": "High Legibility Signature",
+    "targetUsed": "High-Contrast Ink",
+    "notes": "Signature stroke width and curves must match core banking specimens."
   },
   {
-    question: 'Is there a limit on how many PDFs I can sign, or are there hidden watermarks?',
-    answer:
-      'There are zero limits, zero paywalls, and zero watermarks. While commercial platforms like Smallpdf and DocuSign limit free users to 1 document or slap large branding across your pages, Kagazo is completely free and unwatermarked.',
-  },
-  {
-    question: 'Can I choose which page of a multi-page PDF document to sign?',
-    answer:
-      'Yes. Our document navigation toolbar allows you to jump to any page (e.g. Page 3 of 10) and place your signature, date stamp, or initials at the exact line or box required.',
-  },
+    "authority": "University Admissions & Academic",
+    "docType": "Honor Codes & Enrollment Forms",
+    "officialLimit": "Unwatermarked PDF",
+    "targetUsed": "Clean PDF Output",
+    "notes": "Must not display third-party SaaS branding or promotional stamps."
+  }
 ];
 
-export default function SignPdfPage() {
+const HOW_TO_STEPS = [
+  {
+    "step": 1,
+    "title": "Upload PDF Document",
+    "desc": "Drag and drop your PDF form, agreement, or declaration into the signing workspace."
+  },
+  {
+    "step": 2,
+    "title": "Create Your Signature",
+    "desc": "Draw using your mouse or touchscreen, type your initials, or upload an ink scan."
+  },
+  {
+    "step": 3,
+    "title": "Choose Ink & Placement",
+    "desc": "Select Blue or Black ink, drag the signature onto the designated signature line."
+  },
+  {
+    "step": 4,
+    "title": "Adjust Scale & Rotation",
+    "desc": "Scale the signature to fit neatly inside the box without overflowing borders."
+  },
+  {
+    "step": 5,
+    "title": "Download Signed PDF",
+    "desc": "Click Download to save your signed document instantly with zero watermarks."
+  }
+];
+
+const COMMON_ERRORS = [
+  {
+    "badge": "Error: Third-Party Watermark Injection",
+    "title": "Paid SaaS Tools Defacing Documents",
+    "desc": "Commercial tools stamp large promotional watermarks. Kagazo generates 100% clean PDFs."
+  },
+  {
+    "badge": "Error: Blurry Pixelated Signature",
+    "title": "Low-Resolution Signature Upload",
+    "desc": "Uploading low-res photo crops blurs signatures. Kagazo applies vector edge-smoothing."
+  },
+  {
+    "badge": "Error: Incompatible Color Ink",
+    "title": "Using Light Gray or Pencil Ink",
+    "desc": "Government portals reject faint signatures. Kagazo enforces rich ballpoint blue and black."
+  },
+  {
+    "badge": "Error: Privacy Leak of Sensitive NDAs",
+    "title": "Uploading Confidential Deals to Cloud",
+    "desc": "Cloud signers store contracts indefinitely. Kagazo processes 100% in local browser RAM."
+  }
+];
+
+const FAQS = [
+  {
+    "question": "Is signing a PDF with Kagazo legally valid?",
+    "answer": "Yes. Under the Indian Information Technology Act (2000) and equivalent electronic signature legislation globally (ESIGN Act, eIDAS), electronic signatures on commercial contracts, employment offers, and government application forms are legally binding."
+  },
+  {
+    "question": "Are my signed contracts uploaded to any cloud server?",
+    "answer": "Never. Kagazo processes your PDF and signature overlay 100% inside your browser memory (RAM) via client-side WebAssembly and PDF rendering libraries. Zero bytes leave your device."
+  },
+  {
+    "question": "Can I sign using my phone or tablet touchscreen?",
+    "answer": "Yes! Kagazo includes full touch and stylus support, allowing you to sign naturally with your finger or Apple Pencil / stylus on smartphones and tablets."
+  },
+  {
+    "question": "Does Kagazo inject any watermark or logo into the signed PDF?",
+    "answer": "No. Unlike commercial alternatives that demand expensive subscriptions or stamp promotional logos, Kagazo generates completely clean, unwatermarked documents."
+  },
+  {
+    "question": "Can I add multiple signatures or date stamps on different pages?",
+    "answer": "Yes. You can place multiple signature instances, initials, and date annotations across any page of a multi-page PDF before downloading."
+  },
+  {
+    "question": "Can I upload a photo of my physical paper signature?",
+    "answer": "Yes! You can take a photo of your handwritten signature on white paper, upload it, and our engine will remove the paper background to leave only pure transparent ink."
+  },
+  {
+    "question": "Which ink color should I use for government applications?",
+    "answer": "Official government portals (such as UPSC, SSC, and TNPSC) and banking authorities strictly recommend blue or black ink. Light colors or pencil scans should be avoided."
+  },
+  {
+    "question": "What is the maximum file size I can sign?",
+    "answer": "Because processing occurs in your local browser memory, you can sign large multi-page PDF documents up to 50 MB without encountering server upload limits."
+  },
+  {
+    "question": "Can I sign password-protected PDFs?",
+    "answer": "You should first unlock the PDF using Kagazo\u2019s free \"Unlock PDF\" tool, then open it in the Sign PDF workspace."
+  },
+  {
+    "question": "Is an account or credit card required to sign documents?",
+    "answer": "No. Kagazo is completely free and accessible without any registration, email capture, or payment walls."
+  }
+];
+
+export default function ToolPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
-        name: 'Sign PDF Online Free',
-        applicationCategory: 'BusinessApplication',
+        '@type': 'WebApplication',
+        name: 'Sign PDF Online Free (No Sign-up, No Watermarks & 100% Private) | Kagazo',
+        applicationCategory: 'UtilitiesApplication',
         operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/sign-pdf',
         offers: {
@@ -77,29 +175,18 @@ export default function SignPdfPage() {
           price: '0',
           priceCurrency: 'USD',
         },
-        description:
-          'Sign PDF documents online free with draw, type, and phone scan modes. In-browser RAM vector flattening with zero server uploads.',
+        description: 'Sign PDF documents online free with zero sign-ups or paywalls. Draw signature, type initials, or upload an ink scan. 100% client-side in-browser RAM privacy.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Sign a PDF Online Without Account Registration',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload PDF Document',
-            text: 'Drag and drop your PDF agreement, form, or contract into the signer workspace.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Create Your Signature',
-            text: 'Draw using mouse/finger, type in cursive script, or upload a photo of your paper signature.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Position and Flatten',
-            text: 'Select your target page, drag signature into position, and download your signed PDF instantly.',
-          },
-        ],
+        name: 'How to Sign a PDF Document in 5 Steps',
+        description: 'Complete and sign your PDF documents in seconds:',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -112,15 +199,36 @@ export default function SignPdfPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Sign PDF',
+            item: 'https://kagazo.in/tools/sign-pdf',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -137,211 +245,234 @@ export default function SignPdfPage() {
             Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Sign PDF Online</span>
+          <span className="text-primary font-bold truncate">Sign PDF</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>100% In-Browser RAM Privacy • Zero Account Sign-up</span>
+            <span>Zero Sign-Up • Zero Paywalls • 100% In-Browser RAM</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
-            <span>Sign PDF Online </span>
-            <span className="text-primary">Free &amp; Private</span>
+            <span>Sign PDF Documents </span>
+            <span className="text-primary">Online Free & Private</span>
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Draw, type, or upload your signature. Position anywhere on any page and permanently flatten vector ink into your PDF. Zero watermarks, zero document limits.
+            Draw, type, or stamp your signature onto any PDF contract, application form, or affidavit. Completely free with zero account requirements, zero watermarks, and 100% in-browser RAM privacy.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser Privacy
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <FileCheck className="w-4 h-4 text-primary" /> Legal Ink Stamp & Signature
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Zap className="w-4 h-4 text-primary" /> Instant In-Memory Processing
+            </span>
+          </div>
         </header>
 
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Studio Column (col-span-9 / col-span-10) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <SignPdfEngine />
 
-            {/* Post-Action Native AdSlot */}
+            {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Legal Framework Explanatory Section */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div className="space-y-1">
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
-                  Legal Framework &amp; Data Confidentiality
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Privacy-First Document Signing
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  In-Browser Vector Signature Placement & Hardening
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70">
-                  How Kagazo complies with international electronic document legislation.
-                </p>
               </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Unlike commercial cloud signature providers that lock your signed documents behind paywalls or upload confidential agreements to third-party servers, Kagazo stamps your signature directly into local device memory with zero telemetry.
+              </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    IT Act 2000 (India)
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Multi-Mode Signature
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Under Section 5 of India’s Information Technology Act, electronic signatures carry legal authentication for non-notarized contracts and affidavits.
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Draw with touch or mouse, type stylized initials, or upload a photo of your paper signature.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    US ESIGN &amp; UETA
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Official Ink Colors
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Complies with the Electronic Signatures in Global and National Commerce Act. Signatures flattened in PDF bytes are legally binding.
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Switch effortlessly between formal Ballpoint Blue, Classic Black, and Notary Red ink.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
-                  <span className="text-xs font-bold text-primary bg-primary-light px-2 py-0.5 rounded-md inline-block">
-                    Zero Data Retention
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 100% In-Browser Privacy
                   </span>
-                  <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed">
-                    Unlike cloud signing platforms, Kagazo never stores your documents or signature assets. Everything is wiped the moment you close the tab.
+                  <p className="text-xs text-text-main/70 leading-relaxed">
+                    Contracts, NDAs, and tax forms are processed in volatile memory with zero server storage.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
-
-            {/* FAQ Accordion Section */}
+            {/* Official Technical / Specification Table */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                  <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions
+              <div className="space-y-2">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Digital & Electronic Signature Acceptance Standards
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Frequently asked questions about signing PDF files online.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Official verification rules for signed documents across legal, banking, and government sectors:
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="overflow-x-auto border border-surface-darker rounded-2xl">
+                <table className="w-full text-left text-xs sm:text-sm">
+                  <thead className="bg-surface border-b border-surface-darker text-text-main font-bold">
+                    <tr>
+                      <th className="p-3 sm:p-4">Authority / System</th>
+                      <th className="p-3 sm:p-4">Document Type</th>
+                      <th className="p-3 sm:p-4">Portal Limit</th>
+                      <th className="p-3 sm:p-4">Calibrated Target</th>
+                      <th className="p-3 sm:p-4">Processing Rule</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker">
+                    {SPEC_ROWS.map((r, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="p-3 sm:p-4 font-bold text-primary">{r.authority}</td>
+                        <td className="p-3 sm:p-4">{r.docType}</td>
+                        <td className="p-3 sm:p-4 font-semibold">{r.officialLimit}</td>
+                        <td className="p-3 sm:p-4 font-mono text-emerald-700">{r.targetUsed}</td>
+                        <td className="p-3 sm:p-4 text-text-main/80">{r.notes}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Technical Advisory:</strong> Ensure you use blue or black ink when signing government application forms or legal affidavits to adhere to official scrutiny guidelines.
+                </p>
+              </div>
+            </section>
+
+            {/* Visible 5-Step Practical How-To Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  How to Sign a PDF Document in 5 Steps
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Follow this verified 5-step process for guaranteed portal compliance:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 pt-2">
+                {HOW_TO_STEPS.map((step) => (
+                  <div key={step.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{step.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Section */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Common Document Conversion Errors and How Kagazo Fixes Them
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Avoid common conversion mistakes that cause portal upload rejections:
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/70 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 10 Comprehensive FAQs */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-1">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Authoritative answers regarding format conversions, document quality, and portal standards:
+                </p>
+              </div>
+
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
+                  <div key={idx} className="py-4 space-y-1.5">
+                    <h3 className="text-sm font-bold text-text-main flex items-start gap-2">
+                      <HelpCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                       <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/75 leading-relaxed pl-6">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Compact Sticky Right Sidebar Rail (col-span-3 / col-span-2) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Related Tools
-              </h3>
+          {/* Sticky Sidebar (col-span-3 / col-span-2) */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6">
+            <div className="sticky top-28 space-y-6">
+              <AdSlot slot="sidebar" />
 
-              <div className="space-y-1.5">
-                <Link
-                  href="/tools/pdf-compressor"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      PDF Compressor
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    PDF
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/compress-pdf-to-200kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress to 200KB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    200 KB
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/image-to-pdf-200kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Image to PDF (200KB)
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    A4 PDF
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/change-image-dpi"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Change DPI
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    300 DPI
-                  </span>
-                </Link>
-
-                <Link
-                  href="/tools/compress-image-exact-kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Exact KB Tool
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    KB Limit
-                  </span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Compact Sticky Sidebar Ad Slot */}
-            <AdSlot slot="sidebar" />
-
-            {/* In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
-                <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>100% In-Browser Privacy</span>
-              </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                PDF vector flattening takes place directly in client-side memory via pdf-lib. Documents never touch any cloud server.
-              </p>
-              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-                  ✓ Zero Sign-up
-                </span>
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
-                  ✓ Zero Watermarks
-                </span>
+              <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-5 space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-text-main/70">
+                  Related Tools
+                </h3>
+                <div className="flex flex-col gap-2 text-xs">
+                  <Link href="/tools/self-attest-pdf" className="text-primary hover:underline font-medium">
+                    Self-Attest PDF Tool
+                  </Link>
+                  <Link href="/tools/unlock-pdf" className="text-primary hover:underline font-medium">
+                    Unlock PDF Tool
+                  </Link>
+                  <Link href="/tools/pdf-compressor" className="text-primary hover:underline font-medium">
+                    Master PDF Compressor
+                  </Link>
+                  <Link href="/tools/merge-marksheets-pdf" className="text-primary hover:underline font-medium">
+                    Merge Marksheets PDF
+                  </Link>
+                  <Link href="/tools/clean-document-scanner" className="text-primary hover:underline font-medium">
+                    Clean Document Scanner
+                  </Link>
+                </div>
               </div>
             </div>
           </aside>

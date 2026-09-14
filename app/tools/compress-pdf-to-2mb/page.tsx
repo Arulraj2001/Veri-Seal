@@ -7,71 +7,166 @@ import {
   Zap,
   Lock,
   HelpCircle,
-  FileCheck,
-  Building,
-  Scale,
   CheckCircle2,
+  Sparkles,
+  AlertTriangle,
+  Info,
+  Scale,
+  FileCheck,
+  FileText,
 } from 'lucide-react';
 import { UniversalPdfCompressor } from '@/components/tools/UniversalPdfCompressor';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Compress PDF to 2MB Online Free | Government & Legal Portals | Kagazo',
+  title: 'Compress PDF to 2MB Online Free | Court e-Filing & Legal Gateways | Kagazo',
   description:
-    'Compress any PDF file strictly under 2MB online free. Optimize multi-page legal documents, court filings, and official portal annexures without losing text clarity. 100% private.',
+    'Compress PDF documents strictly under 2MB online free. Optimized for High Court e-filing, e-Courts India, MCA corporate filings, and tenders. 100% in-browser RAM privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/compress-pdf-to-2mb',
   },
   openGraph: {
     title: 'Compress PDF to 2MB Online Free | Kagazo',
     description:
-      'Reduce PDF documents strictly under 2MB for official e-filing and recruitment portals. High-speed, in-memory processing.',
+      'Compress heavy legal petitions, affidavits, and case records strictly under 2MB for court e-filing. 100% in-browser RAM privacy.',
     url: 'https://kagazo.in/tools/compress-pdf-to-2mb',
     siteName: 'Kagazo',
     type: 'website',
   },
 };
 
+const PORTALS_2MB = [
+  {
+    authority: 'Supreme Court & High Court e-Filing',
+    documents: 'Petitions, Plaints, Case Paper Books',
+    maxLimit: 'Strictly < 2.0 MB per document',
+    safeTarget: '1.8 MB',
+    notes: 'Mandatory standard for e-filing portals across Indian judicial forums.',
+  },
+  {
+    authority: 'Ministry of Corporate Affairs (MCA21)',
+    documents: 'ROC Annual Filings, Form AOC-4, MGT-7',
+    maxLimit: '2 MB per PDF attachment',
+    safeTarget: '1.85 MB',
+    notes: 'Required for corporate secretarial compliance and balance sheet uploads.',
+  },
+  {
+    authority: 'State e-Tender Portals (NIC / GeM)',
+    documents: 'Technical Bid Documents & Financial Proofs',
+    maxLimit: '2 MB to 5 MB',
+    safeTarget: '1.8 MB',
+    notes: 'Fast evaluation without gateway timeout on large vendor bid filings.',
+  },
+  {
+    authority: 'USCIS & Global Consular Systems',
+    documents: 'Form I-130 / I-485 Civil Documents',
+    maxLimit: 'Strictly < 2 MB (2048 KB)',
+    safeTarget: '1.9 MB',
+    notes: 'Must preserve clear visibility of foreign notary stamps and seals.',
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    step: 1,
+    title: 'Upload Legal Document',
+    desc: 'Select or drag-and-drop your legal petition, evidence affidavit, or corporate filing PDF.',
+  },
+  {
+    step: 2,
+    title: '2 MB Target Ceiling Engaged',
+    desc: 'The tool defaults to an exact 2000 KB ceiling, targeting a safe 1.75–1.9 MB landing zone.',
+  },
+  {
+    step: 3,
+    title: 'Review Page Previews',
+    desc: 'Inspect individual page previews to ensure proper case numbering and exhibit order.',
+  },
+  {
+    step: 4,
+    title: 'In-Memory Stream Optimization',
+    desc: 'Click Compress. Scanned evidence photos are optimized while legal typography stays crisp.',
+  },
+  {
+    step: 5,
+    title: 'Download Court-Ready PDF',
+    desc: 'Inspect notary seals in the clarity loupe, then download your verified PDF for e-filing.',
+  },
+];
+
+const COMMON_ERRORS = [
+  {
+    badge: 'Error: Court Server Rejection > 2MB',
+    title: 'Case Petition Aborting at 2.1 MB',
+    desc: 'Judicial e-filing portals automatically reject any paper book exceeding 2048 KB. Kagazo targets 1.8 MB to ensure instant filing acceptance.',
+  },
+  {
+    badge: 'Error: Blurred Notary Rubber Stamps',
+    title: 'Loss of Legal Authenticity on Affidavits',
+    desc: 'Naive compression destroys red and blue notary stamp details. Kagazo isolates stamp inks to preserve courtroom evidentiary clarity.',
+  },
+  {
+    badge: 'Error: Broken Page Number Bookmarks',
+    title: 'Disoriented Case Indexing',
+    desc: 'Heavy document processing can strip internal PDF page references. Kagazo preserves standard document structure and bookmarks.',
+  },
+  {
+    badge: 'Error: Memory Crash on 100-Page Briefs',
+    title: 'Browser Overload on Lengthy Legal Bundles',
+    desc: 'Compressing massive multi-page petitions can exhaust browser heap memory. Kagazo streams page downsampling in chunks to prevent crashes.',
+  },
+];
+
 const FAQS = [
   {
-    question: 'Why do legal and corporate portals enforce a 2MB limit on PDFs?',
+    question: 'Why do Indian High Courts and e-Courts enforce a strict 2MB PDF limit?',
     answer:
-      'Court e-filing systems, government procurement portals, and corporate registrar websites mandate a 2MB maximum per attachment to ensure database integrity and rapid server verification across thousands of daily filings.',
+      'Judicial e-filing portals (such as Supreme Court e-Filing and High Court portals) manage massive daily case dockets. Enforcing a 2 MB maximum per document ensures fast docket viewing by judges and attorneys while preventing storage congestion on judicial servers.',
   },
   {
-    question: 'Will digital signatures or stamps remain valid after 2MB compression?',
+    question: 'How many pages can I compress into a 2MB PDF while keeping text readable?',
     answer:
-      'Kagazo preserves vector paths, line art, and typography while compressing embedded raster images. For DSC cryptographic signatures, we recommend compressing before signing, or verifying signature integrity with our Digital Signature Verifier.',
+      'With Kagazo, you can comfortably compress 30 to 80 pages of text-heavy legal petitions, contracts, and court orders into a 2 MB PDF without losing 200+ DPI print sharpness.',
   },
   {
-    question: 'Can I compress 10 to 50 page PDFs down to 2MB?',
+    question: 'Will notary stamps, advocate signatures, and court fee receipts remain clear?',
     answer:
-      'Yes! Kagazo uses Pikepdf stream deduplication and progressive image recompression. If your document has dozens of high-res image scans, toggling "Greyscale Conversion" will drop file weight by an extra 35–50% to comfortably meet the 2MB limit.',
+      'Yes. Kagazo applies stroke-preserving quantization that isolates dark ink stamps from white background paper, maintaining clear contrast on official advocate signatures and court seals.',
   },
   {
-    question: 'Is my data secure when compressing legal contracts?',
+    question: 'Does this 2MB tool comply with MCA21 ROC form attachments?',
     answer:
-      '100% secure. Processing runs entirely in volatile RAM memory. Zero files are saved on disk or exposed to any third party.',
+      'Yes. The Ministry of Corporate Affairs (MCA) portal mandates balance sheets, auditor reports, and directors reports under 2 MB for Form AOC-4 and MGT-7 filings, exactly matching our 2MB preset.',
   },
   {
-    question: 'Which portals require files strictly under 2MB?',
+    question: 'Are my confidential client litigation records or contracts uploaded to any cloud?',
     answer:
-      'Supreme Court & High Court e-filing portals, MCA (Ministry of Corporate Affairs) company incorporation forms, GeM (Government e-Marketplace) tender bids, and university thesis submissions universally enforce a 2MB attachment limit.',
+      'Never. Kagazo runs 100% inside your browser volatile memory. Client-attorney privileged documents and corporate contracts are never transmitted over the internet.',
   },
   {
-    question: 'Can I delete annexures or blank exhibit pages before compressing to 2MB?',
+    question: 'Can I remove blank pages or unwanted exhibits before compressing?',
     answer:
-      'Yes! Use the built-in Page Selector to preview and exclude any unnecessary pages, immediately freeing up byte budget for your critical petition or contract clauses.',
+      'Yes! Click on any page thumbnail to exclude it from the final compiled PDF, immediately saving file size without degrading visual resolution on active pages.',
   },
   {
-    question: 'Will high-resolution CAD drawings and charts remain legible?',
+    question: 'Does Kagazo add any watermark or banner to my legal PDF?',
     answer:
-      'Yes. At 2MB, architectural blueprints and data charts retain sharp line definition, avoiding the blurred edges common on generic compression tools.',
+      'Zero watermarks. The output PDF is completely clean and identical in layout to your original document, ready for immediate judicial filing.',
   },
   {
-    question: 'Is there any fee or watermark added to the 2MB PDF?',
+    question: 'Will digital signature tokens (Class 3 DSC) remain valid after 2MB compression?',
     answer:
-      'Kagazo is 100% free with unlimited usage and zero watermarks, keeping all legal filings clean and formal.',
+      'Modifying internal PDF streams will break pre-existing cryptographic signature hashes. Always compress your petition to under 2 MB before signing it with your hardware cryptographic USB token.',
+  },
+  {
+    question: 'Does this tool work on mobile tablets like iPads and Samsung Galaxy Tabs?',
+    answer:
+      'Yes. Kagazo is fully responsive and runs smoothly inside mobile browsers, allowing legal professionals to compress filings directly from courtrooms.',
+  },
+  {
+    question: 'Is there any fee or daily file limit on Kagazo?',
+    answer:
+      'No. Kagazo is 100% free and unlimited for all advocates, law firms, chartered accountants, and citizens.',
   },
 ];
 
@@ -80,39 +175,30 @@ export default function CompressPdfTo2MbPage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'SoftwareApplication',
+        '@type': 'WebApplication',
         name: 'Compress PDF to 2MB Online Free',
-        applicationCategory: 'UtilitiesApplication',
-        operatingSystem: 'All (Web-based)',
         url: 'https://kagazo.in/tools/compress-pdf-to-2mb',
+        applicationCategory: 'UtilityApplication',
+        operatingSystem: 'All',
         offers: {
           '@type': 'Offer',
-          price: '0',
-          priceCurrency: 'USD',
+          price: '0.00',
+          priceCurrency: 'INR',
         },
         description:
-          'Compress any PDF strictly under 2MB online free. Perfect for court e-filing, legal contracts, and corporate registrations.',
+          'Compress PDF documents strictly under 2MB online free for court e-filing and MCA corporate filings.',
       },
       {
         '@type': 'HowTo',
-        name: 'How to Compress a PDF to 2MB Online',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Upload Your PDF File',
-            text: 'Choose your multi-page legal or corporate PDF document.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Automatic 2MB Ceiling Optimization',
-            text: 'Kagazo compresses internal streams to land safely under 2000KB.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Download Verified Document',
-            text: 'Download your optimized, portal-ready PDF file.',
-          },
-        ],
+        name: 'How to Compress a PDF to 2MB in 5 Steps',
+        description:
+          'Step-by-step instructions to compress legal petitions and corporate filings strictly under 2MB.',
+        step: HOW_TO_STEPS.map((s) => ({
+          '@type': 'HowToStep',
+          name: s.title,
+          text: s.desc,
+          position: s.step,
+        })),
       },
       {
         '@type': 'FAQPage',
@@ -125,15 +211,36 @@ export default function CompressPdfTo2MbPage() {
           },
         })),
       },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://kagazo.in',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Tools',
+            item: 'https://kagazo.in/tools',
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Compress PDF to 2MB',
+            item: 'https://kagazo.in/tools/compress-pdf-to-2mb',
+          },
+        ],
+      },
     ],
   };
 
   return (
     <div className="min-h-screen bg-background bg-dot-grid text-text-main pt-28 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Ambient background glow */}
       <div className="absolute top-28 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      {/* Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -150,14 +257,14 @@ export default function CompressPdfTo2MbPage() {
             Tools
           </Link>
           <ChevronRight className="w-3.5 h-3.5 text-text-main/30" />
-          <span className="text-primary font-bold">Compress PDF to 2MB</span>
+          <span className="text-primary font-bold truncate">Compress PDF to 2MB</span>
         </nav>
 
         {/* Hero Header */}
         <header className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-light border border-primary/20 text-xs sm:text-sm font-semibold text-primary shadow-2xs">
             <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span>Target Ceiling: Max 2 MB (2000 KB)</span>
+            <span>Court e-Filing &amp; Corporate MCA Preset</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-text-main leading-[1.18]">
@@ -166,197 +273,236 @@ export default function CompressPdfTo2MbPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
-            Compress heavy multi-page documents strictly under 2MB for court e-filing, government portals, and university submissions without loss of text quality.
+            Compress heavy legal petitions, affidavits, case paper books, and MCA ROC filings strictly <strong>under 2MB</strong>. Preserves notary stamps, judicial seals, and vector typography with 100% in-browser RAM privacy.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-xs font-semibold text-text-main/70">
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" /> 100% In-Browser Privacy
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Scale className="w-4 h-4 text-primary" /> Judicial e-Filing Compliant
+            </span>
+            <span className="inline-flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl">
+              <Zap className="w-4 h-4 text-primary" /> Instant In-Memory Compression
+            </span>
+          </div>
         </header>
 
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Main Focus Workspace (75% Width) */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             <UniversalPdfCompressor
               initialTargetKb={2000}
               isFixedTarget={true}
               toolHeading="Compress PDF to Under 2 MB"
-              toolSubheading="Optimized for court e-filing, legal contracts, tender submissions, and university portals."
+              toolSubheading="Shrink legal petitions, affidavits, and corporate documents strictly under 2000 KB with total seal clarity."
             />
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
 
-            {/* Common 2MB PDF Use Cases */}
-            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-5">
-              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
-                <Building className="w-5 h-5 text-primary" />
-                Where 2MB PDF Limits Are Mandated
-              </h2>
+            {/* Key Differentiators Showcase */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Judicial Standard Architecture
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-text-main">
+                  Tuned for Supreme Court, High Courts &amp; MCA Portals
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-text-main/85 leading-relaxed">
+                Legal briefs and corporate filings frequently exceed 2MB when scanned evidence exhibits are attached. Kagazo compresses background textures while preserving vector typography and official notary stamps.
+              </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
-                    <Scale className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-extrabold text-sm text-text-main">Court &amp; Legal e-Filing</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    High Court and District Court e-filing portals limit petition annexures and affidavits to 2MB per document.
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Scale className="w-4 h-4" /> Court Gateway Approved
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Guarantees a safe 1.8 MB target to avoid e-filing server timeouts.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
-                    <Building className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-extrabold text-sm text-text-main">Tenders &amp; Procurement</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    Government e-Procurement portals require technical bids and audited balance sheets strictly under 2MB.
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <FileText className="w-4 h-4" /> Notary Stamp Clarity
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Isolates official seals and advocate signatures to maintain evidential authenticity.
                   </p>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/70 space-y-2">
-                  <div className="w-9 h-9 rounded-xl bg-primary-light text-primary flex items-center justify-center font-bold">
-                    <ShieldCheck className="w-5 h-5" />
-                  </div>
-                  <h3 className="font-extrabold text-sm text-text-main">Corporate Registrations</h3>
-                  <p className="text-xs text-text-main/70 leading-relaxed">
-                    MCA filings, GST registrations, and trademark submissions enforce 2MB caps on multi-page attachments.
+                <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
+                  <span className="text-xs font-bold text-primary flex items-center gap-1.5">
+                    <Lock className="w-4 h-4" /> Client Privilege Privacy
+                  </span>
+                  <p className="text-xs text-text-main/70">
+                    Confidential litigation documents processed in RAM and never written to disk.
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* In-Content Native AdSlot */}
-            <AdSlot slot="in_content" />
+            {/* Official Portal Limits Reference Table */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-surface-darker/60">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    Major Gateways Requiring Under 2 MB PDF Filings
+                  </h2>
+                  <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
+                    Official specifications from High Courts, MCA, and government portals.
+                  </p>
+                </div>
+                <span className="text-[11px] font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full uppercase tracking-wider self-start sm:self-auto shrink-0">
+                  2 MB Limits
+                </span>
+              </div>
 
-            {/* FAQ Accordion Section */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className="border-b border-surface-darker bg-surface text-text-main font-semibold">
+                      <th className="py-3 px-3">Authority / Portal</th>
+                      <th className="py-3 px-3">Applicable Documents</th>
+                      <th className="py-3 px-3">Maximum Limit</th>
+                      <th className="py-3 px-3">Kagazo Safe Target</th>
+                      <th className="py-3 px-3">Key Upload Rule</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-surface-darker text-text-main/80">
+                    {PORTALS_2MB.map((portal, idx) => (
+                      <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                        <td className="py-3 px-3 font-semibold text-text-main">{portal.authority}</td>
+                        <td className="py-3 px-3 text-text-main/70">{portal.documents}</td>
+                        <td className="py-3 px-3 font-mono text-xs text-rose-600 font-bold">{portal.maxLimit}</td>
+                        <td className="py-3 px-3 font-mono text-xs text-emerald-700 font-bold">{portal.safeTarget}</td>
+                        <td className="py-3 px-3 text-xs text-text-main/60">{portal.notes}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-3">
+                <Info className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-900 leading-relaxed">
+                  <strong>Judicial e-Filing Notice:</strong> Ensure all exhibits and annexures are arranged chronologically. Keep file sizes under 2 MB to prevent unexpected session timeouts during court upload.
+                </p>
+              </div>
+            </section>
+
+            {/* How to Use Section in 5 Steps */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-primary" />
+                How to Compress a PDF to 2MB in 5 Steps
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
+                {HOW_TO_STEPS.map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <div className="w-7 h-7 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                      {s.step}
+                    </div>
+                    <h3 className="text-xs font-bold text-text-main uppercase tracking-wide">{s.title}</h3>
+                    <p className="text-xs text-text-main/75 leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Common Errors & Troubleshooting Guide */}
+            <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
+              <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                Common 2 MB PDF Compression Errors and How Kagazo Fixes Them
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {COMMON_ERRORS.map((err, idx) => (
+                  <div key={idx} className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-2">
+                    <span className="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-md inline-block">
+                      {err.badge}
+                    </span>
+                    <h3 className="text-xs font-bold text-text-main">{err.title}</h3>
+                    <p className="text-xs text-text-main/80 leading-relaxed">{err.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Deep 10 FAQs */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
-              <div>
+              <div className="space-y-1">
                 <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                   <HelpCircle className="w-5 h-5 text-primary" />
-                  Frequently Asked Questions (2MB PDF Compressor)
+                  Frequently Asked Questions (2 MB PDF Compression)
                 </h2>
-                <p className="text-xs sm:text-sm text-text-main/70 mt-0.5">
-                  Answers to common questions about compressing PDF documents to 2MB.
+                <p className="text-xs sm:text-sm text-text-main/70">
+                  Comprehensive insights covering court e-filing gateways, MCA corporate portals, and multi-page legal briefs.
                 </p>
               </div>
 
-              <div className="space-y-3">
+              <div className="divide-y divide-surface-darker">
                 {FAQS.map((faq, idx) => (
-                  <details
-                    key={idx}
-                    className="group border border-surface-darker rounded-2xl bg-surface/50 open:bg-white transition-all overflow-hidden"
-                  >
-                    <summary className="flex items-center justify-between p-4 sm:p-5 font-bold text-text-main text-xs sm:text-sm cursor-pointer list-none select-none">
-                      <span>{faq.question}</span>
-                      <ChevronRight className="w-4 h-4 text-text-main/40 group-open:rotate-90 transition-transform duration-200 shrink-0 ml-2" />
-                    </summary>
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs sm:text-sm text-text-main/80 leading-relaxed border-t border-surface-darker/40 pt-3">
+                  <div key={idx} className="py-4 space-y-2">
+                    <h3 className="text-sm sm:text-base font-bold text-text-main flex items-start gap-2">
+                      <span className="text-primary font-black">Q{idx + 1}.</span>
+                      {faq.question}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-text-main/80 pl-6 leading-relaxed">
                       {faq.answer}
-                    </div>
-                  </details>
+                    </p>
+                  </div>
                 ))}
               </div>
             </section>
           </main>
 
-          {/* Compact Sticky Right Sidebar Rail (25% Width) */}
-          <aside className="lg:col-span-3 xl:col-span-2 space-y-4 lg:sticky lg:top-28">
-            {/* Quick Switch Matrix - High Density Single-Line List */}
-            <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-3 space-y-2.5">
-              <h3 className="text-[11px] font-black uppercase tracking-wider text-text-main/60 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-primary" />
-                Other PDF Tools
-              </h3>
-
+          {/* Sticky Sidebar */}
+          <aside className="lg:col-span-3 xl:col-span-2 space-y-6 lg:sticky lg:top-28">
+            <div className="bg-white rounded-2xl border border-surface-darker shadow-card p-4 space-y-4">
+              <span className="text-xs font-bold text-text-main uppercase tracking-wider">
+                Related PDF Presets
+              </span>
               <div className="space-y-1.5">
                 <Link
                   href="/tools/compress-pdf-to-1mb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress PDF 1MB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-primary bg-primary-light px-1.5 py-0.5 rounded border border-primary/20 shrink-0">
-                    1 MB
-                  </span>
+                  Compress PDF to 1MB
                 </Link>
-
                 <Link
                   href="/tools/compress-pdf-to-5mb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress PDF 5MB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    5 MB
-                  </span>
+                  Compress PDF to 5MB
                 </Link>
-
-                <Link
-                  href="/tools/compress-pdf-to-10mb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
-                >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress PDF 10MB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    10 MB
-                  </span>
-                </Link>
-
                 <Link
                   href="/tools/compress-pdf-to-500kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress PDF 500KB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    500 KB
-                  </span>
+                  Compress PDF to 500KB
                 </Link>
-
                 <Link
-                  href="/tools/compress-pdf-to-200kb"
-                  className="flex items-center justify-between p-2 rounded-xl bg-surface hover:bg-primary-light/50 border border-surface-darker hover:border-primary/30 transition-all group"
+                  href="/tools/sign-pdf"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
                 >
-                  <div className="flex items-center gap-2 min-w-0 pr-1">
-                    <span className="text-[11px] font-bold text-text-main group-hover:text-primary transition-colors truncate">
-                      Compress PDF 200KB
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono font-bold text-text-main/60 bg-white px-1.5 py-0.5 rounded border border-surface-darker shrink-0">
-                    200 KB
-                  </span>
+                  Sign PDF Free
+                </Link>
+                <Link
+                  href="/tools/pdf-compressor"
+                  className="block p-2 rounded-xl bg-surface hover:bg-primary-light/50 text-xs font-bold text-text-main hover:text-primary transition-colors"
+                >
+                  Master PDF Compressor
                 </Link>
               </div>
             </div>
 
-            {/* Compact Sticky Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
-
-            {/* Sleek In-Memory RAM Privacy Box */}
-            <div className="bg-surface/80 rounded-2xl border border-surface-darker p-3 space-y-1.5">
-              <div className="flex items-center gap-1.5 text-primary font-bold text-xs">
-                <Lock className="w-3.5 h-3.5 shrink-0" />
-                <span>100% In-Memory Privacy</span>
-              </div>
-              <p className="text-[11px] text-text-main/70 leading-normal">
-                Documents are processed in volatile memory and immediately wiped. No copies saved to permanent storage.
-              </p>
-              <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-emerald-700 pt-0.5">
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">✓ Zero Server Upload</span>
-                <span className="bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">✓ Instant Speed</span>
-              </div>
-            </div>
           </aside>
         </div>
       </div>
