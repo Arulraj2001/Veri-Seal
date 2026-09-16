@@ -258,7 +258,7 @@ export async function POST(req: Request) {
         content: content || '',
         meta_description: meta_description || '',
         meta_keywords: meta_keywords || '',
-        featured_image_url: featured_image_url || 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
+        featured_image_url: featured_image_url || `/api/og?title=${encodeURIComponent(trimmedTitle)}&type=blog`,
         category: category || (postLang === 'ta' ? 'Tamil Nadu' : 'Guides & Tutorials'),
         published: Boolean(published),
         published_at: published ? nowIso : null,

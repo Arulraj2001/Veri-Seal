@@ -60,7 +60,7 @@ export default function AdminBlogPage() {
       content: '# New Article Heading\n\nWrite detailed verification guidance for citizens here.',
       meta_description: '',
       meta_keywords: '',
-      featured_image_url: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
+      featured_image_url: '/api/og?title=New%20Guide&type=blog',
       published: false,
       author_name: 'Kagazo Team',
       lang: 'en',

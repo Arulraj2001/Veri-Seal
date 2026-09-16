@@ -71,7 +71,7 @@ export async function POST(req: Request) {
         content: p.content,
         meta_description: p.meta_description || p.excerpt || '',
         meta_keywords: p.meta_keywords || '',
-        featured_image_url: p.featured_image_url || 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80',
+        featured_image_url: p.featured_image_url || `/api/og?title=${encodeURIComponent(p.title)}&type=blog`,
         category: p.category || 'Guides & Tutorials',
         published: isPublish,
         published_at: isPublish ? nowIso : null,

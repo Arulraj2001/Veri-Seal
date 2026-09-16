@@ -191,7 +191,7 @@ export async function POST(req: Request) {
         plan: plan as 'pro' | 'business',
         amount: planAmount,
         upi_txn_id: 'ADMIN_MANUAL_GRANT',
-        screenshot_url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80',
+        screenshot_url: '/api/og?title=Manual%20Plan%20Grant&type=verify',
         submitted: new Date().toISOString(),
         status: 'approved',
         expiry_date: expiry_date || '2027-12-31',

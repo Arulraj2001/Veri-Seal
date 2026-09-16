@@ -178,7 +178,7 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
           type="url"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="https://images.unsplash.com/... or https://..."
+          placeholder="https://... or /api/og?title=..."
           className="w-full px-3 py-1.5 text-xs bg-surface/40 border border-surface-darker rounded-xl text-text-main focus:outline-none focus:border-primary"
         />
       </div>
