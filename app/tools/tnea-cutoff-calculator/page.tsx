@@ -38,6 +38,11 @@ export const metadata: Metadata = {
   description: 'Calculate your exact TNEA Engineering Cutoff out of 200 marks for Anna University counseling. Formula: Maths + (Physics/2) + (Chemistry/2). Includes 7.5% Govt School quota eligibility, First Graduate fee waiver, and college cutoff tier benchmarks.',
   alternates: {
     canonical: 'https://kagazo.in/tools/tnea-cutoff-calculator',
+    languages: {
+      'ta-IN': 'https://kagazo.in/ta/tools/tnea-cutoff-calculator',
+      'en': 'https://kagazo.in/tools/tnea-cutoff-calculator',
+      'x-default': 'https://kagazo.in/tools/tnea-cutoff-calculator',
+    },
   },
   openGraph: {
     title: 'TNEA Engineering Cutoff Calculator 2025–26 (Anna University 200 Formula) | Kagazo',

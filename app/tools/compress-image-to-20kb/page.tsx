@@ -25,6 +25,11 @@ export const metadata: Metadata = {
     'Compress image and signature to strictly between 10 KB and 20 KB online free. Bi-directional auto-calibration prevents under-size rejection. Zero watermark, 100% in-browser privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/compress-image-to-20kb',
+    languages: {
+      'ta-IN': 'https://kagazo.in/ta/tools/compress-image-to-20kb',
+      'en': 'https://kagazo.in/tools/compress-image-to-20kb',
+      'x-default': 'https://kagazo.in/tools/compress-image-to-20kb',
+    },
   },
   openGraph: {
     title: 'Compress Image to 20KB Online Free | Kagazo',

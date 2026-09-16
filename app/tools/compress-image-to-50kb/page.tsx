@@ -25,6 +25,11 @@ export const metadata: Metadata = {
     'Compress photo and image to strictly between 20 KB and 50 KB online free. Perfect for passport photos, SSC, TNPSC, and IBPS online application forms. Zero blur, zero watermark, 100% private.',
   alternates: {
     canonical: 'https://kagazo.in/tools/compress-image-to-50kb',
+    languages: {
+      'ta-IN': 'https://kagazo.in/ta/tools/compress-image-to-50kb',
+      'en': 'https://kagazo.in/tools/compress-image-to-50kb',
+      'x-default': 'https://kagazo.in/tools/compress-image-to-50kb',
+    },
   },
   openGraph: {
     title: 'Compress Image to 50KB Online Free | Kagazo',

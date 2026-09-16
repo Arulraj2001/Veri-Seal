@@ -41,6 +41,11 @@ export const metadata: Metadata = {
   description: 'Mask your Aadhaar card online free per UIDAI and RBI guidelines. Black out the first 8 digits (XXXXXXXX) while keeping the last 4 digits, photograph, and QR code visible. 100% in-browser RAM privacy, zero cloud storage.',
   alternates: {
     canonical: 'https://kagazo.in/tools/mask-aadhaar',
+    languages: {
+      'ta-IN': 'https://kagazo.in/ta/tools/mask-aadhaar',
+      'en': 'https://kagazo.in/tools/mask-aadhaar',
+      'x-default': 'https://kagazo.in/tools/mask-aadhaar',
+    },
   },
   openGraph: {
     title: 'Mask Aadhaar Online Free (First 8 Digits Redacted) | UIDAI Compliant | Kagazo',

@@ -109,14 +109,32 @@ export default function PrivacyPage() {
           <section className="bg-white p-6 sm:p-8 rounded-3xl border border-surface-darker">
             <h2 className="text-xl font-bold text-text-main mb-4">4. Telemetry & Analytics</h2>
             <p>
-              We collect privacy-preserving aggregated telemetry (such as total verification count and generic error codes) to maintain server availability and monitor uptime. We do not track individual users across the web or sell behavioral data to advertising networks.
+              We collect privacy-preserving aggregated telemetry (such as total verification count and generic error codes) to maintain server availability and monitor uptime. We do not inspect or store user document contents.
             </p>
           </section>
 
           <section className="bg-white p-6 sm:p-8 rounded-3xl border border-surface-darker">
-            <h2 className="text-xl font-bold text-text-main mb-4">5. Contact Data Privacy Desk</h2>
+            <h2 className="text-xl font-bold text-text-main mb-4">5. Third-Party Advertising & Google AdSense Cookies</h2>
             <p>
-              If you have any questions regarding Kagazo&apos;s cryptographic security or privacy practices, please contact our privacy compliance desk at <a href="mailto:privacy@Kagazo.in" className="text-primary font-bold hover:underline">privacy@Kagazo.in</a> or visit our <Link href="/contact" className="text-primary font-bold hover:underline">Contact Desk</Link>.
+              Kagazo partners with third-party advertising vendors, including Google, to serve relevant advertisements when you visit our website. These advertising partners help fund the free availability of our tools and server infrastructure.
+            </p>
+            <ul className="list-disc pl-5 space-y-2 mt-3">
+              <li>
+                <strong>Google AdSense &amp; DoubleClick Cookies:</strong> Third-party vendors, including Google, use cookies to serve ads based on a user&apos;s prior visits to our website or other websites across the Internet.
+              </li>
+              <li>
+                <strong>Advertising Cookies:</strong> Google&apos;s use of advertising cookies enables it and its partners to serve ads to users based on their visit to Kagazo and/or other sites on the Internet.
+              </li>
+              <li>
+                <strong>Personalized Advertising Opt-Out:</strong> Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">Google Ads Settings</a>. Alternatively, you can opt out of third-party vendor use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">www.aboutads.info</a>.
+              </li>
+            </ul>
+          </section>
+
+          <section className="bg-white p-6 sm:p-8 rounded-3xl border border-surface-darker">
+            <h2 className="text-xl font-bold text-text-main mb-4">6. Contact Data Privacy Desk</h2>
+            <p>
+              If you have any questions regarding Kagazo&apos;s cryptographic security, advertising disclosures, or privacy practices, please contact our privacy compliance desk at <a href="mailto:privacy@kagazo.in" className="text-primary font-bold hover:underline">privacy@kagazo.in</a> or visit our <Link href="/contact" className="text-primary font-bold hover:underline">Contact Desk</Link>.
             </p>
           </section>
         </div>

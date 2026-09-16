@@ -30,6 +30,11 @@ export const metadata: Metadata = {
     'Resize your TNPSC Group 1, Group 2, Group 4, or VAO photo (20–50 KB) and signature (10–20 KB) with the mandatory name and date strip for the One Time Registration portal. Free, no upload.',
   alternates: {
     canonical: 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
+    languages: {
+      'ta-IN': 'https://kagazo.in/ta/tools/tnpsc-photo-signature-resizer',
+      'en': 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
+      'x-default': 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
+    },
   },
   openGraph: {
     title: 'TNPSC Photo & Signature Resizer — OTR Portal | Kagazo',

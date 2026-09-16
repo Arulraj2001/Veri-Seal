@@ -19,10 +19,52 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
+      url: `${baseUrl}/ta`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
       url: `${baseUrl}/tools`,
       lastModified: now,
       changeFrequency: 'daily',
       priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/ta/tools`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.96,
+    },
+    {
+      url: `${baseUrl}/ta/tools/compress-image-to-20kb`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/ta/tools/compress-image-to-50kb`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/ta/tools/tnpsc-photo-signature-resizer`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/ta/tools/mask-aadhaar`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/ta/tools/tnea-cutoff-calculator`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/tools/pdf-compressor`,
