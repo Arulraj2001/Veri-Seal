@@ -317,6 +317,131 @@ export const mockBlogPosts: BlogPost[] = [
     tags: [],
     content: "# How to Verify Tamil Nadu Community, Nativity & Income Certificates (TNeGA e-Sevai Guide for TNEA & NEET)\n\nIn Tamil Nadu, millions of school and college students require government revenue certificates every year for **TNEA Engineering Admissions, NEET-UG / NEET-PG Medical Counseling, TNPSC Civil Services Examinations, and TRB Teacher Recruitment**.\n\nUnder the modernization initiatives of the **Tamil Nadu e-Governance Agency (TNeGA)** and the **Department of Revenue and Disaster Management**, physical seal-and-stamp certificates have been completely phased out. All revenue certificates\u2014including **Community Certificates (BC / MBC / SC / ST), Nativity Certificates, Income Certificates, First Graduate Certificates, and Legal Heir Certificates**\u2014are now issued as digitally signed PDF documents through **e-Sevai Centers** and the citizen portal at `edistricts.tn.gov.in`.\n\nHowever, during online certificate verification for engineering counseling or medical admission scrutiny, students frequently run into a major hurdle:\n\n> **\"Signer's identity is not valid\" or a yellow question mark hovering over the Tahsildar's signature block.**\n\nThis detailed guide explains why Tamil Nadu revenue certificates show signature warnings and how to secure a 100% verified, LTV-compliant green tick before submission.\n\n---\n\n## The High Stakes of Document Verification in TNEA & NEET\n\nDuring online document scrutiny for **Anna University (TNEA)** or the **Directorate of Medical Education (DME Tamil Nadu)**, administrative scrutiny officers review thousands of PDF uploads. \n\nWhen a certificate exhibits an unverified signature:\n1. **Application Query Flag:** The candidate's application is placed on hold or moved into the grievance redressal loop.\n2. **Category Reversion:** If a Community Certificate signature cannot be validated in time, candidates risk being arbitrarily moved from their reserved reservation category (BC, BCM, MBC/DNC, SC, ST) to the Open Competition (OC) general pool, drastically altering their cutoff rank prospects.\n3. **Counseling Delay:** Missing counseling rounds due to re-upload notices can result in forfeiting seats in prestigious institutions like PSG Tech, CEG Guindy, or Madras Medical College.\n\n---\n\n## Anatomy of a Tamil Nadu e-District Digital Signature\n\nUnlike simple scanned images of signatures, a genuine TNeGA certificate contains an encrypted digital certificate issued by the **National Informatics Centre (NIC Sub-CA)** under the auspices of the Controller of Certifying Authorities (CCA India).\n\n```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502              TNeGA / Tamil Nadu Revenue Department               \u2502\n\u2502                  Official Certificate Header                     \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Certificate No: TN-720230812345                                  \u2502\n\u2502 Applicant Name: ARUNAGIRINATHAN K                                \u2502\n\u2502 Father's Name:  KALYANASUNDARAM M                                \u2502\n\u2502 Community:      Backward Classes (BC)                            \u2502\n\u2502 G.O. Reference: G.O. (Ms.) No. 28, Backward Classes Welfare      \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502                                                                  \u2502\n\u2502  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510         \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510  \u2502\n\u2502  \u2502   2D Verification QR   \u2502         \u2502    DIGITALLY SIGNED     \u2502  \u2502\n\u2502  \u2502    Direct URL to       \u2502         \u2502 Zonal Deputy Tahsildar  \u2502  \u2502\n\u2502  \u2502 edistricts.tn.gov.in   \u2502         \u2502 NIC Sub-CA CA 2014      \u2502  \u2502\n\u2502  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518         \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518  \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\nThe digital signature captures:\n- **Common Name (CN):** The exact official designation and name of the Zonal Deputy Tahsildar or Headquarters Deputy Tahsildar (e.g., *Headquarters Deputy Tahsildar, Tambaram Taluk, Chengalpattu District*).\n- **Issuer:** `NIC Sub-CA for NIC 2014` or `NIC e-Sign CA`.\n- **Signing Timestamp:** The exact date, second, and timezone when the officer approved the application on the e-District server.\n- **Cryptographic Digest:** SHA-256 hash ensuring that not a single Tamil or English character, date, or photo in the certificate has been modified.\n\n---\n\n## Step-by-Step: Verifying Tamil Nadu Revenue Certificates on Kagazo\n\n### Step 1: Download Original PDF from Official Source\nObtain your certificate directly from the **Tamil Nadu Citizen Portal** (`tnesevai.tn.gov.in` or `edistricts.tn.gov.in`) or request the clean original PDF from your local e-Sevai operator. Avoid scanning a printed paper copy back into PDF; you must use the original digital file containing the cryptographic layer.\n\n### Step 2: Upload to Kagazo Verification Engine\n1. Go to **[Kagazo.in](/#upload-zone)**.\n2. Select your Tamil Nadu certificate PDF and drop it into the upload box.\n3. Most Tamil Nadu revenue certificates are **not password protected**; click **Verify Digital Signature**.\n\n### Step 3: Instant Cryptographic Inspection\nIn under 2 seconds, Kagazo connects to the national root anchors:\n- Validates the public key against **NIC Sub-CA** and **RCAI Root 2014/2022**.\n- Verifies that the Zonal Deputy Tahsildar's certificate was unrevoked at the exact time of signing.\n- Audits the PDF byte segments to ensure zero data corruption.\n\n### Step 4: Download the LTV-Enabled PDF\nClick **Download Verified PDF**. Kagazo embeds a cryptographically sealed **Document Security Store (/DSS)** into the document. Now, when uploaded to TNEA, NEET, or TNPSC candidate portals, the verification officers' systems instantly recognize the valid green tick mark.\n\n---\n\n## Tamil Nadu Revenue Certificates Supported by Kagazo\n\n| Certificate Type | G.O. / Department Reference | Issuing Authority | Common Signing Certificate |\n| :--- | :--- | :--- | :--- |\n| **Community Certificate** | Revenue & BC/MBC Welfare | Zonal Deputy Tahsildar | NIC Sub-CA Tamil Nadu |\n| **Nativity Certificate** | Revenue Department | Zonal Deputy Tahsildar | NIC Sub-CA Tamil Nadu |\n| **Income Certificate** | Revenue & Finance Dept | Headquarters Deputy Tahsildar | NIC Sub-CA Tamil Nadu |\n| **First Graduate Certificate** | Higher Education Directorate | Headquarters Deputy Tahsildar | NIC Sub-CA Tamil Nadu |\n| **Legal Heir Certificate** | Revenue Administration | Tahsildar of Respective Taluk | NIC Sub-CA Tamil Nadu |\n| **Destitute Widow Certificate** | Social Welfare Department | Revenue Divisional Officer (RDO) | NIC Sub-CA Tamil Nadu |\n| **Inter-Caste Marriage Cert** | Social Welfare Department | Tahsildar / Special Tahsildar | NIC Sub-CA Tamil Nadu |\n\n---\n\n## Cross-Referencing the 2D QR Code vs. PDF Digital Signature\n\nEvery Tamil Nadu e-District certificate features a 2D matrix QR code in the lower-left quadrant:\n1. **The QR Code Role:** Contains a direct web link to `edistricts.tn.gov.in/revenue/VerifyCert.html` containing the Application Number and Certificate Number. Anyone scanning it with a phone camera can view the web-based summary.\n2. **The Digital Signature Role:** Protects the actual PDF file itself from binary tampering, font alteration, or photo replacement.\n\n> [!IMPORTANT]\n> Official counseling scrutiny systems (like Anna University's automated document verification bot) do **not** scan the physical QR code; they parse the PDF binary file for a valid PKCS#7 digital signature. If the digital signature container is corrupted or untrusted, your document may fail automated screening.\n\n---\n\n## Frequently Asked Questions (FAQ)\n\n### Q1: Is a color printout of the digitally signed certificate acceptable for physical counseling?\nYes. As per Tamil Nadu Government Order **G.O. (Ms) No. 28**, revenue certificates issued digitally through e-Sevai bearing an electronic signature and QR code are valid public documents and do not require manual physical ink signatures or office rubber stamps.\n\n### Q2: What if the Tahsildar's certificate has expired since my certificate was issued?\nCertificates of revenue officials are often renewed annually. If you obtained your Community Certificate in 2022 and the officer's digital token expired in 2024, the certificate remains 100% legally valid because it was signed when the token was active. Kagazo's LTV engine preserves the historical validity state.\n\n### Q3: My certificate shows \"Signature Not Verified\" on my Android smartphone. Why?\nMobile operating systems (Android, iOS) lack desktop certificate trust management utilities. Kagazo fixes this by baking the validation data directly into the file, enabling mobile viewers to display the green checkmark without local certificate installation.\n\n---\n\n## Guarantee Your Counseling Admission Without Glitches\n\nNever submit an unverified revenue certificate for competitive examinations or college counseling. \n\n**[Verify your Tamil Nadu Revenue Certificate on Kagazo now](/#upload-zone)** and secure your admission with confidence.",
   },
+  {
+    id: "f82a7b19-612b-4e1a-9f44-8d93c4e12345",
+    title: "How to Fix TNPSC OTR Photo & Signature Upload Rejection (10–20 KB Signature & 20–50 KB Photo Rules 2026)",
+    slug: "how-to-fix-tnpsc-otr-photo-signature-upload-rejection",
+    excerpt: "Complete troubleshooting guide on solving 'File size less than 10 KB' and dimension errors on TNPSC One Time Registration (OTR). Exact 2026 rules for name/date photo strips and 10–20 KB signatures.",
+    category: "Exam Guides",
+    meta_description: "Fix TNPSC OTR photo and signature upload errors. Learn exact 10-20KB signature and 20-50KB name/date photo rules for TNPSC Group 1, 2, 4. Free 1-click resizer.",
+    meta_keywords: "tnpsc signature size 10 to 20 kb, tnpsc photo with name and date 2026, tnpsc otr photo signature rejection, tnpsc file size less than 10 kb, resize photo for tnpsc group 4, tnpsc photo resizer online free, tnpsc signature dimension cm",
+    featured_image_url: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80",
+    published: true,
+    published_at: "2026-09-16T12:00:00+00:00",
+    author_name: "Kagazo Examination Guidance Desk",
+    created_at: "2026-09-16T12:00:00+00:00",
+    updated_at: "2026-09-16T12:00:00+00:00",
+    lang: "en",
+    hreflang_group: "how-to-fix-tnpsc-otr-photo-signature-upload-rejection",
+    reading_time: 6,
+    view_count: 0,
+    tags: ["TNPSC", "OTR", "Exam Prep", "Image Resizer"],
+    content: `# How to Fix TNPSC OTR Photo & Signature Upload Rejections (Official 2026 Guidelines)
+
+When applying for **TNPSC Group 1, Group 2, Group 4, or VAO examinations**, thousands of aspirants in Tamil Nadu get stuck at the One Time Registration (OTR) portal with frustrating errors such as **"File size less than 10 KB"**, **"Invalid image dimensions"**, or **"Uploaded photograph does not contain name and date"**.
+
+You can format and auto-calibrate your documents immediately using Kagazo's free **[TNPSC Photo & Signature Resizer](https://kagazo.in/tools/tnpsc-photo-signature-resizer)**. For native Tamil language users, access our localized tool: **[TNPSC புகைப்படம் மற்றும் கையொப்பம் அளவு மாற்றி](https://kagazo.in/ta/tools/tnpsc-photo-signature-resizer)**.
+
+In this guide, we break down why the **Tamil Nadu Public Service Commission ([tnpsc.gov.in](https://www.tnpsc.gov.in))** automated screening script blocks file uploads and how you can format your files correctly in under 30 seconds using your smartphone.
+
+---
+
+## Why Does the TNPSC Portal Reject Signatures Under 10 KB?
+
+**Answer Capsule:** **The TNPSC One Time Registration (OTR) server strictly enforces a file byte range between 10.0 KB and 20.0 KB for candidate signatures. If a cropped signature drops even 0.1 KB below 10 KB (e.g., 9.9 KB), the upload script automatically triggers a "File size too small" rejection to prevent unreadable, pixelated signatures on examination admit cards and attendance sheets.**
+
+Standard online image compressors only shrink files downwards. When you crop a signature on a mobile phone and compress it with generic tools, the clean white space compresses too aggressively, frequently dropping the file down to 4 KB to 8 KB. 
+
+Kagazo solves this with **bi-directional calibration**:
+- If your signature is over 20 KB, it compresses it down safely to the 12–18 KB safe zone.
+- If your signature is under 10 KB, it applies lossless padding and Xerox ink-boost algorithms to lift the file size above 10.5 KB without blurring the pen strokes.
+
+---
+
+## Official 2026 TNPSC OTR Photo & Signature Specifications
+
+**Answer Capsule:** **According to official TNPSC Instructions to Applicants, candidate photographs must be between 20.0 KB and 50.0 KB with dimensions of 3.5 cm × 4.5 cm, containing the candidate's name and photograph date in a bottom white strip. Candidate signatures must strictly be between 10.0 KB and 20.0 KB with dimensions of 6.0 cm × 2.0 cm on white paper.**
+
+| Parameter | TNPSC Candidate Photograph | TNPSC Candidate Signature | Recommended Safe Setting |
+| :--- | :--- | :--- | :--- |
+| **File Size Range** | **20.0 KB to 50.0 KB** | **10.0 KB to 20.0 KB** | 35 KB (Photo) / 16 KB (Sig) |
+| **Physical Dimensions** | **3.5 cm (Width) × 4.5 cm (Height)** | **6.0 cm (Width) × 2.0 cm (Height)** | Exact aspect ratio locked |
+| **Pixel Dimensions (at 200 DPI)** | 275 px × 354 px | 472 px × 157 px | Clean sharp resolution |
+| **File Format** | JPEG / JPG only | JPEG / JPG only | RGB / Grayscale JPEG |
+| **Mandatory Markings** | Full Name & Date of Photo (DOP) | Dark blue or black pen ink | Pure white background (#FFFFFF) |
+
+Refer directly to the official Commission guidelines at the **[TNPSC Examinations Portal (tnpscexams.in)](https://www.tnpscexams.in)**.
+
+---
+
+## How to Add the Mandatory Name and Date Strip to TNPSC Photos
+
+**Answer Capsule:** **Under TNPSC Commission rules, passport photos taken without a bottom white rectangular strip showing the candidate's full name in capital letters and the date the photo was taken (DOP) within the last three months are deemed non-compliant and liable for rejection. The strip must occupy approximately 15% of the bottom image canvas.**
+
+Traditional cyber café operators charge candidates ₹50 to ₹100 to manually Photoshop this text onto an image. With Kagazo, this process is automated:
+1. When you select the TNPSC photo preset on Kagazo's **[TNPSC Photo Resizer](https://kagazo.in/tools/tnpsc-photo-signature-resizer)**, toggle the **Name & Date Strip** option.
+2. Enter your Name as registered in SSLC marksheet (e.g., \`K. SARAVANAN\`).
+3. Enter the Date of Photo (e.g., \`15.09.2026\`).
+4. Kagazo automatically generates a crisp, high-contrast white bounding strip with bold black typography centered beneath your chin, exporting the entire image strictly between 20 KB and 50 KB.
+
+---
+
+## Step-by-Step: Formatting TNPSC Files on Kagazo in 30 Seconds
+
+**Answer Capsule:** **To format your files for TNPSC OTR on Kagazo, upload your smartphone photo or cropped signature, select the corresponding TNPSC preset, adjust the crop box, and click Download. The entire operation executes 100% in your device's browser memory (RAM) with zero file uploads.**
+
+### Step 1: Capture or Crop Your Photo/Signature
+- **Signature:** Sign on unruled plain white paper using a dark blue or black ballpoint pen. Take a clear, shadow-free photo in good daylight.
+- **Photo:** Take a straight-facing passport photo against a light or white wall. Both ears must be clearly visible, with neutral facial expression and zero spectacles glare.
+
+### Step 2: Select the Preset on Kagazo
+Navigate to **[TNPSC Photo & Signature Resizer](https://kagazo.in/tools/tnpsc-photo-signature-resizer)**:
+- Select **TNPSC Candidate Photo (20–50 KB)** or **TNPSC Candidate Signature (10–20 KB)**.
+- If you only need exact byte reduction without dimensional changes, use our dedicated **[20KB Image Compressor](https://kagazo.in/tools/compress-image-to-20kb)** or **[50KB Image Compressor](https://kagazo.in/tools/compress-image-to-50kb)**.
+
+### Step 3: 1-Click Export and Upload
+Click **Download Formatted Image**. The output file is formatted as an optimized JPEG with stripped EXIF telemetry to ensure minimum byte footprint and instant acceptance on the OTR upload form.
+
+---
+
+## Common TNPSC Upload Error Codes and How to Fix Them
+
+### 1. Error: "File size must be greater than 10 KB"
+- **Cause:** Your signature image was compressed too heavily by mobile messaging apps or generic photo editors.
+- **Fix:** Upload the signature to Kagazo. Our engine detects when a file is under 10 KB and injects compliant byte padding to bring it to 14–17 KB while keeping 100% edge sharpness.
+
+### 2. Error: "File dimensions do not match specified width and height"
+- **Cause:** The image has the wrong aspect ratio (e.g. square 1:1 instead of 3.5:4.5).
+- **Fix:** Use Kagazo's built-in framing grid, which automatically snaps your crop window to the mandatory 3.5 × 4.5 cm or 6.0 × 2.0 cm ratio.
+
+### 3. Error: "Only JPG/JPEG files allowed"
+- **Cause:** Modern smartphones (especially iPhones and newer Samsung devices) default to HEIC or WEBP formats.
+- **Fix:** Kagazo automatically converts HEIC, PNG, and WEBP uploads into pure Baseline JPEG compliant with government servers.
+
+---
+
+## Frequently Asked Questions (FAQ)
+
+### Q1: Can I use spectacles in my TNPSC passport photo?
+Spectacles with colored or tinted lenses are strictly prohibited. Plain reading glasses may be worn only if there is no flash reflection obscuring the eyes. The Commission strongly recommends taking the photograph without spectacles to avoid computerized screening rejection.
+
+### Q2: What is the maximum age of the photo allowed for TNPSC OTR?
+The photograph must have been taken within **three months** prior to the date of notification. The date printed on the bottom strip must reflect this recent date.
+
+### Q3: Does Kagazo store my photo or signature on its servers?
+No. Kagazo runs on a zero-retention security model. All pixel conversions, text overlay stamping, and JPEG compression algorithms run directly within your web browser's volatile RAM. Your identity files are never uploaded to any remote server or cloud database.
+
+### Q4: Are these rules the same for TNUSRB Police SI and Constable exams?
+Yes. The Tamil Nadu Uniformed Services Recruitment Board (TNUSRB) adheres to nearly identical photo (20–50 KB) and signature (10–20 KB) parameters as TNPSC.
+
+---
+
+## Format Your TNPSC Documents Now
+
+Don't risk having your government job application rejected due to technical upload errors. 
+
+**[Launch the free TNPSC Photo & Signature Resizer](https://kagazo.in/tools/tnpsc-photo-signature-resizer)** and generate your verified, OTR-ready files in seconds.`,
+  },
 ];
 
 export function calculateReadTime(content: string): string {
