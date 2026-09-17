@@ -96,10 +96,51 @@ export default function AdminBlogImportPage() {
     ],
   };
 
+  const fileInputRef = React.useRef<HTMLInputElement | null>(null);
+
   const handleLoadSample = () => {
     setJsonText(JSON.stringify(sampleJson, null, 2));
     setErrorMessage(null);
     setResultMessage(null);
+  };
+
+  const handleLoadPhase3 = async () => {
+    setErrorMessage(null);
+    setResultMessage(null);
+    try {
+      const res = await fetch('/admin-import/phase3_blogs_bundle.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status}: Could not load preset bundle`);
+      const data = await res.json();
+      setJsonText(JSON.stringify(data, null, 2));
+      setParsedPosts(data.posts);
+      setResultMessage('✅ Successfully loaded Phase 3 Bundle (5 Posts). Ready to preview or publish!');
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Failed to load Phase 3 bundle');
+    }
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage(null);
+    setResultMessage(null);
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const text = event.target?.result as string;
+        const parsed = JSON.parse(text);
+        if (!parsed || !Array.isArray(parsed.posts)) {
+          throw new Error("Invalid format: File must contain a { \"posts\": [ ... ] } object.");
+        }
+        setJsonText(JSON.stringify(parsed, null, 2));
+        setParsedPosts(parsed.posts);
+        setResultMessage(`✅ Successfully loaded "${file.name}" (${parsed.posts.length} posts).`);
+      } catch (err: any) {
+        setErrorMessage(`File Parse Error: ${err.message}`);
+      }
+    };
+    reader.readAsText(file);
   };
 
   const handlePreview = () => {
@@ -247,14 +288,38 @@ export default function AdminBlogImportPage() {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleLoadSample}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-surface border border-surface-darker hover:bg-surface-darker text-xs font-bold text-text-main transition-colors shadow-2xs self-start sm:self-auto"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-primary" />
-          <span>Load Sample JSON</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            accept=".json,application/json"
+            className="hidden"
+          />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface border border-surface-darker hover:bg-surface-darker text-xs font-bold text-text-main transition-colors shadow-2xs cursor-pointer"
+          >
+            <Upload className="w-3.5 h-3.5 text-primary" />
+            <span>Upload JSON File</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleLoadPhase3}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary/10 border border-primary/20 hover:bg-primary/20 text-xs font-bold text-primary transition-colors shadow-2xs cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <span>Load Phase 3 Bundle (5 Posts)</span>
+          </button>
+          <button
+            type="button"
+            onClick={handleLoadSample}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-surface border border-surface-darker hover:bg-surface-darker text-xs font-bold text-text-main transition-colors shadow-2xs cursor-pointer"
+          >
+            <span>Sample Template</span>
+          </button>
+        </div>
       </div>
 
       {/* Main Form Area */}
