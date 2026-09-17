@@ -8,7 +8,7 @@ import { BlogListContainer } from '@/components/blog/BlogListContainer';
 
 import { SITE_URL } from '@/lib/constants';
 
-export const revalidate = 3600; // ISR 1 hour
+export const revalidate = 60; // Fresh within 60s (purged on-demand via revalidatePath)
 
 export const metadata: Metadata = {
   title: 'Kagazo Blog — Indian Government PDF & Digital Signature Guides',

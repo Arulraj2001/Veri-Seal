@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import { supabaseAdmin } from '@/lib/supabase';
 import { mockBlogPosts, BlogPost } from '@/lib/blog-store';
@@ -247,6 +248,13 @@ export async function POST(req: Request) {
         }
       }
 
+      // Purge Next.js static cache so updated images & content appear immediately
+      try {
+        revalidatePath('/blog');
+        revalidatePath(`/blog/${trimmedSlug}`);
+        revalidatePath('/');
+      } catch (_) {}
+
       return NextResponse.json({ success: true, post: updatedPost });
     } else {
       // 2. Create new post
@@ -335,6 +343,13 @@ export async function POST(req: Request) {
         }
       }
 
+      // Purge Next.js static cache so new posts & images appear immediately
+      try {
+        revalidatePath('/blog');
+        revalidatePath(`/blog/${trimmedSlug}`);
+        revalidatePath('/');
+      } catch (_) {}
+
       return NextResponse.json({ success: true, post: newPost, supabaseResult });
     }
   } catch (error) {
@@ -367,6 +382,13 @@ export async function DELETE(req: Request) {
     // Delete from Supabase
     try {
       await supabaseAdmin.from('blog_posts').delete().or(`id.eq.${id},slug.eq.${targetSlug}`);
+    } catch (_) {}
+
+    // Purge Next.js cache on deletion
+    try {
+      revalidatePath('/blog');
+      if (targetSlug) revalidatePath(`/blog/${targetSlug}`);
+      revalidatePath('/');
     } catch (_) {}
 
     return NextResponse.json({ success: true });

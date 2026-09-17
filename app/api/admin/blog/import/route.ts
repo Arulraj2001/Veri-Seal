@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { auth } from '@/auth';
 import { supabaseAdmin } from '@/lib/supabase';
 import { mockBlogPosts, BlogPost } from '@/lib/blog-store';
@@ -155,6 +156,15 @@ export async function POST(req: Request) {
         }).catch(() => {});
       } catch {}
     }
+
+    // Purge Next.js static cache so newly imported posts & images appear immediately
+    try {
+      revalidatePath('/blog');
+      revalidatePath('/');
+      for (const p of processedPosts) {
+        revalidatePath(`/blog/${p.slug}`);
+      }
+    } catch (_) {}
 
     return NextResponse.json({
       success: true,

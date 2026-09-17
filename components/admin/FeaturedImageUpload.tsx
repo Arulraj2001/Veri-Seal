@@ -12,11 +12,90 @@ interface FeaturedImageUploadProps {
 export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProps) {
   const [isUploading, setIsUploading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [uploadStats, setUploadStats] = React.useState<{ originalKb: number; compressedKb: number } | null>(null);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const handleButtonClick = () => {
     setError(null);
     fileInputRef.current?.click();
+  };
+
+  /**
+   * Client-side 16:9 auto-crop & WebP compression engine
+   * Scales & crops image to 1200x675 (16:9) to fit blog cards perfectly.
+   */
+  const compressAndFitToCard = (
+    file: File,
+    targetWidth = 1200,
+    targetHeight = 675
+  ): Promise<{ blob: Blob; sizeKb: number }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              return reject(new Error('HTML5 Canvas context is not supported in this browser.'));
+            }
+
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            // Calculate cover crop coordinates
+            const srcRatio = img.width / img.height;
+            const targetRatio = targetWidth / targetHeight;
+
+            let renderWidth = targetWidth;
+            let renderHeight = targetHeight;
+            let offsetX = 0;
+            let offsetY = 0;
+
+            if (srcRatio > targetRatio) {
+              // Image is wider than 16:9 -> crop horizontal sides evenly
+              renderHeight = targetHeight;
+              renderWidth = img.width * (targetHeight / img.height);
+              offsetX = (targetWidth - renderWidth) / 2;
+            } else {
+              // Image is taller than 16:9 -> crop top/bottom evenly
+              renderWidth = targetWidth;
+              renderHeight = img.height * (targetWidth / img.width);
+              offsetY = (targetHeight - renderHeight) / 2;
+            }
+
+            // Clean background fill
+            ctx.fillStyle = '#0F172A';
+            ctx.fillRect(0, 0, targetWidth, targetHeight);
+
+            // Draw image scaled and centered
+            ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
+
+            // Export as WebP
+            canvas.toBlob(
+              (blob) => {
+                if (!blob) {
+                  return reject(new Error('Failed to generate compressed image blob.'));
+                }
+                const sizeKb = Math.round(blob.size / 1024);
+                resolve({ blob, sizeKb });
+              },
+              'image/webp',
+              0.84
+            );
+          } catch (canvasErr: any) {
+            reject(canvasErr);
+          }
+        };
+        img.onerror = () => reject(new Error('Failed to decode image file.'));
+        img.src = event.target?.result as string;
+      };
+      reader.onerror = () => reject(new Error('Failed to read image file.'));
+      reader.readAsDataURL(file);
+    });
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,9 +106,9 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
     e.target.value = '';
     setError(null);
 
-    // Validate size (5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setError('File size exceeds the 5MB limit.');
+    // Validate size (max 15MB source)
+    if (file.size > 15 * 1024 * 1024) {
+      setError('File size exceeds the 15MB limit.');
       return;
     }
 
@@ -41,18 +120,25 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
     }
 
     setIsUploading(true);
+    setUploadStats(null);
 
     try {
-      // 1. First attempt direct Supabase client upload
-      const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}-${cleanName}`;
+      const originalKb = Math.round(file.size / 1024);
+      // Auto-compress & fit to exact 16:9 (1200x675)
+      const { blob: compressedBlob, sizeKb: compressedKb } = await compressAndFitToCard(file, 1200, 675);
+      setUploadStats({ originalKb, compressedKb });
+
+      const cleanBase = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9.-]/g, '_');
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}-${cleanBase}.webp`;
+      const compressedFile = new File([compressedBlob], fileName, { type: 'image/webp' });
 
       let publicUrl = '';
 
+      // 1. First attempt direct Supabase client upload
       const { data: uploadData, error: uploadErr } = await supabase.storage
         .from('blog-images')
-        .upload(fileName, file, {
-          contentType: file.type,
+        .upload(fileName, compressedFile, {
+          contentType: 'image/webp',
           upsert: false,
         });
 
@@ -60,9 +146,9 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
         const { data: urlData } = supabase.storage.from('blog-images').getPublicUrl(fileName);
         publicUrl = urlData.publicUrl;
       } else {
-        // 2. Fallback to API route (which has admin service key credentials)
+        // 2. Fallback to API route (uses admin service role key)
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', compressedFile);
 
         const apiRes = await fetch('/api/admin/blog/upload-image', {
           method: 'POST',
@@ -95,34 +181,50 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
           Featured Article Image
         </label>
         <span className="text-[10px] text-text-main/50 font-medium">
-          JPG, PNG, WebP (Max 5MB)
+          Auto-fits 16:9 Card (1200×675 px WebP)
         </span>
       </div>
 
+      {/* Upload Compression Stats */}
+      {uploadStats && (
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success/10 border border-success/20 text-[11px] font-bold text-success">
+          <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+          <span>
+            ✨ Auto-fitted to 16:9 (1200×675 px WebP) · {uploadStats.compressedKb} KB (Saved {Math.max(0, Math.round((1 - uploadStats.compressedKb / uploadStats.originalKb) * 100))}%)
+          </span>
+        </div>
+      )}
+
       {/* Preview Card */}
       {value ? (
-        <div className="relative group rounded-2xl overflow-hidden border border-surface-darker bg-surface/50 max-h-56">
+        <div className="relative group rounded-2xl overflow-hidden border border-surface-darker bg-surface/50 aspect-video w-full">
           <img
             src={value}
             alt="Featured preview"
-            className="w-full h-48 object-cover rounded-2xl"
+            className="w-full h-full object-cover rounded-2xl"
             onError={(e) => {
               (e.target as HTMLElement).style.display = 'none';
             }}
           />
+          <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider">
+            16:9 Card Preview
+          </div>
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <button
               type="button"
               onClick={handleButtonClick}
-              className="px-3 py-1.5 rounded-xl bg-white text-text-main text-xs font-bold hover:bg-surface shadow-md transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-xl bg-white text-text-main text-xs font-bold hover:bg-surface shadow-md transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5 text-primary" />
               <span>Replace Image</span>
             </button>
             <button
               type="button"
-              onClick={() => onChange('')}
-              className="p-1.5 rounded-xl bg-error text-white hover:bg-error/90 shadow-md transition-colors"
+              onClick={() => {
+                onChange('');
+                setUploadStats(null);
+              }}
+              className="p-1.5 rounded-xl bg-error text-white hover:bg-error/90 shadow-md transition-colors cursor-pointer"
               title="Remove image"
             >
               <X className="w-4 h-4" />
@@ -138,8 +240,8 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
             <ImageIcon className="w-6 h-6 text-primary" />
           </div>
           <div className="space-y-0.5">
-            <p className="text-xs font-bold text-text-main">Click to upload featured image</p>
-            <p className="text-[11px] text-text-main/50">Storage bucket: blog-images</p>
+            <p className="text-xs font-bold text-text-main">Click to upload &amp; auto-fit image</p>
+            <p className="text-[11px] text-text-main/50">Auto-converts to 1200×675 px (16:9) WebP</p>
           </div>
         </div>
       )}

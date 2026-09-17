@@ -6,11 +6,24 @@ export const runtime = 'edge';
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
-  const title = searchParams.get('title') || 'Kagazo — Indian Document Tools';
-  const subtitle = searchParams.get('subtitle') || 'Verify · Resize · Convert · Generate';
-  const type = searchParams.get('type') || 'tool';
+  const title = searchParams.get('title') || 'Kagazo — Sovereign Indian Document Tools';
+  const subtitle = searchParams.get('subtitle') || '100% In-Browser Volatile RAM Execution · Zero Uploads · Official Portal Calibrated';
+  const type = searchParams.get('type') || 'blog';
 
-  // Icon based on type
+  // Dynamic category / badge text
+  const categoryLabel =
+    type === 'blog'
+      ? 'OFFICIAL KAGAZO GUIDE'
+      : type === 'verify'
+      ? 'DIGITAL SIGNATURE VERIFIER'
+      : type === 'photo'
+      ? 'EXAM & STUDIO PHOTO LAB'
+      : type === 'pdf'
+      ? 'SOVEREIGN PDF UTILITY'
+      : type === 'calc'
+      ? 'FINANCE & STATUTORY CALCULATOR'
+      : 'CITIZEN DOCUMENT TOOL';
+
   const icon =
     type === 'blog'
       ? '📖'
@@ -32,151 +45,354 @@ export async function GET(req: NextRequest) {
           height: '630px',
           display: 'flex',
           flexDirection: 'column',
-          background: '#FBFAF9',
+          justifyContent: 'space-between',
+          background: 'linear-gradient(135deg, #090D16 0%, #0F172A 50%, #162033 100%)',
           fontFamily: 'sans-serif',
           position: 'relative',
           overflow: 'hidden',
         }}
       >
-        {/* Orange top bar */}
+        {/* Glowing ambient radial light bloom (Orange/Amber) */}
         <div
           style={{
-            width: '100%',
-            height: '8px',
-            background: '#E6570B',
+            position: 'absolute',
+            top: '-80px',
+            right: '-80px',
+            width: '540px',
+            height: '540px',
+            borderRadius: '100%',
+            background: 'radial-gradient(circle, rgba(230, 87, 11, 0.32) 0%, rgba(245, 158, 11, 0.12) 50%, transparent 75%)',
             display: 'flex',
           }}
         />
 
-        {/* Main content */}
+        {/* Ambient bottom-left indigo bloom */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '-100px',
+            left: '-100px',
+            width: '450px',
+            height: '450px',
+            borderRadius: '100%',
+            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, transparent 70%)',
+            display: 'flex',
+          }}
+        />
+
+        {/* Indian Tricolor Accent Top Bar */}
+        <div
+          style={{
+            width: '100%',
+            height: '6px',
+            background: 'linear-gradient(90deg, #E6570B 0%, #F59E0B 45%, #10B981 100%)',
+            display: 'flex',
+          }}
+        />
+
+        {/* Main Content Area */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            padding: '60px 80px',
+            padding: '48px 72px 24px 72px',
             flex: 1,
+            justifyContent: 'space-between',
           }}
         >
-          {/* Kagazo logo row */}
+          {/* Top Brand Header Row */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '16px',
-              marginBottom: '48px',
+              justifyContent: 'space-between',
+              width: '100%',
             }}
           >
+            {/* Logo + Name */}
             <div
               style={{
-                width: '48px',
-                height: '48px',
-                background: '#E6570B',
-                borderRadius: '12px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '24px',
-                color: 'white',
+                gap: '14px',
               }}
             >
-              🛡️
+              <div
+                style={{
+                  width: '44px',
+                  height: '44px',
+                  background: 'linear-gradient(135deg, #E6570B 0%, #D04808 100%)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '22px',
+                  color: 'white',
+                  boxShadow: '0 4px 18px rgba(230, 87, 11, 0.45)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                }}
+              >
+                🛡️
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span
+                  style={{
+                    fontSize: '26px',
+                    fontWeight: '900',
+                    color: '#F8FAFC',
+                    letterSpacing: '-0.02em',
+                  }}
+                >
+                  Kagazo
+                </span>
+                <span
+                  style={{
+                    fontSize: '11px',
+                    color: '#94A3B8',
+                    fontWeight: '600',
+                    letterSpacing: '0.05em',
+                  }}
+                >
+                  kagazo.in
+                </span>
+              </div>
             </div>
-            <span
+
+            {/* Live RAM Privacy Indicator Badge */}
+            <div
               style={{
-                fontSize: '28px',
-                fontWeight: '700',
-                color: '#2E241F',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 16px',
+                borderRadius: '9999px',
+                background: 'rgba(16, 185, 129, 0.12)',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
               }}
             >
-              Kagazo
-            </span>
-            <span
+              <div
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '9999px',
+                  background: '#10B981',
+                  display: 'flex',
+                }}
+              />
+              <span
+                style={{
+                  fontSize: '11px',
+                  fontWeight: '800',
+                  color: '#34D399',
+                  letterSpacing: '0.06em',
+                }}
+              >
+                100% CLIENT RAM EXECUTION · ZERO UPLOADS
+              </span>
+            </div>
+          </div>
+
+          {/* Central Showcase Grid: Left Title Block + Right Glassmorphic Card */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '40px',
+              margin: '28px 0',
+            }}
+          >
+            {/* Left: Category Badge, Main Title & Subtitle */}
+            <div
               style={{
-                fontSize: '16px',
-                color: '#9CA3AF',
-                marginLeft: '8px',
+                display: 'flex',
+                flexDirection: 'column',
+                flex: 1,
+                maxWidth: '740px',
               }}
             >
-              Kagazo.in
-            </span>
-          </div>
+              {/* Category Pill */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  marginBottom: '16px',
+                }}
+              >
+                <div
+                  style={{
+                    padding: '4px 12px',
+                    borderRadius: '8px',
+                    background: 'rgba(230, 87, 11, 0.18)',
+                    border: '1px solid rgba(230, 87, 11, 0.38)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                >
+                  <span style={{ fontSize: '14px' }}>{icon}</span>
+                  <span
+                    style={{
+                      fontSize: '11px',
+                      fontWeight: '800',
+                      color: '#FB923C',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    {categoryLabel}
+                  </span>
+                </div>
+              </div>
 
-          {/* Icon */}
-          <div
-            style={{
-              fontSize: '72px',
-              marginBottom: '24px',
-              display: 'flex',
-            }}
-          >
-            {icon}
-          </div>
+              {/* Main Article Title */}
+              <div
+                style={{
+                  fontSize: title.length > 55 ? '38px' : title.length > 35 ? '44px' : '50px',
+                  fontWeight: '900',
+                  color: '#FFFFFF',
+                  lineHeight: '1.14',
+                  letterSpacing: '-0.03em',
+                  marginBottom: '14px',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                }}
+              >
+                {title}
+              </div>
 
-          {/* Title */}
-          <div
-            style={{
-              fontSize: title.length > 50 ? '42px' : '52px',
-              fontWeight: '800',
-              color: '#2E241F',
-              lineHeight: '1.1',
-              maxWidth: '900px',
-              marginBottom: '24px',
-              display: 'flex',
-              flexWrap: 'wrap',
-            }}
-          >
-            {title}
-          </div>
+              {/* Subtitle / Excerpt */}
+              <div
+                style={{
+                  fontSize: '18px',
+                  color: '#94A3B8',
+                  lineHeight: '1.38',
+                  fontWeight: '500',
+                  display: 'flex',
+                }}
+              >
+                {subtitle}
+              </div>
+            </div>
 
-          {/* Subtitle */}
-          <div
-            style={{
-              fontSize: '24px',
-              color: '#6B7280',
-              display: 'flex',
-            }}
-          >
-            {subtitle}
+            {/* Right: Glassmorphic Security & Spec Seal Card */}
+            <div
+              style={{
+                width: '290px',
+                padding: '24px',
+                borderRadius: '24px',
+                background: 'rgba(255, 255, 255, 0.04)',
+                border: '1px solid rgba(255, 255, 255, 0.12)',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.35)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '14px',
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '11px',
+                  fontWeight: '800',
+                  color: '#CBD5E1',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                  paddingBottom: '8px',
+                  display: 'flex',
+                }}
+              >
+                Verified Sovereign Specs
+              </div>
+
+              {[
+                { icon: '🔒', title: 'Zero Data Retention', desc: 'RAM-volatile processing' },
+                { icon: '⚡', title: 'Instant Execution', desc: 'No queue · No server delay' },
+                { icon: '🖨️', title: '300 DPI Print Ready', desc: 'Lossless vector output' },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '10px',
+                      background: 'rgba(255, 255, 255, 0.06)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '14px',
+                    }}
+                  >
+                    {item.icon}
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontSize: '12px', fontWeight: '700', color: '#F1F5F9' }}>
+                      {item.title}
+                    </span>
+                    <span style={{ fontSize: '10px', color: '#64748B' }}>
+                      {item.desc}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom Sovereign Trust Ribbon */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '24px 80px',
-            background: '#F1EFEE',
-            borderTop: '1px solid #E5E7EB',
+            padding: '16px 72px',
+            background: 'rgba(9, 13, 22, 0.85)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
           }}
         >
           <span
             style={{
-              fontSize: '18px',
-              color: '#2E241F',
-              fontWeight: '600',
+              fontSize: '14px',
+              color: '#F8FAFC',
+              fontWeight: '700',
               display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
-            🇮🇳 Free for every Indian
+            🇮🇳 India's Sovereign Document &amp; Utility Suite
           </span>
+
           <div
             style={{
               display: 'flex',
-              gap: '32px',
+              gap: '20px',
             }}
           >
-            {['✅ No signup', '⚡ Instant', '🔒 Private'].map((badge) => (
+            {[
+              'Zero Watermarks',
+              'Zero Login Required',
+              'Free for Every Indian',
+            ].map((badge) => (
               <span
                 key={badge}
                 style={{
-                  fontSize: '16px',
-                  color: '#6B7280',
+                  fontSize: '12px',
+                  color: '#94A3B8',
+                  fontWeight: '600',
                   display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
                 }}
               >
-                {badge}
+                ✓ {badge}
               </span>
             ))}
           </div>

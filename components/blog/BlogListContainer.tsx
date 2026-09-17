@@ -253,9 +253,12 @@ export function BlogListContainer({ initialPosts }: BlogListContainerProps) {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
                   <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-full min-h-[280px] overflow-hidden bg-surface">
                     <img
-                      src={featuredPost.featured_image_url}
+                      src={featuredPost.featured_image_url || `/api/og?title=${encodeURIComponent(featuredPost.title)}&type=blog`}
                       alt={featuredPost.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = `/api/og?title=${encodeURIComponent(featuredPost.title)}&type=blog`;
+                      }}
                     />
                     <div className="absolute top-4 left-4 flex items-center gap-2">
                       <span className="px-3 py-1 rounded-full bg-primary text-white text-xs font-black uppercase tracking-wide shadow-sm">
@@ -327,9 +330,12 @@ export function BlogListContainer({ initialPosts }: BlogListContainerProps) {
                 {/* Image & Badges */}
                 <div className="relative h-48 sm:h-52 overflow-hidden bg-surface">
                   <img
-                    src={post.featured_image_url}
+                    src={post.featured_image_url || `/api/og?title=${encodeURIComponent(post.title)}&type=blog`}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `/api/og?title=${encodeURIComponent(post.title)}&type=blog`;
+                    }}
                   />
                   <div className="absolute top-3 left-3 flex items-center gap-2">
                     <span className="px-2.5 py-1 rounded-full bg-surface/90 backdrop-blur-md text-text-main text-[11px] font-bold border border-surface-darker shadow-2xs">

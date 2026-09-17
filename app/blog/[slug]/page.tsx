@@ -31,7 +31,7 @@ import { ViewCountTracker } from '@/components/blog/ViewCountTracker';
 import { AuthorBio } from '@/components/blog/AuthorBio';
 import { LanguageSwitcher } from '@/components/blog/LanguageSwitcher';
 
-export const revalidate = 3600; // ISR 1 hour
+export const revalidate = 60; // Fresh within 60s (purged on-demand via revalidatePath)
 
 interface BlogPostPageProps {
   params: {
@@ -121,6 +121,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const allPosts = await getPublishedBlogPosts();
   const relatedPosts = await getRelatedBlogPosts(post.category, post.slug);
   const postUrl = `https://kagazo.in/blog/${post.slug}`;
+  const heroImage =
+    post.featured_image_url ||
+    `/api/og?title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(
+      post.excerpt?.slice(0, 90) || 'Official Kagazo Guide'
+    )}&type=blog`;
 
   // 3A. Word Count & Reading Time
   const wordCount = (post.content || '').trim().split(/\s+/).filter(Boolean).length;
@@ -296,13 +301,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <ShareButtons title={post.title} slug={post.slug} />
               </header>
 
-              {/* Featured Image */}
-              {post.featured_image_url && (
-                <div className="rounded-3xl overflow-hidden border border-surface-darker shadow-sm bg-surface">
+              {/* Featured Image (Auto-calibrated 16:9 Card & Reader) */}
+              {heroImage && (
+                <div className="rounded-3xl overflow-hidden border border-surface-darker shadow-sm bg-surface aspect-video w-full">
                   <img
-                    src={post.featured_image_url}
+                    src={heroImage}
                     alt={post.title}
-                    className="w-full h-auto max-h-[460px] object-cover"
+                    className="w-full h-full object-cover"
                   />
                 </div>
               )}
