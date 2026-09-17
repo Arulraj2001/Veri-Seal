@@ -104,21 +104,6 @@ export default function AdminBlogImportPage() {
     setResultMessage(null);
   };
 
-  const handleLoadPhase3 = async () => {
-    setErrorMessage(null);
-    setResultMessage(null);
-    try {
-      const res = await fetch('/admin-import/phase3_blogs_bundle.json');
-      if (!res.ok) throw new Error(`HTTP ${res.status}: Could not load preset bundle`);
-      const data = await res.json();
-      setJsonText(JSON.stringify(data, null, 2));
-      setParsedPosts(data.posts);
-      setResultMessage('✅ Successfully loaded Phase 3 Bundle (5 Posts). Ready to preview or publish!');
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to load Phase 3 bundle');
-    }
-  };
-
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMessage(null);
     setResultMessage(null);
@@ -304,14 +289,7 @@ export default function AdminBlogImportPage() {
             <Upload className="w-3.5 h-3.5 text-primary" />
             <span>Upload JSON File</span>
           </button>
-          <button
-            type="button"
-            onClick={handleLoadPhase3}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary/10 border border-primary/20 hover:bg-primary/20 text-xs font-bold text-primary transition-colors shadow-2xs cursor-pointer"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            <span>Load Phase 3 Bundle (5 Posts)</span>
-          </button>
+
           <button
             type="button"
             onClick={handleLoadSample}

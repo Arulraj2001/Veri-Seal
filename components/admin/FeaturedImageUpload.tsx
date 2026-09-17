@@ -1,8 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import { Upload, Image as ImageIcon, Loader2, X, CheckCircle2, AlertCircle } from 'lucide-react';
+import {
+  Upload,
+  Image as ImageIcon,
+  Loader2,
+  X,
+  CheckCircle2,
+  AlertCircle,
+  Crop,
+  Sparkles,
+} from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { FeaturedImageCropModal } from './FeaturedImageCropModal';
 
 interface FeaturedImageUploadProps {
   value: string;
@@ -12,90 +22,19 @@ interface FeaturedImageUploadProps {
 export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProps) {
   const [isUploading, setIsUploading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
-  const [uploadStats, setUploadStats] = React.useState<{ originalKb: number; compressedKb: number } | null>(null);
+  const [uploadStats, setUploadStats] = React.useState<{ originalKb?: number; compressedKb: number; width?: number; height?: number } | null>(null);
+
+  // Crop modal state
+  const [isCropModalOpen, setIsCropModalOpen] = React.useState(false);
+  const [cropImageSrc, setCropImageSrc] = React.useState<string | null>(null);
+  const [sourceFileName, setSourceFileName] = React.useState<string>('featured_image');
+  const [sourceOriginalKb, setSourceOriginalKb] = React.useState<number | undefined>(undefined);
+
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
 
   const handleButtonClick = () => {
     setError(null);
     fileInputRef.current?.click();
-  };
-
-  /**
-   * Client-side 16:9 auto-crop & WebP compression engine
-   * Scales & crops image to 1200x675 (16:9) to fit blog cards perfectly.
-   */
-  const compressAndFitToCard = (
-    file: File,
-    targetWidth = 1200,
-    targetHeight = 675
-  ): Promise<{ blob: Blob; sizeKb: number }> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new Image();
-        img.onload = () => {
-          try {
-            const canvas = document.createElement('canvas');
-            canvas.width = targetWidth;
-            canvas.height = targetHeight;
-            const ctx = canvas.getContext('2d');
-            if (!ctx) {
-              return reject(new Error('HTML5 Canvas context is not supported in this browser.'));
-            }
-
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high';
-
-            // Calculate cover crop coordinates
-            const srcRatio = img.width / img.height;
-            const targetRatio = targetWidth / targetHeight;
-
-            let renderWidth = targetWidth;
-            let renderHeight = targetHeight;
-            let offsetX = 0;
-            let offsetY = 0;
-
-            if (srcRatio > targetRatio) {
-              // Image is wider than 16:9 -> crop horizontal sides evenly
-              renderHeight = targetHeight;
-              renderWidth = img.width * (targetHeight / img.height);
-              offsetX = (targetWidth - renderWidth) / 2;
-            } else {
-              // Image is taller than 16:9 -> crop top/bottom evenly
-              renderWidth = targetWidth;
-              renderHeight = img.height * (targetWidth / img.width);
-              offsetY = (targetHeight - renderHeight) / 2;
-            }
-
-            // Clean background fill
-            ctx.fillStyle = '#0F172A';
-            ctx.fillRect(0, 0, targetWidth, targetHeight);
-
-            // Draw image scaled and centered
-            ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
-
-            // Export as WebP
-            canvas.toBlob(
-              (blob) => {
-                if (!blob) {
-                  return reject(new Error('Failed to generate compressed image blob.'));
-                }
-                const sizeKb = Math.round(blob.size / 1024);
-                resolve({ blob, sizeKb });
-              },
-              'image/webp',
-              0.84
-            );
-          } catch (canvasErr: any) {
-            reject(canvasErr);
-          }
-        };
-        img.onerror = () => reject(new Error('Failed to decode image file.'));
-        img.src = event.target?.result as string;
-      };
-      reader.onerror = () => reject(new Error('Failed to read image file.'));
-      reader.readAsDataURL(file);
-    });
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,35 +45,61 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
     e.target.value = '';
     setError(null);
 
-    // Validate size (max 15MB source)
-    if (file.size > 15 * 1024 * 1024) {
-      setError('File size exceeds the 15MB limit.');
+    // Validate size (max 20MB source)
+    if (file.size > 20 * 1024 * 1024) {
+      setError('File size exceeds the 20MB limit.');
       return;
     }
 
     // Validate type
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
     if (!validTypes.includes(file.type)) {
       setError('Only JPG, PNG, and WebP images are allowed.');
       return;
     }
 
+    const cleanBase = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9.-]/g, '_');
+    setSourceFileName(cleanBase || 'featured_image');
+    setSourceOriginalKb(Math.round(file.size / 1024));
+
+    // Read file as Data URL to open directly in interactive crop modal
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result as string;
+      if (dataUrl) {
+        setCropImageSrc(dataUrl);
+        setIsCropModalOpen(true);
+      }
+    };
+    reader.onerror = () => setError('Failed to read image file.');
+    reader.readAsDataURL(file);
+  };
+
+  // Open cropper for existing image
+  const handleOpenCropperForExisting = () => {
+    if (!value) return;
+    setError(null);
+    setSourceFileName('recropped_featured_image');
+    setSourceOriginalKb(undefined);
+    setCropImageSrc(value);
+    setIsCropModalOpen(true);
+  };
+
+  // Callback when user confirms crop in modal
+  const handleApplyCroppedBlob = async (
+    blob: Blob,
+    meta: { width: number; height: number; sizeKb: number }
+  ) => {
     setIsUploading(true);
-    setUploadStats(null);
+    setError(null);
 
     try {
-      const originalKb = Math.round(file.size / 1024);
-      // Auto-compress & fit to exact 16:9 (1200x675)
-      const { blob: compressedBlob, sizeKb: compressedKb } = await compressAndFitToCard(file, 1200, 675);
-      setUploadStats({ originalKb, compressedKb });
-
-      const cleanBase = file.name.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9.-]/g, '_');
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}-${cleanBase}.webp`;
-      const compressedFile = new File([compressedBlob], fileName, { type: 'image/webp' });
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}-${sourceFileName}.webp`;
+      const compressedFile = new File([blob], fileName, { type: 'image/webp' });
 
       let publicUrl = '';
 
-      // 1. First attempt direct Supabase client upload
+      // 1. Direct Supabase Storage upload
       const { data: uploadData, error: uploadErr } = await supabase.storage
         .from('blog-images')
         .upload(fileName, compressedFile, {
@@ -165,10 +130,17 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
 
       if (publicUrl) {
         onChange(publicUrl);
+        setUploadStats({
+          originalKb: sourceOriginalKb,
+          compressedKb: meta.sizeKb,
+          width: meta.width,
+          height: meta.height,
+        });
       }
     } catch (err: any) {
       console.error('Featured image upload error:', err);
-      setError(err.message || 'Failed to upload image. Please try pasting the URL directly.');
+      setError(err.message || 'Failed to upload image. You can paste the URL directly.');
+      throw err;
     } finally {
       setIsUploading(false);
     }
@@ -177,11 +149,12 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="block text-xs font-bold text-text-main">
-          Featured Article Image
+        <label className="block text-xs font-bold text-text-main flex items-center gap-1.5">
+          <Crop className="w-3.5 h-3.5 text-primary" />
+          <span>Featured Article Image</span>
         </label>
         <span className="text-[10px] text-text-main/50 font-medium">
-          Auto-fits 16:9 Card (1200×675 px WebP)
+          Free Size Crop &amp; 16:9 Card Fit (WebP Optimized)
         </span>
       </div>
 
@@ -190,7 +163,10 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
         <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-success/10 border border-success/20 text-[11px] font-bold text-success">
           <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
           <span>
-            ✨ Auto-fitted to 16:9 (1200×675 px WebP) · {uploadStats.compressedKb} KB (Saved {Math.max(0, Math.round((1 - uploadStats.compressedKb / uploadStats.originalKb) * 100))}%)
+            ✨ Cropped &amp; Optimized ({uploadStats.width}×{uploadStats.height}px WebP) · {uploadStats.compressedKb} KB
+            {uploadStats.originalKb
+              ? ` (Saved ${Math.max(0, Math.round((1 - uploadStats.compressedKb / uploadStats.originalKb) * 100))}%)`
+              : ''}
           </span>
         </div>
       )}
@@ -209,14 +185,24 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
           <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider">
             16:9 Card Preview
           </div>
+
+          {/* Action Overlay */}
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={handleOpenCropperForExisting}
+              className="px-3 py-1.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-hover shadow-md transition-colors flex items-center gap-1.5 cursor-pointer"
+            >
+              <Crop className="w-3.5 h-3.5" />
+              <span>Crop / Adjust</span>
+            </button>
             <button
               type="button"
               onClick={handleButtonClick}
               className="px-3 py-1.5 rounded-xl bg-white text-text-main text-xs font-bold hover:bg-surface shadow-md transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5 text-primary" />
-              <span>Replace Image</span>
+              <span>Replace</span>
             </button>
             <button
               type="button"
@@ -237,11 +223,13 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
           className="border-2 border-dashed border-surface-darker hover:border-primary/60 rounded-2xl p-6 text-center cursor-pointer transition-all bg-surface/20 hover:bg-surface/40 flex flex-col items-center justify-center gap-2 group"
         >
           <div className="p-3 rounded-2xl bg-white border border-surface-darker group-hover:border-primary/40 shadow-2xs group-hover:scale-105 transition-all">
-            <ImageIcon className="w-6 h-6 text-primary" />
+            <Crop className="w-6 h-6 text-primary" />
           </div>
           <div className="space-y-0.5">
-            <p className="text-xs font-bold text-text-main">Click to upload &amp; auto-fit image</p>
-            <p className="text-[11px] text-text-main/50">Auto-converts to 1200×675 px (16:9) WebP</p>
+            <p className="text-xs font-bold text-text-main">Click to upload, crop &amp; fit image</p>
+            <p className="text-[11px] text-text-main/50">
+              Interactive Free Size, 16:9 Blog Card Fit, Zoom &amp; Rotate
+            </p>
           </div>
         </div>
       )}
@@ -250,16 +238,16 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp"
+        accept="image/jpeg,image/png,image/webp,image/avif"
         className="hidden"
         onChange={handleFileChange}
       />
 
-      {/* Upload Spinner */}
+      {/* Uploading indicator */}
       {isUploading && (
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-primary/10 border border-primary/20 text-xs font-bold text-primary">
           <Loader2 className="w-4 h-4 animate-spin shrink-0" />
-          <span>Uploading image to Supabase blog-images bucket...</span>
+          <span>Uploading cropped WebP image...</span>
         </div>
       )}
 
@@ -284,6 +272,19 @@ export function FeaturedImageUpload({ value, onChange }: FeaturedImageUploadProp
           className="w-full px-3 py-1.5 text-xs bg-surface/40 border border-surface-darker rounded-xl text-text-main focus:outline-none focus:border-primary"
         />
       </div>
+
+      {/* Interactive Cropping Modal */}
+      {cropImageSrc && (
+        <FeaturedImageCropModal
+          isOpen={isCropModalOpen}
+          imageSrc={cropImageSrc}
+          onClose={() => {
+            setIsCropModalOpen(false);
+            setCropImageSrc(null);
+          }}
+          onApplyCrop={handleApplyCroppedBlob}
+        />
+      )}
     </div>
   );
 }
