@@ -26,7 +26,8 @@ export type FormatTag =
   | 'QR'
   | 'SECURITY'
   | 'CALC'
-  | 'PRINT';
+  | 'PRINT'
+  | 'AUDIO';
 
 export interface ToolItem {
   id: string;
@@ -1836,6 +1837,35 @@ export const TOOLS_CATALOG: ToolItem[] = [
     ],
     featuredInNav: true,
     priorityOrder: 95,
+  },
+  {
+    id: 'voice-to-text-tool',
+    slug: '/tools/voice-to-text',
+    name: 'Voice to Text & Audio Transcriber (with Timestamps)',
+    category: 'text_speech',
+    categoryLabel: 'Text, Speech & Content',
+    formatTag: 'AUDIO',
+    shortDesc: 'Transcribe audio and voice into accurate text with millisecond timestamps using in-browser OpenAI Whisper AI. Download .SRT, .VTT subtitles and clean text.',
+    badge: 'FREE UNLIMITED',
+    examTags: [
+      'Voice to Text',
+      'Voice to Text with Timestamp',
+      'Audio to Text',
+      'Audio Transcriber',
+      'Speech to Text',
+      'MP3 to Text',
+      'SRT Subtitle Generator',
+      'Video Subtitles',
+      'Otter Alternative',
+      'Descript Alternative',
+      'Whisper AI Transcriber',
+      'Live Voice Dictation',
+      'Hindi Voice to Text',
+      'Tamil Voice to Text',
+      'Telugu Audio to Text',
+    ],
+    featuredInNav: true,
+    priorityOrder: 96,
   },
   {
     id: 'lorem-ipsum-generator-tool',

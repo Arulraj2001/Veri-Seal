@@ -110,26 +110,36 @@ const nextConfig = {
           },
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=()',
+            value: 'camera=(), microphone=(self)',
           },
           {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self';",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://adservice.google.com;",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com https://va.vercel-scripts.com https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://adservice.google.com;",
               "style-src 'self' 'unsafe-inline' fonts.googleapis.com;",
               "font-src 'self' fonts.gstatic.com data:;",
               "img-src 'self' data: blob: https: https://pagead2.googlesyndication.com;",
               "media-src 'self' blob: data: https:;",
               "connect-src 'self' https: http://127.0.0.1:7860 ws: wss: https://pagead2.googlesyndication.com;",
               "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com;",
-              "worker-src 'self' blob:;",
+              "worker-src 'self' blob: https://cdn.jsdelivr.net;",
               "frame-ancestors 'self';",
             ].join(' '),
           },
         ],
       },
     ];
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        sharp$: false,
+        'onnxruntime-node$': false,
+      };
+    }
+    return config;
   },
 };
 
