@@ -53,6 +53,15 @@ export function VoiceToTextEngine() {
   const [selectedModel, setSelectedModel] = React.useState<SttModelOption>(STT_MODELS[0]);
   const [selectedLanguage, setSelectedLanguage] = React.useState<string>('auto');
 
+  // Auto-switch to multilingual model if user selects a non-English language (Hindi, Tamil, Telugu, etc.)
+  const handleLanguageChange = (langCode: string) => {
+    setSelectedLanguage(langCode);
+    if (langCode !== 'en' && langCode !== 'auto' && !selectedModel.isMultilingual) {
+      const multilingualModel = STT_MODELS.find((m) => m.isMultilingual) || STT_MODELS[1];
+      setSelectedModel(multilingualModel);
+    }
+  };
+
   // File & Audio states
   const [audioFile, setAudioFile] = React.useState<File | null>(null);
   const [audioUrl, setAudioUrl] = React.useState<string | null>(null);
@@ -578,7 +587,7 @@ export function VoiceToTextEngine() {
             <div className="relative">
               <select
                 value={selectedLanguage}
-                onChange={(e) => setSelectedLanguage(e.target.value)}
+                onChange={(e) => handleLanguageChange(e.target.value)}
                 className="w-full appearance-none bg-[#161821] border border-[#262833] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-[#E6570B] transition-colors pr-8 font-medium cursor-pointer"
               >
                 {SUPPORTED_LANGUAGES.map((lang) => (

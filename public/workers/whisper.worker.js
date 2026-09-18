@@ -20,6 +20,7 @@ class WhisperPipelineSingleton {
         this.instance = await pipeline(this.task, this.model, {
           progress_callback,
           device: 'webgpu',
+          dtype: 'fp32',
         });
       } catch (gpuError) {
         console.warn('WebGPU acceleration not supported, falling back to WASM CPU:', gpuError);
@@ -52,17 +53,21 @@ self.addEventListener('message', async (event) => {
         }
       });
 
-      self.postMessage({ status: 'transcribing', message: 'Synthesizing timestamps and acoustic tokens...' });
+      const isEnglishOnly = typeof modelId === 'string' && modelId.endsWith('.en');
 
       const options = {
         return_timestamps: true,
         chunk_length_s: 30,
         stride_length_s: 5,
-        task: 'transcribe',
       };
 
-      if (language && language !== 'auto') {
-        options.language = language;
+      // Only pass task & language to multilingual models
+      // OpenAI English-only (.en) models lack multilingual vocabulary and throw an error if task/language is passed
+      if (!isEnglishOnly) {
+        options.task = 'transcribe';
+        if (language && language !== 'auto') {
+          options.language = language;
+        }
       }
 
       const output = await transcriber(pcm, options);
