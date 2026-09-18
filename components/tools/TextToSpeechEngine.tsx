@@ -28,6 +28,7 @@ import {
   Rewind,
   Music2,
   CheckCircle2,
+  Search,
 } from 'lucide-react';
 import {
   POPULAR_NEURAL_VOICES,
@@ -42,6 +43,7 @@ export function TextToSpeechEngine() {
   const [text, setText] = React.useState(SAMPLE_SCRIPTS[0].text);
   const [selectedNeuralVoice, setSelectedNeuralVoice] = React.useState<string>(POPULAR_NEURAL_VOICES[0].id);
   const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
+  const [voiceSearch, setVoiceSearch] = React.useState<string>('');
 
   // Situation / Tone Preset
   const [activePreset, setActivePreset] = React.useState<string | null>(null);
@@ -549,10 +551,18 @@ export function TextToSpeechEngine() {
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
-  // Filter voices by category
+  // Filter voices by category and live search query
   const filteredVoices = POPULAR_NEURAL_VOICES.filter((voice) => {
-    if (selectedCategory === 'All') return true;
-    return voice.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'All' || voice.category === selectedCategory;
+    if (!matchesCategory) return false;
+    if (!voiceSearch.trim()) return true;
+    const q = voiceSearch.toLowerCase().trim();
+    return (
+      voice.name.toLowerCase().includes(q) ||
+      voice.locale.toLowerCase().includes(q) ||
+      voice.gender.toLowerCase().includes(q) ||
+      voice.category.toLowerCase().includes(q)
+    );
   });
 
   const selectedVoiceObj = POPULAR_NEURAL_VOICES.find((v) => v.id === selectedNeuralVoice) || POPULAR_NEURAL_VOICES[0];
@@ -685,28 +695,51 @@ export function TextToSpeechEngine() {
 
       {/* Voice Selection Studio & Audition Carousel */}
       <div className="bg-[#12141A] border border-[#262833] rounded-2xl p-5 shadow-xl space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#262833] pb-3">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#262833] pb-3">
+          <div className="flex items-center gap-2 shrink-0">
             <Mic className="w-4 h-4 text-emerald-400" />
             <span className="font-semibold text-sm text-gray-100">Broadcast Neural Voices</span>
-            <span className="text-[11px] text-gray-500 font-mono">({POPULAR_NEURAL_VOICES.length} available)</span>
+            <span className="text-[11px] text-gray-500 font-mono">({filteredVoices.length} shown)</span>
           </div>
 
-          {/* Language / Region Filter Tabs */}
-          <div className="flex items-center gap-1 bg-[#0E0F14] p-1 rounded-xl border border-[#262833] text-xs">
-            {['All', 'English', 'Indian', 'European', 'Global'].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1 rounded-lg transition-all font-medium ${
-                  selectedCategory === cat
-                    ? 'bg-[#E6570B] text-white shadow-sm font-semibold'
-                    : 'text-gray-400 hover:text-white'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* Live Voice Search Bar */}
+            <div className="relative w-full sm:w-64">
+              <Search className="w-3.5 h-3.5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={voiceSearch}
+                onChange={(e) => setVoiceSearch(e.target.value)}
+                placeholder="Search voice, language (e.g. Hindi, Tamil, Guy)..."
+                className="w-full bg-[#0E0F14] border border-[#2E313D] rounded-xl pl-8 pr-7 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors"
+              />
+              {voiceSearch && (
+                <button
+                  type="button"
+                  onClick={() => setVoiceSearch('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 text-xs"
+                >
+                  &times;
+                </button>
+              )}
+            </div>
+
+            {/* Language / Region Filter Tabs */}
+            <div className="flex items-center gap-1 bg-[#0E0F14] p-1 rounded-xl border border-[#262833] text-xs">
+              {['All', 'English', 'Indian', 'European', 'Global'].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-2.5 py-1 rounded-lg transition-all font-medium ${
+                    selectedCategory === cat
+                      ? 'bg-[#E6570B] text-white shadow-sm font-semibold'
+                      : 'text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

@@ -33,20 +33,28 @@ export const POPULAR_NEURAL_VOICES: NeuralVoice[] = [
 
 export const SAMPLE_SCRIPTS = [
   {
-    title: 'Customer Support Welcome',
-    text: 'Hello and welcome to our customer support center. All our client operations execute with complete zero-trust privacy. How may we assist your team today?',
+    title: 'YouTube Shorts Hook',
+    text: 'Stop scrolling! Here are three psychological productivity secrets that high performers use daily to get ahead without burning out.',
   },
   {
-    title: 'Product Announcement',
-    text: 'We are thrilled to unveil our latest release featuring instant in-browser compression, zero latency execution, and full compliance with web standards.',
+    title: 'Hindi Voiceover (हिंदी)',
+    text: 'नमस्ते दोस्तों! स्वागत है आपका हमारे चैनल पर। आज के इस वीडियो में हम जानेंगे कि कैसे आप फ्री में स्टूडियो क्वालिटी आवाज़ बना सकते हैं।',
+  },
+  {
+    title: 'Tamil Tech Explainer (தமிழ்)',
+    text: 'வணக்கம் நண்பர்களே! இன்றைய தொழில்நுட்ப பதிவில், இணையத்தில் கிடைக்கும் சிறந்த இலவச கருவிகளை பற்றி விரிவாக பார்ப்போம்.',
+  },
+  {
+    title: 'Customer Support Welcome',
+    text: 'Hello and welcome to our customer support center. All our client operations execute with complete zero-trust privacy. How may we assist your team today?',
   },
   {
     title: 'Audiobook Narration',
     text: 'The evening mist settled quietly over the valley as the lone traveler reached the crossroads, looking up at the distant beacon glowing softly against the dusk.',
   },
   {
-    title: 'Educational Lecture',
-    text: 'Artificial intelligence transforms natural language processing through transformer architectures, enabling speech synthesis with unprecedented human-like inflections and natural pauses.',
+    title: 'Product Announcement',
+    text: 'We are thrilled to unveil our latest release featuring instant in-browser compression, zero latency execution, and full compliance with web standards.',
   },
 ];
 
