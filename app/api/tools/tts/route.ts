@@ -22,8 +22,68 @@ export async function GET() {
   });
 }
 
+async function synthesizeAudio(ssml: string, targetVoice: string): Promise<Buffer> {
+  let lastError: any = null;
+
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    let tts: MsEdgeTTS | null = null;
+    try {
+      tts = new MsEdgeTTS();
+      await tts.setMetadata(targetVoice, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
+
+      const buffer = await new Promise<Buffer>((resolve, reject) => {
+        const chunks: Buffer[] = [];
+        const currentTts = tts!;
+        // CRITICAL FIX: Use rawToStream because ssml already contains the full <speak> document
+        const { audioStream } = currentTts.rawToStream(ssml);
+
+        const timeoutId = setTimeout(() => {
+          try {
+            currentTts.close();
+          } catch {}
+          reject(new Error('Audio synthesis timed out after 25 seconds.'));
+        }, 25000);
+
+        audioStream.on('data', (chunk: Buffer) => {
+          chunks.push(chunk);
+        });
+
+        audioStream.on('end', () => {
+          clearTimeout(timeoutId);
+          try {
+            currentTts.close();
+          } catch {}
+          resolve(Buffer.concat(chunks));
+        });
+
+        audioStream.on('error', (err: any) => {
+          clearTimeout(timeoutId);
+          try {
+            currentTts.close();
+          } catch {}
+          reject(err);
+        });
+      });
+
+      return buffer;
+    } catch (err: any) {
+      lastError = err;
+      if (tts) {
+        try {
+          tts.close();
+        } catch {}
+      }
+      if (attempt < 2) {
+        // Brief pause before retry
+        await new Promise((r) => setTimeout(r, 400));
+      }
+    }
+  }
+
+  throw lastError || new Error('Failed to synthesize audio after retry.');
+}
+
 export async function POST(req: NextRequest) {
-  let tts: MsEdgeTTS | null = null;
   try {
     const body = await req.json();
     const { text, voice, rate = 1, pitch = 1, volume = 1 } = body;
@@ -75,48 +135,7 @@ export async function POST(req: NextRequest) {
     const escapedText = escapeXml(cleanText);
     const ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US"><voice name="${targetVoice}"><prosody rate="${ratePercent}" pitch="${pitchOffset}" volume="${volumePercent}">${escapedText}</prosody></voice></speak>`;
 
-    // Use 24kHz 96kbps for high-quality MP3 output
-    tts = new MsEdgeTTS();
-    await tts.setMetadata(targetVoice, OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
-
-    const audioBuffer = await new Promise<Buffer>((resolve, reject) => {
-      const chunks: Buffer[] = [];
-      const currentTts = tts!;
-      const { audioStream } = currentTts.toStream(ssml);
-
-      const timeoutId = setTimeout(() => {
-        try {
-          currentTts.close();
-        } catch {
-          // ignore
-        }
-        reject(new Error('Audio synthesis timed out after 25 seconds.'));
-      }, 25000);
-
-      audioStream.on('data', (chunk: Buffer) => {
-        chunks.push(chunk);
-      });
-
-      audioStream.on('end', () => {
-        clearTimeout(timeoutId);
-        try {
-          currentTts.close();
-        } catch {
-          // ignore
-        }
-        resolve(Buffer.concat(chunks));
-      });
-
-      audioStream.on('error', (err: any) => {
-        clearTimeout(timeoutId);
-        try {
-          currentTts.close();
-        } catch {
-          // ignore
-        }
-        reject(err);
-      });
-    });
+    const audioBuffer = await synthesizeAudio(ssml, targetVoice);
 
     return new NextResponse(new Uint8Array(audioBuffer), {
       status: 200,
@@ -129,13 +148,6 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (error: any) {
-    if (tts) {
-      try {
-        tts.close();
-      } catch {
-        // ignore
-      }
-    }
     console.error('[TTS API Error]:', error);
     return NextResponse.json(
       {

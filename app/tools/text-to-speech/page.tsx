@@ -121,12 +121,12 @@ const FAQS = [
   {
     question: 'How does this free text-to-speech studio work without an API key or paid subscription?',
     answer:
-      'Our studio combines edge neural voice synthesis with native W3C Web Speech protocols. High-bitrate 24kHz broadcast MP3 generation runs via dedicated server-side neural pipelines without imposing user paywalls, credit card requirements, or artificial token limits. In-browser live playback streams directly through HTML5 audio buffers for instant zero-latency previewing.',
+      'Our studio utilizes high-fidelity 24kHz broadcast neural speech pipelines. High-bitrate MP3 generation runs via dedicated server-side neural processors without imposing user paywalls, credit card requirements, or artificial monthly token limits. In-browser live playback streams directly through HTML5 audio buffers with instant zero-latency replay.',
   },
   {
     question: 'Can I download the synthesized speech as a high-quality MP3 audio file?',
     answer:
-      'Yes. Clicking "Download Studio MP3" immediately packages the synthesized narration into a broadcast-standard 24kHz 96kbps mono MP3 file (`kagazo-speech.mp3`). If you have already played the audio live, the download executes in 0 milliseconds straight from local memory without re-synthesizing.',
+      'Yes. Clicking "Download Studio MP3" immediately packages the synthesized narration into a broadcast-standard 24kHz 96kbps mono MP3 file. If you have already auditioned the audio live, the download executes in 0 milliseconds straight from local browser memory without re-calling the server.',
   },
   {
     question: 'Can I use the generated audio for YouTube videos, podcasts, and commercial projects?',
@@ -141,27 +141,27 @@ const FAQS = [
   {
     question: 'How does the "Smart Punctuation & Breath Enhancer" make AI speech sound human?',
     answer:
-      'Neural speech models derive vocal inflection, pitch rises, and respiratory breaks from punctuation. Our Smart Punctuation tool expands confusing abbreviations (e.g., "approx." to "approximately", "dept." to "department", "no." to "number"), inserts breathing commas after transitional discourse markers ("However,", "Therefore,", "Furthermore,"), converts isolated hyphens to em-dashes, and ensures solid sentence-ending punctuation.',
+      'Neural speech models derive vocal inflection, pitch curves, and respiratory breaks from punctuation. Our Smart Punctuation tool expands confusing abbreviations (e.g., "approx." to "approximately", "dept." to "department", "no." to "number"), inserts breathing commas after transitional discourse markers ("However,", "Therefore,", "Furthermore,"), and converts isolated hyphens to em-dashes for natural narrative breaks.',
   },
   {
     question: 'Which languages, accents, and neural voices are supported?',
     answer:
-      'Our curated Studio Neural library includes 20 premium voices spanning English (US Jenny, US Guy, US Aria, US Christopher, UK Sonia, UK Ryan, Indian English Neerja, Indian English Prabhat), Hindi (Swara, Madhur), Tamil (Pallavi, Valluvar), Telugu (Shruti), Spanish (Elvira), French (Denise), German (Katja), Japanese (Nanami), Mandarin Chinese (Xiaoxiao), Arabic (Zariyah), and Brazilian Portuguese (Francisca), plus complete access to all OS voices installed on your device.',
+      'Our curated Studio Neural library includes 20 premium voices spanning English (US Jenny, US Guy, US Aria, US Christopher, UK Sonia, UK Ryan, Indian English Neerja, Indian English Prabhat), Hindi (Swara, Madhur), Tamil (Pallavi, Valluvar), Telugu (Shruti), Spanish (Elvira), French (Denise), German (Katja), Japanese (Nanami), Mandarin Chinese (Xiaoxiao), Arabic (Zariyah), and Brazilian Portuguese (Francisca). You can audition samples for any voice with 1 click.',
   },
   {
     question: 'How does the live karaoke teleprompter follower work?',
     answer:
-      'When you switch to the "Live Karaoke Follower" view, our engine calculates word boundaries in real time as the audio streams. The active word being spoken glows in vibrant brand orange (`#E6570B`) with an automatic teleprompter auto-scroll container that keeps your current sentence perfectly centered in view—ideal for video recordings, reading comprehension, and pronunciation training.',
+      'When you switch to the "Live Karaoke Teleprompter" view, our engine calculates word boundaries in real time as the audio streams. The active word being spoken glows in vibrant brand orange (`#E6570B`) with an automatic teleprompter auto-scroll container that keeps your current sentence centered in view—ideal for video voiceovers and reading comprehension.',
   },
   {
-    question: 'Why do other online text-to-speech tools stop after 15 seconds in Google Chrome?',
+    question: 'How does Kagazo eliminate robotic speech interruptions?',
     answer:
-      'Chromium has a longstanding internal timer bug that silently pauses the `speechSynthesis` engine if an audio buffer runs longer than 15 seconds. Kagazo solves this through automated sentence segmentation (`parseSentenceChunks`) and a background keep-alive watchdog timer (`window.speechSynthesis.resume()` every 10 seconds), guaranteeing uninterrupted playback on scripts of any length.',
+      'Unlike simple browser speech engines that sound robotic and timeout after 15 seconds, Kagazo generates pure broadcast 24kHz neural audio files streamed via high-speed server pipelines, guaranteeing natural human prosody, zero speech timeouts, and full compatibility across all mobile and desktop devices.',
   },
   {
     question: 'Is my script, document, or audio data kept confidential?',
     answer:
-      'Yes. Offline device playback runs 100% locally on your machine with zero remote data transmission. When generating Studio Neural MP3 audio, your text is streamed directly into volatile server memory solely to synthesize the audio stream and is discarded immediately after delivery. We do not store transcripts, save audio files, or use your private scripts for model training.',
+      'Yes. Your script is streamed directly into volatile server memory solely to synthesize the audio stream and is discarded immediately after delivery. We do not store transcripts, save audio files on remote databases, or use your private scripts for model training.',
   },
   {
     question: 'How does Kagazo compare to paid AI voice subscription tools like ElevenLabs or Murf AI?',
