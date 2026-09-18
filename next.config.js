@@ -120,6 +120,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' fonts.googleapis.com;",
               "font-src 'self' fonts.gstatic.com data:;",
               "img-src 'self' data: blob: https: https://pagead2.googlesyndication.com;",
+              "media-src 'self' blob: data: https:;",
               "connect-src 'self' https: http://127.0.0.1:7860 ws: wss: https://pagead2.googlesyndication.com;",
               "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com;",
               "worker-src 'self' blob:;",

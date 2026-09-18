@@ -86,6 +86,7 @@ export function TextToSpeechEngine() {
   const activeWordRef = React.useRef<HTMLSpanElement>(null);
   const studioAudioRef = React.useRef<HTMLAudioElement | null>(null);
   const previewAudioRef = React.useRef<HTMLAudioElement | null>(null);
+  const previewBlobUrlRef = React.useRef<string | null>(null);
   const audioContextRef = React.useRef<AudioContext | null>(null);
 
   const textRef = React.useRef(text);
@@ -154,6 +155,10 @@ export function TextToSpeechEngine() {
       audio.src = '';
       previewAudio.pause();
       previewAudio.src = '';
+      if (previewBlobUrlRef.current) {
+        URL.revokeObjectURL(previewBlobUrlRef.current);
+        previewBlobUrlRef.current = null;
+      }
       if (audioContextRef.current) {
         audioContextRef.current.close().catch(() => {});
         audioContextRef.current = null;
@@ -236,9 +241,14 @@ export function TextToSpeechEngine() {
 
     // If currently paused, resume immediately
     if (isPaused && studioAudioRef.current) {
-      studioAudioRef.current.play();
-      setIsPlaying(true);
-      setIsPaused(false);
+      try {
+        const p = studioAudioRef.current.play();
+        if (p !== undefined) await p;
+        setIsPlaying(true);
+        setIsPaused(false);
+      } catch (err: any) {
+        if (err.name !== 'AbortError') console.error('Resume error:', err);
+      }
       return;
     }
 
@@ -250,9 +260,14 @@ export function TextToSpeechEngine() {
       studioAudioRef.current.currentTime = 0;
       studioAudioRef.current.volume = isMuted ? 0 : volume;
       studioAudioRef.current.playbackRate = playbackSpeed;
-      studioAudioRef.current.play();
-      setIsPlaying(true);
-      setIsPaused(false);
+      try {
+        const p = studioAudioRef.current.play();
+        if (p !== undefined) await p;
+        setIsPlaying(true);
+        setIsPaused(false);
+      } catch (err: any) {
+        if (err.name !== 'AbortError') console.error('Cached play error:', err);
+      }
       return;
     }
 
@@ -274,9 +289,16 @@ export function TextToSpeechEngine() {
         audio.src = newUrl;
         audio.volume = isMuted ? 0 : volume;
         audio.playbackRate = playbackSpeed;
-        await audio.play();
-        setIsPlaying(true);
-        setIsPaused(false);
+        try {
+          const p = audio.play();
+          if (p !== undefined) await p;
+          setIsPlaying(true);
+          setIsPaused(false);
+        } catch (playErr: any) {
+          if (playErr.name !== 'AbortError') {
+            console.error('Studio audio.play() error:', playErr);
+          }
+        }
       }
     } catch (err: any) {
       console.error('Studio TTS fetch error:', err);
@@ -384,13 +406,27 @@ export function TextToSpeechEngine() {
 
     try {
       const blob = await fetchStudioAudio(voice.sampleText, voice.id, 1, 1, 1);
+      if (previewBlobUrlRef.current) {
+        URL.revokeObjectURL(previewBlobUrlRef.current);
+        previewBlobUrlRef.current = null;
+      }
       const url = URL.createObjectURL(blob);
+      previewBlobUrlRef.current = url;
       if (previewAudioRef.current) {
         previewAudioRef.current.src = url;
-        await previewAudioRef.current.play();
+        try {
+          const p = previewAudioRef.current.play();
+          if (p !== undefined) await p;
+        } catch (playErr: any) {
+          if (playErr.name !== 'AbortError') {
+            console.error('Preview play error:', playErr);
+          }
+        }
       }
-    } catch (err) {
-      console.error('Preview error:', err);
+    } catch (err: any) {
+      if (err.name !== 'AbortError') {
+        console.error('Preview error:', err);
+      }
       setPreviewingVoiceId(null);
     } finally {
       setIsLoadingPreview(false);
