@@ -984,8 +984,8 @@ def locate_signature_targets(doc: fitz.Document, is_aadhaar: bool = False) -> li
     page0 = doc[0]
     pw, ph = page0.rect.width, page0.rect.height
     if is_aadhaar:
-        # Bottom-left quadrant of Aadhaar letter
-        targets.append((0, fitz.Rect(55, ph * 0.51, 235, ph * 0.51 + 65)))
+        # Bottom-left quadrant of Aadhaar letter (safely left of middle QR code at x ≈ 196)
+        targets.append((0, fitz.Rect(80, ph * 0.53, 185, ph * 0.53 + 55)))
     else:
         # Standard bottom-right of certificate (safely inside borders)
         targets.append((0, fitz.Rect(pw - 200, ph - 95, min(pw - 55, 540), ph - 35)))
@@ -993,7 +993,7 @@ def locate_signature_targets(doc: fitz.Document, is_aadhaar: bool = False) -> li
     return targets
 
 
-def format_signature_details(signer_name: str, date_str: str) -> list[str]:
+def format_signature_details(signer_name: str, date_str: str, max_chars: int = 33) -> list[str]:
     """
     Format signer name and timestamp into compact lines matching Adobe Acrobat's
     exact visual layout on Indian government documents (Image 1).
@@ -1006,7 +1006,7 @@ def format_signature_details(signer_name: str, date_str: str) -> list[str]:
     cur_line: list[str] = []
     cur_len = 0
     for w in words:
-        if cur_len + len(w) + (1 if cur_line else 0) <= 33:
+        if cur_len + len(w) + (1 if cur_line else 0) <= max_chars:
             cur_line.append(w)
             cur_len += len(w) + (1 if cur_len > 0 else 0)
         else:
@@ -1072,38 +1072,68 @@ def stage4_add_stamp(
                 continue
             page = doc[page_idx]
 
-            bx = rect.x0
-            by = rect.y0
-
-            # Ensure stamp box stays strictly within certificate margins
-            # Outer border on A4 certificates is typically at x ≈ 550-560 pt.
-            # Keep a safety buffer from the right page margin to avoid erasing border lines.
             pw = page.rect.width
-            max_x = min(pw - 55.0, 540.0) if pw >= 500 else pw - 40.0
 
-            # Authentic Adobe stamp width is ~135 pt.
-            # Never blindly use raw widget width (which can be 230pt+ from government portals)
-            bw = min(max(rect.width, 135.0), 160.0)
-            if bx + bw > max_x:
-                bw = max_x - bx
-            if bw < 130.0 and max_x - 130.0 >= 30.0:
-                bx = max_x - 130.0
-                bw = 130.0
+            if is_aadhaar:
+                # UIDAI e-Aadhaar: Dynamically locate middle secure QR code to prevent ANY overlap
+                qr_left = 196.0
+                try:
+                    for img in page.get_image_info():
+                        bbox = img.get("bbox", ())
+                        if len(bbox) == 4 and 160 <= bbox[0] <= 240 and 380 <= bbox[1] <= 550:
+                            qr_left = min(qr_left, bbox[0])
+                except Exception:
+                    pass
 
-            bh = max(min(rect.height, 70.0), 60.0)
+                # Keep safe clearance before the QR code (QR starts at x ≈ 196 pt)
+                max_x = min(qr_left - 4.0, 192.0)
+                bx = max(min(rect.x0, 85.0), 75.0)
+                by = rect.y0 if rect.y0 > 300 else 421.0
+                bw = min(max(rect.width, 95.0), max_x - bx)
+                bh = max(min(rect.height, 70.0), 60.0)
 
-            # 1. Cleanly clear the original unverified appearance strictly within safe bounds
-            # Covers the yellow '?' and old "Signature Not Verified" text without touching outer borders
-            page.draw_rect(fitz.Rect(bx, by, bx + bw, by + bh), color=None, fill=(1, 1, 1), overlay=True)
+                # Cleanly clear ONLY within safe bounds (never touches the QR code)
+                page.draw_rect(fitz.Rect(bx - 2, by, max_x, by + bh), color=None, fill=(1, 1, 1), overlay=True)
+
+                check_p1 = fitz.Point(bx + 20.5, by + 26.5)
+                check_p2 = fitz.Point(bx + 32.0, by + 38.5)
+                check_p3 = fitz.Point(bx + 54.5, by + 7.5)
+                header_font_size = 12.0
+                detail_font_size = 6.5
+                detail_line_pitch = 7.5
+                max_chars = 26
+            else:
+                # State e-Districts (TN, AP/TS MeeSeva, KA Nadakacheri, Kerala, etc.)
+                bx = rect.x0
+                by = rect.y0
+
+                # Outer border on A4 certificates is typically at x ≈ 550-560 pt.
+                # Keep a safety buffer from the right page margin to avoid erasing border lines.
+                max_x = min(pw - 55.0, 540.0) if pw >= 500 else pw - 40.0
+                bw = min(max(rect.width, 135.0), 160.0)
+                if bx + bw > max_x:
+                    bw = max_x - bx
+                if bw < 130.0 and max_x - 130.0 >= 30.0:
+                    bx = max_x - 130.0
+                    bw = 130.0
+
+                bh = max(min(rect.height, 70.0), 60.0)
+
+                # 1. Cleanly clear the original unverified appearance strictly within safe bounds
+                # Covers the yellow '?' and old "Signature Not Verified" text without touching outer borders
+                page.draw_rect(fitz.Rect(bx, by, bx + bw, by + bh), color=None, fill=(1, 1, 1), overlay=True)
+
+                check_p1 = fitz.Point(bx + 24.5, by + 28.5)
+                check_p2 = fitz.Point(bx + 38.0, by + 42.5)
+                check_p3 = fitz.Point(bx + 62.5, by + 7.5)
+                header_font_size = 12.5
+                detail_font_size = 6.8
+                detail_line_pitch = 7.8
+                max_chars = 33
 
             if verification_status == VerificationStatus.VALID or len(sig_infos) > 0 or is_aadhaar:
                 green_color = (0.04, 0.67, 0.25)  # Vivid Adobe Green #0AAC41
                 black_color = (0.0, 0.0, 0.0)
-
-                # Exact Adobe Acrobat calibrated 3D Green Checkmark coordinates (matching Image 1)
-                check_p1 = fitz.Point(bx + 24.5, by + 28.5)
-                check_p2 = fitz.Point(bx + 38.0, by + 42.5)
-                check_p3 = fitz.Point(bx + 62.5, by + 7.5)
 
                 # Layer 1: Solid black 3D drop shadow (sharp miter joint, 1.2pt offset)
                 shadow_offset = fitz.Point(1.2, 1.2)
@@ -1126,29 +1156,29 @@ def stage4_add_stamp(
                     overlay=True,
                 )
 
-                # Layer 3: Header Text 'Signature valid' in Times-Roman Serif (Solid Black, 12.5pt)
+                # Layer 3: Header Text 'Signature valid' in Times-Roman Serif (Solid Black)
                 page.insert_text(
                     fitz.Point(bx, by + 11.5),
                     "Signature valid",
                     fontname="tiro",  # Times-Roman
-                    fontsize=12.5,
+                    fontsize=header_font_size,
                     color=black_color,
                     overlay=True,
                 )
 
-                # Layer 4: Detail lines in Helvetica (Solid Black, 6.8pt, 7.8pt pitch) rendered over checkmark
-                detail_lines = format_signature_details(signer, date_str)
-                curr_y = by + 21.5
+                # Layer 4: Detail lines in Helvetica rendered over checkmark
+                detail_lines = format_signature_details(signer, date_str, max_chars=max_chars)
+                curr_y = by + 21.0
                 for line in detail_lines:
                     page.insert_text(
                         fitz.Point(bx, curr_y),
                         line,
                         fontname="helv",
-                        fontsize=6.8,
+                        fontsize=detail_font_size,
                         color=black_color,
                         overlay=True,
                     )
-                    curr_y += 7.8
+                    curr_y += detail_line_pitch
 
             elif verification_status == VerificationStatus.INVALID:
                 red_color = (0.863, 0.149, 0.149)  # #DC2626
