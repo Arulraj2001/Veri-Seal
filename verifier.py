@@ -963,11 +963,13 @@ def locate_signature_targets(doc: fitz.Document, is_aadhaar: bool = False) -> li
             hits = page.search_for(phrase)
             if hits:
                 for hit in hits:
-                    # Encompass the icon and multiline text
+                    # Encompass the icon and multiline text (safely within page margins)
+                    pw = page.rect.width
+                    max_x = min(pw - 55.0, 540.0) if pw >= 500 else pw - 40.0
                     box = fitz.Rect(
                         hit.x0 - 4,
                         hit.y0 - 22,
-                        max(hit.x1 + 40, hit.x0 + 175),
+                        min(max(hit.x1 + 40, hit.x0 + 155), max_x),
                         hit.y0 + 48,
                     )
                     targets.append((page_idx, box))
@@ -985,8 +987,8 @@ def locate_signature_targets(doc: fitz.Document, is_aadhaar: bool = False) -> li
         # Bottom-left quadrant of Aadhaar letter
         targets.append((0, fitz.Rect(55, ph * 0.51, 235, ph * 0.51 + 65)))
     else:
-        # Standard bottom-right of certificate
-        targets.append((0, fitz.Rect(pw - 215, ph - 95, pw - 25, ph - 35)))
+        # Standard bottom-right of certificate (safely inside borders)
+        targets.append((0, fitz.Rect(pw - 200, ph - 95, min(pw - 55, 540), ph - 35)))
 
     return targets
 
@@ -1072,11 +1074,26 @@ def stage4_add_stamp(
 
             bx = rect.x0
             by = rect.y0
-            bw = max(rect.width, 155)
-            bh = max(rect.height, 75)
 
-            # 1. Cleanly clear the original unverified appearance
-            # Covers the yellow '?' and old "Signature Not Verified" text
+            # Ensure stamp box stays strictly within certificate margins
+            # Outer border on A4 certificates is typically at x ≈ 550-560 pt.
+            # Keep a safety buffer from the right page margin to avoid erasing border lines.
+            pw = page.rect.width
+            max_x = min(pw - 55.0, 540.0) if pw >= 500 else pw - 40.0
+
+            # Authentic Adobe stamp width is ~135 pt.
+            # Never blindly use raw widget width (which can be 230pt+ from government portals)
+            bw = min(max(rect.width, 135.0), 160.0)
+            if bx + bw > max_x:
+                bw = max_x - bx
+            if bw < 130.0 and max_x - 130.0 >= 30.0:
+                bx = max_x - 130.0
+                bw = 130.0
+
+            bh = max(min(rect.height, 70.0), 60.0)
+
+            # 1. Cleanly clear the original unverified appearance strictly within safe bounds
+            # Covers the yellow '?' and old "Signature Not Verified" text without touching outer borders
             page.draw_rect(fitz.Rect(bx, by, bx + bw, by + bh), color=None, fill=(1, 1, 1), overlay=True)
 
             if verification_status == VerificationStatus.VALID or len(sig_infos) > 0 or is_aadhaar:
