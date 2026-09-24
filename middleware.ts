@@ -14,7 +14,27 @@ export default auth(async (req) => {
     }
   }
 
-  // 2. Payment gate on /api/verify
+  // 2. Decision Engines Route Protection (Home Cost, Vehicle OS, Business OS)
+  if (
+    pathname.startsWith('/home-cost') ||
+    pathname.startsWith('/vehicle-os') ||
+    pathname.startsWith('/business-os')
+  ) {
+    try {
+      const settingsRes = await fetch(new URL('/api/settings', req.nextUrl.origin));
+      if (settingsRes.ok) {
+        const settings = await settingsRes.json();
+        if (settings.hide_decision_engines) {
+          return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+        }
+      }
+    } catch {
+      // Fallback: redirect to home
+      return NextResponse.redirect(new URL('/', req.nextUrl.origin));
+    }
+  }
+
+  // 3. Payment gate on /api/verify
   if (pathname === '/api/verify') {
     try {
       const settingsRes = await fetch(new URL('/api/settings', req.nextUrl.origin));

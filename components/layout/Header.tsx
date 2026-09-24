@@ -79,12 +79,24 @@ export function Header() {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [toolsMenuOpen, setToolsMenuOpen] = React.useState(false);
+  const [hideDecisionEngines, setHideDecisionEngines] = React.useState<boolean>(true);
   const toolsRef = React.useRef<HTMLDivElement>(null);
   const { t, language, toggleLanguage } = useLanguage();
 
   const user = session?.user;
   const userRole = (user as { role?: string })?.role || 'user';
   const userPlan = (user as { plan?: string })?.plan || 'free';
+
+  React.useEffect(() => {
+    fetch('/api/settings')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && typeof data.hide_decision_engines === 'boolean') {
+          setHideDecisionEngines(data.hide_decision_engines);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -112,9 +124,13 @@ export function Header() {
   const navLinks = [
     { label: t.nav.home, href: '/#hero' },
     { label: t.nav.freeTools, href: '/tools' },
-    { label: t.nav.homeCost, href: '/home-cost' },
-    { label: t.nav.businessOs, href: '/business-os' },
-    { label: 'Vehicle OS', href: '/vehicle-os' },
+    ...(!hideDecisionEngines
+      ? [
+          { label: t.nav.homeCost, href: '/home-cost' },
+          { label: t.nav.businessOs, href: '/business-os' },
+          { label: 'Vehicle OS', href: '/vehicle-os' },
+        ]
+      : []),
     { label: t.nav.documents, href: '/#supported-docs' },
     { label: t.nav.security, href: '/#trust-section' },
     { label: t.nav.faq, href: '/#faq-section' },
@@ -472,51 +488,58 @@ export function Header() {
 
                   {/* Bottom Footer Bar */}
                   <div className="col-span-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                    <div className="flex items-center gap-2">
-                      <span className="font-extrabold text-emerald-700 flex items-center gap-1">
-                        <Zap className="w-3.5 h-3.5" />
-                        <span>Home Cost:</span>
-                      </span>
-                      <Link
-                        href="/home-cost"
-                        onClick={() => setToolsMenuOpen(false)}
-                        className="text-slate-600 hover:text-emerald-700 font-semibold underline"
-                      >
-                        Digital Twin
-                      </Link>
-                      <span className="text-slate-300">•</span>
-                      <span className="font-extrabold text-indigo-700 flex items-center gap-1">
-                        <Briefcase className="w-3.5 h-3.5" />
-                        <span>Business OS:</span>
-                      </span>
-                      <Link
-                        href="/business-os"
-                        onClick={() => setToolsMenuOpen(false)}
-                        className="text-slate-600 hover:text-indigo-700 font-semibold underline"
-                      >
-                        Profit &amp; Cash Flow
-                      </Link>
-                      <span className="text-slate-300">•</span>
-                      <Link
-                        href="/business-os/product-pricing-calculator"
-                        onClick={() => setToolsMenuOpen(false)}
-                        className="text-slate-600 hover:text-indigo-700 font-semibold underline"
-                      >
-                        Pricing Sizer
-                      </Link>
-                      <span className="text-slate-300">•</span>
-                      <span className="font-extrabold text-amber-700 flex items-center gap-1">
-                        <Car className="w-3.5 h-3.5" />
-                        <span>Vehicle OS:</span>
-                      </span>
-                      <Link
-                        href="/vehicle-os"
-                        onClick={() => setToolsMenuOpen(false)}
-                        className="text-slate-600 hover:text-amber-700 font-semibold underline"
-                      >
-                        Car &amp; Bike Decisions
-                      </Link>
-                    </div>
+                    {!hideDecisionEngines ? (
+                      <div className="flex items-center gap-2">
+                        <span className="font-extrabold text-emerald-700 flex items-center gap-1">
+                          <Zap className="w-3.5 h-3.5" />
+                          <span>Home Cost:</span>
+                        </span>
+                        <Link
+                          href="/home-cost"
+                          onClick={() => setToolsMenuOpen(false)}
+                          className="text-slate-600 hover:text-emerald-700 font-semibold underline"
+                        >
+                          Digital Twin
+                        </Link>
+                        <span className="text-slate-300">•</span>
+                        <span className="font-extrabold text-indigo-700 flex items-center gap-1">
+                          <Briefcase className="w-3.5 h-3.5" />
+                          <span>Business OS:</span>
+                        </span>
+                        <Link
+                          href="/business-os"
+                          onClick={() => setToolsMenuOpen(false)}
+                          className="text-slate-600 hover:text-indigo-700 font-semibold underline"
+                        >
+                          Profit &amp; Cash Flow
+                        </Link>
+                        <span className="text-slate-300">•</span>
+                        <Link
+                          href="/business-os/product-pricing-calculator"
+                          onClick={() => setToolsMenuOpen(false)}
+                          className="text-slate-600 hover:text-indigo-700 font-semibold underline"
+                        >
+                          Pricing Sizer
+                        </Link>
+                        <span className="text-slate-300">•</span>
+                        <span className="font-extrabold text-amber-700 flex items-center gap-1">
+                          <Car className="w-3.5 h-3.5" />
+                          <span>Vehicle OS:</span>
+                        </span>
+                        <Link
+                          href="/vehicle-os"
+                          onClick={() => setToolsMenuOpen(false)}
+                          className="text-slate-600 hover:text-amber-700 font-semibold underline"
+                        >
+                          Car &amp; Bike Decisions
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 text-text-main/60 font-medium">
+                        <Sparkles className="w-3.5 h-3.5 text-primary" />
+                        <span>57+ Sovereign Document &amp; Exam Compliance Utilities</span>
+                      </div>
+                    )}
                     <Link
                       href="/tools"
                       onClick={() => setToolsMenuOpen(false)}
@@ -530,29 +553,34 @@ export function Header() {
             </AnimatePresence>
           </div>
 
-          {/* Home Cost & Savings Direct Link */}
-          <Link
-            href="/home-cost"
-            className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-emerald-700 hover:bg-emerald-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
-          >
-            {t.nav.homeCost}
-          </Link>
+          {/* Decision Engines Direct Links (Conditionally Visible) */}
+          {!hideDecisionEngines && (
+            <>
+              {/* Home Cost & Savings Direct Link */}
+              <Link
+                href="/home-cost"
+                className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-emerald-700 hover:bg-emerald-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
+              >
+                {t.nav.homeCost}
+              </Link>
 
-          {/* Business Profit OS Direct Link */}
-          <Link
-            href="/business-os"
-            className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-indigo-700 hover:bg-indigo-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
-          >
-            {t.nav.businessOs}
-          </Link>
+              {/* Business Profit OS Direct Link */}
+              <Link
+                href="/business-os"
+                className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-indigo-700 hover:bg-indigo-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
+              >
+                {t.nav.businessOs}
+              </Link>
 
-          {/* Vehicle Decision OS Direct Link */}
-          <Link
-            href="/vehicle-os"
-            className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-amber-700 hover:bg-amber-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
-          >
-            Vehicle OS
-          </Link>
+              {/* Vehicle Decision OS Direct Link */}
+              <Link
+                href="/vehicle-os"
+                className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-amber-700 hover:bg-amber-50/80 rounded-full transition-colors select-none shrink-0 whitespace-nowrap"
+              >
+                Vehicle OS
+              </Link>
+            </>
+          )}
 
           {/* Documents Section Link */}
           <Link

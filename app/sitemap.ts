@@ -3,6 +3,7 @@ import { getPublishedBlogPosts } from '@/lib/blog-store';
 import { getPublishedSeoPages } from '@/lib/seo-store';
 import { supabaseAdmin } from '@/lib/supabase';
 import { SITE_URL } from '@/lib/constants';
+import { getMergedSettings } from '@/lib/settings-store';
 
 export const revalidate = 86400; // 24 hours daily revalidation
 
@@ -1274,5 +1275,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
-  return [...staticRoutes, ...seoRoutes, ...blogRoutes];
+  const settings = await getMergedSettings();
+  const allRoutes = [...staticRoutes, ...seoRoutes, ...blogRoutes];
+
+  if (settings.hide_decision_engines) {
+    return allRoutes.filter(
+      (r) =>
+        !r.url.includes('/home-cost') &&
+        !r.url.includes('/vehicle-os') &&
+        !r.url.includes('/business-os')
+    );
+  }
+
+  return allRoutes;
 }

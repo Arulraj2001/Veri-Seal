@@ -366,6 +366,7 @@ export default function AdminSettingsPage() {
                   adsense_enabled: settings.adsense_enabled,
                   adsense_publisher_id: settings.adsense_publisher_id,
                   language_tamil_enabled: settings.language_tamil_enabled,
+                  hide_decision_engines: settings.hide_decision_engines,
                   api_access_enabled: settings.api_access_enabled,
                   free_daily_limit: settings.free_daily_limit,
                 })
@@ -404,6 +405,33 @@ export default function AdminSettingsPage() {
                 value={settings.adsense_publisher_id || ''}
                 onChange={(e) => setSettings({ ...settings, adsense_publisher_id: e.target.value })}
                 className="w-full px-3 py-2 bg-surface/50 border border-surface-darker rounded-xl text-text-main font-mono"
+              />
+            </div>
+
+            {/* Hide Decision Engines Master Toggle */}
+            <div className="flex items-center justify-between p-3.5 bg-surface/40 rounded-2xl border border-surface-darker">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-text-main">Hide Decision Engines (Home OS, Business OS, Vehicle OS)</span>
+                  <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                    settings.hide_decision_engines === 'true'
+                      ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                      : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                  }`}>
+                    {settings.hide_decision_engines === 'true' ? 'Hidden from Site' : 'Visible on Site'}
+                  </span>
+                </div>
+                <div className="text-[11px] text-text-main/60 mt-0.5">
+                  When ON, /home-cost, /business-os, and /vehicle-os are completely hidden from navbar, home showcase, footer, and blocked with automatic redirect.
+                </div>
+              </div>
+              <input
+                type="checkbox"
+                checked={settings.hide_decision_engines === 'true'}
+                onChange={(e) =>
+                  setSettings({ ...settings, hide_decision_engines: e.target.checked ? 'true' : 'false' })
+                }
+                className="w-5 h-5 rounded text-primary cursor-pointer"
               />
             </div>
 

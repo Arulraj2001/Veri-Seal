@@ -14,11 +14,12 @@ import { ApiOfferingBanner } from '@/components/home/ApiOfferingBanner';
 import { OstruneAgencyBanner } from '@/components/home/OstruneAgencyBanner';
 import { FaqSection } from '@/components/home/FaqSection';
 import { SITE_URL } from '@/lib/constants';
+import { getMergedSettings } from '@/lib/settings-store';
 
 export const metadata: Metadata = {
   title: "Kagazo — India's Sovereign Document, Exam Compliance & Citizen Tool Suite",
   description:
-    'Instantly fix government PDF digital signatures (green checkmark), resize exam photos for UPSC, TNPSC & SSC, create 5-in-1 A4 ID gang sheets, mask Aadhaar, and calculate home construction costs. 100% free, in-browser RAM privacy.',
+    'Instantly fix government PDF digital signatures (green checkmark), resize exam photos for UPSC, TNPSC & SSC, create 5-in-1 A4 ID gang sheets, mask Aadhaar, and compress PDFs. 100% free, in-browser RAM privacy.',
   keywords: [
     'verify government pdf signature',
     'fix yellow question mark aadhaar pdf',
@@ -29,7 +30,6 @@ export const metadata: Metadata = {
     'aadhaar front back merge pdf',
     'a4 multi id card maker epson',
     'pvc id card maker',
-    'home construction cost calculator chennai',
     'free ats resume builder india',
     'digital signature verify india',
     'tn esevai certificate signature verify',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Kagazo — India's Sovereign Document, Exam Compliance & Citizen Tool Suite",
     description:
-      'Instantly fix PDF signatures, format UPSC/TNPSC exam photos, create A4 gang sheets, and calculate home building costs in browser RAM.',
+      'Instantly fix PDF signatures, format UPSC/TNPSC exam photos, create A4 gang sheets, and compress PDFs in browser RAM.',
     images: [
       `${SITE_URL}/api/og?title=${encodeURIComponent("Kagazo — India's Sovereign Document & Exam Suite")}&subtitle=${encodeURIComponent('Verify Signatures · 57 Free Tools · 100% Client-Side RAM')}&type=home`,
     ],
@@ -66,7 +66,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const settings = await getMergedSettings();
+  const hideDecisionEngines = settings.hide_decision_engines;
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -116,8 +119,9 @@ export default function HomePage() {
           bestRating: '5',
           worstRating: '1',
         },
-        description:
-          '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and construction calculators.',
+        description: hideDecisionEngines
+          ? '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and PDF tools.'
+          : '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and construction calculators.',
       },
       {
         '@type': 'FAQPage',
@@ -169,7 +173,7 @@ export default function HomePage() {
       />
 
       {/* 1. Hero Section (H1, Command Search, Hot-Pills, Live Counter) */}
-      <HeroSection />
+      <HeroSection hideDecisionEngines={hideDecisionEngines} />
 
       {/* 2. Real-time Stats Bar */}
       <StatsBar />
@@ -188,8 +192,8 @@ export default function HomePage() {
       {/* 6. Curated 57+ Sovereign Tools Matrix (Exam Suite, KYC Privacy, CSC Print Lab, PDF Tools) */}
       <ToolsMatrix />
 
-      {/* 7. Flagship Citizen Decision Engines (Home Cost OS, Vehicle OS, Business Profit OS) */}
-      <DecisionEnginesShowcase />
+      {/* 7. Flagship Citizen Decision Engines (Conditionally rendered when not hidden) */}
+      {!hideDecisionEngines && <DecisionEnginesShowcase />}
 
       {/* 8. Sovereign Trust & RCAI Security Cards */}
       <TrustSection />
@@ -204,7 +208,7 @@ export default function HomePage() {
       <OstruneAgencyBanner />
 
       {/* 12. FAQ Accordion Section */}
-      <FaqSection />
+      <FaqSection hideDecisionEngines={hideDecisionEngines} />
     </div>
   );
 }

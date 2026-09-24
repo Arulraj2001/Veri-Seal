@@ -16,6 +16,7 @@ export async function GET() {
       verification_counter: 421847,
       language_tamil_enabled: true,
       free_daily_limit: 3,
+      hide_decision_engines: true,
       pro_price: 199,
       business_price: 2499,
       upi_id: 'Kagazo.pay@icici',

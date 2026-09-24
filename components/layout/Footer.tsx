@@ -21,6 +21,7 @@ export function Footer() {
   const pathname = usePathname();
   const [contactEmail, setContactEmail] = React.useState('support@kagazo.in');
   const [whatsappNumber, setWhatsappNumber] = React.useState('+919876543210');
+  const [hideDecisionEngines, setHideDecisionEngines] = React.useState<boolean>(true);
   const [copied, setCopied] = React.useState(false);
 
   React.useEffect(() => {
@@ -32,6 +33,9 @@ export function Footer() {
         }
         if (data?.whatsapp_number) {
           setWhatsappNumber(data.whatsapp_number);
+        }
+        if (typeof data?.hide_decision_engines === 'boolean') {
+          setHideDecisionEngines(data.hide_decision_engines);
         }
       })
       .catch(() => {});
@@ -307,30 +311,34 @@ export function Footer() {
                   GSTIN Verifier ★
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/home-cost"
-                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
-                >
-                  Home Cost &amp; Build OS
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/business-os"
-                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
-                >
-                  Business Profit OS
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/vehicle-os"
-                  className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
-                >
-                  Vehicle Decision OS
-                </Link>
-              </li>
+              {!hideDecisionEngines && (
+                <>
+                  <li>
+                    <Link
+                      href="/home-cost"
+                      className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
+                    >
+                      Home Cost &amp; Build OS
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/business-os"
+                      className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
+                    >
+                      Business Profit OS
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/vehicle-os"
+                      className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
+                    >
+                      Vehicle Decision OS
+                    </Link>
+                  </li>
+                </>
+              )}
               <li>
                 <Link
                   href="/tools/ifsc-code-finder"

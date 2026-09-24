@@ -68,6 +68,7 @@ export interface PublicSettings {
   verification_counter: number;
   language_tamil_enabled: boolean;
   free_daily_limit: number;
+  hide_decision_engines?: boolean;
   pro_price?: number;
   business_price?: number;
   upi_id?: string;
@@ -280,6 +281,7 @@ export async function fetchPublicSettings(): Promise<PublicSettings> {
     verification_counter: 421847,
     language_tamil_enabled: true,
     free_daily_limit: 3,
+    hide_decision_engines: true,
     pro_price: 199,
     business_price: 2499,
     upi_id: 'kagazo.pay@icici',

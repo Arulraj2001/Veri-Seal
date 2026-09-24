@@ -54,7 +54,7 @@ const FAQ_EN: FaqItemData[] = [
   {
     question: 'Does Kagazo work on mobile phones and tablets?',
     answer:
-      'Yes. Kagazo is designed mobile-first and works seamlessly on Android, iOS, Windows, Mac, and Chromebook browsers. You do not need to install any app or plugin. Simply open kagazo.in on your mobile browser and access all 56+ tools instantly.',
+      'Yes. Kagazo is designed mobile-first and works seamlessly on Android, iOS, Windows, Mac, and Chromebook browsers. You do not need to install any app or plugin. Simply open kagazo.in on your mobile browser and access all 57+ tools instantly.',
   },
 ];
 
@@ -101,9 +101,20 @@ const FAQ_TA: FaqItemData[] = [
   },
 ];
 
-export function FaqSection() {
+interface FaqSectionProps {
+  hideDecisionEngines?: boolean;
+}
+
+export function FaqSection({ hideDecisionEngines = true }: FaqSectionProps) {
   const { language } = useLanguage();
-  const faqList = language === 'ta' ? FAQ_TA : FAQ_EN;
+  const rawList = language === 'ta' ? FAQ_TA : FAQ_EN;
+  const faqList = hideDecisionEngines
+    ? rawList.filter(
+        (item) =>
+          !item.question.includes('Home Construction') &&
+          !item.question.includes('வீட்டு கட்டுமான')
+      )
+    : rawList;
 
   return (
     <section id="faq-section" className="py-20 bg-background relative overflow-hidden">

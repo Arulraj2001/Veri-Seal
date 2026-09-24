@@ -7,7 +7,11 @@ import { Lock, Zap, ShieldCheck, ArrowDown, Sparkles, CheckCircle2 } from 'lucid
 import { useLanguage } from '@/components/providers/LanguageProvider';
 import { HomeHeroSearch } from '@/components/home/HomeHeroSearch';
 
-export function HeroSection() {
+interface HeroSectionProps {
+  hideDecisionEngines?: boolean;
+}
+
+export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
   const { t, language } = useLanguage();
   const [counter, setCounter] = React.useState(421848);
 
@@ -57,8 +61,15 @@ export function HeroSection() {
     { label: 'IBPS Declaration', href: '/tools/handwritten-declaration-scanner', isAnchor: false },
     { label: 'A4 5-in-1 Sheet', href: '/tools/a4-multi-card-sheet', isAnchor: false },
     { label: 'Mask Aadhaar', href: '/tools/mask-aadhaar', isAnchor: false },
-    { label: '🏡 Home Cost OS', href: '/home-cost', isAnchor: false },
-    { label: 'Vehicle OS', href: '/vehicle-os', isAnchor: false },
+    ...(!hideDecisionEngines
+      ? [
+          { label: '🏡 Home Cost OS', href: '/home-cost', isAnchor: false },
+          { label: 'Vehicle OS', href: '/vehicle-os', isAnchor: false },
+        ]
+      : [
+          { label: 'Merge PDF', href: '/tools/merge-pdf', isAnchor: false },
+          { label: 'Clean Scanner', href: '/tools/clean-document-scanner', isAnchor: false },
+        ]),
   ];
 
   return (
@@ -107,7 +118,11 @@ export function HeroSection() {
           className="text-base sm:text-lg md:text-xl text-text-main/80 max-w-3xl mx-auto mb-6 leading-relaxed font-normal"
         >
           {language === 'ta'
-            ? 'அரசு PDF மஞ்சள் கேள்விக்குறியை சரிசெய்தல், UPSC/TNPSC தேர்வு புகைப்பட அளவை மாற்றுதல், A4 5-இன்-1 அட்டை தயாரிப்பு, மற்றும் கட்டுமான செலவு கணக்கீடுகள். 100% இலவசம், பாதுகாப்பானது.'
+            ? hideDecisionEngines
+              ? 'அரசு PDF மஞ்சள் கேள்விக்குறியை சரிசெய்தல், UPSC/TNPSC தேர்வு புகைப்பட அளவை மாற்றுதல், A4 5-இன்-1 அட்டை தயாரிப்பு மற்றும் ஆதார் மறைப்பு. 100% இலவசம், பாதுகாப்பானது.'
+              : 'அரசு PDF மஞ்சள் கேள்விக்குறியை சரிசெய்தல், UPSC/TNPSC தேர்வு புகைப்பட அளவை மாற்றுதல், A4 5-இன்-1 அட்டை தயாரிப்பு, மற்றும் கட்டுமான செலவு கணக்கீடுகள். 100% இலவசம், பாதுகாப்பானது.'
+            : hideDecisionEngines
+            ? 'Fix government PDF signature yellow "?" marks, format zero-rejection exam photos for UPSC & TNPSC, print 5-in-1 A4 gang sheets, and mask Aadhaar securely in browser RAM.'
             : 'Fix government PDF signature yellow "?" marks, format zero-rejection exam photos for UPSC & TNPSC, print 5-in-1 A4 gang sheets, mask Aadhaar, and calculate home construction costs in browser RAM.'}
         </motion.p>
 
