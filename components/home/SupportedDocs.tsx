@@ -43,7 +43,7 @@ export function SupportedDocs() {
   };
 
   return (
-    <section id="supported-docs" className="py-20 bg-surface/50 relative">
+    <section id="supported-docs" className="py-20 bg-surface/50 border-t border-surface-darker/70 relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">

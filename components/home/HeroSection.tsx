@@ -81,7 +81,7 @@ export function HeroSection() {
           </span>
           <span className="hidden sm:inline text-primary/40">•</span>
           <span className="hidden sm:inline text-text-main/80 text-xs">
-            {language === 'ta' ? '56 இலவச அரசு கருவிகள்' : '56 Free Sovereign Tools'}
+            {language === 'ta' ? '57 இலவச அரசு கருவிகள்' : '57 Free Sovereign Tools'}
           </span>
         </motion.div>
 

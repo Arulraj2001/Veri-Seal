@@ -54,7 +54,7 @@ const DECISION_ENGINES = [
 
 export function DecisionEnginesShowcase() {
   return (
-    <section id="decision-engines" className="py-20 bg-background relative overflow-hidden">
+    <section id="decision-engines" className="py-20 bg-background border-t border-surface-darker/70 relative overflow-hidden scroll-mt-20">
       {/* Background decorations */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none -z-10" />
 

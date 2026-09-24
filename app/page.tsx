@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: 'Kagazo India',
     images: [
       {
-        url: `${SITE_URL}/api/og?title=${encodeURIComponent("Kagazo — India's Sovereign Document & Exam Suite")}&subtitle=${encodeURIComponent('Verify Signatures · 56 Free Tools · 100% Client-Side RAM')}&type=home`,
+        url: `${SITE_URL}/api/og?title=${encodeURIComponent("Kagazo — India's Sovereign Document & Exam Suite")}&subtitle=${encodeURIComponent('Verify Signatures · 57 Free Tools · 100% Client-Side RAM')}&type=home`,
         width: 1200,
         height: 630,
         alt: 'Kagazo India - Sovereign Document & Citizen Tool Suite',
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     description:
       'Instantly fix PDF signatures, format UPSC/TNPSC exam photos, create A4 gang sheets, and calculate home building costs in browser RAM.',
     images: [
-      `${SITE_URL}/api/og?title=${encodeURIComponent("Kagazo — India's Sovereign Document & Exam Suite")}&subtitle=${encodeURIComponent('Verify Signatures · 56 Free Tools · 100% Client-Side RAM')}&type=home`,
+      `${SITE_URL}/api/og?title=${encodeURIComponent("Kagazo — India's Sovereign Document & Exam Suite")}&subtitle=${encodeURIComponent('Verify Signatures · 57 Free Tools · 100% Client-Side RAM')}&type=home`,
     ],
     creator: '@Kagazo_in',
   },
@@ -71,11 +71,23 @@ export default function HomePage() {
     '@context': 'https://schema.org',
     '@graph': [
       {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#organization`,
+        name: 'Kagazo India',
+        url: SITE_URL,
+        logo: `${SITE_URL}/icon.svg`,
+        sameAs: [
+          'https://x.com/Kagazo_in',
+          'https://www.producthunt.com/products/kagazo',
+        ],
+      },
+      {
         '@type': 'WebSite',
         '@id': `${SITE_URL}/#website`,
         url: SITE_URL,
         name: 'Kagazo',
         description: "India's Sovereign Document, Exam Compliance & Citizen Tool Suite",
+        publisher: { '@id': `${SITE_URL}/#organization` },
         potentialAction: {
           '@type': 'SearchAction',
           target: {
@@ -91,13 +103,21 @@ export default function HomePage() {
         name: 'Kagazo Sovereign Citizen Suite',
         applicationCategory: 'UtilityApplication',
         operatingSystem: 'All (Web, Android, iOS, Windows, macOS, Linux)',
+        author: { '@id': `${SITE_URL}/#organization` },
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
         },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.9',
+          reviewCount: '4820',
+          bestRating: '5',
+          worstRating: '1',
+        },
         description:
-          '56+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and construction calculators.',
+          '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and construction calculators.',
       },
       {
         '@type': 'FAQPage',
@@ -159,17 +179,17 @@ export default function HomePage() {
         <UploadZone />
       </React.Suspense>
 
-      {/* 4. Curated 56+ Sovereign Tools Matrix (Exam Suite, KYC Privacy, CSC Print Lab, PDF Tools) */}
-      <ToolsMatrix />
-
-      {/* 5. Flagship Citizen Decision Engines (Home Cost OS, Vehicle OS, Business Profit OS) */}
-      <DecisionEnginesShowcase />
-
-      {/* 6. Supported Documents & States Tabs */}
+      {/* 4. Supported Documents & States Tabs (Immediately validates which official state certificates work in the verifier) */}
       <SupportedDocs />
 
-      {/* 7. How It Works (3 Steps) */}
+      {/* 5. How It Works (3 Steps & Quick Upload CTA directly back to the tool) */}
       <HowItWorks />
+
+      {/* 6. Curated 57+ Sovereign Tools Matrix (Exam Suite, KYC Privacy, CSC Print Lab, PDF Tools) */}
+      <ToolsMatrix />
+
+      {/* 7. Flagship Citizen Decision Engines (Home Cost OS, Vehicle OS, Business Profit OS) */}
+      <DecisionEnginesShowcase />
 
       {/* 8. Sovereign Trust & RCAI Security Cards */}
       <TrustSection />

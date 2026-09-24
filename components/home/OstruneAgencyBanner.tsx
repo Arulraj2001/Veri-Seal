@@ -28,7 +28,7 @@ export function OstruneAgencyBanner() {
             <div className="space-y-4 max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-primary/10 text-primary border border-primary/20">
                 <Sparkles className="w-3.5 h-3.5 text-primary" />
-                <span>{language === 'ta' ? 'வெரிசீல் பின்னால் உள்ள சிறப்பு பங்குதாரர்' : 'Featured Partner & Agency Behind Kagazo'}</span>
+                <span>{language === 'ta' ? 'காகாசோ பின்னால் உள்ள சிறப்பு பங்குதாரர்' : 'Featured Partner & Agency Behind Kagazo'}</span>
               </div>
 
               <h3 className="text-2xl sm:text-3xl font-black text-text-main tracking-tight">
@@ -40,7 +40,7 @@ export function OstruneAgencyBanner() {
               <p className="text-sm sm:text-base text-text-main/75 leading-relaxed">
                 {language === 'ta' ? (
                   <>
-                    வெரிசீல் தளம் அதிவேக வேகம், 100/100 Core Web Vitals மற்றும் இந்திய அரசு PKI பாதுகாப்புடன்{' '}
+                    காகாசோ தளம் அதிவேக வேகம், 100/100 Core Web Vitals மற்றும் இந்திய அரசு PKI பாதுகாப்புடன்{' '}
                     <a
                       href="https://ostrune.netlify.app/"
                       target="_blank"

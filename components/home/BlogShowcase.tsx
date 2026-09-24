@@ -28,7 +28,7 @@ export function BlogShowcase() {
   }, []);
 
   return (
-    <section id="blog-guides" className="py-20 bg-surface/50 border-t border-surface-darker relative overflow-hidden">
+    <section id="blog-guides" className="py-20 bg-background relative overflow-hidden scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">

@@ -123,7 +123,7 @@ export function ToolsMatrix() {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary-light px-3.5 py-1.5 rounded-full border border-primary/20 inline-flex items-center gap-1.5 shadow-2xs">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>56+ Sovereign Citizen Utilities</span>
+            <span>57+ Sovereign Citizen Utilities</span>
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-text-main mt-4 tracking-tight leading-tight">
             Curated Tools for Every Citizen &amp; Aspirant
