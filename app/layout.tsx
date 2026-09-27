@@ -171,20 +171,6 @@ const organizationSchema = {
   },
 };
 
-// 4. FAQPage Schema (Home Page FAQs)
-const faqPageSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQ.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.answer,
-    },
-  })),
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -233,10 +219,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema) }}
         />
       </head>
       <body className="min-h-screen flex flex-col font-sans bg-background text-text-main antialiased selection:bg-primary/20 selection:text-text-main">

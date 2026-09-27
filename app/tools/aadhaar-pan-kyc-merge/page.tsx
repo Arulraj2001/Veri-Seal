@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import AadhaarPanKycMergerEngine from '@/components/tools/AadhaarPanKycMergerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
   title: 'Aadhaar + PAN Single PDF KYC Merger (Under 200KB) | Bank & SIM KYC | Kagazo',
@@ -255,6 +256,15 @@ export default function AadhaarPanKycMergePage() {
             Merge Aadhaar card and PAN card into a single A4 PDF under 200KB for bank account opening, demat accounts, and SIM KYC. Includes self-attestation signing space and instant 100% client-side privacy.
           </p>
         </header>
+
+        {/* Answer Capsule for Search Dominance */}
+        <AnswerCapsule
+          title="Aadhaar + PAN Single A4 PDF KYC Rules (2026 Summary)"
+          answer="Under Reserve Bank of India (RBI) KYC Master Directions and SEBI guidelines, financial institutions (SBI, HDFC, ICICI) and brokerage portals (Zerodha, Groww) require Aadhaar Front, Aadhaar Back, and PAN Front compiled onto a single A4 PDF strictly under 200 KB with self-attestation signing margins. Kagazo merges all three cards in 100% private browser RAM."
+          officialSourceUrl="https://www.rbi.org.in"
+          officialSourceName="RBI Master Direction – Know Your Customer (KYC) Direction"
+          portal="RBI / SEBI Banking KYC"
+        />
 
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

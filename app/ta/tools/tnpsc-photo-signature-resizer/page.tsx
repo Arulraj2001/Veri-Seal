@@ -18,6 +18,9 @@ import {
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { SITE_URL } from '@/lib/constants';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { buildToolStructuredData } from '@/lib/seo-schema';
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
   title: 'TNPSC புகைப்படம் & கையொப்பம் அளவு மாற்றி | OTR 2026 போர்ட்டல் | காகஸோ',
@@ -82,25 +85,52 @@ const TNPSC_FAQS = [
 ];
 
 export default function TnpscPhotoResizerTamilPage() {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: TNPSC_FAQS.map((f) => ({
-      '@type': 'Question',
-      name: f.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: f.answer,
+  const structuredData = buildToolStructuredData({
+    name: 'TNPSC புகைப்படம் & கையொப்பம் அளவு மாற்றி (OTR 2026)',
+    description:
+      'TNPSC குரூப் 1, 2, 4, VAO தேர்வுகளுக்கான OTR விதிமுறைப்படி பெயர் மற்றும் தேதியுடன் கூடிய புகைப்படம் (20-50KB) மற்றும் கையொப்பம் (10-20KB) இலவசமாக மாற்றும் தமிழ் இணையக் கருவி.',
+    url: `${SITE_URL}/ta/tools/tnpsc-photo-signature-resizer`,
+    howToTitle: 'TNPSC OTR புகைப்படம் மற்றும் கையொப்பத்தை ஆன்லைனில் மாற்றுவது எப்படி?',
+    howToDescription:
+      'TNPSC அதிகாரப்பூர்வ விதிமுறைகளின்படி புகைப்படம் மற்றும் கையொப்பத்தை 5 எளிய படிகளில் மாற்றுங்கள்.',
+    howToSteps: [
+      {
+        step: 1,
+        title: 'புகைப்படம் அல்லது கையொப்பத்தைத் தேர்ந்தெடுக்கவும்',
+        desc: 'TNPSC Photo (20-50 KB) அல்லது TNPSC Signature (10-20 KB) தேர்ந்தெடுக்கவும்.',
       },
-    })),
-  };
+      {
+        step: 2,
+        title: 'கோப்பைப் பதிவேற்றவும்',
+        desc: 'உங்கள் மொபைல் அல்லது கணினியிலிருந்து புகைப்படத்தைத் தேர்ந்தெடுக்கவும்.',
+      },
+      {
+        step: 3,
+        title: 'பெயர் மற்றும் தேதியை உள்ளிடவும்',
+        desc: 'விண்ணப்பதாரர் பெயர் மற்றும் புகைப்படம் எடுத்த தேதியை உள்ளிடவும்.',
+      },
+      {
+        step: 4,
+        title: 'அளவைச் சரிபார்க்கவும்',
+        desc: 'தானாக 200x230 px மற்றும் 20-50 KB அளவுக்குள் மாற்றப்படும்.',
+      },
+      {
+        step: 5,
+        title: 'பதிவிறக்கவும்',
+        desc: 'TNPSC போர்ட்டலில் பதிவேற்ற தயாரான JPEG கோப்பைப் பதிவிறக்கவும்.',
+      },
+    ],
+    faqs: TNPSC_FAQS,
+    breadcrumbs: [
+      { name: 'முகப்பு', url: `${SITE_URL}/ta` },
+      { name: 'கருவிகள்', url: `${SITE_URL}/ta/tools` },
+      { name: 'TNPSC ரீசைசர்', url: `${SITE_URL}/ta/tools/tnpsc-photo-signature-resizer` },
+    ],
+  });
 
   return (
     <div className="pt-24 pb-20 sm:pt-32 sm:pb-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <JsonLd data={structuredData} id="tnpsc-tamil-tool-schema" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Breadcrumb */}
@@ -124,6 +154,15 @@ export default function TnpscPhotoResizerTamilPage() {
           <p className="text-xs sm:text-sm text-text-main/70 leading-relaxed">
             குரூப் 1, குரூப் 2, குரூப் 4 மற்றும் VAO விண்ணப்பங்களுக்கான புகைப்படம் (20–50KB) மற்றும் கையொப்பம் (10–20KB) உடனடியாக தயார் செய்யவும்.
           </p>
+
+          <AnswerCapsule
+            lang="ta"
+            portal="TNPSC OTR 2026"
+            badge="அதிகாரப்பூர்வ TNPSC விதிமுறை விடை"
+            officialSourceUrl="https://www.tnpsc.gov.in"
+            officialSourceName="tnpsc.gov.in அதிகாரப்பூர்வ சுற்றறிக்கை"
+            answer="TNPSC OTR விதிமுறைகளின்படி, புகைப்படம் கட்டாயமாக 3.5 × 4.5 செ.மீ (200 × 230 px) அளவில் 20 KB முதல் 50 KB-க்குள் இருக்க வேண்டும். படத்தின் கீழ் பகுதியில் விண்ணப்பதாரர் பெயர் மற்றும் புகைப்படம் எடுத்த தேதி அச்சிடப்பட்டிருக்க வேண்டும். கையொப்பம் 3.5 × 1.5 செ.மீ அளவில் 10 KB முதல் 20 KB-க்குள் இருக்க வேண்டும்."
+          />
         </div>
 
         {/* Engine (Top 30%) */}

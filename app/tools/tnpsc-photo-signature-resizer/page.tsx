@@ -23,6 +23,7 @@ import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageR
 import { AdSlot } from '@/components/ads/AdSlot';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
   title: 'TNPSC Photo & Signature Resizer — OTR Portal 2026 | Kagazo',
@@ -247,6 +248,7 @@ export default function TnpscPhotoSignatureResizerPage() {
             { label: 'TNPSC Photo & Signature Resizer' },
           ]}
           showHomeIcon
+          suppressSchema
         />
 
         {/* Hero Header */}
@@ -264,6 +266,14 @@ export default function TnpscPhotoSignatureResizerPage() {
           <p className="text-base sm:text-lg text-text-main/80 leading-relaxed font-normal">
             Format your TNPSC photo and signature for the Tamil Nadu Public Service Commission One Time Registration (OTR) portal — with the mandatory candidate name and date-of-photograph strip embedded directly in the image. Processed in-browser, zero server contact.
           </p>
+
+          <AnswerCapsule
+            portal="TNPSC OTR 2026"
+            badge="Official TNPSC Rule Capsule"
+            officialSourceUrl="https://www.tnpsc.gov.in"
+            officialSourceName="tnpsc.gov.in OTR Notification"
+            answer="Under official TNPSC guidelines, photographs must be in JPG/JPEG format, measuring exactly 3.5 × 4.5 cm (200 × 230 px) with file size strictly between 20 KB and 50 KB, featuring a mandatory bottom white strip with candidate name and date of photo. Signatures must measure 3.5 × 1.5 cm and be strictly between 10 KB and 20 KB."
+          />
         </header>
 
         {/* 2-Column Responsive Layout */}

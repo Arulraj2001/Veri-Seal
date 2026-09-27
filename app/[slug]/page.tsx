@@ -29,6 +29,9 @@ import { SITE_URL } from '@/lib/constants';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { UploadZone } from '@/components/home/UploadZone';
 import { FaqAccordion } from '@/components/seo/FaqAccordion';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { buildSeoPortalStructuredData } from '@/lib/seo-schema';
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const revalidate = 86400; // 24 hours ISR
 
@@ -96,101 +99,24 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
   const relatedPages = allPages.filter((p) => p.slug !== page.slug).slice(0, 4);
   const pageUrl = `${SITE_URL}/${page.slug}`;
 
-  // 1. FAQPage Schema (JSON-LD)
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: page.faq.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.a,
-      },
-    })),
-  };
-
-  // 2. HowToStep Schema (JSON-LD)
-  const howToSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: `How to verify ${page.doc_type} PDF signature`,
-    description: `Step-by-step instructions to verify the digital signature on ${page.doc_type} and convert unverified question marks into a permanent CCA India verified green tick.`,
-    step: [
-      {
-        '@type': 'HowToStep',
-        position: 1,
-        name: 'Go to Kagazo',
-        text: 'Access the free Kagazo Indian Government digital signature verification engine.',
-      },
-      {
-        '@type': 'HowToStep',
-        position: 2,
-        name: `Upload your ${page.doc_type} PDF`,
-        text: `Drag and drop your official downloaded ${page.doc_type} file into the verification zone.`,
-      },
-      {
-        '@type': 'HowToStep',
-        position: 3,
-        name: 'Enter password if required',
-        text: 'For password-protected files like e-Aadhaar, provide the 8-character password. Files without passwords proceed automatically.',
-      },
-      {
-        '@type': 'HowToStep',
-        position: 4,
-        name: 'Click verify',
-        text: 'Initiate the cryptographic audit against the Root Certifying Authority of India (RCAI) and CCA trust chain.',
-      },
-      {
-        '@type': 'HowToStep',
-        position: 5,
-        name: 'Download verified copy',
-        text: 'Download the LTV-stamped PDF displaying the permanent green checkmark across all PDF readers.',
-      },
-    ],
-  };
-
-  // 3. BreadcrumbList Schema (JSON-LD)
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: SITE_URL,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: page.title,
-        item: pageUrl,
-      },
-    ],
-  };
+  // Generate authoritative Schema.org @graph (WebApplication, HowTo, FAQPage, BreadcrumbList)
+  const structuredData = buildSeoPortalStructuredData(page);
 
   return (
     <>
-      {/* Inject Structured Data Schemas */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
-      />
+      {/* Inject Unified Schema.org Structured Data */}
+      <JsonLd data={structuredData} id="seo-portal-schema" />
 
       <div className="pt-28 pb-16 sm:pt-36 sm:pb-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb Navigation */}
+          {/* Breadcrumb Navigation (Schema unified in JsonLd above) */}
           <Breadcrumb
             items={[
               { label: 'Home', href: '/' },
               { label: page.title },
             ]}
             showHomeIcon
+            suppressSchema
             className="mb-6 sm:mb-8"
           />
 
@@ -210,20 +136,17 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
             </p>
           </header>
 
-          {/* Position 0 Featured Snippet: Direct Answer Box */}
-          <div className="mb-10 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-sm">
-            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-700 mb-2">
-              <Zap className="w-4 h-4 text-amber-600" />
-              <span>Direct Answer &amp; Fix</span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-black text-text-main mb-3">
-              How to Fix the Unverified Signature on {page.doc_type} PDF
-            </h2>
-            <p className="text-sm sm:text-base text-text-main/80 leading-relaxed">
-              {page.direct_answer ||
-                `A yellow question mark appears on ${page.doc_type} PDFs when default viewers like Adobe Acrobat lack India's Controller of Certifying Authorities (CCA) root trust anchors. Kagazo cryptographically validates the RSA/ECDSA signature against the Root Certifying Authority of India (RCAI) in memory and embeds a permanent green checkmark without requiring software installation.`}
-            </p>
-          </div>
+          {/* Position 0 Featured Snippet: Direct Answer Box (GEO Rule of 45 Words) */}
+          <AnswerCapsule
+            portal={page.portal}
+            badge="Verified Direct Answer"
+            title={`How to Fix the Unverified Signature on ${page.doc_type} PDF`}
+            answer={
+              page.direct_answer ||
+              `A yellow question mark appears on ${page.doc_type} PDFs when default viewers like Adobe Acrobat lack India's Controller of Certifying Authorities (CCA) root trust anchors. Kagazo cryptographically validates the RSA/ECDSA signature against the Root Certifying Authority of India (RCAI) in memory and embeds a permanent green checkmark without requiring software installation.`
+            }
+            className="mb-10"
+          />
 
           {/* Inline Verify Tool Component */}
           <div className="mb-16">

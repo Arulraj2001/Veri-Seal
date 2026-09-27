@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Kagazo — Govt Exam Photo Resizer & PDF Compressor",
+  "version": "1.0.0",
+  "description": "Instant in-browser resizer for UPSC, SSC, IBPS, TNPSC exam photos, name & date stamps, signature 10-20KB, and PDF compression. 100% private.",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "permissions": ["storage"],
+  "homepage_url": "https://kagazo.in"
+}

@@ -12,18 +12,20 @@ export interface BreadcrumbProps {
   items: BreadcrumbItem[];
   className?: string;
   showHomeIcon?: boolean;
+  suppressSchema?: boolean;
 }
 
 export function Breadcrumb({
   items,
   className = '',
   showHomeIcon = false,
+  suppressSchema = false,
 }: BreadcrumbProps) {
   if (!items || items.length === 0) return null;
 
   const baseUrl = SITE_URL || 'https://kagazo.in';
 
-  // Generate Schema.org BreadcrumbList JSON-LD
+  // Generate Schema.org BreadcrumbList JSON-LD compliant with Google Rich Results
   const breadcrumbListSchema = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -32,24 +34,28 @@ export function Breadcrumb({
         ? item.href.startsWith('http')
           ? item.href
           : `${baseUrl}${item.href.startsWith('/') ? '' : '/'}${item.href}`
-        : undefined;
+        : `${baseUrl}/`;
 
       return {
         '@type': 'ListItem',
         position: index + 1,
         name: item.label,
-        ...(itemUrl ? { item: itemUrl } : {}),
+        item: itemUrl,
       };
     }),
   };
 
   return (
     <>
-      {/* Embedded BreadcrumbList JSON-LD Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbListSchema) }}
-      />
+      {/* Embedded BreadcrumbList JSON-LD Schema (unless suppressed by parent page) */}
+      {!suppressSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbListSchema).replace(/<\/script>/gi, '<\\/script>'),
+          }}
+        />
+      )}
 
       {/* Visual Breadcrumb Navigation */}
       <nav aria-label="Breadcrumb" className={`w-full ${className}`}>

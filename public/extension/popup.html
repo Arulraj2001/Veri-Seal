@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kagazo Quick Resizer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      width: 360px;
+      min-height: 500px;
+      background: #f8fafc;
+      color: #0f172a;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #10b981;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand h1 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .brand span {
+      color: #10b981;
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .tabs {
+      display: flex;
+      background: #e2e8f0;
+      padding: 3px;
+      margin: 12px 14px 0 14px;
+      border-radius: 10px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: #64748b;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tab-btn.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    main {
+      flex: 1;
+      padding: 14px;
+    }
+    .panel {
+      display: none;
+    }
+    .panel.active {
+      display: block;
+    }
+    /* Quick Resizer Styles */
+    .dropzone {
+      border: 2px dashed #cbd5e1;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 20px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .dropzone:hover {
+      border-color: #10b981;
+      background: #f0fdf4;
+    }
+    .dropzone p {
+      font-size: 12px;
+      font-weight: 600;
+      color: #334155;
+      margin-top: 6px;
+    }
+    .dropzone small {
+      font-size: 10px;
+      color: #94a3b8;
+    }
+    .target-pills {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin: 14px 0;
+    }
+    .pill-btn {
+      padding: 8px 4px;
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      text-align: center;
+    }
+    .pill-btn.active {
+      border-color: #10b981;
+      background: #10b981;
+      color: #ffffff;
+    }
+    .action-btn {
+      width: 100%;
+      padding: 11px;
+      background: #10b981;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+      transition: background 0.15s;
+    }
+    .action-btn:hover {
+      background: #059669;
+    }
+    .action-btn:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    /* Presets Grid */
+    .presets-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .preset-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #0f172a;
+      transition: transform 0.1s, border-color 0.1s;
+    }
+    .preset-card:hover {
+      border-color: #10b981;
+      transform: translateY(-1px);
+    }
+    .preset-title {
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .preset-desc {
+      font-size: 10px;
+      color: #64748b;
+    }
+    .preset-badge {
+      font-size: 9px;
+      font-weight: 800;
+      background: #f1f5f9;
+      color: #059669;
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+    }
+    footer {
+      padding: 10px 14px;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+      text-align: center;
+      font-size: 10px;
+      color: #64748b;
+    }
+    footer a {
+      color: #10b981;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    #status-msg {
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 8px;
+      text-align: center;
+      min-height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>KAGAZO<span>.IN</span></h1>
+    </div>
+    <span class="badge">100% In-RAM</span>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-quick">Quick Resizer</button>
+    <button class="tab-btn" id="tab-tools">Exam Hub (135+)</button>
+  </div>
+
+  <main>
+    <!-- Panel 1: Quick In-Browser Resizer -->
+    <div class="panel active" id="panel-quick">
+      <div class="dropzone" id="dropzone">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p id="file-label">Click or Drag Image Here</p>
+        <small id="file-info">Supports JPG, PNG, WEBP</small>
+        <input type="file" id="file-input" accept="image/*" style="display:none">
+      </div>
+
+      <div style="margin-top:10px">
+        <label style="font-size:11px; font-weight:700; color:#475569">Target File Size Limit:</label>
+        <div class="target-pills">
+          <button class="pill-btn active" data-kb="20">20 KB<br><span style="font-size:8px;opacity:0.8">Signature</span></button>
+          <button class="pill-btn" data-kb="50">50 KB<br><span style="font-size:8px;opacity:0.8">Photo</span></button>
+          <button class="pill-btn" data-kb="100">100 KB<br><span style="font-size:8px;opacity:0.8">Card</span></button>
+          <button class="pill-btn" data-kb="200">200 KB<br><span style="font-size:8px;opacity:0.8">Doc</span></button>
+        </div>
+      </div>
+
+      <button class="action-btn" id="compress-btn" disabled>Compress &amp; Download</button>
+      <div id="status-msg"></div>
+    </div>
+
+    <!-- Panel 2: Popular Tools & Combo Packs -->
+    <div class="panel" id="panel-tools">
+      <div class="presets-list">
+        <a href="https://kagazo.in/tools/tnpsc-combo-pack" target="_blank" class="preset-card">
+          <div>
+            <div class="preset-title">TNPSC Combo Pack (3-in-1)</div>
+            <div class="preset-desc">Photo + Signature + Certificate ZIP</div>
+          </div>
+          <span class="preset-badge">1-CLICK ZIP</span>
+        </a>
+
+        <a href="https://kagazo.in/tools/ssc-combo-pack" target="_blank" class="preset-card">
+          <div>
+            <div class="preset-title">SSC Combo Pack (CGL / CHSL)</div>
+            <div class="preset-desc">20-50KB Photo &amp; 10-20KB Signature</div>
+          </div>
+          <span class="preset-badge">SSC 2026</span>
+        </a>
+
+        <a href="https://kagazo.in/tools/photo-date-name-stamper" target="_blank" class="preset-card">
+          <div>
+            <div class="preset-title">UPSC Name &amp; Date Stamper</div>
+            <div class="preset-desc">Lower 20% banner with 10-day rule check</div>
+          </div>
+          <span class="preset-badge">UPSC OTR</span>
+        </a>
+
+        <a href="https://kagazo.in/tools/upload-error-fixer" target="_blank" class="preset-card">
+          <div>
+            <div class="preset-title">Upload Error Doctor</div>
+            <div class="preset-desc">Fix dimension, DPI &amp; aspect errors</div>
+          </div>
+          <span class="preset-badge">AUTO-CURE</span>
+        </a>
+
+        <a href="https://kagazo.in/tools/exam-photo-dimension-chart-2026" target="_blank" class="preset-card">
+          <div>
+            <div class="preset-title">Exam Dimension Chart 2026</div>
+            <div class="preset-desc">Printable A4 cheat-sheet for cyber cafés</div>
+          </div>
+          <span class="preset-badge">A4 POSTER</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Zero Cloud Storage • Open full portal at <a href="https://kagazo.in" target="_blank">Kagazo.in</a>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

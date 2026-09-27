@@ -19,11 +19,23 @@ import {
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 import { SITE_URL } from '@/lib/constants';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { buildToolStructuredData } from '@/lib/seo-schema';
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
   title: 'புகைப்படம் 50KB வரை குறைப்பான் | 20-50 KB பாஸ்போர்ட் போட்டோ | காகஸோ',
   description:
     'TNPSC, TNEB, தமிழ்நாடு e-Sevai மற்றும் அரசு தேர்வுகளுக்கான பாஸ்போர்ட் அளவிலான புகைப்படங்களை 20 KB முதல் 50 KB வரை தரம் குறையாமல் ஆன்லைனில் இலவசமாக அமுக்கவும்.',
+  keywords: [
+    'passport photo 50kb kuraippathu eppadi',
+    'tneb photo size 50kb fix tamil',
+    'esevai photo compress',
+    'tnpsc photo 50kb tamil',
+    'photo 50kb converter',
+    'passport size photo compress to 50kb',
+    'போட்டோ 50kb குறைப்பான்',
+  ],
   alternates: {
     canonical: `${SITE_URL}/ta/tools/compress-image-to-50kb`,
     languages: {
@@ -66,14 +78,19 @@ const PRESETS_50KB: CustomPreset[] = [
 
 const FAQS_50KB = [
   {
-    question: 'மொபைல் கேமராவில் எடுத்த பெரிய படத்தை 50 KB-க்குள் கொண்டுவர முடியுமா?',
+    question: 'Passport photo 50kb kuraippathu eppadi? (TNEB photo size 50kb fix tamil)',
     answer:
-      'நிச்சயமாக. உங்கள் மொபைல் போனில் எடுக்கப்பட்ட 5MB அல்லது 10MB அளவிலான பெரிய புகைப்படங்களையும், முகம் மங்கலாகாமல் (Blur ஆகாமல்) தெளிவாக 20KB முதல் 50KB-க்குள் காகஸோ சுருக்கித் தரும்.',
+      'TNEB மற்றும் e-Sevai போர்ட்டல்களில் உங்கள் பாஸ்போர்ட் புகைப்படம் 20KB முதல் 50KB வரை மட்டுமே அனுமதிக்கப்படும். காகஸோவில் உங்கள் புகைப்படத்தைப் பதிவேற்றி "பாஸ்போர்ட் புகைப்படம் (20-50KB)" என்பதைத் தேர்ந்தெடுக்கவும். உங்கள் படத்தின் தரம் குறையாமல், முகம் மங்கலாகாமல் சரியாக 35 KB அளவில் பிரவுசரிலேயே உருவாக்கிக் கொள்ளலாம்.',
   },
   {
     question: 'TNEB மற்றும் e-Sevai போர்ட்டல்களில் 50 KB புகைப்படம் எதற்காக கேட்கப்படுகிறது?',
     answer:
-      'புதிய மின் இணைப்பு, மின் கட்டண பெயர் மாற்றம், சாதி சான்றிதழ், இருப்பிட சான்றிதழ் மற்றும் வருமான சான்றிதழ் போன்ற அரசு இணையதளங்களில் 50 KB-க்கு அதிகமான கோப்புகளை பதிவேற்ற முடியாது.',
+      'புதிய மின் இணைப்பு, மின் கட்டண பெயர் மாற்றம், சாதி சான்றிதழ், இருப்பிட சான்றிதழ் மற்றும் வருமான சான்றிதழ் போன்ற அரசு இணையதளங்களில் 50 KB-க்கு அதிகமான கோப்புகளை பதிவேற்ற முடியாது. சர்வர் சுமையைத் தவிர்க்க 50 KB உச்சவரம்பு நிர்ணயிக்கப்பட்டுள்ளது.',
+  },
+  {
+    question: 'மொபைல் கேமராவில் எடுத்த பெரிய படத்தை 50 KB-க்குள் கொண்டுவர முடியுமா?',
+    answer:
+      'நிச்சயமாக. உங்கள் மொபைல் போனில் எடுக்கப்பட்ட 5MB அல்லது 10MB அளவிலான பெரிய புகைப்படங்களையும், முகம் மங்கலாகாமல் (Blur ஆகாமல்) தெளிவாக 20KB முதல் 50KB-க்குள் காகஸோ சுருக்கித் தரும்.',
   },
   {
     question: 'புகைப்படத்தை மாற்றும்போது அதன் பரிமாணங்கள் (Dimensions) மாறுமா?',
@@ -83,25 +100,42 @@ const FAQS_50KB = [
 ];
 
 export default function CompressImageTo50kbTamilPage() {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: FAQS_50KB.map((f) => ({
-      '@type': 'Question',
-      name: f.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: f.answer,
+  const structuredData = buildToolStructuredData({
+    name: 'புகைப்படம் 50KB வரை குறைப்பான் (20–50 KB)',
+    description:
+      'TNEB, e-Sevai, TNPSC, SSC போன்ற அனைத்து அரசு மற்றும் தேர்வு இணையதளங்களுக்காகவும் தரம் குறையாமல் 50KB-க்குள் மாற்றும் தமிழ் இணையக் கருவி.',
+    url: `${SITE_URL}/ta/tools/compress-image-to-50kb`,
+    howToTitle: 'புகைப்படத்தை 20-50 KB அளவுக்கு சுருக்குவது எப்படி?',
+    howToDescription:
+      'மொபைல் புகைப்படத்தை தரம் குறையாமல் 3 எளிய படிகளில் 50 KB-க்குள் மாற்றுங்கள்.',
+    howToSteps: [
+      {
+        step: 1,
+        title: 'புகைப்படத்தை பதிவேற்றவும்',
+        desc: 'உங்கள் போன் அல்லது கணினியிலிருந்து பாஸ்போர்ட் புகைப்படத்தை அப்லோட் செய்யவும்.',
       },
-    })),
-  };
+      {
+        step: 2,
+        title: '20–50 KB பிரிசெட்டை தேர்வு செய்யவும்',
+        desc: 'பாஸ்போர்ட் புகைப்படம் (20-50KB) அல்லது TNEB/e-Sevai (30-50KB) தேர்ந்தெடுக்கவும்.',
+      },
+      {
+        step: 3,
+        title: 'பதிவிறக்கவும்',
+        desc: 'நொடிகளில் சரியான அளவில் தரவிறக்கம் செய்து நேரடியாக அரசு இணையதளங்களில் பதிவேற்றலாம்.',
+      },
+    ],
+    faqs: FAQS_50KB,
+    breadcrumbs: [
+      { name: 'முகப்பு', url: `${SITE_URL}/ta` },
+      { name: 'கருவிகள்', url: `${SITE_URL}/ta/tools` },
+      { name: '50KB குறைப்பான்', url: `${SITE_URL}/ta/tools/compress-image-to-50kb` },
+    ],
+  });
 
   return (
     <div className="pt-24 pb-20 sm:pt-32 sm:pb-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <JsonLd data={structuredData} />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Breadcrumb */}
@@ -126,6 +160,17 @@ export default function CompressImageTo50kbTamilPage() {
             TNEB, e-Sevai, TNPSC, SSC போன்ற அனைத்து அரசு மற்றும் தேர்வு இணையதளங்களுக்காகவும் தரம் குறையாமல் 50KB-க்குள் மாற்றும் ஆன்லைன் கருவி.
           </p>
         </div>
+
+        {/* GEO Rule of 45 Words Answer Capsule */}
+        <AnswerCapsule
+          lang="ta"
+          title="டிஜிட்டல் உடனடி சுருக்கம்: பாஸ்போர்ட் புகைப்படம் 20–50 KB வரை குறைப்பது எப்படி?"
+          badge="அரசு போர்ட்டல் நேரடி விடை"
+          portal="TNEB, e-Sevai & TNPSC OTR"
+          officialSourceName="TANGEDCO / e-Sevai Guidelines"
+          officialSourceUrl="https://www.tnebnet.org"
+          answer="TNEB புதிய மின் இணைப்பு, TN e-Sevai சான்றிதழ்கள் மற்றும் TNPSC OTR விண்ணப்பங்களுக்கு விண்ணப்பதாரர் புகைப்படம் 20 KB முதல் 50 KB (3.5 × 4.5 cm) வரை இருக்க வேண்டும். உங்கள் மொபைலில் எடுத்த 5MB–10MB படங்களை முகம் மங்கலாகாமல், பிரவுசரிலேயே நொடிகளில் 35 KB அளவில் காகஸோ இலவசமாக மாற்றித் தருகிறது."
+        />
 
         {/* Interactive Engine (Top 30%) */}
         <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-4 sm:p-8">
@@ -171,7 +216,7 @@ export default function CompressImageTo50kbTamilPage() {
             <div className="space-y-1">
               <h2 className="text-lg sm:text-xl font-extrabold text-text-main flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-primary" />
-                அடிக்கடி கேட்கப்படும் கேள்விகள் (50 KB போட்டோ)
+                அடிக்கடி கேட்கப்படும் கேள்விகள் (50 KB போட்டோ &amp; Tanglish வழிகாட்டி)
               </h2>
             </div>
             <div className="divide-y divide-surface-darker">

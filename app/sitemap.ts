@@ -4,6 +4,7 @@ import { getPublishedSeoPages } from '@/lib/seo-store';
 import { supabaseAdmin } from '@/lib/supabase';
 import { SITE_URL } from '@/lib/constants';
 import { getMergedSettings } from '@/lib/settings-store';
+import { TOOLS_CATALOG } from '@/lib/tools-data';
 
 export const revalidate = 86400; // 24 hours daily revalidation
 
@@ -1275,8 +1276,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
+  // Dynamic Catalog Synchronization: Guarantees zero orphan tools from TOOLS_CATALOG
+  const existingUrls = new Set<string>([
+    ...staticRoutes.map((r) => r.url),
+    ...seoRoutes.map((r) => r.url),
+    ...blogRoutes.map((r) => r.url),
+  ]);
+
+  const dynamicToolRoutes: MetadataRoute.Sitemap = [];
+  for (const tool of TOOLS_CATALOG) {
+    if (!tool.slug || tool.slug.startsWith('/#')) continue;
+    const cleanPath = tool.slug.startsWith('/') ? tool.slug : `/${tool.slug}`;
+    const toolUrl = `${baseUrl}${cleanPath}`;
+    if (!existingUrls.has(toolUrl)) {
+      existingUrls.add(toolUrl);
+      dynamicToolRoutes.push({
+        url: toolUrl,
+        lastModified: now,
+        changeFrequency: 'daily',
+        priority: 0.95,
+      });
+    }
+  }
+
   const settings = await getMergedSettings();
-  const allRoutes = [...staticRoutes, ...seoRoutes, ...blogRoutes];
+  const allRoutes = [
+    ...staticRoutes,
+    ...dynamicToolRoutes,
+    ...seoRoutes,
+    ...blogRoutes,
+  ];
 
   if (settings.hide_decision_engines) {
     return allRoutes.filter(

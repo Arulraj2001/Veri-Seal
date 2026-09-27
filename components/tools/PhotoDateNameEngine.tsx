@@ -16,6 +16,7 @@ import {
   Printer,
   Camera,
 } from 'lucide-react';
+import { ExamSocialShareBar } from '@/components/tools/ExamSocialShareBar';
 
 export default function PhotoDateNameEngine() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -41,7 +42,10 @@ export default function PhotoDateNameEngine() {
   const [renderedUrl, setRenderedUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Calculate 90-day compliance
+  // Dedicated Exam Preset State (UPSC, SSC, TNPSC, Custom)
+  const [examPreset, setExamPreset] = useState<'upsc' | 'ssc' | 'tnpsc' | 'custom'>('upsc');
+
+  // Calculate 90-day compliance (SSC / State PSCs)
   const isDateValid = (() => {
     if (!dateOfPhoto) return true;
     const photoDate = new Date(dateOfPhoto);
@@ -51,6 +55,16 @@ export default function PhotoDateNameEngine() {
     return diffDays >= 0 && diffDays <= 90;
   })();
 
+  // Calculate 10-day compliance strictly for UPSC CSE / NDA / CDS
+  const isUpscDateValid = (() => {
+    if (!dateOfPhoto) return true;
+    const photoDate = new Date(dateOfPhoto);
+    const today = new Date();
+    const diffTime = today.getTime() - photoDate.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays >= 0 && diffDays <= 10;
+  })();
+
   const daysAgo = (() => {
     if (!dateOfPhoto) return 0;
     const photoDate = new Date(dateOfPhoto);
@@ -58,6 +72,27 @@ export default function PhotoDateNameEngine() {
     const diffTime = today.getTime() - photoDate.getTime();
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   })();
+
+  // Switch Exam Presets with Official Guidelines
+  const handleApplyPreset = (preset: 'upsc' | 'ssc' | 'tnpsc' | 'custom') => {
+    setExamPreset(preset);
+    if (preset === 'upsc') {
+      setAspectPreset('square');
+      setStripHeightPct(20); // UPSC mandates candidate name & date on lower 20% white bar
+      setStripStyle('white_bg');
+      setPrefixType('DOP');
+    } else if (preset === 'ssc') {
+      setAspectPreset('35x45');
+      setStripHeightPct(18);
+      setStripStyle('white_bg');
+      setPrefixType('DOP');
+    } else if (preset === 'tnpsc') {
+      setAspectPreset('35x45');
+      setStripHeightPct(20);
+      setStripStyle('white_bg');
+      setPrefixType('DOP');
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
@@ -257,19 +292,59 @@ export default function PhotoDateNameEngine() {
           </div>
         </div>
 
-        {/* 90-Day Validity Badge */}
+        {/* Dynamic Validity Badge (10-Day Rule for UPSC, 90-Day for Others) */}
         <div className="flex items-center gap-2 text-xs">
-          {isDateValid ? (
+          {examPreset === 'upsc' ? (
+            isUpscDateValid ? (
+              <div className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>UPSC Compliant ({daysAgo}d old ≤ 10-Day Rule)</span>
+              </div>
+            ) : (
+              <div className="px-3 py-1.5 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4" />
+                <span>UPSC Exceeds 10-Day Freshness Limit ({daysAgo}d ago)!</span>
+              </div>
+            )
+          ) : isDateValid ? (
             <div className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4" />
-              <span>Valid for SSC/UPSC ({daysAgo}d ago)</span>
+              <span>Valid for {examPreset.toUpperCase()} ({daysAgo}d ago)</span>
             </div>
           ) : (
             <div className="px-3 py-1.5 rounded-xl bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold flex items-center gap-1.5">
               <AlertTriangle className="w-4 h-4" />
-              <span>Photo Date Exceeds 90-Day Limit!</span>
+              <span>Photo Date Exceeds 90-Day Limit ({daysAgo}d ago)!</span>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Official Exam Presets Toolbar */}
+      <div className="bg-slate-800/90 text-white px-6 py-3 flex flex-wrap items-center justify-between gap-3 border-b border-slate-700">
+        <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
+          <span>Official Presets:</span>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          {[
+            { id: 'upsc', label: '🏛️ UPSC OTR (10-Day Rule • 20% Bar)' },
+            { id: 'ssc', label: '🏢 SSC CGL / CHSL (90-Day Rule)' },
+            { id: 'tnpsc', label: '🏛️ TNPSC OTR (Name & Date Strip)' },
+            { id: 'custom', label: '⚙️ Custom Format' },
+          ].map((preset) => (
+            <button
+              key={preset.id}
+              type="button"
+              onClick={() => handleApplyPreset(preset.id as any)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                examPreset === preset.id
+                  ? 'bg-emerald-500 text-slate-950 shadow-md scale-105'
+                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              }`}
+            >
+              {preset.label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -530,6 +605,12 @@ export default function PhotoDateNameEngine() {
                   <span>Download Stamped Exam Photo (300 DPI JPG)</span>
                 </button>
               </div>
+
+              {/* Telegram & WhatsApp Community Sharing */}
+              <ExamSocialShareBar
+                toolName="UPSC & SSC Name and Date Photo Stamper"
+                examName="UPSC / SSC / TNPSC Exams"
+              />
 
               {/* Official SSC Exam Rule Notice */}
               <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-950 flex items-start gap-3">

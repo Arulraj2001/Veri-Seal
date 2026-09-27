@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import PhotoDateNameEngine from '@/components/tools/PhotoDateNameEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
   title: 'Exam Photo Name & Date (DOP) Stamper Online Free | SSC & UPSC | Kagazo',
@@ -302,6 +303,15 @@ export default function PhotoDateNameStamperPage() {
             ))}
           </div>
         </header>
+
+        {/* Answer Capsule for Search Dominance */}
+        <AnswerCapsule
+          title="UPSC & SSC Photo Name & Date Rules (2026 Summary)"
+          answer="Under official recruitment rules: (1) UPSC CSE / NDA / CDS: The photograph must not be older than 10 days before application start date. Candidate Name in capital letters and Date of Photograph (DOP) must cover the lower 20% white bar; (2) SSC CGL / CHSL / MTS: Photograph must not be older than 3 months (90 days) with Candidate Name and DOP on the bottom strip; (3) TNPSC OTR: Candidate Name and recent capture date in block letters on a white strip. File size must remain strictly 20–50 KB."
+          officialSourceUrl="https://upsc.gov.in"
+          officialSourceName="UPSC & SSC Examination Guidelines 2026"
+          portal="UPSC / SSC / State PSCs"
+        />
 
         {/* Value Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">

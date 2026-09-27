@@ -18,16 +18,28 @@ import {
 } from 'lucide-react';
 import { SITE_URL } from '@/lib/constants';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { JsonLd } from '@/components/seo/JsonLd';
 
 export const metadata: Metadata = {
   title: 'காகஸோ — அரசு ஆவணங்கள் & PDF சரிபார்ப்பு | இலவச இணைய கருவிகள்',
   description:
     'ஆதார் அட்டை, சாதி சான்றிதழ், வருமான சான்றிதழ், டிஜிலாக்கர் PDF டிஜிட்டல் கையொப்ப சரிபார்ப்பு மற்றும் TNPSC, TNEB தேர்வுக்கான புகைப்பட & கையொப்ப அளவு குறைக்கும் இலவச இணையக் கருவிகள். 100% பாதுகாப்பானது.',
+  keywords: [
+    'tnpsc photo size eppadi mathurathu',
+    'signature size kuraippathu eppadi',
+    'community certificate pdf compression tamil',
+    'aadhaar mask seivathu eppadi',
+    'tnea engineering cutoff calculator 2026',
+    'காகஸோ தமிழ் கருவிகள்',
+    'அரசு சான்றிதழ் கையொப்ப சரிபார்ப்பு',
+  ],
   alternates: {
     canonical: `${SITE_URL}/ta`,
     languages: {
+      'ta': `${SITE_URL}/ta`,
       'ta-IN': `${SITE_URL}/ta`,
       'en': SITE_URL,
+      'en-IN': SITE_URL,
       'x-default': SITE_URL,
     },
   },
@@ -107,25 +119,36 @@ const TAMIL_FAQS = [
 ];
 
 export default function TamilHomePage() {
-  const faqSchema = {
+  const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: TAMIL_FAQS.map((faq) => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.a,
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/ta#website`,
+        url: `${SITE_URL}/ta`,
+        name: 'காகஸோ தமிழ் (Kagazo Tamil)',
+        description:
+          'அரசு ஆவணங்கள், டிஜிட்டல் கையொப்ப சரிபார்ப்பு மற்றும் TNPSC / TNEB புகைப்பட அளவு குறைக்கும் தமிழ் இணைய போர்ட்டல்.',
+        inLanguage: 'ta-IN',
       },
-    })),
+      {
+        '@type': 'FAQPage',
+        '@id': `${SITE_URL}/ta#faq`,
+        mainEntity: TAMIL_FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.a,
+          },
+        })),
+      },
+    ],
   };
 
   return (
     <div className="pt-24 pb-20 sm:pt-32 sm:pb-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <JsonLd data={structuredData} />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Hero Section */}

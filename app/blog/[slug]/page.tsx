@@ -67,14 +67,17 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const enSlug = enPost ? enPost.slug : baseSlug;
   const alternateLanguages: Record<string, string> = {
     'en': `https://kagazo.in/blog/${enSlug}`,
+    'en-IN': `https://kagazo.in/blog/${enSlug}`,
     'x-default': `https://kagazo.in/blog/${enSlug}`,
   };
 
   if (taPost) {
     alternateLanguages['ta'] = `https://kagazo.in/blog/${taPost.slug}`;
+    alternateLanguages['ta-IN'] = `https://kagazo.in/blog/${taPost.slug}`;
   }
   if (hiPost) {
     alternateLanguages['hi'] = `https://kagazo.in/blog/${hiPost.slug}`;
+    alternateLanguages['hi-IN'] = `https://kagazo.in/blog/${hiPost.slug}`;
   }
 
   return {
