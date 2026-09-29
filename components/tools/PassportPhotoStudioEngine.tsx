@@ -188,10 +188,31 @@ export function PassportPhotoStudioEngine({
   };
 
   // Download Single Photo as an exact-physical-size PDF
-  const handleDownloadPdf = () => {
-    if (!singleResult?.dataUrl) return;
+  const handleDownloadPdf = async () => {
+    if (!singleResult?.blob) return;
     try {
-      const pdfBlob = createPdfFromJpeg(singleResult.dataUrl, spec.widthMm, spec.heightMm);
+      // singleResult.dataUrl is a blob: object URL, not base64. Re-encode the JPEG
+      // blob as a real base64 data URL so createPdfFromJpeg (which decodes with atob) works.
+      const reader = new FileReader();
+      reader.readAsDataURL(singleResult.blob);
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        reader.onloadend = () => {
+          if (reader.result) {
+            resolve(reader.result as string);
+          } else {
+            reject(new Error('Failed to encode JPEG for PDF.'));
+          }
+        };
+        reader.onerror = () => reject(new Error('Failed to encode JPEG for PDF.'));
+      });
+
+      const pdfBlob = createPdfFromJpeg(
+        dataUrl,
+        spec.widthMm,
+        spec.heightMm,
+        singleResult.widthPx,
+        singleResult.heightPx
+      );
       const url = URL.createObjectURL(pdfBlob);
       const a = document.createElement('a');
       const baseName = file?.name ? file.name.replace(/\.[^/.]+$/, '') : 'passport_photo';
