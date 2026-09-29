@@ -37,6 +37,8 @@ export function UscisPhotoCheckerEngine({
   toolSubheading = 'Verify 600×600 px dimensions, 50%–69% head height ratio, 300 DPI, and generate printable 4×6" cards in browser RAM.',
   defaultMode = 'dv_lottery',
 }: UscisPhotoCheckerEngineProps) {
+  const isDvMode = defaultMode === 'dv_lottery';
+  const programLabel = isDvMode ? 'DV Lottery (DV-2026/2027)' : 'USCIS / DS-160 Visa';
   const [file, setFile] = React.useState<File | null>(null);
   const [filePreview, setFilePreview] = React.useState<string | null>(null);
   const [activeTab, setActiveTab] = React.useState<'single' | 'sheet4x6'>('single');
@@ -148,7 +150,7 @@ export function UscisPhotoCheckerEngine({
     if (!singleBlob) return;
     const a = document.createElement('a');
     a.href = URL.createObjectURL(singleBlob);
-    a.download = `USCIS_DV_Lottery_600x600_300DPI_${singleSizeKb}KB.jpg`;
+    a.download = `${isDvMode ? 'DV_Lottery' : 'USCIS_Visa'}_600x600_300DPI_${singleSizeKb}KB.jpg`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -214,10 +216,10 @@ export function UscisPhotoCheckerEngine({
                 <Upload className="w-8 h-8" />
               </div>
               <div className="font-extrabold text-base sm:text-lg text-text-main">
-                Upload Photo for DV Lottery / US Visa
+                Upload Photo for {programLabel}
               </div>
               <p className="text-xs sm:text-sm text-text-main/60 mt-1 max-w-md">
-                Upload a portrait selfie or passport photo. We will check biometric compliance and format it to exact State Dept rules.
+                Upload a portrait selfie or passport photo. We will check biometric compliance and format it to exact {isDvMode ? 'U.S. Department of State Diversity Visa' : 'U.S. State Dept'} rules.
               </p>
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 <span className="inline-flex items-center gap-1 text-[11px] font-extrabold text-primary bg-white px-3 py-1 rounded-full border border-primary/20 shadow-2xs">
@@ -354,9 +356,14 @@ export function UscisPhotoCheckerEngine({
                 State Dept 4-Point Audit
               </span>
               <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                USCIS &amp; DV Passed
+                {isDvMode ? 'DV Lottery Passed' : 'USCIS Passed'}
               </span>
             </div>
+            {isDvMode && (
+              <p className="text-[11px] text-text-main/70 leading-relaxed rounded-lg bg-amber-50 border border-amber-200 px-2.5 py-2">
+                <strong className="text-amber-800 font-bold">DV Entry note:</strong> The DV-2026/2027 entry system rejects photos over 240 KB or smaller than 600×600. Keep your expression neutral, face the camera directly, and use a plain white or off-white background with no shadows.
+              </p>
+            )}
 
             {/* Preview Output: Single or 4x6 Sheet */}
             {activeTab === 'single' ? (

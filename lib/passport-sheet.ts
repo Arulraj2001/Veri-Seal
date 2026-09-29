@@ -28,18 +28,24 @@ export function generate4x6PassportSheet(
   const pW = spec.widthPx300Dpi;
   const pH = spec.heightPx300Dpi;
 
-  // Compute how many fit horizontally and vertically
-  const maxCols = Math.floor((sheetW - 60) / pW);
-  const maxRows = Math.floor((sheetH - 60) / pH);
+  // US 2×2" photos (600×600) tile as the industry-standard 3 cols × 2 rows = 6 photos
+  // across the full 4×6 sheet (applicant trims/cuts the printed grid). No outer gutter.
+  // All other specs reserve a small 60px safety margin so cut guides never clip.
+  const isUsSquare = spec.id === 'us-passport';
+  const margin = isUsSquare ? 0 : 60;
 
-  const cols = Math.max(1, Math.min(maxCols, spec.id === 'us-passport' ? 3 : 4));
-  const rows = Math.max(1, Math.min(maxRows, spec.id === 'us-passport' ? 2 : 2));
+  // Compute how many fit horizontally and vertically
+  const maxCols = Math.floor((sheetW - margin) / pW);
+  const maxRows = Math.floor((sheetH - margin) / pH);
+
+  const cols = Math.max(1, Math.min(maxCols, isUsSquare ? 3 : 4));
+  const rows = Math.max(1, Math.min(maxRows, 2));
 
   const totalGridW = cols * pW;
   const totalGridH = rows * pH;
 
-  const spacingX = cols > 1 ? Math.floor((sheetW - totalGridW) / (cols + 1)) : 40;
-  const spacingY = rows > 1 ? Math.floor((sheetH - totalGridH) / (rows + 1)) : 40;
+  const spacingX = cols > 1 ? Math.floor((sheetW - totalGridW) / (cols + 1)) : 0;
+  const spacingY = rows > 1 ? Math.floor((sheetH - totalGridH) / (rows + 1)) : 0;
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -60,15 +66,18 @@ export function generate4x6PassportSheet(
     }
   }
 
-  // Draw footer text with specs
-  ctx.fillStyle = '#9CA3AF';
-  ctx.font = 'bold 16px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText(
-    `${spec.country} ${spec.title} • 4"×6" Sheet (${cols * rows} Photos) • Print at 100% Scale / Actual Size • Generated on Kagazo.in`,
-    sheetW / 2,
-    sheetH - 18
-  );
+  // Draw footer text with specs. Skipped for the tight US 3×2 grid which fills the
+  // entire sheet (footer would overlap the bottom row of photos).
+  if (!isUsSquare) {
+    ctx.fillStyle = '#9CA3AF';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(
+      `${spec.country} ${spec.title} • 4"×6" Sheet (${cols * rows} Photos) • Print at 100% Scale / Actual Size • Generated on Kagazo.in`,
+      sheetW / 2,
+      sheetH - 18
+    );
+  }
 
   return canvas;
 }

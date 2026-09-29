@@ -44,6 +44,7 @@ import {
   generateA4PassportSheet,
   canvasTo300DpiBlob,
 } from '@/lib/passport-sheet';
+import { createPdfFromJpeg } from '@/lib/pdf-utils';
 import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 
 export interface PassportPhotoStudioEngineProps {
@@ -184,6 +185,25 @@ export function PassportPhotoStudioEngine({
     const baseName = file?.name ? file.name.replace(/\.[^/.]+$/, '') : 'passport_photo';
     a.download = `${baseName}_${spec.countryCode}_${spec.widthMm}x${spec.heightMm}mm_300dpi.jpg`;
     a.click();
+  };
+
+  // Download Single Photo as an exact-physical-size PDF
+  const handleDownloadPdf = () => {
+    if (!singleResult?.dataUrl) return;
+    try {
+      const pdfBlob = createPdfFromJpeg(singleResult.dataUrl, spec.widthMm, spec.heightMm);
+      const url = URL.createObjectURL(pdfBlob);
+      const a = document.createElement('a');
+      const baseName = file?.name ? file.name.replace(/\.[^/.]+$/, '') : 'passport_photo';
+      a.href = url;
+      a.download = `${baseName}_${spec.countryCode}_${spec.widthMm}x${spec.heightMm}mm_300dpi.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('PDF export failed', err);
+    }
   };
 
   // Download 4x6 Sheet
@@ -561,14 +581,24 @@ export function PassportPhotoStudioEngine({
                     {/* Download & Print Actions */}
                     <div className="space-y-2 pt-1">
                       {activeOutputTab === 'single' ? (
-                        <button
-                          type="button"
-                          onClick={handleDownloadSingle}
-                          className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-primary text-white font-bold text-xs shadow-md hover:bg-primary-hover transition-all cursor-pointer"
-                        >
-                          <Download className="w-4 h-4" />
-                          <span>Download Biometric JPEG ({singleResult.sizeKb} KB)</span>
-                        </button>
+                        <div className="space-y-2">
+                          <button
+                            type="button"
+                            onClick={handleDownloadSingle}
+                            className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-primary text-white font-bold text-xs shadow-md hover:bg-primary-hover transition-all cursor-pointer"
+                          >
+                            <Download className="w-4 h-4" />
+                            <span>Download Biometric JPEG ({singleResult.sizeKb} KB)</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleDownloadPdf}
+                            className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-surface-darker text-text-main hover:bg-surface font-bold text-xs shadow-2xs transition-all cursor-pointer"
+                          >
+                            <FileCheck className="w-4 h-4 text-primary" />
+                            <span>Download as PDF (exact {spec.widthMm}×{spec.heightMm}mm)</span>
+                          </button>
+                        </div>
                       ) : activeOutputTab === '4x6' ? (
                         <div className="space-y-2">
                           <button
@@ -613,7 +643,7 @@ export function PassportPhotoStudioEngine({
 
                   {/* WhatsApp Share */}
                   <WhatsAppShare
-                    message={`I created official ${spec.country} passport photos with a 4x6 print sheet for free on Kagazo! https://kagazo.in/tools/${spec.id}`}
+                    message={`I created official ${spec.country} passport photos with a 4x6 print sheet for free on Kagazo! https://kagazo.in/tools/${spec.slug}`}
                   />
                 </div>
               ) : (

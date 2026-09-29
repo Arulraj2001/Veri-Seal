@@ -16,6 +16,15 @@ import {
   Award,
 } from 'lucide-react';
 
+/** Physical paper dimensions in mm for the stamp print sheet. */
+function paperWidthMm(format: '4R' | 'A4'): number {
+  return format === 'A4' ? 210 : 101.6;
+}
+
+function paperHeightMm(format: '4R' | 'A4'): number {
+  return format === 'A4' ? 297 : 152.4;
+}
+
 export default function StampPhotoEngine() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imageObj, setImageObj] = useState<HTMLImageElement | null>(null);
@@ -40,6 +49,21 @@ export default function StampPhotoEngine() {
 
   const [renderedImageUrl, setRenderedImageUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Shared stamp-sheet metrics (used by render + UI labels).
+  const isA4Paper = paperFormat === 'A4';
+  const stampCols = isA4Paper ? 8 : 4;
+  const stampRows = isA4Paper ? 10 : 4;
+  const stampTotalPhotos = stampCols * stampRows;
+  const stampPaperLabel = isA4Paper ? 'A4' : '4×6"';
+  const stampPaperDesc = isA4Paper ? '210×297mm' : '101.6×152.4mm';
+
+  // Switching paper size may drop copies above the new grid capacity.
+  const handlePaperChange = (next: '4R' | 'A4') => {
+    const nextTotal = next === 'A4' ? 80 : 16;
+    setPaperFormat(next);
+    if (stampCopies > nextTotal) setStampCopies(nextTotal);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
@@ -132,9 +156,10 @@ export default function StampPhotoEngine() {
 
       setRenderedImageUrl(canvas.toDataURL('image/jpeg', 0.95));
     } else {
-      // Stamp Size (20x25 mm) tiled on 4x6" card (16 photos: 4 cols x 4 rows)
-      const sheetWPx = Math.round((101.6 / 25.4) * dpi);
-      const sheetHPx = Math.round((152.4 / 25.4) * dpi);
+      // Stamp Size (20×25 mm) tiled on the selected paper format.
+      // 4R → 4×4 (16 photos); A4 → 8×10 (80 photos).
+      const sheetWPx = Math.round((paperWidthMm(paperFormat) / 25.4) * dpi);
+      const sheetHPx = Math.round((paperHeightMm(paperFormat) / 25.4) * dpi);
 
       const canvas = document.createElement('canvas');
       canvas.width = sheetWPx;
@@ -150,9 +175,8 @@ export default function StampPhotoEngine() {
       const stampWPx = Math.round((20 / 25.4) * dpi);
       const stampHPx = Math.round((25 / 25.4) * dpi);
 
-      const cols = 4;
-      const rows = 4;
-      const totalPhotos = 16;
+      const cols = stampCols;
+      const rows = stampRows;
 
       const gapX = (sheetWPx - cols * stampWPx) / (cols + 1);
       const gapY = (sheetHPx - rows * stampHPx) / (rows + 1);
@@ -190,11 +214,15 @@ export default function StampPhotoEngine() {
         sCtx.strokeRect(0, 0, stampWPx, stampHPx);
       }
 
-      // Tile onto master sheet
+      // Tile onto master sheet (honoring the user's requested copy count)
       let count = 0;
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          if (count >= stampCopies) break;
+      let stop = false;
+      for (let r = 0; r < rows && !stop; r++) {
+        for (let c = 0; c < cols && !stop; c++) {
+          if (count >= stampCopies) {
+            stop = true;
+            break;
+          }
 
           const posX = Math.round(gapX + c * (stampWPx + gapX));
           const posY = Math.round(gapY + r * (stampHPx + gapY));
@@ -218,14 +246,14 @@ export default function StampPhotoEngine() {
       ctx.font = '12px sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText(
-        `Kagazo Studio • 16 Stamp Photos (20×25mm) • 4×6" 300 DPI • 100% Actual Size`,
+        `Kagazo Studio • ${count} Stamp Photos (20×25mm) • ${stampPaperLabel} ${dpi} DPI • 100% Actual Size`,
         sheetWPx - 20,
         sheetHPx - 12
       );
 
       setRenderedImageUrl(canvas.toDataURL('image/jpeg', 0.95));
     }
-  }, [imageObj, mode, stampCopies, candidateName, dateOfPhoto, rollNumber, brightness, contrast, borderType, dpi]);
+  }, [imageObj, mode, stampCopies, paperFormat, candidateName, dateOfPhoto, rollNumber, brightness, contrast, borderType, dpi]);
 
   useEffect(() => {
     if (imageObj) {
@@ -240,14 +268,16 @@ export default function StampPhotoEngine() {
       alert('Please allow popups to open the print window.');
       return;
     }
+    // NEET postcard & 4R stamp sheets print on 4×6"; A4 stamp sheets print on A4.
+    const printPageSize = mode === 'stamp_size' && isA4Paper ? 'A4' : '4in 6in';
     printWin.document.write(`
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Print Stamp / NEET Postcard Photo - Kagazo Studio</title>
+          <title>Print ${mode === 'neet_postcard' ? 'NEET Postcard' : stampPaperLabel} Photo - Kagazo Studio</title>
           <style>
             @page {
-              size: 4in 6in;
+              size: ${printPageSize};
               margin: 0mm;
             }
             @media print {
@@ -283,9 +313,10 @@ export default function StampPhotoEngine() {
 
   const handleDownload = () => {
     if (!renderedImageUrl) return;
+    const suffix = mode === 'stamp_size' ? `_${paperFormat.toLowerCase()}` : '';
     const link = document.createElement('a');
     link.href = renderedImageUrl;
-    link.download = `kagazo_${mode}_300dpi.jpg`;
+    link.download = `kagazo_${mode}${suffix}_${dpi}dpi.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -323,7 +354,7 @@ export default function StampPhotoEngine() {
                 : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
             }`}
           >
-            20×25mm Stamp (16 Photos)
+            20×25mm Stamp ({stampTotalPhotos} Photos)
           </button>
           <button
             type="button"
@@ -361,7 +392,7 @@ export default function StampPhotoEngine() {
               </h3>
               <p className="text-sm text-slate-500 max-w-md mx-auto">
                 {mode === 'stamp_size'
-                  ? 'We automatically crop to 20×25mm stamp size and arrange 16 copies onto a 4×6" card.'
+                  ? 'We automatically crop to 20×25mm stamp size and tile 16–80 copies onto a 4×6" or A4 sheet.'
                   : 'We scale your photo to official 4×6" (10×15 cm) postcard size with candidate name, roll number, and DOP.'}
               </p>
             </div>
@@ -377,18 +408,45 @@ export default function StampPhotoEngine() {
               {mode === 'stamp_size' ? (
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
                   <label className="text-xs font-extrabold text-slate-800 uppercase tracking-wider">
-                    1. Stamp Photo Copies
+                    1. Paper Size &amp; Stamp Photo Copies
                   </label>
+
+                  {/* Paper Format Toggle (4R vs A4) */}
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-bold text-slate-600">Print Sheet:</span>
+                    <div className="flex gap-1.5">
+                      {(['4R', 'A4'] as ('4R' | 'A4')[]).map((pf) => (
+                        <button
+                          key={pf}
+                          type="button"
+                          onClick={() => handlePaperChange(pf)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                            paperFormat === pf
+                              ? 'bg-emerald-600 text-white shadow-xs'
+                              : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+                          }`}
+                        >
+                          {pf === '4R' ? '4×6"' : 'A4'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-500">
+                    {stampPaperDesc} • up to {stampTotalPhotos} photos per sheet.
+                  </p>
+
                   <div className="flex items-center justify-between text-xs text-slate-600 font-bold">
                     <span>Quantity: {stampCopies} Photos</span>
-                    <span className="text-emerald-700 font-extrabold">Full 4×6 Card</span>
+                    <span className="text-emerald-700 font-extrabold">
+                      {stampPaperLabel} • {dpi} DPI
+                    </span>
                   </div>
                   <input
                     type="range"
                     min="4"
-                    max="16"
+                    max={stampTotalPhotos}
                     step="4"
-                    value={stampCopies}
+                    value={Math.min(stampCopies, stampTotalPhotos)}
                     onChange={(e) => setStampCopies(parseInt(e.target.value))}
                     className="w-full accent-emerald-600"
                   />
@@ -507,10 +565,10 @@ export default function StampPhotoEngine() {
                 <span className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
                   <span>Live Preview</span>
                   <span className="text-emerald-700 font-bold lowercase">
-                    {mode === 'stamp_size' ? '16 Stamp Photos (20×25mm)' : '4×6" NEET Postcard'}
+                    {mode === 'stamp_size' ? `${stampTotalPhotos} Stamp Photos (20×25mm) • ${stampPaperLabel}` : '4×6" NEET Postcard'}
                   </span>
                 </span>
-                <span className="text-[11px] text-slate-500 font-semibold">300 DPI Lab Print</span>
+                <span className="text-[11px] text-slate-500 font-semibold">{dpi} DPI Lab Print</span>
               </div>
 
               <div className="relative bg-slate-200/70 p-6 rounded-3xl border border-slate-300/80 shadow-inner flex items-center justify-center overflow-hidden min-h-[440px]">
@@ -543,7 +601,7 @@ export default function StampPhotoEngine() {
                   className="w-full py-3.5 px-6 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-sm rounded-2xl transition-all shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Download className="w-5 h-5" />
-                  <span>Download 300 DPI JPG</span>
+                  <span>Download {dpi} DPI JPG</span>
                 </button>
               </div>
             </div>

@@ -6,6 +6,8 @@
 
 export interface PassportPhotoSpec {
   id: string;
+  /** Real Kagazo tool route (without leading slash) this spec renders under, used for share links & CTAs. */
+  slug: string;
   country: string;
   countryCode: string;
   flagEmoji: string;
@@ -41,6 +43,7 @@ export interface PassportPhotoSpec {
 export const PASSPORT_SPECS: Record<string, PassportPhotoSpec> = {
   'us-passport': {
     id: 'us-passport',
+    slug: 'us-passport-photo',
     country: 'United States',
     countryCode: 'US',
     flagEmoji: '🇺🇸',
@@ -83,6 +86,7 @@ export const PASSPORT_SPECS: Record<string, PassportPhotoSpec> = {
 
   'uk-passport': {
     id: 'uk-passport',
+    slug: 'uk-passport-photo',
     country: 'United Kingdom',
     countryCode: 'GB',
     flagEmoji: '🇬🇧',
@@ -124,6 +128,7 @@ export const PASSPORT_SPECS: Record<string, PassportPhotoSpec> = {
 
   'schengen-visa': {
     id: 'schengen-visa',
+    slug: 'schengen-visa-photo',
     country: 'Schengen Area (EU)',
     countryCode: 'EU',
     flagEmoji: '🇪🇺',
@@ -165,6 +170,7 @@ export const PASSPORT_SPECS: Record<string, PassportPhotoSpec> = {
 
   'canada-passport': {
     id: 'canada-passport',
+    slug: 'canadian-passport-photo',
     country: 'Canada',
     countryCode: 'CA',
     flagEmoji: '🇨🇦',
@@ -206,6 +212,7 @@ export const PASSPORT_SPECS: Record<string, PassportPhotoSpec> = {
 
   'india-passport': {
     id: 'india-passport',
+    slug: 'passport-photo-maker',
     country: 'India',
     countryCode: 'IN',
     flagEmoji: '🇮🇳',
@@ -247,6 +254,7 @@ export const PASSPORT_SPECS: Record<string, PassportPhotoSpec> = {
 
   'australia-passport': {
     id: 'australia-passport',
+    slug: 'passport-photo-maker',
     country: 'Australia',
     countryCode: 'AU',
     flagEmoji: '🇦🇺',
@@ -287,6 +295,7 @@ export const PASSPORT_SPECS: Record<string, PassportPhotoSpec> = {
 
   'singapore-passport': {
     id: 'singapore-passport',
+    slug: 'passport-photo-maker',
     country: 'Singapore',
     countryCode: 'SG',
     flagEmoji: '🇸🇬',

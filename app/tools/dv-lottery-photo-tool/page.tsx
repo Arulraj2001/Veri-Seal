@@ -341,7 +341,7 @@ export default function DvLotteryPhotoPage() {
           {/* Main Content Area */}
           <main className="lg:col-span-9 xl:col-span-10 space-y-8">
             {/* Interactive Engine Container */}
-            <UscisPhotoCheckerEngine />
+            <UscisPhotoCheckerEngine defaultMode="dv_lottery" />
 
             {/* Post-Download Ad Slot */}
             <AdSlot slot="post_download" />
