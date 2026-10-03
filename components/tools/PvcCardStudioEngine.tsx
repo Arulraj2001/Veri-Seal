@@ -16,6 +16,14 @@ import {
   Award,
 } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { createPdfFromJpeg } from '@/lib/pdf-utils';
+
+/** Physical sheet dimensions (mm) for each PVC tray layout. */
+const PVC_SHEET_MM: Record<'pouch_4x6' | 'epson_tray' | 'a4_batch', { w: number; h: number }> = {
+  pouch_4x6: { w: 152.4, h: 101.6 }, // 4×6" card
+  epson_tray: { w: 140, h: 210 }, // Epson standard tray
+  a4_batch: { w: 210, h: 297 }, // A4 portrait
+};
 
 export default function PvcCardStudioEngine() {
   const [frontFile, setFrontFile] = useState<File | null>(null);
@@ -169,13 +177,21 @@ export default function PvcCardStudioEngine() {
       alert('Please allow popups to open the print dialog.');
       return;
     }
+    // Print at the physical sheet scale for true lab output.
+    const pageSize =
+      layoutMode === 'a4_batch'
+        ? 'A4'
+        : layoutMode === 'pouch_4x6'
+        ? '6in 4in'
+        : '5.51in 8.27in'; // Epson tray 140×210 mm in portrait
+
     printWin.document.write(`
       <!DOCTYPE html>
       <html>
         <head>
           <title>Print PVC Smart ID Card - Kagazo</title>
           <style>
-            @page { size: auto; margin: 0mm; }
+            @page { size: ${pageSize}; margin: 0mm; }
             @media print {
               html, body { width: 100%; height: 100%; margin: 0 !important; padding: 0 !important; }
               img { width: 100%; height: 100%; object-fit: contain; display: block; }
@@ -199,6 +215,20 @@ export default function PvcCardStudioEngine() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleDownloadPdf = () => {
+    if (!renderedImageUrl) return;
+    const { w, h } = PVC_SHEET_MM[layoutMode];
+    const pdfBlob = createPdfFromJpeg(renderedImageUrl, w, h);
+    const url = URL.createObjectURL(pdfBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `pvc_smart_card_${layoutMode}_300dpi.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
   };
 
   return (
@@ -360,7 +390,7 @@ export default function PvcCardStudioEngine() {
               )}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
               <button
                 type="button"
                 onClick={handlePrint}
@@ -376,7 +406,16 @@ export default function PvcCardStudioEngine() {
                 className="w-full py-3.5 px-6 bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-sm rounded-2xl transition-all shadow-lg shadow-slate-900/20 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Download className="w-5 h-5" />
-                <span>Download Print-Ready 300 DPI JPG</span>
+                <span>Download 300 DPI JPG</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleDownloadPdf}
+                className="w-full py-3.5 px-6 bg-white border-2 border-slate-900 hover:bg-slate-100 text-slate-900 font-extrabold text-sm rounded-2xl transition-all shadow-lg shadow-slate-900/10 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <FileText className="w-5 h-5" />
+                <span>Download Exact-Size PDF</span>
               </button>
             </div>
           </div>

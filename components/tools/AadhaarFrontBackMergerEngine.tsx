@@ -72,7 +72,7 @@ export default function AadhaarFrontBackMergerEngine() {
     setIsRendering(true);
 
     try {
-      const dpi = 200; // 200 DPI for fast crisp generation
+      const dpi = targetKb === '300kb' ? 300 : 200; // 300 DPI lab print for high-fidelity preset, 200 DPI otherwise to stay under the KB cap
       const a4WidthPx = Math.round((210 / 25.4) * dpi);
       const a4HeightPx = Math.round((297 / 25.4) * dpi);
 
@@ -637,7 +637,7 @@ export default function AadhaarFrontBackMergerEngine() {
               <div className="w-full p-3 rounded-xl border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-300 flex items-center justify-between text-xs font-bold">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-cyan-600" />
-                  <span>Output Size: {renderedSizeKb} KB • STRICTLY UNDER 200KB LIMIT</span>
+                  <span>Output Size: {renderedSizeKb} KB • STRICTLY UNDER {targetKb === '150kb' ? '150KB' : targetKb === '200kb' ? '200KB' : '300KB'} LIMIT</span>
                 </div>
                 <span className="text-[10px] uppercase tracking-wider bg-white/80 dark:bg-slate-900 px-2 py-0.5 rounded">
                   ISO 32000 PDF

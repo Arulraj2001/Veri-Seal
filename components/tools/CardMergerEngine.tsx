@@ -14,8 +14,68 @@ import {
   ShieldCheck,
   Layers,
 } from 'lucide-react';
-import { mergeIdCards, CardMergerResponse, CardMergerOptions } from '@/lib/api';
+import { binarySearchJpeg } from '@/lib/image-engine';
+import { createPdfFromJpeg } from '@/lib/pdf-utils';
 import PreFlightComplianceCard from './PreFlightComplianceCard';
+
+/** Convert millimetres to pixels at a given DPI. */
+const px = (mm: number, dpi: number) => Math.round((mm / 25.4) * dpi);
+
+/** Encode a JPEG byte array as a base64 data URL (required by createPdfFromJpeg's atob path). */
+function bytesToBase64DataUrl(bytes: Uint8Array, mime: string): string {
+  let binary = '';
+  const CHUNK = 0x8000;
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    binary += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + CHUNK)));
+  }
+  return `data:${mime};base64,${btoa(binary)}`;
+}
+
+/** Load a File into an HTMLImageElement (client-side). */
+function loadImage(file: File): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Could not decode image file.'));
+    img.src = url;
+  });
+}
+
+/** Draw an image cover-fit, centered and rotated within (x, y, w, h). */
+function drawRotatedCard(
+  ctx: CanvasRenderingContext2D,
+  img: HTMLImageElement,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  rotation: number
+) {
+  const deg = ((rotation % 360) + 360) % 360;
+  const cx = x + w / 2;
+  const cy = y + h / 2;
+  const swap = deg === 90 || deg === 270;
+  const dw = swap ? h : w;
+  const dh = swap ? w : h;
+  const scale = Math.max(dw / img.width, dh / img.height);
+  const cw = img.width * scale;
+  const ch = img.height * scale;
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate((deg * Math.PI) / 180);
+  ctx.drawImage(img, -cw / 2, -ch / 2, cw, ch);
+  ctx.restore();
+}
+
+interface ClientMergeResult {
+  pdfBlob: Blob;
+  image_base64: string;
+  output_size_kb: number;
+  width_px: number;
+  height_px: number;
+  target_kb: number;
+}
 
 export default function CardMergerEngine() {
   const [frontFile, setFrontFile] = useState<File | null>(null);
@@ -24,11 +84,11 @@ export default function CardMergerEngine() {
   const [backPreview, setBackPreview] = useState<string | null>(null);
   const [frontRotation, setFrontRotation] = useState<number>(0);
   const [backRotation, setBackRotation] = useState<number>(0);
-  const [layout, setLayout] = useState<CardMergerOptions['layout']>('stacked');
+  const [layout, setLayout] = useState<'stacked' | 'side_by_side'>('stacked');
   const [targetKb, setTargetKb] = useState<number>(200);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [result, setResult] = useState<CardMergerResponse | null>(null);
+  const [result, setResult] = useState<ClientMergeResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const frontInputRef = useRef<HTMLInputElement>(null);
@@ -59,19 +119,70 @@ export default function CardMergerEngine() {
     }
 
     setIsLoading(true);
-    setProgress(20);
+    setProgress(10);
     setError(null);
 
     try {
-      const res = await mergeIdCards(frontFile, backFile, {
-        layout,
-        frontRotation,
-        backRotation,
-        targetKb,
-        outputFormat: 'both',
-        onProgress: (pct) => setProgress(pct),
+      const [front, back] = await Promise.all([loadImage(frontFile), loadImage(backFile)]);
+      setProgress(30);
+
+      // 100% in-browser canvas pipeline (no uploads).
+      const dpi = 200; // A4 merge sheets stay well under the KB cap at 200 DPI
+      const a4W = px(210, dpi);
+      const a4H = px(297, dpi);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = a4W;
+      canvas.height = a4H;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Canvas is not supported in this browser.');
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, a4W, a4H);
+
+      // Render smart-card sides slightly above native CR-80 for A4 legibility.
+      const cardW = px(95, dpi);
+      const cardH = px(60, dpi);
+
+      if (layout === 'side_by_side') {
+        const gap = px(14, dpi);
+        const startX = (a4W - cardW * 2 - gap) / 2;
+        const y = (a4H - cardH) / 2;
+        drawRotatedCard(ctx, front, startX, y, cardW, cardH, frontRotation);
+        drawRotatedCard(ctx, back, startX + cardW + gap, y, cardW, cardH, backRotation);
+      } else {
+        const titleH = px(22, dpi);
+        const gap = px(16, dpi);
+        let y = (a4H - cardH * 2 - gap - titleH) / 2;
+
+        ctx.fillStyle = '#0F172A';
+        ctx.font = `bold ${px(11, dpi)}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('DRIVING LICENCE / VEHICLE REGISTRATION', a4W / 2, y + titleH / 2);
+        y += titleH;
+
+        drawRotatedCard(ctx, front, (a4W - cardW) / 2, y, cardW, cardH, frontRotation);
+        y += cardH + gap;
+        drawRotatedCard(ctx, back, (a4W - cardW) / 2, y, cardW, cardH, backRotation);
+      }
+
+      setProgress(55);
+
+      // Binary-search JPEG quality to stay strictly under the selected KB cap.
+      const { bytes, sizeKb } = await binarySearchJpeg(canvas, 1, targetKb, dpi);
+      const image_base64 = bytesToBase64DataUrl(bytes, 'image/jpeg');
+      const pdfBlob = createPdfFromJpeg(image_base64, 210, 297, a4W, a4H);
+
+      setProgress(100);
+      setResult({
+        pdfBlob,
+        image_base64,
+        output_size_kb: sizeKb,
+        width_px: a4W,
+        height_px: a4H,
+        target_kb: targetKb,
       });
-      setResult(res);
     } catch (err: any) {
       setError(err.message || 'Failed to merge smart card sides.');
     } finally {
@@ -81,20 +192,22 @@ export default function CardMergerEngine() {
   };
 
   const handleDownloadPdf = () => {
-    if (!result?.pdf_base64) return;
+    if (!result?.pdfBlob) return;
+    const url = URL.createObjectURL(result.pdfBlob);
     const link = document.createElement('a');
-    link.href = result.pdf_base64;
-    link.download = `driving_license_single_page_${targetKb}kb.pdf`;
+    link.href = url;
+    link.download = `driving_license_single_page_${result.target_kb}kb.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
   };
 
   const handleDownloadImage = () => {
     if (!result?.image_base64) return;
     const link = document.createElement('a');
     link.href = result.image_base64;
-    link.download = `driving_license_merged_a4.jpg`;
+    link.download = 'driving_license_merged_a4.jpg';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -305,7 +418,7 @@ export default function CardMergerEngine() {
 
           {result && (
             <div className="flex items-center gap-3">
-              {result.pdf_base64 && (
+              {result.pdfBlob && (
                 <button
                   onClick={handleDownloadPdf}
                   className="px-5 py-2.5 rounded-2xl bg-slate-900 hover:bg-black text-white font-bold text-xs inline-flex items-center gap-2 shadow-md transition-all"
