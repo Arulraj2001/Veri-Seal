@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'how to read car service bill India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/service-invoice-analyzer',
+    canonical: 'https://kagazo.in/vehicle-os/service-invoice-analyzer',
   },
   openGraph: {
     title: 'Car Service Invoice Analyzer India | Deconstruct Parts, Labour & GST Taxes',
     description:
       'Analyze your completed car service bill into Parts, Labour, and Taxes. Detect cost inflation compared to your previous service.',
-    url: 'https://Kagazo.in/vehicle-os/service-invoice-analyzer',
+    url: 'https://kagazo.in/vehicle-os/service-invoice-analyzer',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function ServiceInvoiceAnalyzerPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://Kagazo.in/vehicle-os' },
-          { '@type': 'ListItem', position: 3, name: 'Service Invoice Analyzer', item: 'https://Kagazo.in/vehicle-os/service-invoice-analyzer' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://kagazo.in/vehicle-os' },
+          { '@type': 'ListItem', position: 3, name: 'Service Invoice Analyzer', item: 'https://kagazo.in/vehicle-os/service-invoice-analyzer' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Car Service Invoice Analyzer',
-        url: 'https://Kagazo.in/vehicle-os/service-invoice-analyzer',
+        url: 'https://kagazo.in/vehicle-os/service-invoice-analyzer',
         applicationCategory: 'AutomotiveApplication',
         operatingSystem: 'All',
         offers: {

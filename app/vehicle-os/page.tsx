@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     'car 5 year cost of ownership calculator',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os',
+    canonical: 'https://kagazo.in/vehicle-os',
   },
   openGraph: {
     title: 'Vehicle Cost & Ownership Intelligence India | Kagazo',
     description:
       'Audit garage repair quotes, calculate true 5-year ₹/km ownership costs, and evaluate EV vs petrol break-even in India.',
-    url: 'https://Kagazo.in/vehicle-os',
+    url: 'https://kagazo.in/vehicle-os',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -74,14 +74,14 @@ export default function VehicleOsHubPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://Kagazo.in/vehicle-os' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://kagazo.in/vehicle-os' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Vehicle Cost & Ownership Intelligence Platform',
-        url: 'https://Kagazo.in/vehicle-os',
+        url: 'https://kagazo.in/vehicle-os',
         applicationCategory: 'AutomotiveApplication',
         operatingSystem: 'All',
         offers: {

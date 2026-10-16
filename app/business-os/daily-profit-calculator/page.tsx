@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'daily margin percentage calculator India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/daily-profit-calculator',
+    canonical: 'https://kagazo.in/business-os/daily-profit-calculator',
   },
   openGraph: {
     title: 'Daily Profit Calculator for Kirana Shops & Retailers India | Cash vs UPI vs Udhaar',
     description:
       "Enter today's Cash, UPI, and Credit sales to see your real daily profit and interactive ₹100 anatomy breakdown. Free and private.",
-    url: 'https://Kagazo.in/business-os/daily-profit-calculator',
+    url: 'https://kagazo.in/business-os/daily-profit-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,9 +73,9 @@ export default function DailyProfitPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Daily Profit Calculator', item: 'https://Kagazo.in/business-os/daily-profit-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Daily Profit Calculator', item: 'https://kagazo.in/business-os/daily-profit-calculator' },
         ],
       },
       {

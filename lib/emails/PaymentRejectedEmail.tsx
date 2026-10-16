@@ -48,7 +48,7 @@ export function PaymentRejectedEmail({
 
         <div style={{ textAlign: 'center', margin: '32px 0' }}>
           <a
-            href="https://Kagazo.in/dashboard/payment"
+            href="https://kagazo.in/dashboard/payment"
             style={{
               backgroundColor: '#E6570B',
               color: '#FFFFFF',

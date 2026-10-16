@@ -28,13 +28,13 @@ export const metadata: Metadata = {
     'vehicle breakdown repair contingency fund',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/emergency-cost-planner',
+    canonical: 'https://kagazo.in/vehicle-os/emergency-cost-planner',
   },
   openGraph: {
     title: 'Vehicle Emergency Cost Planner | Kagazo Vehicle OS',
     description:
       'Plan your monthly car maintenance sinking fund. Smooth out lump-sum insurance, tyre replacements, and unforeseen breakdowns.',
-    url: 'https://Kagazo.in/vehicle-os/emergency-cost-planner',
+    url: 'https://kagazo.in/vehicle-os/emergency-cost-planner',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -55,19 +55,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Emergency Repair Sinking Fund',
-      item: 'https://Kagazo.in/vehicle-os/emergency-cost-planner',
+      item: 'https://kagazo.in/vehicle-os/emergency-cost-planner',
     },
   ],
 };
@@ -76,7 +76,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Vehicle Emergency Sinking Fund Planner',
-  url: 'https://Kagazo.in/vehicle-os/emergency-cost-planner',
+  url: 'https://kagazo.in/vehicle-os/emergency-cost-planner',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

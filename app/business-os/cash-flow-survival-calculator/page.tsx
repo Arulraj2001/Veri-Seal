@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'business solvency runway calculator',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/cash-flow-survival-calculator',
+    canonical: 'https://kagazo.in/business-os/cash-flow-survival-calculator',
   },
   openGraph: {
     title: 'Cash Flow Survival Runway Calculator India | How Many Days Until Cash Runs Out',
     description:
       'Profit on paper does not pay suppliers or shop rent. Calculate your exact days of cash buffer before default.',
-    url: 'https://Kagazo.in/business-os/cash-flow-survival-calculator',
+    url: 'https://kagazo.in/business-os/cash-flow-survival-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function CashFlowSurvivalPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Cash-Flow Survival Calculator', item: 'https://Kagazo.in/business-os/cash-flow-survival-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Cash-Flow Survival Calculator', item: 'https://kagazo.in/business-os/cash-flow-survival-calculator' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Cash-Flow Survival Runway Calculator',
-        url: 'https://Kagazo.in/business-os/cash-flow-survival-calculator',
+        url: 'https://kagazo.in/business-os/cash-flow-survival-calculator',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

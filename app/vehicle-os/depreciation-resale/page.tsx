@@ -27,13 +27,13 @@ export const metadata: Metadata = {
     'diesel car depreciation 10 year rule delhi',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/depreciation-resale',
+    canonical: 'https://kagazo.in/vehicle-os/depreciation-resale',
   },
   openGraph: {
     title: 'Car Depreciation & Resale Value Predictor | Kagazo Vehicle OS',
     description:
       'Check fair market used car valuation bands and 2-year forward resale outlook across Indian car models.',
-    url: 'https://Kagazo.in/vehicle-os/depreciation-resale',
+    url: 'https://kagazo.in/vehicle-os/depreciation-resale',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -54,19 +54,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Depreciation & Resale Predictor',
-      item: 'https://Kagazo.in/vehicle-os/depreciation-resale',
+      item: 'https://kagazo.in/vehicle-os/depreciation-resale',
     },
   ],
 };
@@ -75,7 +75,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Car Depreciation & Resale Predictor',
-  url: 'https://Kagazo.in/vehicle-os/depreciation-resale',
+  url: 'https://kagazo.in/vehicle-os/depreciation-resale',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

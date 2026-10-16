@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'kirana shop monthly profit target planner',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/sales-target-calculator',
+    canonical: 'https://kagazo.in/business-os/sales-target-calculator',
   },
   openGraph: {
     title: 'Sales Target Calculator India | How to Earn ₹1 Lakh/Month Net Profit',
     description:
       'Start from your dream take-home pay and reverse-engineer your required daily sales pace, monthly turnover, and order volume.',
-    url: 'https://Kagazo.in/business-os/sales-target-calculator',
+    url: 'https://kagazo.in/business-os/sales-target-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,9 +73,9 @@ export default function SalesTargetPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Sales Target Calculator', item: 'https://Kagazo.in/business-os/sales-target-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Sales Target Calculator', item: 'https://kagazo.in/business-os/sales-target-calculator' },
         ],
       },
       {
@@ -92,7 +92,7 @@ export default function SalesTargetPage() {
       {
         '@type': 'WebApplication',
         name: 'Reverse Sales Target Calculator',
-        url: 'https://Kagazo.in/business-os/sales-target-calculator',
+        url: 'https://kagazo.in/business-os/sales-target-calculator',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

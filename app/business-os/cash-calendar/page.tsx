@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'kirana shop monthly cash flow planner',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/cash-calendar',
+    canonical: 'https://kagazo.in/business-os/cash-calendar',
   },
   openGraph: {
     title: '30-Day Business Cash Flow Calendar India | Predict Bank Balance & Crunch Days',
     description:
       'Predict your bank balance on every upcoming day after shop rent, staff salaries, GST 3B, and vendor cheques clear.',
-    url: 'https://Kagazo.in/business-os/cash-calendar',
+    url: 'https://kagazo.in/business-os/cash-calendar',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function CashCalendarPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: '30-Day Cash Flow Calendar', item: 'https://Kagazo.in/business-os/cash-calendar' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: '30-Day Cash Flow Calendar', item: 'https://kagazo.in/business-os/cash-calendar' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: '30-Day Business Cash Flow Calendar & Liquidity Forecaster',
-        url: 'https://Kagazo.in/business-os/cash-calendar',
+        url: 'https://kagazo.in/business-os/cash-calendar',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

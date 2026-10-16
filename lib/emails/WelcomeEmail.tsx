@@ -53,7 +53,7 @@ export function WelcomeEmail({ name }: WelcomeEmailProps) {
         {/* CTA */}
         <div style={{ textAlign: 'center', margin: '32px 0' }}>
           <a
-            href="https://Kagazo.in"
+            href="https://kagazo.in"
             style={{
               backgroundColor: '#E6570B',
               color: '#FFFFFF',

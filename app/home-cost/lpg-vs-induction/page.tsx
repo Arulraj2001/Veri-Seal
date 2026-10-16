@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'best cooking option for Indian home 2025',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/lpg-vs-induction',
+    canonical: 'https://kagazo.in/home-cost/lpg-vs-induction',
   },
   openGraph: {
     title: 'LPG Cylinder vs Induction Cooking Cost Comparison India 2025 | Kagazo',
     description:
       'Discover whether cooking with a 14.2 kg LPG cylinder or an 1800W electric induction cooktop is cheaper per month for an Indian household.',
-    url: 'https://Kagazo.in/home-cost/lpg-vs-induction',
+    url: 'https://kagazo.in/home-cost/lpg-vs-induction',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -89,13 +89,13 @@ export default function LpgVsInductionPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
           {
             '@type': 'ListItem',
             position: 3,
             name: 'LPG vs Induction Cost Calculator',
-            item: 'https://Kagazo.in/home-cost/lpg-vs-induction',
+            item: 'https://kagazo.in/home-cost/lpg-vs-induction',
           },
         ],
       },

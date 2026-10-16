@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const sitemapUrl = 'https://Kagazo.in/sitemap.xml';
+  const sitemapUrl = 'https://kagazo.in/sitemap.xml';
   const pingGoogleUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`;
 
   try {

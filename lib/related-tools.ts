@@ -18,6 +18,9 @@ export const CANONICAL_SLUG_MAP: Record<string, string> = {
   '/tools/pdf-password-remover': '/tools/unlock-pdf',
   '/tools/aadhaar-masker': '/tools/mask-aadhaar',
   '/tools/ifsc-finder': '/tools/ifsc-code-finder',
+  '/tools/gst-verifier': '/tools/gst-number-verifier',
+  '/tools/digital-signature-verifier': '/verify-aadhaar-pdf',
+  '/tools/community-certificate-compressor': '/tools/compress-pdf-to-200kb',
 };
 
 export const RELATED_TOOLS_MAP: Record<string, string[]> = {
@@ -49,7 +52,7 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
     '/tools/tnpsc-otr-compliance-kit',
     '/tools/pstm-certificate-generator',
     '/tools/compress-pdf-to-200kb',
-    '/tools/community-certificate-compressor',
+    '/tools/merge-marksheets-pdf',
   ],
   'ibps-photo-signature-resizer': [
     '/tools/handwritten-declaration-scanner',
@@ -77,7 +80,7 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   ],
   'aadhaar-pan-kyc-merge': [
     '/tools/mask-aadhaar',
-    '/tools/digital-signature-verifier',
+    '/verify-aadhaar-pdf',
     '/tools/ifsc-code-finder',
     '/tools/affidavit-generator',
   ],
@@ -143,13 +146,13 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
   ],
   'mask-aadhaar': [
     '/tools/aadhaar-pan-kyc-merge',
-    '/tools/digital-signature-verifier',
+    '/verify-aadhaar-pdf',
     '/tools/unlock-pdf',
     '/tools/affidavit-generator',
   ],
   'aadhaar-masker': [
     '/tools/aadhaar-pan-kyc-merge',
-    '/tools/digital-signature-verifier',
+    '/verify-aadhaar-pdf',
     '/tools/unlock-pdf',
     '/tools/affidavit-generator',
   ],

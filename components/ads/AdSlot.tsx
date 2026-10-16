@@ -254,13 +254,9 @@ export function AdSlot({
         className="adsbygoogle"
         style={{ display: 'block', width: '100%', minHeight: '200px' }}
         data-ad-client={config.adsense_publisher_id}
-        data-ad-slot={
-          slot === 'sidebar'
-            ? '1234567890'
-            : slot === 'post_download'
-            ? '2345678901'
-            : '3456789012'
-        }
+        {...(process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID
+          ? { 'data-ad-slot': process.env.NEXT_PUBLIC_ADSENSE_SLOT_ID }
+          : {})}
         data-ad-format="auto"
         data-full-width-responsive="true"
       />

@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'car vs train ticket price comparison india',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/trip-true-cost',
+    canonical: 'https://kagazo.in/vehicle-os/trip-true-cost',
   },
   openGraph: {
     title: 'Trip True Cost & Split Calculator | Kagazo Vehicle OS',
     description:
       'Plan your next outstation road trip. Calculate complete door-to-door expenses including fuel, expressway tolls, wear amortization, and per-head splits.',
-    url: 'https://Kagazo.in/vehicle-os/trip-true-cost',
+    url: 'https://kagazo.in/vehicle-os/trip-true-cost',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -57,19 +57,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Trip True Cost & Split Calculator',
-      item: 'https://Kagazo.in/vehicle-os/trip-true-cost',
+      item: 'https://kagazo.in/vehicle-os/trip-true-cost',
     },
   ],
 };
@@ -78,7 +78,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Trip True-Cost & Split Calculator',
-  url: 'https://Kagazo.in/vehicle-os/trip-true-cost',
+  url: 'https://kagazo.in/vehicle-os/trip-true-cost',
   applicationCategory: 'TravelApplication',
   operatingSystem: 'Any',
   offers: {

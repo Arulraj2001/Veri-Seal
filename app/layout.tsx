@@ -61,7 +61,6 @@ export const metadata: Metadata = {
     shortcut: ['/favicon.ico?v=3'],
   },
   alternates: {
-    canonical: SITE_URL,
     types: {
       'application/rss+xml': `${SITE_URL}/feed.xml`,
     },

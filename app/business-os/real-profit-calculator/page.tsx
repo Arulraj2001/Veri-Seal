@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'profit leak detector SMB India 2025',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/real-profit-calculator',
+    canonical: 'https://kagazo.in/business-os/real-profit-calculator',
   },
   openGraph: {
     title: 'Monthly P&L & Hidden Profit Leak Finder for Indian SMBs | Kagazo',
     description:
       'Uncover where your business is silently bleeding cash. Autodetects hidden leaks in Amazon/Flipkart marketplace cuts, courier freight, rent, and ad spend.',
-    url: 'https://Kagazo.in/business-os/real-profit-calculator',
+    url: 'https://kagazo.in/business-os/real-profit-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,9 +73,9 @@ export default function RealProfitPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Monthly P&L & Profit Leak Finder', item: 'https://Kagazo.in/business-os/real-profit-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Monthly P&L & Profit Leak Finder', item: 'https://kagazo.in/business-os/real-profit-calculator' },
         ],
       },
       {

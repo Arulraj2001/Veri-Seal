@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'best geyser for Indian home 2025',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/geyser-cost-calculator',
+    canonical: 'https://kagazo.in/home-cost/geyser-cost-calculator',
   },
   openGraph: {
     title: 'Geyser Running Cost Calculator India — Electric vs Solar vs Gas | Kagazo',
     description:
       'Discover whether a solar water heater, 5-Star electric geyser, or LPG instant geyser saves the most money for your Indian family. Annual cost comparison + payback calculator.',
-    url: 'https://Kagazo.in/home-cost/geyser-cost-calculator',
+    url: 'https://kagazo.in/home-cost/geyser-cost-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -89,13 +89,13 @@ export default function GeyserCostCalculatorPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
           {
             '@type': 'ListItem',
             position: 3,
             name: 'Geyser Running Cost Calculator',
-            item: 'https://Kagazo.in/home-cost/geyser-cost-calculator',
+            item: 'https://kagazo.in/home-cost/geyser-cost-calculator',
           },
         ],
       },

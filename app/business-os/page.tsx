@@ -43,14 +43,14 @@ export const metadata: Metadata = {
     'free business tools for Indian sellers',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os',
+    canonical: 'https://kagazo.in/business-os',
   },
   openGraph: {
     title: 'Free Profit & Cash-Flow Calculator for Indian Small Businesses | Kirana, D2C & WhatsApp Sellers',
     description:
       "Answer the #1 small business question: Am I actually making money, and where is my money going? 100% free, zero-login tools with authentic Indian marketplace fee slabs.",
     type: 'website',
-    url: 'https://Kagazo.in/business-os',
+    url: 'https://kagazo.in/business-os',
     siteName: 'Kagazo',
   },
   twitter: {
@@ -271,14 +271,14 @@ export default function BusinessOsHubPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Kagazo Business OS — Small Business Cash-Flow & Profitability Platform',
-        url: 'https://Kagazo.in/business-os',
+        url: 'https://kagazo.in/business-os',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All modern web browsers',
         offers: {

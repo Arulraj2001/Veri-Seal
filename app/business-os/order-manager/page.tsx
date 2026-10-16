@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'free small business order management tool',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/order-manager',
+    canonical: 'https://kagazo.in/business-os/order-manager',
   },
   openGraph: {
     title: 'WhatsApp & DM Order Manager India | Track COD vs Prepaid & Live Profit Per Order',
     description:
       'Track orders from Instagram DMs and WhatsApp with automatic COGS, shipping deduction, COD status, and live net profit calculations.',
-    url: 'https://Kagazo.in/business-os/order-manager',
+    url: 'https://kagazo.in/business-os/order-manager',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function OrderManagerPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'WhatsApp & DM Order Manager', item: 'https://Kagazo.in/business-os/order-manager' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'WhatsApp & DM Order Manager', item: 'https://kagazo.in/business-os/order-manager' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'WhatsApp Business Order & Profit Manager',
-        url: 'https://Kagazo.in/business-os/order-manager',
+        url: 'https://kagazo.in/business-os/order-manager',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

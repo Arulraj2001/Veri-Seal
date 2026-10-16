@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'helper salary true cost calculator',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/employee-cost-calculator',
+    canonical: 'https://kagazo.in/business-os/employee-cost-calculator',
   },
   openGraph: {
     title: 'Employee True Cost Calculator India | Why ₹18k Salary Actually Costs ₹23k+',
     description:
       'A ₹18k salary costs ~₹23k in real cash. Calculate Diwali bonuses, tea/snacks, PF/ESI, and true hourly cost.',
-    url: 'https://Kagazo.in/business-os/employee-cost-calculator',
+    url: 'https://kagazo.in/business-os/employee-cost-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function EmployeeCostPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Employee True Cost Calculator', item: 'https://Kagazo.in/business-os/employee-cost-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Employee True Cost Calculator', item: 'https://kagazo.in/business-os/employee-cost-calculator' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Employee True Cost & Productivity Calculator',
-        url: 'https://Kagazo.in/business-os/employee-cost-calculator',
+        url: 'https://kagazo.in/business-os/employee-cost-calculator',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

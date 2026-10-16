@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'net worth comparison rent vs buy India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/rent-vs-buy',
+    canonical: 'https://kagazo.in/home-cost/rent-vs-buy',
   },
   openGraph: {
     title: 'Rent vs Buy Calculator India 2025 — 10-Year Wealth Comparison | Kagazo',
     description:
       'Compare buying a house with an 8.5% home loan vs renting and investing the down payment in a Nifty 50 equity SIP. Includes stamp duty, Section 24b, and property appreciation.',
-    url: 'https://Kagazo.in/home-cost/rent-vs-buy',
+    url: 'https://kagazo.in/home-cost/rent-vs-buy',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -89,13 +89,13 @@ export default function RentVsBuyPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
           {
             '@type': 'ListItem',
             position: 3,
             name: 'Rent vs Buy Calculator India',
-            item: 'https://Kagazo.in/home-cost/rent-vs-buy',
+            item: 'https://kagazo.in/home-cost/rent-vs-buy',
           },
         ],
       },

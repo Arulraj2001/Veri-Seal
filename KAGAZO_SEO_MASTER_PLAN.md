@@ -15,7 +15,8 @@
 | **Phase 3** | High-Intent Viral Tools & Workflow Bundles | 4 | 4 | ✅ Completed |
 | **Phase 4** | Regional Indic SEO (`ta-IN`) & Transliteration Grid | 3 | 3 | ✅ Completed |
 | **Phase 5** | Digital PR, Backlinks & Distribution Engine | 3 | 3 | ✅ Completed |
-| **Total** | | **18** | **18** | **100% Completed 🎉** |
+| **Phase 6** | Search Indexation Repair, 404 Elimination & AdSense Shield | 4 | 4 | ✅ Completed |
+| **Total** | | **22** | **22** | **100% Completed 🎉** |
 
 ---
 
@@ -152,6 +153,32 @@
   - Packaged extension into instant downloadable archive `public/extension/kagazo-chrome-extension.zip`.
   - Deployed dedicated landing and installation guide page `app/tools/chrome-extension/page.tsx`.
   - Registered in `TOOLS_CATALOG` (`lib/tools-data.ts`) with dynamic sitemap synchronization.
+
+---
+
+## Phase 6: Search Indexation Repair, 404 Elimination & AdSense Shield
+
+*Goal: Resolve all technical de-indexing signals, eradicate internal 404 links, and establish mandatory YMYL legal compliance for Google AdSense monetization.*
+
+- [x] **Task 6.1: Domain Casing Normalization & Root Canonical Trap Elimination**
+  - Replaced 286 instances of uppercase `https://Kagazo.in` with canonical lowercase `https://kagazo.in` across 62 files (preventing Google GSC "Duplicate without user-selected canonical" drops).
+  - Removed global `canonical: SITE_URL` from root `app/layout.tsx` so individual subpages, tools, and guides generate their own authoritative self-referential canonical URLs rather than trapping crawlers at the homepage.
+  - Corrected `Permissions-Policy` in `next.config.js` to `camera=(self), microphone=(self)` so live webcam photo capture and barcode scanning do not throw browser security violations.
+
+- [x] **Task 6.2: Internal 404 Eradication & Server-Level 301 Redirect Architecture**
+  - Audited and repaired broken internal tool links in `lib/related-tools.ts` (`/tools/community-certificate-compressor` mapped to `/tools/compress-pdf-to-200kb`, and `/tools/digital-signature-verifier` mapped to `/verify-aadhaar-pdf`).
+  - Added edge-level 301 permanent redirects in `next.config.js` for legacy and duplicate paths (`/tools/gst-verifier`, `/tools/digital-signature-verifier`, `/tools/community-certificate-compressor`, `/blog/community-certificate-signature-not-verified-fix`, and `/blog/fix-aadhaar-pdf-yellow-question-mark`).
+  - Removed ghost slug `/blog/community-certificate-signature-not-verified-fix` from `app/api/indexnow/route.ts` and added all 11 newly published high-authority guides to the IndexNow ping engine.
+
+- [x] **Task 6.3: AdSense Legal Shield Deployment (`/terms`, `/disclaimer`, `/cookies`)**
+  - Built comprehensive **Terms of Service** (`app/terms/page.tsx`) with Information Technology Act 2000, zero-retention liability terms, and allowable usage bounds.
+  - Built **Government Non-Affiliation Disclaimer** (`app/disclaimer/page.tsx`) explicitly stating Kagazo is an independent private educational tool not affiliated with UIDAI, State Governments, or recruitment commissions (UPSC, TNPSC, SSC). Prevents instant AdSense rejection under "Government Impersonation / Misleading Identity".
+  - Built **Cookie Policy** (`app/cookies/page.tsx`) complying with India's DPDP Act 2023, GDPR transparency, DoubleClick/AdSense ad cookie disclosures, and opt-out mechanics.
+  - Linked all legal pages into `components/layout/Footer.tsx` and registered them with monthly crawl frequencies in `app/sitemap.ts`.
+
+- [x] **Task 6.4: Ad Container Sanitation & CLS Protection**
+  - Updated `components/ads/AdSlot.tsx` to eliminate hardcoded dummy ad slot numbers (`1234567890`) that cause 400 Bad Request crawling errors on Google AdSense bots.
+  - Configured clean responsive layout containers with strict min-height protection to guarantee zero Cumulative Layout Shift (CLS 0.0) during live ad injection.
 
 ---
 

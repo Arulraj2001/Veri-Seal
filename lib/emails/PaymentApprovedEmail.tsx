@@ -60,7 +60,7 @@ export function PaymentApprovedEmail({
 
         <div style={{ textAlign: 'center', margin: '32px 0' }}>
           <a
-            href="https://Kagazo.in/dashboard"
+            href="https://kagazo.in/dashboard"
             style={{
               backgroundColor: '#E6570B',
               color: '#FFFFFF',

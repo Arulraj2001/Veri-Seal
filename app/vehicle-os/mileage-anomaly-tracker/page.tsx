@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'track car fuel efficiency real world',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/mileage-anomaly-tracker',
+    canonical: 'https://kagazo.in/vehicle-os/mileage-anomaly-tracker',
   },
   openGraph: {
     title: 'Real Mileage Tracker & Drop Anomaly Detector | Kagazo Vehicle OS',
     description:
       'Log full-to-full fuel fill-ups. Catch sudden 15%+ fuel economy drops caused by tyre drag, clogged filters, or faulty O2 sensors.',
-    url: 'https://Kagazo.in/vehicle-os/mileage-anomaly-tracker',
+    url: 'https://kagazo.in/vehicle-os/mileage-anomaly-tracker',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -57,19 +57,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Mileage Anomaly Tracker',
-      item: 'https://Kagazo.in/vehicle-os/mileage-anomaly-tracker',
+      item: 'https://kagazo.in/vehicle-os/mileage-anomaly-tracker',
     },
   ],
 };
@@ -78,7 +78,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Real Mileage & Drop Anomaly Tracker',
-  url: 'https://Kagazo.in/vehicle-os/mileage-anomaly-tracker',
+  url: 'https://kagazo.in/vehicle-os/mileage-anomaly-tracker',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'Any',
   offers: {

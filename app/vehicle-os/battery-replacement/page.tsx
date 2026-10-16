@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'car battery doorstep replacement warranty India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/battery-replacement',
+    canonical: 'https://kagazo.in/vehicle-os/battery-replacement',
   },
   openGraph: {
     title: 'Car Battery Replacement & Health Sizer India | Scrap Rebate Guide',
     description:
       'Is your car battery due for replacement? Test resting voltage and cranking lag to prevent highway stranding, with scrap rebate calculation.',
-    url: 'https://Kagazo.in/vehicle-os/battery-replacement',
+    url: 'https://kagazo.in/vehicle-os/battery-replacement',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function BatteryReplacementPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://Kagazo.in/vehicle-os' },
-          { '@type': 'ListItem', position: 3, name: 'Battery Replacement Decision Tool', item: 'https://Kagazo.in/vehicle-os/battery-replacement' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://kagazo.in/vehicle-os' },
+          { '@type': 'ListItem', position: 3, name: 'Battery Replacement Decision Tool', item: 'https://kagazo.in/vehicle-os/battery-replacement' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Car Battery Replacement & Health Decision Tool',
-        url: 'https://Kagazo.in/vehicle-os/battery-replacement',
+        url: 'https://kagazo.in/vehicle-os/battery-replacement',
         applicationCategory: 'AutomotiveApplication',
         operatingSystem: 'All',
         offers: {

@@ -28,13 +28,13 @@ export const metadata: Metadata = {
     'car maintenance insurance fuel cost breakdown',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/cost-reality-checker',
+    canonical: 'https://kagazo.in/vehicle-os/cost-reality-checker',
   },
   openGraph: {
     title: 'Vehicle Cost Reality Checker (TCO) | Kagazo Vehicle OS',
     description:
       'Uncover the real 5-year financial commitment of car ownership in India. See your true cost per month and cost per kilometer.',
-    url: 'https://Kagazo.in/vehicle-os/cost-reality-checker',
+    url: 'https://kagazo.in/vehicle-os/cost-reality-checker',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -55,19 +55,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Cost Reality Checker',
-      item: 'https://Kagazo.in/vehicle-os/cost-reality-checker',
+      item: 'https://kagazo.in/vehicle-os/cost-reality-checker',
     },
   ],
 };
@@ -106,7 +106,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Vehicle Cost Reality Checker',
-  url: 'https://Kagazo.in/vehicle-os/cost-reality-checker',
+  url: 'https://kagazo.in/vehicle-os/cost-reality-checker',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

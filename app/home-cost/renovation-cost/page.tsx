@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'tile flooring cost estimate India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/renovation-cost',
+    canonical: 'https://kagazo.in/home-cost/renovation-cost',
   },
   openGraph: {
     title: 'Home Renovation Cost Calculator India — Painting & Tile Estimator 2025 | Kagazo',
     description:
       'Estimate exact paint litres, labour charges, and vitrified floor tile boxes for room makeovers in India. Accounts for door/window area deduction and 10% tile wastage.',
-    url: 'https://Kagazo.in/home-cost/renovation-cost',
+    url: 'https://kagazo.in/home-cost/renovation-cost',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -89,13 +89,13 @@ export default function RenovationCostPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
           {
             '@type': 'ListItem',
             position: 3,
             name: 'Home Renovation Cost Calculator',
-            item: 'https://Kagazo.in/home-cost/renovation-cost',
+            item: 'https://kagazo.in/home-cost/renovation-cost',
           },
         ],
       },

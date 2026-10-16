@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'best AC for Indian home electricity saving',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/ac-cost-calculator',
+    canonical: 'https://kagazo.in/home-cost/ac-cost-calculator',
   },
   openGraph: {
     title: 'AC Running Cost & 3★ vs 5★ Break-Even Calculator India | Kagazo',
     description:
       'Compare 1.5 Ton Inverter AC electricity cost per hour, per night, and per month with Indian summer temperatures. Find out if upgrading to 5-Star pays off.',
-    url: 'https://Kagazo.in/home-cost/ac-cost-calculator',
+    url: 'https://kagazo.in/home-cost/ac-cost-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -89,13 +89,13 @@ export default function AcCostCalculatorPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
           {
             '@type': 'ListItem',
             position: 3,
             name: 'AC Electricity Cost Calculator',
-            item: 'https://Kagazo.in/home-cost/ac-cost-calculator',
+            item: 'https://kagazo.in/home-cost/ac-cost-calculator',
           },
         ],
       },

@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'SMB working capital optimization guide',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/ai-advisor',
+    canonical: 'https://kagazo.in/business-os/ai-advisor',
   },
   openGraph: {
     title: 'AI Business Diagnostic & Advisor for Indian SMBs | 0–100 Health Score',
     description:
       'Pinpoint the exact operational leaks dragging your business down and receive 3 high-ROI tactical fixes for this week.',
-    url: 'https://Kagazo.in/business-os/ai-advisor',
+    url: 'https://kagazo.in/business-os/ai-advisor',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function AiAdvisorPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'AI Business Diagnostic & Advisor', item: 'https://Kagazo.in/business-os/ai-advisor' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'AI Business Diagnostic & Advisor', item: 'https://kagazo.in/business-os/ai-advisor' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'AI Business Diagnostic & Margin Advisor',
-        url: 'https://Kagazo.in/business-os/ai-advisor',
+        url: 'https://kagazo.in/business-os/ai-advisor',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

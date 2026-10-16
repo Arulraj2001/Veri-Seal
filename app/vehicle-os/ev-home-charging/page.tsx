@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     'home charging vs fast charging cost difference',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/ev-home-charging',
+    canonical: 'https://kagazo.in/vehicle-os/ev-home-charging',
   },
   openGraph: {
     title: 'EV Home Charging Cost Calculator | Kagazo Vehicle OS',
     description:
       'Model your daily, monthly, and annual electricity bill impact when charging an electric vehicle at home in India.',
-    url: 'https://Kagazo.in/vehicle-os/ev-home-charging',
+    url: 'https://kagazo.in/vehicle-os/ev-home-charging',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -56,19 +56,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'EV Home Charging Cost Calculator',
-      item: 'https://Kagazo.in/vehicle-os/ev-home-charging',
+      item: 'https://kagazo.in/vehicle-os/ev-home-charging',
     },
   ],
 };
@@ -77,7 +77,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo EV Home Charging Cost Calculator',
-  url: 'https://Kagazo.in/vehicle-os/ev-home-charging',
+  url: 'https://kagazo.in/vehicle-os/ev-home-charging',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'Any',
   offers: {

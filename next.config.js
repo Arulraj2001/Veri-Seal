@@ -81,6 +81,31 @@ const nextConfig = {
         destination: '/tools/passport-photo-maker',
         permanent: true,
       },
+      {
+        source: '/tools/gst-verifier',
+        destination: '/tools/gst-number-verifier',
+        permanent: true,
+      },
+      {
+        source: '/tools/digital-signature-verifier',
+        destination: '/#upload-zone',
+        permanent: true,
+      },
+      {
+        source: '/tools/community-certificate-compressor',
+        destination: '/tools/compress-pdf-to-200kb',
+        permanent: true,
+      },
+      {
+        source: '/blog/community-certificate-signature-not-verified-fix',
+        destination: '/blog/community-certificate-signature-not-verified-free-fix-how-to-2026-tamil',
+        permanent: true,
+      },
+      {
+        source: '/blog/fix-aadhaar-pdf-yellow-question-mark',
+        destination: '/blog/fix-yellow-question-mark-aadhaar-pdf',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {
@@ -110,7 +135,7 @@ const nextConfig = {
           },
           {
             key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(self)',
+            value: 'camera=(self), microphone=(self)',
           },
           {
             key: 'Content-Security-Policy',

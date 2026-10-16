@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'best inverter battery for frequent power cut India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/inverter-battery-calculator',
+    canonical: 'https://kagazo.in/home-cost/inverter-battery-calculator',
   },
   openGraph: {
     title: 'Inverter & Battery Capacity Calculator India — VA & Ah Sizing | Kagazo',
     description:
       'Size your home backup inverter and 150Ah/200Ah tubular or lithium battery with exact backup hours calculation for Indian power cuts.',
-    url: 'https://Kagazo.in/home-cost/inverter-battery-calculator',
+    url: 'https://kagazo.in/home-cost/inverter-battery-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -89,13 +89,13 @@ export default function InverterBatteryCalculatorPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
           {
             '@type': 'ListItem',
             position: 3,
             name: 'Inverter & Battery Capacity Calculator',
-            item: 'https://Kagazo.in/home-cost/inverter-battery-calculator',
+            item: 'https://kagazo.in/home-cost/inverter-battery-calculator',
           },
         ],
       },

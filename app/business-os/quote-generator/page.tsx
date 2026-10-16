@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'itemized quotation generator rupees',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/quote-generator',
+    canonical: 'https://kagazo.in/business-os/quote-generator',
   },
   openGraph: {
     title: 'Free WhatsApp Quotation & Estimate Maker India | 1-Click Send for Small Businesses',
     description:
       'Send professional itemized price estimates directly on WhatsApp with delivery fees, discounts, and instant UPI payment details.',
-    url: 'https://Kagazo.in/business-os/quote-generator',
+    url: 'https://kagazo.in/business-os/quote-generator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,9 +73,9 @@ export default function QuoteGeneratorPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'WhatsApp Quotation Generator', item: 'https://Kagazo.in/business-os/quote-generator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'WhatsApp Quotation Generator', item: 'https://kagazo.in/business-os/quote-generator' },
         ],
       },
       {
@@ -92,7 +92,7 @@ export default function QuoteGeneratorPage() {
       {
         '@type': 'WebApplication',
         name: 'WhatsApp Estimate & Quotation Generator',
-        url: 'https://Kagazo.in/business-os/quote-generator',
+        url: 'https://kagazo.in/business-os/quote-generator',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

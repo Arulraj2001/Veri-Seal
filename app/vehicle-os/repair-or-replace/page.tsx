@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'car replacement financial threshold',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/repair-or-replace',
+    canonical: 'https://kagazo.in/vehicle-os/repair-or-replace',
   },
   openGraph: {
     title: 'Repair or Replace Car Calculator | Kagazo Vehicle OS',
     description:
       'Compare the total cost of repairing your old car vs buying a replacement over a 1 to 3 year horizon.',
-    url: 'https://Kagazo.in/vehicle-os/repair-or-replace',
+    url: 'https://kagazo.in/vehicle-os/repair-or-replace',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -57,19 +57,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Repair or Replace Decision Engine',
-      item: 'https://Kagazo.in/vehicle-os/repair-or-replace',
+      item: 'https://kagazo.in/vehicle-os/repair-or-replace',
     },
   ],
 };
@@ -78,7 +78,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Repair or Replace Decision Engine',
-  url: 'https://Kagazo.in/vehicle-os/repair-or-replace',
+  url: 'https://kagazo.in/vehicle-os/repair-or-replace',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

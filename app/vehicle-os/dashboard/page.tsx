@@ -27,13 +27,13 @@ export const metadata: Metadata = {
     'kagazo digital vehicle garage',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/dashboard',
+    canonical: 'https://kagazo.in/vehicle-os/dashboard',
   },
   openGraph: {
     title: 'Digital Vehicle Garage Dashboard | Kagazo Vehicle OS',
     description:
       'Manage multiple cars and two-wheelers in your digital garage. Track ₹/km running cost, service schedules, and statutory compliance.',
-    url: 'https://Kagazo.in/vehicle-os/dashboard',
+    url: 'https://kagazo.in/vehicle-os/dashboard',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -54,19 +54,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Digital Vehicle Garage',
-      item: 'https://Kagazo.in/vehicle-os/dashboard',
+      item: 'https://kagazo.in/vehicle-os/dashboard',
     },
   ],
 };
@@ -75,7 +75,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Digital Vehicle Garage Dashboard',
-  url: 'https://Kagazo.in/vehicle-os/dashboard',
+  url: 'https://kagazo.in/vehicle-os/dashboard',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

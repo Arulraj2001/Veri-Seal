@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     'COD return rate calculator India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/delivery-profit-calculator',
+    canonical: 'https://kagazo.in/business-os/delivery-profit-calculator',
   },
   openGraph: {
     title: 'COD RTO Loss Calculator India | Shiprocket Delivery Profit Per Order | Kagazo',
     description:
       'Cash on Delivery (COD) returns ruin margins. Calculate the hidden RTO tax per delivered order across Shiprocket, Delhivery, and Blue Dart logistics partners.',
-    url: 'https://Kagazo.in/business-os/delivery-profit-calculator',
+    url: 'https://kagazo.in/business-os/delivery-profit-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -75,9 +75,9 @@ export default function DeliveryProfitPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'COD RTO Loss Calculator', item: 'https://Kagazo.in/business-os/delivery-profit-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'COD RTO Loss Calculator', item: 'https://kagazo.in/business-os/delivery-profit-calculator' },
         ],
       },
       {

@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'business payment follow up templates India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/payment-follow-up',
+    canonical: 'https://kagazo.in/business-os/payment-follow-up',
   },
   openGraph: {
     title: 'Udhaar Payment Reminder Generator India | WhatsApp Recovery Message Templates',
     description:
       'Never feel awkward asking for pending money. Pick your tone and send polite WhatsApp reminders in 1 click.',
-    url: 'https://Kagazo.in/business-os/payment-follow-up',
+    url: 'https://kagazo.in/business-os/payment-follow-up',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function PaymentFollowUpPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Payment Follow-Up & Udhaar Ledger', item: 'https://Kagazo.in/business-os/payment-follow-up' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Payment Follow-Up & Udhaar Ledger', item: 'https://kagazo.in/business-os/payment-follow-up' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Udhaar Ledger & Polite WhatsApp Payment Reminder Generator',
-        url: 'https://Kagazo.in/business-os/payment-follow-up',
+        url: 'https://kagazo.in/business-os/payment-follow-up',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'average order value AOV booster calculator',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/minimum-order-calculator',
+    canonical: 'https://kagazo.in/business-os/minimum-order-calculator',
   },
   openGraph: {
     title: 'Minimum Order Value (MOV) Calculator India | Profitable Free Delivery Threshold',
     description:
       'Avoid shipping orders that lose money. Calculate your profitable free delivery cart threshold after courier freight and packaging.',
-    url: 'https://Kagazo.in/business-os/minimum-order-calculator',
+    url: 'https://kagazo.in/business-os/minimum-order-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function MinimumOrderPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Minimum Order Value Sizer', item: 'https://Kagazo.in/business-os/minimum-order-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Minimum Order Value Sizer', item: 'https://kagazo.in/business-os/minimum-order-calculator' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Minimum Order Value (MOV) & Free Delivery Sizer',
-        url: 'https://Kagazo.in/business-os/minimum-order-calculator',
+        url: 'https://kagazo.in/business-os/minimum-order-calculator',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

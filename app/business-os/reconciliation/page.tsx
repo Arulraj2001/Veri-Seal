@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'retail cash register closing template rupees',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/reconciliation',
+    canonical: 'https://kagazo.in/business-os/reconciliation',
   },
   openGraph: {
     title: 'Day-End Cash & UPI Reconciliation Calculator India | Evening Shop Closing in 90 Seconds',
     description:
       'Tally drawer cash against sales, verify PhonePe/GPay soundbox settlements, and spot register shortages in under 90 seconds.',
-    url: 'https://Kagazo.in/business-os/reconciliation',
+    url: 'https://kagazo.in/business-os/reconciliation',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function ReconciliationPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Day-End Cash Reconciliation', item: 'https://Kagazo.in/business-os/reconciliation' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Day-End Cash Reconciliation', item: 'https://kagazo.in/business-os/reconciliation' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Day-End Cash & UPI Register Reconciliation Tool',
-        url: 'https://Kagazo.in/business-os/reconciliation',
+        url: 'https://kagazo.in/business-os/reconciliation',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

@@ -27,13 +27,13 @@ export const metadata: Metadata = {
     '5 year car expense comparison matrix',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/compare',
+    canonical: 'https://kagazo.in/vehicle-os/compare',
   },
   openGraph: {
     title: 'Vehicle Comparison Engine | Kagazo Vehicle OS',
     description:
       'Compare Indian vehicles beyond brochure specs. Discover which model wins on total 5-year financial outflow at your exact monthly driving distance.',
-    url: 'https://Kagazo.in/vehicle-os/compare',
+    url: 'https://kagazo.in/vehicle-os/compare',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -54,19 +54,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Vehicle Comparison Engine',
-      item: 'https://Kagazo.in/vehicle-os/compare',
+      item: 'https://kagazo.in/vehicle-os/compare',
     },
   ],
 };
@@ -75,7 +75,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Head-to-Head Vehicle Comparison Engine',
-  url: 'https://Kagazo.in/vehicle-os/compare',
+  url: 'https://kagazo.in/vehicle-os/compare',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

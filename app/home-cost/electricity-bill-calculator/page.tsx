@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'home electricity bill calculator India 2025',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/electricity-bill-calculator',
+    canonical: 'https://kagazo.in/home-cost/electricity-bill-calculator',
   },
   openGraph: {
     title: 'Free Electricity Bill Calculator India — TANGEDCO, BESCOM, MSEDCL, BSES | Kagazo',
     description:
       'Calculate your exact monthly electricity bill with authentic DISCOM slab rates for Tamil Nadu, Karnataka, Maharashtra, Delhi & UP. Appliance breakdown, fixed charges, and What-If savings simulator.',
-    url: 'https://Kagazo.in/home-cost/electricity-bill-calculator',
+    url: 'https://kagazo.in/home-cost/electricity-bill-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -89,13 +89,13 @@ export default function ElectricityBillCalculatorPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
           {
             '@type': 'ListItem',
             position: 3,
             name: 'Electricity Bill Calculator',
-            item: 'https://Kagazo.in/home-cost/electricity-bill-calculator',
+            item: 'https://kagazo.in/home-cost/electricity-bill-calculator',
           },
         ],
       },

@@ -69,7 +69,7 @@ export function PaymentRequestReceivedEmail({
 
         <p style={{ fontSize: '14px', lineHeight: '1.6', margin: '0 0 24px 0' }}>
           You can check your payment status anytime at{' '}
-          <a href="https://Kagazo.in/dashboard/payment" style={{ color: '#E6570B', fontWeight: 'bold', textDecoration: 'underline' }}>
+          <a href="https://kagazo.in/dashboard/payment" style={{ color: '#E6570B', fontWeight: 'bold', textDecoration: 'underline' }}>
             Kagazo.in/dashboard/payment
           </a>.
         </p>
@@ -83,8 +83,8 @@ export function PaymentRequestReceivedEmail({
         <div style={{ borderTop: '1px solid #F1EFEE', paddingTop: '16px', fontSize: '11px', color: '#9C9189', textAlign: 'center' }}>
           &copy; {new Date().getFullYear()} Kagazo India. All rights reserved. Processing exclusively in volatile RAM.
           <br />
-          <a href="https://Kagazo.in/privacy" style={{ color: '#786C65', textDecoration: 'underline' }}>Privacy Policy</a> &bull;{' '}
-          <a href="https://Kagazo.in/terms" style={{ color: '#786C65', textDecoration: 'underline' }}>Terms of Service</a>
+          <a href="https://kagazo.in/privacy" style={{ color: '#786C65', textDecoration: 'underline' }}>Privacy Policy</a> &bull;{' '}
+          <a href="https://kagazo.in/terms" style={{ color: '#786C65', textDecoration: 'underline' }}>Terms of Service</a>
         </div>
       </div>
     </div>

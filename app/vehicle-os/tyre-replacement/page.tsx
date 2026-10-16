@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'tyre age DOT code checker India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/tyre-replacement',
+    canonical: 'https://kagazo.in/vehicle-os/tyre-replacement',
   },
   openGraph: {
     title: 'Car Tyre Replacement & Health Calculator India | Tread Depth & Pricing Guide',
     description:
       'Should you replace your car tyres today? Audit tread depth, age, and highway safety risk with remaining km estimation.',
-    url: 'https://Kagazo.in/vehicle-os/tyre-replacement',
+    url: 'https://kagazo.in/vehicle-os/tyre-replacement',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function TyreReplacementPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://Kagazo.in/vehicle-os' },
-          { '@type': 'ListItem', position: 3, name: 'Tyre Replacement Decision Tool', item: 'https://Kagazo.in/vehicle-os/tyre-replacement' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://kagazo.in/vehicle-os' },
+          { '@type': 'ListItem', position: 3, name: 'Tyre Replacement Decision Tool', item: 'https://kagazo.in/vehicle-os/tyre-replacement' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Car Tyre Replacement & Health Decision Tool',
-        url: 'https://Kagazo.in/vehicle-os/tyre-replacement',
+        url: 'https://kagazo.in/vehicle-os/tyre-replacement',
         applicationCategory: 'AutomotiveApplication',
         operatingSystem: 'All',
         offers: {

@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'ev charging cost vs petrol bill india',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/ev-vs-petrol',
+    canonical: 'https://kagazo.in/vehicle-os/ev-vs-petrol',
   },
   openGraph: {
     title: 'EV vs Petrol Break-Even Calculator | Kagazo Vehicle OS',
     description:
       'Discover when your EV becomes cheaper than a petrol car based on your daily commute and home electricity tariff.',
-    url: 'https://Kagazo.in/vehicle-os/ev-vs-petrol',
+    url: 'https://kagazo.in/vehicle-os/ev-vs-petrol',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -57,19 +57,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'EV vs Petrol Break-Even Calculator',
-      item: 'https://Kagazo.in/vehicle-os/ev-vs-petrol',
+      item: 'https://kagazo.in/vehicle-os/ev-vs-petrol',
     },
   ],
 };
@@ -108,7 +108,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo EV vs Petrol Break-Even Calculator',
-  url: 'https://Kagazo.in/vehicle-os/ev-vs-petrol',
+  url: 'https://kagazo.in/vehicle-os/ev-vs-petrol',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

@@ -28,13 +28,13 @@ export const metadata: Metadata = {
     'car emi parking vs daily cab ride costs',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/own-vs-cab',
+    canonical: 'https://kagazo.in/vehicle-os/own-vs-cab',
   },
   openGraph: {
     title: 'Own vs Cab Decision Calculator | Kagazo Vehicle OS',
     description:
       'Compare the total monthly financial commitment of owning a personal car vs relying on on-demand cabs and metro.',
-    url: 'https://Kagazo.in/vehicle-os/own-vs-cab',
+    url: 'https://kagazo.in/vehicle-os/own-vs-cab',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -55,19 +55,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Own vs Cab Decision Calculator',
-      item: 'https://Kagazo.in/vehicle-os/own-vs-cab',
+      item: 'https://kagazo.in/vehicle-os/own-vs-cab',
     },
   ],
 };
@@ -76,7 +76,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Own vs Cab Decision Calculator',
-  url: 'https://Kagazo.in/vehicle-os/own-vs-cab',
+  url: 'https://kagazo.in/vehicle-os/own-vs-cab',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

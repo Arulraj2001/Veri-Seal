@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'how many solar panels for 500 units per month',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/solar-calculator',
+    canonical: 'https://kagazo.in/home-cost/solar-calculator',
   },
   openGraph: {
     title: 'PM Surya Ghar Subsidy Calculator — Rooftop Solar Size & 25-Year ROI | Kagazo India',
     description:
       'Determine the perfect solar kW system for your Indian home, net-metering bill savings, and PM Surya Ghar central government DBT subsidy up to ₹78,000.',
-    url: 'https://Kagazo.in/home-cost/solar-calculator',
+    url: 'https://kagazo.in/home-cost/solar-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -89,13 +89,13 @@ export default function SolarCalculatorPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
           {
             '@type': 'ListItem',
             position: 3,
             name: 'Rooftop Solar Size & Subsidy Calculator',
-            item: 'https://Kagazo.in/home-cost/solar-calculator',
+            item: 'https://kagazo.in/home-cost/solar-calculator',
           },
         ],
       },

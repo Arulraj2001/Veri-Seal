@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'festive discount margin impact calculator',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/discount-profit-calculator',
+    canonical: 'https://kagazo.in/business-os/discount-profit-calculator',
   },
   openGraph: {
     title: 'Discount Profit Crash Calculator India | Why 20% Off Kills 50% of Your Profit',
     description:
       'A 20% discount does not cost 20% profit. Calculate your exact profit destruction and required sales volume jump.',
-    url: 'https://Kagazo.in/business-os/discount-profit-calculator',
+    url: 'https://kagazo.in/business-os/discount-profit-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function DiscountProfitPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Discount Profit Crash Simulator', item: 'https://Kagazo.in/business-os/discount-profit-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Discount Profit Crash Simulator', item: 'https://kagazo.in/business-os/discount-profit-calculator' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Discount Profit Crash Simulator',
-        url: 'https://Kagazo.in/business-os/discount-profit-calculator',
+        url: 'https://kagazo.in/business-os/discount-profit-calculator',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

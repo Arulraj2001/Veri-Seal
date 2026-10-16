@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     'reverse price calculator for sellers India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/product-pricing-calculator',
+    canonical: 'https://kagazo.in/business-os/product-pricing-calculator',
   },
   openGraph: {
     title: 'Amazon & Flipkart Product Pricing Calculator India 2025 | Referral Fee + Closing Fee',
     description:
       'Reverse-engineer your exact selling price to guarantee your desired net profit after Amazon/Flipkart cuts, Shiprocket courier, and GST.',
-    url: 'https://Kagazo.in/business-os/product-pricing-calculator',
+    url: 'https://kagazo.in/business-os/product-pricing-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -75,9 +75,9 @@ export default function ProductPricingPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Product Pricing Calculator', item: 'https://Kagazo.in/business-os/product-pricing-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Product Pricing Calculator', item: 'https://kagazo.in/business-os/product-pricing-calculator' },
         ],
       },
       {

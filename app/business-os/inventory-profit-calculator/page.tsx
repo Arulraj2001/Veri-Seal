@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'godown dead inventory audit tool',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/inventory-profit-calculator',
+    canonical: 'https://kagazo.in/business-os/inventory-profit-calculator',
   },
   openGraph: {
     title: 'Dead Stock & Slow Inventory Cost Calculator India | Unlock Trapped Working Capital',
     description:
       'Unsold stock is frozen cash. Calculate your total trapped capital, carrying costs, and clearance liquidation pricing to unlock bank balance today.',
-    url: 'https://Kagazo.in/business-os/inventory-profit-calculator',
+    url: 'https://kagazo.in/business-os/inventory-profit-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,15 +73,15 @@ export default function InventoryProfitPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Dead Stock & Capital Auditor', item: 'https://Kagazo.in/business-os/inventory-profit-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Dead Stock & Capital Auditor', item: 'https://kagazo.in/business-os/inventory-profit-calculator' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Dead Stock & Trapped Working Capital Auditor',
-        url: 'https://Kagazo.in/business-os/inventory-profit-calculator',
+        url: 'https://kagazo.in/business-os/inventory-profit-calculator',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

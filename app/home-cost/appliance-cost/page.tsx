@@ -18,13 +18,13 @@ export const metadata: Metadata = {
   description:
     'Calculate the exact electricity cost for any household appliance in India: AC, Refrigerator, Ceiling Fan, Geyser, TV, Washing Machine, Microwave, Laptop, and Water Pump.',
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost/appliance-cost',
+    canonical: 'https://kagazo.in/home-cost/appliance-cost',
   },
   openGraph: {
     title: 'Individual Appliance Electricity Cost Calculator | Kagazo',
     description:
       'Enter wattage and hours to see daily, monthly, and yearly electricity cost with energy-efficient alternatives.',
-    url: 'https://Kagazo.in/home-cost/appliance-cost',
+    url: 'https://kagazo.in/home-cost/appliance-cost',
     siteName: 'Kagazo',
     type: 'website',
   },

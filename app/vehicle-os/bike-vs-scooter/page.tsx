@@ -28,13 +28,13 @@ export const metadata: Metadata = {
     'bike vs scooter total cost of ownership 5 years',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/bike-vs-scooter',
+    canonical: 'https://kagazo.in/vehicle-os/bike-vs-scooter',
   },
   openGraph: {
     title: 'Bike vs Scooter Decision Engine | Kagazo Vehicle OS',
     description:
       'Compare commuter motorcycles against gearless scooters on mileage, storage utility, family usability, and monthly running costs.',
-    url: 'https://Kagazo.in/vehicle-os/bike-vs-scooter',
+    url: 'https://kagazo.in/vehicle-os/bike-vs-scooter',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -55,19 +55,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Bike vs Scooter Decision Tool',
-      item: 'https://Kagazo.in/vehicle-os/bike-vs-scooter',
+      item: 'https://kagazo.in/vehicle-os/bike-vs-scooter',
     },
   ],
 };
@@ -76,7 +76,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Bike vs Scooter Decision Tool',
-  url: 'https://Kagazo.in/vehicle-os/bike-vs-scooter',
+  url: 'https://kagazo.in/vehicle-os/bike-vs-scooter',
   applicationCategory: 'DecisionApplication',
   operatingSystem: 'Any',
   offers: {

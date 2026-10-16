@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     'maximum car emi percentage of salary',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/affordability-checker',
+    canonical: 'https://kagazo.in/vehicle-os/affordability-checker',
   },
   openGraph: {
     title: 'Vehicle Affordability Checker | Kagazo Vehicle OS',
     description:
       'Evaluate whether a car fits your net monthly take-home pay, loan EMI, fuel, insurance, and investment goals.',
-    url: 'https://Kagazo.in/vehicle-os/affordability-checker',
+    url: 'https://kagazo.in/vehicle-os/affordability-checker',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -56,19 +56,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Vehicle Affordability Checker',
-      item: 'https://Kagazo.in/vehicle-os/affordability-checker',
+      item: 'https://kagazo.in/vehicle-os/affordability-checker',
     },
   ],
 };
@@ -77,7 +77,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo Vehicle Affordability Checker',
-  url: 'https://Kagazo.in/vehicle-os/affordability-checker',
+  url: 'https://kagazo.in/vehicle-os/affordability-checker',
   applicationCategory: 'FinanceApplication',
   operatingSystem: 'Any',
   offers: {

@@ -470,6 +470,18 @@ export function Footer() {
               Privacy Policy
             </Link>
             <span>•</span>
+            <Link href="/terms" className="hover:text-primary transition-colors">
+              Terms of Service
+            </Link>
+            <span>•</span>
+            <Link href="/disclaimer" className="hover:text-primary transition-colors">
+              Disclaimer
+            </Link>
+            <span>•</span>
+            <Link href="/cookies" className="hover:text-primary transition-colors">
+              Cookies
+            </Link>
+            <span>•</span>
             <Link href="/tools" className="hover:text-primary transition-colors">
               Tools Directory
             </Link>

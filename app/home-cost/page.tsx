@@ -36,13 +36,13 @@ export const metadata: Metadata = {
     'home renovation cost India',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/home-cost',
+    canonical: 'https://kagazo.in/home-cost',
   },
   openGraph: {
     title: 'Household Cost Calculator India | Electricity, AC, Solar & Renovation | Kagazo',
     description:
       'Answer the ultimate homeowner question: What is costing me money at home, and what should I change to save money? Real DISCOM tariffs, PM Surya Ghar subsidy, AC payback, and more.',
-    url: 'https://Kagazo.in/home-cost',
+    url: 'https://kagazo.in/home-cost',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -133,14 +133,14 @@ export default function HomeCostLandingPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://Kagazo.in/home-cost' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Home Cost OS', item: 'https://kagazo.in/home-cost' },
         ],
       },
       {
         '@type': 'WebApplication',
         name: 'Kagazo Home Cost & Savings Intelligence Platform',
-        url: 'https://Kagazo.in/home-cost',
+        url: 'https://kagazo.in/home-cost',
         applicationCategory: 'FinanceApplication',
         operatingSystem: 'All',
         offers: {

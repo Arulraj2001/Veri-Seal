@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'retail break even day of month simulator',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/business-os/break-even-calculator',
+    canonical: 'https://kagazo.in/business-os/break-even-calculator',
   },
   openGraph: {
     title: 'Break-Even Calculator India | Daily Orders & Monthly Turnover to Cover Rent & Staff',
     description:
       'Know the exact day of the month and order quota after which your Indian business covers all bills and starts pocketing true owner profit.',
-    url: 'https://Kagazo.in/business-os/break-even-calculator',
+    url: 'https://kagazo.in/business-os/break-even-calculator',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,9 +73,9 @@ export default function BreakEvenPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://Kagazo.in/business-os' },
-          { '@type': 'ListItem', position: 3, name: 'Break-Even Calculator', item: 'https://Kagazo.in/business-os/break-even-calculator' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Business OS', item: 'https://kagazo.in/business-os' },
+          { '@type': 'ListItem', position: 3, name: 'Break-Even Calculator', item: 'https://kagazo.in/business-os/break-even-calculator' },
         ],
       },
       {
@@ -92,7 +92,7 @@ export default function BreakEvenPage() {
       {
         '@type': 'WebApplication',
         name: 'Break-Even & Survival Target Calculator',
-        url: 'https://Kagazo.in/business-os/break-even-calculator',
+        url: 'https://kagazo.in/business-os/break-even-calculator',
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'All',
         offers: {

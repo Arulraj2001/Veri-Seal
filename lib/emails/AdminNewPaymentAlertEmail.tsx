@@ -74,7 +74,7 @@ export function AdminNewPaymentAlertEmail({
 
         <div style={{ textAlign: 'center', margin: '32px 0' }}>
           <a
-            href="https://Kagazo.in/admin/payments"
+            href="https://kagazo.in/admin/payments"
             style={{
               backgroundColor: '#2E241F',
               color: '#FFFFFF',

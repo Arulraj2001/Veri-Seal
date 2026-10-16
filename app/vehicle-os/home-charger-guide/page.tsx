@@ -29,13 +29,13 @@ export const metadata: Metadata = {
     'single phase vs 3 phase ev charger home',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/home-charger-guide',
+    canonical: 'https://kagazo.in/vehicle-os/home-charger-guide',
   },
   openGraph: {
     title: 'EV Home Charger Decision Tool | Kagazo Vehicle OS',
     description:
       'Compare 16A industrial sockets vs 7.4kW wallboxes based on your daily commute, battery capacity, and home electrical capacity.',
-    url: 'https://Kagazo.in/vehicle-os/home-charger-guide',
+    url: 'https://kagazo.in/vehicle-os/home-charger-guide',
     siteName: 'Kagazo',
     locale: 'en_IN',
     type: 'website',
@@ -56,19 +56,19 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://Kagazo.in',
+      item: 'https://kagazo.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Vehicle OS',
-      item: 'https://Kagazo.in/vehicle-os',
+      item: 'https://kagazo.in/vehicle-os',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'EV Home Charger Guide',
-      item: 'https://Kagazo.in/vehicle-os/home-charger-guide',
+      item: 'https://kagazo.in/vehicle-os/home-charger-guide',
     },
   ],
 };
@@ -77,7 +77,7 @@ const webAppSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Kagazo EV Home Charger Decision Tool',
-  url: 'https://Kagazo.in/vehicle-os/home-charger-guide',
+  url: 'https://kagazo.in/vehicle-os/home-charger-guide',
   applicationCategory: 'UtilityApplication',
   operatingSystem: 'Any',
   offers: {

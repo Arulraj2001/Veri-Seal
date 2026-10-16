@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     'engine flush ac disinfection car service scam',
   ],
   alternates: {
-    canonical: 'https://Kagazo.in/vehicle-os/service-quote-fairness',
+    canonical: 'https://kagazo.in/vehicle-os/service-quote-fairness',
   },
   openGraph: {
     title: 'Car Service Estimate Checker India | Audit Garage Quotes & Spot Overpriced Upsells',
     description:
       'Is your car service estimate fair? Audit OEM and garage quotes line-by-line, detect unmandated chemical flushes, and copy a polite negotiation script.',
-    url: 'https://Kagazo.in/vehicle-os/service-quote-fairness',
+    url: 'https://kagazo.in/vehicle-os/service-quote-fairness',
     siteName: 'Kagazo',
     type: 'website',
   },
@@ -73,9 +73,9 @@ export default function ServiceQuoteFairnessPage() {
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://Kagazo.in' },
-          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://Kagazo.in/vehicle-os' },
-          { '@type': 'ListItem', position: 3, name: 'Service Quote Fairness Checker', item: 'https://Kagazo.in/vehicle-os/service-quote-fairness' },
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kagazo.in' },
+          { '@type': 'ListItem', position: 2, name: 'Vehicle OS', item: 'https://kagazo.in/vehicle-os' },
+          { '@type': 'ListItem', position: 3, name: 'Service Quote Fairness Checker', item: 'https://kagazo.in/vehicle-os/service-quote-fairness' },
         ],
       },
       {
@@ -92,7 +92,7 @@ export default function ServiceQuoteFairnessPage() {
       {
         '@type': 'WebApplication',
         name: 'Car Service Estimate Fairness Checker',
-        url: 'https://Kagazo.in/vehicle-os/service-quote-fairness',
+        url: 'https://kagazo.in/vehicle-os/service-quote-fairness',
         applicationCategory: 'AutomotiveApplication',
         operatingSystem: 'All',
         offers: {
