@@ -176,7 +176,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-Kagazo01';
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-XSSRYXQKPY';
 
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${notoSansTamil.variable}`}>
