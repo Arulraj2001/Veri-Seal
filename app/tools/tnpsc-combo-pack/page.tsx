@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://kagazo.in/tools/tnpsc-combo-pack',
     languages: {
-      'ta-IN': 'https://kagazo.in/ta/tools/tnpsc-photo-signature-resizer',
+      'ta-IN': 'https://kagazo.in/ta/tools/tnpsc-combo-pack',
       'en': 'https://kagazo.in/tools/tnpsc-combo-pack',
       'x-default': 'https://kagazo.in/tools/tnpsc-combo-pack',
     },

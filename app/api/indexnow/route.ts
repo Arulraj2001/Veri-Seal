@@ -39,6 +39,9 @@ const STATIC_URLS = [
   '/verify-nadakacheri-certificate',
   '/verify-up-edistrict-certificate',
   '/verify-aaple-sarkar-certificate',
+  '/verify-kerala-edistrict-certificate',
+  '/verify-bihar-rtps-certificate',
+  '/verify-wb-edistrict-certificate',
   '/verify-widow-certificate',
   '/verify-solvency-certificate',
   '/verify-deserted-woman-certificate',
@@ -75,10 +78,14 @@ const STATIC_URLS = [
 
   // Tools — Photo & Signature
   '/tools/tnpsc-photo-signature-resizer',
+  '/tools/tnpsc-combo-pack',
   '/tools/upsc-photo-signature-resizer',
+  '/tools/upsc-combo-pack',
   '/tools/ssc-photo-signature-resizer',
+  '/tools/ssc-combo-pack',
   '/tools/neet-photo-signature-resizer',
   '/tools/ibps-photo-signature-resizer',
+  '/tools/ibps-combo-pack',
   '/tools/rrb-photo-signature-resizer',
   '/tools/gate-photo-signature-resizer',
   '/tools/passport-photo-sheet-maker',
@@ -94,7 +101,15 @@ const STATIC_URLS = [
   '/tools/formal-attire-changer',
   '/tools/college-admission-photo-maker',
 
-  // Tools — TN Specific
+  // Tools — TN & Indic Specific
+  '/ta',
+  '/ta/tools',
+  '/ta/tools/tnpsc-combo-pack',
+  '/ta/tools/compress-pdf-to-200kb',
+  '/ta/tools/compress-image-to-20kb',
+  '/ta/tools/compress-image-to-50kb',
+  '/ta/tools/tnpsc-photo-signature-resizer',
+  '/ta/tools/mask-aadhaar',
   '/tools/tn-esevai-certificate-prep',
   '/tools/tnpsc-otr-compliance-kit',
   '/tools/tnea-cutoff-calculator',
@@ -107,7 +122,6 @@ const STATIC_URLS = [
 
   // Tools — Financial & Verification
   '/tools/income-tax-calculator-2025-26',
-  '/tools/gst-verifier',
   '/tools/gst-number-verifier',
   '/tools/ifsc-code-finder',
 

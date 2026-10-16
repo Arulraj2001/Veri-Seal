@@ -673,6 +673,96 @@ Kagazo confirms the cryptographic digital signature and validates the document s
     published: true,
     updated_at: '2026-09-10T11:00:00Z',
   },
+  {
+    id: 'seo-25',
+    slug: 'verify-kerala-edistrict-certificate',
+    title: 'Verify Kerala e-District & Sevana Certificate Signature | Kagazo',
+    h1: 'Verify Kerala e-District & Sevana Digital Signature Online',
+    meta_description: 'Verify digital signatures on Kerala e-District caste, income, nativity and Sevana birth/death certificates. Convert unverified question mark to green tick.',
+    meta_keywords: 'kerala edistrict certificate verify, sevana birth certificate signature verify, kerala caste certificate digital signature, kerala village officer signature verify, edistrict kerala gov in signature valid',
+    intro_text: 'Verify cryptographic digital signatures on certificates issued by the Revenue Department through Kerala e-District and local self-government bodies via Sevana Civil Registration. Fix unverified yellow question mark into verified green checkmark.',
+    doc_type: 'Kerala e-District / Sevana Certificate',
+    state: 'Kerala',
+    portal: 'Kerala e-District & Sevana Portal',
+    portal_description: `The Government of Kerala provides citizen certificates via the Kerala e-District portal (edistrict.kerala.gov.in) and Sevana Civil Registration platform. Certificates for Community, Caste, Income, Nativity, and Vital Events are digitally signed by Village Officers, Tahsildars, or Local Registrar Authorities using Class 2/3 Digital Signature Certificates under the CCA India trust chain.`,
+    direct_answer: 'Kerala e-District and Sevana certificates display a yellow question mark in standard viewers because Kerala State IT Mission and NIC roots are not pre-installed. Kagazo validates the Village Officer or Registrar digital signature token against India\'s RCAI root and produces a certified PDF with a permanent green checkmark.',
+    faq: [
+      {
+        q: 'Why does my Kerala e-District certificate show an unverified yellow question mark?',
+        a: 'Desktop PDF readers like Adobe Acrobat lack the pre-configured trust anchor for the Kerala NIC Sub-CA. Kagazo establishes this cryptographic chain in memory and converts the signature to a permanent CCA India green checkmark.'
+      },
+      {
+        q: 'Is a Kagazo-verified certificate accepted for Kerala PSC document verification?',
+        a: 'Yes. Kerala Public Service Commission (KPSC) requires verifiable digital certificates confirming zero post-issuance tampering. The green tick indicates cryptographic compliance under Section 5 of the Information Technology Act 2000.'
+      },
+      {
+        q: 'Are certificates uploaded to external servers during verification?',
+        a: 'No. Kagazo strictly validates files in client-side RAM memory. No demographic information or document content is saved or transmitted remotely.'
+      }
+    ],
+    published: true,
+    updated_at: '2026-10-16T12:00:00Z',
+  },
+  {
+    id: 'seo-26',
+    slug: 'verify-bihar-rtps-certificate',
+    title: 'Verify Bihar RTPS ServicePlus Certificate Signature Online | Kagazo',
+    h1: 'Verify Bihar RTPS (Jati, Aay, Niwas) Digital Signature',
+    meta_description: 'Verify digital signature on Bihar RTPS caste (Jati), income (Aay), and residential (Niwas) certificates issued via ServicePlus. Fix unverified question mark online.',
+    meta_keywords: 'bihar rtps certificate verify, serviceonline bihar gov in signature, bihar jati praman patra signature verify, bihar aay niwas digital signature, revenue officer signature verify bihar',
+    intro_text: 'Verify electronic digital signatures on Bihar Right to Public Services (RTPS) certificates generated via ServicePlus. Validates Circle Officer and Revenue Officer digital tokens for BPSC, BSSC, and government scholarship submissions.',
+    doc_type: 'Bihar RTPS Certificate',
+    state: 'Bihar',
+    portal: 'Bihar RTPS / ServicePlus Portal',
+    portal_description: `Bihar Right to Public Services (RTPS) issues electronic certificates for Caste (Jati), Income (Aay), Non-Creamy Layer (NCL), and Domicile (Niwas) through the ServicePlus platform (serviceonline.bihar.gov.in). Each document is digitally signed by designated Revenue Officers or Sub-Divisional Officers.`,
+    direct_answer: 'Bihar RTPS certificates downloaded from serviceonline.bihar.gov.in feature cryptographic PKCS#7 signatures. Kagazo verifies the Revenue Officer\'s digital certificate directly against the Root Certifying Authority of India (RCAI) in memory, converting unverified signatures into official green tick status.',
+    faq: [
+      {
+        q: 'बिहार आरटीपीएस (RTPS) प्रमाण पत्र पर डिजिटल हस्ताक्षर कैसे सत्यापित करें?',
+        a: 'कागज़ो (Kagazo) पर अपना सर्विसप्लस पीडीएफ प्रमाण पत्र अपलोड करें। हमारा सिस्टम तुरंत राजस्व अधिकारी (Revenue Officer) के डिजिटल टोकन को भारत सरकार के सीसीए (CCA) रूट से सत्यापित कर ग्रीन टिक पीडीएफ प्रदान करता है।'
+      },
+      {
+        q: 'Is this verification required for BPSC and BSSC counseling?',
+        a: 'Yes. Scrutiny boards at BPSC and BSSC verify that applicant caste, residence, and income certificates bear authentic, cryptographically intact digital signatures.'
+      },
+      {
+        q: 'What certificates can be verified under Bihar RTPS on Kagazo?',
+        a: 'You can verify Jati Praman Patra (Caste Certificate), Aay Praman Patra (Income Certificate), Niwas Praman Patra (Residential/Domicile), and Non-Creamy Layer (NCL) certificates.'
+      }
+    ],
+    published: true,
+    updated_at: '2026-10-16T12:00:00Z',
+  },
+  {
+    id: 'seo-27',
+    slug: 'verify-wb-edistrict-certificate',
+    title: 'Verify West Bengal e-District & Oasis Certificate Signature | Kagazo',
+    h1: 'Verify West Bengal e-District 2.0 Digital Signature Online',
+    meta_description: 'Verify digital signatures on West Bengal e-District 2.0 caste, domicile, income certificates and Oasis scholarship forms. Convert question mark to green tick.',
+    meta_keywords: 'wb edistrict certificate verify, west bengal caste certificate signature verify, oasis scholarship signature verify, wb edistrict 2.0 digital signature, sdo bdo signature verify wb',
+    intro_text: 'Verify cryptographic digital signatures on West Bengal e-District 2.0 certificates and Oasis portal approvals. Validates SDO, BDO, and Executive Magistrate digital tokens.',
+    doc_type: 'West Bengal e-District Certificate',
+    state: 'West Bengal',
+    portal: 'West Bengal e-District 2.0 Portal',
+    portal_description: `The Government of West Bengal issues statutory certificates (Caste, Domicile, Income, and Land Records) through the e-District 2.0 portal (edistrict.wb.gov.in) and Oasis Scholarship system. All certificates carry cryptographic digital signatures by Sub-Divisional Officers (SDO) or Block Development Officers (BDO).`,
+    direct_answer: 'West Bengal e-District 2.0 PDFs show an unverified signature in standard desktop viewers due to missing state intermediate trust certificates. Kagazo verifies the SDO or BDO digital signature container against CCA India and returns an authenticated PDF with a verified green tick.',
+    faq: [
+      {
+        q: 'How do I verify a West Bengal SC/ST/OBC certificate online?',
+        a: 'Upload the PDF downloaded from the WB e-District portal or Backward Classes Welfare Department. Kagazo cryptographically authenticates the SDO\'s digital signature token against the national root registry.'
+      },
+      {
+        q: 'Why does my WB certificate show "Signature Not Verified"?',
+        a: 'Adobe Reader requires manual installation of the NIC West Bengal Sub-CA root certificate. Without it, the signature appears as an unverified yellow question mark. Kagazo validates the signature in memory and embeds Long-Term Validation (LTV).'
+      },
+      {
+        q: 'Can I verify Oasis scholarship approval letters on Kagazo?',
+        a: 'Yes. Oasis pre-matric and post-matric scholarship sanction letters carrying government electronic signatures can be validated for submission to educational institutions.'
+      }
+    ],
+    published: true,
+    updated_at: '2026-10-16T12:00:00Z',
+  },
 ];
 
 export async function getPublishedSeoPages(): Promise<SeoPageData[]> {
@@ -790,6 +880,9 @@ export function getSeoSlugForDocType(docType: string): string {
   // 8. State Specific Portals
   if (dt.includes('up e-district') || dt.includes('up edistrict') || dt.includes('uttar pradesh')) return 'verify-up-edistrict-certificate';
   if (dt.includes('aaple sarkar') || dt.includes('maharashtra')) return 'verify-aaple-sarkar-certificate';
+  if (dt.includes('kerala') || dt.includes('sevana')) return 'verify-kerala-edistrict-certificate';
+  if (dt.includes('bihar') || dt.includes('rtps') || dt.includes('serviceplus') || dt.includes('serviceonline')) return 'verify-bihar-rtps-certificate';
+  if (dt.includes('west bengal') || dt.includes('wb edistrict') || dt.includes('oasis')) return 'verify-wb-edistrict-certificate';
 
   // 9. Social Welfare & Special Certificates
   if (dt.includes('widow')) return 'verify-widow-certificate';

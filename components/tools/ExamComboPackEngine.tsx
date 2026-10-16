@@ -23,7 +23,7 @@ import { PDFDocument } from 'pdf-lib';
 import { binarySearchJpeg, padJpegToMinBytes, injectJfifDpi, applyColorAdjustments } from '@/lib/image-engine';
 import { ExamSocialShareBar } from '@/components/tools/ExamSocialShareBar';
 
-export type PortalType = 'tnpsc' | 'ssc';
+export type PortalType = 'tnpsc' | 'ssc' | 'upsc' | 'ibps';
 
 interface ExamComboPackEngineProps {
   portal: PortalType;
@@ -42,6 +42,82 @@ interface ProcessedFile {
 
 export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps) {
   const isTnpsc = portal === 'tnpsc';
+  const isUpsc = portal === 'upsc';
+  const isIbps = portal === 'ibps';
+
+  const portalConfig = React.useMemo(() => {
+    switch (portal) {
+      case 'tnpsc':
+        return {
+          title: 'TNPSC OTR 3-in-1 Combo Pack',
+          desc: 'Pre-calibrated for TNPSC Group 1, 2, 4 & VAO One Time Registration (OTR).',
+          prefix: 'TNPSC_OTR',
+          photoW: 413,
+          photoH: 531,
+          photoMinKb: 20,
+          photoMaxKb: 50,
+          sigW: 400,
+          sigH: 133,
+          sigMinKb: 10,
+          sigMaxKb: 20,
+          certMaxKb: 200,
+          stripRatio: 0.2,
+          mandatoryStrip: true,
+        };
+      case 'upsc':
+        return {
+          title: 'UPSC Civil Services 3-in-1 Combo Pack',
+          desc: 'Pre-calibrated for UPSC CSE (IAS/IPS), NDA, CDS, CAPF & Engineering Services OTR.',
+          prefix: 'UPSC_OTR',
+          photoW: 550,
+          photoH: 550,
+          photoMinKb: 20,
+          photoMaxKb: 300,
+          sigW: 550,
+          sigH: 550,
+          sigMinKb: 20,
+          sigMaxKb: 300,
+          certMaxKb: 300,
+          stripRatio: 0.2,
+          mandatoryStrip: true,
+        };
+      case 'ibps':
+        return {
+          title: 'IBPS Banking & SBI PO 3-in-1 Combo Pack',
+          desc: 'Pre-calibrated for IBPS PO, Clerk, SO, RRB Office Assistant & SBI Bank recruitment.',
+          prefix: 'IBPS_Banking',
+          photoW: 350,
+          photoH: 450,
+          photoMinKb: 20,
+          photoMaxKb: 50,
+          sigW: 280,
+          sigH: 120,
+          sigMinKb: 10,
+          sigMaxKb: 20,
+          certMaxKb: 200,
+          stripRatio: 0.18,
+          mandatoryStrip: false,
+        };
+      case 'ssc':
+      default:
+        return {
+          title: 'SSC Application 3-in-1 Combo Pack',
+          desc: 'Pre-calibrated for SSC CGL, CHSL, MTS & GD Constable recruitment portals.',
+          prefix: 'SSC_Application',
+          photoW: 350,
+          photoH: 450,
+          photoMinKb: 20,
+          photoMaxKb: 50,
+          sigW: 280,
+          sigH: 140,
+          sigMinKb: 10,
+          sigMaxKb: 20,
+          certMaxKb: 300,
+          stripRatio: 0.18,
+          mandatoryStrip: false,
+        };
+    }
+  }, [portal]);
 
   // Candidate Details for Photo Strip
   const [candidateName, setCandidateName] = React.useState('');
@@ -89,9 +165,8 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
           img.onerror = () => reject(new Error('Failed to load photograph'));
         });
 
-        // Dimensions: 3.5 x 4.5 cm @ 300 DPI
-        const targetWidth = isTnpsc ? 413 : 350;
-        const targetHeight = isTnpsc ? 531 : 450;
+        const targetWidth = portalConfig.photoW;
+        const targetHeight = portalConfig.photoH;
 
         const canvas = document.createElement('canvas');
         canvas.width = targetWidth;
@@ -103,7 +178,8 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
         ctx.fillRect(0, 0, targetWidth, targetHeight);
 
         // Aspect ratio crop for upper photo area
-        const stripHeight = isTnpsc ? Math.round(targetHeight * 0.2) : name ? Math.round(targetHeight * 0.18) : 0;
+        const shouldAddStrip = portalConfig.mandatoryStrip || Boolean(name);
+        const stripHeight = shouldAddStrip ? Math.round(targetHeight * portalConfig.stripRatio) : 0;
         const photoAreaHeight = targetHeight - stripHeight;
 
         const scale = Math.max(targetWidth / img.width, photoAreaHeight / img.height);
@@ -145,15 +221,15 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
           ctx.fillText(`D.O.P: ${dateStr}`, targetWidth / 2, line2Y);
         }
 
-        // Quality optimization: strictly 20 KB to 50 KB
-        const { bytes, sizeKb } = await binarySearchJpeg(canvas, 20, 50, 300);
+        // Quality optimization: strictly within portal bounds
+        const { bytes, sizeKb } = await binarySearchJpeg(canvas, portalConfig.photoMinKb, portalConfig.photoMaxKb, 300);
         const jfifBytes = injectJfifDpi(bytes, 300);
 
         const safeBlob = new Blob([jfifBytes as unknown as BlobPart], { type: 'image/jpeg' });
         const dataUrl = URL.createObjectURL(safeBlob);
         URL.revokeObjectURL(objectUrl);
 
-        const isCompliant = sizeKb >= 20 && sizeKb <= 50;
+        const isCompliant = sizeKb >= portalConfig.photoMinKb && sizeKb <= portalConfig.photoMaxKb;
         setPhoto({
           originalFile: file,
           processedBlob: safeBlob,
@@ -172,7 +248,7 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
         setIsProcessingPhoto(false);
       }
     },
-    [isTnpsc]
+    [portalConfig]
   );
 
   // Re-process photo when Name or Date changes
@@ -196,9 +272,9 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
           img.onerror = () => reject(new Error('Failed to load signature'));
         });
 
-        // Dimensions: TNPSC: 6.0 x 2.0 cm (400 x 133 px); SSC: 4.0 x 2.0 cm (240 x 120 px)
-        const targetWidth = isTnpsc ? 400 : 280;
-        const targetHeight = isTnpsc ? 133 : 140;
+        // Dimensions from portalConfig
+        const targetWidth = portalConfig.sigW;
+        const targetHeight = portalConfig.sigH;
 
         const canvas = document.createElement('canvas');
         canvas.width = targetWidth;
@@ -224,10 +300,10 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
         // Enhance contrast (whiten background paper & darken ink)
         applyColorAdjustments(ctx, targetWidth, targetHeight, 10, 40, false);
 
-        // Target: strictly 10 KB to 20 KB
-        const { bytes } = await binarySearchJpeg(canvas, 10, 20, 300);
-        // Safe lossless COM padding if under 10 KB
-        const paddedBytes = padJpegToMinBytes(bytes, 10.5 * 1024);
+        // Target: strictly within portalConfig bounds
+        const { bytes } = await binarySearchJpeg(canvas, portalConfig.sigMinKb, portalConfig.sigMaxKb, 300);
+        // Safe lossless COM padding if under minimum KB
+        const paddedBytes = padJpegToMinBytes(bytes, (portalConfig.sigMinKb + 0.5) * 1024);
         const finalJfifBytes = injectJfifDpi(paddedBytes, 300);
 
         const safeBlob = new Blob([finalJfifBytes as unknown as BlobPart], { type: 'image/jpeg' });
@@ -235,7 +311,7 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
         const dataUrl = URL.createObjectURL(safeBlob);
         URL.revokeObjectURL(objectUrl);
 
-        const isCompliant = sizeKb >= 10 && sizeKb <= 20;
+        const isCompliant = sizeKb >= portalConfig.sigMinKb && sizeKb <= portalConfig.sigMaxKb;
         setSignature({
           originalFile: file,
           processedBlob: safeBlob,
@@ -252,7 +328,7 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
         setIsProcessingSig(false);
       }
     },
-    [isTnpsc]
+    [portalConfig]
   );
 
   // 3. Process Certificate (Community / SSLC / Category)
@@ -297,7 +373,7 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
         }
 
         const sizeKb = Math.round((finalBlob.size / 1024) * 10) / 10;
-        const maxLimit = isTnpsc ? 200 : 300;
+        const maxLimit = portalConfig.certMaxKb;
         const isCompliant = sizeKb <= maxLimit;
         const dataUrl = URL.createObjectURL(finalBlob);
 
@@ -319,7 +395,7 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
         setIsProcessingCert(false);
       }
     },
-    [isTnpsc]
+    [portalConfig]
   );
 
   // 1-Click ZIP Download Handler
@@ -329,16 +405,16 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
     setIsZipping(true);
     try {
       const zip = new JSZip();
-      const prefix = isTnpsc ? 'TNPSC_OTR' : 'SSC_Application';
+      const prefix = portalConfig.prefix;
 
       if (photo?.processedBlob) {
-        zip.file(`${prefix}_Photograph_20_50KB.jpg`, photo.processedBlob);
+        zip.file(`${prefix}_Photograph_${portalConfig.photoMinKb}_${portalConfig.photoMaxKb}KB.jpg`, photo.processedBlob);
       }
       if (signature?.processedBlob) {
-        zip.file(`${prefix}_Signature_10_20KB.jpg`, signature.processedBlob);
+        zip.file(`${prefix}_Signature_${portalConfig.sigMinKb}_${portalConfig.sigMaxKb}KB.jpg`, signature.processedBlob);
       }
       if (certificate?.processedBlob) {
-        zip.file(`${prefix}_Certificate.pdf`, certificate.processedBlob);
+        zip.file(`${prefix}_Certificate_Under_${portalConfig.certMaxKb}KB.pdf`, certificate.processedBlob);
       }
 
       const zipBlob = await zip.generateAsync({ type: 'blob' });
@@ -387,15 +463,13 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
           </div>
           <div>
             <h2 className="text-base sm:text-lg font-bold text-text-main flex items-center gap-2">
-              <span>{isTnpsc ? 'TNPSC OTR 3-in-1 Combo Pack' : 'SSC Application 3-in-1 Combo Pack'}</span>
+              <span>{portalConfig.title}</span>
               <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-bold">
                 1-Click ZIP
               </span>
             </h2>
             <p className="text-xs text-text-main/70">
-              {isTnpsc
-                ? 'Pre-calibrated for TNPSC Group 1, 2, 4 & VAO One Time Registration (OTR).'
-                : 'Pre-calibrated for SSC CGL, CHSL, MTS & GD Constable recruitment portals.'}
+              {portalConfig.desc}
             </p>
           </div>
         </div>
@@ -463,13 +537,17 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
                 <h3 className="text-xs font-bold text-text-main uppercase tracking-wider">1. Photograph</h3>
               </div>
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-surface-darker text-text-main/80">
-                20–50 KB
+                {portalConfig.photoMinKb}–{portalConfig.photoMaxKb} KB
               </span>
             </div>
 
             <p className="text-[11px] text-text-main/70">
-              {isTnpsc
+              {portal === 'tnpsc'
                 ? '3.5×4.5 cm (413×531 px @ 300 DPI) with bottom Name & DOP strip.'
+                : portal === 'upsc'
+                ? '3.5×4.5 cm (350×450 px) with mandatory Name & Date of Photo strip.'
+                : portal === 'ibps'
+                ? '3.5×4.5 cm (200×230 px) with clean white or light background.'
                 : '3.5×4.5 cm with plain background, face covering 80% area.'}
             </p>
 
@@ -540,7 +618,7 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
             {photo?.processedBlob && (
               <a
                 href={photo.processedDataUrl!}
-                download={isTnpsc ? 'TNPSC_Photo_NameDate.jpg' : 'SSC_Photo_20_50KB.jpg'}
+                download={`${portalConfig.prefix}_Photograph_${portalConfig.photoMinKb}_${portalConfig.photoMaxKb}KB.jpg`}
                 className="p-2 rounded-xl bg-primary text-white hover:bg-primary/90 transition-colors"
                 title="Download Photo"
               >
@@ -561,13 +639,17 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
                 <h3 className="text-xs font-bold text-text-main uppercase tracking-wider">2. Signature</h3>
               </div>
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-surface-darker text-text-main/80">
-                10–20 KB
+                {portalConfig.sigMinKb}–{portalConfig.sigMaxKb} KB
               </span>
             </div>
 
             <p className="text-[11px] text-text-main/70">
-              {isTnpsc
+              {portal === 'tnpsc'
                 ? '6.0×2.0 cm (400×133 px). Strict floor & ceiling: 10 KB to 20 KB.'
+                : portal === 'upsc'
+                ? '3.5×1.5 cm (350×150 px). Strict bounds: 20 KB to 300 KB.'
+                : portal === 'ibps'
+                ? '140×60 px (10 KB to 20 KB). Black ink on clean white sheet.'
                 : '4.0×2.0 cm (140×60 px minimum). Black ink on clean white sheet.'}
             </p>
 
@@ -638,7 +720,7 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
             {signature?.processedBlob && (
               <a
                 href={signature.processedDataUrl!}
-                download={isTnpsc ? 'TNPSC_Signature_10_20KB.jpg' : 'SSC_Signature_10_20KB.jpg'}
+                download={`${portalConfig.prefix}_Signature_${portalConfig.sigMinKb}_${portalConfig.sigMaxKb}KB.jpg`}
                 className="p-2 rounded-xl bg-primary text-white hover:bg-primary/90 transition-colors"
                 title="Download Signature"
               >
@@ -659,13 +741,17 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
                 <h3 className="text-xs font-bold text-text-main uppercase tracking-wider">3. Certificate</h3>
               </div>
               <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-surface-darker text-text-main/80">
-                {isTnpsc ? '< 200 KB' : '< 300 KB'}
+                &lt; {portalConfig.certMaxKb} KB
               </span>
             </div>
 
             <p className="text-[11px] text-text-main/70">
-              {isTnpsc
+              {portal === 'tnpsc'
                 ? 'Community, SSLC Marksheet, or PSTM Certificate compiled in PDF.'
+                : portal === 'upsc'
+                ? 'Identity Card, Matriculation or Category Certificate in PDF (≤ 300 KB).'
+                : portal === 'ibps'
+                ? 'Handwritten declaration or Caste Certificate in PDF (≤ 200 KB).'
                 : 'Category (OBC/EWS/SC/ST) or 10th certificate in PDF.'}
             </p>
 
@@ -742,7 +828,7 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
             {certificate?.processedBlob && (
               <a
                 href={certificate.processedDataUrl!}
-                download={isTnpsc ? 'TNPSC_Certificate_Under_200KB.pdf' : 'SSC_Certificate_Under_300KB.pdf'}
+                download={`${portalConfig.prefix}_Certificate_Under_${portalConfig.certMaxKb}KB.pdf`}
                 className="p-2 rounded-xl bg-primary text-white hover:bg-primary/90 transition-colors"
                 title="Download Certificate"
               >
@@ -794,8 +880,16 @@ export default function ExamComboPackEngine({ portal }: ExamComboPackEngineProps
 
       {/* Telegram & WhatsApp Aspirant Community Sharing */}
       <ExamSocialShareBar
-        toolName={isTnpsc ? 'TNPSC Combo Pack' : 'SSC Combo Pack'}
-        examName={isTnpsc ? 'TNPSC Group 1, 2, 4 & VAO' : 'SSC CGL / CHSL / MTS'}
+        toolName={portalConfig.title}
+        examName={
+          portal === 'tnpsc'
+            ? 'TNPSC Group 1, 2, 4 & VAO'
+            : portal === 'upsc'
+            ? 'UPSC Civil Services CSE / NDA / CDS'
+            : portal === 'ibps'
+            ? 'IBPS PO / Clerk / SBI Banking'
+            : 'SSC CGL / CHSL / MTS'
+        }
       />
 
       {/* Zero Cloud Upload Security Guarantee */}

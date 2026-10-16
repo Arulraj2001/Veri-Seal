@@ -27,6 +27,11 @@ export const metadata: Metadata = {
     'Compress PDF certificates and marksheets strictly under 200 KB online free. Auto-calibrated for TNPSC, SSC CGL/CHSL, and university portals. 100% in-browser RAM privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/compress-pdf-to-200kb',
+    languages: {
+      'ta-IN': 'https://kagazo.in/ta/tools/compress-pdf-to-200kb',
+      en: 'https://kagazo.in/tools/compress-pdf-to-200kb',
+      'x-default': 'https://kagazo.in/tools/compress-pdf-to-200kb',
+    },
   },
   openGraph: {
     title: 'Compress PDF to 200KB Online Free | Kagazo',

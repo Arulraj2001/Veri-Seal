@@ -63,6 +63,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.95,
     },
     {
+      url: `${baseUrl}/ta/tools/tnpsc-combo-pack`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.96,
+    },
+    {
+      url: `${baseUrl}/ta/tools/compress-pdf-to-200kb`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.96,
+    },
+    {
       url: `${baseUrl}/ta/tools/tnea-cutoff-calculator`,
       lastModified: now,
       changeFrequency: 'daily',
@@ -139,6 +151,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: 'daily',
       priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/tools/tnpsc-combo-pack`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/tools/ssc-combo-pack`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/tools/upsc-combo-pack`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/tools/ibps-combo-pack`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
     },
     {
       url: `${baseUrl}/tools/neet-photo-signature-resizer`,
