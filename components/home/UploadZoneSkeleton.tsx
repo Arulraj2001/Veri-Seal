@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 
-export function UploadZoneSkeleton() {
+export function UploadZoneSkeleton({ isHeroMode = false }: { isHeroMode?: boolean } = {}) {
   return (
-    <section id="upload-zone" className="py-12 md:py-16 scroll-mt-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="upload-zone" className={isHeroMode ? 'w-full scroll-mt-28' : 'py-12 md:py-16 scroll-mt-20'}>
+      <div className={isHeroMode ? 'w-full' : 'max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'}>
         <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-10 min-h-[480px] flex flex-col justify-between animate-pulse">
           {/* Top Bar Skeleton */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-surface-darker/60">

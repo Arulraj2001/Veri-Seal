@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { WhatsAppShare } from '@/components/ui/WhatsAppShare';
 import type { VerificationState, VerificationResult } from '@/types';
@@ -55,7 +56,12 @@ import { captureVerificationError, ErrorBoundary } from '@/components/ui/ErrorBo
 import { processPdfWithWorker } from '@/lib/pdf-worker-client';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
-export function UploadZone() {
+export interface UploadZoneProps {
+  className?: string;
+  isHeroMode?: boolean;
+}
+
+export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = {}) {
   const { t, language } = useLanguage();
   const { data: session } = useSession();
   const user = session?.user;
@@ -393,11 +399,17 @@ export function UploadZone() {
 
   return (
     <ErrorBoundary fallbackTitle="Verification Engine Error">
-      <section id="verify-engine" className="py-12 md:py-16 scroll-mt-20">
-        <div id="upload-zone" className="scroll-mt-20" />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="verify-engine" className={isHeroMode ? 'w-full scroll-mt-28' : 'py-12 md:py-16 scroll-mt-20'}>
+        <div id="upload-zone" className="scroll-mt-28" />
+        <div className={isHeroMode ? 'w-full' : 'max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'}>
           {/* Card Wrapper with fixed min-height for zero CLS */}
-          <div className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-10 relative overflow-hidden min-h-[480px]">
+          <div
+            className={cn(
+              'bg-white rounded-3xl border border-surface-darker shadow-card p-5 sm:p-8 relative overflow-hidden min-h-[460px] sm:min-h-[480px] transition-all',
+              isHeroMode && 'shadow-2xl border-primary/20 ring-1 ring-primary/10',
+              className
+            )}
+          >
           {/* Top Header inside card */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-surface-darker/60">
             <div>

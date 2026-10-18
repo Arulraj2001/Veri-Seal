@@ -1,12 +1,13 @@
 import * as React from 'react';
 import type { Metadata } from 'next';
 import { HeroSection } from '@/components/home/HeroSection';
-import { StatsBar } from '@/components/home/StatsBar';
 import { UploadZone } from '@/components/home/UploadZone';
 import { UploadZoneSkeleton } from '@/components/home/UploadZoneSkeleton';
+import { SovereignTrustBar } from '@/components/home/SovereignTrustBar';
+import { IntentGateway } from '@/components/home/IntentGateway';
+import { SignatureComparison } from '@/components/home/SignatureComparison';
 import { ToolsMatrix } from '@/components/home/ToolsMatrix';
 import { DecisionEnginesShowcase } from '@/components/home/DecisionEnginesShowcase';
-import { HowItWorks } from '@/components/home/HowItWorks';
 import { SupportedDocs } from '@/components/home/SupportedDocs';
 import { TrustSection } from '@/components/home/TrustSection';
 import { BlogShowcase } from '@/components/home/BlogShowcase';
@@ -171,22 +172,24 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* 1. Hero Section (H1, Command Search, Hot-Pills, Live Counter) */}
-      <HeroSection hideDecisionEngines={hideDecisionEngines} />
+      {/* 1. Split Hero Section with Live Verification Studio Above the Fold */}
+      <HeroSection hideDecisionEngines={hideDecisionEngines}>
+        <React.Suspense fallback={<UploadZoneSkeleton isHeroMode />}>
+          <UploadZone isHeroMode />
+        </React.Suspense>
+      </HeroSection>
 
-      {/* 2. Real-time Stats Bar */}
-      <StatsBar />
+      {/* 2. Sovereign Authority & Trust Ticker Bar */}
+      <SovereignTrustBar />
 
-      {/* 3. Core Interactive PDF Signature Verification Engine (with Suspense & Zero CLS) */}
-      <React.Suspense fallback={<UploadZoneSkeleton />}>
-        <UploadZone />
-      </React.Suspense>
+      {/* 3. Intent Gateway: 3 High-Impact Citizen Workspaces */}
+      <IntentGateway />
 
-      {/* 4. Supported Documents & States Tabs (Immediately validates which official state certificates work in the verifier) */}
+      {/* 4. Visual Before & After Proof: The Yellow '?' Fix Explained */}
+      <SignatureComparison />
+
+      {/* 5. Supported Government Documents & State Portals Directory */}
       <SupportedDocs />
-
-      {/* 5. How It Works (3 Steps & Quick Upload CTA directly back to the tool) */}
-      <HowItWorks />
 
       {/* 6. Curated 57+ Sovereign Tools Matrix (Exam Suite, KYC Privacy, CSC Print Lab, PDF Tools) */}
       <ToolsMatrix />
