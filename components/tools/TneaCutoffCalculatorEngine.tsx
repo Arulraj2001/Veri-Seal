@@ -521,7 +521,7 @@ export default function TneaCutoffCalculatorEngine() {
         </div>
       </div>
 
-      {/* Dynamic Ostrune Agency Ad Banner */}
+      {/* Dynamic Sponsor Ad Banner */}
       <AdSlot slot="in_content" />
     </div>
   );

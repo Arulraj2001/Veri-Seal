@@ -26,11 +26,11 @@ export async function GET() {
       ad_slot_post_download: true,
       ad_slot_in_content: true,
       ad_slot_mobile: true,
-      sponsor_title: 'Ostrune — Web Development, SEO & Speed Growth Agency',
-      sponsor_desc: 'We build sub-second websites, custom web apps, and run SEO & Meta Ads with 100/100 Core Web Vitals for ambitious businesses worldwide. Free site audit with 12h reply guarantee.',
-      sponsor_cta_text: 'Book Free Strategy Call',
-      sponsor_cta_url: 'https://ostrune.netlify.app/',
-      sponsor_badge: 'Ostrune Agency',
+      sponsor_title: 'Kagazo — 100% Free Sovereign Document & Exam Tools',
+      sponsor_desc: 'Zero server uploads. Process passport photo sheets, 5-in-1 PVC ID cards, Aadhaar merges, and exam compliance in your browser RAM.',
+      sponsor_cta_text: 'Explore Citizen Tools',
+      sponsor_cta_url: '/tools',
+      sponsor_badge: 'Kagazo Suite',
     });
   }
 }

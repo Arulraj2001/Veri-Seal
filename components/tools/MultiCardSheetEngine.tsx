@@ -1090,7 +1090,7 @@ export default function MultiCardSheetEngine() {
         </div>
       </div>
 
-      {/* Official Partner Slot (Ostrune) */}
+      {/* Official Partner Slot (Sponsor) */}
       <AdSlot slot="in_content" />
     </div>
   );

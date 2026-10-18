@@ -4,12 +4,9 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  ExternalLink,
-  Sparkles,
   Mail,
   Check,
   Copy,
-  ArrowUpRight,
   Headphones,
 } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
@@ -417,46 +414,7 @@ export function Footer() {
 
         </div>
 
-        {/* Engineering Partner Showcase (Ostrune) */}
-        <div className="py-5 my-8 px-5 sm:px-8 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-surface/90 via-white to-surface border border-surface-darker/80 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left">
-            <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 text-primary flex items-center justify-center shrink-0 border border-primary/20 shadow-2xs">
-              <Sparkles className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <p className="text-xs sm:text-sm font-extrabold text-text-main flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
-                <span>Engineered for Speed &amp; Performance by</span>
-                <a
-                  href="https://ostrune.netlify.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline font-black inline-flex items-center gap-1"
-                >
-                  <span>Ostrune Agency</span>
-                  <ExternalLink className="w-3.5 h-3.5 inline" />
-                </a>
-                <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-md bg-primary/10 text-primary border border-primary/20">
-                  Performance Partner
-                </span>
-              </p>
-              <p className="text-xs text-text-main/70 mt-0.5">
-                Web Development, High-Conversion SEO &amp; Performance Growth. Free site audit with 12h reply guarantee.
-              </p>
-            </div>
-          </div>
-
-          <a
-            href="https://ostrune.netlify.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-text-main hover:bg-black text-white text-xs font-black shrink-0 transition-colors shadow-xs w-full sm:w-auto justify-center"
-          >
-            <span>Visit Ostrune</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
-        </div>
-
-        {/* Bottom Bar: Symmetrical Copyright, Legal Quick Links & India Badge */}
+{/* Bottom Bar: Symmetrical Copyright, Legal Quick Links & India Badge */}
         <div className="pt-6 sm:pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-text-main/70">
           <p className="text-center lg:text-left leading-relaxed">
             © 2026 Kagazo. {t.footer_rights || (isTamil ? 'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை' : 'All rights reserved')} — {isTamil

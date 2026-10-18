@@ -11,7 +11,6 @@ import { SupportedDocs } from '@/components/home/SupportedDocs';
 import { TrustSection } from '@/components/home/TrustSection';
 import { BlogShowcase } from '@/components/home/BlogShowcase';
 import { ApiOfferingBanner } from '@/components/home/ApiOfferingBanner';
-import { OstruneAgencyBanner } from '@/components/home/OstruneAgencyBanner';
 import { FaqSection } from '@/components/home/FaqSection';
 import { SITE_URL } from '@/lib/constants';
 import { getMergedSettings } from '@/lib/settings-store';
@@ -204,10 +203,7 @@ export default async function HomePage() {
       {/* 10. Developer & Enterprise REST API Offering */}
       <ApiOfferingBanner />
 
-      {/* 11. Ostrune Agency Engineering & SEO Showcase */}
-      <OstruneAgencyBanner />
-
-      {/* 12. FAQ Accordion Section */}
+      {/* 11. FAQ Accordion Section */}
       <FaqSection hideDecisionEngines={hideDecisionEngines} />
     </div>
   );

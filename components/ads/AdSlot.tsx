@@ -32,12 +32,12 @@ interface PublicAdsConfig {
   sponsor_badge: string;
 }
 
-export const DEFAULT_OSTRUNE_CONFIG = {
-  title: 'Ostrune — Web Development, SEO & Speed Growth Agency',
-  desc: 'We build sub-second websites, custom web apps, and run SEO & Meta Ads with 100/100 Core Web Vitals for ambitious businesses worldwide. Free site audit with 12h reply guarantee.',
-  cta_text: 'Book Free Strategy Call',
-  cta_url: 'https://ostrune.netlify.app/',
-  badge: 'Ostrune Agency',
+export const DEFAULT_SPONSOR_CONFIG = {
+  title: 'Kagazo — 100% Free Sovereign Document & Exam Tools',
+  desc: 'Zero server uploads. Process passport photo sheets, 5-in-1 PVC ID cards, Aadhaar merges, and exam compliance in your browser RAM.',
+  cta_text: 'Explore Citizen Tools',
+  cta_url: '/tools',
+  badge: 'Kagazo Suite',
 };
 
 const DEFAULT_CONFIG: PublicAdsConfig = {
@@ -48,11 +48,11 @@ const DEFAULT_CONFIG: PublicAdsConfig = {
   ad_slot_post_download: true,
   ad_slot_in_content: true,
   ad_slot_mobile: true,
-  sponsor_title: DEFAULT_OSTRUNE_CONFIG.title,
-  sponsor_desc: DEFAULT_OSTRUNE_CONFIG.desc,
-  sponsor_cta_text: DEFAULT_OSTRUNE_CONFIG.cta_text,
-  sponsor_cta_url: DEFAULT_OSTRUNE_CONFIG.cta_url,
-  sponsor_badge: DEFAULT_OSTRUNE_CONFIG.badge,
+  sponsor_title: DEFAULT_SPONSOR_CONFIG.title,
+  sponsor_desc: DEFAULT_SPONSOR_CONFIG.desc,
+  sponsor_cta_text: DEFAULT_SPONSOR_CONFIG.cta_text,
+  sponsor_cta_url: DEFAULT_SPONSOR_CONFIG.cta_url,
+  sponsor_badge: DEFAULT_SPONSOR_CONFIG.badge,
 };
 
 export function AdSlot({
@@ -81,11 +81,11 @@ export function AdSlot({
           ad_slot_post_download: data.ad_slot_post_download !== false,
           ad_slot_in_content: data.ad_slot_in_content !== false,
           ad_slot_mobile: data.ad_slot_mobile !== false,
-          sponsor_title: data.sponsor_title || DEFAULT_OSTRUNE_CONFIG.title,
-          sponsor_desc: data.sponsor_desc || DEFAULT_OSTRUNE_CONFIG.desc,
-          sponsor_cta_text: data.sponsor_cta_text || DEFAULT_OSTRUNE_CONFIG.cta_text,
-          sponsor_cta_url: data.sponsor_cta_url || DEFAULT_OSTRUNE_CONFIG.cta_url,
-          sponsor_badge: data.sponsor_badge || DEFAULT_OSTRUNE_CONFIG.badge,
+          sponsor_title: (/ostrune/i.test(data.sponsor_title || '') ? DEFAULT_SPONSOR_CONFIG.title : (data.sponsor_title || DEFAULT_SPONSOR_CONFIG.title)),
+          sponsor_desc: (/ostrune/i.test(data.sponsor_desc || '') ? DEFAULT_SPONSOR_CONFIG.desc : (data.sponsor_desc || DEFAULT_SPONSOR_CONFIG.desc)),
+          sponsor_cta_text: (/ostrune/i.test(data.sponsor_cta_text || '') ? DEFAULT_SPONSOR_CONFIG.cta_text : (data.sponsor_cta_text || DEFAULT_SPONSOR_CONFIG.cta_text)),
+          sponsor_cta_url: (/ostrune/i.test(data.sponsor_cta_url || '') ? DEFAULT_SPONSOR_CONFIG.cta_url : (data.sponsor_cta_url || DEFAULT_SPONSOR_CONFIG.cta_url)),
+          sponsor_badge: (/ostrune/i.test(data.sponsor_badge || '') ? DEFAULT_SPONSOR_CONFIG.badge : (data.sponsor_badge || DEFAULT_SPONSOR_CONFIG.badge)),
         });
         setLoaded(true);
       })
@@ -115,12 +115,17 @@ export function AdSlot({
     config.adsense_publisher_id &&
     !adBlocked;
 
-  // Resolve dynamic sponsor text from admin settings, custom props, or Ostrune default
-  const activeTitle = customTitle || config.sponsor_title || DEFAULT_OSTRUNE_CONFIG.title;
-  const activeDesc = customDesc || config.sponsor_desc || DEFAULT_OSTRUNE_CONFIG.desc;
-  const activeCtaText = customCtaText || config.sponsor_cta_text || DEFAULT_OSTRUNE_CONFIG.cta_text;
-  const activeCtaUrl = customCtaUrl || config.sponsor_cta_url || DEFAULT_OSTRUNE_CONFIG.cta_url;
-  const activeBadge = config.sponsor_badge || DEFAULT_OSTRUNE_CONFIG.badge;
+  // Resolve dynamic sponsor text from admin settings, custom props, or Kagazo default
+  const rawTitle = customTitle || config.sponsor_title;
+  const activeTitle = rawTitle && !/ostrune/i.test(rawTitle) ? rawTitle : DEFAULT_SPONSOR_CONFIG.title;
+  const rawDesc = customDesc || config.sponsor_desc;
+  const activeDesc = rawDesc && !/ostrune/i.test(rawDesc) ? rawDesc : DEFAULT_SPONSOR_CONFIG.desc;
+  const rawCtaText = customCtaText || config.sponsor_cta_text;
+  const activeCtaText = rawCtaText && !/ostrune/i.test(rawCtaText) ? rawCtaText : DEFAULT_SPONSOR_CONFIG.cta_text;
+  const rawCtaUrl = customCtaUrl || config.sponsor_cta_url;
+  const activeCtaUrl = rawCtaUrl && !/ostrune/i.test(rawCtaUrl) ? rawCtaUrl : DEFAULT_SPONSOR_CONFIG.cta_url;
+  const rawBadge = config.sponsor_badge;
+  const activeBadge = rawBadge && !/ostrune/i.test(rawBadge) ? rawBadge : DEFAULT_SPONSOR_CONFIG.badge;
 
   // Custom Direct Sponsor UI
   if (!isAdSense || adBlocked) {

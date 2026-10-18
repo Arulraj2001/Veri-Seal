@@ -232,7 +232,7 @@ Result: 28 / 28 Routes Returned HTTP 200 OK!
 
 All 12 tools in **Category 2: Passport & Visa Photo Lab** and all tools in **Category 1: Exam & Recruitment Photos** have been thoroughly standardized, audited, and optimized:
 1. **Eliminated Redundant Double Card Wrapping (Image 2)**: Removed redundant outer card wrappers (`<div className="bg-white rounded-3xl border border-surface-darker p-4 sm:p-6 shadow-card">`) from 11 tools so engines sit directly in `<main>`, unlocking maximum horizontal and vertical space with single-card clarity.
-2. **Eliminated Duplicate Stacked Ads (Image 1)**: Removed internal `AdSlot` components from engine footers (`HandwrittenDeclarationEngine`, `CollegePhotoStudioEngine`, `TnpscOtrComplianceKitEngine`, and `ImageResizerEngine`) so pages never render two Ostrune sponsored ads stacked back-to-back.
+2. **Eliminated Duplicate Stacked Ads (Image 1)**: Removed internal `AdSlot` components from engine footers (`HandwrittenDeclarationEngine`, `CollegePhotoStudioEngine`, `TnpscOtrComplianceKitEngine`, and `ImageResizerEngine`) so pages never render two Sponsored ads stacked back-to-back.
 3. **Fixed Navbar Clearance**: Unified all pages with `pt-28 pb-20`, ambient glow, and centered hero headers with preserved custom badge colors.
 4. **Code-Level Verification**: Clean `npx tsc --noEmit` build (exit code 0). Zero browser subagent usage.
 
@@ -257,7 +257,7 @@ All 12 tools in **Category 2: Passport & Visa Photo Lab** and all tools in **Cat
 - **Result**: The engines now occupy the full column width without redundant margins, providing a larger, cleaner, and more spacious interface.
 
 ### Issue B: Duplicate Stacked Sponsored Ads (Image 1)
-- **Problem**: In pages like `handwritten-declaration-scanner` and `college-admission-photo-maker`, the interactive engine contained an internal `<AdSlot slot="in_content" />` at its bottom, while the parent `page.tsx` also rendered `<AdSlot slot="post_download" />` immediately below the engine. This caused two sponsored ads (Ostrune Agency) to appear stacked right on top of each other.
+- **Problem**: In pages like `handwritten-declaration-scanner` and `college-admission-photo-maker`, the interactive engine contained an internal `<AdSlot slot="in_content" />` at its bottom, while the parent `page.tsx` also rendered `<AdSlot slot="post_download" />` immediately below the engine. This caused two sponsored ads (Sponsor) to appear stacked right on top of each other.
 - **Solution**: Removed internal AdSlots from the following engines:
   - `components/tools/HandwrittenDeclarationEngine.tsx` (removed duplicate `in_content` AdSlot)
   - `components/tools/CollegePhotoStudioEngine.tsx` (removed duplicate `in_content` AdSlot)
@@ -472,7 +472,7 @@ A nationwide rebrand from **VeriSeal** to **Kagazo** (`kagazo.in`) was executed 
 ## 6. Layout Width Audit & Full-Width Standardization across Categories 1, 2, and 3
 
 ### Issue Analysis (Image 1 vs Image 2)
-- **Identified Friction (Image 1)**: In `/tools/pdf-compressor` and related compressor tools, the interactive tool card was artificially constricted by a hardcoded `max-w-4xl mx-auto` class on the engine container (`PdfCompressorEngine.tsx`), capping its width at 896px. In contrast, the Ostrune native ad (`<AdSlot slot="post_download" />`) and the Indian Government Recruitment Upload Limits table below it spanned the full width (`lg:col-span-9 xl:col-span-10`, ~1100–1300px), causing the tool card to appear squeezed/narrow with empty margin gaps on both sides.
+- **Identified Friction (Image 1)**: In `/tools/pdf-compressor` and related compressor tools, the interactive tool card was artificially constricted by a hardcoded `max-w-4xl mx-auto` class on the engine container (`PdfCompressorEngine.tsx`), capping its width at 896px. In contrast, the Native sponsor ad (`<AdSlot slot="post_download" />`) and the Indian Government Recruitment Upload Limits table below it spanned the full width (`lg:col-span-9 xl:col-span-10`, ~1100–1300px), causing the tool card to appear squeezed/narrow with empty margin gaps on both sides.
 - **Target Reference (Image 2)**: In `/tools/passport-white-background` (`BackgroundRemoverEngine.tsx`), the tool card uses `w-full`, creating a cohesive vertical alignment where the engine, ad slot, and content/FAQ cards share identical left and right boundaries with zero horizontal jumping.
 
 ### Resolution & Audit Across Categories 1, 2, and 3:
