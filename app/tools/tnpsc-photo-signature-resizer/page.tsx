@@ -26,9 +26,9 @@ import { RelatedTools } from '@/components/ui/RelatedTools';
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
-  title: 'TNPSC Photo & Signature Resizer — OTR Portal 2026 | Kagazo',
+  title: 'TNPSC Photo & Signature Resizer (200x230px, 20–50KB) — OTR 2026 Free | Kagazo',
   description:
-    'Resize your TNPSC Group 1, Group 2, Group 4, or VAO photo (20–50 KB) and signature (10–20 KB) with the mandatory name and date strip for the One Time Registration portal. Free, no upload.',
+    'Resize and auto-crop TNPSC photo (20–50 KB, 200x230px) and signature (10–20 KB) with mandatory candidate name and date stamp for OTR portal. 100% free, zero upload.',
   alternates: {
     canonical: 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
     languages: {
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'TNPSC Photo & Signature Resizer — OTR Portal | Kagazo',
+    title: 'TNPSC Photo & Signature Resizer (200x230px, 20–50KB) — OTR Portal | Kagazo',
     description:
-      'Format TNPSC photo with name and date-of-photo strip (20–50 KB) and signature (10–20 KB) for OTR registration. 100% in-browser, free.',
+      'Format TNPSC photo with name and date-of-photo strip (20–50 KB, 200x230px) and signature (10–20 KB) for OTR registration. 100% in-browser, free.',
     url: 'https://kagazo.in/tools/tnpsc-photo-signature-resizer',
     siteName: 'Kagazo',
     type: 'website',

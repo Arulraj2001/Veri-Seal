@@ -24,17 +24,22 @@ import { buildToolStructuredData } from '@/lib/seo-schema';
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
-  title: 'புகைப்படம் & கையொப்பம் 20KB அளவு குறைப்பான் | 10-20 KB ஆன்லைன் இலவசம் | காகஸோ',
+  title: 'Photo & Signature Compressor to 20KB (போட்டோ 20KB குறைப்பான்) — TNPSC, SSC Free | Kagazo',
   description:
-    'அரசு வேலைவாய்ப்பு மற்றும் TNPSC, SSC தேர்வுகளுக்கான புகைப்படம் மற்றும் கையொப்பத்தை துல்லியமாக 10 KB முதல் 20 KB வரை இலவசமாக அமுக்கவும். தரம் குறையாது, வாட்டர்மார்க் இல்லை.',
+    'Compress photo and signature to strictly 10KB–20KB online free for TNPSC, SSC & govt exams. TNPSC மற்றும் அரசு தேர்வுகளுக்கான போட்டோ, கையொப்பம் 20KB அளவுக்கு உடனே மாற்றவும். 100% Free.',
   keywords: [
+    'photo compressor to 20kb',
+    'photo size reducer 20kb',
+    'signature resize 10 to 20 kb',
+    '20 kb photo size',
     'tnpsc photo size eppadi mathurathu',
     'signature size kuraippathu eppadi',
     'tnpsc signature less than 10kb error fix tamil',
     'signature compress 20kb',
     'ssc signature 10 to 20 kb tamil',
     'upsc signature 20kb resizer',
-    'k கையொப்பம் அளவு குறைப்பான்',
+    'போட்டோ 20kb',
+    'கையொப்பம் அளவு குறைப்பான்',
   ],
   alternates: {
     canonical: `${SITE_URL}/ta/tools/compress-image-to-20kb`,

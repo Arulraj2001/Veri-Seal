@@ -106,6 +106,21 @@ const nextConfig = {
         destination: '/blog/fix-yellow-question-mark-aadhaar-pdf',
         permanent: true,
       },
+      {
+        source: '/aadhaar-pdf-yellow-question-mark-fix',
+        destination: '/blog/fix-yellow-question-mark-aadhaar-pdf',
+        permanent: true,
+      },
+      {
+        source: '/blog/tnpsc-photo-signature-resizer-guidelines',
+        destination: '/blog/tnpsc-otr-photo-size-requirements-2026',
+        permanent: true,
+      },
+      {
+        source: '/blog/gstin-verification-online-free',
+        destination: '/blog/how-to-verify-gst-number-spot-fake-invoices-gstin-guide',
+        permanent: true,
+      },
     ];
   },
   async rewrites() {

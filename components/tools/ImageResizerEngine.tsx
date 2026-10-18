@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   Upload,
   Camera,
@@ -18,6 +19,8 @@ import {
   User,
   RefreshCw,
   Trash2,
+  ChevronRight,
+  FileCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { resizeImage, type ImageResizeResponse } from '@/lib/api';
@@ -584,6 +587,46 @@ export function ImageResizerEngine({
                   <Download className="w-4 h-4" />
                   <span>Download Verified {mode === 'photo' ? 'Photo' : 'Signature'} ({result.output_size_kb} KB)</span>
                 </button>
+
+                {/* Companion Step: Workflow Chaining to prevent bounce */}
+                <div className="p-3 bg-gradient-to-r from-primary/10 via-surface to-white border border-primary/20 rounded-2xl flex items-center justify-between gap-3 shadow-2xs">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-8 h-8 rounded-xl bg-primary/15 text-primary flex items-center justify-center shrink-0">
+                      {mode === 'photo' ? <PenTool className="w-4 h-4" /> : <FileCheck className="w-4 h-4 text-emerald-600" />}
+                    </div>
+                    <div className="min-w-0 text-left">
+                      <span className="text-[10px] uppercase font-black tracking-wider text-primary block">
+                        Step 2 Next Action
+                      </span>
+                      <span className="text-xs font-bold text-text-main truncate block">
+                        {mode === 'photo' ? 'Next: Resize Candidate Signature (10–20 KB)' : 'Next: Prepare Exam Documents & Certificates'}
+                      </span>
+                    </div>
+                  </div>
+                  {mode === 'photo' ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleModeChange('signature');
+                        setFile(null);
+                        setFilePreview(null);
+                        setResult(null);
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-primary hover:bg-primary-hover text-white text-xs font-bold transition-all shadow-xs shrink-0 flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Resize Sign</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  ) : (
+                    <Link
+                      href="/tools/government-exam-pdf-compressor"
+                      className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-xs shrink-0 flex items-center gap-1"
+                    >
+                      <span>Compress PDF</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
+                </div>
 
                 <WhatsAppShare
                   message={`I just resized my exam ${mode === 'photo' ? 'photo' : 'signature'} for ${examName} using Kagazo's free compliance tool! Check it out:`}

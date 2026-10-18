@@ -37,22 +37,22 @@ import PhotoSheetEngine from '@/components/tools/PhotoSheetEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Passport Photo Sheet Maker Online Free (4x6" & A4) | Kagazo',
-  description: 'Generate printable passport photo sheets on 4x6" (6-8 photos) and A4 paper (30-36 photos) online for free. Exact 35x45mm and 2x2" dimensions with cutting crop marks at 300 DPI.',
+  title: 'Passport Photo Sheet Maker: 8 Photos on 4x6" & A4 Online Free (300 DPI Cut Marks) | Kagazo',
+  description: 'Print 8 passport photos on 4x6" or 32 photos on A4 paper online for free. Exact 35x45mm & 2x2" presets with cutting borders at 300 DPI for Epson & Canon printers.',
   alternates: {
     canonical: 'https://kagazo.in/tools/passport-photo-sheet-maker',
   },
   openGraph: {
-    title: 'Passport Photo Sheet Maker Online Free (4x6" & A4) | Kagazo',
-    description: 'Generate printable passport photo sheets on 4x6" (6-8 photos) and A4 paper (30-36 photos) online for free. Exact 35x45mm and 2x2" dimensions with cutting crop marks at 300 DPI.',
+    title: 'Passport Photo Sheet Maker: 8 Photos on 4x6" & A4 Online Free | Kagazo',
+    description: 'Print 8 passport photos on 4x6" or 32 photos on A4 paper online for free. Exact 35x45mm & 2x2" presets with cutting borders at 300 DPI.',
     url: 'https://kagazo.in/tools/passport-photo-sheet-maker',
     siteName: 'Kagazo',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Passport Photo Sheet Maker Online Free (4x6" & A4) | Kagazo',
-    description: 'Generate printable passport photo sheets on 4x6" (6-8 photos) and A4 paper (30-36 photos) online for free. Exact 35x45mm and 2x2" dimensions with cutting crop marks at 300 DPI.',
+    title: 'Passport Photo Sheet Maker: 8 Photos on 4x6" & A4 Online Free | Kagazo',
+    description: 'Print 8 passport photos on 4x6" or 32 photos on A4 paper online for free. Exact 35x45mm & 2x2" presets with cutting borders at 300 DPI.',
   },
 };
 

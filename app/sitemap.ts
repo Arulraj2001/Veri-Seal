@@ -33,6 +33,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.98,
     },
     {
+      url: `${baseUrl}/tools/cyber-cafe-suite`,
+      lastModified: now,
+      changeFrequency: 'daily',
+      priority: 0.98,
+    },
+    {
       url: `${baseUrl}/ta/tools`,
       lastModified: now,
       changeFrequency: 'daily',
@@ -1361,8 +1367,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...blogRoutes,
   ];
 
+  // Exclude low-intent generic dev/network utilities to preserve Google crawl budget for Indian Gov & Exam tools
+  const EXCLUDED_GENERIC_SLUGS = new Set([
+    'youtube-thumbnail-downloader', 'color-picker', 'color-converter', 'whatsapp-link-generator',
+    'qr-code-generator', 'qr-code-reader', 'barcode-generator', 'barcode-reader',
+    'utm-link-generator', 'mailto-link-generator', 'paypal-link-generator', 'dns-lookup',
+    'ssl-lookup', 'whois-lookup', 'ip-lookup', 'reverse-ip-lookup', 'http-headers-lookup',
+    'url-redirect-checker', 'meta-tags-checker', 'json-formatter', 'json-validator',
+    'json-beautifier', 'html-minifier', 'css-minifier', 'js-minifier', 'sql-formatter',
+    'markdown-to-html', 'base64-encode', 'base64-decode', 'url-encode', 'url-decode',
+    'html-entity-encoder', 'html-entity-decoder', 'lorem-ipsum-generator', 'case-converter',
+    'word-counter', 'text-cleaner', 'remove-line-breaks', 'password-generator',
+    'unix-timestamp-converter', 'unit-converter', 'number-to-words-converter',
+    'hash-generator', 'uuid-generator'
+  ]);
+
+  let finalRoutes = allRoutes.filter((r) => {
+    const slug = r.url.replace(`${baseUrl}/tools/`, '').replace(`${baseUrl}/`, '');
+    return !EXCLUDED_GENERIC_SLUGS.has(slug);
+  });
+
   if (settings.hide_decision_engines) {
-    return allRoutes.filter(
+    finalRoutes = finalRoutes.filter(
       (r) =>
         !r.url.includes('/home-cost') &&
         !r.url.includes('/vehicle-os') &&
@@ -1370,5 +1396,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     );
   }
 
-  return allRoutes;
+  return finalRoutes;
 }

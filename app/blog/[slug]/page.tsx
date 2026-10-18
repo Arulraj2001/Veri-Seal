@@ -14,6 +14,8 @@ import {
   FileCheck2,
   Eye,
   Globe,
+  Sparkles,
+  Zap,
 } from 'lucide-react';
 import {
   getPublishedBlogPosts,
@@ -32,6 +34,98 @@ import { AuthorBio } from '@/components/blog/AuthorBio';
 import { LanguageSwitcher } from '@/components/blog/LanguageSwitcher';
 
 export const revalidate = 60; // Fresh within 60s (purged on-demand via revalidatePath)
+
+function getSmartToolCallout(slug: string, title: string, category?: string) {
+  const s = (slug + ' ' + title + ' ' + (category || '')).toLowerCase();
+
+  // 1. Passport photo printing / sheet maker / 4x6 / A4
+  if (s.includes('passport-photo') || s.includes('4x6') || s.includes('passport photo') || s.includes('print-8')) {
+    return {
+      title: 'Generate Printable 4x6" Passport Photo Sheet Free',
+      description: 'Auto-tile 6 to 8 photos with cutting lines at 300 DPI for Epson & Canon printers in 5 seconds.',
+      ctaText: 'Open Photo Sheet Maker',
+      href: '/tools/passport-photo-sheet-maker',
+      badge: 'Cyber Café Utility',
+    };
+  }
+
+  // 2. TNPSC OTR Photo & Signature
+  if (s.includes('tnpsc')) {
+    return {
+      title: 'Resize TNPSC Photo & Signature (OTR 2026)',
+      description: 'Strictly 20–50KB photo with candidate name/date stamp & 10–20KB signature for One Time Registration.',
+      ctaText: 'Open TNPSC Resizer',
+      href: '/tools/tnpsc-photo-signature-resizer',
+      badge: 'TNPSC Compliance',
+    };
+  }
+
+  // 3. SSC Live Photo & Signature (CGL / CHSL / MTS)
+  if (s.includes('ssc')) {
+    return {
+      title: 'SSC Live Photo & Signature Resizer (2026)',
+      description: 'Auto-pad undersized scans to 20–50KB and format 10–20KB signature to official SSC portal rules.',
+      ctaText: 'Resize for SSC Free',
+      href: '/tools/ssc-photo-signature-resizer',
+      badge: 'SSC CGL/CHSL',
+    };
+  }
+
+  // 4. IBPS / Banking Handwritten Declaration & Thumb
+  if (s.includes('ibps') || s.includes('handwritten') || s.includes('declaration')) {
+    return {
+      title: 'IBPS Handwritten Declaration & Photo Resizer',
+      description: 'Clean notebook lines, whiten mobile camera shadows, and lock file size strictly to 50KB–100KB.',
+      ctaText: 'Open Declaration Scanner',
+      href: '/tools/handwritten-declaration-scanner',
+      badge: 'IBPS / SBI Banking',
+    };
+  }
+
+  // 5. Masked Aadhaar (Hotels, KYC, Redaction)
+  if (s.includes('mask-aadhaar') || s.includes('masked-aadhaar') || (s.includes('aadhaar') && s.includes('hotel'))) {
+    return {
+      title: 'Mask Your Aadhaar Card (First 8 Digits Redacted)',
+      description: 'UIDAI & RBI compliant. Redact first 8 digits online free with 100% in-browser RAM privacy.',
+      ctaText: 'Mask Aadhaar Online',
+      href: '/tools/mask-aadhaar',
+      badge: 'RBI & UIDAI Compliant',
+    };
+  }
+
+  // 6. Salary Slip / Payslip
+  if (s.includes('salary') || s.includes('payslip') || s.includes('pay slip')) {
+    return {
+      title: 'Free Indian Salary Slip Generator (FY 2025-26)',
+      description: 'Generate professional PDF salary slips with HRA, DA, PF, and New Tax Regime breakups instantly.',
+      ctaText: 'Generate Pay Slip Free',
+      href: '/tools/salary-slip-generator',
+      badge: 'HR & Tax Utility',
+    };
+  }
+
+  // 7. TN e-Sevai / Revenue Certificate PDF prep
+  if (s.includes('tnesevai') || s.includes('revenue-certificate') || s.includes('pdf-compression')) {
+    return {
+      title: 'TN e-Sevai Certificate PDF Compressor (<200KB)',
+      description: 'Compress Community, Nativity, and Income certificates below 200KB preserving QR codes.',
+      ctaText: 'Optimize Certificate',
+      href: '/tools/tn-esevai-certificate-prep',
+      badge: 'TNeGA e-District',
+    };
+  }
+
+  // 8. Default: Signature verification
+  const targetDocSlug = getSeoSlugForDocType(title + ' ' + slug);
+  const targetDocUrl = targetDocSlug && targetDocSlug !== '#upload-zone' ? `/${targetDocSlug}` : '/#upload-zone';
+  return {
+    title: 'Verify Your Government PDF Instantly',
+    description: 'Check digital signatures on Aadhaar, Community, and Marksheets in 2 seconds with green tick.',
+    ctaText: 'Verify PDF Free',
+    href: targetDocUrl,
+    badge: '100% In-RAM Privacy',
+  };
+}
 
 interface BlogPostPageProps {
   params: {
@@ -212,8 +306,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     ],
   };
 
-  const targetDocSlug = getSeoSlugForDocType(post.title + ' ' + (post.slug || ''));
-  const targetDocUrl = targetDocSlug && targetDocSlug !== '#upload-zone' ? `/${targetDocSlug}` : '/#upload-zone';
+  const toolCallout = getSmartToolCallout(post.slug, post.title, post.category);
 
   return (
     <>
@@ -320,27 +413,32 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <TableOfContents content={post.content} />
               </div>
 
-              {/* Mid-Article CTA Box */}
-              <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-primary/10 via-surface to-white border border-primary/20 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
+              {/* Mid-Article Smart Tool CTA Bridge */}
+              <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-primary/10 via-surface to-white border border-primary/25 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center shrink-0 shadow-sm">
-                    <ShieldCheck className="w-6 h-6" />
+                    <Sparkles className="w-6 h-6" />
                   </div>
-                  <div>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/20">
+                        {toolCallout.badge}
+                      </span>
+                    </div>
                     <h3 className="text-base sm:text-lg font-black text-text-main">
-                      Verify Your Government PDF Instantly
+                      {toolCallout.title}
                     </h3>
-                    <p className="text-xs text-text-main/70 mt-1">
-                      Check digital signatures on Aadhaar, Community, and Marksheets in 2 seconds.
+                    <p className="text-xs text-text-main/70">
+                      {toolCallout.description}
                     </p>
                   </div>
                 </div>
 
                 <Link
-                  href={targetDocUrl}
+                  href={toolCallout.href}
                   className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-xs hover:bg-primary-hover transition-colors shadow-sm whitespace-nowrap shrink-0 flex items-center gap-2"
                 >
-                  <span>Verify PDF Free</span>
+                  <span>{toolCallout.ctaText}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
