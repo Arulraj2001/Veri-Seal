@@ -15,7 +15,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
   return (
-    <section id="hero" className="relative pt-16 sm:pt-20 pb-4 overflow-hidden bg-[#fbfbfb]">
+    <section id="hero" className="relative pt-16 pb-0 overflow-hidden bg-[#fbfbfb] w-full">
       
       {/* ========================================================================= */}
       {/* 1. COMPREHENSIVE SEO FOUNDATION (ACCESSIBLE TO GOOGLE, SCREEN-READERS)    */}
@@ -45,33 +45,33 @@ export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. MASTER HERO BANNER IMAGE PLACED DIRECTLY ON HERO (NO CARD, NO BORDERS) */}
+      {/* 2. FULL-SCREEN HERO BANNER (COVERS SCREEN EDGE-TO-EDGE, NO VERTICAL SCROLL)*/}
       {/* ========================================================================= */}
-      <div className="w-full max-w-[1440px] mx-auto px-0 sm:px-2 md:px-4">
+      <div className="w-full px-0 mx-0">
         
-        {/* Aspect ratio 1024:575 preserved identically, no card wrapper, borderless */}
-        <div className="relative aspect-[1024/575] w-full select-none">
+        {/* On desktop, fits viewport height exactly (calc(100vh - 64px)); on mobile preserves aspect ratio */}
+        <div className="relative w-full h-[calc(100svh-64px)] min-h-[460px] md:min-h-[520px] max-h-[820px] select-none">
           <Image
             src="/images/hero-banner-main.png"
             alt="Kagazo — Your Documents. Your Rights. 100% Private. Sovereign Citizen & Document Utility Suite"
             fill
             priority
             quality={100}
-            className="object-cover object-center"
-            sizes="(max-width: 1440px) 100vw, 1440px"
+            className="object-fill w-full h-full"
+            sizes="100vw"
           />
 
           {/* ------------------------------------------------------------------- */}
-          {/* FLOATING ACTION BUTTONS: Placed precisely in the space above         */}
-          {/* "No uploads. No cloud storage. 100% secure in your browser RAM."    */}
-          {/* (Left: 3.8%, Top: 68.2%, Width: 33.5%, Height: 9.8%)                 */}
+          {/* FLOATING ACTION BUTTONS: Positioned cleanly in the empty space       */}
+          {/* ABOVE "No uploads. No cloud storage. 100% secure in your browser RAM"*/}
+          {/* (Left: 3.4%, Top: 75.2%, Width: 33.2%, Height: 8.5%)                  */}
           {/* ------------------------------------------------------------------- */}
-          <div className="absolute left-[3.8%] top-[68.2%] w-[33.5%] h-[9.8%] z-30 flex items-center gap-1.5 sm:gap-2 lg:gap-3">
+          <div className="absolute left-[3.4%] top-[75.2%] w-[33.2%] h-[8.5%] z-30 flex items-center gap-1.5 sm:gap-2 lg:gap-3">
             
             {/* Button 1: Verify a PDF Now */}
             <Link
               href="/verify"
-              className="flex-1 h-full inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-1 sm:px-2 md:px-3 lg:px-4 rounded-md sm:rounded-lg md:rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-[14px] xl:text-[15px] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all whitespace-nowrap"
+              className="flex-1 h-full inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-1 sm:px-2 md:px-3 lg:px-4 rounded-md sm:rounded-lg md:rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-[13px] xl:text-[14px] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all whitespace-nowrap"
               title="Verify Government PDF Signatures with CCA India Green Tick"
             >
               <FileCheck className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-white shrink-0" />
@@ -82,7 +82,7 @@ export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
             {/* Button 2: Explore All Tools */}
             <Link
               href="/tools"
-              className="flex-1 h-full inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-1 sm:px-2 md:px-3 lg:px-4 rounded-md sm:rounded-lg md:rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-extrabold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-[14px] xl:text-[15px] border border-slate-300 shadow-2xs hover:shadow-sm hover:-translate-y-0.5 transition-all whitespace-nowrap"
+              className="flex-1 h-full inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-1 sm:px-2 md:px-3 lg:px-4 rounded-md sm:rounded-lg md:rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-extrabold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-[13px] xl:text-[14px] border border-slate-300 shadow-2xs hover:shadow-sm hover:-translate-y-0.5 transition-all whitespace-nowrap"
               title="Explore 57+ Free Client-Side Citizen Tools"
             >
               <LayoutGrid className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-slate-700 shrink-0" />
@@ -98,42 +98,42 @@ export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
           {/* 1. Exam Photo Suite */}
           <Link
             href="/tools/tnpsc-combo-pack"
-            className="absolute left-[39.2%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+            className="absolute left-[39.2%] top-[76.5%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
             title="Launch Exam Photo Suite (UPSC, TNPSC, SSC OTR)"
           />
 
           {/* 2. A4 Multi-Card Print Studio */}
           <Link
             href="/tools/a4-multi-card-sheet"
-            className="absolute left-[48.9%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+            className="absolute left-[48.9%] top-[76.5%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
             title="Launch A4 Multi-Card Print Studio (5-in-1 Sheet at 300 DPI)"
           />
 
           {/* 3. Mask Aadhaar (UIDAI Compliant) */}
           <Link
             href="/tools/mask-aadhaar"
-            className="absolute left-[58.6%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+            className="absolute left-[58.6%] top-[76.5%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
             title="Launch Mask Aadhaar (UIDAI & RBI KYC Compliant)"
           />
 
           {/* 4. Signature Cleaner & Extractor */}
           <Link
             href="/tools/signature-cleaner-extractor"
-            className="absolute left-[68.3%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+            className="absolute left-[68.3%] top-[76.5%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
             title="Launch Signature Cleaner & Extractor"
           />
 
           {/* 5. PDF Compressors (Zero Blur) */}
           <Link
             href="/tools/compress-pdf-to-200kb"
-            className="absolute left-[78.0%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+            className="absolute left-[78.0%] top-[76.5%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
             title="Launch PDF Compressors (Strict 200KB / 100KB limits)"
           />
 
           {/* 6. Self-Attest PDF */}
           <Link
             href="/tools/self-attest-pdf"
-            className="absolute left-[87.7%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+            className="absolute left-[87.7%] top-[76.5%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
             title="Launch Self-Attest PDF Document Tool"
           />
 
