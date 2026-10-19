@@ -1,49 +1,60 @@
 'use client';
 
 import * as React from 'react';
-import { ShieldCheck, CheckCircle2, Lock, FileCheck, Award, Building2 } from 'lucide-react';
+import Image from 'next/image';
+import { ShieldCheck } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
 const AUTHORITIES = [
-  { name: 'UIDAI e-Aadhaar', category: 'Central Govt', desc: 'UIDAI e-Sign & QR verification' },
-  { name: 'Tamil Nadu TNeGA', category: 'State Portal', desc: 'Community, Nativity & Income certs' },
-  { name: 'MeeSeva AP & TS', category: 'State Portal', desc: 'Revenue, Caste & Residence certs' },
-  { name: 'Seva Sindhu KA', category: 'State Portal', desc: 'Karnataka revenue & caste seals' },
-  { name: 'DigiLocker MeitY', category: 'Central Govt', desc: 'All DigiLocker issued documents' },
-  { name: 'Income Tax e-PAN', category: 'Central Govt', desc: 'Protean & UTIITSL DSC validation' },
-  { name: 'TRACES Form 16', category: 'Central Govt', desc: 'Employer TDS certificate signatures' },
-  { name: 'e-District Kerala', category: 'State Portal', desc: 'Akshaya & Sevana civil certificates' },
+  { name: 'UIDAI e-Aadhaar', logo: '/logos/uidai.svg', height: 28 },
+  { name: 'Emblem of India', logo: '/logos/emblem_of_india.svg', height: 32 },
+  { name: 'TNPSC Exams', logo: '/logos/tnpsc.svg', height: 28 },
+  { name: 'UPSC Recruitment', logo: '/logos/upsc.svg', height: 26 },
+  { name: 'SSC Commission', logo: '/logos/ssc.svg', height: 26 },
+  { name: 'Income Tax e-PAN', logo: '/logos/incometax.svg', height: 24 },
+  { name: 'Parivahan Sarathi', logo: '/logos/parivahan.svg', height: 24 },
+  { name: 'IBPS Banking', logo: '/logos/ibps.svg', height: 26 },
 ];
 
 export function SovereignTrustBar() {
   const { language } = useLanguage();
 
   return (
-    <section className="py-6 bg-surface/70 border-b border-border/60">
+    <section className="py-6 sm:py-7 bg-surface/40 border-y border-surface-darker/60 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
           
-          {/* Left Title Label */}
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-xs font-extrabold uppercase tracking-wider text-text-main flex items-center gap-1.5">
+          {/* Subtle Label */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-xs font-bold uppercase tracking-wider text-text-muted flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>{language === 'ta' ? 'அங்கீகரிக்கப்பட்ட அரசு அமைப்புகள்' : 'Supported Government Authorities'}</span>
+              <span>
+                {language === 'ta'
+                  ? 'மத்திய அமைச்சகங்கள் & அரசு அமைப்புகளுக்கு இணக்கமானது'
+                  : 'Engineered for India’s Sovereign Ministries & Recruitment Boards'}
+              </span>
             </span>
           </div>
 
-          {/* Scrolling / Flex Badges */}
-          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-2 sm:gap-2.5">
-            {AUTHORITIES.map((auth, idx) => (
+          {/* Logo Ribbon */}
+          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 sm:gap-8 opacity-80 hover:opacity-100 transition-opacity">
+            {AUTHORITIES.map((auth) => (
               <div
-                key={idx}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-surface-darker/80 shadow-2xs hover:border-primary/40 transition-all text-xs"
-                title={auth.desc}
+                key={auth.name}
+                className="flex items-center gap-2 group transition-transform hover:scale-105"
+                title={auth.name}
               >
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span className="font-bold text-text-main">{auth.name}</span>
-                <span className="text-[10px] text-text-muted px-1.5 py-0.2 rounded bg-muted">
-                  {auth.category}
+                <div className="h-8 w-auto flex items-center justify-center grayscale group-hover:grayscale-0 transition-all">
+                  <img
+                    src={auth.logo}
+                    alt={auth.name}
+                    className="max-h-7 max-w-[85px] object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <span className="text-xs font-semibold text-text-main/70 group-hover:text-text-main transition-colors hidden sm:inline">
+                  {auth.name}
                 </span>
               </div>
             ))}

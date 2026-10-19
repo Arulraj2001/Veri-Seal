@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Lock, Zap, ShieldCheck, Sparkles, CheckCircle2, ChevronRight, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Sparkles, ArrowRight, CheckCircle2, Lock } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 import { HomeHeroSearch } from '@/components/home/HomeHeroSearch';
 import { CertificateVerificationHeroVisual } from '@/components/home/CertificateVerificationHeroVisual';
@@ -40,15 +40,15 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
   ];
 
   return (
-    <section id="hero" className="relative pt-24 pb-10 md:pt-28 md:pb-14 overflow-hidden bg-background bg-dot-grid border-b border-border/50">
+    <section id="hero" className="relative pt-24 pb-12 md:pt-28 md:pb-16 overflow-hidden bg-background bg-dot-grid border-b border-border/50">
       {/* Ambient background glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left Column: Value Proposition & Direct Portals */}
-          <div className="lg:col-span-7 xl:col-span-6 space-y-5 text-left">
+          <div className="lg:col-span-7 xl:col-span-6 space-y-6 text-left">
             {/* Top Live Badge */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -69,7 +69,7 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
             </motion.div>
 
             {/* H1 Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-text-main tracking-tight leading-[1.12]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-text-main tracking-tight leading-[1.14]">
               {language === 'ta' ? (
                 <>
                   அரசு PDF டிஜிட்டல் கையொப்பங்களை{' '}
@@ -90,7 +90,7 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
             </h1>
 
             {/* Subheadline */}
-            <p className="text-sm sm:text-base text-text-main/75 leading-relaxed font-normal">
+            <p className="text-sm sm:text-base text-text-main/75 leading-relaxed font-normal max-w-2xl">
               {language === 'ta'
                 ? 'இ-ஆதார், சாதிச் சான்றிதழ், வருமானச் சான்றிதழ், பான் கார்டு மற்றும் டிஜிலாக்கர் PDF கோப்புகளை உடனடியாக சரிபார்க்கவும். 100% இலவசம், கோப்புகள் சர்வரில் சேமிக்கப்படாது.'
                 : 'Instantly validate digital signatures on e-Aadhaar, Community Certificate, Nativity, Income, PAN card & DigiLocker PDFs with official CCA India Root (RCAI) cryptographic green tick. Zero server uploads — 100% private in browser RAM.'}
@@ -115,33 +115,8 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
               </a>
             </div>
 
-            {/* 3 Core Trust Reassurance Points */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-              <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-white border border-surface-darker/80 shadow-2xs">
-                <Lock className="w-4 h-4 text-emerald-600 shrink-0" />
-                <div className="text-[11px] font-bold text-text-main leading-tight">
-                  <div>100% RAM Privacy</div>
-                  <div className="text-[10px] text-text-muted font-normal">DPDP Act Compliant</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-white border border-surface-darker/80 shadow-2xs">
-                <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
-                <div className="text-[11px] font-bold text-text-main leading-tight">
-                  <div>CCA India RCAI</div>
-                  <div className="text-[10px] text-text-muted font-normal">IT Act 2000 Sec 5</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-white border border-surface-darker/80 shadow-2xs">
-                <Zap className="w-4 h-4 text-amber-500 shrink-0" />
-                <div className="text-[11px] font-bold text-text-main leading-tight">
-                  <div>Instant Green Tick</div>
-                  <div className="text-[10px] text-text-muted font-normal">Permanent LTV PDF</div>
-                </div>
-              </div>
-            </div>
-
             {/* Fast Command Search */}
-            <div className="pt-1">
+            <div className="pt-2">
               <HomeHeroSearch />
             </div>
 
@@ -155,10 +130,10 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
                   <Link
                     key={pill.label}
                     href={pill.href}
-                    className={`text-xs font-bold px-3 py-1.5 rounded-xl border transition-all ${
+                    className={`text-xs font-semibold px-3 py-1.5 rounded-xl border transition-all ${
                       pill.isHighlight
-                        ? 'bg-primary text-white border-primary shadow-xs hover:bg-primary-hover'
-                        : 'bg-white hover:bg-surface text-text-main border-surface-darker hover:border-primary/40 shadow-2xs'
+                        ? 'bg-primary text-white border-primary shadow-xs hover:bg-primary-hover font-bold'
+                        : 'bg-white hover:bg-surface text-text-main border-surface-darker/80 hover:border-primary/40 shadow-2xs'
                     }`}
                   >
                     {pill.label}
@@ -166,6 +141,25 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
                 ))}
               </div>
             </div>
+
+            {/* Reassurance Line */}
+            <div className="flex items-center gap-4 pt-1 text-xs text-text-muted font-medium">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>100% RAM Privacy</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
+                <span>CCA India RCAI Certified</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Zero File Retention</span>
+              </span>
+            </div>
+
           </div>
 
           {/* Right Column: Interactive Certificate Verification Showcase */}

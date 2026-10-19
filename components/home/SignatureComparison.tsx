@@ -3,17 +3,14 @@
 import * as React from 'react';
 import Link from 'next/link';
 import {
-  AlertTriangle,
-  CheckCircle2,
-  HelpCircle,
   ShieldCheck,
+  CheckCircle2,
+  AlertTriangle,
   ArrowRight,
-  FileText,
   Lock,
-  ExternalLink,
+  FileCheck,
+  Check,
   X,
-  Minus,
-  Square,
 } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
@@ -21,167 +18,146 @@ export function SignatureComparison() {
   const { language } = useLanguage();
 
   return (
-    <section className="py-16 md:py-20 bg-background relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <section className="py-16 sm:py-24 bg-surface/50 border-y border-surface-darker/60 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
-            <ShieldCheck className="w-4 h-4 text-primary" />
-            <span>THE YELLOW &quot;?&quot; EXPLAINED</span>
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-text-main tracking-tight">
-            Why Do Bank &amp; Government Counters Reject Your PDF?
-          </h2>
-          <p className="text-sm sm:text-base text-text-muted leading-relaxed">
-            Standard PDF viewers on Windows, Mac, and Android do not bundle India&apos;s Sovereign Root Certificates (CCA India / RCAI). Kagazo resolves the root cryptographic chain and embeds permanent Long-Term Validation (LTV) directly into the PDF.
-          </p>
-        </div>
-
-        {/* Side-by-Side Visual OS Window Comparison Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
-          {/* CARD 1: BEFORE KAGAZO (ADOBE READER REJECTED VIEW) */}
-          <div className="rounded-3xl bg-surface border-2 border-amber-300 shadow-md overflow-hidden flex flex-col justify-between">
-            {/* Operating System Window Bar Simulation */}
-            <div className="px-4 py-2.5 bg-slate-800 text-slate-300 flex items-center justify-between text-xs font-mono">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" />
+          {/* Left Column: The Problem & Legal Context */}
+          <div className="lg:col-span-5 space-y-6 text-left">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary bg-primary-light px-3.5 py-1.5 rounded-full border border-primary/20 inline-flex items-center gap-1.5 shadow-2xs">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>The Technical &amp; Legal Truth</span>
+            </span>
+
+            <h2 className="text-2xl sm:text-4xl font-black text-text-main tracking-tight leading-tight">
+              Why Do Government &amp; Bank Counters Reject Your PDF?
+            </h2>
+
+            <p className="text-sm sm:text-base text-text-muted leading-relaxed">
+              Standard PDF viewers on Windows, Mac, and Android come pre-installed with American and European root certificate authorities. India&apos;s Root Certifying Authority (RCAI) is not included by default.
+            </p>
+
+            <p className="text-sm text-text-muted leading-relaxed">
+              When an official opens your e-Aadhaar or revenue certificate, their viewer shows an alarming yellow question mark. Counter staff assume the document is forged and demand physical visits to revenue offices.
+            </p>
+
+            <div className="space-y-3 pt-2">
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                  ✓
                 </div>
-                <span className="text-[11px] font-medium text-slate-300 ml-2">Acrobat Reader — eAadhaar.pdf</span>
+                <div className="text-xs sm:text-sm text-text-main leading-relaxed">
+                  <span className="font-bold">Section 5, IT Act 2000:</span> Digitally signed records validated under CCA India carry the same legal weight as ink signatures.
+                </div>
               </div>
-              <span className="text-[10px] text-rose-400 font-bold">UNVERIFIED</span>
+
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                  ✓
+                </div>
+                <div className="text-xs sm:text-sm text-text-main leading-relaxed">
+                  <span className="font-bold">Permanent LTV Embedding:</span> Kagazo embeds cryptographic proof into the PDF so it displays a green checkmark anywhere.
+                </div>
+              </div>
             </div>
 
-            <div className="p-6 sm:p-7 space-y-5 flex-1 flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-800 text-xs font-black uppercase tracking-wide">
-                    <span>❌ Common Problem</span>
-                  </span>
-                  <span className="text-xs font-mono font-bold text-amber-700">Adobe Default Root Store</span>
-                </div>
-
-                {/* Adobe Reader Warning Ribbon Simulation Box */}
-                <div className="p-4 rounded-2xl bg-amber-50/90 border border-amber-200 space-y-2.5">
-                  <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center font-black text-lg shrink-0 shadow-xs">
-                      ?
-                    </div>
-                    <div>
-                      <div className="font-extrabold text-amber-950 text-xs sm:text-sm">
-                        Validity Unknown · Signature Not Verified
-                      </div>
-                      <div className="text-[11px] text-amber-900/80 mt-1 leading-relaxed">
-                        &quot;The validity of the document is unknown. The signer&apos;s identity cannot be confirmed by your operating system root certificates.&quot;
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Real World Impact */}
-                <div className="space-y-2 text-xs text-text-main/80 pt-1">
-                  <div className="font-bold text-rose-700 text-xs">Real-World Consequence:</div>
-                  <ul className="space-y-1.5 pl-1">
-                    <li className="flex items-start gap-2">
-                      <span className="text-rose-500 font-bold shrink-0">•</span>
-                      <span>Bank loan officers decline applications citing unverified digital signatures.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-rose-500 font-bold shrink-0">•</span>
-                      <span>College admission verification counters demand a physical revenue officer ink seal.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-rose-500 font-bold shrink-0">•</span>
-                      <span>Mobile PDF viewers display an ugly yellow question mark instead of an official seal.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="pt-4 mt-4 border-t border-amber-200/60 text-[11px] font-semibold text-amber-800 flex items-center justify-between">
-                <span>Status: Untrusted Local Trust Store</span>
-                <span className="text-rose-600 font-black">Rejected at Counter</span>
-              </div>
+            <div className="pt-2">
+              <Link
+                href="/verify"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-primary hover:bg-primary-hover text-white font-bold text-sm shadow-md hover:shadow-lg transition-all"
+              >
+                <span>Verify Your Document Now</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </div>
 
-          {/* CARD 2: AFTER KAGAZO (ACCEPTED SOVEREIGN VALIDATED VIEW) */}
-          <div className="rounded-3xl bg-white border-2 border-emerald-500 shadow-xl overflow-hidden flex flex-col justify-between ring-2 ring-emerald-500/20">
-            {/* Operating System Window Bar Simulation */}
-            <div className="px-4 py-2.5 bg-emerald-950 text-emerald-200 flex items-center justify-between text-xs font-mono">
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-slate-600 inline-block" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-slate-600 inline-block" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block" />
-                </div>
-                <span className="text-[11px] font-medium text-emerald-200 ml-2">Kagazo Sovereign Engine — eAadhaar_Verified.pdf</span>
-              </div>
-              <span className="text-[10px] text-emerald-300 font-bold">RCAI TRUSTED</span>
-            </div>
-
-            <div className="p-6 sm:p-7 space-y-5 flex-1 flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black uppercase tracking-wide">
-                    <span>✅ Kagazo Solution</span>
-                  </span>
-                  <span className="text-xs font-mono font-bold text-emerald-700">CCA India Root Validated</span>
-                </div>
-
-                {/* Kagazo Green Tick Simulation Box */}
-                <div className="p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200 space-y-2.5">
-                  <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                      <CheckCircle2 className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <div className="font-extrabold text-emerald-950 text-xs sm:text-sm flex items-center gap-2">
-                        <span>Signature Valid · Certified by RCAI</span>
-                        <span className="px-1.5 py-0.2 rounded bg-emerald-200 text-emerald-900 text-[10px] font-mono">LTV DSS</span>
-                      </div>
-                      <div className="text-[11px] text-emerald-900/80 mt-1 leading-relaxed">
-                        &quot;Digitally signed by CCA India Licensed Certifying Authority. Signature timestamped and cryptographically validated.&quot;
-                      </div>
-                    </div>
+          {/* Right Column: High-End Side-by-Side Comparison */}
+          <div className="lg:col-span-7 space-y-4">
+            
+            {/* Unverified Card */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-white border border-amber-200/90 shadow-soft space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-black text-sm">
+                    ?
+                  </div>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-bold text-text-main">
+                      Default PDF Viewer (Unverified)
+                    </h3>
+                    <div className="text-xs text-text-muted">Acrobat Reader / Chrome / iOS Preview</div>
                   </div>
                 </div>
+                <span className="text-xs font-bold px-3 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                  Counter Rejected
+                </span>
+              </div>
 
-                {/* Real World Impact */}
-                <div className="space-y-2 text-xs text-text-main/80 pt-1">
-                  <div className="font-bold text-emerald-700 text-xs">Kagazo Guarantee:</div>
-                  <ul className="space-y-1.5 pl-1">
-                    <li className="flex items-start gap-2">
-                      <span className="text-emerald-500 font-bold shrink-0">✓</span>
-                      <span><strong>100% Accepted:</strong> Valid across all banks, colleges, courts, and RTO counters nationwide.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-emerald-500 font-bold shrink-0">✓</span>
-                      <span><strong>Permanent Green Tick:</strong> The verified PDF retains the green tick in Adobe Acrobat forever.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-emerald-500 font-bold shrink-0">✓</span>
-                      <span><strong>IT Act 2000 Section 5:</strong> Fully compliant with Indian legal digital signature standards.</span>
-                    </li>
-                  </ul>
+              <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/60 text-xs text-amber-950 space-y-1">
+                <div className="font-bold flex items-center gap-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                  <span>Signature Validity Unknown · Signer Not Trusted</span>
+                </div>
+                <p className="text-amber-900/80 leading-relaxed text-[11px]">
+                  The signer&apos;s certificate was issued by an authority not recognized by the operating system default store.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-text-muted pt-1">
+                <div className="flex items-center gap-1.5 text-rose-700">
+                  <X className="w-3.5 h-3.5 shrink-0" />
+                  <span>Banks reject loan files</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-rose-700">
+                  <X className="w-3.5 h-3.5 shrink-0" />
+                  <span>Universities demand ink seals</span>
                 </div>
               </div>
+            </div>
 
-              <div className="pt-4 mt-4 border-t border-emerald-200/60 flex items-center justify-between">
-                <span className="text-[11px] font-semibold text-emerald-800">Status: Long-Term Validated (LTV)</span>
-                <Link
-                  href="/verify"
-                  className="inline-flex items-center gap-1.5 text-xs font-black text-emerald-700 hover:text-emerald-800 hover:underline"
-                >
-                  <span>Verify Your PDF Now</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+            {/* Kagazo Sovereign Verified Card */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-white border-2 border-emerald-500 shadow-xl space-y-4 ring-4 ring-emerald-500/10">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-sm">
+                    ✔
+                  </div>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-bold text-text-main">
+                      Kagazo Sovereign Engine (Verified)
+                    </h3>
+                    <div className="text-xs text-text-muted">CCA India RCAI Cryptographic Hierarchy</div>
+                  </div>
+                </div>
+                <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  100% Accepted
+                </span>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-300 text-xs text-emerald-950 space-y-1">
+                <div className="font-bold flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Signature Valid · Cryptographically Certified</span>
+                </div>
+                <p className="text-emerald-900/80 leading-relaxed text-[11px]">
+                  Validated against official CCA licensed roots (NIC, eMudhra, Capricorn, CDAC). Embedded with permanent LTV timestamp.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-text-muted pt-1">
+                <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                  <Check className="w-3.5 h-3.5 shrink-0" />
+                  <span>Permanent green tick</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                  <Check className="w-3.5 h-3.5 shrink-0" />
+                  <span>IT Act 2000 evidentiary value</span>
+                </div>
               </div>
             </div>
+
           </div>
 
         </div>

@@ -87,7 +87,7 @@ export function HomeHeroSearch() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-2xl mx-auto my-6 z-30">
+    <div ref={containerRef} className="relative w-full max-w-xl z-30">
       {/* Search Input Box */}
       <div className="relative group">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/5 to-amber-500/20 rounded-2xl blur-md group-hover:blur-lg transition-all opacity-70" />
