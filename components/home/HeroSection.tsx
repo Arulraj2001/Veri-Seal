@@ -4,15 +4,12 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  FileText,
   FileCheck,
   LayoutGrid,
+  ArrowRight,
   ShieldCheck,
   Zap,
-  Calculator,
-  BookOpen,
-  Lock,
-  ArrowRight,
+  Sparkles,
 } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
@@ -24,287 +21,197 @@ export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
   const { language } = useLanguage();
 
   return (
-    <section id="hero" className="relative pt-24 pb-10 md:pt-28 md:pb-14 overflow-hidden bg-[#fbfbfb] border-b border-slate-200/80">
-      {/* Background Indian Tricolor & Warm Monument Atmosphere */}
-      <div className="absolute top-0 right-0 w-full sm:w-2/3 h-full pointer-events-none -z-10 opacity-70">
-        <div className="absolute top-0 right-0 w-[600px] h-[350px] bg-gradient-to-bl from-amber-500/10 via-amber-200/5 to-transparent rounded-full blur-3xl" />
-        <div className="absolute top-1/3 right-10 w-[500px] h-[350px] bg-gradient-to-l from-emerald-500/10 via-teal-200/5 to-transparent rounded-full blur-3xl" />
+    <section id="hero" className="relative pt-20 pb-8 sm:pt-24 sm:pb-12 overflow-hidden bg-[#fbfbfb]">
+      
+      {/* ========================================================================= */}
+      {/* 1. COMPREHENSIVE SEO FOUNDATION (ACCESSIBLE TO GOOGLE, SCREEN-READERS)    */}
+      {/* ========================================================================= */}
+      <div className="sr-only">
+        <h1>
+          Kagazo — India&apos;s Sovereign Citizen &amp; Document Utility Suite: Verify Indian Government PDF Signatures, Fix Yellow &quot;?&quot; Mark to Green Tick, Exam Photo Resizer &amp; A4 Multi-Card Gang Sheets
+        </h1>
+        <p>
+          Instantly validate digital signatures on e-Aadhaar, Tamil Nadu e-Sevai, Patta/Chitta, Income, Community, Caste, PAN card, and DigiLocker PDFs with official CCA India Root (RCAI) cryptographic verification.
+          Format zero-rejection exam photos with Name and DOP (Date of Photograph) banners for UPSC Civil Services, TNPSC OTR, SSC CGL, IBPS, and NEET.
+          Create 5-in-1 A4 ID gang sheets, format PVC smart card trays for Epson L805, mask Aadhaar numbers client-side, and compress PDFs to strict 200KB limits.
+          100% free, private in browser memory (RAM) with zero cloud uploads under India&apos;s DPDP Act 2023.
+        </p>
+
+        <div>
+          <h2>Core Sovereign Document Utilities:</h2>
+          <ul>
+            <li>Government PDF Digital Signature Verification with CCA India RCAI LTV green checkmark</li>
+            <li>TNPSC OTR &amp; UPSC Photo Resizer (125x165px, 350x350px with DOP Date Banner)</li>
+            <li>5-in-1 A4 Multi-Card ID Gang Sheet Maker for Cyber Cafés and CSC Centers</li>
+            <li>UIDAI-Compliant 8-Digit Masked Aadhaar Generator (Client-Side Canvas)</li>
+            <li>Govt Exam PDF Compressor to exact 200KB, 100KB, and 500KB ceilings</li>
+            <li>Civic Decision Engines: Home Construction Cost OS, Vehicle TCO OS, and Business Profit OS</li>
+          </ul>
+        </div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+      {/* ========================================================================= */}
+      {/* 2. THE MASTER HERO BANNER (100% USER GIVEN IMAGE REFERENCE)               */}
+      {/* ========================================================================= */}
+      <div className="max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-6">
+        <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl sm:shadow-2xl border border-slate-200/90 bg-white">
           
-          {/* ========================================================================= */}
-          {/* LEFT COLUMN: BRAND, HEADLINE, VALUE PILLS, BUTTONS & TRUST (100% MATCH)   */}
-          {/* ========================================================================= */}
-          <div className="lg:col-span-5 xl:col-span-5 space-y-6 text-left">
-            
-            {/* 1. Brand Logo & "Made for Indian Citizens" Pill */}
-            <div className="flex flex-wrap items-center justify-between sm:justify-start gap-3">
-              {/* Brand Logo & Tagline */}
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/80 flex items-center justify-center text-blue-600 shadow-2xs">
-                  <FileText className="w-6 h-6 stroke-[2.2]" />
-                </div>
-                <div>
-                  <div className="text-2xl font-black text-slate-900 tracking-tight leading-none">
-                    Kagazo
-                  </div>
-                  <div className="text-[11px] font-semibold text-slate-700 tracking-tight mt-0.5">
-                    India&apos;s Sovereign Citizen &amp; Document Utility Suite
-                  </div>
-                </div>
-              </div>
+          {/* Main Visual Image (Aspect ratio 1024:575 preserved identically) */}
+          <div className="relative aspect-[1024/575] w-full select-none">
+            <Image
+              src="/images/hero-banner-main.png"
+              alt="Kagazo — Your Documents. Your Rights. 100% Private. Sovereign Citizen & Document Utility Suite"
+              fill
+              priority
+              quality={100}
+              className="object-cover object-center"
+              sizes="(max-width: 1440px) 100vw, 1440px"
+            />
 
-              {/* Made for Indian Citizens Pill */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200/90 shadow-2xs">
-                {/* Circular Indian Tricolor Badge */}
-                <div className="w-4 h-4 rounded-full overflow-hidden border border-slate-300 flex flex-col shrink-0">
-                  <div className="h-1/3 bg-[#FF9933]" />
-                  <div className="h-1/3 bg-white flex items-center justify-center">
-                    <div className="w-1 h-1 rounded-full bg-[#000080]" />
-                  </div>
-                  <div className="h-1/3 bg-[#138808]" />
-                </div>
-                <span className="text-[11px] font-bold text-slate-800">
-                  Made for Indian Citizens
-                </span>
-              </div>
-            </div>
-
-            {/* 2. Giant Stacked 3-Line Headline */}
-            <div className="space-y-0 text-4xl sm:text-5xl lg:text-5xl xl:text-[58px] font-black tracking-tight leading-[1.06]">
-              <div className="text-slate-900">Your Documents.</div>
-              <div className="text-blue-600">Your Rights.</div>
-              <div className="text-emerald-600">100% Private.</div>
-            </div>
-
-            {/* 3. Subtitle */}
-            <div className="space-y-0.5">
-              <div className="text-base sm:text-lg font-black text-slate-800 tracking-tight">
-                Verify • Prepare • Calculate • Comply
-              </div>
-              <div className="text-sm sm:text-base font-medium text-slate-600">
-                All in One Place. Built for India.
-              </div>
-            </div>
-
-            {/* 4. Four Key Value Proposition Badges (Row of 4) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+            {/* ------------------------------------------------------------------- */}
+            {/* FLOATING ACTION BUTTONS: Placed precisely in the space above         */}
+            {/* "No uploads. No cloud storage. 100% secure in your browser RAM."    */}
+            {/* (Left: 3.8%, Top: 68.2%, Width: 33.5%, Height: 9.8%)                 */}
+            {/* ------------------------------------------------------------------- */}
+            <div className="absolute left-[3.8%] top-[68.2%] w-[33.5%] h-[9.8%] z-30 hidden sm:flex items-center gap-2 lg:gap-3">
               
-              {/* Badge 1: 100% In-Browser Privacy */}
-              <div className="flex items-start gap-2">
-                <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div className="space-y-0.5 min-w-0">
-                  <div className="text-[11px] font-black text-slate-900 leading-tight">
-                    100% In-Browser Privacy
-                  </div>
-                  <div className="text-[9px] text-slate-500 leading-tight">
-                    Zero Uploads · Zero File Retention
-                  </div>
-                </div>
-              </div>
-
-              {/* Badge 2: 57+ Free Utilities */}
-              <div className="flex items-start gap-2">
-                <div className="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-2xs">
-                  <Zap className="w-4 h-4 fill-white" />
-                </div>
-                <div className="space-y-0.5 min-w-0">
-                  <div className="text-[11px] font-black text-slate-900 leading-tight">
-                    57+ Free Utilities
-                  </div>
-                  <div className="text-[9px] text-slate-500 leading-tight">
-                    Photos, PDFs, KYC, Compliance &amp; More
-                  </div>
-                </div>
-              </div>
-
-              {/* Badge 3: Civic Decision Engines */}
-              <div className="flex items-start gap-2">
-                <div className="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
-                  <Calculator className="w-4 h-4" />
-                </div>
-                <div className="space-y-0.5 min-w-0">
-                  <div className="text-[11px] font-black text-slate-900 leading-tight">
-                    Civic Decision Engines
-                  </div>
-                  <div className="text-[9px] text-slate-500 leading-tight">
-                    Home • Vehicle • Business
-                  </div>
-                </div>
-              </div>
-
-              {/* Badge 4: Expert Knowledge Hub */}
-              <div className="flex items-start gap-2">
-                <div className="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
-                  <BookOpen className="w-4 h-4" />
-                </div>
-                <div className="space-y-0.5 min-w-0">
-                  <div className="text-[11px] font-black text-slate-900 leading-tight">
-                    Expert Knowledge Hub
-                  </div>
-                  <div className="text-[9px] text-slate-500 leading-tight">
-                    Step-by-step Guides for Every Citizen
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            {/* 5. Main Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
-              {/* Primary Blue Button */}
+              {/* Button 1: Verify a PDF Now */}
               <Link
                 href="/verify"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm shadow-md hover:shadow-lg transition-all"
+                className="flex-1 h-full inline-flex items-center justify-center gap-1.5 md:gap-2 px-2.5 sm:px-3 md:px-4 rounded-lg md:rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[11px] sm:text-xs md:text-sm lg:text-sm xl:text-[15px] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all whitespace-nowrap"
+                title="Verify Government PDF Signatures with CCA India Green Tick"
               >
-                <FileCheck className="w-4 h-4 text-white" />
+                <FileCheck className="w-3.5 h-3.5 md:w-4 md:h-4 text-white shrink-0" />
                 <span>Verify a PDF Now</span>
-                <ArrowRight className="w-4 h-4 ml-0.5" />
+                <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 ml-0.5 shrink-0" />
               </Link>
 
-              {/* Secondary White Button */}
+              {/* Button 2: Explore All Tools */}
               <Link
                 href="/tools"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-extrabold text-sm border border-slate-200/90 shadow-2xs hover:border-slate-300 transition-all"
+                className="flex-1 h-full inline-flex items-center justify-center gap-1.5 md:gap-2 px-2.5 sm:px-3 md:px-4 rounded-lg md:rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-extrabold text-[11px] sm:text-xs md:text-sm lg:text-sm xl:text-[15px] border border-slate-300 shadow-2xs hover:shadow-sm hover:-translate-y-0.5 transition-all whitespace-nowrap"
+                title="Explore 57+ Free Client-Side Citizen Tools"
               >
-                <LayoutGrid className="w-4 h-4 text-slate-700" />
+                <LayoutGrid className="w-3.5 h-3.5 md:w-4 md:h-4 text-slate-700 shrink-0" />
                 <span>Explore All Tools</span>
-                <ArrowRight className="w-4 h-4 ml-0.5" />
+                <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 ml-0.5 shrink-0" />
               </Link>
+
             </div>
 
-            {/* 6. Privacy Reassurance Note */}
-            <div className="text-xs text-slate-500 font-medium">
-              No uploads. No cloud storage. 100% secure in your browser RAM.
-            </div>
+            {/* ------------------------------------------------------------------- */}
+            {/* INTERACTIVE CLICKABLE HOTSPOTS: Bottom 6 Tool Cards                  */}
+            {/* ------------------------------------------------------------------- */}
+            {/* 1. Exam Photo Suite */}
+            <Link
+              href="/tools/tnpsc-combo-pack"
+              className="absolute left-[39.2%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+              title="Launch Exam Photo Suite (UPSC, TNPSC, SSC OTR)"
+            />
 
-            {/* 7. Bottom Trust Row */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 border-t border-slate-200/70 text-xs text-slate-600 font-medium">
-              <div className="flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-blue-600" />
-                <span>Compliant with India&apos;s DPDP Act 2023</span>
-              </div>
+            {/* 2. A4 Multi-Card Print Studio */}
+            <Link
+              href="/tools/a4-multi-card-sheet"
+              className="absolute left-[48.9%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+              title="Launch A4 Multi-Card Print Studio (5-in-1 Sheet at 300 DPI)"
+            />
 
-              <div className="flex items-center gap-1.5">
-                <img
-                  src="/logos/emblem_of_india.svg"
-                  alt="Emblem of India"
-                  className="w-3.5 h-4 object-contain grayscale opacity-80"
-                />
-                <span>Trusted by Millions of Indian Citizens</span>
-              </div>
+            {/* 3. Mask Aadhaar (UIDAI Compliant) */}
+            <Link
+              href="/tools/mask-aadhaar"
+              className="absolute left-[58.6%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+              title="Launch Mask Aadhaar (UIDAI & RBI KYC Compliant)"
+            />
 
-              <div className="flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                <span>Works Offline (PWA Enabled)</span>
-              </div>
-            </div>
+            {/* 4. Signature Cleaner & Extractor */}
+            <Link
+              href="/tools/signature-cleaner-extractor"
+              className="absolute left-[68.3%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+              title="Launch Signature Cleaner & Extractor"
+            />
+
+            {/* 5. PDF Compressors (Zero Blur) */}
+            <Link
+              href="/tools/compress-pdf-to-200kb"
+              className="absolute left-[78.0%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+              title="Launch PDF Compressors (Strict 200KB / 100KB limits)"
+            />
+
+            {/* 6. Self-Attest PDF */}
+            <Link
+              href="/tools/self-attest-pdf"
+              className="absolute left-[87.7%] top-[76.2%] w-[9.6%] h-[21.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/60 transition-all"
+              title="Launch Self-Attest PDF Document Tool"
+            />
+
+            {/* ------------------------------------------------------------------- */}
+            {/* INTERACTIVE CLICKABLE HOTSPOTS: Laptop Screen Portals               */}
+            {/* ------------------------------------------------------------------- */}
+            {/* Laptop Verify PDF Button */}
+            <Link
+              href="/verify"
+              className="absolute left-[59.2%] top-[37.4%] w-[7.8%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-blue-600 transition-all"
+              title="Verify Government Document Signatures"
+            />
+
+            {/* Laptop Explore Tools Button */}
+            <Link
+              href="/tools"
+              className="absolute left-[76.8%] top-[37.4%] w-[7.8%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-blue-600 transition-all"
+              title="Explore 57+ Free Tools"
+            />
+
+            {/* Laptop Home Cost OS */}
+            <Link
+              href="/home-cost"
+              className="absolute left-[55.8%] top-[55.2%] w-[8.2%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-amber-500 transition-all"
+              title="Home Construction Cost OS"
+            />
+
+            {/* Laptop Vehicle OS */}
+            <Link
+              href="/vehicle-os"
+              className="absolute left-[68.4%] top-[55.2%] w-[8.2%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
+              title="Vehicle Decision OS (EV vs Petrol TCO)"
+            />
+
+            {/* Laptop Business Profit OS */}
+            <Link
+              href="/business-os"
+              className="absolute left-[81.0%] top-[55.2%] w-[8.2%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-indigo-500 transition-all"
+              title="Business Profit & Margin OS"
+            />
+
+            {/* Fanned Certificates Background -> Link to Verify Studio */}
+            <Link
+              href="/verify"
+              className="absolute left-[45%] top-[5%] w-[42%] h-[25%] cursor-pointer"
+              title="Click to Verify e-Aadhaar, PAN, TN e-Sevai, or Patta/Chitta"
+            />
 
           </div>
 
-          {/* ========================================================================= */}
-          {/* RIGHT COLUMN: LAPTOP MOCKUP, FANNED CERTIFICATES & 6 TOOL CARDS            */}
-          {/* ========================================================================= */}
-          <div className="lg:col-span-7 xl:col-span-7 w-full relative">
-            <div className="relative aspect-[629/575] w-full overflow-hidden rounded-2xl select-none group shadow-xl border border-slate-200/80 bg-white">
-              
-              {/* High-Resolution 2x Master Visual */}
-              <Image
-                src="/images/hero-right-complete@2x.png"
-                alt="Kagazo Sovereign Citizen Suite — Document Verification, Exam Resizer, Cyber Café Print Lab"
-                fill
-                priority
-                className="object-cover object-left-top"
-              />
+          {/* =================================================================== */}
+          {/* MOBILE ACTION BUTTONS (Clean, accessible on touchscreens < 640px)   */}
+          {/* =================================================================== */}
+          <div className="sm:hidden p-4 bg-white border-t border-slate-200/80 flex flex-col gap-2.5">
+            <Link
+              href="/verify"
+              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-600 text-white font-extrabold text-sm shadow-md"
+            >
+              <FileCheck className="w-4 h-4 text-white" />
+              <span>Verify a PDF Now</span>
+              <ArrowRight className="w-4 h-4 ml-0.5" />
+            </Link>
 
-              {/* ------------------------------------------------------------- */}
-              {/* Interactive Clickable Hotspots overlaying the 6 tool cards    */}
-              {/* ------------------------------------------------------------- */}
-              {/* Card 1: Exam Photo Suite */}
-              <Link
-                href="/tools/tnpsc-combo-pack"
-                className="absolute left-[0.8%] top-[75.5%] w-[15.8%] h-[22.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/50 hover:bg-blue-500/5 transition-all"
-                title="Launch Exam Photo Suite (UPSC, TNPSC, SSC)"
-              />
-
-              {/* Card 2: A4 Multi-Card Print Studio */}
-              <Link
-                href="/tools/a4-multi-card-sheet"
-                className="absolute left-[17.2%] top-[75.5%] w-[15.8%] h-[22.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/50 hover:bg-blue-500/5 transition-all"
-                title="Launch A4 Multi-Card Print Studio (5-in-1 Sheet)"
-              />
-
-              {/* Card 3: Mask Aadhaar (UIDAI Compliant) */}
-              <Link
-                href="/tools/mask-aadhaar"
-                className="absolute left-[33.6%] top-[75.5%] w-[15.8%] h-[22.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/50 hover:bg-blue-500/5 transition-all"
-                title="Launch Mask Aadhaar (UIDAI Compliant)"
-              />
-
-              {/* Card 4: Signature Cleaner & Extractor */}
-              <Link
-                href="/tools/signature-cleaner-extractor"
-                className="absolute left-[50.0%] top-[75.5%] w-[15.8%] h-[22.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/50 hover:bg-blue-500/5 transition-all"
-                title="Launch Signature Cleaner & Extractor"
-              />
-
-              {/* Card 5: PDF Compressors (Zero Blur) */}
-              <Link
-                href="/tools/compress-pdf-to-200kb"
-                className="absolute left-[66.4%] top-[75.5%] w-[15.8%] h-[22.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/50 hover:bg-blue-500/5 transition-all"
-                title="Launch PDF Compressors (Strict 200KB / 100KB limits)"
-              />
-
-              {/* Card 6: Self-Attest PDF */}
-              <Link
-                href="/tools/self-attest-pdf"
-                className="absolute left-[82.8%] top-[75.5%] w-[15.8%] h-[22.5%] rounded-xl cursor-pointer hover:ring-2 hover:ring-blue-500/50 hover:bg-blue-500/5 transition-all"
-                title="Launch Self-Attest PDF Tool"
-              />
-
-              {/* ------------------------------------------------------------- */}
-              {/* Interactive Clickable Hotspots on Laptop Screen               */}
-              {/* ------------------------------------------------------------- */}
-              {/* Laptop Screen: Verify Government Document Signatures Button */}
-              <Link
-                href="/verify"
-                className="absolute left-[20%] top-[37%] w-[16%] h-[8%] rounded-md cursor-pointer hover:ring-2 hover:ring-blue-600 transition-all"
-                title="Verify PDF Signatures"
-              />
-
-              {/* Laptop Screen: 57+ Free Tools Explore Button */}
-              <Link
-                href="/tools"
-                className="absolute left-[58%] top-[37%] w-[16%] h-[8%] rounded-md cursor-pointer hover:ring-2 hover:ring-blue-600 transition-all"
-                title="Explore 57+ Free Tools"
-              />
-
-              {/* Laptop Screen: Home Construction Cost OS */}
-              <Link
-                href="/home-cost"
-                className="absolute left-[13%] top-[53%] w-[18%] h-[6%] rounded-md cursor-pointer hover:ring-2 hover:ring-amber-500 transition-all"
-                title="Calculate Home Construction Costs"
-              />
-
-              {/* Laptop Screen: Vehicle Decision OS */}
-              <Link
-                href="/vehicle-os"
-                className="absolute left-[41%] top-[53%] w-[18%] h-[6%] rounded-md cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
-                title="Compare EV vs Petrol vs Hybrid Costs"
-              />
-
-              {/* Laptop Screen: Business Profit OS */}
-              <Link
-                href="/business-os"
-                className="absolute left-[69%] top-[53%] w-[18%] h-[6%] rounded-md cursor-pointer hover:ring-2 hover:ring-indigo-500 transition-all"
-                title="Model Business Profits & Margins"
-              />
-
-            </div>
+            <Link
+              href="/tools"
+              className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-50 text-slate-800 font-extrabold text-sm border border-slate-300 shadow-2xs"
+            >
+              <LayoutGrid className="w-4 h-4 text-slate-700" />
+              <span>Explore All Tools</span>
+              <ArrowRight className="w-4 h-4 ml-0.5" />
+            </Link>
           </div>
 
         </div>
