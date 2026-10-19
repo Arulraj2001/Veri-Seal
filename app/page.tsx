@@ -1,8 +1,6 @@
 import * as React from 'react';
 import type { Metadata } from 'next';
 import { HeroSection } from '@/components/home/HeroSection';
-import { UploadZone } from '@/components/home/UploadZone';
-import { UploadZoneSkeleton } from '@/components/home/UploadZoneSkeleton';
 import { SovereignTrustBar } from '@/components/home/SovereignTrustBar';
 import { IntentGateway } from '@/components/home/IntentGateway';
 import { SignatureComparison } from '@/components/home/SignatureComparison';
@@ -172,12 +170,8 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* 1. Split Hero Section with Live Verification Studio Above the Fold */}
-      <HeroSection hideDecisionEngines={hideDecisionEngines}>
-        <React.Suspense fallback={<UploadZoneSkeleton isHeroMode />}>
-          <UploadZone isHeroMode />
-        </React.Suspense>
-      </HeroSection>
+      {/* 1. Split Hero Section with Visual Certificate Showcase & Direct Actions */}
+      <HeroSection hideDecisionEngines={hideDecisionEngines} />
 
       {/* 2. Sovereign Authority & Trust Ticker Bar */}
       <SovereignTrustBar />

@@ -20,7 +20,7 @@ export function SovereignTrustBar() {
 
   return (
     <section className="py-6 bg-surface/70 border-b border-border/60">
-      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
           
           {/* Left Title Label */}

@@ -363,6 +363,14 @@ export function Footer() {
             <ul className="space-y-2 text-xs font-medium">
               <li>
                 <Link
+                  href="/verify"
+                  className="text-emerald-700 font-black hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
+                >
+                  Verify Document Signatures ★
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/verify-aadhaar-pdf"
                   className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >

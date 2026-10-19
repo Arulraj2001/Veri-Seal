@@ -9,7 +9,6 @@ import { InstallPromptModal } from '@/components/pwa/InstallPromptModal';
 import { FAQ, SITE_CONFIG, SITE_URL } from '@/lib/constants';
 import { AuthProvider } from '@/components/providers/AuthProvider';
 import { LanguageProvider } from '@/components/providers/LanguageProvider';
-import { DraggableStickyNav } from '@/components/navigation/DraggableStickyNav';
 import { FloatingContactButton } from '@/components/navigation/FloatingContactButton';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -224,7 +223,6 @@ export default function RootLayout({
         <AuthProvider>
           <LanguageProvider>
             <Header />
-            <DraggableStickyNav />
             <main className="flex-1">{children}</main>
             <FloatingContactButton />
             <Footer />

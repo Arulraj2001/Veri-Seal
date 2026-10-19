@@ -894,6 +894,6 @@ export function getSeoSlugForDocType(docType: string): string {
   if (dt.includes('income')) return 'verify-income-certificate';
   if (dt.includes('epfo') || dt.includes('uan')) return 'verify-epfo-uan-card';
 
-  // Safe Fallback: anchor to upload zone instead of falsely claiming it's an Aadhaar!
-  return '#upload-zone';
+  // Safe Fallback: navigate to dedicated /verify page
+  return 'verify';
 }

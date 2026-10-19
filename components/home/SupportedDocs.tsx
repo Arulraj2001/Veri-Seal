@@ -42,6 +42,17 @@ export function SupportedDocs() {
     }
   };
 
+  const getAuthorityLogo = (doc: typeof SUPPORTED_DOCS[0]) => {
+    const portal = (doc.portal || '').toLowerCase();
+    const name = (doc.name || '').toLowerCase();
+    if (portal.includes('uidai') || name.includes('aadhaar')) return '/logos/uidai.svg';
+    if (portal.includes('parivahan') || portal.includes('morth') || name.includes('driving') || name.includes('rc')) return '/logos/parivahan.svg';
+    if (portal.includes('income tax') || portal.includes('traces') || name.includes('pan') || name.includes('form 16')) return '/logos/incometax.svg';
+    if (name.includes('tnpsc')) return '/logos/tnpsc.svg';
+    if (name.includes('upsc')) return '/logos/upsc.svg';
+    return '/logos/emblem_of_india.svg';
+  };
+
   return (
     <section id="supported-docs" className="py-20 bg-surface/50 border-t border-surface-darker/70 relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -105,20 +116,30 @@ export function SupportedDocs() {
                 className="bg-white rounded-2xl p-5 border border-surface-darker hover:border-primary/40 hover:shadow-card transition-all duration-200 flex flex-col justify-between group"
               >
                 <div>
-                  {/* Card Badges */}
+                  {/* Card Badges with Official Authority Logo */}
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <Badge variant="primary" className="text-[11px] font-bold">
-                      {doc.portal}
-                    </Badge>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-7 h-7 rounded-lg bg-surface border border-surface-darker/70 p-1 flex items-center justify-center shrink-0 shadow-2xs">
+                        <img
+                          src={getAuthorityLogo(doc)}
+                          alt={doc.portal}
+                          className="w-4 h-4 object-contain"
+                          loading="lazy"
+                        />
+                      </div>
+                      <Badge variant="primary" className="text-[11px] font-bold truncate">
+                        {doc.portal}
+                      </Badge>
+                    </div>
 
-                    <span className="text-[11px] font-semibold text-text-main/60 bg-surface px-2 py-0.5 rounded-md border border-surface-darker/60">
+                    <span className="text-[11px] font-semibold text-text-main/60 bg-surface px-2 py-0.5 rounded-md border border-surface-darker/60 shrink-0">
                       {doc.state}
                     </span>
                   </div>
 
                   {/* Document Name */}
                   <h3 className="font-bold text-base text-text-main group-hover:text-primary transition-colors leading-snug mb-2">
-                    <Link href={(doc.slug ? `/${doc.slug}` : (getSeoSlugForDocType(doc.name).startsWith('#') ? getSeoSlugForDocType(doc.name) : `/${getSeoSlugForDocType(doc.name)}`))}>
+                    <Link href={doc.slug ? `/${doc.slug}` : `/${getSeoSlugForDocType(doc.name)}`}>
                       {doc.name}
                     </Link>
                   </h3>
@@ -144,7 +165,7 @@ export function SupportedDocs() {
                   )}
 
                   <Link
-                    href={(doc.slug ? `/${doc.slug}` : (getSeoSlugForDocType(doc.name).startsWith('#') ? getSeoSlugForDocType(doc.name) : `/${getSeoSlugForDocType(doc.name)}`))}
+                    href={doc.slug ? `/${doc.slug}` : `/${getSeoSlugForDocType(doc.name)}`}
                     className="inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-primary-hover group-hover:translate-x-0.5 transition-all"
                   >
                     <span>{language === 'ta' ? 'சரிபார்ப்பு வழிகாட்டி' : 'Verify Guide'}</span>

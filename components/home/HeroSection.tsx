@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Lock, Zap, ShieldCheck, Sparkles, CheckCircle2, ChevronRight, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 import { HomeHeroSearch } from '@/components/home/HomeHeroSearch';
+import { CertificateVerificationHeroVisual } from '@/components/home/CertificateVerificationHeroVisual';
 
 interface HeroSectionProps {
   hideDecisionEngines?: boolean;
@@ -30,7 +31,7 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
   }, []);
 
   const quickHotPills = [
-    { label: 'Fix Yellow "?" PDF', href: '#verify-engine', isHighlight: true },
+    { label: 'Fix Yellow "?" PDF', href: '/verify', isHighlight: true },
     { label: 'TNPSC/UPSC Photo Kit', href: '/tools/tnpsc-combo-pack' },
     { label: 'Cyber Café 4x6" Sheet', href: '/tools/passport-photo-sheet-maker' },
     { label: 'Compress PDF <200KB', href: '/tools/compress-pdf-to-200kb' },
@@ -43,7 +44,7 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
       {/* Ambient background glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl 2xl:max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
           {/* Left Column: Value Proposition & Direct Portals */}
@@ -94,6 +95,25 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
                 ? 'இ-ஆதார், சாதிச் சான்றிதழ், வருமானச் சான்றிதழ், பான் கார்டு மற்றும் டிஜிலாக்கர் PDF கோப்புகளை உடனடியாக சரிபார்க்கவும். 100% இலவசம், கோப்புகள் சர்வரில் சேமிக்கப்படாது.'
                 : 'Instantly validate digital signatures on e-Aadhaar, Community Certificate, Nativity, Income, PAN card & DigiLocker PDFs with official CCA India Root (RCAI) cryptographic green tick. Zero server uploads — 100% private in browser RAM.'}
             </p>
+
+            {/* Primary Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+              <Link
+                href="/verify"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-primary hover:bg-primary-hover text-white font-bold text-sm shadow-md hover:shadow-lg transition-all"
+              >
+                <ShieldCheck className="w-4 h-4 text-white" />
+                <span>{language === 'ta' ? 'சான்றிதழ் கையொப்பத்தை சரிபார்க்கவும்' : 'Verify Document Signatures'}</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a
+                href="#tools-matrix"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-white hover:bg-surface text-text-main border border-surface-darker hover:border-primary/40 font-bold text-sm shadow-2xs transition-all"
+              >
+                <Sparkles className="w-4 h-4 text-primary" />
+                <span>{language === 'ta' ? 'அனைத்து இலவச கருவிகள் (57+)' : 'Explore 57+ Free Tools'}</span>
+              </a>
+            </div>
 
             {/* 3 Core Trust Reassurance Points */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
@@ -148,9 +168,9 @@ export function HeroSection({ hideDecisionEngines = true, children }: HeroSectio
             </div>
           </div>
 
-          {/* Right Column: Interactive Verification Tool */}
+          {/* Right Column: Interactive Certificate Verification Showcase */}
           <div className="lg:col-span-5 xl:col-span-6 w-full">
-            {children}
+            {children || <CertificateVerificationHeroVisual />}
           </div>
 
         </div>

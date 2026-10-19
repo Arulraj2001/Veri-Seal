@@ -123,6 +123,7 @@ export function Header() {
 
   const navLinks = [
     { label: t.nav.home, href: '/#hero' },
+    { label: language === 'ta' ? 'கையொப்ப சரிபார்ப்பு' : 'Verify Signatures', href: '/verify' },
     { label: t.nav.freeTools, href: '/tools' },
     ...(!hideDecisionEngines
       ? [
@@ -171,6 +172,20 @@ export function Header() {
 
         {/* Desktop Nav Center (Elongated, compact sleek height, perfectly centered) */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface/90 px-3.5 xl:px-5 py-1 rounded-full border border-surface-darker/80 backdrop-blur-md shadow-xs z-30 transition-all">
+          {/* Dedicated Verify Signatures Link */}
+          <Link
+            href="/verify"
+            className={cn(
+              'flex items-center gap-1 px-3 py-1 text-xs xl:text-[13px] font-bold rounded-full transition-all shrink-0 whitespace-nowrap',
+              pathname === '/verify'
+                ? 'bg-primary text-white shadow-xs'
+                : 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 hover:text-emerald-800'
+            )}
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span>{language === 'ta' ? 'கையொப்ப சரிபார்ப்பு' : 'Verify PDF'}</span>
+          </Link>
+
           {/* Tools Mega-Menu Trigger */}
           <div ref={toolsRef} className="relative">
             <button
@@ -688,11 +703,11 @@ export function Header() {
               </Link>
 
               {/* Quick CTA */}
-              <a href="#upload-zone">
-                <Button size="sm" className="h-9 px-3.5 font-semibold text-xs shadow-sm rounded-xl">
+              <Link href="/verify">
+                <Button size="sm" className="h-9 px-3.5 font-bold text-xs shadow-sm rounded-xl bg-primary hover:bg-primary-hover text-white">
                   Verify PDF
                 </Button>
-              </a>
+              </Link>
             </div>
           )}
         </div>
@@ -795,15 +810,15 @@ export function Header() {
                     </Link>
                   )}
 
-                  <a
-                    href="#upload-zone"
+                  <Link
+                    href="/verify"
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-full"
                   >
                     <Button variant="outline" size="lg" className="w-full font-bold">
                       Verify PDF Now
                     </Button>
-                  </a>
+                  </Link>
 
                   <Button
                     variant="outline"
@@ -820,15 +835,15 @@ export function Header() {
                 </>
               ) : (
                 <>
-                  <a
-                    href="#upload-zone"
+                  <Link
+                    href="/verify"
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-full"
                   >
-                    <Button size="lg" className="w-full">
+                    <Button size="lg" className="w-full font-bold">
                       Verify PDF Now
                     </Button>
-                  </a>
+                  </Link>
 
                   <Link
                     href="/login"
