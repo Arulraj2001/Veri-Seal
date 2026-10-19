@@ -132,7 +132,7 @@ export function Header() {
           { label: 'Vehicle OS', href: '/vehicle-os' },
         ]
       : []),
-    { label: t.nav.documents, href: '/#supported-docs' },
+    { label: t.nav.documents, href: '/verify#supported-docs' },
     { label: t.nav.security, href: '/#trust-section' },
     { label: t.nav.faq, href: '/#faq-section' },
     { label: t.nav.blog, href: '/blog' },
@@ -599,7 +599,7 @@ export function Header() {
 
           {/* Documents Section Link */}
           <Link
-            href="/#supported-docs"
+            href="/verify#supported-docs"
             className="px-3 py-1 xl:px-3 xl:py-1 text-xs xl:text-[13px] font-medium text-text-main/80 hover:text-primary rounded-full hover:bg-white/60 transition-colors shrink-0 whitespace-nowrap"
           >
             {t.nav.documents}

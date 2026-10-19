@@ -6,7 +6,6 @@ import { IntentGateway } from '@/components/home/IntentGateway';
 import { SignatureComparison } from '@/components/home/SignatureComparison';
 import { ToolsMatrix } from '@/components/home/ToolsMatrix';
 import { DecisionEnginesShowcase } from '@/components/home/DecisionEnginesShowcase';
-import { SupportedDocs } from '@/components/home/SupportedDocs';
 import { TrustSection } from '@/components/home/TrustSection';
 import { BlogShowcase } from '@/components/home/BlogShowcase';
 import { ApiOfferingBanner } from '@/components/home/ApiOfferingBanner';
@@ -182,10 +181,7 @@ export default async function HomePage() {
       {/* 4. Visual Before & After Proof: The Yellow '?' Fix Explained */}
       <SignatureComparison />
 
-      {/* 5. Supported Government Documents & State Portals Directory */}
-      <SupportedDocs />
-
-      {/* 6. Curated 57+ Sovereign Tools Matrix (Exam Suite, KYC Privacy, CSC Print Lab, PDF Tools) */}
+      {/* 5. Curated 57+ Sovereign Tools Matrix (Exam Suite, KYC Privacy, CSC Print Lab, PDF Tools) */}
       <ToolsMatrix />
 
       {/* 7. Flagship Citizen Decision Engines (Conditionally rendered when not hidden) */}

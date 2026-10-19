@@ -21,13 +21,8 @@ export function CertificateVerificationHeroVisual() {
 
   return (
     <div className="relative w-full select-none">
-      {/* Interactive Toggle Pill on Top */}
-      <div className="flex items-center justify-between mb-3 px-1">
-        <div className="flex items-center gap-1.5 text-xs font-bold text-text-muted">
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Live Certificate Simulator</span>
-        </div>
-
+      {/* Interactive Toggle on Top */}
+      <div className="flex items-center justify-end mb-3">
         {/* Toggle Buttons */}
         <div className="inline-flex items-center p-1 rounded-2xl bg-surface border border-surface-darker/90 shadow-2xs">
           <button
@@ -220,23 +215,6 @@ export function CertificateVerificationHeroVisual() {
             </div>
           </div>
         </div>
-
-        {/* Ambient Subtle Badge Indicator */}
-        <div className="px-6 py-2.5 bg-surface/70 border-t border-surface-darker/60 flex items-center justify-between text-[11px] font-mono text-text-muted">
-          <span>Security Standard: ISO 32000-1 PAdES</span>
-          <span className="text-emerald-700 font-bold">CCA India Root RCAI</span>
-        </div>
-      </div>
-
-      {/* Floating Micro-Badges around Visual */}
-      <div className="hidden lg:flex items-center gap-2 absolute -bottom-4 -left-4 p-2.5 rounded-2xl bg-white border border-surface-darker/90 shadow-lg text-[11px] font-bold text-text-main">
-        <Lock className="w-3.5 h-3.5 text-emerald-600" />
-        <span>100% Private in RAM</span>
-      </div>
-
-      <div className="hidden lg:flex items-center gap-2 absolute -top-3 -right-3 p-2.5 rounded-2xl bg-white border border-surface-darker/90 shadow-lg text-[11px] font-bold text-emerald-800">
-        <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-        <span>0.4s Verification Speed</span>
       </div>
     </div>
   );
