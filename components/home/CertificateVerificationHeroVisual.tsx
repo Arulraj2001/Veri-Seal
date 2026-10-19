@@ -58,8 +58,8 @@ export function CertificateVerificationHeroVisual() {
         {/* Real High-Resolution Photorealistic Certificate Graphic */}
         <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden bg-slate-950">
           <Image
-            src="/images/hero-certificate.jpg"
-            alt="Government of India Digital Certificate Verification"
+            src="/images/hero-modern-suite.jpg"
+            alt="Kagazo Sovereign Citizen Suite — Digital Certificate, Exam Photo & Print Lab"
             fill
             priority
             className={`object-cover transition-all duration-500 ${
