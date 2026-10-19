@@ -187,7 +187,7 @@ export function Header() {
           </Link>
 
           {/* Tools Mega-Menu Trigger */}
-          <div ref={toolsRef} className="relative">
+          <div ref={toolsRef}>
             <button
               type="button"
               onClick={() => setToolsMenuOpen(!toolsMenuOpen)}
@@ -211,11 +211,11 @@ export function Header() {
             <AnimatePresence>
               {toolsMenuOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                  initial={{ opacity: 0, y: 10, x: '-50%', scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, x: '-50%', scale: 1 }}
+                  exit={{ opacity: 0, y: 8, x: '-50%', scale: 0.98 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[860px] max-h-[85vh] overflow-y-auto bg-white/95 backdrop-blur-xl border border-surface-darker rounded-3xl shadow-2xl p-6 z-50 text-left grid grid-cols-4 gap-5"
+                  className="absolute top-full left-1/2 mt-3 w-[880px] max-w-[calc(100vw-32px)] max-h-[85vh] overflow-y-auto bg-white/95 backdrop-blur-xl border border-surface-darker rounded-3xl shadow-2xl p-6 z-50 text-left grid grid-cols-4 gap-5"
                 >
                   {/* Top Directory Banner */}
                   <div className="col-span-4 bg-emerald-50 border border-emerald-200/80 rounded-2xl p-3 flex items-center justify-between shadow-xs">
