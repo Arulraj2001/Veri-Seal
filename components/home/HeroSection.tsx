@@ -64,14 +64,14 @@ export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
           {/* ------------------------------------------------------------------- */}
           {/* FLOATING ACTION BUTTONS: Positioned cleanly in the empty space       */}
           {/* ABOVE "No uploads. No cloud storage. 100% secure in your browser RAM"*/}
-          {/* (Left: 3.4%, Top: 75.2%, Width: 33.2%, Height: 8.5%)                  */}
+          {/* (Left: 3.4%, Top: 71.5%, Width: 33.2%, Height: 8%)                   */}
           {/* ------------------------------------------------------------------- */}
-          <div className="absolute left-[3.4%] top-[75.2%] w-[33.2%] h-[8.5%] z-30 flex items-center gap-1.5 sm:gap-2 lg:gap-3">
+          <div className="absolute left-[3.4%] top-[71.5%] w-[33.2%] h-[8%] z-30 flex items-center gap-1.5 sm:gap-2 lg:gap-3">
             
             {/* Button 1: Verify a PDF Now */}
             <Link
               href="/verify"
-              className="flex-1 h-full inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-1 sm:px-2 md:px-3 lg:px-4 rounded-md sm:rounded-lg md:rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-[13px] xl:text-[14px] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all whitespace-nowrap"
+              className="flex-1 h-full inline-flex items-center justify-center gap-1 sm:gap-1.5 md:gap-2 px-1 sm:px-2 md:px-3 lg:px-4 rounded-md sm:rounded-lg md:rounded-xl bg-primary hover:bg-primary-hover text-white font-extrabold text-[9px] xs:text-[10px] sm:text-xs md:text-sm lg:text-[13px] xl:text-[14px] shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all whitespace-nowrap"
               title="Verify Government PDF Signatures with CCA India Green Tick"
             >
               <FileCheck className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-white shrink-0" />
