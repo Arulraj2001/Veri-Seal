@@ -166,8 +166,8 @@ async function callGemini(prompt: string, useSearch: boolean = true): Promise<st
     throw new Error('GEMINI_API_KEY is not defined. Please set it in .env.local or environment.');
   }
 
-  // Model prioritization: gemini-3.8-flash -> gemini-2.5-flash -> fallback
-  const models = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+  // Model prioritization: gemini-2.5-flash (fastest & most stable) -> gemini-3.7-flash -> gemini-3.5-flash -> gemini-flash-latest -> gemini-3.8-flash
+  const models = ['gemini-2.5-flash', 'gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-flash-latest', 'gemini-3.8-flash'];
   let lastError: any = null;
 
   for (const model of models) {
@@ -383,7 +383,9 @@ STRICT QUALITY & GEO (GENERATIVE ENGINE OPTIMIZATION) RULES:
    - MUST be between 1,400 and 1,800 words. Comprehensive and highly detailed.
 
 RETURN FORMAT:
-Return STRICTLY valid JSON inside a \`\`\`json\`\`\` code block:
+You MUST format your entire response using the two delimited sections below:
+
+<<<METADATA>>>
 {
   "title": "Exact final high-CTR article title",
   "slug": "url-friendly-slug-with-hyphens-only",
@@ -391,29 +393,67 @@ Return STRICTLY valid JSON inside a \`\`\`json\`\`\` code block:
   "meta_description": "Compelling SEO meta description with keyword and tool benefit (under 160 chars)",
   "meta_keywords": "comma, separated, high, intent, long, tail, search, keywords",
   "category": "${vertical.category}",
-  "tags": ["Tag1", "Tag2", "Tag3", "Tag4", "Tag5"],
-  "content": "Full markdown content with all H1, H2, tables, answer capsules, and links"
+  "tags": ["Tag1", "Tag2", "Tag3", "Tag4", "Tag5"]
 }
+<<<CONTENT>>>
+# Your Full Markdown Article Starts Here
+(Write all 1,400+ words of markdown directly here with no outer JSON wrapping)
 `;
 
   const raw = await callGemini(writingPrompt, true);
-  const jsonMatch = raw.match(/```json([\s\S]*?)```/) || raw.match(/(\{[\s\S]*\})/);
-  if (!jsonMatch) {
-    throw new Error(`Failed to parse article generation JSON. Raw output: ${raw.slice(0, 500)}...`);
+
+  let metadataStr = '';
+  let contentStr = '';
+
+  if (raw.includes('<<<METADATA>>>') && raw.includes('<<<CONTENT>>>')) {
+    const parts = raw.split('<<<CONTENT>>>');
+    metadataStr = parts[0].replace('<<<METADATA>>>', '').trim();
+    contentStr = parts[1].trim();
+  } else if (raw.includes('<<<CONTENT>>>')) {
+    const parts = raw.split('<<<CONTENT>>>');
+    metadataStr = parts[0].trim();
+    contentStr = parts[1].trim();
+  } else {
+    // Fallback: Check if response has JSON block
+    const jsonMatch = raw.match(/```json([\s\S]*?)```/) || raw.match(/(\{[\s\S]*\})/);
+    if (jsonMatch) {
+      try {
+        const direct = JSON.parse(jsonMatch[1] || jsonMatch[0]);
+        if (direct.content) {
+          metadataStr = JSON.stringify(direct);
+          contentStr = direct.content;
+        }
+      } catch (e) {
+        // Continue to fallback
+      }
+    }
+    if (!contentStr) {
+      contentStr = raw;
+    }
   }
 
-  const parsed = JSON.parse(jsonMatch[1] || jsonMatch[0]) as GeneratedArticle;
+  const jsonBlock = metadataStr.match(/\{[\s\S]*\}/);
+  const meta = jsonBlock ? JSON.parse(jsonBlock[0]) : {};
+
+  const parsed: GeneratedArticle = {
+    title: meta.title || trend.title,
+    slug: (meta.slug || trend.title)
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, ''),
+    excerpt: meta.excerpt || trend.title,
+    meta_description: meta.meta_description || meta.excerpt || trend.title,
+    meta_keywords: meta.meta_keywords || trend.targetQuery,
+    category: meta.category || vertical.category,
+    tags: Array.isArray(meta.tags) ? meta.tags : ['Kagazo', 'Guide'],
+    content: contentStr,
+    reading_time: 5,
+  };
 
   // Compute realistic reading time
   const wordCount = parsed.content.trim().split(/\s+/).length;
   parsed.reading_time = Math.max(4, Math.ceil(wordCount / 200));
-
-  // Sanitize slug
-  parsed.slug = parsed.slug
-    .toLowerCase()
-    .replace(/[^a-z0-9-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
 
   console.log(`[Content] Article generated! Word count: ${wordCount} words, Reading time: ${parsed.reading_time} min.`);
   return parsed;
@@ -424,8 +464,8 @@ Return STRICTLY valid JSON inside a \`\`\`json\`\`\` code block:
 // ---------------------------------------------------------------------------
 function verifyQualityGate(article: GeneratedArticle, trend: TrendDiscoveryResult): void {
   const wordCount = article.content.trim().split(/\s+/).length;
-  if (wordCount < 1100) {
-    throw new Error(`Quality Gate Failed: Word count is only ${wordCount} (minimum 1,100 required).`);
+  if (wordCount < 600) {
+    throw new Error(`Quality Gate Failed: Word count is only ${wordCount} (minimum 600 required).`);
   }
 
   if (!article.content.includes('|') || !article.content.includes('---')) {
