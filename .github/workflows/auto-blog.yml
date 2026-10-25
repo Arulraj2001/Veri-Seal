@@ -1,0 +1,68 @@
+name: Kagazo 48-Hour Autonomous Blog Engine
+
+on:
+  schedule:
+    # Runs at 21:00 UTC (02:30 AM IST) every 2 days
+    - cron: '0 21 */2 * *'
+  workflow_dispatch:
+    inputs:
+      category:
+        description: 'Vertical category to target'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - 'auto'
+          - 'govt_exams'
+          - 'ai_tools'
+          - 'cyber_cafe'
+      topic:
+        description: 'Optional custom topic to write about immediately'
+        required: false
+        type: string
+      dry_run:
+        description: 'Dry run (generate & test without publishing to database)'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  publish:
+    name: Generate & Publish Autonomous Post
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Project Dependencies
+        run: npm ci --prefer-offline
+
+      - name: Run Kagazo Autonomous Blogger
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://slfiqegofbgsuolltslc.supabase.co' }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          NEXT_PUBLIC_SITE_URL: 'https://kagazo.in'
+          INDEXNOW_KEY: 'kagazo2026indexnow'
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ -n "${{ inputs.category }}" ] && [ "${{ inputs.category }}" != "auto" ]; then
+            ARGS="$ARGS --category ${{ inputs.category }}"
+          fi
+          if [ -n "${{ inputs.topic }}" ]; then
+            ARGS="$ARGS --topic '${{ inputs.topic }}'"
+          fi
+
+          echo "Executing: npx tsx scripts/auto-blogger.ts $ARGS"
+          npx tsx scripts/auto-blogger.ts $ARGS
