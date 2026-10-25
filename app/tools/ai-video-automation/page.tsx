@@ -23,6 +23,7 @@ import {
   ArrowRight,
   Info,
   Clock,
+  ExternalLink,
   Check,
   X,
 } from 'lucide-react';
@@ -275,7 +276,7 @@ export default function AiVideoAutomationPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-[1720px] mx-auto space-y-8">
+      <div className="max-w-[1880px] 2xl:max-w-[1920px] mx-auto space-y-8 px-2 sm:px-4">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-text-main/60 px-1">
           <Link href="/" className="hover:text-primary transition-colors font-medium">
@@ -331,8 +332,33 @@ export default function AiVideoAutomationPage() {
           {/* ========================================================= */}
           <aside
             aria-label="Sponsored Announcements and Page Navigation"
-            className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-28 space-y-6"
+            className="hidden xl:block w-[280px] 2xl:w-[320px] shrink-0 sticky top-28 space-y-6"
           >
+            {/* Direct Studio Launch Card */}
+            <div className="p-5 rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white border border-slate-800 shadow-card space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-300">
+                  Cloud Studio Active
+                </span>
+              </div>
+              <h4 className="font-extrabold text-sm leading-snug">
+                Ready to create audio-synced videos?
+              </h4>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Open AutoClip Studio in a new window with full GPU hardware acceleration and zero watermarks.
+              </p>
+              <a
+                href="https://autoclipaitool.ai.studio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-2xl bg-primary hover:bg-primary-hover text-white text-xs font-bold transition-all shadow-sm"
+              >
+                <span>Launch AutoClip Studio</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
             {/* Native Left Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
 
@@ -386,7 +412,7 @@ export default function AiVideoAutomationPage() {
           {/* ========================================================= */}
           {/* CENTER MAIN APPLICATION & ON-PAGE CONTENT COLUMN          */}
           {/* ========================================================= */}
-          <main className="flex-1 w-full max-w-5xl space-y-10 min-w-0">
+          <main className="flex-1 w-full max-w-5xl lg:max-w-6xl space-y-10 min-w-0">
             {/* Mobile Top AdSlot Fallback (Only on screens < xl) */}
             <div className="block xl:hidden">
               <AdSlot slot="mobile" />
@@ -693,7 +719,7 @@ export default function AiVideoAutomationPage() {
           {/* ========================================================= */}
           <aside
             aria-label="Sponsored Announcements and Related Tools"
-            className="hidden xl:block w-[180px] 2xl:w-[200px] shrink-0 sticky top-28 space-y-6"
+            className="hidden xl:block w-[280px] 2xl:w-[320px] shrink-0 sticky top-28 space-y-6"
           >
             {/* Native Right Sidebar Ad Slot */}
             <AdSlot slot="sidebar" />
