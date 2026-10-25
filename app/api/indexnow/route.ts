@@ -100,6 +100,7 @@ const STATIC_URLS = [
   '/tools/handwritten-declaration-scanner',
   '/tools/formal-attire-changer',
   '/tools/college-admission-photo-maker',
+  '/tools/ai-video-automation',
 
   // Tools — TN & Indic Specific
   '/ta',

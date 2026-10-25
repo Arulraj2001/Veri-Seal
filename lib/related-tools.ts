@@ -174,6 +174,12 @@ export const RELATED_TOOLS_MAP: Record<string, string[]> = {
     '/tools/unlock-pdf',
     '/tools/affidavit-generator',
   ],
+  'ai-video-automation': [
+    '/tools/youtube-thumbnail-downloader',
+    '/tools/compress-image-exact-kb',
+    '/tools/change-image-dpi',
+    '/tools/batch-photo-resizer',
+  ],
   'aadhaar-masker': [
     '/tools/aadhaar-pan-kyc-merge',
     '/verify-aadhaar-pdf',

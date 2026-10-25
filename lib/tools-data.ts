@@ -482,6 +482,19 @@ export const TOOLS_CATALOG: ToolItem[] = [
   },
 
   {
+    id: 'ai-video-automation',
+    slug: '/tools/ai-video-automation',
+    name: 'AutoClip Studio AI Video Automation',
+    category: 'media_studio',
+    categoryLabel: 'Image & Media Studio',
+    formatTag: 'IMAGE',
+    shortDesc: 'Automate viral 9:16 Shorts, Reels, and 16:9 YouTube videos with audio-synced cuts, kinetic subtitles, and bulk CSV mode.',
+    badge: 'AI STUDIO',
+    examTags: ['AI Video', 'Shorts', 'Reels', 'TikTok', 'YouTube', 'Automation'],
+    featuredInNav: true,
+    priorityOrder: 16.5,
+  },
+  {
     id: 'compress-image-20kb',
     slug: '/tools/compress-image-to-20kb',
     name: 'Compress Image to 20KB (Signature)',
