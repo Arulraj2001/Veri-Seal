@@ -162,7 +162,7 @@ const nextConfig = {
               "img-src 'self' data: blob: https: https://pagead2.googlesyndication.com;",
               "media-src 'self' blob: data: https:;",
               "connect-src 'self' https: http://127.0.0.1:7860 ws: wss: https://pagead2.googlesyndication.com;",
-              "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com;",
+              "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://autoclipaitool.ai.studio https://*.ai.studio;",
               "worker-src 'self' blob: https://cdn.jsdelivr.net;",
               "frame-ancestors 'self';",
             ].join(' '),

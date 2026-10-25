@@ -54,6 +54,13 @@ export function AutoClipStudioEngine({ className }: AutoClipStudioEngineProps) {
   };
 
   React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [iframeKey]);
+
+  React.useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
@@ -227,10 +234,18 @@ export function AutoClipStudioEngine({ className }: AutoClipStudioEngineProps) {
               Loading multi-aspect video timeline, audio-sync models, and scene automation canvas in your secure sandbox.
             </p>
 
-            <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500">
+            <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500 mb-3">
               <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
               <span>Connecting to autoclipaitool.ai.studio CDN</span>
             </div>
+
+            <button
+              type="button"
+              onClick={() => setIsLoading(false)}
+              className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition-all shadow-2xs"
+            >
+              Skip to Canvas &rarr;
+            </button>
           </div>
         )}
 
