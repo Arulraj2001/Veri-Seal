@@ -133,10 +133,29 @@ const VERTICALS: VerticalConfig[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// 3. Supabase Client Setup
+// 3. Supabase Client Setup (With WebSocket shim for Node.js environments)
 // ---------------------------------------------------------------------------
+class ServerWebSocketMock {
+  static readonly CONNECTING = 0;
+  static readonly OPEN = 1;
+  static readonly CLOSING = 2;
+  static readonly CLOSED = 3;
+  readonly readyState = 3;
+  send() {}
+  close() {}
+  addEventListener() {}
+  removeEventListener() {}
+  onopen = null;
+  onclose = null;
+  onerror = null;
+  onmessage = null;
+}
+
+const wsTransport = typeof WebSocket !== 'undefined' ? undefined : (ServerWebSocketMock as unknown as typeof WebSocket);
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   auth: { persistSession: false, autoRefreshToken: false },
+  ...(wsTransport ? { realtime: { transport: wsTransport } } : {}),
 });
 
 // ---------------------------------------------------------------------------
