@@ -191,3 +191,153 @@ export function convertNumberToFrenchWords(num: number): NumberToWordsResult {
   };
 }
 
+
+
+// ---------------------------------------------------------------------------
+// STATUTORY MODULE: AUTO-ENTREPRENEUR / MICRO-ENTREPRISE URSSAF 2026
+// Code de la sécurité sociale & Direction Générale des Finances Publiques
+// ---------------------------------------------------------------------------
+export interface AutoEntrepreneurInput {
+  chiffreAffairesAnnuel: number;
+  typeActivite: 'vente_marchandises' | 'prestations_bic' | 'professions_bnc';
+  beneficieAcre: boolean; // Aide aux créateurs d'entreprise (-50% 1ère année)
+  versementLiberatoire: boolean; // Option versement libératoire de l'impôt sur le revenu
+}
+
+export interface AutoEntrepreneurResult {
+  chiffreAffairesAnnuel: number;
+  chiffreAffairesMensuelMoyen: number;
+  tauxCotisationsUrssaf: number;
+  montantCotisationsSocialesAnnuelles: number;
+  montantCotisationsSocialesMensuelles: number;
+  tauxVersementLiberatoire: number;
+  montantVersementLiberatoireAnnuel: number;
+  contributionFormationPro: number;
+  revenuNetPocheAnnuel: number;
+  revenuNetPocheMensuel: number;
+  plafondChiffreAffaires: number;
+  seuilFranchiseTva: number;
+  alerteDepassementTva: boolean;
+  alerteDepassementPlafond: boolean;
+  libelleActivite: string;
+}
+
+export function calculateAutoEntrepreneurFrance(input: AutoEntrepreneurInput): AutoEntrepreneurResult {
+  const ca = Math.max(input.chiffreAffairesAnnuel, 0);
+
+  let tauxUrssaf = 0.212;
+  let tauxLiberatoire = 0.017;
+  let tauxCfp = 0.002;
+  let plafondCA = 77700;
+  let seuilTva = 37500;
+  let libelle = 'Prestations de services commerciales ou artisanales (BIC)';
+
+  if (input.typeActivite === 'vente_marchandises') {
+    tauxUrssaf = 0.123; // 12.3%
+    tauxLiberatoire = 0.010; // 1.0%
+    tauxCfp = 0.001; // 0.1%
+    plafondCA = 188700;
+    seuilTva = 85000;
+    libelle = 'Achat / Revente de marchandises et hébergement (BIC)';
+  } else if (input.typeActivite === 'professions_bnc') {
+    tauxUrssaf = 0.231; // 23.1% BNC 2026
+    tauxLiberatoire = 0.022; // 2.2%
+    tauxCfp = 0.002; // 0.2%
+    plafondCA = 77700;
+    seuilTva = 37500;
+    libelle = 'Professions libérales réglementées et non-réglementées (BNC)';
+  }
+
+  // Application de l'ACRE (-50% la première année)
+  if (input.beneficieAcre) {
+    tauxUrssaf = tauxUrssaf / 2;
+  }
+
+  const cotisationsSociales = Math.round(ca * tauxUrssaf * 100) / 100;
+  const montantLiberatoire = input.versementLiberatoire ? Math.round(ca * tauxLiberatoire * 100) / 100 : 0;
+  const montantCfp = Math.round(ca * tauxCfp * 100) / 100;
+
+  const totalPrelevements = cotisationsSociales + montantLiberatoire + montantCfp;
+  const netAnnuel = Math.max(Math.round((ca - totalPrelevements) * 100) / 100, 0);
+
+  return {
+    chiffreAffairesAnnuel: ca,
+    chiffreAffairesMensuelMoyen: Math.round((ca / 12) * 100) / 100,
+    tauxCotisationsUrssaf: Math.round(tauxUrssaf * 1000) / 10,
+    montantCotisationsSocialesAnnuelles: cotisationsSociales,
+    montantCotisationsSocialesMensuelles: Math.round((cotisationsSociales / 12) * 100) / 100,
+    tauxVersementLiberatoire: input.versementLiberatoire ? Math.round(tauxLiberatoire * 1000) / 10 : 0,
+    montantVersementLiberatoireAnnuel: montantLiberatoire,
+    contributionFormationPro: montantCfp,
+    revenuNetPocheAnnuel: netAnnuel,
+    revenuNetPocheMensuel: Math.round((netAnnuel / 12) * 100) / 100,
+    plafondChiffreAffaires: plafondCA,
+    seuilFranchiseTva: seuilTva,
+    alerteDepassementTva: ca > seuilTva,
+    alerteDepassementPlafond: ca > plafondCA,
+    libelleActivite: libelle,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// STATUTORY MODULE: INDEMNITÉ DE RUPTURE CONVENTIONNELLE & LICENCIEMENT 2026
+// Code du travail (Articles L.1237-13, R.1234-2, R.1234-4)
+// ---------------------------------------------------------------------------
+export interface RuptureCalculationInput {
+  salaireMensuelBrutMoyen: number; // Salaire brut de référence
+  anneesAnciennete: number;
+  moisAnciennete: number;
+  joursCongesRestants: number;
+  typeRupture: 'conventionnelle' | 'licenciement_economique' | 'licenciement_personnel';
+}
+
+export interface RuptureCalculationResult {
+  salaireReference: number;
+  ancienneteTotaleAnnees: number;
+  indemniteLegaleMinimum: number;
+  indemniteCongesPayes: number;
+  totalIndemniteBrute: number;
+  formuleDetaillee: string;
+  regimeFiscal: string;
+}
+
+export function calculateIndemniteRuptureFrance(input: RuptureCalculationInput): RuptureCalculationResult {
+  const salaireRef = Math.max(input.salaireMensuelBrutMoyen, 0);
+  const totalAnnees = input.anneesAnciennete + input.moisAnciennete / 12;
+
+  let indemnite = 0;
+  let formule = '';
+
+  // Barème légal Article R1234-2 :
+  // - 1/4 de mois de salaire par année d'ancienneté pour les 10 premières années
+  // - 1/3 de mois de salaire par année d'ancienneté à partir de la 11e année
+  if (totalAnnees < 0.67) { // Moins de 8 mois
+    indemnite = 0;
+    formule = "Moins de 8 mois d'ancienneté : pas d'indemnité légale obligatoire.";
+  } else if (totalAnnees <= 10) {
+    indemnite = (1 / 4) * salaireRef * totalAnnees;
+    formule = `(1/4 × ${salaireRef.toLocaleString('fr-FR')} €) × ${totalAnnees.toFixed(2)} ans = ${Math.round(indemnite).toLocaleString('fr-FR')} €`;
+  } else {
+    const tranche1 = (1 / 4) * salaireRef * 10;
+    const tranche2 = (1 / 3) * salaireRef * (totalAnnees - 10);
+    indemnite = tranche1 + tranche2;
+    formule = `(1/4 × ${salaireRef.toLocaleString('fr-FR')} € × 10 ans) + (1/3 × ${salaireRef.toLocaleString('fr-FR')} € × ${(totalAnnees - 10).toFixed(2)} ans) = ${Math.round(indemnite).toLocaleString('fr-FR')} €`;
+  }
+
+  indemnite = Math.round(indemnite * 100) / 100;
+
+  // Congés payés (règle du 1/10e ou maintien de salaire) : salaire journalier moyen ~ salaireRef / 21.67
+  const salaireJournalier = salaireRef / 21.67;
+  const congesPayes = Math.round(salaireJournalier * Math.max(input.joursCongesRestants, 0) * 100) / 100;
+  const total = Math.round((indemnite + congesPayes) * 100) / 100;
+
+  return {
+    salaireReference: salaireRef,
+    ancienneteTotaleAnnees: Math.round(totalAnnees * 100) / 100,
+    indemniteLegaleMinimum: indemnite,
+    indemniteCongesPayes: congesPayes,
+    totalIndemniteBrute: total,
+    formuleDetaillee: formule,
+    regimeFiscal: "Exonérée d'impôt sur le revenu dans la limite du montant légal ou conventionnel (Art. 80 duodecies du CGI).",
+  };
+}

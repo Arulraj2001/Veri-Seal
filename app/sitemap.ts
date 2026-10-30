@@ -15,6 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Core static routes - crawled daily
   const staticRoutes: MetadataRoute.Sitemap = [
     // --- International Multi-Language High-RPM Hubs (ES, FR, DE) ---
+    // Spain (ES)
     {
       url: `${baseUrl}/es`,
       lastModified: now,
@@ -28,11 +29,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.98,
     },
     {
+      url: `${baseUrl}/es/calculadora-irpf-autonomos`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-finiquito-despido`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/es/generador-factura-pdf`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
       url: `${baseUrl}/es/validador-dni-nie-cif`,
       lastModified: now,
       changeFrequency: 'weekly',
-      priority: 0.90,
+      priority: 0.92,
     },
+
+    // France (FR)
     {
       url: `${baseUrl}/fr`,
       lastModified: now,
@@ -46,11 +67,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.98,
     },
     {
+      url: `${baseUrl}/fr/simulateur-charges-urssaf`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-indemnite-rupture`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/fr/facture-auto-entrepreneur`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
       url: `${baseUrl}/fr/convertisseur-chiffre-en-lettre`,
       lastModified: now,
       changeFrequency: 'weekly',
-      priority: 0.90,
+      priority: 0.92,
     },
+
+    // Germany (DE)
     {
       url: `${baseUrl}/de`,
       lastModified: now,
@@ -62,6 +103,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/de/abfindungsrechner`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/de/kleinunternehmer-rechnung`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/de/der-die-das-finder`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/de/stundenlohnrechner`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/`,

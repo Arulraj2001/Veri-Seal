@@ -137,3 +137,127 @@ export function calculateGermanySalary(input: SalaryCalculationInput): SalaryCal
   };
 }
 
+
+
+// ---------------------------------------------------------------------------
+// STATUTORY MODULE: ABFINDUNGSRECHNER DEUTSCHLAND 2026 (§ 34 EStG Fünftelregelung)
+// Kündigungsschutzgesetz (§ 1a KSchG) & Einkommensteuergesetz
+// ---------------------------------------------------------------------------
+export interface AbfindungCalculationInput {
+  bruttoJahresgehaltRegulaer: number;
+  abfindungsBetrag: number;
+  steuerklasse: 1 | 2 | 3 | 4 | 5 | 6;
+  jahreBetriebszugehoerigkeit: number;
+  monatsGehaltBrutto: number;
+}
+
+export interface AbfindungCalculationResult {
+  abfindungsBetrag: number;
+  regelAbfindungNachKSchG: number; // § 1a KSchG: 0.5 Monatsgehälter pro Beschäftigungsjahr
+  steuerOhneAbfindung: number;
+  steuerMitFuenftelregelung: number;
+  steuerAufAbfindung: number;
+  steuerersparnisDurchFuenftelregelung: number;
+  nettoAbfindung: number;
+  istSozialversicherungsfrei: boolean;
+  effektiverSteuersatzAbfindungProzent: number;
+}
+
+export function calculateAbfindungGermany(input: AbfindungCalculationInput): AbfindungCalculationResult {
+  const regulär = Math.max(input.bruttoJahresgehaltRegulaer, 0);
+  const abfindung = Math.max(input.abfindungsBetrag, 0);
+
+  // KSchG Richtwert: 0.5 Monatsgehälter je Beschäftigungsjahr
+  const regelAbfindung = Math.round(input.monatsGehaltBrutto * 0.5 * input.jahreBetriebszugehoerigkeit * 100) / 100;
+
+  // Lohnsteuerfunktion nach § 32a EStG vereinfacht
+  function computeESt(zvE: number): number {
+    if (zvE <= 11784) return 0;
+    const taxable = zvE - 11784;
+    if (taxable <= 5000) return taxable * 0.14;
+    if (taxable <= 50000) return 700 + (taxable - 5000) * 0.28;
+    return 700 + 12600 + (taxable - 50000) * 0.42;
+  }
+
+  // Steuerklasse Multiplikator
+  let factor = 1.0;
+  if (input.steuerklasse === 3) factor = 0.65;
+  if (input.steuerklasse === 5) factor = 1.35;
+  if (input.steuerklasse === 6) factor = 1.45;
+
+  const steuerA = Math.round(computeESt(regulär) * factor * 100) / 100;
+  const steuerB = Math.round(computeESt(regulär + abfindung / 5) * factor * 100) / 100;
+  const steuerC_Voll = Math.round(computeESt(regulär + abfindung) * factor * 100) / 100;
+
+  const differenzFuenftel = Math.max(steuerB - steuerA, 0);
+  const steuerAufAbfindungMitFuenftel = Math.round(differenzFuenftel * 5 * 100) / 100;
+  const steuerAufAbfindungOhneFuenftel = Math.max(steuerC_Voll - steuerA, 0);
+
+  const ersparnis = Math.max(Math.round((steuerAufAbfindungOhneFuenftel - steuerAufAbfindungMitFuenftel) * 100) / 100, 0);
+  const nettoAbfindung = Math.max(Math.round((abfindung - steuerAufAbfindungMitFuenftel) * 100) / 100, 0);
+  const effRate = abfindung > 0 ? Math.round((steuerAufAbfindungMitFuenftel / abfindung) * 10000) / 100 : 0;
+
+  return {
+    abfindungsBetrag: abfindung,
+    regelAbfindungNachKSchG: regelAbfindung,
+    steuerOhneAbfindung: steuerA,
+    steuerMitFuenftelregelung: steuerA + steuerAufAbfindungMitFuenftel,
+    steuerAufAbfindung: steuerAufAbfindungMitFuenftel,
+    steuerersparnisDurchFuenftelregelung: ersparnis,
+    nettoAbfindung,
+    istSozialversicherungsfrei: true,
+    effektiverSteuersatzAbfindungProzent: effRate,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// STATUTORY MODULE: STUNDENLOHNRECHNER & MINIJOB 2026
+// Mindestlohngesetz (MiLoG) & Viertes Gesetz für moderne Dienstleistungen
+// ---------------------------------------------------------------------------
+export interface StundenlohnInput {
+  monatsGehaltBrutto: number;
+  wochenStunden: number;
+  urlaubstage: number;
+}
+
+export interface StundenlohnResult {
+  stundenlohnBrutto: number;
+  stundenlohnNettoGeschaetzt: number;
+  mindestlohnErfuellt: boolean;
+  statusKategorie: 'Minijob (538 €)' | 'Midijob (Übergangsbereich)' | 'Reguläres Arbeitsverhältnis';
+  gesetzlicherMindestlohn2026: number;
+  arbeitsstundenProMonat: number;
+}
+
+export function calculateStundenlohnGermany(input: StundenlohnInput): StundenlohnResult {
+  const monatsBrutto = Math.max(input.monatsGehaltBrutto, 0);
+  const hours = Math.max(input.wochenStunden, 1);
+  const MINDESTLOHN_2026 = 12.82; // Gesetzlicher Mindestlohn 2026
+
+  // Formel Bundesarbeitsgericht: (Monatslohn × 3 Monate) / 13 Wochen / Wochenstunden
+  const stundenlohn = Math.round(((monatsBrutto * 3) / (13 * hours)) * 100) / 100;
+  const monatsStunden = Math.round((hours * 4.348) * 10) / 10;
+
+  let kategorie: StundenlohnResult['statusKategorie'] = 'Reguläres Arbeitsverhältnis';
+  if (monatsBrutto <= 538) {
+    kategorie = 'Minijob (538 €)';
+  } else if (monatsBrutto <= 2000) {
+    kategorie = 'Midijob (Übergangsbereich)';
+  }
+
+  // Netto-Schätzung
+  let nettoFaktor = 0.65;
+  if (kategorie === 'Minijob (538 €)') nettoFaktor = 1.0; // Keine Abzüge für Arbeitnehmer
+  else if (kategorie === 'Midijob (Übergangsbereich)') nettoFaktor = 0.78;
+
+  const stundenlohnNetto = Math.round(stundenlohn * nettoFaktor * 100) / 100;
+
+  return {
+    stundenlohnBrutto: stundenlohn,
+    stundenlohnNettoGeschaetzt: stundenlohnNetto,
+    mindestlohnErfuellt: stundenlohn >= MINDESTLOHN_2026,
+    statusKategorie: kategorie,
+    gesetzlicherMindestlohn2026: MINDESTLOHN_2026,
+    arbeitsstundenProMonat: monatsStunden,
+  };
+}

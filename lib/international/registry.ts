@@ -2,11 +2,12 @@ import { SITE_URL } from '@/lib/constants';
 
 export interface HreflangMapping {
   canonicalPath: string;
-  locales: Record<string, string>; // e.g. 'es-ES': '/es/calculadora-sueldo-neto'
+  locales: Record<string, string>;
 }
 
 /**
  * Universal Hreflang Registry for Multi-Country Scaling
+ * Cross-linking Spain (ES), France (FR), Germany (DE), and global defaults.
  */
 export const HREFLANG_REGISTRY: Record<string, HreflangMapping> = {
   salary_calculator: {
@@ -27,11 +28,33 @@ export const HREFLANG_REGISTRY: Record<string, HreflangMapping> = {
     locales: {
       'es-ES': `${SITE_URL}/es/generador-factura-pdf`,
       'es': `${SITE_URL}/es/generador-factura-pdf`,
-      'fr-FR': `${SITE_URL}/fr/generateur-facture-auto-entrepreneur`,
-      'fr': `${SITE_URL}/fr/generateur-facture-auto-entrepreneur`,
-      'de-DE': `${SITE_URL}/de/kleinunternehmer-rechnung-generator`,
-      'de': `${SITE_URL}/de/kleinunternehmer-rechnung-generator`,
+      'fr-FR': `${SITE_URL}/fr/facture-auto-entrepreneur`,
+      'fr': `${SITE_URL}/fr/facture-auto-entrepreneur`,
+      'de-DE': `${SITE_URL}/de/kleinunternehmer-rechnung`,
+      'de': `${SITE_URL}/de/kleinunternehmer-rechnung`,
       'x-default': `${SITE_URL}/tools/invoice-generator`,
+    },
+  },
+  severance_calculator: {
+    canonicalPath: '/es/calculadora-finiquito-despido',
+    locales: {
+      'es-ES': `${SITE_URL}/es/calculadora-finiquito-despido`,
+      'es': `${SITE_URL}/es/calculadora-finiquito-despido`,
+      'fr-FR': `${SITE_URL}/fr/calculateur-indemnite-rupture`,
+      'fr': `${SITE_URL}/fr/calculateur-indemnite-rupture`,
+      'de-DE': `${SITE_URL}/de/abfindungsrechner`,
+      'de': `${SITE_URL}/de/abfindungsrechner`,
+      'x-default': `${SITE_URL}/es/calculadora-finiquito-despido`,
+    },
+  },
+  freelance_calculator: {
+    canonicalPath: '/es/calculadora-irpf-autonomos',
+    locales: {
+      'es-ES': `${SITE_URL}/es/calculadora-irpf-autonomos`,
+      'es': `${SITE_URL}/es/calculadora-irpf-autonomos`,
+      'fr-FR': `${SITE_URL}/fr/simulateur-charges-urssaf`,
+      'fr': `${SITE_URL}/fr/simulateur-charges-urssaf`,
+      'x-default': `${SITE_URL}/es/calculadora-irpf-autonomos`,
     },
   },
   id_validator: {
@@ -52,5 +75,22 @@ export const HREFLANG_REGISTRY: Record<string, HreflangMapping> = {
       'x-default': `${SITE_URL}/fr/convertisseur-chiffre-en-lettre`,
     },
   },
+  german_gender: {
+    canonicalPath: '/de/der-die-das-finder',
+    locales: {
+      'de-DE': `${SITE_URL}/de/der-die-das-finder`,
+      'de-AT': `${SITE_URL}/de/der-die-das-finder`,
+      'de-CH': `${SITE_URL}/de/der-die-das-finder`,
+      'de': `${SITE_URL}/de/der-die-das-finder`,
+      'x-default': `${SITE_URL}/de/der-die-das-finder`,
+    },
+  },
+  hourly_wage: {
+    canonicalPath: '/de/stundenlohnrechner',
+    locales: {
+      'de-DE': `${SITE_URL}/de/stundenlohnrechner`,
+      'de': `${SITE_URL}/de/stundenlohnrechner`,
+      'x-default': `${SITE_URL}/de/stundenlohnrechner`,
+    },
+  },
 };
-

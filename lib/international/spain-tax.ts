@@ -39,27 +39,20 @@ export const AUTONOMOUS_COMMUNITIES_SPAIN: Record<string, { name: string; region
 
 /**
  * Calculates exact Spanish employee Cotizaciones a la Seguridad Social (2026)
- * - Contingencias Comunes: 4.70%
- * - Desempleo: 1.55% (Contrato Indefinido) / 1.60% (Temporal)
- * - Formación Profesional: 0.10%
- * - MEI (Mecanismo de Equidad Intergeneracional): 0.14% (Empleado)
- * Total Indefinido: 6.49% (capped at Base Máxima de Cotización 2026: ~€4,720.50/mes = €56,646/año)
  */
 export function calculateSeguridadSocialSpain(
   grossAnnual: number,
   contractType: 'indefinido' | 'temporal' = 'indefinido'
 ): { totalAnnual: number; ratePercent: number; baseUsed: number } {
-  const BASE_MAXIMA_2026 = 56646; // €4,720.50 x 12
-  const BASE_MINIMA_2026 = 15876; // Salario Mínimo Interprofesional (SMI) base
-
+  const BASE_MAXIMA_2026 = 56646;
   const base = Math.min(Math.max(grossAnnual, 0), BASE_MAXIMA_2026);
   const desempleoRate = contractType === 'temporal' ? 0.016 : 0.0155;
-  const totalRate = 0.047 + desempleoRate + 0.001 + 0.0014; // ~6.49%
+  const totalRate = 0.047 + desempleoRate + 0.001 + 0.0014;
 
   const totalAnnual = Math.round(base * totalRate * 100) / 100;
   return {
     totalAnnual,
-    ratePercent: Math.round(totalRate * 10000) / 100, // e.g. 6.49%
+    ratePercent: Math.round(totalRate * 10000) / 100,
     baseUsed: base,
   };
 }
@@ -73,38 +66,29 @@ export function calculateIrpfSpain(
   childrenCount = 0,
   age = 30
 ): { taxAnnual: number; effectiveRatePercent: number } {
-  // If below minimum threshold (€15,876 SMI 2026), 0% withholding
   if (grossAnnual <= 15876) {
     return { taxAnnual: 0, effectiveRatePercent: 0 };
   }
 
-  // Personal & Family Minimum (Mínimo personal y familiar)
-  // Base personal: €5,550
   let minimoPersonal = 5550;
   if (age >= 65) minimoPersonal += 1150;
   if (age >= 75) minimoPersonal += 1400;
 
-  // Children increments (1st child: €2,400; 2nd: €2,700; 3rd: €4,000; 4th+: €4,500)
   if (childrenCount >= 1) minimoPersonal += 2400;
   if (childrenCount >= 2) minimoPersonal += 2700;
   if (childrenCount >= 3) minimoPersonal += 4000;
   if (childrenCount > 3) minimoPersonal += (childrenCount - 3) * 4500;
 
-  // Gastos deducibles generales (Art. 19 LIRPF): €2,000 + SS employee
   const ss = calculateSeguridadSocialSpain(grossAnnual);
   const gastosDeducibles = 2000 + ss.totalAnnual;
-
-  // Base liquidable aproximada
   const baseLiquidable = Math.max(grossAnnual - gastosDeducibles, 0);
 
-  // Progressive tax calculation on base
   function computeProgressive(amount: number): number {
     let tax = 0;
     let prevLimit = 0;
     for (const b of IRPF_BRACKETS_ESTATAL_2026) {
       if (amount > prevLimit) {
         const taxableInBracket = Math.min(amount, b.limit) - prevLimit;
-        // Total bracket rate = Estatal + Autonómico (approx 2x Estatal * regionalFactor)
         tax += taxableInBracket * (b.rate * 2);
         prevLimit = b.limit;
       } else {
@@ -128,9 +112,6 @@ export function calculateIrpfSpain(
   };
 }
 
-/**
- * Master Spain Gross-to-Net Salary Calculator Engine
- */
 export function calculateSpainSalary(input: SalaryCalculationInput): SalaryCalculationResult {
   const gross = Math.max(input.grossAnnualSalary, 0);
   const payFreq = input.payFrequency === 14 ? 14 : 12;
@@ -163,21 +144,21 @@ export function calculateSpainSalary(input: SalaryCalculationInput): SalaryCalcu
         label: 'Sueldo Neto Líquido',
         amount: netAnnual,
         percentOfGross: takeHomePercent,
-        color: '#10B981', // Emerald
+        color: '#10B981',
         description: `Importe disponible en cuenta (${payFreq} pagas de ${netMonthly.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €)`,
       },
       {
         label: 'Retención IRPF (Hacienda)',
         amount: irpf.taxAnnual,
         percentOfGross: irpf.effectiveRatePercent,
-        color: '#D9531E', // Warm Iberian Terracotta
+        color: '#D9531E',
         description: `Impuesto sobre la Renta calculado para ${AUTONOMOUS_COMMUNITIES_SPAIN[community]?.name || 'España'}`,
       },
       {
         label: 'Seguridad Social (Trabajador)',
         amount: ss.totalAnnual,
         percentOfGross: ss.ratePercent,
-        color: '#3B82F6', // Blue
+        color: '#3B82F6',
         description: 'Contingencias comunes (4.7%), Desempleo (1.55%), Formación y MEI',
       },
     ],
@@ -188,5 +169,174 @@ export function calculateSpainSalary(input: SalaryCalculationInput): SalaryCalcu
       baseCotizacionSeguridadSocial: ss.baseUsed,
       normativaVigente: 'Real Decreto Legislativo 8/2015 & Ley 35/2006 IRPF 2026',
     },
+  };
+}
+
+// ---------------------------------------------------------------------------
+// NEW STATUTORY MODULE: AUTÓNOMOS IRPF & CUOTA 2026
+// ---------------------------------------------------------------------------
+export interface AutonomoCalculationInput {
+  ingresosAnuales: number;
+  gastosDeducibles: number;
+  retencionFacturaPercent?: 7 | 15; // 7% nuevos autónomos, 15% general
+  esTarifaPlana?: boolean;
+}
+
+export interface AutonomoCalculationResult {
+  rendimientoNetoAnual: number;
+  tramoCuotaMensual: number;
+  cuotaSeguridadSocialAnual: number;
+  rendimientoNetoPrevioIRPF: number;
+  pagoFraccionadoModelo130Anual: number;
+  pagoFraccionadoTrimestral: number;
+  retencionesSoportadasFacturas: number;
+  ingresoLimpioEnBolsilloAnual: number;
+  ingresoLimpioMensualMedio: number;
+}
+
+/**
+ * 2026 Real Decreto-ley 13/2022: Tramos de Rendimientos Netos y Cuota de Autónomos
+ */
+export function calculateAutonomoSpain(input: AutonomoCalculationInput): AutonomoCalculationResult {
+  const ingresos = Math.max(input.ingresosAnuales, 0);
+  const gastos = Math.max(input.gastosDeducibles, 0);
+  const rendimientoPrevio = Math.max(ingresos - gastos, 0);
+
+  // Deducción adicional por gastos de difícil justificación (7% para autónomos individuales, capped at €2,000)
+  const gastosDificilJustificacion = Math.min(rendimientoPrevio * 0.07, 2000);
+  const rendimientoNetoAnual = Math.max(rendimientoPrevio - gastosDificilJustificacion, 0);
+  const rendimientoNetoMensual = rendimientoNetoAnual / 12;
+
+  // Cuota mensual según tramos 2026 (o Tarifa Plana de €80-€86/mes si es nuevo)
+  let cuotaMensual = 294; // Base intermedia estándar
+  if (input.esTarifaPlana) {
+    cuotaMensual = 86; // Tarifa plana 2026
+  } else {
+    if (rendimientoNetoMensual <= 670) cuotaMensual = 225;
+    else if (rendimientoNetoMensual <= 900) cuotaMensual = 240;
+    else if (rendimientoNetoMensual <= 1166) cuotaMensual = 260;
+    else if (rendimientoNetoMensual <= 1300) cuotaMensual = 291;
+    else if (rendimientoNetoMensual <= 1500) cuotaMensual = 294;
+    else if (rendimientoNetoMensual <= 1700) cuotaMensual = 294;
+    else if (rendimientoNetoMensual <= 1850) cuotaMensual = 315;
+    else if (rendimientoNetoMensual <= 2030) cuotaMensual = 325;
+    else if (rendimientoNetoMensual <= 2330) cuotaMensual = 370;
+    else if (rendimientoNetoMensual <= 2760) cuotaMensual = 400;
+    else if (rendimientoNetoMensual <= 3190) cuotaMensual = 420;
+    else if (rendimientoNetoMensual <= 3620) cuotaMensual = 440;
+    else if (rendimientoNetoMensual <= 4050) cuotaMensual = 490;
+    else if (rendimientoNetoMensual <= 6000) cuotaMensual = 530;
+    else cuotaMensual = 530;
+  }
+
+  const cuotaSeguridadSocialAnual = cuotaMensual * 12;
+  const baseImponibleIRPF = Math.max(rendimientoNetoAnual - cuotaSeguridadSocialAnual, 0);
+
+  // Modelo 130: Pago fraccionado trimestral general (20% del rendimiento neto)
+  const retencionPct = (input.retencionFacturaPercent || 15) / 100;
+  const retencionesSoportadas = Math.round(ingresos * retencionPct * 100) / 100;
+
+  // IRPF final aproximado
+  const irpfEstimado = Math.round(baseImponibleIRPF * 0.20 * 100) / 100;
+  const pagoFraccionadoModelo130Anual = Math.max(irpfEstimado - retencionesSoportadas, 0);
+  const pagoFraccionadoTrimestral = Math.round((pagoFraccionadoModelo130Anual / 4) * 100) / 100;
+
+  const totalDeducciones = cuotaSeguridadSocialAnual + irpfEstimado;
+  const ingresoLimpioEnBolsilloAnual = Math.max(Math.round((ingresos - gastos - totalDeducciones) * 100) / 100, 0);
+  const ingresoLimpioMensualMedio = Math.round((ingresoLimpioEnBolsilloAnual / 12) * 100) / 100;
+
+  return {
+    rendimientoNetoAnual,
+    tramoCuotaMensual: cuotaMensual,
+    cuotaSeguridadSocialAnual,
+    rendimientoNetoPrevioIRPF: baseImponibleIRPF,
+    pagoFraccionadoModelo130Anual,
+    pagoFraccionadoTrimestral,
+    retencionesSoportadasFacturas: retencionesSoportadas,
+    ingresoLimpioEnBolsilloAnual,
+    ingresoLimpioMensualMedio,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// NEW STATUTORY MODULE: FINIQUITO Y DESPIDO ESPAÑA 2026
+// Estatuto de los Trabajadores (Art. 49, 53, 56)
+// ---------------------------------------------------------------------------
+export interface FiniquitoCalculationInput {
+  salarioMensualBruto: number;
+  pagasExtrasIncluidas: boolean; // Si están prorrateadas o no
+  aniosTrabajados: number;
+  mesesTrabajados: number;
+  diasVacacionesPendientes: number;
+  tipoDespido: 'objetivo' | 'improcedente' | 'baja_voluntaria' | 'fin_contrato_temporal';
+}
+
+export interface FiniquitoCalculationResult {
+  salarioDiario: number;
+  indemnizacionTotal: number;
+  indemnizacionDias: number;
+  importeVacacionesNoDisfrutadas: number;
+  totalFiniquitoBruto: number;
+  diasIndemnizacionPorAnio: number;
+  topeMaximoMensualidades: number;
+  normativaAplicada: string;
+}
+
+export function calculateFiniquitoSpain(input: FiniquitoCalculationInput): FiniquitoCalculationResult {
+  const salarioMes = Math.max(input.salarioMensualBruto, 0);
+  const salarioAnual = input.pagasExtrasIncluidas ? salarioMes * 12 : salarioMes * 14;
+  const salarioDiario = Math.round((salarioAnual / 365) * 100) / 100;
+
+  const tiempoAnios = input.aniosTrabajados + input.mesesTrabajados / 12;
+
+  let diasPorAnio = 0;
+  let topeMeses = 0;
+  let normativa = '';
+
+  switch (input.tipoDespido) {
+    case 'objetivo':
+      // 20 días por año trabajado, máximo 12 mensualidades (Art. 53 ET)
+      diasPorAnio = 20;
+      topeMeses = 12;
+      normativa = 'Art. 53 Estatuto de los Trabajadores (Despido Objetivo: 20 días/año, máx. 12 meses)';
+      break;
+    case 'improcedente':
+      // Reforma laboral: 33 días por año trabajado, máximo 24 mensualidades (Art. 56 ET)
+      diasPorAnio = 33;
+      topeMeses = 24;
+      normativa = 'Art. 56 Estatuto de los Trabajadores (Despido Improcedente: 33 días/año, máx. 24 meses)';
+      break;
+    case 'fin_contrato_temporal':
+      // 12 días por año de servicio (Art. 49.1.c ET)
+      diasPorAnio = 12;
+      topeMeses = 12;
+      normativa = 'Art. 49.1.c ET (Fin de Contrato Temporal: 12 días/año)';
+      break;
+    case 'baja_voluntaria':
+    default:
+      diasPorAnio = 0;
+      topeMeses = 0;
+      normativa = 'Baja Voluntaria / Dimisión: Sin derecho a indemnización por despido';
+      break;
+  }
+
+  const topeEuros = topeMeses * salarioMes;
+  const rawIndemnizacion = Math.round(salarioDiario * diasPorAnio * tiempoAnios * 100) / 100;
+  const indemnizacionTotal = topeMeses > 0 ? Math.min(rawIndemnizacion, topeEuros) : 0;
+  const indemnizacionDias = Math.round(diasPorAnio * tiempoAnios * 10) / 10;
+
+  // Vacaciones no disfrutadas cotizan y tributan
+  const importeVacaciones = Math.round(salarioDiario * Math.max(input.diasVacacionesPendientes, 0) * 100) / 100;
+  const totalFiniquitoBruto = Math.round((indemnizacionTotal + importeVacaciones) * 100) / 100;
+
+  return {
+    salarioDiario,
+    indemnizacionTotal,
+    indemnizacionDias,
+    importeVacacionesNoDisfrutadas: importeVacaciones,
+    totalFiniquitoBruto,
+    diasIndemnizacionPorAnio: diasPorAnio,
+    topeMaximoMensualidades: topeMeses,
+    normativaAplicada: normativa,
   };
 }
