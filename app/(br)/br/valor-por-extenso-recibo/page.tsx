@@ -462,3 +462,4 @@ CPF/CNPJ: ${cpfCnpjRecebedor.trim() || '[CPF/CNPJ]'}`;
     </div>
   );
 }
+

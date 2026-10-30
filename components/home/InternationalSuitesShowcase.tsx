@@ -254,6 +254,57 @@ const SUITES: CountrySuite[] = [
       },
     ],
   },
+  {
+    code: 'uk',
+    name: 'United Kingdom',
+    flag: '🇬🇧',
+    hubHref: '/uk',
+    badge: 'HMRC & Finance Act 2026/27',
+    accentBg: 'bg-indigo-900/10 text-indigo-900 border-indigo-900/20',
+    accentText: 'text-indigo-900',
+    accentBorder: 'border-indigo-900/30',
+    hoverBorder: 'hover:border-indigo-900/60',
+    description:
+      'Official statutory calculator suite for PAYE salary take-home, Stamp Duty (SDLT), Section 24 landlord relief, and statutory redundancy.',
+    pillars: [
+      {
+        name: 'HMRC & Payroll',
+        icon: Calculator,
+        featured: [
+          { name: 'Take-Home Pay Salary Calculator 2026/27', href: '/uk/take-home-pay-salary-calculator', tag: 'Top' },
+          { name: 'Stamp Duty (SDLT) Land Tax Calculator', href: '/uk/stamp-duty-sdlt-calculator', tag: 'SDLT' },
+          { name: 'Statutory Redundancy Pay Calculator', href: '/uk/redundancy-pay-statutory-calculator' },
+        ],
+      },
+      {
+        name: 'Corporate & Self-Assessment',
+        icon: Building2,
+        featured: [
+          { name: 'Self-Assessment Payment on Account (s.59A)', href: '/uk/self-assessment-payment-on-account-calculator', tag: 'HMRC' },
+          { name: 'Corporation Tax & Marginal Relief (19-25%)', href: '/uk/corporation-tax-marginal-relief-calculator' },
+          { name: 'Dividend Tax & Allowance Calculator', href: '/uk/dividend-tax-calculator' },
+        ],
+      },
+      {
+        name: 'Property & Landlord',
+        icon: Home,
+        featured: [
+          { name: 'Section 24 Landlord Mortgage Relief', href: '/uk/section-24-landlord-mortgage-relief-calculator', tag: 'Sec 24' },
+          { name: 'UK Rental Yield & Cap Rate Estimator', href: '/uk/rental-yield-cap-rate-calculator-uk' },
+          { name: 'Leasehold Extension & Marriage Value', href: '/uk/ground-rent-leasehold-extension-calculator' },
+        ],
+      },
+      {
+        name: 'Compliance & Verification',
+        icon: FileText,
+        featured: [
+          { name: 'HM Passport Photo Biometric Tool (35×45mm)', href: '/uk/uk-passport-photo-checker-generator', tag: '35×45' },
+          { name: 'Sort Code & Account Modulus 11 Checker', href: '/uk/hmrc-modulus-11-sort-code-account-validator' },
+          { name: 'Companies House PDF Filing Compressor', href: '/uk/pdf-compressor-companies-house' },
+        ],
+      },
+    ],
+  },
 ];
 
 export function InternationalSuitesShowcase() {
@@ -275,15 +326,15 @@ export function InternationalSuitesShowcase() {
             <Globe2 className="w-4 h-4 text-emerald-400" />
             <span>Kagazo International Portals</span>
             <span className="text-slate-400">&bull;</span>
-            <span className="text-emerald-400 font-mono">100 Statutory Tools</span>
+            <span className="text-emerald-400 font-mono">120 Statutory Tools</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-            Sovereign Micro-Tools Across 5 Nations
+            Sovereign Micro-Tools Across 6 Nations
           </h2>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-            Explore 100 newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, France, Italy, and Brazil. 100% in-browser client execution with zero data storage.
+            Explore 120 newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, France, Italy, Brazil, and the United Kingdom. 100% in-browser client execution with zero data storage.
           </p>
 
           {/* Quick Filter Tabs */}
@@ -298,7 +349,7 @@ export function InternationalSuitesShowcase() {
                   : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
               )}
             >
-              All Global Suites (100 Tools)
+              All Global Suites (120 Tools)
             </button>
             <button
               type="button"
@@ -364,6 +415,19 @@ export function InternationalSuitesShowcase() {
             >
               <span>🇧🇷</span>
               <span>Brasil (20)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedSuite('uk')}
+              className={cn(
+                'px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5',
+                selectedSuite === 'uk'
+                  ? 'bg-indigo-900 text-white border-indigo-900 shadow-xs'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+              )}
+            >
+              <span>🇬🇧</span>
+              <span>UK (20)</span>
             </button>
           </div>
         </div>

@@ -109,7 +109,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br') || pathname?.startsWith('/uk')) {
     return null;
   }
 
@@ -646,6 +646,21 @@ export function Header() {
                       <p className="text-[11px] text-text-main/60 truncate mt-0.5">Salário Líquido CLT, Rescisão, MEI, FGTS, CPF/CNPJ</p>
                     </div>
                   </Link>
+
+                  <Link
+                    href="/uk"
+                    onClick={() => setPortalsMenuOpen(false)}
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-indigo-50 border border-transparent hover:border-indigo-200 transition-all group"
+                  >
+                    <span className="text-2xl shrink-0">🇬🇧</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-text-main group-hover:text-indigo-900">United Kingdom</span>
+                        <span className="text-[10px] font-bold text-indigo-900 bg-indigo-100 px-1.5 py-0.5 rounded">20 Tools</span>
+                      </div>
+                      <p className="text-[11px] text-text-main/60 truncate mt-0.5">Take-Home Pay, SDLT, Section 24, Redundancy, VAT</p>
+                    </div>
+                  </Link>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -842,6 +857,15 @@ export function Header() {
                   <span className="text-2xl group-hover:scale-110 transition-transform">🇧🇷</span>
                   <span className="text-xs font-bold text-text-main mt-1">Brasil</span>
                   <span className="text-[10px] text-emerald-700 font-bold bg-emerald-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
+                </Link>
+                <Link
+                  href="/uk"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex flex-col items-center p-3 rounded-2xl bg-surface border border-surface-darker hover:border-indigo-300 text-center transition-all group shadow-2xs"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">🇬🇧</span>
+                  <span className="text-xs font-bold text-text-main mt-1">United Kingdom</span>
+                  <span className="text-[10px] text-indigo-900 font-bold bg-indigo-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
                 </Link>
               </div>
             </div>

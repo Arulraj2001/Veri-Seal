@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type CountryCode = 'es' | 'de' | 'fr' | 'it' | 'br';
+export type CountryCode = 'es' | 'de' | 'fr' | 'it' | 'br' | 'uk';
 
 interface ToolItem {
   title: string;
@@ -363,6 +363,68 @@ const COUNTRY_CONFIGS: Record<CountryCode, CountryConfig> = {
       },
     ],
   },
+  uk: {
+    code: 'uk',
+    name: 'United Kingdom',
+    flag: '🇬🇧',
+    portalTitle: 'UK Statutory Tax, HMRC & Property Suite 2026/27',
+    badgeText: 'UK HMRC',
+    accentClass: 'indigo',
+    accentBg: 'bg-indigo-900',
+    accentText: 'text-indigo-900',
+    accentHoverBg: 'hover:bg-indigo-50',
+    accentBorder: 'border-indigo-900/30',
+    activePillBg: 'bg-indigo-900 text-white',
+    hubHref: '/uk',
+    hubButtonLabel: 'UK Suite Hub',
+    allToolsLabel: 'All 20 Statutory Tools',
+    pillars: [
+      {
+        name: 'HMRC & Payroll',
+        icon: Calculator,
+        tools: [
+          { title: 'Take-Home Pay Salary Calculator 2026/27', href: '/uk/take-home-pay-salary-calculator', badge: 'HMRC' },
+          { title: 'Stamp Duty (SDLT) Land Tax Calculator', href: '/uk/stamp-duty-sdlt-calculator', badge: 'SDLT' },
+          { title: 'Statutory Redundancy Pay Calculator', href: '/uk/redundancy-pay-statutory-calculator' },
+          { title: 'UK VAT & Domestic Reverse Charge', href: '/uk/vat-calculator-uk-reverse-charge' },
+          { title: 'Statutory Maternity Pay (SMP) Estimator', href: '/uk/statutory-maternity-pay-smp-calculator' },
+        ],
+      },
+      {
+        name: 'Corporate & Self-Assessment',
+        icon: Building2,
+        tools: [
+          { title: 'Self-Assessment Payment on Account', href: '/uk/self-assessment-payment-on-account-calculator', badge: 's.59A' },
+          { title: 'Dividend Tax & Allowance Calculator', href: '/uk/dividend-tax-calculator' },
+          { title: 'Corporation Tax & Marginal Relief', href: '/uk/corporation-tax-marginal-relief-calculator', badge: '19-25%' },
+          { title: 'Capital Gains Tax (Property & Shares)', href: '/uk/capital-gains-tax-residential-shares-calculator' },
+          { title: 'CIS Tax Deduction Calculator', href: '/uk/cis-deduction-calculator', badge: '20/30%' },
+        ],
+      },
+      {
+        name: 'Property & Landlord',
+        icon: Home,
+        tools: [
+          { title: 'Section 24 Landlord Mortgage Relief', href: '/uk/section-24-landlord-mortgage-relief-calculator', badge: 'Sec 24' },
+          { title: 'UK Rental Yield & Cap Rate Estimator', href: '/uk/rental-yield-cap-rate-calculator-uk' },
+          { title: 'Mortgage Affordability PRA Stress Test', href: '/uk/mortgage-affordability-stress-test-calculator' },
+          { title: 'Leasehold Extension & Marriage Value', href: '/uk/ground-rent-leasehold-extension-calculator' },
+          { title: 'Inheritance Tax (NRB & RNRB) Estimator', href: '/uk/inheritance-tax-nrb-rnrb-calculator' },
+        ],
+      },
+      {
+        name: 'Compliance & Verification',
+        icon: FileText,
+        tools: [
+          { title: 'HM Passport Photo Biometric Tool (35×45mm)', href: '/uk/uk-passport-photo-checker-generator', badge: 'ICAO' },
+          { title: 'Sort Code & Account Modulus 11 Checker', href: '/uk/hmrc-modulus-11-sort-code-account-validator', badge: 'Bacs' },
+          { title: 'UK VAT Number Modulo 97 Validator', href: '/uk/vat-number-validator-uk-gb', badge: 'HMRC' },
+          { title: 'Companies House PDF Filing Compressor', href: '/uk/pdf-compressor-companies-house', badge: '< 4MB' },
+          { title: 'Right to Work Share Code Checker', href: '/uk/right-to-work-share-code-expiry-calculator' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalHeader({ country }: { country: CountryCode }) {
@@ -398,7 +460,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
           ? 'bg-blue-600 text-white'
           : country === 'it'
             ? 'bg-sky-600 text-white'
-            : 'bg-emerald-600 text-white';
+            : country === 'br'
+              ? 'bg-emerald-600 text-white'
+              : 'bg-indigo-900 text-white';
 
   const hoverAccent =
     country === 'es'
@@ -409,7 +473,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
           ? 'hover:text-blue-700 hover:bg-blue-50'
           : country === 'it'
             ? 'hover:text-sky-700 hover:bg-sky-50'
-            : 'hover:text-emerald-700 hover:bg-emerald-50';
+            : country === 'br'
+              ? 'hover:text-emerald-700 hover:bg-emerald-50'
+              : 'hover:text-indigo-900 hover:bg-indigo-50';
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md transition-all shadow-xs">
@@ -583,6 +649,17 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
               <span>BR</span>
             </Link>
             <Link
+              href="/uk"
+              className={cn(
+                'px-2.5 py-1 rounded-full transition-all flex items-center gap-1',
+                country === 'uk' ? 'bg-white text-slate-950 shadow-2xs font-black' : 'text-slate-700 hover:text-slate-950'
+              )}
+              title="United Kingdom Suite (20 Tools)"
+            >
+              <span>🇬🇧</span>
+              <span>UK</span>
+            </Link>
+            <Link
               href="/"
               className="px-2.5 py-1 rounded-full text-slate-700 hover:text-slate-950 transition-all flex items-center gap-1"
               title="Kagazo Global Suite"
@@ -674,6 +751,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
             </Link>
             <Link href="/br" className={cn('p-2 rounded-xl text-center flex-1', country === 'br' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-50 text-slate-700')}>
               🇧🇷 Brasil
+            </Link>
+            <Link href="/uk" className={cn('p-2 rounded-xl text-center flex-1', country === 'uk' ? 'bg-indigo-50 text-indigo-900 border border-indigo-200' : 'bg-slate-50 text-slate-700')}>
+              🇬🇧 UK
             </Link>
             <Link href="/" className="p-2 rounded-xl text-center flex-1 bg-slate-50 text-slate-700">
               🌐 Global

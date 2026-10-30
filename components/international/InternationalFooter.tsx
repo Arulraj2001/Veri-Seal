@@ -295,6 +295,60 @@ const FOOTER_CONFIGS: Record<CountryCode, CountryFooterConfig> = {
       },
     ],
   },
+  uk: {
+    code: 'uk',
+    countryName: 'United Kingdom',
+    flag: '🇬🇧',
+    heroText: 'Official UK Statutory Calculators & Compliance Tools 2026/27',
+    subText: 'Comprehensive HMRC, Stamp Duty (SDLT), employment rights, corporation tax, and property compliance suite in accordance with UK statutory acts.',
+    disclaimerTitle: 'Privacy & Statutory Rigour:',
+    disclaimer: 'Calculations strictly aligned with HMRC 2026/27 tax thresholds, Finance Act 2003 (SDLT), Employment Rights Act 1996, and Companies House guidelines. 100% client-side in-browser execution with zero personal or financial data retention.',
+    accentClass: 'indigo',
+    accentText: 'text-indigo-400',
+    accentBorder: 'border-indigo-500/30',
+    categories: [
+      {
+        title: 'HMRC, Tax & Payroll',
+        links: [
+          { label: 'Take-Home Pay Salary Calculator 2026/27', href: '/uk/take-home-pay-salary-calculator' },
+          { label: 'Stamp Duty Land Tax (SDLT) Calculator', href: '/uk/stamp-duty-sdlt-calculator' },
+          { label: 'Statutory Redundancy Pay Calculator', href: '/uk/redundancy-pay-statutory-calculator' },
+          { label: 'UK VAT & Domestic Reverse Charge', href: '/uk/vat-calculator-uk-reverse-charge' },
+          { label: 'Statutory Maternity Pay (SMP) Calculator', href: '/uk/statutory-maternity-pay-smp-calculator' },
+        ],
+      },
+      {
+        title: 'Corporate & Self-Assessment',
+        links: [
+          { label: 'Self-Assessment Payment on Account (s.59A)', href: '/uk/self-assessment-payment-on-account-calculator' },
+          { label: 'Dividend Tax & Allowance Calculator', href: '/uk/dividend-tax-calculator' },
+          { label: 'Corporation Tax Marginal Relief (19-25%)', href: '/uk/corporation-tax-marginal-relief-calculator' },
+          { label: 'Capital Gains Tax (Property & Shares)', href: '/uk/capital-gains-tax-residential-shares-calculator' },
+          { label: 'CIS Tax Deduction Calculator (20/30%)', href: '/uk/cis-deduction-calculator' },
+        ],
+      },
+      {
+        title: 'Property & Landlord',
+        links: [
+          { label: 'Section 24 Landlord Mortgage Relief', href: '/uk/section-24-landlord-mortgage-relief-calculator' },
+          { label: 'UK Rental Yield & Net Cap Rate', href: '/uk/rental-yield-cap-rate-calculator-uk' },
+          { label: 'Mortgage Affordability PRA Stress Test', href: '/uk/mortgage-affordability-stress-test-calculator' },
+          { label: 'Leasehold Extension & Marriage Value', href: '/uk/ground-rent-leasehold-extension-calculator' },
+          { label: 'Inheritance Tax (NRB & RNRB) Estimator', href: '/uk/inheritance-tax-nrb-rnrb-calculator' },
+        ],
+      },
+      {
+        title: 'Compliance & Verification',
+        links: [
+          { label: 'HM Passport Photo Biometric Tool (35×45mm)', href: '/uk/uk-passport-photo-checker-generator' },
+          { label: 'Sort Code & Account Modulus 11 Checker', href: '/uk/hmrc-modulus-11-sort-code-account-validator' },
+          { label: 'UK VAT Number Modulo 97 Validator', href: '/uk/vat-number-validator-uk-gb' },
+          { label: 'Companies House PDF Filing Compressor', href: '/uk/pdf-compressor-companies-house' },
+          { label: 'Right to Work Share Code Checker', href: '/uk/right-to-work-share-code-expiry-calculator' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalFooter({ country }: { country: CountryCode }) {
@@ -385,6 +439,18 @@ export function InternationalFooter({ country }: { country: CountryCode }) {
             >
               <span>🇧🇷</span>
               <span>Brasil (20)</span>
+            </Link>
+            <Link
+              href="/uk"
+              className={cn(
+                'px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5',
+                country === 'uk'
+                  ? 'bg-indigo-900 text-white border-indigo-700 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
+              )}
+            >
+              <span>🇬🇧</span>
+              <span>UK (20)</span>
             </Link>
             <Link
               href="/"
