@@ -120,13 +120,6 @@ export default function GermanyInvoicePage() {
         {/* Interactive Engine */}
         <GermanyInvoiceEngine />
 
-        {/* AdSense Placement Slot 1 */}
-        <div className="w-full border border-dashed border-slate-200 bg-slate-50/40 rounded-2xl py-8 text-center print:hidden">
-          <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">
-            Werbeplatzhalter
-          </span>
-        </div>
-
         {/* Mandatory Legal Clauses Guide */}
         <div className="space-y-6 pt-6 border-t border-slate-200 print:hidden">
           <div className="space-y-1">
@@ -182,3 +175,4 @@ export default function GermanyInvoicePage() {
     </div>
   );
 }
+

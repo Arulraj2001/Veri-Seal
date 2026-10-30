@@ -52,6 +52,96 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.92,
     },
+    {
+      url: `${baseUrl}/es/calculadora-jubilacion-pension`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/es/calculador-horas-extras`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-hipoteca-euribor`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-itp-gastos-compraventa`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-plusvalia-municipal`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/es/actualizador-alquiler-ipc`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/es/simulador-rentabilidad-alquiler`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/es/foto-carnet-dni-pasaporte`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/es/validador-iban-espana`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.92,
+    },
+    {
+      url: `${baseUrl}/es/compresor-pdf-sede-electronica`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-iva-trimestral`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-precio-gasolina-viaje`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.92,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-dias-habiles`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.92,
+    },
+    {
+      url: `${baseUrl}/es/contador-palabras-caracteres`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.90,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-descuentos-rebajas`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.90,
+    },
 
     // France (FR)
     {

@@ -340,3 +340,501 @@ export function calculateFiniquitoSpain(input: FiniquitoCalculationInput): Finiq
     normativaAplicada: normativa,
   };
 }
+
+
+// ---------------------------------------------------------------------------
+// 1. JUBILACIÓN Y PENSIÓN ESPAÑA 2026
+// Ley 21/2021 de garantía del poder adquisitivo de las pensiones
+// ---------------------------------------------------------------------------
+export interface JubilacionCalculationInput {
+  baseReguladoraMedia: number; // Base media últimos 25 años (300 bases / 350)
+  aniosCotizados: number;
+  mesesCotizados: number;
+  edadActual: number;
+}
+
+export interface JubilacionCalculationResult {
+  pensionMensualBruta: number;
+  pensionAnualBruta: number; // 14 pagas
+  porcentajeAplicable: number;
+  edadJubilacionOrdinaria: string;
+  cumpleRequisitoMinimo: boolean;
+  aniosFaltantesParaMaximo: number;
+}
+
+export function calculateJubilacionSpain(input: JubilacionCalculationInput): JubilacionCalculationResult {
+  const totalMeses = input.aniosCotizados * 12 + input.mesesCotizados;
+  const base = Math.max(input.baseReguladoraMedia, 0);
+
+  // Requisito mínimo legal: 15 años (180 meses)
+  if (totalMeses < 180) {
+    return {
+      pensionMensualBruta: 0,
+      pensionAnualBruta: 0,
+      porcentajeAplicable: 0,
+      edadJubilacionOrdinaria: 'No alcanza el mínimo de 15 años de cotización requeridos por la Seguridad Social',
+      cumpleRequisitoMinimo: false,
+      aniosFaltantesParaMaximo: Math.max(0, Math.round(((438 - totalMeses) / 12) * 10) / 10),
+    };
+  }
+
+  // 2026: Con 15 años (180 meses) = 50% de la base
+  // Meses 181 a 229 (primeros 49 meses siguientes): +0,21% por mes
+  // Meses restantes hasta alcanzar el 100% (a los 36 años y 6 meses = 438 meses): +0,19% por mes
+  let porcentaje = 50;
+  const mesesExtra = totalMeses - 180;
+
+  if (mesesExtra > 0) {
+    const tramo1 = Math.min(mesesExtra, 49);
+    porcentaje += tramo1 * 0.21;
+
+    const tramo2 = Math.max(mesesExtra - 49, 0);
+    if (tramo2 > 0) {
+      porcentaje += Math.min(tramo2 * 0.19, 100 - porcentaje);
+    }
+  }
+
+  porcentaje = Math.min(Math.round(porcentaje * 100) / 100, 100);
+
+  // Pensión máxima 2026 fijada en Presupuestos Generales: ~3.175 €/mes (44.450 €/año)
+  const PENSION_MAXIMA_MENSUAL = 3175.04;
+  const rawPension = Math.round((base * (porcentaje / 100)) * 100) / 100;
+  const pensionMensual = Math.min(rawPension, PENSION_MAXIMA_MENSUAL);
+  const pensionAnual = Math.round(pensionMensual * 14 * 100) / 100;
+
+  // Edad ordinaria 2026: 65 años si tienes 38 años y 3 meses o más cotizados; 66 años y 8 meses si tienes menos
+  const tieneCotizacionLarga = totalMeses >= (38 * 12 + 3);
+  const edadOrdinaria = tieneCotizacionLarga ? '65 años cumplidos' : '66 años y 8 meses cumplidos';
+
+  return {
+    pensionMensualBruta: pensionMensual,
+    pensionAnualBruta: pensionAnual,
+    porcentajeAplicable: porcentaje,
+    edadJubilacionOrdinaria: edadOrdinaria,
+    cumpleRequisitoMinimo: true,
+    aniosFaltantesParaMaximo: Math.max(0, Math.round(((438 - totalMeses) / 12) * 10) / 10),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 2. HORAS EXTRAS Y RECARGOS ESPAÑA 2026
+// Estatuto de los Trabajadores (Art. 35)
+// ---------------------------------------------------------------------------
+export interface HorasExtrasInput {
+  salarioBrutoAnual: number;
+  horasConvenioAnuales: number;
+  horasExtrasOrdinarias: number;
+  horasExtrasFestivasONocturnas: number;
+}
+
+export interface HorasExtrasResult {
+  precioHoraOrdinaria: number;
+  precioHoraExtraOrdinaria: number; // 75% recargo legal mínimo supletorio
+  precioHoraExtraFestiva: number; // 100% recargo
+  totalImporteExtras: number;
+  superaTopeLegal80Horas: boolean;
+  totalHorasExtras: number;
+}
+
+export function calculateHorasExtrasSpain(input: HorasExtrasInput): HorasExtrasResult {
+  const anual = Math.max(input.salarioBrutoAnual, 0);
+  const horasTotales = Math.max(input.horasConvenioAnuales, 1);
+
+  const precioHoraOrdinaria = Math.round((anual / horasTotales) * 100) / 100;
+  const precioExtraOrdinaria = Math.round(precioHoraOrdinaria * 1.75 * 100) / 100;
+  const precioExtraFestiva = Math.round(precioHoraOrdinaria * 2.00 * 100) / 100;
+
+  const importeOrdinarias = Math.round(precioExtraOrdinaria * Math.max(input.horasExtrasOrdinarias, 0) * 100) / 100;
+  const importeFestivas = Math.round(precioExtraFestiva * Math.max(input.horasExtrasFestivasONocturnas, 0) * 100) / 100;
+  const totalImporte = Math.round((importeOrdinarias + importeFestivas) * 100) / 100;
+
+  const totalHoras = input.horasExtrasOrdinarias + input.horasExtrasFestivasONocturnas;
+
+  return {
+    precioHoraOrdinaria,
+    precioHoraExtraOrdinaria: precioExtraOrdinaria,
+    precioHoraExtraFestiva: precioExtraFestiva,
+    totalImporteExtras: totalImporte,
+    superaTopeLegal80Horas: totalHoras > 80,
+    totalHorasExtras: totalHoras,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 3. HIPOTECA EURÍBOR ESPAÑA 2026 (Sistema Francés)
+// Ley 5/2019 reguladora de los contratos de crédito inmobiliario
+// ---------------------------------------------------------------------------
+export interface HipotecaCalculationInput {
+  capitalPrestamo: number;
+  plazoAnios: number;
+  tipoInteresAnualPorcentaje: number; // e.g. 2.95% fijo o Euribor 2.2% + 0.75%
+}
+
+export interface HipotecaCalculationResult {
+  cuotaMensual: number;
+  totalIntereses: number;
+  totalAPagar: number;
+  capitalFinanciado: number;
+  porcentajeInteresesSobreCapital: number;
+}
+
+export function calculateHipotecaSpain(input: HipotecaCalculationInput): HipotecaCalculationResult {
+  const P = Math.max(input.capitalPrestamo, 0);
+  const n = Math.max(input.plazoAnios, 1) * 12;
+  const r = (Math.max(input.tipoInteresAnualPorcentaje, 0) / 100) / 12;
+
+  let cuota = 0;
+  if (r === 0) {
+    cuota = P / n;
+  } else {
+    // Fórmula sistema francés: C = P * [r*(1+r)^n] / [(1+r)^n - 1]
+    cuota = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+  }
+
+  cuota = Math.round(cuota * 100) / 100;
+  const totalAPagar = Math.round(cuota * n * 100) / 100;
+  const totalIntereses = Math.max(Math.round((totalAPagar - P) * 100) / 100, 0);
+  const ratio = P > 0 ? Math.round((totalIntereses / P) * 10000) / 100 : 0;
+
+  return {
+    cuotaMensual: cuota,
+    totalIntereses,
+    totalAPagar,
+    capitalFinanciado: P,
+    porcentajeInteresesSobreCapital: ratio,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 4. GASTOS E ITP COMPRAVENTA DE VIVIENDA ESPAÑA 2026
+// Ley del Impuesto sobre Transmisiones Patrimoniales y Actos Jurídicos Documentados
+// ---------------------------------------------------------------------------
+export const ITP_RATES_BY_COMUNIDAD: Record<string, { name: string; itpRate: number; ajdRate: number }> = {
+  madrid: { name: 'Comunidad de Madrid', itpRate: 6.0, ajdRate: 0.75 },
+  canarias: { name: 'Canarias', itpRate: 6.5, ajdRate: 1.0 },
+  andalucia: { name: 'Andalucía', itpRate: 7.0, ajdRate: 1.2 },
+  galicia: { name: 'Galicia', itpRate: 8.0, ajdRate: 1.5 },
+  pais_vasco: { name: 'País Vasco', itpRate: 4.0, ajdRate: 0.5 },
+  navarra: { name: 'Navarra', itpRate: 6.0, ajdRate: 0.5 },
+  cataluna: { name: 'Cataluña', itpRate: 10.0, ajdRate: 1.5 },
+  valencia: { name: 'Comunitat Valenciana', itpRate: 10.0, ajdRate: 1.5 },
+  baleares: { name: 'Illes Balears', itpRate: 8.0, ajdRate: 1.5 },
+  aragon: { name: 'Aragón', itpRate: 8.0, ajdRate: 1.5 },
+  asturias: { name: 'Asturias', itpRate: 8.0, ajdRate: 1.2 },
+  cantabria: { name: 'Cantabria', itpRate: 9.0, ajdRate: 1.5 },
+  castilla_leon: { name: 'Castilla y León', itpRate: 8.0, ajdRate: 1.5 },
+  castilla_la_mancha: { name: 'Castilla-La Mancha', itpRate: 9.0, ajdRate: 1.5 },
+  extremadura: { name: 'Extremadura', itpRate: 8.0, ajdRate: 1.5 },
+  murcia: { name: 'Región de Murcia', itpRate: 8.0, ajdRate: 1.5 },
+  rioja: { name: 'La Rioja', itpRate: 7.0, ajdRate: 1.0 },
+};
+
+export interface ItpCalculationInput {
+  precioCompra: number;
+  esObraNueva: boolean; // Si es nueva lleva IVA 10% + AJD; si es segunda mano lleva ITP
+  comunidadAutonoma: string;
+}
+
+export interface ItpCalculationResult {
+  impuestoPrincipalNombre: string;
+  impuestoPrincipalImporte: number;
+  tipoImpositivoPercent: number;
+  gastosNotaria: number; // Arancel notarial oficial RD 1426/1989
+  gastosRegistro: number; // Arancel registral RD 1427/1989
+  gastosGestoria: number;
+  gastosTasacion: number;
+  totalGastosEImpuestos: number;
+  costeTotalAdquisicion: number;
+}
+
+export function calculateItpCompraventaSpain(input: ItpCalculationInput): ItpCalculationResult {
+  const precio = Math.max(input.precioCompra, 0);
+  const region = ITP_RATES_BY_COMUNIDAD[input.comunidadAutonoma] || ITP_RATES_BY_COMUNIDAD['madrid'];
+
+  let impuestoNombre = '';
+  let impuestoImporte = 0;
+  let tipoPercent = 0;
+
+  if (input.esObraNueva) {
+    impuestoNombre = 'IVA (10%) + AJD';
+    const iva = precio * 0.10;
+    const ajd = precio * (region.ajdRate / 100);
+    impuestoImporte = Math.round((iva + ajd) * 100) / 100;
+    tipoPercent = 10 + region.ajdRate;
+  } else {
+    impuestoNombre = `ITP (${region.itpRate}%)`;
+    impuestoImporte = Math.round((precio * (region.itpRate / 100)) * 100) / 100;
+    tipoPercent = region.itpRate;
+  }
+
+  // Estimación regulada de aranceles notariales y registrales
+  const notaria = Math.round((550 + precio * 0.001) * 100) / 100;
+  const registro = Math.round((350 + precio * 0.0006) * 100) / 100;
+  const gestoria = 380;
+  const tasacion = 320;
+
+  const totalGastos = Math.round((impuestoImporte + notaria + registro + gestoria + tasacion) * 100) / 100;
+
+  return {
+    impuestoPrincipalNombre: impuestoNombre,
+    impuestoPrincipalImporte: impuestoImporte,
+    tipoImpositivoPercent: tipoPercent,
+    gastosNotaria: notaria,
+    gastosRegistro: registro,
+    gastosGestoria: gestoria,
+    gastosTasacion: tasacion,
+    totalGastosEImpuestos: totalGastos,
+    costeTotalAdquisicion: Math.round((precio + totalGastos) * 100) / 100,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 5. PLUSVALÍA MUNICIPAL ESPAÑA 2026 (IIVTNU)
+// Real Decreto-ley 26/2021 (Método Objetivo vs Plusvalía Real)
+// ---------------------------------------------------------------------------
+export interface PlusvaliaInput {
+  valorCatastralSuelo: number;
+  precioAdquisicionOriginal: number;
+  precioVentaTransmision: number;
+  aniosTenencia: number;
+  tipoGravamenMunicipio: number; // Máximo legal 30%
+}
+
+export interface PlusvaliaResult {
+  cuotaMetodoObjetivo: number;
+  cuotaMetodoReal: number;
+  cuotaOptimaFinal: number; // El contribuyente tiene derecho legal a tributar por la menor
+  metodoRecomendado: 'objetivo' | 'real' | 'exento_perdida';
+  coeficienteObjetivoAplicado: number;
+  exentoPorPerdidasPatrimoniales: boolean;
+}
+
+export function calculatePlusvaliaMunicipalSpain(input: PlusvaliaInput): PlusvaliaResult {
+  const anios = Math.min(Math.max(input.aniosTenencia, 1), 20);
+  const tipoMunicipio = Math.min(Math.max(input.tipoGravamenMunicipio || 30, 0), 30) / 100;
+
+  // Si se vende con pérdidas, está 100% EXENTO según la Ley del IIVTNU
+  if (input.precioVentaTransmision <= input.precioAdquisicionOriginal) {
+    return {
+      cuotaMetodoObjetivo: 0,
+      cuotaMetodoReal: 0,
+      cuotaOptimaFinal: 0,
+      metodoRecomendado: 'exento_perdida',
+      coeficienteObjetivoAplicado: 0,
+      exentoPorPerdidasPatrimoniales: true,
+    };
+  }
+
+  // Coeficientes objetivos máximos aprobados para 2026 (según años de tenencia)
+  const COEFICIENTES: Record<number, number> = {
+    1: 0.15, 2: 0.15, 3: 0.16, 4: 0.17, 5: 0.17,
+    6: 0.16, 7: 0.14, 8: 0.13, 9: 0.12, 10: 0.10,
+    11: 0.09, 12: 0.08, 13: 0.08, 14: 0.08, 15: 0.08,
+    16: 0.09, 17: 0.13, 18: 0.17, 19: 0.23, 20: 0.45,
+  };
+
+  const coef = COEFICIENTES[anios] || 0.10;
+  const baseObjetiva = input.valorCatastralSuelo * coef;
+  const cuotaObjetiva = Math.round(baseObjetiva * tipoMunicipio * 100) / 100;
+
+  // Método Real: (Ganancia patrimonial) * (Valor catastral suelo / Valor catastral total estimado 60%)
+  const gananciaReal = Math.max(input.precioVentaTransmision - input.precioAdquisicionOriginal, 0);
+  const baseReal = gananciaReal * 0.60;
+  const cuotaReal = Math.round(baseReal * tipoMunicipio * 100) / 100;
+
+  const menorCuota = Math.min(cuotaObjetiva, cuotaReal);
+
+  return {
+    cuotaMetodoObjetivo: cuotaObjetiva,
+    cuotaMetodoReal: cuotaReal,
+    cuotaOptimaFinal: menorCuota,
+    metodoRecomendado: cuotaObjetiva <= cuotaReal ? 'objetivo' : 'real',
+    coeficienteObjetivoAplicado: coef,
+    exentoPorPerdidasPatrimoniales: false,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 6. ACTUALIZADOR DE ALQUILER CON IPC / LEY DE VIVIENDA 2026
+// Ley 12/2023 por el Derecho a la Vivienda (Tope legal de actualización anual)
+// ---------------------------------------------------------------------------
+export interface AlquilerIpcInput {
+  rentaMensualActual: number;
+  porcentajeActualizacion: number; // Tope legal 3% en 2026 o índice IRA
+}
+
+export interface AlquilerIpcResult {
+  rentaActual: number;
+  nuevaRentaMensual: number;
+  incrementoMensual: number;
+  incrementoAnual: number;
+  esSuperiorAlTopeLegal: boolean;
+}
+
+export function calculateActualizacionAlquilerIpcSpain(input: AlquilerIpcInput): AlquilerIpcResult {
+  const actual = Math.max(input.rentaMensualActual, 0);
+  const pct = input.porcentajeActualizacion;
+
+  const incrementoMensual = Math.round((actual * (pct / 100)) * 100) / 100;
+  const nuevaRenta = Math.round((actual + incrementoMensual) * 100) / 100;
+
+  return {
+    rentaActual: actual,
+    nuevaRentaMensual: nuevaRenta,
+    incrementoMensual,
+    incrementoAnual: Math.round(incrementoMensual * 12 * 100) / 100,
+    esSuperiorAlTopeLegal: pct > 3.0,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 7. RENTABILIDAD NETA DE ALQUILER ESPAÑA
+// ---------------------------------------------------------------------------
+export interface RentabilidadAlquilerInput {
+  precioInmueble: number;
+  gastosCompraventaYReforma: number;
+  alquilerMensualPrevisto: number;
+  gastosComunidadAnuales: number;
+  ibiAnual: number;
+  segurosAnuales: number;
+}
+
+export interface RentabilidadAlquilerResult {
+  inversionTotal: number;
+  ingresosAnualesBrutos: number;
+  gastosAnualesOperativos: number;
+  beneficioNetoAnual: number;
+  rentabilidadBrutaPercent: number;
+  rentabilidadNetaPercent: number;
+}
+
+export function calculateRentabilidadAlquilerSpain(input: RentabilidadAlquilerInput): RentabilidadAlquilerResult {
+  const inversionTotal = Math.max(input.precioInmueble + input.gastosCompraventaYReforma, 1);
+  const ingresosAnuales = Math.max(input.alquilerMensualPrevisto * 12, 0);
+  const gastosOperativos = Math.max(input.gastosComunidadAnuales + input.ibiAnual + input.segurosAnuales, 0);
+  const beneficioNeto = Math.max(ingresosAnuales - gastosOperativos, 0);
+
+  const rentabilidadBruta = Math.round((ingresosAnuales / inversionTotal) * 10000) / 100;
+  const rentabilidadNeta = Math.round((beneficioNeto / inversionTotal) * 10000) / 100;
+
+  return {
+    inversionTotal,
+    ingresosAnualesBrutos: ingresosAnuales,
+    gastosAnualesOperativos: gastosOperativos,
+    beneficioNetoAnual: beneficioNeto,
+    rentabilidadBrutaPercent: rentabilidadBruta,
+    rentabilidadNetaPercent: rentabilidadNeta,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 8. MODELO 303: IVA TRIMESTRAL ESPAÑA 2026
+// Ley 37/1992 del Impuesto sobre el Valor Añadido
+// ---------------------------------------------------------------------------
+export interface IvaTrimestralInput {
+  ventasGeneral21: number;
+  ventasReducido10: number;
+  ventasSuperreducido4: number;
+  gastosIvaSoportado21: number;
+  gastosIvaSoportado10: number;
+  gastosIvaSoportado4: number;
+}
+
+export interface IvaTrimestralResult {
+  totalIvaRepercutido: number;
+  totalIvaSoportado: number;
+  resultadoModelo303: number;
+  esAIngresar: boolean;
+}
+
+export function calculateIvaTrimestralSpain(input: IvaTrimestralInput): IvaTrimestralResult {
+  const repercutido =
+    input.ventasGeneral21 * 0.21 +
+    input.ventasReducido10 * 0.10 +
+    input.ventasSuperreducido4 * 0.04;
+
+  const soportado =
+    input.gastosIvaSoportado21 * 0.21 +
+    input.gastosIvaSoportado10 * 0.10 +
+    input.gastosIvaSoportado4 * 0.04;
+
+  const resultado = Math.round((repercutido - soportado) * 100) / 100;
+
+  return {
+    totalIvaRepercutido: Math.round(repercutido * 100) / 100,
+    totalIvaSoportado: Math.round(soportado * 100) / 100,
+    resultadoModelo303: resultado,
+    esAIngresar: resultado > 0,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 9. VALIDADOR IBAN Y ENTIDADES ESPAÑA (ISO 13616 / MOD-97-10)
+// ---------------------------------------------------------------------------
+export const BANCOS_ESPANA: Record<string, string> = {
+  '0049': 'Banco Santander',
+  '0182': 'BBVA (Banco Bilbao Vizcaya Argentaria)',
+  '2100': 'CaixaBank',
+  '0081': 'Banco Sabadell',
+  '0128': 'Bankinter',
+  '2080': 'Abanca Corporación Bancaria',
+  '0075': 'Banco Popular',
+  '0073': 'Openbank',
+  '1465': 'ING Bank España',
+  '2038': 'Bankia (Integrado en CaixaBank)',
+  '0239': 'EVO Banco',
+  '3058': 'Cajamar Caja Rural',
+  '2095': 'Kutxabank',
+  '2048': 'Liberbank (Integrado en Unicaja)',
+  '2103': 'Unicaja Banco',
+};
+
+export function validateIbanSpain(rawIban: string): {
+  isValid: boolean;
+  cleanIban: string;
+  bancoNombre: string;
+  codigoBanco: string;
+  codigoSucursal: string;
+  numeroCuenta: string;
+  digitosControl: string;
+} {
+  const clean = rawIban.replace(/[\s-]/g, '').toUpperCase();
+  if (!/^ES\d{22}$/.test(clean)) {
+    return {
+      isValid: false,
+      cleanIban: clean,
+      bancoNombre: 'Código de cuenta no reconocido',
+      codigoBanco: '',
+      codigoSucursal: '',
+      numeroCuenta: '',
+      digitosControl: '',
+    };
+  }
+
+  const codBanco = clean.substring(4, 8);
+  const codSucursal = clean.substring(8, 12);
+  const dc = clean.substring(12, 14);
+  const cuenta = clean.substring(14, 24);
+
+  // Módulo 97: Mover 'ES' (E=14, S=28) + 2 dígitos de control al final
+  const rearranged = clean.substring(4) + '1428' + clean.substring(2, 4);
+
+  // BigInt mod 97 check
+  let remainder = 0;
+  for (let i = 0; i < rearranged.length; i++) {
+    remainder = (remainder * 10 + parseInt(rearranged.charAt(i), 10)) % 97;
+  }
+
+  const isValid = remainder === 1;
+  const bancoNombre = BANCOS_ESPANA[codBanco] || 'Entidad Bancaria Registrada en Banco de España';
+
+  return {
+    isValid,
+    cleanIban: clean.replace(/(.{4})/g, '$1 ').trim(),
+    bancoNombre: isValid ? bancoNombre : 'Dígito de control inválido',
+    codigoBanco: codBanco,
+    codigoSucursal: codSucursal,
+    numeroCuenta: cuenta,
+    digitosControl: dc,
+  };
+}

@@ -123,13 +123,6 @@ export default function FranceUrssafPage() {
         {/* Interactive Engine */}
         <FranceUrssafEngine />
 
-        {/* AdSense Placement Slot 1 */}
-        <div className="w-full border border-dashed border-slate-200 bg-slate-50/40 rounded-2xl py-8 text-center">
-          <span className="text-xs font-mono text-slate-400 uppercase tracking-widest">
-            Emplacement Publicitaire
-          </span>
-        </div>
-
         {/* Statutory Reference Table */}
         <div className="space-y-6 pt-6 border-t border-slate-200">
           <div className="space-y-1">
@@ -199,3 +192,4 @@ export default function FranceUrssafPage() {
     </div>
   );
 }
+
