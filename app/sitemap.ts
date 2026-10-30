@@ -180,6 +180,96 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.92,
     },
+    {
+      url: `${baseUrl}/fr/simulateur-cout-embauche-employeur`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.97,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-indemnite-fin-cdd`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.96,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-frais-de-notaire`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/fr/simulateur-plus-value-immobiliere`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.96,
+    },
+    {
+      url: `${baseUrl}/fr/simulateur-pret-immobilier-mensualite`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.97,
+    },
+    {
+      url: `${baseUrl}/fr/simulateur-pret-taux-zero-ptz`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.96,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-rendement-locatif`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/fr/validateur-siren-siret`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.96,
+    },
+    {
+      url: `${baseUrl}/fr/photo-identite-passeport-ants`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/fr/compresseur-pdf-france-travail`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-tva-francaise`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.96,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-heures-supplementaires`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-duree-travail-heures-decimales`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.92,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-remise-solde`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.90,
+    },
+    {
+      url: `${baseUrl}/fr/simulateur-frais-kilometriques`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
 
     // Germany (DE)
     {
