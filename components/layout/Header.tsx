@@ -109,7 +109,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br')) {
     return null;
   }
 
@@ -546,8 +546,9 @@ export function Header() {
                 <span>🇩🇪</span>
                 <span>🇫🇷</span>
                 <span>🇮🇹</span>
+                <span>🇧🇷</span>
               </span>
-              <span>EU Portals</span>
+              <span>Global Portals</span>
               <ChevronDown
                 className={cn(
                   'w-3.5 h-3.5 text-text-main/60 transition-transform duration-200',
@@ -567,8 +568,8 @@ export function Header() {
                   className="absolute top-full right-0 mt-3 w-80 bg-white/95 backdrop-blur-xl border border-surface-darker rounded-2xl shadow-2xl p-3 z-50 text-left space-y-1.5"
                 >
                   <div className="text-[11px] font-black uppercase tracking-wider text-text-main/60 px-2 py-1 flex items-center justify-between">
-                    <span>Statutory European Suites</span>
-                    <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">80 TOOLS</span>
+                    <span>Statutory Sovereign Suites</span>
+                    <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">100 TOOLS</span>
                   </div>
 
                   <Link
@@ -628,6 +629,21 @@ export function Header() {
                         <span className="text-[10px] font-bold text-sky-700 bg-sky-100 px-1.5 py-0.5 rounded">20 Calcolatori</span>
                       </div>
                       <p className="text-[11px] text-text-main/60 truncate mt-0.5">Stipendio Netto, TFR, IMU F24, CIE, Forfettario</p>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/br"
+                    onClick={() => setPortalsMenuOpen(false)}
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-emerald-50 border border-transparent hover:border-emerald-200 transition-all group"
+                  >
+                    <span className="text-2xl shrink-0">🇧🇷</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-text-main group-hover:text-emerald-700">Brasil</span>
+                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">20 Ferramentas</span>
+                      </div>
+                      <p className="text-[11px] text-text-main/60 truncate mt-0.5">Salário Líquido CLT, Rescisão, MEI, FGTS, CPF/CNPJ</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -817,6 +833,15 @@ export function Header() {
                   <span className="text-2xl group-hover:scale-110 transition-transform">🇮🇹</span>
                   <span className="text-xs font-bold text-text-main mt-1">Italia</span>
                   <span className="text-[10px] text-sky-700 font-bold bg-sky-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
+                </Link>
+                <Link
+                  href="/br"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex flex-col items-center p-3 rounded-2xl bg-surface border border-surface-darker hover:border-emerald-300 text-center transition-all group shadow-2xs"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">🇧🇷</span>
+                  <span className="text-xs font-bold text-text-main mt-1">Brasil</span>
+                  <span className="text-[10px] text-emerald-700 font-bold bg-emerald-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
                 </Link>
               </div>
             </div>

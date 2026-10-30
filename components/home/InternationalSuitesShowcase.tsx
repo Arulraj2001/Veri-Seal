@@ -203,6 +203,57 @@ const SUITES: CountrySuite[] = [
       },
     ],
   },
+  {
+    code: 'br',
+    name: 'Brasil',
+    flag: '🇧🇷',
+    hubHref: '/br',
+    badge: 'CLT & Receita Federal 2026',
+    accentBg: 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20',
+    accentText: 'text-emerald-600',
+    accentBorder: 'border-emerald-500/30',
+    hoverBorder: 'hover:border-emerald-500/60',
+    description:
+      'Suite completa de cálculos trabalhistas CLT, tributários Simples Nacional e MEI, imobiliários e geradores de documentos para o Brasil.',
+    pillars: [
+      {
+        name: 'Trabalhista & Salários',
+        icon: Calculator,
+        featured: [
+          { name: 'Calculadora Salário Líquido CLT 2026', href: '/br/calculadora-salario-liquido-clt', tag: 'Top' },
+          { name: 'Calculadora de Rescisão de Contrato CLT', href: '/br/calculadora-rescisao-clt', tag: 'Art. 477' },
+          { name: 'Cálculo de Férias e Abono Pecuniário', href: '/br/calculo-ferias-clt' },
+        ],
+      },
+      {
+        name: 'Tributos & MEI',
+        icon: Building2,
+        featured: [
+          { name: 'Calculadora DAS MEI 2026 Atualizada', href: '/br/calculadora-das-mei', tag: 'MEI' },
+          { name: 'Simulador Alíquota Simples Nacional', href: '/br/calculadora-simples-nacional' },
+          { name: 'Simulador Carnê-Leão e IRPF Autônomo', href: '/br/calculadora-carne-leao' },
+        ],
+      },
+      {
+        name: 'Imóveis & Crédito',
+        icon: Home,
+        featured: [
+          { name: 'Financiamento SAC vs Tabela Price', href: '/br/simulador-financiamento-sac-price', tag: 'Popular' },
+          { name: 'Custos ITBI e Escritura de Cartório', href: '/br/calculadora-itbi-escritura' },
+          { name: 'Reajuste de Aluguel IPCA e IGP-M', href: '/br/reajuste-aluguel-ipca-igpm' },
+        ],
+      },
+      {
+        name: 'Documentos & Cidadania',
+        icon: FileText,
+        featured: [
+          { name: 'Validador e Gerador de CPF e CNPJ', href: '/br/validador-gerador-cpf-cnpj', tag: 'Módulo 11' },
+          { name: 'Criador Foto 3×4 Documentos & CNH', href: '/br/foto-3x4-documentos-passaporte' },
+          { name: 'Compressor PDF para o PJe (< 3 MB)', href: '/br/compressor-pdf-pje-tribunais' },
+        ],
+      },
+    ],
+  },
 ];
 
 export function InternationalSuitesShowcase() {
@@ -224,15 +275,15 @@ export function InternationalSuitesShowcase() {
             <Globe2 className="w-4 h-4 text-emerald-400" />
             <span>Kagazo International Portals</span>
             <span className="text-slate-400">&bull;</span>
-            <span className="text-emerald-400 font-mono">80 Statutory Tools</span>
+            <span className="text-emerald-400 font-mono">100 Statutory Tools</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-            Sovereign Micro-Tools Across Europe
+            Sovereign Micro-Tools Across 5 Nations
           </h2>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-            Explore 80+ newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, France, and Italy. 100% in-browser client execution with zero data storage.
+            Explore 100 newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, France, Italy, and Brazil. 100% in-browser client execution with zero data storage.
           </p>
 
           {/* Quick Filter Tabs */}
@@ -247,7 +298,7 @@ export function InternationalSuitesShowcase() {
                   : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
               )}
             >
-              All European Suites (80 Tools)
+              All Global Suites (100 Tools)
             </button>
             <button
               type="button"
@@ -301,11 +352,24 @@ export function InternationalSuitesShowcase() {
               <span>🇮🇹</span>
               <span>Italia (20)</span>
             </button>
+            <button
+              type="button"
+              onClick={() => setSelectedSuite('br')}
+              className={cn(
+                'px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5',
+                selectedSuite === 'br'
+                  ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+              )}
+            >
+              <span>🇧🇷</span>
+              <span>Brasil (20)</span>
+            </button>
           </div>
         </div>
 
-        {/* 4 Country Showcase Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Country Showcase Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {filteredSuites.map((suite) => (
             <div
               key={suite.code}

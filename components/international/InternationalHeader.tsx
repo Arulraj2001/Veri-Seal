@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type CountryCode = 'es' | 'de' | 'fr' | 'it';
+export type CountryCode = 'es' | 'de' | 'fr' | 'it' | 'br';
 
 interface ToolItem {
   title: string;
@@ -301,6 +301,68 @@ const COUNTRY_CONFIGS: Record<CountryCode, CountryConfig> = {
       },
     ],
   },
+  br: {
+    code: 'br',
+    name: 'Brasil',
+    flag: '🇧🇷',
+    portalTitle: 'Portal Trabalhista, Tributário & Imobiliário 2026',
+    badgeText: 'Brasil',
+    accentClass: 'emerald',
+    accentBg: 'bg-emerald-600',
+    accentText: 'text-emerald-700',
+    accentHoverBg: 'hover:bg-emerald-50',
+    accentBorder: 'border-emerald-500/30',
+    activePillBg: 'bg-emerald-600 text-white',
+    hubHref: '/br',
+    hubButtonLabel: 'Portal Brasil',
+    allToolsLabel: 'Todas as 20 Ferramentas',
+    pillars: [
+      {
+        name: 'Trabalhista & CLT',
+        icon: Calculator,
+        tools: [
+          { title: 'Salário Líquido CLT 2026', href: '/br/calculadora-salario-liquido-clt', badge: 'Top' },
+          { title: 'Rescisão Contratual CLT', href: '/br/calculadora-rescisao-clt', badge: 'Art. 477' },
+          { title: 'Férias & Abono Pecuniário', href: '/br/calculo-ferias-clt' },
+          { title: 'Décimo Terceiro Salário (13º)', href: '/br/calculadora-decimo-terceiro' },
+          { title: 'Horas Extras & Reflexo DSR', href: '/br/calculo-horas-extras-dsr' },
+        ],
+      },
+      {
+        name: 'Tributos & MEI',
+        icon: Building2,
+        tools: [
+          { title: 'Calculadora DAS MEI 2026', href: '/br/calculadora-das-mei', badge: 'MEI' },
+          { title: 'Simulador Carnê-Leão IRPF', href: '/br/calculadora-carne-leao' },
+          { title: 'Alíquota Efetiva Simples', href: '/br/calculadora-simples-nacional', badge: 'Anexos' },
+          { title: 'Retenção Impostos NF PJ', href: '/br/retencao-impostos-nota-fiscal' },
+          { title: 'Reajuste Dissídio Salarial', href: '/br/calculadora-dissidio-salarial' },
+        ],
+      },
+      {
+        name: 'Imóveis & Financiamento',
+        icon: Home,
+        tools: [
+          { title: 'Financiamento SAC vs Price', href: '/br/simulador-financiamento-sac-price', badge: 'Popular' },
+          { title: 'Custos ITBI & Escritura', href: '/br/calculadora-itbi-escritura' },
+          { title: 'Reajuste Aluguel IPCA / IGP-M', href: '/br/reajuste-aluguel-ipca-igpm' },
+          { title: 'Amortização com FGTS', href: '/br/amortizacao-financiamento-fgts' },
+          { title: 'Rendimento Locativo Líquido', href: '/br/calculadora-rendimento-aluguel-liquido' },
+        ],
+      },
+      {
+        name: 'Documentos & Cidadania',
+        icon: FileText,
+        tools: [
+          { title: 'Validador CPF & CNPJ (Módulo 11)', href: '/br/validador-gerador-cpf-cnpj', badge: 'Receita' },
+          { title: 'Foto 3×4 Documentos & CNH', href: '/br/foto-3x4-documentos-passaporte', badge: '3x4' },
+          { title: 'Compressor PDF para PJe (< 3 MB)', href: '/br/compressor-pdf-pje-tribunais', badge: 'PJe' },
+          { title: 'Prazos Processuais Dias Úteis', href: '/br/calculadora-prazos-processuais-cpc' },
+          { title: 'Valor por Extenso para Recibos', href: '/br/valor-por-extenso-recibo' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalHeader({ country }: { country: CountryCode }) {
@@ -331,19 +393,23 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
     country === 'es'
       ? 'bg-orange-600 text-white'
       : country === 'de'
-      ? 'bg-amber-600 text-white'
-      : country === 'fr'
-      ? 'bg-blue-600 text-white'
-      : 'bg-sky-600 text-white';
+        ? 'bg-amber-600 text-white'
+        : country === 'fr'
+          ? 'bg-blue-600 text-white'
+          : country === 'it'
+            ? 'bg-sky-600 text-white'
+            : 'bg-emerald-600 text-white';
 
   const hoverAccent =
     country === 'es'
       ? 'hover:text-orange-700 hover:bg-orange-50'
       : country === 'de'
-      ? 'hover:text-amber-700 hover:bg-amber-50'
-      : country === 'fr'
-      ? 'hover:text-blue-700 hover:bg-blue-50'
-      : 'hover:text-sky-700 hover:bg-sky-50';
+        ? 'hover:text-amber-700 hover:bg-amber-50'
+        : country === 'fr'
+          ? 'hover:text-blue-700 hover:bg-blue-50'
+          : country === 'it'
+            ? 'hover:text-sky-700 hover:bg-sky-50'
+            : 'hover:text-emerald-700 hover:bg-emerald-50';
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md transition-all shadow-xs">
@@ -506,6 +572,17 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
               <span>IT</span>
             </Link>
             <Link
+              href="/br"
+              className={cn(
+                'px-2.5 py-1 rounded-full transition-all flex items-center gap-1',
+                country === 'br' ? 'bg-white text-slate-950 shadow-2xs font-black' : 'text-slate-700 hover:text-slate-950'
+              )}
+              title="Brasil Suite (20 Ferramentas)"
+            >
+              <span>🇧🇷</span>
+              <span>BR</span>
+            </Link>
+            <Link
               href="/"
               className="px-2.5 py-1 rounded-full text-slate-700 hover:text-slate-950 transition-all flex items-center gap-1"
               title="Kagazo Global Suite"
@@ -594,6 +671,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
             </Link>
             <Link href="/it" className={cn('p-2 rounded-xl text-center flex-1', country === 'it' ? 'bg-sky-50 text-sky-700 border border-sky-200' : 'bg-slate-50 text-slate-700')}>
               🇮🇹 Italia
+            </Link>
+            <Link href="/br" className={cn('p-2 rounded-xl text-center flex-1', country === 'br' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-50 text-slate-700')}>
+              🇧🇷 Brasil
             </Link>
             <Link href="/" className="p-2 rounded-xl text-center flex-1 bg-slate-50 text-slate-700">
               🌐 Global

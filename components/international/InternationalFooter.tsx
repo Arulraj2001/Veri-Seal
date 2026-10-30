@@ -241,6 +241,60 @@ const FOOTER_CONFIGS: Record<CountryCode, CountryFooterConfig> = {
       },
     ],
   },
+  br: {
+    code: 'br',
+    countryName: 'Brasil',
+    flag: '🇧🇷',
+    heroText: 'Ferramentas Oficiais Estatutárias para o Brasil 2026',
+    subText: 'Suite integral de cálculo trabalhista CLT, tributário Receita Federal / Simples Nacional, imobiliário e certidões jurídicas conforme a legislação federal vigente.',
+    disclaimerTitle: 'Privacidade e Rigor Jurídico:',
+    disclaimer: 'Cálculos em estrita conformidade com a CLT (Decreto-Lei 5.452/1943), Lei 12.506/2011, Lei Complementar 123/2006 (Simples Nacional) e Instruções Normativas da Receita Federal do Brasil. Processamento 100% no seu navegador: nenhum dado financeiro ou pessoal é enviado para servidores externos.',
+    accentClass: 'emerald',
+    accentText: 'text-emerald-500',
+    accentBorder: 'border-emerald-500/30',
+    categories: [
+      {
+        title: 'Trabalhista & Salários CLT',
+        links: [
+          { label: 'Calculadora Salário Líquido CLT 2026', href: '/br/calculadora-salario-liquido-clt' },
+          { label: 'Calculadora de Rescisão de Contrato CLT', href: '/br/calculadora-rescisao-clt' },
+          { label: 'Cálculo de Férias CLT e Abono Pecuniário', href: '/br/calculo-ferias-clt' },
+          { label: 'Calculadora Décimo Terceiro Salário', href: '/br/calculadora-decimo-terceiro' },
+          { label: 'Cálculo Horas Extras e DSR (Súmula 172)', href: '/br/calculo-horas-extras-dsr' },
+        ],
+      },
+      {
+        title: 'Tributário, MEI & Empresas',
+        links: [
+          { label: 'Calculadora DAS MEI 2026 Atualizada', href: '/br/calculadora-das-mei' },
+          { label: 'Simulador Carnê-Leão e IRPF Autônomo', href: '/br/calculadora-carne-leao' },
+          { label: 'Simulador Alíquota Simples Nacional', href: '/br/calculadora-simples-nacional' },
+          { label: 'Retenção de Impostos Nota Fiscal PJ', href: '/br/retencao-impostos-nota-fiscal' },
+          { label: 'Calculadora Dissídio e Reajuste Salarial', href: '/br/calculadora-dissidio-salarial' },
+        ],
+      },
+      {
+        title: 'Imobiliário & Financiamento',
+        links: [
+          { label: 'Simulador Financiamento SAC vs Price', href: '/br/simulador-financiamento-sac-price' },
+          { label: 'Calculadora ITBI e Custos de Cartório', href: '/br/calculadora-itbi-escritura' },
+          { label: 'Reajuste Aluguel por IPCA e IGP-M', href: '/br/reajuste-aluguel-ipca-igpm' },
+          { label: 'Amortização de Financiamento com FGTS', href: '/br/amortizacao-financiamento-fgts' },
+          { label: 'Calculadora Rendimento Locativo Líquido', href: '/br/calculadora-rendimento-aluguel-liquido' },
+        ],
+      },
+      {
+        title: 'Documentos, Cidadania & PJe',
+        links: [
+          { label: 'Validador e Gerador de CPF e CNPJ', href: '/br/validador-gerador-cpf-cnpj' },
+          { label: 'Criador Foto 3x4 Documentos & CNH', href: '/br/foto-3x4-documentos-passaporte' },
+          { label: 'Compressor PDF para PJe (< 3 MB)', href: '/br/compressor-pdf-pje-tribunais' },
+          { label: 'Calculadora Prazos Processuais Dias Úteis', href: '/br/calculadora-prazos-processuais-cpc' },
+          { label: 'Valor por Extenso para Recibos e Cheques', href: '/br/valor-por-extenso-recibo' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalFooter({ country }: { country: CountryCode }) {
@@ -319,6 +373,18 @@ export function InternationalFooter({ country }: { country: CountryCode }) {
             >
               <span>🇮🇹</span>
               <span>Italia (20)</span>
+            </Link>
+            <Link
+              href="/br"
+              className={cn(
+                'px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5',
+                country === 'br'
+                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
+              )}
+            >
+              <span>🇧🇷</span>
+              <span>Brasil (20)</span>
             </Link>
             <Link
               href="/"
