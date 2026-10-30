@@ -14,6 +14,55 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Core static routes - crawled daily
   const staticRoutes: MetadataRoute.Sitemap = [
+    // --- International Multi-Language High-RPM Hubs (ES, FR, DE) ---
+    {
+      url: `${baseUrl}/es`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/es/calculadora-sueldo-neto`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/es/validador-dni-nie-cif`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.90,
+    },
+    {
+      url: `${baseUrl}/fr`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/fr/calculateur-salaire-net-brut`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
+    {
+      url: `${baseUrl}/fr/convertisseur-chiffre-en-lettre`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.90,
+    },
+    {
+      url: `${baseUrl}/de`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/de/brutto-netto-rechner`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.98,
+    },
     {
       url: `${baseUrl}/`,
       lastModified: now,

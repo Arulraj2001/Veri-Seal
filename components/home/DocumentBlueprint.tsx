@@ -221,3 +221,4 @@ export function DocumentBlueprint({ category, showVerifiedState = false }: Docum
     </div>
   );
 }
+
