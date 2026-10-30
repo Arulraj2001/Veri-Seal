@@ -61,6 +61,7 @@ import {
   DOCUMENT_CATEGORIES,
   mapSlugToCategory,
 } from '@/lib/doc-categories';
+import { DocumentBlueprint } from '@/components/home/DocumentBlueprint';
 
 export type { DocumentCategory, DocumentCategoryConfig };
 export { DOCUMENT_CATEGORIES, mapSlugToCategory };
@@ -524,6 +525,8 @@ export function UploadZone({
           {/* STATE 1: IDLE */}
           {state === 'idle' && (
             <div className="space-y-4">
+              {/* Interactive Contextual Document Blueprint Preview */}
+              <DocumentBlueprint category={selectedCategory} />
               {/* Visual Before/After Transformation Badge */}
               <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-50/90 via-surface to-emerald-50/90 border border-surface-darker flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
                 {/* Before */}
