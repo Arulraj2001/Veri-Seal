@@ -90,13 +90,34 @@ export default function PrivacyPage() {
           <section className="bg-white p-6 sm:p-8 rounded-3xl border border-surface-darker">
             <h2 className="text-xl font-bold text-text-main mb-4">2. Zero-Retention File Processing</h2>
             <p>
-              When you upload a PDF to Kagazo for verification:
+              Kagazo utilizes two distinct privacy architectures depending on the specific tool you use:
             </p>
-            <ul className="list-disc pl-5 space-y-2 mt-3">
-              <li><strong>Temporary Volatile RAM:</strong> The file buffer is received into isolated container memory (RAM) via an encrypted TLS 1.3 tunnel.</li>
-              <li><strong>No Database Storage:</strong> Your document is never saved to physical hard disks, object storage (e.g. AWS S3), or cloud databases.</li>
-              <li><strong>Immediate Deletion:</strong> As soon as the cryptographic envelope is parsed and the verification response or stamped file is returned to your browser, all memory allocations are immediately freed and garbage collected.</li>
-            </ul>
+            <div className="mt-4 space-y-4">
+              <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60">
+                <h3 className="font-bold text-text-main text-sm mb-1 flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span>Client-Side In-Browser Tools (Photo Sheets, Image Compressors, Calculators)</span>
+                </h3>
+                <p className="text-xs text-text-main/75 leading-relaxed">
+                  Tools such as the Passport Photo Sheet Maker, 20KB/50KB Image Compressors, and Name/Date Stampers execute <strong>100% locally on your device</strong> using HTML5 Canvas and browser memory. Your images, photos, and signatures never leave your browser or computer.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60">
+                <h3 className="font-bold text-text-main text-sm mb-1 flex items-center gap-2">
+                  <Server className="w-4 h-4 text-primary" />
+                  <span>Sovereign PKI Verification &amp; Stamping Engine</span>
+                </h3>
+                <p className="text-xs text-text-main/75 leading-relaxed">
+                  When verifying digital signatures or generating specialized PDF outputs:
+                </p>
+                <ul className="list-disc pl-5 space-y-1.5 mt-2 text-xs text-text-main/75">
+                  <li><strong>Volatile Container RAM:</strong> The file buffer is transmitted via an encrypted TLS 1.3 tunnel directly into temporary server memory.</li>
+                  <li><strong>Zero Disk Storage:</strong> Files are never written to physical hard disks, persistent volumes, or cloud databases.</li>
+                  <li><strong>Immediate Memory Purge:</strong> As soon as the cryptographic signature is verified against CCA India roots, memory is freed immediately. No copies or logs are retained.</li>
+                </ul>
+              </div>
+            </div>
           </section>
 
           <section className="bg-white p-6 sm:p-8 rounded-3xl border border-surface-darker">

@@ -24,7 +24,7 @@ import { buildToolStructuredData } from '@/lib/seo-schema';
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
-  title: 'Photo & Signature Compressor to 20KB (போட்டோ 20KB குறைப்பான்) — TNPSC, SSC Free | Kagazo',
+  title: 'போட்டோ & கையொப்பம் 20KB குறைப்பான் (TNPSC, SSC) — Photo Compressor | Kagazo',
   description:
     'Compress photo and signature to strictly 10KB–20KB online free for TNPSC, SSC & govt exams. TNPSC மற்றும் அரசு தேர்வுகளுக்கான போட்டோ, கையொப்பம் 20KB அளவுக்கு உடனே மாற்றவும். 100% Free.',
   keywords: [

@@ -193,13 +193,6 @@ export default function AiVideoAutomationPage() {
           price: '0',
           priceCurrency: 'INR',
         },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.9',
-          ratingCount: '12840',
-          bestRating: '5',
-          worstRating: '1',
-        },
         description:
           'Automated AI video creation platform for YouTube Shorts, Instagram Reels, and TikTok with audio-synced scene cuts, kinetic captions, and bulk CSV workflow.',
       },

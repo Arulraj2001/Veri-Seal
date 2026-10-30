@@ -76,19 +76,19 @@ const VERIFY_FAQS = [
     value: 'item-3',
     question: 'Are my private documents uploaded to Kagazo servers or stored anywhere?',
     answer:
-      'Zero storage. All cryptographic verification, signature parsing, and LTV embedding execute 100% in transient browser RAM using WebAssembly. We never write your files to remote hard drives, never retain copies, and never log demographic details. Once you close the tab, all memory is instantly purged, ensuring full compliance with the Digital Personal Data Protection (DPDP) Act 2023.',
+      'Zero storage. Your PDF is processed strictly in volatile, ephemeral server RAM by our dedicated zero-retention cryptographic verification engine. We never write your files, personal identity data, or certificates to persistent disk storage, never retain copies, and never log demographic details. The transient memory is purged immediately upon verification response, ensuring full compliance with the Digital Personal Data Protection (DPDP) Act 2023.',
   },
   {
     value: 'item-4',
-    question: 'Is a Kagazo-verified PDF legally accepted at banks, colleges, and courts?',
+    question: 'Is a Kagazo-verified PDF legally accepted at banks, colleges, and government portals?',
     answer:
-      'Yes. Under Section 5 of the Information Technology Act 2000, digital signatures generated under the CCA India root hierarchy hold equal evidentiary value to hand-written signatures. Because Kagazo embeds official Long-Term Validation (LTV DSS), the green tick remains permanently valid offline across bank KYC counters, college admission desks, RTO offices, and court submissions.',
+      'Under Section 5 of the Information Technology Act 2000, digital signatures issued under the CCA India root hierarchy hold legal evidentiary standing. Kagazo verifies that the document content is untampered, the signing certificate is valid, and the issuing CA traces to CCA India. While Kagazo embeds Long-Term Validation (LTV) metadata where supported, final document acceptance remains subject to the specific administrative guidelines and portal rules of the receiving authority.',
   },
   {
     value: 'item-5',
-    question: 'Will the verified green tick remain visible if I email or print the PDF?',
+    question: 'Will the verified green tick show automatically in every PDF viewer?',
     answer:
-      'Yes. The verified signature contains embedded cryptographic timestamps and CRL revocation lists. When you email or share the verified PDF, anyone opening it in Adobe Reader or modern browsers will see the green checkmark and "Certified by CCA India" validation stamp.',
+      'In desktop readers like Adobe Acrobat, whether a signature displays a green checkmark or a yellow question mark depends on whether the viewer’s local trust store trusts the issuing Certifying Authority (e.g., TNeGA or NIC Sub-CA). Kagazo cryptographically verifies the document integrity and embeds LTV data where supported, and provides clear procedural guides to configure Adobe Acrobat trusted certificates.',
   },
 ];
 
@@ -136,8 +136,8 @@ export default function VerifyPage() {
           {
             '@type': 'HowToStep',
             position: 4,
-            name: 'Download Verified PDF with Green Tick',
-            text: 'Download your permanently validated PDF with embedded Long-Term Validation (LTV) DSS catalog.',
+            name: 'Download Cryptographically Verified PDF',
+            text: 'Download your validated PDF with embedded Long-Term Validation (LTV) DSS records.',
           },
         ],
       },
@@ -186,7 +186,7 @@ export default function VerifyPage() {
                 <span className="text-primary/30">•</span>
                 <span className="text-emerald-700 font-bold flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>100% In-Browser RAM</span>
+                  <span>Zero-Retention RAM Engine</span>
                 </span>
               </div>
 
@@ -200,7 +200,7 @@ export default function VerifyPage() {
 
               {/* Subheadline */}
               <p className="text-xs sm:text-sm text-text-main/75 leading-relaxed font-normal">
-                Drop your e-Aadhaar, TN e-Sevai, Patta, Caste, Income, or DigiLocker PDF. We resolve the official Controller of Certifying Authorities (CCA India / RCAI) public key chain in your local browser memory and embed permanent Long-Term Validation (LTV).
+                Drop your e-Aadhaar, TN e-Sevai, Patta, Caste, Income, or DigiLocker PDF. We audit the signature chain against the official Controller of Certifying Authorities (CCA India / RCAI) trust store in ephemeral RAM and embed Long-Term Validation (LTV) records.
               </p>
 
               {/* Quick Document Password & Format Guide */}
@@ -226,22 +226,22 @@ export default function VerifyPage() {
                 <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-white border border-surface-darker/80 shadow-2xs">
                   <Lock className="w-4 h-4 text-emerald-600 shrink-0" />
                   <div className="text-[11px] font-bold text-text-main leading-tight">
-                    <div>100% RAM Privacy</div>
-                    <div className="text-[10px] text-text-muted font-normal">0 Server Uploads</div>
+                    <div>Zero-Storage RAM</div>
+                    <div className="text-[10px] text-text-muted font-normal">Never Saved to Disk</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-white border border-surface-darker/80 shadow-2xs">
                   <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
                   <div className="text-[11px] font-bold text-text-main leading-tight">
                     <div>CCA India RCAI</div>
-                    <div className="text-[10px] text-text-muted font-normal">IT Act 2000 Valid</div>
+                    <div className="text-[10px] text-text-muted font-normal">IT Act 2000 Recognized</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-white border border-surface-darker/80 shadow-2xs">
                   <Zap className="w-4 h-4 text-amber-500 shrink-0" />
                   <div className="text-[11px] font-bold text-text-main leading-tight">
-                    <div>Instant Green Tick</div>
-                    <div className="text-[10px] text-text-muted font-normal">Permanent LTV DSS</div>
+                    <div>Cryptographic Audit</div>
+                    <div className="text-[10px] text-text-muted font-normal">Tamper &amp; LTV Check</div>
                   </div>
                 </div>
               </div>

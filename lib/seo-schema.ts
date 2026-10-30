@@ -55,8 +55,8 @@ export function buildToolStructuredData(options: ToolSchemaOptions) {
     browserRequirements = 'Requires JavaScript. Requires HTML5 Canvas & WebAssembly.',
     price = '0',
     priceCurrency = 'INR',
-    ratingValue = '4.9',
-    ratingCount = '12840',
+    ratingValue,
+    ratingCount,
     featureList = [
       '100% In-Browser Volatile RAM Execution',
       'Zero Cloud File Storage (Complete Privacy)',
@@ -88,13 +88,17 @@ export function buildToolStructuredData(options: ToolSchemaOptions) {
       price,
       priceCurrency,
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue,
-      ratingCount,
-      bestRating: '5',
-      worstRating: '1',
-    },
+    ...(ratingValue && ratingCount
+      ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue,
+            ratingCount,
+            bestRating: '5',
+            worstRating: '1',
+          },
+        }
+      : {}),
     publisher: {
       '@type': 'Organization',
       '@id': `${SITE_URL}/#organization`,
@@ -196,13 +200,6 @@ export function buildSeoPortalStructuredData(page: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'INR',
-        },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.95',
-          ratingCount: '8950',
-          bestRating: '5',
-          worstRating: '1',
         },
         publisher: {
           '@type': 'Organization',

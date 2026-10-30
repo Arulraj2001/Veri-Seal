@@ -167,7 +167,7 @@ async function callGemini(prompt: string, useSearch: boolean = true): Promise<st
   }
 
   // Model prioritization: gemini-2.5-flash (fastest & most stable) -> gemini-3.7-flash -> gemini-3.5-flash -> gemini-flash-latest -> gemini-3.8-flash
-  const models = ['gemini-2.5-flash', 'gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-flash-latest', 'gemini-3.8-flash'];
+  const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro'];
   let lastError: any = null;
 
   for (const model of models) {
@@ -175,7 +175,7 @@ async function callGemini(prompt: string, useSearch: boolean = true): Promise<st
     const payload: any = {
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       generationConfig: {
-        temperature: 0.35,
+        temperature: 0.2,
         maxOutputTokens: 8192,
       },
     };
@@ -366,6 +366,7 @@ STRICT QUALITY & GEO (GENERATIVE ENGINE OPTIMIZATION) RULES:
    - Include at least ONE markdown table with exact parameters:
      | Parameter | Official Portal Requirement | Kagazo Calibration Setting | Common Upload Error |
      Include exact numbers: Byte limits (KB), DPI (200/300), Dimensions (cm and pixels), Color space, Aspect ratio.
+   - TABLE INTEGRITY RULE: Table MUST have 3 to 6 rows and must properly close. NEVER output repetitive hyphens or colons (max 5 hyphens per separator). Do NOT leave table open.
 
 4. STEP-BY-STEP CALIBRATION WALKTHROUGH:
    - Provide concrete, numbered instructions for both Mobile and Desktop with zero Photoshop dependency.
@@ -377,7 +378,11 @@ STRICT QUALITY & GEO (GENERATIVE ENGINE OPTIMIZATION) RULES:
    - Contextually link to the official portals (${trend.officialCitationUrls.join(', ')}) to establish empirical E-E-A-T.
 
 7. AUTHOR & BRAND SIGN-OFF:
-   - Conclude with an expert note signed by "Arulraj, Founder & Lead Engineer at Kagazo".
+   - Conclude with an expert note signed strictly by:
+     ---
+     Arulraj,
+     Founder & Lead Engineer at Kagazo
+   - You MUST complete the entire article and author sign-off. Never terminate abruptly mid-sentence.
 
 8. LENGTH:
    - MUST be between 1,400 and 1,800 words. Comprehensive and highly detailed.
@@ -460,12 +465,73 @@ You MUST format your entire response using the two delimited sections below:
 }
 
 // ---------------------------------------------------------------------------
-// 8. Step 3: Quality Gate Verification
+// 7.5 Markdown Post-Processor & Completion Assurance
+// ---------------------------------------------------------------------------
+function sanitizeMarkdown(content: string): string {
+  // Replace runaway hyphens (e.g. more than 6 consecutive hyphens) with clean standard separator
+  let cleaned = content.replace(/-{6,}/g, '---');
+  // Clean up corrupted table separators like | :----------------- |
+  cleaned = cleaned.replace(/:\-{6,}/g, ':---');
+  cleaned = cleaned.replace(/\-{6,}:/g, '---:');
+  // Normalize multi-line dash bursts
+  cleaned = cleaned.replace(/(?:\r?\n-{3,}){2,}/g, '\n---');
+  return cleaned;
+}
+
+async function ensureArticleCompletion(article: GeneratedArticle): Promise<GeneratedArticle> {
+  article.content = sanitizeMarkdown(article.content);
+  const trimmed = article.content.trim();
+  const endsAbruptly =
+    trimmed.endsWith('|') ||
+    trimmed.endsWith('---') ||
+    trimmed.endsWith(':') ||
+    !article.content.includes('Arulraj') ||
+    article.content.split(/\s+/).length < 1100;
+
+  if (endsAbruptly) {
+    console.log('[Content] Article detected incomplete or truncated. Invoking auto-continuation pass...');
+    const continuationPrompt = `
+You are Arulraj, Founder & Lead Engineer at Kagazo (https://kagazo.in).
+We are writing the article: "${article.title}".
+The article was cut off near the end before concluding.
+
+LAST 1,000 CHARACTERS WRITTEN SO FAR:
+${article.content.slice(-1000)}
+
+TASK:
+Write the complete conclusion, complete the Troubleshooting Error Code Matrix table (if cut off), provide 4 proactive best-practice bullet points, and end strictly with:
+---
+Arulraj,
+Founder & Lead Engineer at Kagazo
+
+Return ONLY the continuation markdown. Do not repeat prior paragraphs or include metadata JSON.
+`;
+    try {
+      const continuation = await callGemini(continuationPrompt, false);
+      if (continuation && continuation.trim().length > 100) {
+        article.content = sanitizeMarkdown(article.content.trim() + '\n\n' + continuation.trim());
+        console.log('[Content] Auto-continuation appended successfully!');
+      }
+    } catch (e: any) {
+      console.warn('[Content] Auto-continuation failed:', e.message);
+    }
+  }
+
+  // Final word count re-calculation
+  const words = article.content.trim().split(/\s+/).length;
+  article.reading_time = Math.max(5, Math.ceil(words / 200));
+  return article;
+}
+
+// ---------------------------------------------------------------------------
+// 8. Step 3: Quality Gate Verification (Strict AdSense & E-E-A-T Standards)
 // ---------------------------------------------------------------------------
 function verifyQualityGate(article: GeneratedArticle, trend: TrendDiscoveryResult): void {
+  article.content = sanitizeMarkdown(article.content);
   const wordCount = article.content.trim().split(/\s+/).length;
-  if (wordCount < 600) {
-    throw new Error(`Quality Gate Failed: Word count is only ${wordCount} (minimum 600 required).`);
+
+  if (wordCount < 1000) {
+    throw new Error(`Quality Gate Failed: Word count is only ${wordCount} (minimum 1,000 words required for AdSense compliance).`);
   }
 
   if (!article.content.includes('|') || !article.content.includes('---')) {
@@ -474,6 +540,15 @@ function verifyQualityGate(article: GeneratedArticle, trend: TrendDiscoveryResul
 
   if (!article.content.includes('kagazo.in') && !article.content.includes('/tools/')) {
     throw new Error('Quality Gate Failed: Article does not link to any Kagazo tool.');
+  }
+
+  if (!article.content.includes('Arulraj') && !article.content.includes('Founder & Lead Engineer')) {
+    throw new Error('Quality Gate Failed: Missing authoritative author sign-off block.');
+  }
+
+  // Runaway character check
+  if (/-{10,}/.test(article.content)) {
+    throw new Error('Quality Gate Failed: Detected un-sanitized runaway hyphen repetitions.');
   }
 
   // Check for AI cliché phrases
@@ -486,11 +561,11 @@ function verifyQualityGate(article: GeneratedArticle, trend: TrendDiscoveryResul
   ];
   for (const c of cliches) {
     if (article.content.toLowerCase().includes(c)) {
-      console.warn(`[Quality Gate Warning] Detected AI cliché phrase: "${c}". Consider refining in future prompts.`);
+      console.warn(`[Quality Gate Warning] Detected AI cliché phrase: "${c}".`);
     }
   }
 
-  console.log('[Quality Gate] PASS! High density, tables present, tool linked.');
+  console.log(`[Quality Gate] PASS! High density (${wordCount} words), clean tables, verified author sign-off.`);
 }
 
 // ---------------------------------------------------------------------------
@@ -608,7 +683,10 @@ async function main() {
     const trend = await discoverLiveTrend(vertical, forcedTopic);
 
     // 3. Generate high-density article
-    const article = await generateDeepArticle(trend, vertical);
+    let article = await generateDeepArticle(trend, vertical);
+
+    // 3.5 Ensure article completion & sanitize markdown
+    article = await ensureArticleCompletion(article);
 
     // 4. Quality gate verification
     verifyQualityGate(article, trend);

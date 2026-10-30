@@ -64,9 +64,9 @@ Because UIDAI signs millions of documents dynamically, the embedded signing cert
   {
     id: 'seo-2',
     slug: 'verify-community-certificate-tamil-nadu',
-    title: 'Verify Tamil Nadu Community Certificate Signature | Kagazo',
-    h1: 'Verify Tamil Nadu Community Certificate Digital Signature',
-    meta_description: 'Verify digital signature on Tamil Nadu revenue department community certificate issued via e-Sevai / TNeGA portal.',
+    title: 'TN Community Certificate Signature Verification & Free Fix (2026) | Kagazo',
+    h1: 'Verify Tamil Nadu Community Certificate Digital Signature Online',
+    meta_description: 'Verify digital signature on Tamil Nadu e-Sevai Community & Nativity certificates. Fix yellow question mark into verified CCA India green status. Free & instant.',
     meta_keywords: 'tamil nadu community certificate verify, tnega digital signature, esevai certificate verification, tnea counseling signature verify, சான்றிதழ் கையொப்பம் சரிபார்க்க, community certificate signature not verified tamil, tn community certificate green tick, வருவாய் துறை சான்றிதழ் கையொப்பம்',
     intro_text: 'Authenticates digitally signed caste and community certificates issued by Revenue Authorities across all 38 districts of Tamil Nadu. Validate the Zonal Deputy Tahsildar signature token.',
     doc_type: 'Community Certificate',
@@ -77,7 +77,7 @@ Because UIDAI signs millions of documents dynamically, the embedded signing cert
 The issued certificate features an official government emblem, a verifiable Application Reference Number, and an electronic signature issued by the National Informatics Centre (NIC) Sub-CA for Tamil Nadu.
 
 Students applying for college counseling through TNEA, medical seats through TN Medical Selection, and government posts through TNPSC are required to produce verified digital certificates without unauthenticated signature warnings.`,
-    direct_answer: 'Tamil Nadu e-Sevai community certificates show an unverified signature warning because default PDF readers lack the NIC Tamil Nadu Sub-CA certificate. Kagazo verifies the Deputy Tahsildar\'s digital signature token against the Controller of Certifying Authorities (CCA) India hierarchy, permanently embedding an LTV green checkmark.',
+    direct_answer: 'Tamil Nadu e-Sevai community certificates show an unverified signature warning because default PDF readers lack the NIC Tamil Nadu Sub-CA certificate. Kagazo verifies the Deputy Tahsildar\'s digital signature token against the Controller of Certifying Authorities (CCA) India hierarchy, confirming cryptographic validity and embedding Long-Term Validation (LTV) records.',
     faq: [
       {
         q: 'How do I verify the digital signature on my TNeGA community certificate?',

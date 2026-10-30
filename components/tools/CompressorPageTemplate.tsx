@@ -50,13 +50,6 @@ export function CompressorPageTemplate({ config, breadcrumb }: CompressorPageTem
           price: '0',
           priceCurrency: 'INR',
         },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.9',
-          ratingCount: '3480',
-          bestRating: '5',
-          worstRating: '1',
-        },
         featureList: [
           `Strict < ${config.maxLimitKb} KB safe portal limit guarantee`,
           'Zero watermarks added to final PDF',

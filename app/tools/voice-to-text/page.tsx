@@ -183,13 +183,6 @@ export default function VoiceToTextPage() {
           price: '0',
           priceCurrency: 'INR',
         },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.9',
-          ratingCount: '1280',
-          bestRating: '5',
-          worstRating: '1',
-        },
         description:
           'Convert voice and audio to text with precise millisecond timestamps online for free. Transcribe MP3, WAV, M4A, and live microphone speech using in-browser OpenAI Whisper AI. Download SRT subtitles, VTT, and TXT with zero login and 100% privacy.',
         featureList: [

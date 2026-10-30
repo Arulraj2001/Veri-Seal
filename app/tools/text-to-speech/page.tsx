@@ -205,13 +205,6 @@ export default function TextToSpeechPage() {
           price: '0',
           priceCurrency: 'INR',
         },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.9',
-          ratingCount: '1420',
-          bestRating: '5',
-          worstRating: '1',
-        },
         description:
           'Best free text to voice converter online with unlimited speech generation. Convert text to realistic AI voices in English, Hindi, Tamil & Telugu. Download 24kHz studio MP3 audio with zero login, no character paywalls, and full commercial rights.',
         featureList: [

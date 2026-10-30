@@ -105,6 +105,19 @@ export default function AboutPage() {
               <span>CBSE &amp; State Board Digital Marksheets</span>
             </li>
           </ul>
+
+          <div className="pt-6 border-t border-surface-darker/60 space-y-3 text-xs text-text-main/70">
+            <h4 className="font-bold text-text-main text-sm">Site Ownership &amp; Non-Affiliation Notice</h4>
+            <p>
+              Kagazo is an independent educational technology and document utility initiative founded and maintained by engineers in Tamil Nadu, India. Kagazo is <strong>not affiliated with, endorsed by, or operated by</strong> UIDAI, TNeGA, TNPSC, SSC, UPSC, or any state or central government department. All government trademarks and portal names mentioned belong to their respective statutory authorities and are referenced strictly for educational, informational, and technical compatibility purposes under Fair Use.
+            </p>
+            <p>
+              For technical queries, corrections, or assistance, contact our team at{' '}
+              <a href="mailto:support@kagazo.in" className="text-primary font-semibold underline">
+                support@kagazo.in
+              </a>.
+            </p>
+          </div>
         </div>
 
         {/* CTA */}

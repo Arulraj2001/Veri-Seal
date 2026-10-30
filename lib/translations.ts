@@ -315,7 +315,7 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
 
     // Upload Zone
     upload_title: 'Drop your PDF here or click to upload',
-    upload_subtitle: 'Supports e-Aadhaar • Community Cert • Nativity • PAN • DigiLocker',
+    upload_subtitle: 'Universal PKI Verifier • Supports all Indian Govt, State Portal, Exam, Tax & DigiLocker PDFs',
     upload_password_label: 'Enter PDF Password',
     upload_password_hint: 'For e-Aadhaar: First 4 letters of name in CAPS + birth year. Example: RAMA1995',
     upload_btn: 'Verify Signature',
@@ -495,7 +495,7 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
 
     // Upload Zone
     upload_title: 'உங்கள் PDF ஐ இங்கே இழுத்து விடுங்கள் அல்லது பதிவேற்றவும்',
-    upload_subtitle: 'ஆதார் • சமூக சான்று • பூர்வீகம் • PAN • DigiLocker ஆதரிக்கப்படுகிறது',
+    upload_subtitle: 'அனைத்து இந்திய அரசு, மாநில போர்ட்டல், தேர்வு, வரி மற்றும் DigiLocker PDF-களுக்கும் பொருந்தும்',
     upload_password_label: 'PDF கடவுச்சொல் உள்ளிடவும்',
     upload_password_hint: 'ஆதாருக்கு: பெயரின் முதல் 4 எழுத்துகள் பெரிய எழுத்தில் + பிறந்த ஆண்டு. உதாரணம்: RAMA1995',
     upload_btn: 'கையொப்பம் சரிபார்க்கவும்',

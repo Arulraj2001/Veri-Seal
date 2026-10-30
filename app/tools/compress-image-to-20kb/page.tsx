@@ -18,11 +18,12 @@ import {
 } from 'lucide-react';
 import { ImageResizerEngine, type CustomPreset } from '@/components/tools/ImageResizerEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
 
 export const metadata: Metadata = {
-  title: 'Compress Image to 20KB Online Free | Exact 10-20KB Signature & Photo | Kagazo',
+  title: 'Photo Compressor to 20KB & Signature Resizer (10–20 KB) | Kagazo',
   description:
-    'Compress image and signature to strictly between 10 KB and 20 KB online free. Bi-directional auto-calibration prevents under-size rejection. Zero watermark, 100% in-browser privacy.',
+    'Compress photo and signature to strictly between 10 KB and 20 KB online free for TNPSC, SSC, UPSC & IBPS forms. Automatic calibration prevents under-size rejection. 100% in-browser privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/compress-image-to-20kb',
     languages: {

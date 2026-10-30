@@ -37,13 +37,13 @@ import PhotoSheetEngine from '@/components/tools/PhotoSheetEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Passport Photo Sheet Maker: 8 Photos on 4x6" & A4 Online Free (300 DPI Cut Marks) | Kagazo',
-  description: 'Print 8 passport photos on 4x6" or 32 photos on A4 paper online for free. Exact 35x45mm & 2x2" presets with cutting borders at 300 DPI for Epson & Canon printers.',
+  title: '8 Passport Photos on 4x6 Paper Maker (300 DPI Print Free) | Kagazo',
+  description: 'Print 8 passport photos on 4x6" paper or 32 on A4 online for free. Exact 35x45mm dimensions with cut borders at 300 DPI for Epson & Canon printers. 100% in-browser privacy.',
   alternates: {
     canonical: 'https://kagazo.in/tools/passport-photo-sheet-maker',
   },
   openGraph: {
-    title: 'Passport Photo Sheet Maker: 8 Photos on 4x6" & A4 Online Free | Kagazo',
+    title: '8 Passport Photos on 4x6 Paper Maker (300 DPI Print Free) | Kagazo',
     description: 'Print 8 passport photos on 4x6" or 32 photos on A4 paper online for free. Exact 35x45mm & 2x2" presets with cutting borders at 300 DPI.',
     url: 'https://kagazo.in/tools/passport-photo-sheet-maker',
     siteName: 'Kagazo',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Passport Photo Sheet Maker: 8 Photos on 4x6" & A4 Online Free | Kagazo',
+    title: '8 Passport Photos on 4x6 Paper Maker (300 DPI Print Free) | Kagazo',
     description: 'Print 8 passport photos on 4x6" or 32 photos on A4 paper online for free. Exact 35x45mm & 2x2" presets with cutting borders at 300 DPI.',
   },
 };

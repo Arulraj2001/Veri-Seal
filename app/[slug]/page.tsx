@@ -28,6 +28,7 @@ import {
 import { SITE_URL } from '@/lib/constants';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { UploadZone } from '@/components/home/UploadZone';
+import { mapSlugToCategory } from '@/lib/doc-categories';
 import { FaqAccordion } from '@/components/seo/FaqAccordion';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { buildSeoPortalStructuredData } from '@/lib/seo-schema';
@@ -150,7 +151,10 @@ export default async function SeoLandingPage({ params }: SeoLandingPageProps) {
 
           {/* Inline Verify Tool Component */}
           <div className="mb-16">
-            <UploadZone />
+            <UploadZone
+              defaultCategory={mapSlugToCategory(page.slug, page.doc_type)}
+              docTitle={page.doc_type}
+            />
           </div>
 
           {/* Section 1: Step-by-Step Tutorial */}

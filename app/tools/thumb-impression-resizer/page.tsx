@@ -19,9 +19,8 @@ import ThumbImpressionEngine from '@/components/tools/ThumbImpressionEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Left Thumb Impression (LTI) Resizer & Sharpener | IBPS, SBI, RRB | Kagazo',
-  description:
-    'Sharpen fingerprint friction ridges and format Left Thumb Impressions (LTI) strictly to 240×240 px (20–50 KB) in JPEG for IBPS PO, Clerk, SBI & Railway RRB. Ink smudge remover, 100% free RAM privacy.',
+  title: 'Left Thumb Impression (LTI) Resizer: 20–50 KB (IBPS, SBI, RRB) | Kagazo',
+  description: 'Resize and sharpen Left Thumb Impression (LTI) strictly to 240x240 px (20–50 KB) in JPEG for IBPS PO, Clerk, SBI & Railway RRB. Ink smudge remover, 100% in-browser privacy.',
   keywords: [
     'thumb impression resizer online free',
     'ibps left thumb impression size 240x240',

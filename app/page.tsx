@@ -16,7 +16,7 @@ import { getMergedSettings } from '@/lib/settings-store';
 export const metadata: Metadata = {
   title: "Kagazo — India's Sovereign Document, Exam Compliance & Citizen Tool Suite",
   description:
-    'Instantly fix government PDF digital signatures (green checkmark), resize exam photos for UPSC, TNPSC & SSC, create 5-in-1 A4 ID gang sheets, mask Aadhaar, and compress PDFs. 100% free, in-browser RAM privacy.',
+    'Verify government PDF digital signatures, resize exam photos for UPSC, TNPSC & SSC, create 5-in-1 A4 ID sheets, mask Aadhaar, and compress PDFs. Free, zero-retention privacy.',
   keywords: [
     'verify government pdf signature',
     'fix yellow question mark aadhaar pdf',
@@ -37,12 +37,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Kagazo — India's Sovereign Document, Exam Compliance & Citizen Tool Suite",
     description:
-      'Verify government PDF signatures with cryptographic green tick, format zero-rejection exam photos for UPSC/TNPSC, print 5-in-1 A4 sheets, and mask Aadhaar. 100% free & private.',
+      'Verify government PDF signatures, format compliant exam photos for UPSC & TNPSC, print 5-in-1 A4 sheets, and mask Aadhaar. Free, private, and zero-retention.',
     url: SITE_URL,
     siteName: 'Kagazo India',
     images: [
       {
-        url: `${SITE_URL}/api/og?title=${encodeURIComponent("Kagazo — India's Sovereign Document & Exam Suite")}&subtitle=${encodeURIComponent('Verify Signatures · 57 Free Tools · 100% Client-Side RAM')}&type=home`,
+        url: `${SITE_URL}/api/og?title=${encodeURIComponent("Kagazo — India's Sovereign Document & Exam Suite")}&subtitle=${encodeURIComponent('Verify Signatures · 57 Free Tools · Zero-Retention Privacy')}&type=home`,
         width: 1200,
         height: 630,
         alt: 'Kagazo India - Sovereign Document & Citizen Tool Suite',
@@ -109,13 +109,6 @@ export default async function HomePage() {
           price: '0',
           priceCurrency: 'INR',
         },
-        aggregateRating: {
-          '@type': 'AggregateRating',
-          ratingValue: '4.9',
-          reviewCount: '4820',
-          bestRating: '5',
-          worstRating: '1',
-        },
         description: hideDecisionEngines
           ? '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and PDF tools.'
           : '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and construction calculators.',
@@ -129,7 +122,7 @@ export default async function HomePage() {
             name: 'Why does my government PDF show a yellow question mark?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: "Indian government PDFs are digitally signed using certificates from NIC, eMudhra, or other CCA India licensed authorities. Most PDF viewers don't include India's Root Certifying Authority (RCAI) in their default trust store. Kagazo validates the signature against official CCA hierarchy and creates a permanent green tick.",
+              text: "Indian government PDFs are digitally signed using certificates from NIC, eMudhra, or other CCA India licensed authorities. Most PDF viewers don't include India's Root Certifying Authority (RCAI) in their default trust store. Kagazo audits the signature against the official CCA hierarchy and embeds LTV verification metadata.",
             },
           },
           {
@@ -137,15 +130,15 @@ export default async function HomePage() {
             name: 'Is my document safe? Do you store my PDF or photos?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Zero storage. All document verification, photo resizing, and PDF compression executes 100% in browser RAM. Files are never written to disk or saved on cloud servers, adhering to India DPDP Act 2023.',
+              text: 'Zero storage. Photo resizing and document editing run client-side in your device browser, while digital signature verification executes in volatile server RAM with zero disk retention. Files are never saved to persistent storage, fully complying with India’s DPDP Act 2023.',
             },
           },
           {
             '@type': 'Question',
-            name: 'How does Kagazo ensure zero rejection for UPSC, TNPSC & SSC exam portals?',
+            name: 'How does Kagazo ensure compliance with UPSC, TNPSC & SSC exam portal requirements?',
             acceptedAnswer: {
               '@type': 'Answer',
-              text: 'Recruitment boards enforce strict pixel dimensions (e.g. 125x165px for TNPSC) and tight file size ceilings (20KB-50KB for photos, under 200KB for certificates). Kagazo tools calibrate files precisely to official criteria on the first upload.',
+              text: 'Recruitment boards enforce strict pixel dimensions and tight file size ceilings (such as 20KB-50KB for photos and 10KB-20KB for signatures). Kagazo tools calibrate files precisely to official notification criteria before upload.',
             },
           },
           {

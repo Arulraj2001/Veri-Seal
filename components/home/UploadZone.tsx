@@ -55,18 +55,45 @@ import { trackEvent } from '@/lib/analytics';
 import { captureVerificationError, ErrorBoundary } from '@/components/ui/ErrorBoundary';
 import { processPdfWithWorker } from '@/lib/pdf-worker-client';
 import { useLanguage } from '@/components/providers/LanguageProvider';
+import {
+  DocumentCategory,
+  DocumentCategoryConfig,
+  DOCUMENT_CATEGORIES,
+  mapSlugToCategory,
+} from '@/lib/doc-categories';
+
+export type { DocumentCategory, DocumentCategoryConfig };
+export { DOCUMENT_CATEGORIES, mapSlugToCategory };
 
 export interface UploadZoneProps {
   className?: string;
   isHeroMode?: boolean;
+  defaultCategory?: DocumentCategory;
+  docTitle?: string;
 }
 
-export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = {}) {
+export function UploadZone({
+  className,
+  isHeroMode = false,
+  defaultCategory = 'all',
+  docTitle,
+}: UploadZoneProps = {}) {
   const { t, language } = useLanguage();
   const { data: session } = useSession();
   const user = session?.user;
   const userPlan = (user as { plan?: string })?.plan || 'guest';
   const isPaidUser = userPlan === 'pro' || userPlan === 'business';
+
+  const [selectedCategory, setSelectedCategory] = React.useState<DocumentCategory>(defaultCategory);
+
+  React.useEffect(() => {
+    if (defaultCategory) {
+      setSelectedCategory(defaultCategory);
+    }
+  }, [defaultCategory]);
+
+  const activeCategoryConfig =
+    DOCUMENT_CATEGORIES.find((c) => c.id === selectedCategory) || DOCUMENT_CATEGORIES[0];
 
   const [state, setState] = React.useState<VerificationState>('idle');
   const [file, setFile] = React.useState<File | null>(null);
@@ -108,7 +135,7 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
         }
       })
       .catch(() => {
-        setVerifiedCount(421847);
+        setVerifiedCount(SITE_CONFIG.verifiedCountDefault);
       });
   }, []);
 
@@ -116,7 +143,7 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
     const fname = file?.name?.toLowerCase() || '';
     const currentPath = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
 
-    if (fname.includes('aadhaar') || currentPath.includes('aadhaar')) {
+    if (fname.includes('aadhaar') || currentPath.includes('aadhaar') || selectedCategory === 'aadhaar') {
       return {
         placeholder: 'e.g. RAMA1995',
         hint: language === 'ta'
@@ -124,7 +151,7 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
           : 'First 4 letters of your name in CAPITAL LETTERS + your 4-digit Year of Birth (e.g. RAMA1995).'
       };
     }
-    if (fname.includes('pan') || currentPath.includes('pan')) {
+    if (fname.includes('pan') || currentPath.includes('pan') || selectedCategory === 'pan') {
       return {
         placeholder: 'e.g. 25081995',
         hint: language === 'ta'
@@ -132,7 +159,7 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
           : 'Your Date of Birth in DDMMYYYY format without spaces or slashes (e.g. 25081995 for 25-Aug-1995).'
       };
     }
-    if (fname.includes('form16') || fname.includes('form-16') || currentPath.includes('form-16')) {
+    if (fname.includes('form16') || fname.includes('form-16') || currentPath.includes('form-16') || selectedCategory === 'tax_form16') {
       return {
         placeholder: 'e.g. ABCDE1234F',
         hint: language === 'ta'
@@ -146,6 +173,12 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
         hint: language === 'ta'
           ? 'PAN எண் (சிறிய எழுத்துக்களில்) + பிறந்த தேதி DDMMYYYY.'
           : 'Your 10-digit PAN in lowercase + Date of Birth in DDMMYYYY format (e.g. abcde1234f25081995).'
+      };
+    }
+    if (selectedCategory !== 'all') {
+      return {
+        placeholder: activeCategoryConfig.passwordPlaceholder,
+        hint: activeCategoryConfig.passwordHint,
       };
     }
     return {
@@ -213,7 +246,7 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
     const currentPath = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
     const isPasswordName = ['aadhaar', 'pan', 'form16', 'form-16', 'itr', 'traces', 'salary', 'payslip', 'statement', 'tax'].some((k) => fname.includes(k));
     const isPasswordPage = ['verify-pan-card-pdf', 'verify-form-16', 'verify-itr-acknowledgement', 'verify-aadhaar-pdf'].some((k) => currentPath.includes(k));
-    setIsPasswordProtected(isPasswordName || isPasswordPage);
+    setIsPasswordProtected(isPasswordName || isPasswordPage || selectedCategory === 'aadhaar');
     setState('file-selected');
 
     // Telemetry: Track PDF uploaded
@@ -411,10 +444,10 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
             )}
           >
           {/* Top Header inside card */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-surface-darker/60">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-5 border-b border-surface-darker/60">
             <div>
               <h2 className="text-xl sm:text-2xl font-extrabold text-text-main flex items-center gap-2">
-                <span>{t.upload.cardHeading}</span>
+                <span>{docTitle ? `Verify ${docTitle}` : t.upload.cardHeading}</span>
                 <span className="inline-flex items-center gap-1 text-[11px] font-bold text-primary bg-primary-light px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                   {t.upload.liveEngine}
                 </span>
@@ -438,6 +471,46 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
             )}
           </div>
 
+          {/* Category Selector Filter Pills */}
+          <div className="mb-5">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-bold text-text-main/70 uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                <span>Select Document Type to Optimize Audit</span>
+              </span>
+              <span className="text-[11px] font-semibold text-primary bg-primary-light px-2.5 py-0.5 rounded-full">
+                {activeCategoryConfig.badge}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
+              {DOCUMENT_CATEGORIES.map((cat) => {
+                const isSelected = selectedCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory(cat.id);
+                      if (cat.id === 'aadhaar') {
+                        setIsPasswordProtected(true);
+                      }
+                    }}
+                    className={cn(
+                      'shrink-0 text-xs font-bold px-3 py-1.5 rounded-xl border transition-all duration-200 cursor-pointer flex items-center gap-1.5',
+                      isSelected
+                        ? 'bg-primary text-white border-primary shadow-xs'
+                        : 'bg-surface/70 text-text-main/70 border-surface-darker hover:bg-surface-darker/60 hover:text-text-main'
+                    )}
+                  >
+                    <span>{cat.shortLabel}</span>
+                    {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Hidden Real File Input */}
           <input
             ref={fileInputRef}
@@ -450,33 +523,75 @@ export function UploadZone({ className, isHeroMode = false }: UploadZoneProps = 
 
           {/* STATE 1: IDLE */}
           {state === 'idle' && (
-            <div
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-primary/50 hover:border-primary bg-surface/30 hover:bg-primary-light/30 rounded-2xl p-10 sm:p-16 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 group"
-            >
-              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-primary-light border border-primary/30 flex items-center justify-center text-primary mb-5 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
-                <FileUp className="w-8 h-8 sm:w-10 sm:h-10 animate-pulse-slow" />
+            <div className="space-y-4">
+              {/* Visual Before/After Transformation Badge */}
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-50/90 via-surface to-emerald-50/90 border border-surface-darker flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                {/* Before */}
+                <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                  <div className="w-7 h-7 rounded-lg bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-800 font-black shrink-0">
+                    ?
+                  </div>
+                  <div className="leading-tight text-left">
+                    <div className="font-bold text-amber-900">Before Kagazo</div>
+                    <div className="text-[11px] text-amber-700">Signature Not Verified / Untrusted</div>
+                  </div>
+                </div>
+
+                {/* Middle indicator */}
+                <div className="hidden sm:flex items-center gap-1.5 text-primary font-bold text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary-light border border-primary/20">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>RCAI Trust Chain Audit</span>
+                  <ArrowRight className="w-3 h-3" />
+                </div>
+
+                {/* After */}
+                <div className="flex items-center gap-2.5 w-full sm:w-auto justify-start sm:justify-end">
+                  <div className="w-7 h-7 rounded-lg bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800 shrink-0">
+                    <Check className="w-4 h-4 stroke-[3]" />
+                  </div>
+                  <div className="leading-tight text-left sm:text-right">
+                    <div className="font-bold text-emerald-900">Verified Result</div>
+                    <div className="text-[11px] text-emerald-700">Valid Signature (CCA India Root)</div>
+                  </div>
+                </div>
               </div>
 
-              <h3 className="text-lg sm:text-xl font-bold text-text-main mb-2">
-                {t.upload_title || t.upload.dropTitle}
-              </h3>
-
-              <p className="text-xs sm:text-sm text-text-main/60 max-w-md mb-6 leading-relaxed">
-                {t.upload_subtitle || t.upload.dropHint}
-              </p>
-
-              <Button
-                type="button"
-                variant="primary"
-                size="md"
-                className="pointer-events-none group-hover:bg-primary-hover shadow-md"
+              {/* Dropzone Box */}
+              <div
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                className="border-2 border-dashed border-primary/50 hover:border-primary bg-surface/30 hover:bg-primary-light/30 rounded-2xl p-8 sm:p-12 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300 group"
               >
-                {t.upload_btn || t.upload.selectPdfBtn}
-              </Button>
+                <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-primary-light border border-primary/30 flex items-center justify-center text-primary mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                  <FileUp className="w-8 h-8 sm:w-10 sm:h-10 animate-pulse-slow" />
+                </div>
+
+                <h3 className="text-lg sm:text-xl font-bold text-text-main mb-1.5">
+                  {selectedCategory === 'all'
+                    ? (t.upload_title || t.upload.dropTitle)
+                    : `Upload ${activeCategoryConfig.label} to Verify`}
+                </h3>
+
+                <p className="text-xs sm:text-sm text-text-main/60 max-w-md mb-2 leading-relaxed">
+                  {activeCategoryConfig.hint}
+                </p>
+
+                <div className="inline-flex items-center gap-1.5 text-[11px] font-medium text-text-muted mb-5 bg-white/90 px-3 py-1 rounded-full border border-surface-darker">
+                  <ShieldCheck className="w-3.5 h-3.5 text-primary" />
+                  <span>Authority: {activeCategoryConfig.sampleAuthority}</span>
+                </div>
+
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="md"
+                  className="pointer-events-none group-hover:bg-primary-hover shadow-md"
+                >
+                  {t.upload_btn || t.upload.selectPdfBtn}
+                </Button>
+              </div>
             </div>
           )}
 

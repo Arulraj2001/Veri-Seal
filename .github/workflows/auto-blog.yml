@@ -3,7 +3,8 @@ name: Kagazo 48-Hour Autonomous Blog Engine
 on:
   schedule:
     # Runs at 21:00 UTC (02:30 AM IST) every 2 days
-    - cron: '0 21 */2 * *'
+    # Runs at 03:17 UTC (08:47 AM IST) every 2 days (off-peak, off-minute for guaranteed runner allocation)
+    - cron: '17 3 */2 * *'
   workflow_dispatch:
     inputs:
       category:

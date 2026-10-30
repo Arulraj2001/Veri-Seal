@@ -135,13 +135,6 @@ const webApplicationSchema = {
     price: '0',
     priceCurrency: 'INR',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    ratingCount: '4820',
-    bestRating: '5',
-    worstRating: '1',
-  },
   featureList: [
     'UIDAI e-Aadhaar verification',
     'Tamil Nadu TNeGA e-Sevai certificate validation',

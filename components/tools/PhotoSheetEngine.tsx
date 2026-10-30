@@ -1620,6 +1620,45 @@ export default function PhotoSheetEngine() {
         </div>
       </div>
     </div>
+
+    {/* Mobile Floating Action Bar */}
+    {photos.length > 0 && renderedImageUrl && (
+      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-300 dark:border-slate-700 p-2.5 rounded-2xl shadow-2xl flex items-center justify-between gap-2 animate-in fade-in slide-in-from-bottom-3 duration-200">
+        <div className="flex items-center gap-2 min-w-0">
+          <img
+            src={renderedImageUrl}
+            alt="Mini sheet preview"
+            className="w-10 h-10 object-cover rounded-lg border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs"
+          />
+          <div className="truncate">
+            <span className="text-[11px] font-bold text-slate-800 dark:text-slate-100 block truncate">
+              {activePaper.label} ({totalSlots} photos)
+            </span>
+            <span className="text-[10px] text-emerald-600 font-semibold block">Ready to print (300 DPI)</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={() => handleDownloadSheet('jpeg')}
+            disabled={!renderedImageUrl || photos.length === 0}
+            className="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1 cursor-pointer disabled:opacity-40"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Download</span>
+          </button>
+          <button
+            type="button"
+            onClick={handlePrint}
+            disabled={!renderedImageUrl || photos.length === 0}
+            className="px-2.5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1 cursor-pointer disabled:opacity-40"
+            title="Print Sheet"
+          >
+            <Printer className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+    )}
   </div>
 </div>
   );
