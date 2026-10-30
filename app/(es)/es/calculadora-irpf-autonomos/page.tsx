@@ -3,20 +3,22 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SpainAutonomoEngine } from '@/components/international/SpainAutonomoEngine';
 import { HREFLANG_REGISTRY } from '@/lib/international/registry';
-import { ShieldCheck, HelpCircle, ArrowRight, ExternalLink } from 'lucide-react';
+import { ShieldCheck, HelpCircle, ArrowRight, ExternalLink, Calculator, BookOpen, AlertCircle, FileText, CheckCircle2 } from 'lucide-react';
 import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Calculadora IRPF Autónomos 2026 | Cuota y Neto Real España',
+  title: 'Calculadora IRPF Autónomos 2026 : Cuota RETA y Sueldo Neto Real | Kagazo',
   description:
-    'Calcula tus ingresos netos reales como autónomo en España en 2026. Simulación de cuota de cotización por tramos de ingresos reales, IRPF y Modelo 130.',
+    'Calcula tus ingresos netos reales como autónomo en España en 2026. Simulación de cuota RETA por tramos de ingresos reales, Modelo 130 (20%), gastos deducibles y sueldo limpio.',
   keywords: [
-    'calculadora irpf autonomos',
-    'cuota autonomos 2026 tramos',
-    'calcular sueldo autonomo neto',
+    'calculadora irpf autonomos 2026',
+    'cuota autonomos 2026 tramos reales',
+    'calcular sueldo autonomo neto mensual',
     'modelo 130 irpf trimestral autonomos',
-    'tarifa plana autonomos 2026',
-    'gastos deducibles autonomo calcular',
+    'gastos deducibles autonomo hacienda',
+    'tarifa plana autonomos 2026 86 euros',
+    'regularizacion cuota seguridad social autonomos',
+    'retencion 7 o 15 por ciento facturas autonomo',
   ],
   alternates: {
     canonical: `${SITE_URL}/es/calculadora-irpf-autonomos`,
@@ -27,9 +29,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Calculadora IRPF Autónomos 2026 | Cuota y Neto Real España',
+    title: 'Calculadora IRPF Autónomos 2026 : Cuota RETA y Sueldo Neto Real',
     description:
-      'Calcula tus ingresos limpios como autónomo en España: cuotas de la Seguridad Social según tus rendimientos reales y pagos a cuenta del IRPF.',
+      'Calcula exactamente cuánto dinero limpio te queda en el banco cada mes como autónomo tras restar gastos, cuota de la Seguridad Social e IRPF.',
     url: `${SITE_URL}/es/calculadora-irpf-autonomos`,
     locale: 'es_ES',
     siteName: 'Kagazo España',
@@ -45,41 +47,50 @@ export default function SpainAutonomoPage() {
         '@type': 'SoftwareApplication',
         name: 'Calculadora IRPF y Cuotas Autónomos España 2026',
         applicationCategory: 'FinanceApplication',
-        operatingSystem: 'Any (Web Browser)',
+        operatingSystem: 'All',
         offers: {
           '@type': 'Offer',
           price: '0',
           priceCurrency: 'EUR',
         },
+        provider: {
+          '@type': 'Organization',
+          name: 'Kagazo España',
+          url: SITE_URL,
+        },
         description:
-          'Simulador de cuota de autónomos por rendimientos reales y liquidación de IRPF trimestral (Modelo 130) según la reforma del Real Decreto-ley 13/2022.',
+          'Simulador oficial de cuota de autónomos por rendimientos reales y liquidación de IRPF trimestral (Modelo 130) según el Real Decreto-ley 13/2022.',
       },
       {
-        '@type': 'FAQPage',
-        mainEntity: [
+        '@type': 'FinancialProduct',
+        name: 'Cálculo de Rendimiento Neto y Liquidación Fiscal de Autónomos',
+        category: 'SelfEmployedTaxCalculation',
+        provider: {
+          '@type': 'Organization',
+          name: 'Kagazo España',
+          url: SITE_URL,
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
           {
-            '@type': 'Question',
-            name: '¿Cómo se calcula el sueldo neto real de un autónomo en España?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Para obtener tu ingreso limpio como autónomo, debes restar de tu facturación total sin IVA: los gastos deducibles de la actividad, la deducción del 7% por gastos de difícil justificación, la cuota mensual a la Seguridad Social según tus rendimientos reales y la retención o pago fraccionado del IRPF (Modelo 130, 20%).',
-            },
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Inicio',
+            item: `${SITE_URL}/es`,
           },
           {
-            '@type': 'Question',
-            name: '¿Cuánto paga de cuota un autónomo con el nuevo sistema de tramos en 2026?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'El sistema de cotización por ingresos reales comprende 15 tramos. Quienes tengan rendimientos netos inferiores a 670 € al mes pagan la cuota mínima de 225 €/mes, mientras que rendimientos superiores a 6.000 €/mes alcanzan una cuota máxima de 530 €/mes. Los nuevos autónomos pueden acogerse a la Tarifa Plana reducida de 86 €/mes durante los primeros 12 meses.',
-            },
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Laboral y Fiscal',
+            item: `${SITE_URL}/es#laboral-fiscal`,
           },
           {
-            '@type': 'Question',
-            name: '¿Qué son los gastos de difícil justificación?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'En el régimen de estimación directa simplificada, la Agencia Tributaria permite aplicar una deducción automática adicional del 7% sobre el rendimiento neto previo, con un límite máximo anual fijado en 2.000 euros.',
-            },
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Calculadora IRPF Autónomos',
+            item: `${SITE_URL}/es/calculadora-irpf-autonomos`,
           },
         ],
       },
@@ -100,195 +111,357 @@ export default function SpainAutonomoPage() {
             Inicio
           </Link>
           <span>/</span>
+          <Link href="/es#laboral-fiscal" className="hover:text-slate-900 transition-colors">
+            Laboral y Fiscal
+          </Link>
+          <span>/</span>
           <span className="text-slate-900 font-bold">Calculadora IRPF Autónomos</span>
         </nav>
 
         {/* Header Hero Area */}
         <div className="max-w-3xl space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-xs font-bold text-orange-700">
-            <span>Régimen de Estimación Directa Simplificada 2026</span>
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Sistema de Cotización por Ingresos Reales 2026 • RETA y Modelo 130</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight leading-tight">
-            Calculadora IRPF y Cuota Autónomos 2026
+          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Calculadora IRPF Autónomos 2026 : Cuota RETA y Salario Neto Real
           </h1>
-          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-            Descubre con precisión cuánto dinero te queda limpio en el banco tras deducir tus gastos,
-            la cuota mensual de la Seguridad Social por rendimientos reales y tus pagos a cuenta del IRPF.
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+            Calcula con precisión tus rendimientos netos reales mensuales y anuales en España. Conoce tu tramo oficial de cotización a la Seguridad Social (RETA), la deducción por gastos de difícil justificación (7%) y la retención o pago a cuenta del IRPF (Modelo 130).
           </p>
         </div>
 
-        {/* Google AI Overview / Featured Snippet 45-Word Answer Capsule */}
-        <div className="bg-orange-50/60 border-l-4 border-orange-600 p-4 sm:p-5 rounded-r-2xl text-slate-900 space-y-1.5">
-          <div className="text-xs font-bold uppercase tracking-wider text-orange-700">
-            Resumen Operativo para Autónomos (2026)
+        {/* Direct Answer Capsule for AI Overviews & Featured Snippets */}
+        <div className="bg-orange-50/70 border-l-4 border-orange-600 p-5 rounded-r-2xl text-slate-900 space-y-2">
+          <div className="text-xs font-bold uppercase tracking-wider text-orange-800 flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-orange-600" />
+            <span>Respuesta Rápida : ¿Cuánto le queda limpio a un autónomo en España?</span>
           </div>
-          <p className="text-sm sm:text-base font-medium leading-relaxed">
-            El ingreso neto mensual de un autónomo resulta de descontar de las ventas sin IVA los gastos afectos,
-            la cuota progresiva de cotización (entre 225 € y 530 €/mes según rendimientos) y la retención del 20%
-            del rendimiento neto en el Modelo 130 de Hacienda.
+          <p className="text-sm sm:text-base font-medium leading-relaxed text-slate-800">
+            Para una facturación media de <strong>3.000 € al mes sin IVA</strong> con <strong>500 € de gastos deducibles</strong>, el autónomo abona una cuota de Seguridad Social de aproximadamente <strong>370 €/mes</strong> (tramo de rendimiento neto entre 2.030 € y 2.330 €) y anticipa un <strong>20% de IRPF trimestral (Modelo 130)</strong> de unos 390 €/mes. El sueldo neto disponible en cuenta es de <strong>1.740 € limpios al mes</strong>.
           </p>
         </div>
 
         {/* Interactive Engine */}
         <SpainAutonomoEngine />
 
-        {/* Regulatory Breakdown Table */}
-        <div className="space-y-6 pt-6 border-t border-slate-200">
+        {/* Reference Worked Calculation Matrix */}
+        <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-6">
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-              Tabla de Tramos de Cuota de Autónomos 2026 (Seguridad Social)
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Tabla de Rendimiento Neto Real y Cuotas RETA 2026
             </h2>
-            <p className="text-sm text-slate-600">
-              Conforme al Real Decreto-ley 13/2022, la cotización se ajusta a tus rendimientos netos reales mensuales computables.
+            <p className="text-xs sm:text-sm text-slate-500">
+              Proyección de beneficio limpio según volumen de facturación mensual media (asumiendo un 15% de gastos operativos deducibles).
             </p>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-2xs">
-            <table className="w-full text-left text-xs sm:text-sm">
-              <thead className="bg-slate-50 text-slate-700 border-b border-slate-200 font-bold uppercase tracking-wider">
-                <tr>
-                  <th className="py-3 px-4">Tramo de Rendimiento Neto Mensual</th>
-                  <th className="py-3 px-4 font-mono">Base Mínima</th>
-                  <th className="py-3 px-4 font-mono">Cuota Mensual 2026</th>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr className="border-b border-slate-200 text-slate-700 bg-slate-50/80">
+                  <th className="py-3.5 px-4 font-bold">Facturación Mensual (sin IVA)</th>
+                  <th className="py-3.5 px-4 font-bold">Gastos Estimados (15%)</th>
+                  <th className="py-3.5 px-4 font-bold">Cuota RETA 2026</th>
+                  <th className="py-3.5 px-4 font-bold">IRPF Modelo 130 (20%)</th>
+                  <th className="py-3.5 px-4 font-bold text-orange-700">Neto Mensual Limpio</th>
+                  <th className="py-3.5 px-4 font-bold text-slate-900">Neto Anual Limpio</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 font-mono text-slate-800">
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">Menor o igual a 670 €/mes</td>
-                  <td className="py-3 px-4">753,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">225 € / mes</td>
+                <tr className="hover:bg-slate-50/50">
+                  <td className="py-3 px-4 font-bold font-sans">1.200 € / mes</td>
+                  <td className="py-3 px-4 text-slate-600">180 €</td>
+                  <td className="py-3 px-4 text-slate-600">260 € (Tramo 3)</td>
+                  <td className="py-3 px-4 text-slate-600">152 €</td>
+                  <td className="py-3 px-4 font-bold text-slate-900">608 €</td>
+                  <td className="py-3 px-4 font-bold text-orange-600">7.296 €</td>
                 </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">De 670 € a 900 €/mes</td>
-                  <td className="py-3 px-4">803,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">240 € / mes</td>
+                <tr className="hover:bg-slate-50/50">
+                  <td className="py-3 px-4 font-bold font-sans">2.000 € / mes</td>
+                  <td className="py-3 px-4 text-slate-600">300 €</td>
+                  <td className="py-3 px-4 text-slate-600">294 € (Tramo 5)</td>
+                  <td className="py-3 px-4 text-slate-600">281 €</td>
+                  <td className="py-3 px-4 font-bold text-slate-900">1.125 €</td>
+                  <td className="py-3 px-4 font-bold text-orange-600">13.500 €</td>
                 </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">De 900 € a 1.166 €/mes</td>
-                  <td className="py-3 px-4">870,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">260 € / mes</td>
+                <tr className="hover:bg-slate-50/50 bg-orange-50/30">
+                  <td className="py-3 px-4 font-bold font-sans">3.000 € / mes (Típico)</td>
+                  <td className="py-3 px-4 text-slate-600">450 €</td>
+                  <td className="py-3 px-4 text-slate-600">370 € (Tramo 8)</td>
+                  <td className="py-3 px-4 text-slate-600">436 €</td>
+                  <td className="py-3 px-4 font-bold text-slate-900">1.744 €</td>
+                  <td className="py-3 px-4 font-bold text-orange-600">20.928 €</td>
                 </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">De 1.166 € a 1.300 €/mes</td>
-                  <td className="py-3 px-4">973,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">291 € / mes</td>
+                <tr className="hover:bg-slate-50/50">
+                  <td className="py-3 px-4 font-bold font-sans">4.500 € / mes</td>
+                  <td className="py-3 px-4 text-slate-600">675 €</td>
+                  <td className="py-3 px-4 text-slate-600">420 € (Tramo 11)</td>
+                  <td className="py-3 px-4 text-slate-600">681 €</td>
+                  <td className="py-3 px-4 font-bold text-slate-900">2.724 €</td>
+                  <td className="py-3 px-4 font-bold text-orange-600">32.688 €</td>
                 </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">De 1.300 € a 1.700 €/mes (Base Media)</td>
-                  <td className="py-3 px-4">983,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">294 € / mes</td>
+                <tr className="hover:bg-slate-50/50">
+                  <td className="py-3 px-4 font-bold font-sans">6.000 € / mes</td>
+                  <td className="py-3 px-4 text-slate-600">900 €</td>
+                  <td className="py-3 px-4 text-slate-600">490 € (Tramo 13)</td>
+                  <td className="py-3 px-4 text-slate-600">922 €</td>
+                  <td className="py-3 px-4 font-bold text-slate-900">3.688 €</td>
+                  <td className="py-3 px-4 font-bold text-orange-600">44.256 €</td>
                 </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">De 1.700 € a 1.850 €/mes</td>
-                  <td className="py-3 px-4">1.053,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">315 € / mes</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">De 1.850 € a 2.030 €/mes</td>
-                  <td className="py-3 px-4">1.087,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">325 € / mes</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">De 2.030 € a 2.330 €/mes</td>
-                  <td className="py-3 px-4">1.237,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">370 € / mes</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">De 2.330 € a 2.760 €/mes</td>
-                  <td className="py-3 px-4">1.338,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">400 € / mes</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-3 px-4 font-sans font-medium text-slate-900">Superior a 6.000 €/mes (Tope Máximo)</td>
-                  <td className="py-3 px-4">1.773,00 €</td>
-                  <td className="py-3 px-4 font-bold text-orange-600">530 € / mes</td>
+                <tr className="hover:bg-slate-50/50">
+                  <td className="py-3 px-4 font-bold font-sans">8.000 € / mes (Tope Máx)</td>
+                  <td className="py-3 px-4 text-slate-600">1.200 €</td>
+                  <td className="py-3 px-4 text-slate-600">530 € (Tramo 15)</td>
+                  <td className="py-3 px-4 text-slate-600">1.254 €</td>
+                  <td className="py-3 px-4 font-bold text-slate-900">5.016 €</td>
+                  <td className="py-3 px-4 font-bold text-orange-600">60.192 €</td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
+          <p className="text-[11px] text-slate-400 italic">
+            * Nota: Los cálculos aplican la deducción general del 7% por gastos de difícil justificación (tope 2.000 € anuales) prevista en el artículo 30.2 del IRPF para estimación directa simplificada.
+          </p>
+        </section>
 
-        {/* Editorial Guidance & Statutory Explanations */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-          <div className="space-y-3 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-2xs">
-            <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
-              <ShieldCheck className="w-5 h-5 text-emerald-600" />
-              <span>¿Qué gastos puedes deducirte en el IRPF?</span>
-            </div>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              Para que la Agencia Tributaria admita un gasto deducible en estimación directa, debe cumplir tres premisas:
-              estar directamente vinculado a tu actividad profesional, disponer de factura completa a tu nombre con NIF
-              y estar registrado en tu libro de gastos e ingresos.
-            </p>
-            <ul className="text-xs text-slate-500 space-y-1 list-disc list-inside">
-              <li>Cuotas a la Seguridad Social (RETA).</li>
-              <li>Consumos y suministros si trabajas desde casa (30% sobre el porcentaje de m² afectos).</li>
-              <li>Servicios profesionales (gestoría, abogados, asesoría contable).</li>
-              <li>Software, hosting, telefonía e internet empresarial.</li>
-            </ul>
-          </div>
-
-          <div className="space-y-3 bg-white p-6 rounded-2xl border border-slate-200/90 shadow-2xs">
-            <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
-              <HelpCircle className="w-5 h-5 text-orange-600" />
-              <span>Diferencia entre Modelo 130 y la Declaración de la Renta</span>
-            </div>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              El Modelo 130 es un pago a cuenta trimestral que anticipas a Hacienda (20% del beneficio acumulado del año).
-              Al presentar la Declaración Anual de la Renta (Modelo 100), se calcula tu IRPF definitivo según los tramos
-              estatales y autonómicos: si pagaste de más te devuelven la diferencia, y si pagaste de menos abonarás el saldo.
-            </p>
-          </div>
-        </div>
-
-        {/* FAQ Accordion Section */}
-        <div className="space-y-6 pt-6 border-t border-slate-200">
-          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Preguntas Frecuentes de Autónomos en España
-          </h2>
+        {/* Deep Statutory & Editorial Content */}
+        <section className="space-y-8 text-slate-700 leading-relaxed text-sm sm:text-base">
           <div className="space-y-4">
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2">
-              <h3 className="font-bold text-slate-900 text-base">
-                ¿Puedo aplicar la Tarifa Plana de 86 €/mes en 2026?
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Sí, si te das de alta por primera vez en el Régimen Especial de Trabajadores Autónomos (RETA) o no has estado de alta
-                en los dos años anteriores (tres en caso de haber disfrutado de bonificaciones previas), tienes derecho a la cuota reducida
-                durante los primeros doce meses de actividad.
-              </p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Cómo funciona el sistema de cotización por ingresos reales en 2026
+            </h2>
+            <p>
+              Desde la entrada en vigor definitiva de la reforma del Real Decreto-ley 13/2022, los trabajadores autónomos en España ya no eligen libremente su base de cotización entre un mínimo y un máximo arbitrario. En 2026, la cuota a la Seguridad Social está directamente vinculada al <strong>rendimiento neto computable</strong> obtenido durante el año natural.
+            </p>
+            <p>
+              El cálculo oficial del rendimiento neto mensual para encuadrarse en la tabla de 15 tramos de la Seguridad Social sigue una fórmula matemática rigurosa supervisada por la Agencia Estatal de Administración Tributaria (AEAT) y la Tesorería General de la Seguridad Social (TGSS):
+            </p>
+
+            <div className="p-4 rounded-2xl bg-slate-100 border border-slate-200 font-mono text-xs sm:text-sm text-slate-800 space-y-1">
+              <p className="font-bold text-slate-900 font-sans">Fórmula Legal del Rendimiento Neto Mensual RETA:</p>
+              <p>Rendimiento Previo = Ingresos Íntegros Computables - Gastos Deducibles de Explotación</p>
+              <p>Rendimiento Neto Fiscal = Rendimiento Previo - 7% (Gastos Difícil Justificación, máx. 2.000 €/año)</p>
+              <p>Rendimiento Computable Mensual = (Rendimiento Neto Anual + Cuotas Seguridad Social Pagadas en el año) / 12</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                <h3>Gastos Fiscalmente Deducibles sin Riesgo</h3>
+              </div>
+              <ul className="text-xs sm:text-sm text-slate-600 space-y-2 list-disc list-inside">
+                <li><strong>Suministros del hogar:</strong> Si trabajas desde casa, puedes deducirte el 30% del porcentaje de metros cuadrados de la vivienda afectos a la actividad (art. 30.2.5.ª LIRPF).</li>
+                <li><strong>Dietas y manutención:</strong> Hasta 26,67 € diarios en España (48,08 € en el extranjero) sin pernocta, abonados mediante tarjeta o medio electrónico en establecimientos de hostelería.</li>
+                <li><strong>Seguro médico privado:</strong> Cuotas satisfechas para el propio autónomo, su cónyuge e hijos menores de 25 años, con un límite de 500 € por persona (1.500 € en personas con discapacidad).</li>
+                <li><strong>Servicios profesionales y software:</strong> Asesoría contable, herramientas digitales, hosting, telefonía móvil con factura detallada y cuotas colegiales obligatorias.</li>
+              </ul>
             </div>
 
-            <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs space-y-2">
-              <h3 className="font-bold text-slate-900 text-base">
-                ¿Cuándo debo retener el 7% o el 15% de IRPF en mis facturas?
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Si emites facturas a empresas o a otros autónomos en España, debes retener IRPF. Durante el año de alta y los dos
-                siguientes puedes aplicar el tipo reducido del 7% comunicándolo por escrito a tu cliente. A partir del cuarto año,
-                la retención general obligatoria es del 15%. A particulares nunca se les retiene IRPF.
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 space-y-3 shadow-2xs">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-base">
+                <AlertCircle className="w-5 h-5 text-orange-600 shrink-0" />
+                <h3>La Regularización Anual de la Seguridad Social</h3>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Al concluir cada ejercicio fiscal y tras la presentación de la Declaración de la Renta, la TGSS cruza datos automáticamente con la AEAT. Si tus rendimientos reales fueron inferiores a los previstos en tus pagos mensuales, la Seguridad Social te devolverá el exceso de oficio antes del 31 de mayo. Si tus ingresos fueron superiores, recibirás una liquidación complementaria para abonar la diferencia sin recargo en un plazo de dos meses.
+              </p>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-semibold">
+                Puedes modificar tu base provisional de cotización hasta 6 veces al año a través del portal Import@ss para ajustar tu cuota a la evolución real de tu negocio.
               </p>
             </div>
           </div>
-        </div>
 
-        {/* Cross-tool Navigation Pills */}
-        <div className="p-6 rounded-3xl bg-slate-900 text-white flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-lg font-bold">¿Tienes también trabajadores o nómina propia?</h3>
-            <p className="text-xs text-slate-400">
-              Calcula el sueldo neto y retenciones de IRPF exactas para empleados según su comunidad autónoma.
+          <div className="space-y-4 pt-4">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Modelo 130 vs Retención en Factura: ¿Cuándo estás obligado a presentarlo?
+            </h2>
+            <p>
+              El <strong>Modelo 130</strong> es la autoliquidación trimestral del pago fraccionado del IRPF. En él se abona el <strong>20% del rendimiento neto acumulado</strong> desde el 1 de enero hasta el final del trimestre en cuestión, deduciendo los pagos fraccionados anteriores y las retenciones que te hayan practicado los clientes.
+            </p>
+            <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200 text-amber-900 text-xs sm:text-sm leading-relaxed space-y-2">
+              <p className="font-bold flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-amber-700 shrink-0" />
+                Regla del 70% de Retención en Factura:
+              </p>
+              <p>
+                Si más del <strong>70% de tus ingresos procedentes de actividades profesionales</strong> durante el año anterior estuvieron sujetos a retención en factura por parte de empresas o autónomos españoles (retención general del 15% o reducida del 7%), <strong>no tienes obligación de presentar el Modelo 130</strong>. En ese caso, todo tu IRPF se ajustará directamente en la campaña de la Renta anual.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Comprehensive FAQ Section */}
+        <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Preguntas Frecuentes sobre el IRPF y Cuotas de Autónomos en España
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500">
+              Respuestas oficiales y fundamentadas en la Ley del IRPF (Ley 35/2006) y la normativa de la Seguridad Social 2026.
             </p>
           </div>
-          <Link
-            href="/es/calculadora-sueldo-neto"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 font-bold text-xs text-white transition-all shadow-md shrink-0"
-          >
-            <span>Calculadora de Sueldo Neto</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+
+          <div className="space-y-4">
+            <div className="border border-slate-200/80 rounded-2xl p-4 sm:p-5 hover:border-slate-300 transition-colors">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                ¿Sigue existiendo la Tarifa Plana para nuevos autónomos en 2026?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                Sí. Los autónomos que causen alta inicial o no hayan estado de alta en los dos años inmediatamente anteriores (tres años si aplicaron bonificaciones antes) tienen derecho a una cuota reducida de <strong>86 € al mes</strong> durante los primeros 12 meses naturales de actividad. Puede prorrogarse otros 12 meses si los rendimientos netos anuales no superan el Salario Mínimo Interprofesional (SMI).
+              </p>
+            </div>
+
+            <div className="border border-slate-200/80 rounded-2xl p-4 sm:p-5 hover:border-slate-300 transition-colors">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                ¿Cuándo debo aplicar el 7% o el 15% de retención en mis facturas?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                Solo deben incluir retención los autónomos dados de alta en actividades profesionales (Sección 2 del IAE) cuando facturan a empresas o a otros autónomos domiciliados en España. El tipo general es del <strong>15%</strong>. No obstante, los nuevos autónomos pueden aplicar el <strong>tipo reducido del 7%</strong> durante el año natural en que inician su actividad y en los dos ejercicios siguientes, comunicándolo previamente por escrito al cliente pagador. Si emites una factura a un particular, nunca lleva retención de IRPF.
+              </p>
+            </div>
+
+            <div className="border border-slate-200/80 rounded-2xl p-4 sm:p-5 hover:border-slate-300 transition-colors">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                ¿Cómo se deducen los gastos de vehículo particular o comercial?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                En el <strong>IRPF</strong>, la Agencia Tributaria solo admite la deducción del combustible y mantenimiento del coche si está afecto al 100% en exclusiva a la actividad profesional (agentes comerciales, transportistas, autoescuelas). Si se utiliza para fines mixtos personales y laborales, el IRPF no permite deducir nada. Por el contrario, en el <strong>IVA</strong> la ley presume una afectación mínima del 50%, permitiendo deducir la mitad del IVA soportado en gasolina, revisiones y compra.
+              </p>
+            </div>
+
+            <div className="border border-slate-200/80 rounded-2xl p-4 sm:p-5 hover:border-slate-300 transition-colors">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                ¿Qué son los gastos de difícil justificación y qué límite tienen?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                En la modalidad de estimación directa simplificada del IRPF, la ley contempla un porcentaje automático de deducción complementaria en concepto de provisiones y gastos de difícil justificación. Se aplica un <strong>7% sobre el rendimiento neto previo</strong> (ingresos menos gastos ordinarios justificados), con un <strong>techo máximo legal de 2.000 euros anuales</strong>.
+              </p>
+            </div>
+
+            <div className="border border-slate-200/80 rounded-2xl p-4 sm:p-5 hover:border-slate-300 transition-colors">
+              <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                ¿Cómo afecta la cuota de autónomo a la jubilación y pensión futura?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                Tu futura pensión pública de jubilación se calcula con la media de las bases de cotización de los últimos 25 años (300 meses). Cotizar por la base mínima del tramo reduce la cuota mensual hoy, pero también reduce directamente la cuantía de tu pensión de jubilación, incapacidad temporal o prestación por cese de actividad.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Contextual Topic Cluster Cross-Links */}
+        <section className="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white space-y-6">
+          <div className="space-y-2">
+            <h3 className="text-lg sm:text-xl font-bold tracking-tight">
+              Herramientas Fiscales y Laborales Relacionadas
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-400">
+              Gestiona todas tus obligaciones tributarias y laborales con nuestras herramientas oficiales verificadas.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link
+              href="/es/generador-factura-pdf"
+              className="p-4 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-1">
+                <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider">Facturación</span>
+                <h4 className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors">
+                  Generador Factura PDF
+                </h4>
+                <p className="text-xs text-slate-400 line-clamp-2">
+                  Crea facturas profesionales con retención de IRPF (7% o 15%) e IVA desglosado conformes al RD 1619/2012.
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-orange-400 group-hover:translate-x-1 transition-transform">
+                <span>Crear factura</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </Link>
+
+            <Link
+              href="/es/calculadora-iva-trimestral"
+              className="p-4 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-1">
+                <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider">Modelo 303</span>
+                <h4 className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors">
+                  Calculadora IVA Trimestral
+                </h4>
+                <p className="text-xs text-slate-400 line-clamp-2">
+                  Calcula el saldo exacto de tu IVA repercutido y soportado para liquidar a Hacienda cada trimestre.
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-orange-400 group-hover:translate-x-1 transition-transform">
+                <span>Calcular IVA</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </Link>
+
+            <Link
+              href="/es/calculadora-sueldo-neto"
+              className="p-4 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-1">
+                <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider">Asalariados</span>
+                <h4 className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors">
+                  Calculadora Sueldo Neto
+                </h4>
+                <p className="text-xs text-slate-400 line-clamp-2">
+                  Compara lo que ingresa un trabajador por cuenta ajena frente a tus ingresos netos como autónomo.
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-orange-400 group-hover:translate-x-1 transition-transform">
+                <span>Ver comparativa</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </Link>
+
+            <Link
+              href="/es/calculadora-jubilacion-pension"
+              className="p-4 rounded-2xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 transition-all flex flex-col justify-between group"
+            >
+              <div className="space-y-1">
+                <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider">Seguridad Social</span>
+                <h4 className="text-sm font-bold text-white group-hover:text-orange-300 transition-colors">
+                  Calculadora de Jubilación
+                </h4>
+                <p className="text-xs text-slate-400 line-clamp-2">
+                  Simula la pensión que te quedará como autónomo según tus bases de cotización acumuladas.
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-orange-400 group-hover:translate-x-1 transition-transform">
+                <span>Simular pensión</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </Link>
+          </div>
+        </section>
+
+        {/* E-E-A-T Official Regulatory Gazette Citation */}
+        <footer className="text-xs text-slate-500 border-t border-slate-200 pt-6 space-y-2">
+          <p className="flex items-center gap-1.5 font-medium text-slate-600">
+            <BookOpen className="w-4 h-4 text-orange-600 shrink-0" />
+            <span>Marco Legal Oficial y Fuentes Estatutarias:</span>
+          </p>
+          <ul className="list-disc list-inside space-y-1 text-slate-500 pl-1 text-[11px] sm:text-xs">
+            <li>
+              <strong>Real Decreto-ley 13/2022:</strong> Sistema de cotización para trabajadores por cuenta propia o autónomos y mejora de la protección por cese de actividad (BOE núm. 179/2022).
+            </li>
+            <li>
+              <strong>Ley 35/2006, de 28 de noviembre:</strong> Ley del Impuesto sobre la Renta de las Personas Físicas (LIRPF), artículos 28 a 32 (Rendimientos de actividades económicas).
+            </li>
+            <li>
+              <strong>Orden HFP/1359/2023:</strong> Modelos de declaración del IRPF y régimen de estimación directa simplificada (Agencia Estatal de Administración Tributaria).
+            </li>
+          </ul>
+        </footer>
       </div>
     </div>
   );
 }
-

@@ -97,18 +97,21 @@ export function AdSlot({
     };
   }, []);
 
+  // Do not render anything until client settings are loaded to prevent layout shift or empty placeholder boxes
+  if (!loaded) {
+    return null;
+  }
+
   // Check global kill switch
-  if (loaded && !config.ads_enabled) {
+  if (!config.ads_enabled) {
     return null;
   }
 
   // Check specific slot switch
-  if (loaded) {
-    if (slot === 'sidebar' && !config.ad_slot_sidebar) return null;
-    if (slot === 'post_download' && !config.ad_slot_post_download) return null;
-    if (slot === 'in_content' && !config.ad_slot_in_content) return null;
-    if (slot === 'mobile' && !config.ad_slot_mobile) return null;
-  }
+  if (slot === 'sidebar' && !config.ad_slot_sidebar) return null;
+  if (slot === 'post_download' && !config.ad_slot_post_download) return null;
+  if (slot === 'in_content' && !config.ad_slot_in_content) return null;
+  if (slot === 'mobile' && !config.ad_slot_mobile) return null;
 
   const isAdSense =
     (config.ads_provider === 'adsense' || config.ads_provider === 'auto') &&
