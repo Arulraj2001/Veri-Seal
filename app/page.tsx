@@ -5,7 +5,6 @@ import { SovereignTrustBar } from '@/components/home/SovereignTrustBar';
 import { IntentGateway } from '@/components/home/IntentGateway';
 import { SignatureComparison } from '@/components/home/SignatureComparison';
 import { ToolsMatrix } from '@/components/home/ToolsMatrix';
-import { DecisionEnginesShowcase } from '@/components/home/DecisionEnginesShowcase';
 import { TrustSection } from '@/components/home/TrustSection';
 import { BlogShowcase } from '@/components/home/BlogShowcase';
 import { ApiOfferingBanner } from '@/components/home/ApiOfferingBanner';
@@ -65,7 +64,6 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const settings = await getMergedSettings();
-  const hideDecisionEngines = settings.hide_decision_engines;
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -109,9 +107,7 @@ export default async function HomePage() {
           price: '0',
           priceCurrency: 'INR',
         },
-        description: hideDecisionEngines
-          ? '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and PDF tools.'
-          : '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and construction calculators.',
+        description: '57+ free client-side sovereign utilities including digital signature verification, exam photo resizing, A4 multi-card printing, and PDF tools.',
       },
       {
         '@type': 'FAQPage',
@@ -163,7 +159,7 @@ export default async function HomePage() {
       />
 
       {/* 1. Split Hero Section with Visual Certificate Showcase & Direct Actions */}
-      <HeroSection hideDecisionEngines={hideDecisionEngines} />
+      <HeroSection />
 
       {/* 2. Sovereign Authority & Trust Ticker Bar */}
       <SovereignTrustBar />
@@ -177,10 +173,7 @@ export default async function HomePage() {
       {/* 5. Curated 57+ Sovereign Tools Matrix (Exam Suite, KYC Privacy, CSC Print Lab, PDF Tools) */}
       <ToolsMatrix />
 
-      {/* 7. Flagship Citizen Decision Engines (Conditionally rendered when not hidden) */}
-      {!hideDecisionEngines && <DecisionEnginesShowcase />}
-
-      {/* 8. Sovereign Trust & RCAI Security Cards */}
+            {/* 8. Sovereign Trust & RCAI Security Cards */}
       <TrustSection />
 
       {/* 9. Sovereign Knowledge Hub (Trending Research Guides from Blog) */}
@@ -190,7 +183,7 @@ export default async function HomePage() {
       <ApiOfferingBanner />
 
       {/* 11. FAQ Accordion Section */}
-      <FaqSection hideDecisionEngines={hideDecisionEngines} />
+      <FaqSection />
     </div>
   );
 }

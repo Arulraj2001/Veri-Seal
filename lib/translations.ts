@@ -24,8 +24,6 @@ export interface TranslationDictionary {
     adminPanel: string;
     logout: string;
     freeTools: string;
-    homeCost: string;
-    businessOs: string;
   };
   hero: {
     tag: string;
@@ -195,8 +193,6 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       adminPanel: 'Admin Panel',
       logout: 'Sign Out',
       freeTools: 'Free Tools',
-      homeCost: 'Home Cost',
-      businessOs: 'Business OS',
     },
     hero: {
       tag: 'Free Online Verification Tool • IT Act 2000 Compliant',
@@ -375,8 +371,6 @@ export const translations: Record<SupportedLanguage, TranslationDictionary> = {
       adminPanel: 'நிர்வாக பலகை',
       logout: 'வெளியேறு',
       freeTools: 'இலவச கருவிகள்',
-      homeCost: 'வீட்டு செலவு',
-      businessOs: 'வணிக OS',
     },
     hero: {
       tag: 'இலவச ஆன்லைன் சரிபார்ப்பு • தகவல் தொழில்நுட்ப சட்டம் 2000 இணக்கமானது',

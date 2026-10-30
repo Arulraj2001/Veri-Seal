@@ -27,7 +27,6 @@ export interface SiteSettings {
   sponsor_badge: string;
   language_tamil_enabled: boolean;
   api_access_enabled: boolean;
-  hide_decision_engines: boolean;
   free_daily_limit: number;
   admin_notification_email: string;
   notify_new_payment: boolean;
@@ -38,7 +37,6 @@ export interface SiteSettings {
 
 export const inMemorySettings: Record<string, string> = {
   payment_enabled: 'true',
-  hide_decision_engines: 'true',
   upi_id: 'Kagazo.pay@icici',
   upi_qr_url: 'https://kagazo.in/assets/upi-qr-sample.png',
   pro_price: '199',
@@ -112,7 +110,6 @@ export async function getMergedSettings(): Promise<SiteSettings> {
     sponsor_badge: (/ostrune/i.test(result['sponsor_badge'] || '') ? 'Kagazo Suite' : (result['sponsor_badge'] || 'Kagazo Suite')),
     language_tamil_enabled: result['language_tamil_enabled'] !== 'false',
     api_access_enabled: result['api_access_enabled'] !== 'false',
-    hide_decision_engines: result['hide_decision_engines'] !== 'false',
     free_daily_limit: parseInt(result['free_daily_limit'] || '3', 10),
     admin_notification_email: result['admin_notification_email'] || 'admin@Kagazo.in',
     notify_new_payment: result['notify_new_payment'] !== 'false',

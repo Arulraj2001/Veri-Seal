@@ -47,11 +47,6 @@ const FAQ_EN: FaqItemData[] = [
       'Yes. Enter your PDF password (for e-Aadhaar: the first 4 letters of your name in uppercase followed by your birth year, e.g. RAMA1995) in the password field upon uploading. The file is decrypted in RAM, cryptographically audited, and returned with the green seal intact.',
   },
   {
-    question: 'How do the Home Construction Cost, Vehicle OS, and Business OS calculators work?',
-    answer:
-      'Our civic decision calculators provide transparent, unbiased mathematical models. The Home Cost OS calculates cement bags, steel tonnage, sand volume, and labor rates tailored to Indian cities. Vehicle OS computes the true 5-year Total Cost of Ownership (TCO) comparing EV vs Petrol vs Diesel factoring in battery replacement and EMI interest. Business Profit OS models real margins after GST and break-even sales.',
-  },
-  {
     question: 'Does Kagazo work on mobile phones and tablets?',
     answer:
       'Yes. Kagazo is designed mobile-first and works seamlessly on Android, iOS, Windows, Mac, and Chromebook browsers. You do not need to install any app or plugin. Simply open kagazo.in on your mobile browser and access all 57+ tools instantly.',
@@ -101,20 +96,9 @@ const FAQ_TA: FaqItemData[] = [
   },
 ];
 
-interface FaqSectionProps {
-  hideDecisionEngines?: boolean;
-}
-
-export function FaqSection({ hideDecisionEngines = true }: FaqSectionProps) {
+export function FaqSection() {
   const { language } = useLanguage();
-  const rawList = language === 'ta' ? FAQ_TA : FAQ_EN;
-  const faqList = hideDecisionEngines
-    ? rawList.filter(
-        (item) =>
-          !item.question.includes('Home Construction') &&
-          !item.question.includes('வீட்டு கட்டுமான')
-      )
-    : rawList;
+  const faqList = language === 'ta' ? FAQ_TA : FAQ_EN;
 
   return (
     <section id="faq-section" className="py-20 bg-background relative overflow-hidden">

@@ -9,11 +9,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
-interface HeroSectionProps {
-  hideDecisionEngines?: boolean;
-}
-
-export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
+export function HeroSection() {
   return (
     <section id="hero" className="relative pt-16 pb-0 overflow-hidden bg-[#fbfbfb] w-full">
       
@@ -152,27 +148,6 @@ export function HeroSection({ hideDecisionEngines = true }: HeroSectionProps) {
             href="/tools"
             className="absolute left-[76.8%] top-[37.4%] w-[7.8%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-blue-600 transition-all"
             title="Explore 57+ Free Tools"
-          />
-
-          {/* Laptop Home Cost OS */}
-          <Link
-            href="/home-cost"
-            className="absolute left-[55.8%] top-[55.2%] w-[8.2%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-amber-500 transition-all"
-            title="Home Construction Cost OS"
-          />
-
-          {/* Laptop Vehicle OS */}
-          <Link
-            href="/vehicle-os"
-            className="absolute left-[68.4%] top-[55.2%] w-[8.2%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
-            title="Vehicle Decision OS (EV vs Petrol TCO)"
-          />
-
-          {/* Laptop Business Profit OS */}
-          <Link
-            href="/business-os"
-            className="absolute left-[81.0%] top-[55.2%] w-[8.2%] h-[4.2%] rounded-md cursor-pointer hover:ring-2 hover:ring-indigo-500 transition-all"
-            title="Business Profit & Margin OS"
           />
 
           {/* Fanned Certificates Background -> Link to Verify Studio */}
