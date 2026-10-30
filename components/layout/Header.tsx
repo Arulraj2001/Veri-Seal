@@ -109,7 +109,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it')) {
     return null;
   }
 
@@ -545,6 +545,7 @@ export function Header() {
                 <span>🇪🇸</span>
                 <span>🇩🇪</span>
                 <span>🇫🇷</span>
+                <span>🇮🇹</span>
               </span>
               <span>EU Portals</span>
               <ChevronDown
@@ -567,7 +568,7 @@ export function Header() {
                 >
                   <div className="text-[11px] font-black uppercase tracking-wider text-text-main/60 px-2 py-1 flex items-center justify-between">
                     <span>Statutory European Suites</span>
-                    <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">60 TOOLS</span>
+                    <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">80 TOOLS</span>
                   </div>
 
                   <Link
@@ -612,6 +613,21 @@ export function Header() {
                         <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">20 Simulateurs</span>
                       </div>
                       <p className="text-[11px] text-text-main/60 truncate mt-0.5">Brut en Net, URSSAF, Rupture, Frais Notaire</p>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/it"
+                    onClick={() => setPortalsMenuOpen(false)}
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-sky-50 border border-transparent hover:border-sky-200 transition-all group"
+                  >
+                    <span className="text-2xl shrink-0">🇮🇹</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-text-main group-hover:text-sky-700">Italia</span>
+                        <span className="text-[10px] font-bold text-sky-700 bg-sky-100 px-1.5 py-0.5 rounded">20 Calcolatori</span>
+                      </div>
+                      <p className="text-[11px] text-text-main/60 truncate mt-0.5">Stipendio Netto, TFR, IMU F24, CIE, Forfettario</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -763,9 +779,9 @@ export function Header() {
             <div className="mt-4 pt-4 border-t border-surface-darker/60">
               <div className="text-[11px] font-black uppercase tracking-wider text-text-main/60 px-1 mb-2.5 flex items-center justify-between">
                 <span>European Statutory Portals</span>
-                <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">60 Tools</span>
+                <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">80 Tools</span>
               </div>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <Link
                   href="/es"
                   onClick={() => setMobileMenuOpen(false)}
@@ -792,6 +808,15 @@ export function Header() {
                   <span className="text-2xl group-hover:scale-110 transition-transform">🇫🇷</span>
                   <span className="text-xs font-bold text-text-main mt-1">France</span>
                   <span className="text-[10px] text-blue-700 font-bold bg-blue-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
+                </Link>
+                <Link
+                  href="/it"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex flex-col items-center p-3 rounded-2xl bg-surface border border-surface-darker hover:border-sky-300 text-center transition-all group shadow-2xs"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">🇮🇹</span>
+                  <span className="text-xs font-bold text-text-main mt-1">Italia</span>
+                  <span className="text-[10px] text-sky-700 font-bold bg-sky-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
                 </Link>
               </div>
             </div>

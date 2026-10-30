@@ -187,6 +187,60 @@ const FOOTER_CONFIGS: Record<CountryCode, CountryFooterConfig> = {
       },
     ],
   },
+  it: {
+    code: 'it',
+    countryName: 'Italia',
+    flag: '🇮🇹',
+    heroText: 'Calcolatori e Utilità Statutarie Ufficiali Italia 2026',
+    subText: 'Suite integrata di calcolo fiscale, giuslavoristico, previdenziale e amministrativo conforme al D.Lgs. 216/2023, TUIR, Codice Civile e circolari dell\'Agenzia delle Entrate e dell\'INPS.',
+    disclaimerTitle: 'Privacy & Rigore Giuridico:',
+    disclaimer: 'Calcoli conformi al D.Lgs. 216/2023 (Riforma IRPEF), Art. 2120 c.c. (TFR), D.P.R. 917/1986 (TUIR) e Legge 190/2014 (Regime Forfettario). Elaborazione 100% locale nel tuo browser: nessun dato fiscale viene memorizzato o trasmesso a server.',
+    accentClass: 'sky',
+    accentText: 'text-sky-400',
+    accentBorder: 'border-sky-500/30',
+    categories: [
+      {
+        title: 'Fisco & Lavoro',
+        links: [
+          { label: 'Calcolo Stipendio Netto 2026', href: '/it/calcolo-stipendio-netto' },
+          { label: 'Calcolo TFR Fine Rapporto', href: '/it/calcolo-tfr-fine-rapporto' },
+          { label: 'Fattura Regime Forfettario 2026', href: '/it/fattura-regime-forfettario' },
+          { label: 'Calcolo Pensione Quota 103', href: '/it/calcolo-pensione-anticipata' },
+          { label: 'Calcolo Straordinari CCNL', href: '/it/calcolo-straordinari-lavoro' },
+        ],
+      },
+      {
+        title: 'Casa & Immobili',
+        links: [
+          { label: 'Calcolo IMU e Modello F24', href: '/it/calcolo-imu-f24' },
+          { label: 'Imposte Acquisto Prima Casa', href: '/it/calcolo-imposte-acquisto-casa' },
+          { label: 'Adeguamento Affitto ISTAT FOI', href: '/it/adeguamento-affitto-istat' },
+          { label: 'Rendimento & Cedolare Secca', href: '/it/calcolo-rendimento-locativo-cedolare' },
+          { label: 'Plusvalenza Cessione Immobile', href: '/it/calcolo-plusvalenza-immobiliare' },
+        ],
+      },
+      {
+        title: 'Previdenza & Finanza',
+        links: [
+          { label: 'Ravvedimento Operoso F24', href: '/it/calcolo-ravvedimento-operoso' },
+          { label: 'Verifica Partita IVA & CF', href: '/it/verifica-partita-iva-codice-fiscale' },
+          { label: 'Interessi Legali e di Mora', href: '/it/calcolo-interessi-legali-mora' },
+          { label: 'Calcolo Giorni Lavorativi', href: '/it/calcolo-giorni-lavorativi' },
+          { label: 'Calcolo Assegno Unico INPS', href: '/it/calcolo-assegno-unico-inps' },
+        ],
+      },
+      {
+        title: 'Trámites & Documenti',
+        links: [
+          { label: 'Foto Tessera CIE 35x45 mm', href: '/it/foto-tessera-cie-passaporto' },
+          { label: 'Compressore PDF PA (< 2 MB)', href: '/it/compressore-pdf-pubblica-amministrazione' },
+          { label: 'Validatore IBAN Bancario Italia', href: '/it/validatore-iban-bancario-italia' },
+          { label: 'Calcolo Bollo Auto & Superbollo', href: '/it/calcolo-bollo-auto-regione' },
+          { label: 'Convertitore Numeri in Lettere', href: '/it/convertitore-numeri-in-lettere' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalFooter({ country }: { country: CountryCode }) {
@@ -253,6 +307,18 @@ export function InternationalFooter({ country }: { country: CountryCode }) {
             >
               <span>🇫🇷</span>
               <span>France (20)</span>
+            </Link>
+            <Link
+              href="/it"
+              className={cn(
+                'px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5',
+                country === 'it'
+                  ? 'bg-sky-600 text-white border-sky-500 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
+              )}
+            >
+              <span>🇮🇹</span>
+              <span>Italia (20)</span>
             </Link>
             <Link
               href="/"

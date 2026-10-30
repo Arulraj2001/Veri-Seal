@@ -161,6 +161,48 @@ const SUITES: CountrySuite[] = [
       },
     ],
   },
+  {
+    code: 'it',
+    name: 'Italia',
+    flag: '🇮🇹',
+    hubHref: '/it',
+    badge: 'TUIR, D.Lgs. 216/2023 & INPS',
+    accentBg: 'bg-sky-500/10 text-sky-700 border-sky-500/20',
+    accentText: 'text-sky-600',
+    accentBorder: 'border-sky-500/30',
+    hoverBorder: 'hover:border-sky-500/60',
+    description:
+      'Suite ufficiale di calcolo giuslavoristico, fiscale e catastale secondo la Riforma IRPEF 2026, Codice Civile (TFR) e Agenzia delle Entrate.',
+    pillars: [
+      {
+        name: 'Fisco & Lavoro',
+        icon: Calculator,
+        featured: [
+          { name: 'Calcolo Stipendio Netto 2026', href: '/it/calcolo-stipendio-netto', tag: 'Top' },
+          { name: 'Calcolo TFR Fine Rapporto', href: '/it/calcolo-tfr-fine-rapporto' },
+          { name: 'Fattura Regime Forfettario', href: '/it/fattura-regime-forfettario', tag: '5%/15%' },
+        ],
+      },
+      {
+        name: 'Casa & Immobili',
+        icon: Home,
+        featured: [
+          { name: 'Calcolo IMU e Modello F24', href: '/it/calcolo-imu-f24', tag: 'F24' },
+          { name: 'Imposte Acquisto Prima Casa', href: '/it/calcolo-imposte-acquisto-casa' },
+          { name: 'Adeguamento Affitto ISTAT FOI', href: '/it/adeguamento-affitto-istat' },
+        ],
+      },
+      {
+        name: 'Previdenza & Trámites',
+        icon: FileText,
+        featured: [
+          { name: 'Ravvedimento Operoso F24', href: '/it/calcolo-ravvedimento-operoso', tag: 'Fiscale' },
+          { name: 'Foto Tessera CIE 35×45 mm', href: '/it/foto-tessera-cie-passaporto' },
+          { name: 'Calcolo Bollo Auto & Superbollo', href: '/it/calcolo-bollo-auto-regione' },
+        ],
+      },
+    ],
+  },
 ];
 
 export function InternationalSuitesShowcase() {
@@ -182,7 +224,7 @@ export function InternationalSuitesShowcase() {
             <Globe2 className="w-4 h-4 text-emerald-400" />
             <span>Kagazo International Portals</span>
             <span className="text-slate-400">&bull;</span>
-            <span className="text-emerald-400 font-mono">60 Statutory Tools</span>
+            <span className="text-emerald-400 font-mono">80 Statutory Tools</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight leading-tight">
@@ -190,7 +232,7 @@ export function InternationalSuitesShowcase() {
           </h2>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-            Explore 60+ newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, and France. 100% in-browser client execution with zero data storage.
+            Explore 80+ newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, France, and Italy. 100% in-browser client execution with zero data storage.
           </p>
 
           {/* Quick Filter Tabs */}
@@ -205,7 +247,7 @@ export function InternationalSuitesShowcase() {
                   : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
               )}
             >
-              All European Suites (60 Tools)
+              All European Suites (80 Tools)
             </button>
             <button
               type="button"
@@ -246,11 +288,24 @@ export function InternationalSuitesShowcase() {
               <span>🇫🇷</span>
               <span>France (20)</span>
             </button>
+            <button
+              type="button"
+              onClick={() => setSelectedSuite('it')}
+              className={cn(
+                'px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5',
+                selectedSuite === 'it'
+                  ? 'bg-sky-600 text-white border-sky-600 shadow-xs'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+              )}
+            >
+              <span>🇮🇹</span>
+              <span>Italia (20)</span>
+            </button>
           </div>
         </div>
 
-        {/* 3 Country Showcase Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+        {/* 4 Country Showcase Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredSuites.map((suite) => (
             <div
               key={suite.code}

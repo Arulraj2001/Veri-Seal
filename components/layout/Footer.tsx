@@ -42,7 +42,7 @@ export function Footer() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it')) {
     return null;
   }
 
@@ -396,7 +396,7 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <span className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
                 <span>🌐</span>
-                <span>International Statutory Suites (60 Tools)</span>
+                <span>International Statutory Suites (80 Tools)</span>
               </span>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
                 100% In-Browser • Client-Side
@@ -433,6 +433,15 @@ export function Footer() {
               <span className="text-base group-hover:scale-110 transition-transform">🇫🇷</span>
               <span>France</span>
               <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">20 Simulateurs</span>
+            </Link>
+
+            <Link
+              href="/it"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-sky-300 hover:bg-sky-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+            >
+              <span className="text-base group-hover:scale-110 transition-transform">🇮🇹</span>
+              <span>Italia</span>
+              <span className="text-[10px] font-bold text-sky-700 bg-sky-100 px-1.5 py-0.5 rounded">20 Calcolatori</span>
             </Link>
           </div>
         </div>
@@ -481,6 +490,10 @@ export function Footer() {
             <span>•</span>
             <Link href="/fr" className="hover:text-blue-600 font-bold transition-colors">
               🇫🇷 France (20)
+            </Link>
+            <span>•</span>
+            <Link href="/it" className="hover:text-sky-600 font-bold transition-colors">
+              🇮🇹 Italia (20)
             </Link>
             <span>•</span>
             <Link href="/contact" className="hover:text-primary transition-colors">

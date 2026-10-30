@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type CountryCode = 'es' | 'de' | 'fr';
+export type CountryCode = 'es' | 'de' | 'fr' | 'it';
 
 interface ToolItem {
   title: string;
@@ -239,6 +239,68 @@ const COUNTRY_CONFIGS: Record<CountryCode, CountryConfig> = {
       },
     ],
   },
+  it: {
+    code: 'it',
+    name: 'Italia',
+    flag: '🇮🇹',
+    portalTitle: 'Portale Giuridico, Fiscale & Lavoro 2026',
+    badgeText: 'Italia',
+    accentClass: 'sky',
+    accentBg: 'bg-sky-600',
+    accentText: 'text-sky-700',
+    accentHoverBg: 'hover:bg-sky-50',
+    accentBorder: 'border-sky-500/30',
+    activePillBg: 'bg-sky-600 text-white',
+    hubHref: '/it',
+    hubButtonLabel: 'Portale Italia',
+    allToolsLabel: 'Tutti i 20 Calcolatori',
+    pillars: [
+      {
+        name: 'Fisco & Lavoro',
+        icon: Calculator,
+        tools: [
+          { title: 'Stipendio Netto 2026', href: '/it/calcolo-stipendio-netto', badge: 'Top' },
+          { title: 'Calcolo TFR Fine Rapporto', href: '/it/calcolo-tfr-fine-rapporto' },
+          { title: 'Fattura Forfettario 2026', href: '/it/fattura-regime-forfettario', badge: '5%/15%' },
+          { title: 'Pensione Quota 103', href: '/it/calcolo-pensione-anticipata' },
+          { title: 'Straordinari CCNL', href: '/it/calcolo-straordinari-lavoro' },
+        ],
+      },
+      {
+        name: 'Casa & Immobili',
+        icon: Home,
+        tools: [
+          { title: 'Calcolo IMU e Modello F24', href: '/it/calcolo-imu-f24', badge: 'F24' },
+          { title: 'Imposte Acquisto Prima Casa', href: '/it/calcolo-imposte-acquisto-casa' },
+          { title: 'Adeguamento Affitto ISTAT', href: '/it/adeguamento-affitto-istat' },
+          { title: 'Rendimento & Cedolare Secca', href: '/it/calcolo-rendimento-locativo-cedolare' },
+          { title: 'Plusvalenza Cessione Immobile', href: '/it/calcolo-plusvalenza-immobiliare' },
+        ],
+      },
+      {
+        name: 'Previdenza & Finanza',
+        icon: Building2,
+        tools: [
+          { title: 'Ravvedimento Operoso F24', href: '/it/calcolo-ravvedimento-operoso', badge: 'Fiscale' },
+          { title: 'Verifica Partita IVA & CF', href: '/it/verifica-partita-iva-codice-fiscale' },
+          { title: 'Interessi Legali e di Mora', href: '/it/calcolo-interessi-legali-mora' },
+          { title: 'Giorni Lavorativi Festività', href: '/it/calcolo-giorni-lavorativi' },
+          { title: 'Assegno Unico Figli INPS', href: '/it/calcolo-assegno-unico-inps' },
+        ],
+      },
+      {
+        name: 'Trámites & Documenti',
+        icon: FileText,
+        tools: [
+          { title: 'Foto Tessera CIE 35×45 mm', href: '/it/foto-tessera-cie-passaporto', badge: 'CIE' },
+          { title: 'Compressore PDF PA (< 2 MB)', href: '/it/compressore-pdf-pubblica-amministrazione' },
+          { title: 'Validatore IBAN Bancario', href: '/it/validatore-iban-bancario-italia' },
+          { title: 'Calcolo Bollo Auto Regione', href: '/it/calcolo-bollo-auto-regione' },
+          { title: 'Numeri in Lettere Assegni', href: '/it/convertitore-numeri-in-lettere' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalHeader({ country }: { country: CountryCode }) {
@@ -270,14 +332,18 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
       ? 'bg-orange-600 text-white'
       : country === 'de'
       ? 'bg-amber-600 text-white'
-      : 'bg-blue-600 text-white';
+      : country === 'fr'
+      ? 'bg-blue-600 text-white'
+      : 'bg-sky-600 text-white';
 
   const hoverAccent =
     country === 'es'
       ? 'hover:text-orange-700 hover:bg-orange-50'
       : country === 'de'
       ? 'hover:text-amber-700 hover:bg-amber-50'
-      : 'hover:text-blue-700 hover:bg-blue-50';
+      : country === 'fr'
+      ? 'hover:text-blue-700 hover:bg-blue-50'
+      : 'hover:text-sky-700 hover:bg-sky-50';
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md transition-all shadow-xs">
@@ -429,6 +495,17 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
               <span>FR</span>
             </Link>
             <Link
+              href="/it"
+              className={cn(
+                'px-2.5 py-1 rounded-full transition-all flex items-center gap-1',
+                country === 'it' ? 'bg-white text-slate-950 shadow-2xs font-black' : 'text-slate-700 hover:text-slate-950'
+              )}
+              title="Italia Suite (20 Calcolatori)"
+            >
+              <span>🇮🇹</span>
+              <span>IT</span>
+            </Link>
+            <Link
               href="/"
               className="px-2.5 py-1 rounded-full text-slate-700 hover:text-slate-950 transition-all flex items-center gap-1"
               title="Kagazo Global Suite"
@@ -514,6 +591,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
             </Link>
             <Link href="/fr" className={cn('p-2 rounded-xl text-center flex-1', country === 'fr' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-slate-50 text-slate-700')}>
               🇫🇷 France
+            </Link>
+            <Link href="/it" className={cn('p-2 rounded-xl text-center flex-1', country === 'it' ? 'bg-sky-50 text-sky-700 border border-sky-200' : 'bg-slate-50 text-slate-700')}>
+              🇮🇹 Italia
             </Link>
             <Link href="/" className="p-2 rounded-xl text-center flex-1 bg-slate-50 text-slate-700">
               🌐 Global
