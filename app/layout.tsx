@@ -10,6 +10,7 @@ import { FAQ, SITE_CONFIG, SITE_URL } from '@/lib/constants';
 import { AuthProvider } from '@/components/providers/AuthProvider';
 import { LanguageProvider } from '@/components/providers/LanguageProvider';
 import { FloatingContactButton } from '@/components/navigation/FloatingContactButton';
+import { CookieConsentBanner } from '@/components/ui/CookieConsentBanner';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -218,6 +219,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1">{children}</main>
             <FloatingContactButton />
+            <CookieConsentBanner />
             <Footer />
 
             {/* Telemetry & PWA Prompts */}
