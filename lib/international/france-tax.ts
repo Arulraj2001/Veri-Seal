@@ -190,3 +190,4 @@ export function convertNumberToFrenchWords(num: number): NumberToWordsResult {
     formattedOfficial: formatted.charAt(0).toUpperCase() + formatted.slice(1),
   };
 }
+

@@ -180,3 +180,4 @@ export function FranceSalaryEngine() {
     </div>
   );
 }
+

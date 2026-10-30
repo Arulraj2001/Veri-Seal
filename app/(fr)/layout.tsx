@@ -28,7 +28,8 @@ export default function FrenchHubLayout({
       {/* Editorial Header */}
       <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/fr" className="flex items-center gap-2.5 group">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <Link href="/fr" className="flex items-center gap-2.5 group">
             <div className="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center font-black text-sm shadow-xs group-hover:scale-105 transition-transform">
               K
             </div>
@@ -41,6 +42,13 @@ export default function FrenchHubLayout({
               </span>
             </div>
           </Link>
+          <Link
+            href="/"
+            className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 hover:text-slate-900 border-l border-slate-200 pl-4 transition-colors"
+          >
+            <span>&larr; Kagazo Global</span>
+          </Link>
+        </div>
 
           <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
             <Link
@@ -111,3 +119,4 @@ export default function FrenchHubLayout({
     </div>
   );
 }
+

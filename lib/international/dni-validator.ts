@@ -124,3 +124,4 @@ export function validateDniNieCif(input: string): DniValidationResult {
       'Formato no reconocido. Debe ser un DNI (8 números + letra), NIE (X/Y/Z + 7 números + letra) o CIF de empresa.',
   };
 }
+

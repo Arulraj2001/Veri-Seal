@@ -136,3 +136,4 @@ export function calculateGermanySalary(input: SalaryCalculationInput): SalaryCal
     },
   };
 }
+

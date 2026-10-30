@@ -53,3 +53,4 @@ export const HREFLANG_REGISTRY: Record<string, HreflangMapping> = {
     },
   },
 };
+

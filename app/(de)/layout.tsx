@@ -27,7 +27,8 @@ export default function GermanHubLayout({
     <div className="flex flex-col min-h-screen bg-[#FAFAFA] text-[#09090B] antialiased selection:bg-amber-500/20 selection:text-amber-950">
       <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/de" className="flex items-center gap-2.5 group">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <Link href="/de" className="flex items-center gap-2.5 group">
             <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-xs group-hover:scale-105 transition-transform">
               K
             </div>
@@ -40,6 +41,13 @@ export default function GermanHubLayout({
               </span>
             </div>
           </Link>
+          <Link
+            href="/"
+            className="hidden sm:inline-flex items-center gap-1 text-[11px] font-semibold text-slate-500 hover:text-slate-900 border-l border-slate-200 pl-4 transition-colors"
+          >
+            <span>&larr; Kagazo Global</span>
+          </Link>
+        </div>
 
           <nav className="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-600">
             <Link
@@ -104,3 +112,4 @@ export default function GermanHubLayout({
     </div>
   );
 }
+

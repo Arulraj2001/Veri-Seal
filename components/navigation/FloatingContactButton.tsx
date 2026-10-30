@@ -18,7 +18,7 @@ export function FloatingContactButton() {
   }, []);
 
   // Hide when already on /contact or inside admin portal
-  if (pathname === '/contact' || pathname?.startsWith('/admin')) {
+  if (pathname === '/contact' || pathname?.startsWith('/admin') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de')) {
     return null;
   }
 

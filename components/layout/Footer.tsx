@@ -42,7 +42,7 @@ export function Footer() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de')) {
     return null;
   }
 

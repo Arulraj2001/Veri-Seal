@@ -104,7 +104,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de')) {
     return null;
   }
 

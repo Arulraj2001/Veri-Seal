@@ -96,3 +96,4 @@ export interface InvoiceDraft {
   notes?: string;
   legalNotice?: string;
 }
+
