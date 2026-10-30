@@ -77,7 +77,9 @@ export function Header() {
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [toolsMenuOpen, setToolsMenuOpen] = React.useState(false);
+  const [portalsMenuOpen, setPortalsMenuOpen] = React.useState(false);
   const toolsRef = React.useRef<HTMLDivElement>(null);
+  const portalsRef = React.useRef<HTMLDivElement>(null);
   const { t, language, toggleLanguage } = useLanguage();
 
   const user = session?.user;
@@ -89,6 +91,9 @@ export function Header() {
     const handleClickOutside = (event: MouseEvent) => {
       if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
         setToolsMenuOpen(false);
+      }
+      if (portalsRef.current && !portalsRef.current.contains(event.target as Node)) {
+        setPortalsMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -523,6 +528,96 @@ export function Header() {
           >
             {t.nav.blog}
           </Link>
+
+          {/* International Portals Dropdown Trigger */}
+          <div ref={portalsRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setPortalsMenuOpen(!portalsMenuOpen)}
+              className={cn(
+                'flex items-center gap-1.5 px-3 py-1 text-xs xl:text-[13px] font-semibold rounded-full transition-all cursor-pointer select-none shrink-0 whitespace-nowrap',
+                portalsMenuOpen
+                  ? 'bg-white text-primary shadow-2xs'
+                  : 'text-text-main hover:text-primary hover:bg-white/60'
+              )}
+            >
+              <span className="flex items-center gap-0.5 text-xs">
+                <span>🇪🇸</span>
+                <span>🇩🇪</span>
+                <span>🇫🇷</span>
+              </span>
+              <span>EU Portals</span>
+              <ChevronDown
+                className={cn(
+                  'w-3.5 h-3.5 text-text-main/60 transition-transform duration-200',
+                  portalsMenuOpen && 'rotate-180 text-primary'
+                )}
+              />
+            </button>
+
+            {/* Portals Dropdown Panel */}
+            <AnimatePresence>
+              {portalsMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="absolute top-full right-0 mt-3 w-80 bg-white/95 backdrop-blur-xl border border-surface-darker rounded-2xl shadow-2xl p-3 z-50 text-left space-y-1.5"
+                >
+                  <div className="text-[11px] font-black uppercase tracking-wider text-text-main/60 px-2 py-1 flex items-center justify-between">
+                    <span>Statutory European Suites</span>
+                    <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">60 TOOLS</span>
+                  </div>
+
+                  <Link
+                    href="/es"
+                    onClick={() => setPortalsMenuOpen(false)}
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-orange-50 border border-transparent hover:border-orange-200 transition-all group"
+                  >
+                    <span className="text-2xl shrink-0">🇪🇸</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-text-main group-hover:text-orange-700">España</span>
+                        <span className="text-[10px] font-bold text-orange-700 bg-orange-100 px-1.5 py-0.5 rounded">20 Herramientas</span>
+                      </div>
+                      <p className="text-[11px] text-text-main/60 truncate mt-0.5">Sueldo Neto, IRPF, Hipoteca Euríbor, DNI/NIE</p>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/de"
+                    onClick={() => setPortalsMenuOpen(false)}
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-amber-50 border border-transparent hover:border-amber-200 transition-all group"
+                  >
+                    <span className="text-2xl shrink-0">🇩🇪</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-text-main group-hover:text-amber-700">Deutschland</span>
+                        <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">20 Rechner</span>
+                      </div>
+                      <p className="text-[11px] text-text-main/60 truncate mt-0.5">Brutto-Netto, Abfindung § 34, GNotKG, 1%-Regel</p>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/fr"
+                    onClick={() => setPortalsMenuOpen(false)}
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 border border-transparent hover:border-blue-200 transition-all group"
+                  >
+                    <span className="text-2xl shrink-0">🇫🇷</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-text-main group-hover:text-blue-700">France</span>
+                        <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">20 Simulateurs</span>
+                      </div>
+                      <p className="text-[11px] text-text-main/60 truncate mt-0.5">Brut en Net, URSSAF, Rupture, Frais Notaire</p>
+                    </div>
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </nav>
 
         {/* Right Actions - Adjusted to right end without overlap */}
@@ -662,6 +757,43 @@ export function Header() {
                   <ArrowRight className="w-4 h-4 text-primary opacity-60" />
                 </motion.a>
               ))}
+            </div>
+
+            {/* European Portals Section for Mobile */}
+            <div className="mt-4 pt-4 border-t border-surface-darker/60">
+              <div className="text-[11px] font-black uppercase tracking-wider text-text-main/60 px-1 mb-2.5 flex items-center justify-between">
+                <span>European Statutory Portals</span>
+                <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">60 Tools</span>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                <Link
+                  href="/es"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex flex-col items-center p-3 rounded-2xl bg-surface border border-surface-darker hover:border-orange-300 text-center transition-all group shadow-2xs"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">🇪🇸</span>
+                  <span className="text-xs font-bold text-text-main mt-1">España</span>
+                  <span className="text-[10px] text-orange-700 font-bold bg-orange-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
+                </Link>
+                <Link
+                  href="/de"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex flex-col items-center p-3 rounded-2xl bg-surface border border-surface-darker hover:border-amber-300 text-center transition-all group shadow-2xs"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">🇩🇪</span>
+                  <span className="text-xs font-bold text-text-main mt-1">Deutschland</span>
+                  <span className="text-[10px] text-amber-700 font-bold bg-amber-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
+                </Link>
+                <Link
+                  href="/fr"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex flex-col items-center p-3 rounded-2xl bg-surface border border-surface-darker hover:border-blue-300 text-center transition-all group shadow-2xs"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">🇫🇷</span>
+                  <span className="text-xs font-bold text-text-main mt-1">France</span>
+                  <span className="text-[10px] text-blue-700 font-bold bg-blue-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
+                </Link>
+              </div>
             </div>
 
             <div className="mt-8 pt-6 border-t border-surface-darker flex flex-col gap-3">

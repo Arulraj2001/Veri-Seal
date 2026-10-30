@@ -5,6 +5,7 @@ import { SovereignTrustBar } from '@/components/home/SovereignTrustBar';
 import { IntentGateway } from '@/components/home/IntentGateway';
 import { SignatureComparison } from '@/components/home/SignatureComparison';
 import { ToolsMatrix } from '@/components/home/ToolsMatrix';
+import { InternationalSuitesShowcase } from '@/components/home/InternationalSuitesShowcase';
 import { TrustSection } from '@/components/home/TrustSection';
 import { BlogShowcase } from '@/components/home/BlogShowcase';
 import { ApiOfferingBanner } from '@/components/home/ApiOfferingBanner';
@@ -172,6 +173,9 @@ export default async function HomePage() {
 
       {/* 5. Curated 57+ Sovereign Tools Matrix (Exam Suite, KYC Privacy, CSC Print Lab, PDF Tools) */}
       <ToolsMatrix />
+
+      {/* 6. European Sovereign Suites: Spain, Germany & France Micro-Tools Showcase */}
+      <InternationalSuitesShowcase />
 
             {/* 8. Sovereign Trust & RCAI Security Cards */}
       <TrustSection />

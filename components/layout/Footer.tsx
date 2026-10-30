@@ -390,7 +390,54 @@ export function Footer() {
 
         </div>
 
-{/* Bottom Bar: Symmetrical Copyright, Legal Quick Links & India Badge */}
+        {/* International Statutory Portals Banner */}
+        <div className="py-6 border-b border-surface-darker/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
+                <span>🌐</span>
+                <span>International Statutory Suites (60 Tools)</span>
+              </span>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                100% In-Browser • Client-Side
+              </span>
+            </div>
+            <p className="text-xs text-text-main/70">
+              Compliant statutory calculation and document verification engines tailored to national jurisdictions.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Link
+              href="/es"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-orange-300 hover:bg-orange-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+            >
+              <span className="text-base group-hover:scale-110 transition-transform">🇪🇸</span>
+              <span>España</span>
+              <span className="text-[10px] font-bold text-orange-700 bg-orange-100 px-1.5 py-0.5 rounded">20 Herramientas</span>
+            </Link>
+
+            <Link
+              href="/de"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-amber-300 hover:bg-amber-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+            >
+              <span className="text-base group-hover:scale-110 transition-transform">🇩🇪</span>
+              <span>Deutschland</span>
+              <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">20 Rechner</span>
+            </Link>
+
+            <Link
+              href="/fr"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-blue-300 hover:bg-blue-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+            >
+              <span className="text-base group-hover:scale-110 transition-transform">🇫🇷</span>
+              <span>France</span>
+              <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">20 Simulateurs</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Bottom Bar: Symmetrical Copyright, Legal Quick Links & India Badge */}
         <div className="pt-6 sm:pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-text-main/70">
           <p className="text-center lg:text-left leading-relaxed">
             © 2026 Kagazo. {t.footer_rights || (isTamil ? 'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை' : 'All rights reserved')} — {isTamil
@@ -422,6 +469,18 @@ export function Footer() {
             <span>•</span>
             <Link href="/blog" className="hover:text-primary transition-colors">
               Blog &amp; Guides
+            </Link>
+            <span>•</span>
+            <Link href="/es" className="hover:text-orange-600 font-bold transition-colors">
+              🇪🇸 España (20)
+            </Link>
+            <span>•</span>
+            <Link href="/de" className="hover:text-amber-600 font-bold transition-colors">
+              🇩🇪 Deutschland (20)
+            </Link>
+            <span>•</span>
+            <Link href="/fr" className="hover:text-blue-600 font-bold transition-colors">
+              🇫🇷 France (20)
             </Link>
             <span>•</span>
             <Link href="/contact" className="hover:text-primary transition-colors">
