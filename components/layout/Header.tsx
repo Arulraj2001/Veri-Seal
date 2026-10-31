@@ -109,7 +109,7 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br') || pathname?.startsWith('/uk')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br') || pathname?.startsWith('/uk') || pathname?.startsWith('/mx')) {
     return null;
   }
 
@@ -547,6 +547,8 @@ export function Header() {
                 <span>🇫🇷</span>
                 <span>🇮🇹</span>
                 <span>🇧🇷</span>
+                <span>🇬🇧</span>
+                <span>🇲🇽</span>
               </span>
               <span>Global Portals</span>
               <ChevronDown
@@ -569,7 +571,7 @@ export function Header() {
                 >
                   <div className="text-[11px] font-black uppercase tracking-wider text-text-main/60 px-2 py-1 flex items-center justify-between">
                     <span>Statutory Sovereign Suites</span>
-                    <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">100 TOOLS</span>
+                    <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">140 TOOLS</span>
                   </div>
 
                   <Link
@@ -659,6 +661,21 @@ export function Header() {
                         <span className="text-[10px] font-bold text-indigo-900 bg-indigo-100 px-1.5 py-0.5 rounded">20 Tools</span>
                       </div>
                       <p className="text-[11px] text-text-main/60 truncate mt-0.5">Take-Home Pay, SDLT, Section 24, Redundancy, VAT</p>
+                    </div>
+                  </Link>
+
+                  <Link
+                    href="/mx"
+                    onClick={() => setPortalsMenuOpen(false)}
+                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-emerald-50 border border-transparent hover:border-emerald-200 transition-all group"
+                  >
+                    <span className="text-2xl shrink-0">🇲🇽</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-black text-text-main group-hover:text-emerald-800">México</span>
+                        <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded">20 Herramientas</span>
+                      </div>
+                      <p className="text-[11px] text-text-main/60 truncate mt-0.5">Sueldo Neto LFT, Finiquito, RESICO, Infonavit, CURP/RFC</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -806,11 +823,11 @@ export function Header() {
               ))}
             </div>
 
-            {/* European Portals Section for Mobile */}
+            {/* Sovereign Global Portals Section for Mobile */}
             <div className="mt-4 pt-4 border-t border-surface-darker/60">
               <div className="text-[11px] font-black uppercase tracking-wider text-text-main/60 px-1 mb-2.5 flex items-center justify-between">
-                <span>European Statutory Portals</span>
-                <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">80 Tools</span>
+                <span>Global Sovereign Portals</span>
+                <span className="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">140 Tools</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <Link
@@ -866,6 +883,15 @@ export function Header() {
                   <span className="text-2xl group-hover:scale-110 transition-transform">🇬🇧</span>
                   <span className="text-xs font-bold text-text-main mt-1">United Kingdom</span>
                   <span className="text-[10px] text-indigo-900 font-bold bg-indigo-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
+                </Link>
+                <Link
+                  href="/mx"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex flex-col items-center p-3 rounded-2xl bg-surface border border-surface-darker hover:border-emerald-500 text-center transition-all group shadow-2xs"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">🇲🇽</span>
+                  <span className="text-xs font-bold text-text-main mt-1">México</span>
+                  <span className="text-[10px] text-emerald-800 font-bold bg-emerald-100 px-1.5 py-0.5 rounded mt-1">20 Tools</span>
                 </Link>
               </div>
             </div>

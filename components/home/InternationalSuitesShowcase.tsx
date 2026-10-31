@@ -305,6 +305,57 @@ const SUITES: CountrySuite[] = [
       },
     ],
   },
+  {
+    code: 'mx',
+    name: 'México',
+    flag: '🇲🇽',
+    hubHref: '/mx',
+    badge: 'LFT, SAT & Infonavit 2026',
+    accentBg: 'bg-emerald-500/10 text-emerald-800 border-emerald-500/20',
+    accentText: 'text-emerald-700',
+    accentBorder: 'border-emerald-700/30',
+    hoverBorder: 'hover:border-emerald-600',
+    description:
+      'Suite oficial estatutaria de nómina y liquidación LFT, impuestos RESICO/SAT, crédito y puntos Infonavit T1000, y validadores CURP/RFC.',
+    pillars: [
+      {
+        name: 'Laboral & Nóminas LFT',
+        icon: Calculator,
+        featured: [
+          { name: 'Sueldo Neto IMSS e ISR 2026', href: '/mx/calculadora-sueldo-neto-imss-isr', tag: 'Top' },
+          { name: 'Finiquito y Liquidación por Despido', href: '/mx/calculadora-finiquito-liquidacion-despido', tag: 'Art. 50' },
+          { name: 'Calculadora de Aguinaldo Legal LFT', href: '/mx/calculadora-aguinaldo-ley-federal-trabajo' },
+        ],
+      },
+      {
+        name: 'Fiscal & SAT',
+        icon: Building2,
+        featured: [
+          { name: 'Calculadora RESICO Personas Físicas', href: '/mx/calculadora-resico-personas-fisicas', tag: '1-2.5%' },
+          { name: 'Retención ISR e IVA Honorarios', href: '/mx/calculadora-honorarios-retencion-isr-iva' },
+          { name: 'Deducciones Personales Anuales', href: '/mx/calculadora-deducciones-personales-declaracion-anual' },
+        ],
+      },
+      {
+        name: 'Crédito & Infonavit',
+        icon: Home,
+        featured: [
+          { name: 'Calculadora Puntos Infonavit T1000', href: '/mx/calculadora-puntos-infonavit-t1000', tag: '1080 Pts' },
+          { name: 'Tabla Amortización Pesos vs UMA', href: '/mx/tabla-amortizacion-credito-infonavit' },
+          { name: 'Gastos Notariales e ISAI Escrituración', href: '/mx/calculadora-gastos-notariales-isai-escrituracion' },
+        ],
+      },
+      {
+        name: 'Trámites & Identidad',
+        icon: FileText,
+        featured: [
+          { name: 'Validador y Generador CURP Oficial', href: '/mx/validador-generador-curp-oficial', tag: 'RENAPO' },
+          { name: 'Validador RFC SAT con Homoclave', href: '/mx/validador-rfc-sat-homoclave', tag: 'Módulo 11' },
+          { name: 'Foto Infantil y Pasaporte Mexicano SRE', href: '/mx/foto-infantil-pasaporte-mexicano-sre' },
+        ],
+      },
+    ],
+  },
 ];
 
 export function InternationalSuitesShowcase() {
@@ -326,15 +377,15 @@ export function InternationalSuitesShowcase() {
             <Globe2 className="w-4 h-4 text-emerald-400" />
             <span>Kagazo International Portals</span>
             <span className="text-slate-400">&bull;</span>
-            <span className="text-emerald-400 font-mono">120 Statutory Tools</span>
+            <span className="text-emerald-400 font-mono">140 Statutory Tools</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-            Sovereign Micro-Tools Across 6 Nations
+            Sovereign Micro-Tools Across 7 Nations
           </h2>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-            Explore 120 newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, France, Italy, Brazil, and the United Kingdom. 100% in-browser client execution with zero data storage.
+            Explore 140 newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, France, Italy, Brazil, the United Kingdom, and Mexico. 100% in-browser client execution with zero data storage.
           </p>
 
           {/* Quick Filter Tabs */}
@@ -349,7 +400,7 @@ export function InternationalSuitesShowcase() {
                   : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
               )}
             >
-              All Global Suites (120 Tools)
+              All Global Suites (140 Tools)
             </button>
             <button
               type="button"
@@ -428,6 +479,19 @@ export function InternationalSuitesShowcase() {
             >
               <span>🇬🇧</span>
               <span>UK (20)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedSuite('mx')}
+              className={cn(
+                'px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5',
+                selectedSuite === 'mx'
+                  ? 'bg-emerald-700 text-white border-emerald-700 shadow-xs'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+              )}
+            >
+              <span>🇲🇽</span>
+              <span>México (20)</span>
             </button>
           </div>
         </div>

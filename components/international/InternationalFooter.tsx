@@ -349,6 +349,60 @@ const FOOTER_CONFIGS: Record<CountryCode, CountryFooterConfig> = {
       },
     ],
   },
+  mx: {
+    code: 'mx',
+    countryName: 'México',
+    flag: '🇲🇽',
+    heroText: 'Herramientas Oficiales Estatutarias para México 2026',
+    subText: 'Suite integral de cálculo laboral LFT, tributario SAT, habitacional Infonavit y validadores de identidad oficial mexicana conforme a la legislación vigente y Miscelánea Fiscal.',
+    disclaimerTitle: 'Privacidad y Rigor Jurídico Mexicano:',
+    disclaimer: 'Cálculos conformes con la Ley Federal del Trabajo (LFT), Ley del Impuesto sobre la Renta (LISR), Código Fiscal de la Federación (CFF) y Resoluciones del H. Consejo de Administración del Infonavit 2026. Procesamiento 100% en tu navegador: ningún dato sensible se transmite a servidores.',
+    accentClass: 'emerald',
+    accentText: 'text-emerald-500',
+    accentBorder: 'border-emerald-700/30',
+    categories: [
+      {
+        title: 'Laboral & Nómina LFT',
+        links: [
+          { label: 'Sueldo Neto IMSS e ISR 2026', href: '/mx/calculadora-sueldo-neto-imss-isr' },
+          { label: 'Finiquito y Liquidación Despido', href: '/mx/calculadora-finiquito-liquidacion-despido' },
+          { label: 'Calculadora de Aguinaldo Legal LFT', href: '/mx/calculadora-aguinaldo-ley-federal-trabajo' },
+          { label: 'Vacaciones Dignas & Prima Vacacional', href: '/mx/calculadora-vacaciones-dignas-prima-vacacional' },
+          { label: 'Calculadora Horas Extras LFT', href: '/mx/calculadora-horas-extras-lft' },
+        ],
+      },
+      {
+        title: 'Fiscal & SAT',
+        links: [
+          { label: 'Calculadora RESICO Personas Físicas', href: '/mx/calculadora-resico-personas-fisicas' },
+          { label: 'Retención ISR e IVA Honorarios', href: '/mx/calculadora-honorarios-retencion-isr-iva' },
+          { label: 'Deducciones Personales Anuales', href: '/mx/calculadora-deducciones-personales-declaracion-anual' },
+          { label: 'Validador Factura CFDI 4.0 SAT', href: '/mx/validador-emisor-cfdi-4-0-sat' },
+          { label: 'Amortización de Pérdidas Fiscales', href: '/mx/amortizacion-perdidas-fiscales-sat' },
+        ],
+      },
+      {
+        title: 'Crédito & Infonavit',
+        links: [
+          { label: 'Calculadora Puntos Infonavit T1000', href: '/mx/calculadora-puntos-infonavit-t1000' },
+          { label: 'Tabla Amortización Infonavit Pesos/UMA', href: '/mx/tabla-amortizacion-credito-infonavit' },
+          { label: 'Gastos Notariales e ISAI Escrituras', href: '/mx/calculadora-gastos-notariales-isai-escrituracion' },
+          { label: 'Reajuste Renta Inflación INPC', href: '/mx/reajuste-renta-inpc-arrendamiento' },
+          { label: 'Rendimiento Neto Arrendamiento SAT', href: '/mx/calculadora-rendimiento-neto-arrendamiento-sat' },
+        ],
+      },
+      {
+        title: 'Trámites & Identidad',
+        links: [
+          { label: 'Validador y Generador CURP Oficial', href: '/mx/validador-generador-curp-oficial' },
+          { label: 'Validador RFC SAT con Homoclave', href: '/mx/validador-rfc-sat-homoclave' },
+          { label: 'Foto Infantil y Pasaporte Mexicano SRE', href: '/mx/foto-infantil-pasaporte-mexicano-sre' },
+          { label: 'Compresor PDF Buzón Tributario SAT', href: '/mx/compresor-pdf-buzon-tributario-sat' },
+          { label: 'Convertidor Números a Letras Pesos M.N.', href: '/mx/convertidor-numeros-a-letras-pesos-moneda-nacional' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalFooter({ country }: { country: CountryCode }) {
@@ -451,6 +505,18 @@ export function InternationalFooter({ country }: { country: CountryCode }) {
             >
               <span>🇬🇧</span>
               <span>UK (20)</span>
+            </Link>
+            <Link
+              href="/mx"
+              className={cn(
+                'px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5',
+                country === 'mx'
+                  ? 'bg-emerald-700 text-white border-emerald-600 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
+              )}
+            >
+              <span>🇲🇽</span>
+              <span>México (20)</span>
             </Link>
             <Link
               href="/"

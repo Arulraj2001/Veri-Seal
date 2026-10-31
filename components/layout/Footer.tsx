@@ -42,7 +42,7 @@ export function Footer() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br') || pathname?.startsWith('/uk')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br') || pathname?.startsWith('/uk') || pathname?.startsWith('/mx')) {
     return null;
   }
 
@@ -460,6 +460,15 @@ export function Footer() {
               <span className="text-base group-hover:scale-110 transition-transform">🇬🇧</span>
               <span>United Kingdom</span>
               <span className="text-[10px] font-bold text-indigo-900 bg-indigo-100 px-1.5 py-0.5 rounded">20 Tools</span>
+            </Link>
+
+            <Link
+              href="/mx"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-emerald-500 hover:bg-emerald-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+            >
+              <span className="text-base group-hover:scale-110 transition-transform">🇲🇽</span>
+              <span>México</span>
+              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded">20 Herramientas</span>
             </Link>
           </div>
         </div>

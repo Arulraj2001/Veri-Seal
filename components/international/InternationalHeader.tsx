@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type CountryCode = 'es' | 'de' | 'fr' | 'it' | 'br' | 'uk';
+export type CountryCode = 'es' | 'de' | 'fr' | 'it' | 'br' | 'uk' | 'mx';
 
 interface ToolItem {
   title: string;
@@ -425,6 +425,68 @@ const COUNTRY_CONFIGS: Record<CountryCode, CountryConfig> = {
       },
     ],
   },
+  mx: {
+    code: 'mx',
+    name: 'México',
+    flag: '🇲🇽',
+    portalTitle: 'Portal Laboral LFT, SAT & Infonavit 2026',
+    badgeText: 'México SAT',
+    accentClass: 'emerald',
+    accentBg: 'bg-emerald-700',
+    accentText: 'text-emerald-800',
+    accentHoverBg: 'hover:bg-emerald-50',
+    accentBorder: 'border-emerald-700/30',
+    activePillBg: 'bg-emerald-700 text-white',
+    hubHref: '/mx',
+    hubButtonLabel: 'Portal México',
+    allToolsLabel: 'Todas las 20 Herramientas',
+    pillars: [
+      {
+        name: 'Laboral & Nómina LFT',
+        icon: Calculator,
+        tools: [
+          { title: 'Sueldo Neto IMSS e ISR 2026', href: '/mx/calculadora-sueldo-neto-imss-isr', badge: 'Top' },
+          { title: 'Finiquito y Liquidación por Despido', href: '/mx/calculadora-finiquito-liquidacion-despido', badge: 'Art. 50' },
+          { title: 'Calculadora de Aguinaldo Legal LFT', href: '/mx/calculadora-aguinaldo-ley-federal-trabajo', badge: 'Art. 87' },
+          { title: 'Vacaciones Dignas & Prima Vacacional', href: '/mx/calculadora-vacaciones-dignas-prima-vacacional' },
+          { title: 'Calculadora Horas Extras LFT', href: '/mx/calculadora-horas-extras-lft' },
+        ],
+      },
+      {
+        name: 'Fiscal & SAT',
+        icon: Building2,
+        tools: [
+          { title: 'Calculadora RESICO Personas Físicas', href: '/mx/calculadora-resico-personas-fisicas', badge: '1-2.5%' },
+          { title: 'Retención ISR e IVA Honorarios', href: '/mx/calculadora-honorarios-retencion-isr-iva', badge: '10%' },
+          { title: 'Deducciones Personales Anuales', href: '/mx/calculadora-deducciones-personales-declaracion-anual' },
+          { title: 'Validador Factura CFDI 4.0 SAT', href: '/mx/validador-emisor-cfdi-4-0-sat', badge: 'CFDI' },
+          { title: 'Amortización de Pérdidas Fiscales', href: '/mx/amortizacion-perdidas-fiscales-sat' },
+        ],
+      },
+      {
+        name: 'Crédito & Infonavit',
+        icon: Home,
+        tools: [
+          { title: 'Calculadora Puntos Infonavit T1000', href: '/mx/calculadora-puntos-infonavit-t1000', badge: '1080 Pts' },
+          { title: 'Tabla Amortización Infonavit Pesos/UMA', href: '/mx/tabla-amortizacion-credito-infonavit' },
+          { title: 'Gastos Notariales e ISAI Escrituras', href: '/mx/calculadora-gastos-notariales-isai-escrituracion' },
+          { title: 'Reajuste Renta Inflación INPC', href: '/mx/reajuste-renta-inpc-arrendamiento' },
+          { title: 'Rendimiento Neto Arrendamiento SAT', href: '/mx/calculadora-rendimiento-neto-arrendamiento-sat' },
+        ],
+      },
+      {
+        name: 'Trámites & Identidad',
+        icon: FileText,
+        tools: [
+          { title: 'Validador y Generador CURP Oficial', href: '/mx/validador-generador-curp-oficial', badge: 'RENAPO' },
+          { title: 'Validador RFC SAT con Homoclave', href: '/mx/validador-rfc-sat-homoclave', badge: 'Módulo 11' },
+          { title: 'Foto Infantil y Pasaporte Mexicano SRE', href: '/mx/foto-infantil-pasaporte-mexicano-sre', badge: 'SRE' },
+          { title: 'Compresor PDF Buzón Tributario SAT', href: '/mx/compresor-pdf-buzon-tributario-sat', badge: '< 4MB' },
+          { title: 'Convertidor Números a Letras Pesos M.N.', href: '/mx/convertidor-numeros-a-letras-pesos-moneda-nacional' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalHeader({ country }: { country: CountryCode }) {
@@ -462,7 +524,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
             ? 'bg-sky-600 text-white'
             : country === 'br'
               ? 'bg-emerald-600 text-white'
-              : 'bg-indigo-900 text-white';
+              : country === 'uk'
+                ? 'bg-indigo-900 text-white'
+                : 'bg-emerald-700 text-white';
 
   const hoverAccent =
     country === 'es'
@@ -475,7 +539,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
             ? 'hover:text-sky-700 hover:bg-sky-50'
             : country === 'br'
               ? 'hover:text-emerald-700 hover:bg-emerald-50'
-              : 'hover:text-indigo-900 hover:bg-indigo-50';
+              : country === 'uk'
+                ? 'hover:text-indigo-900 hover:bg-indigo-50'
+                : 'hover:text-emerald-800 hover:bg-emerald-50';
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md transition-all shadow-xs">
@@ -660,6 +726,17 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
               <span>UK</span>
             </Link>
             <Link
+              href="/mx"
+              className={cn(
+                'px-2.5 py-1 rounded-full transition-all flex items-center gap-1',
+                country === 'mx' ? 'bg-white text-slate-950 shadow-2xs font-black' : 'text-slate-700 hover:text-slate-950'
+              )}
+              title="México Suite (20 Herramientas)"
+            >
+              <span>🇲🇽</span>
+              <span>MX</span>
+            </Link>
+            <Link
               href="/"
               className="px-2.5 py-1 rounded-full text-slate-700 hover:text-slate-950 transition-all flex items-center gap-1"
               title="Kagazo Global Suite"
@@ -754,6 +831,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
             </Link>
             <Link href="/uk" className={cn('p-2 rounded-xl text-center flex-1', country === 'uk' ? 'bg-indigo-50 text-indigo-900 border border-indigo-200' : 'bg-slate-50 text-slate-700')}>
               🇬🇧 UK
+            </Link>
+            <Link href="/mx" className={cn('p-2 rounded-xl text-center flex-1', country === 'mx' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-50 text-slate-700')}>
+              🇲🇽 México
             </Link>
             <Link href="/" className="p-2 rounded-xl text-center flex-1 bg-slate-50 text-slate-700">
               🌐 Global
