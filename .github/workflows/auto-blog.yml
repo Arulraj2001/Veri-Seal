@@ -2,7 +2,6 @@ name: Kagazo 48-Hour Autonomous Blog Engine
 
 on:
   schedule:
-    # Runs at 21:00 UTC (02:30 AM IST) every 2 days
     # Runs at 03:17 UTC (08:47 AM IST) every 2 days (off-peak, off-minute for guaranteed runner allocation)
     - cron: '17 3 */2 * *'
   workflow_dispatch:
@@ -17,6 +16,9 @@ on:
           - 'govt_exams'
           - 'ai_tools'
           - 'cyber_cafe'
+          - 'commonwealth'
+          - 'europe_statutory'
+          - 'latam_fiscal'
       topic:
         description: 'Optional custom topic to write about immediately'
         required: false
@@ -66,4 +68,4 @@ jobs:
           fi
 
           echo "Executing: npx tsx scripts/auto-blogger.ts $ARGS"
-          npx tsx scripts/auto-blogger.ts $ARGS
+          npx tsx scripts/auto-blogger.ts $ARGS || (echo "First attempt encountered transient error. Waiting 30s before retry..." && sleep 30 && npx tsx scripts/auto-blogger.ts $ARGS)
