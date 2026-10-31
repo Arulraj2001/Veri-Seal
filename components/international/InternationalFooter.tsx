@@ -403,6 +403,60 @@ const FOOTER_CONFIGS: Record<CountryCode, CountryFooterConfig> = {
       },
     ],
   },
+  au: {
+    code: 'au',
+    countryName: 'Australia',
+    flag: '🇦🇺',
+    heroText: 'Official Australian Statutory ATO, Fair Work & Property Suite 2026/27',
+    subText: 'Comprehensive statutory calculators for ATO revised Stage 3 tax cuts, Superannuation Guarantee, Fair Work NES redundancy, modern award leave loading, and state property transfer stamp duty.',
+    disclaimerTitle: 'Statutory Rigour & Privacy Assurance:',
+    disclaimer: 'Calculations strictly modelled on ITAA 1997, Fair Work Act 2009 NES scales, Superannuation Guarantee Act 1992, and state Duties Acts (NSW, VIC, QLD, WA). 100% in-browser client execution: zero tax or financial figures retained.',
+    accentClass: 'amber',
+    accentText: 'text-amber-500',
+    accentBorder: 'border-amber-500/30',
+    categories: [
+      {
+        title: 'ATO Tax & Superannuation',
+        links: [
+          { label: 'PAYG Withholding & Salary 2026/27', href: '/au/payg-withholding-salary-calculator' },
+          { label: 'Superannuation Guarantee (11.5% - 12%)', href: '/au/superannuation-guarantee-calculator' },
+          { label: 'Australian GST 10% & BAS Tool', href: '/au/goods-and-services-tax-gst-calculator' },
+          { label: 'Capital Gains Tax (50% CGT Discount)', href: '/au/capital-gains-tax-cgt-discount-calculator' },
+          { label: 'HECS / HELP Compulsory Repayment', href: '/au/hecs-help-repayment-calculator' },
+        ],
+      },
+      {
+        title: 'Fair Work & Employment',
+        links: [
+          { label: 'Statutory Redundancy Pay (s.119 NES)', href: '/au/redundancy-pay-fair-work-calculator' },
+          { label: 'Annual Leave Loading (17.5% Award)', href: '/au/annual-leave-loading-calculator' },
+          { label: 'Unfair Dismissal High Income Threshold', href: '/au/unfair-dismissal-high-income-threshold-checker' },
+          { label: 'FBT Car Fringe Benefit Calculator', href: '/au/fbt-car-fringe-benefit-calculator' },
+          { label: 'Contractor vs Employee Sham Check', href: '/au/contractor-vs-employee-sham-contracting-checker' },
+        ],
+      },
+      {
+        title: 'Property & State Revenue',
+        links: [
+          { label: 'State Stamp Duty Transfer Calculator', href: '/au/stamp-duty-conveyancing-calculator' },
+          { label: 'State Land Tax & Surcharge Calculator', href: '/au/land-tax-state-revenue-calculator' },
+          { label: 'Rental Yield & Negative Gearing Shield', href: '/au/rental-yield-negative-gearing-calculator' },
+          { label: 'Division 43 Capital Works (2.5%)', href: '/au/capital-works-div-43-depreciation-calculator' },
+          { label: 'First Home Super Saver Scheme (FHSS)', href: '/au/first-home-super-saver-fhss-calculator' },
+        ],
+      },
+      {
+        title: 'Identity & Legal Verification',
+        links: [
+          { label: 'Australian Passport Photo Tool (35x45mm)', href: '/au/australian-passport-photo-checker-generator' },
+          { label: 'ABN Lookup Modulus 89 Validator', href: '/au/abn-lookup-modulus-89-validator' },
+          { label: 'Tax File Number (TFN) Modulus 11', href: '/au/tfn-tax-file-number-validator' },
+          { label: 'ASIC & ATO PDF Compressor (< 10 MB)', href: '/au/pdf-compressor-asic-ato' },
+          { label: 'AUD Legal Number to Words Converter', href: '/au/number-to-words-aud-cents-converter' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalFooter({ country }: { country: CountryCode }) {
@@ -517,6 +571,18 @@ export function InternationalFooter({ country }: { country: CountryCode }) {
             >
               <span>🇲🇽</span>
               <span>México (20)</span>
+            </Link>
+            <Link
+              href="/au"
+              className={cn(
+                'px-3 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5',
+                country === 'au'
+                  ? 'bg-amber-600 text-white border-amber-500 shadow-sm'
+                  : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
+              )}
+            >
+              <span>🇦🇺</span>
+              <span>Australia (20)</span>
             </Link>
             <Link
               href="/"

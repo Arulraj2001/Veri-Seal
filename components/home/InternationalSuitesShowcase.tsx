@@ -356,6 +356,57 @@ const SUITES: CountrySuite[] = [
       },
     ],
   },
+  {
+    code: 'au',
+    name: 'Australia',
+    flag: '🇦🇺',
+    hubHref: '/au',
+    badge: 'ATO, Fair Work & Revenue 2026/27',
+    accentBg: 'bg-amber-500/10 text-amber-800 border-amber-500/20',
+    accentText: 'text-amber-700',
+    accentBorder: 'border-amber-700/30',
+    hoverBorder: 'hover:border-amber-600',
+    description:
+      'Official statutory calculator suite for revised Stage 3 PAYG tax cuts, Superannuation Guarantee (12%), Fair Work NES redundancy, stamp duty, and ABN/TFN check.',
+    pillars: [
+      {
+        name: 'ATO Tax & Super',
+        icon: Calculator,
+        featured: [
+          { name: 'PAYG Withholding & Salary 2026/27', href: '/au/payg-withholding-salary-calculator', tag: 'Stage 3' },
+          { name: 'Super Guarantee Calculator (12%)', href: '/au/superannuation-guarantee-calculator', tag: '12%' },
+          { name: 'HECS / HELP Compulsory Repayment', href: '/au/hecs-help-repayment-calculator' },
+        ],
+      },
+      {
+        name: 'Fair Work Compliance',
+        icon: Building2,
+        featured: [
+          { name: 'Statutory Redundancy Pay (s.119 NES)', href: '/au/redundancy-pay-fair-work-calculator', tag: 's.119' },
+          { name: 'Annual Leave Loading (17.5% Award)', href: '/au/annual-leave-loading-calculator' },
+          { name: 'Unfair Dismissal High Income Threshold', href: '/au/unfair-dismissal-high-income-threshold-checker' },
+        ],
+      },
+      {
+        name: 'Property & Stamp Duty',
+        icon: Home,
+        featured: [
+          { name: 'State Stamp Duty Transfer Calculator', href: '/au/stamp-duty-conveyancing-calculator', tag: 'NSW/VIC' },
+          { name: 'Negative Gearing Tax Shield (s.8-1)', href: '/au/rental-yield-negative-gearing-calculator' },
+          { name: 'First Home Super Saver Scheme (FHSS)', href: '/au/first-home-super-saver-fhss-calculator' },
+        ],
+      },
+      {
+        name: 'Identity & Legal Verification',
+        icon: FileText,
+        featured: [
+          { name: 'Australian Passport Photo Tool (35×45mm)', href: '/au/australian-passport-photo-checker-generator', tag: 'APO' },
+          { name: 'ABN Lookup Modulus 89 Validator', href: '/au/abn-lookup-modulus-89-validator', tag: 'ABR' },
+          { name: 'TFN Modulus 11 Check Algorithm', href: '/au/tfn-tax-file-number-validator' },
+        ],
+      },
+    ],
+  },
 ];
 
 export function InternationalSuitesShowcase() {
@@ -377,15 +428,15 @@ export function InternationalSuitesShowcase() {
             <Globe2 className="w-4 h-4 text-emerald-400" />
             <span>Kagazo International Portals</span>
             <span className="text-slate-400">&bull;</span>
-            <span className="text-emerald-400 font-mono">140 Statutory Tools</span>
+            <span className="text-emerald-400 font-mono">160 Statutory Tools</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-            Sovereign Micro-Tools Across 7 Nations
+            Sovereign Micro-Tools Across 8 Nations
           </h2>
 
           <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
-            Explore 140 newly built statutory calculators calibrated to official 2026 legal frameworks in Spain, Germany, France, Italy, Brazil, the United Kingdom, and Mexico. 100% in-browser client execution with zero data storage.
+            Explore 160 newly built statutory calculators calibrated to official 2026/27 legal frameworks in Spain, Germany, France, Italy, Brazil, the United Kingdom, Mexico, and Australia. 100% in-browser client execution with zero data storage.
           </p>
 
           {/* Quick Filter Tabs */}
@@ -400,7 +451,7 @@ export function InternationalSuitesShowcase() {
                   : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
               )}
             >
-              All Global Suites (140 Tools)
+              All Global Suites (160 Tools)
             </button>
             <button
               type="button"
@@ -492,6 +543,19 @@ export function InternationalSuitesShowcase() {
             >
               <span>🇲🇽</span>
               <span>México (20)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedSuite('au')}
+              className={cn(
+                'px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer border flex items-center gap-1.5',
+                selectedSuite === 'au'
+                  ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
+                  : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+              )}
+            >
+              <span>🇦🇺</span>
+              <span>Australia (20)</span>
             </button>
           </div>
         </div>

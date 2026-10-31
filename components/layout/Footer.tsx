@@ -42,7 +42,7 @@ export function Footer() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br') || pathname?.startsWith('/uk') || pathname?.startsWith('/mx')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard') || pathname?.startsWith('/es') || pathname?.startsWith('/fr') || pathname?.startsWith('/de') || pathname?.startsWith('/it') || pathname?.startsWith('/br') || pathname?.startsWith('/uk') || pathname?.startsWith('/mx') || pathname?.startsWith('/au')) {
     return null;
   }
 
@@ -469,6 +469,15 @@ export function Footer() {
               <span className="text-base group-hover:scale-110 transition-transform">🇲🇽</span>
               <span>México</span>
               <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded">20 Herramientas</span>
+            </Link>
+
+            <Link
+              href="/au"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-amber-500 hover:bg-amber-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+            >
+              <span className="text-base group-hover:scale-110 transition-transform">🇦🇺</span>
+              <span>Australia</span>
+              <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded">20 Tools</span>
             </Link>
           </div>
         </div>

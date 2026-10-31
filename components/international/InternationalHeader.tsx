@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export type CountryCode = 'es' | 'de' | 'fr' | 'it' | 'br' | 'uk' | 'mx';
+export type CountryCode = 'es' | 'de' | 'fr' | 'it' | 'br' | 'uk' | 'mx' | 'au';
 
 interface ToolItem {
   title: string;
@@ -487,6 +487,68 @@ const COUNTRY_CONFIGS: Record<CountryCode, CountryConfig> = {
       },
     ],
   },
+  au: {
+    code: 'au',
+    name: 'Australia',
+    flag: '🇦🇺',
+    portalTitle: 'Australian Statutory ATO, Fair Work & Property Suite 2026/27',
+    badgeText: 'Australia ATO',
+    accentClass: 'amber',
+    accentBg: 'bg-amber-600',
+    accentText: 'text-amber-800',
+    accentHoverBg: 'hover:bg-amber-50',
+    accentBorder: 'border-amber-600/30',
+    activePillBg: 'bg-amber-600 text-white',
+    hubHref: '/au',
+    hubButtonLabel: 'Australia Hub',
+    allToolsLabel: 'All 20 Statutory Tools',
+    pillars: [
+      {
+        name: 'ATO Tax & Super',
+        icon: Calculator,
+        tools: [
+          { title: 'PAYG Withholding & Salary Calculator 2026/27', href: '/au/payg-withholding-salary-calculator', badge: 'Stage 3' },
+          { title: 'Superannuation Guarantee (11.5% - 12%)', href: '/au/superannuation-guarantee-calculator', badge: '12%' },
+          { title: 'Australian GST 10% & BAS Calculator', href: '/au/goods-and-services-tax-gst-calculator' },
+          { title: 'Capital Gains Tax (50% CGT Discount)', href: '/au/capital-gains-tax-cgt-discount-calculator', badge: '50% Off' },
+          { title: 'HECS / HELP Compulsory Repayment Tool', href: '/au/hecs-help-repayment-calculator', badge: 'HECS' },
+        ],
+      },
+      {
+        name: 'Fair Work & Employment',
+        icon: Building2,
+        tools: [
+          { title: 'Statutory Redundancy Pay (s.119 NES)', href: '/au/redundancy-pay-fair-work-calculator', badge: 's.119' },
+          { title: 'Annual Leave Loading (17.5% Modern Award)', href: '/au/annual-leave-loading-calculator' },
+          { title: 'Unfair Dismissal High Income Threshold', href: '/au/unfair-dismissal-high-income-threshold-checker', badge: 's.382' },
+          { title: 'FBT Car Fringe Benefit (Statutory Formula)', href: '/au/fbt-car-fringe-benefit-calculator', badge: 'FBT' },
+          { title: 'Contractor vs Employee Sham Check', href: '/au/contractor-vs-employee-sham-contracting-checker' },
+        ],
+      },
+      {
+        name: 'Property & State Revenue',
+        icon: Home,
+        tools: [
+          { title: 'State Stamp Duty Transfer Calculator', href: '/au/stamp-duty-conveyancing-calculator', badge: 'NSW/VIC' },
+          { title: 'State Land Tax & Surcharge Calculator', href: '/au/land-tax-state-revenue-calculator' },
+          { title: 'Rental Yield & Negative Gearing Shield', href: '/au/rental-yield-negative-gearing-calculator', badge: 's.8-1' },
+          { title: 'Division 43 Capital Works Depreciation (2.5%)', href: '/au/capital-works-div-43-depreciation-calculator' },
+          { title: 'First Home Super Saver Scheme (FHSS)', href: '/au/first-home-super-saver-fhss-calculator', badge: 'FHSS' },
+        ],
+      },
+      {
+        name: 'Identity & Legal Verification',
+        icon: FileText,
+        tools: [
+          { title: 'Australian Passport Photo Biometric Tool (35×45mm)', href: '/au/australian-passport-photo-checker-generator', badge: 'APO' },
+          { title: 'ABN Lookup Modulus 89 Validator', href: '/au/abn-lookup-modulus-89-validator', badge: 'ABR' },
+          { title: 'Tax File Number (TFN) Modulus 11 Checker', href: '/au/tfn-tax-file-number-validator', badge: 'ATO' },
+          { title: 'ASIC & ATO PDF Filing Compressor (< 10 MB)', href: '/au/pdf-compressor-asic-ato', badge: '< 10MB' },
+          { title: 'AUD Number to Words Legal Converter', href: '/au/number-to-words-aud-cents-converter' },
+        ],
+      },
+    ],
+  },
 };
 
 export function InternationalHeader({ country }: { country: CountryCode }) {
@@ -526,7 +588,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
               ? 'bg-emerald-600 text-white'
               : country === 'uk'
                 ? 'bg-indigo-900 text-white'
-                : 'bg-emerald-700 text-white';
+                : country === 'mx'
+                  ? 'bg-emerald-700 text-white'
+                  : 'bg-amber-600 text-white';
 
   const hoverAccent =
     country === 'es'
@@ -541,7 +605,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
               ? 'hover:text-emerald-700 hover:bg-emerald-50'
               : country === 'uk'
                 ? 'hover:text-indigo-900 hover:bg-indigo-50'
-                : 'hover:text-emerald-800 hover:bg-emerald-50';
+                : country === 'mx'
+                  ? 'hover:text-emerald-800 hover:bg-emerald-50'
+                  : 'hover:text-amber-800 hover:bg-amber-50';
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md transition-all shadow-xs">
@@ -737,6 +803,17 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
               <span>MX</span>
             </Link>
             <Link
+              href="/au"
+              className={cn(
+                'px-2.5 py-1 rounded-full transition-all flex items-center gap-1',
+                country === 'au' ? 'bg-white text-slate-950 shadow-2xs font-black' : 'text-slate-700 hover:text-slate-950'
+              )}
+              title="Australia Suite (20 Tools)"
+            >
+              <span>🇦🇺</span>
+              <span>AU</span>
+            </Link>
+            <Link
               href="/"
               className="px-2.5 py-1 rounded-full text-slate-700 hover:text-slate-950 transition-all flex items-center gap-1"
               title="Kagazo Global Suite"
@@ -834,6 +911,9 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
             </Link>
             <Link href="/mx" className={cn('p-2 rounded-xl text-center flex-1', country === 'mx' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-50 text-slate-700')}>
               🇲🇽 México
+            </Link>
+            <Link href="/au" className={cn('p-2 rounded-xl text-center flex-1', country === 'au' ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-slate-50 text-slate-700')}>
+              🇦🇺 Australia
             </Link>
             <Link href="/" className="p-2 rounded-xl text-center flex-1 bg-slate-50 text-slate-700">
               🌐 Global
