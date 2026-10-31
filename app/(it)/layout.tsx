@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description:
     'Suite completa di 20 calcolatori legali e fiscali per l\'Italia: Stipendio Netto 2026, Calcolo TFR, IMU F24, Regime Forfettario, Foto Tessera CIE e Ravvedimento Operoso.',
   alternates: {
-    canonical: `${SITE_URL}/it`,
     languages: {
       'it-IT': `${SITE_URL}/it`,
       'it': `${SITE_URL}/it`,

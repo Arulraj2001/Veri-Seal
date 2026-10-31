@@ -1,535 +1,291 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Banknote,
-  ShieldCheck,
-  TrendingDown,
-  RotateCcw,
-  Sparkles,
-  ArrowRight,
-  Clock,
-  Coins,
-  CheckCircle2,
-  FileCheck2,
-} from 'lucide-react';
+import { Banknote, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { AmortizacaoFinanciamentoFgtsClient } from './ClientEngine';
 
-interface AmortizacaoResult {
-  saldoAnterior: number;
-  valorAmortizado: number;
-  novoSaldoDevedor: number;
-  // Redução de Prazo
-  prazoOriginalMeses: number;
-  novoPrazoMeses: number;
-  mesesEconomizados: number;
-  anosEconomizados: string;
-  parcelaReducaoPrazo: number;
-  economiaJurosPrazo: number;
-  // Redução de Parcela
-  novaParcelaReducao: number;
-  reducaoMensalParcela: number;
-  economiaJurosParcela: number;
-}
+export const metadata: Metadata = {
+  title: 'Simulador de Amortização com FGTS 2026 | Reduzir Prazo vs Parcela',
+  description:
+    'Simule a amortização do financiamento imobiliário com FGTS ou recursos próprios (SAC e Price). Compare a redução de prazo (máxima economia de juros) versus redução da parcela mensal.',
+  keywords: [
+    'simulador amortizacao fgts 2026',
+    'amortizar financiamento habitacional caixa',
+    'amortizar prazo ou parcela fgts',
+    'regras uso fgts amortizacao sfh',
+    'resolucao ccfgts 994 2021',
+    'economia de juros amortizacao sac'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/amortizacao-financiamento-fgts',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/amortizacao-financiamento-fgts',
+      'pt': 'https://kagazo.in/br/amortizacao-financiamento-fgts',
+      'x-default': 'https://kagazo.in/br/amortizacao-financiamento-fgts',
+    },
+  },
+  openGraph: {
+    title: 'Simulador de Amortização de Financiamento Imobiliário com FGTS',
+    description:
+      'Descubra quantos anos e milhares de reais em juros você pode economizar ao abater o saldo devedor do imóvel com seu FGTS.',
+    url: 'https://kagazo.in/br/amortizacao-financiamento-fgts',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Simulador de Amortização com FGTS 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'FinanceApplication',
+      'description': 'Simulador de amortização extraordinária de financiamento habitacional pelo SFH com comparação de redução de prazo e de parcela.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'Amortização com FGTS',
+          'item': 'https://kagazo.in/br/amortizacao-financiamento-fgts',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'O que vale mais a pena: amortizar reduzindo o prazo ou o valor da parcela?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Financeiramente, a redução de prazo é imensamente superior, pois expurga diretamente parcelas do final do contrato onde a incidência de juros compostos é máxima, gerando economia que chega a ser o dobro ou triplo da redução de parcela. Já a redução de parcela é recomendada apenas para famílias que precisam de alívio emergencial no fluxo de caixa mensal.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Quais são as regras para usar o FGTS na amortização do financiamento?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O mutuário deve ter ao menos 3 anos de trabalho sob o regime do FGTS, o imóvel deve estar financiado pelo SFH com valor de avaliação de até R$ 1,5 milhão, o comprador não pode possuir outro imóvel residencial no mesmo município e deve ser respeitado o intervalo mínimo de 2 anos entre cada amortização de saldo devedor.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Posso usar o FGTS para quitar parcelas atrasadas do financiamento?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Sim. As regras do Conselho Curador do FGTS autorizam o uso do saldo para pagamento de até 3 (três) parcelas em atraso de contratos habitacionais do SFH, evitando a execução da garantia fiduciária e o leilão extrajudicial do imóvel.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Quem financiou pelo SFI pode usar o saldo do FGTS para amortizar?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Desde a Resolução CCFGTS nº 994/2021, foi autorizada a utilização do FGTS para amortização ou liquidação de financiamentos contratados fora do SFH (no Sistema de Financiamento Imobiliário - SFI), desde que o imóvel e o mutuário atendam aos mesmos limites de valor de até R$ 1.500.000,00 e demais requisitos do SFH.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function AmortizacaoFgtsPage() {
-  const [saldoDevedor, setSaldoDevedor] = React.useState<number>(280000);
-  const [prazoMeses, setPrazoMeses] = React.useState<number>(360);
-  const [taxaJurosAnual, setTaxaJurosAnual] = React.useState<number>(9.99);
-  const [valorAmortizacao, setValorAmortizacao] = React.useState<number>(30000);
-  const [sistemaAmortizacao, setSistemaAmortizacao] = React.useState<'sac' | 'price'>('sac');
-  const [estrategiaVisualizacao, setEstrategiaVisualizacao] = React.useState<'prazo' | 'parcela'>('prazo');
-
-  const calcularAmortizacao = React.useCallback((): AmortizacaoResult => {
-    const saldo = Math.max(0, saldoDevedor);
-    const prazo = Math.max(1, prazoMeses);
-    const taxaMes = Math.pow(1 + Math.max(0, taxaJurosAnual) / 100, 1 / 12) - 1;
-    const amort = Math.min(saldo, Math.max(0, valorAmortizacao));
-    const novoSaldo = Math.max(0, saldo - amort);
-
-    // Prestação inicial estimada
-    let parcelaAtual = 0;
-    if (sistemaAmortizacao === 'sac') {
-      const amortMensal = saldo / prazo;
-      parcelaAtual = amortMensal + (saldo * taxaMes);
-    } else {
-      parcelaAtual = (saldo * taxaMes) / (1 - Math.pow(1 + taxaMes, -prazo));
-    }
-
-    // 1. Cenário REDUÇÃO DE PRAZO (mantendo a parcela próxima ao valor atual)
-    let novoPrazoMeses = prazo;
-    let economiaJurosPrazo = 0;
-    if (sistemaAmortizacao === 'sac') {
-      const amortizacaoMensalOriginal = saldo / prazo;
-      novoPrazoMeses = Math.max(1, Math.ceil(novoSaldo / amortizacaoMensalOriginal));
-      // Juros totais SAC = (n + 1) / 2 * Saldo * taxa
-      const jurosOriginal = (prazo + 1) * (saldo * taxaMes) / 2;
-      const jurosNovo = (novoPrazoMeses + 1) * (novoSaldo * taxaMes) / 2;
-      economiaJurosPrazo = Math.max(0, jurosOriginal - jurosNovo);
-    } else {
-      // Price: n = -ln(1 - (Saldo * i / P)) / ln(1 + i)
-      if (parcelaAtual > novoSaldo * taxaMes) {
-        novoPrazoMeses = Math.ceil(-Math.log(1 - (novoSaldo * taxaMes) / parcelaAtual) / Math.log(1 + taxaMes));
-      } else {
-        novoPrazoMeses = 1;
-      }
-      const totalOriginal = parcelaAtual * prazo;
-      const totalNovo = parcelaAtual * novoPrazoMeses;
-      economiaJurosPrazo = Math.max(0, (totalOriginal - saldo) - (totalNovo - novoSaldo));
-    }
-
-    const mesesEconomizados = Math.max(0, prazo - novoPrazoMeses);
-    const anosFormatados = `${Math.floor(mesesEconomizados / 12)} anos e ${mesesEconomizados % 12} meses`;
-
-    // 2. Cenário REDUÇÃO DE PARCELA (mantendo o prazo original intacto)
-    let novaParcelaReducao = 0;
-    let economiaJurosParcela = 0;
-    if (sistemaAmortizacao === 'sac') {
-      const amortNovo = novoSaldo / prazo;
-      novaParcelaReducao = amortNovo + (novoSaldo * taxaMes);
-      const jurosOriginal = (prazo + 1) * (saldo * taxaMes) / 2;
-      const jurosNovo = (prazo + 1) * (novoSaldo * taxaMes) / 2;
-      economiaJurosParcela = Math.max(0, jurosOriginal - jurosNovo);
-    } else {
-      novaParcelaReducao = (novoSaldo * taxaMes) / (1 - Math.pow(1 + taxaMes, -prazo));
-      const totalOriginal = parcelaAtual * prazo;
-      const totalNovo = novaParcelaReducao * prazo;
-      economiaJurosParcela = Math.max(0, (totalOriginal - saldo) - (totalNovo - novoSaldo));
-    }
-
-    const reducaoMensalParcela = Math.max(0, parcelaAtual - novaParcelaReducao);
-
-    return {
-      saldoAnterior: saldo,
-      valorAmortizado: amort,
-      novoSaldoDevedor: novoSaldo,
-      prazoOriginalMeses: prazo,
-      novoPrazoMeses,
-      mesesEconomizados,
-      anosEconomizados: anosFormatados,
-      parcelaReducaoPrazo: parcelaAtual,
-      economiaJurosPrazo,
-      novaParcelaReducao,
-      reducaoMensalParcela,
-      economiaJurosParcela,
-    };
-  }, [saldoDevedor, prazoMeses, taxaJurosAnual, valorAmortizacao, sistemaAmortizacao]);
-
-  const res = calcularAmortizacao();
-
-  const formatarBRL = (val: number) =>
-    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
-
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased py-10 px-4 sm:px-6 lg:px-8">
-      {/* Schema.org FAQ & SoftwareApplication */}
+    <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [
-              {
-                '@type': 'SoftwareApplication',
-                name: 'Simulador de Amortização de Financiamento Imobiliário com FGTS',
-                applicationCategory: 'FinanceApplication',
-                operatingSystem: 'Any',
-                offers: {
-                  '@type': 'Offer',
-                  price: '0.00',
-                  priceCurrency: 'BRL',
-                },
-                description:
-                  'Calculadora de amortização extraordinária de crédito imobiliário pelo SFH. Compare a redução de prazo (menos juros) versus redução de parcela.',
-              },
-              {
-                '@type': 'FAQPage',
-                mainEntity: [
-                  {
-                    '@type': 'Question',
-                    name: 'O que vale mais a pena: amortizar reduzindo o prazo ou a parcela?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Financeiramente, reduzir o prazo do financiamento gera uma economia de juros substancialmente maior (muitas vezes o dobro ou triplo), pois elimina parcelas com juros compostos calculados para o final do contrato. Já reduzir o valor da parcela é indicado quando a renda familiar está apertada e precisa de alívio no fluxo de caixa mensal imediato.',
-                    },
-                  },
-                  {
-                    '@type': 'Question',
-                    name: 'Quais as regras da Caixa para usar o saldo do FGTS na amortização?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Para usar o FGTS na amortização ou liquidação do financiamento pelo SFH, o trabalhador deve possuir ao menos 3 anos de trabalho sob regime do FGTS, não ser proprietário de outro imóvel residencial urbano no mesmo município, e deve respeitar o intervalo mínimo de 2 anos entre uma utilização e outra para amortização de saldo devedor.',
-                    },
-                  },
-                  {
-                    '@type': 'Question',
-                    name: 'Qual o valor máximo do imóvel financiado permitido pelo SFH?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Pelas normas do Conselho Monetário Nacional (CMN) e Resolução CCFGTS nº 994/2021, o teto de avaliação do imóvel para enquadramento no Sistema Financeiro de Habitação (SFH) com direito a uso do FGTS é de R$ 1.500.000,00 em todo o território nacional.',
-                    },
-                  },
-                ],
-              },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-4xl mx-auto">
-        {/* Navigation Breadcrumbs */}
-        <nav className="mb-6 text-sm text-slate-500 flex items-center space-x-2">
-          <Link href="/br" className="hover:text-emerald-700 transition">
-            Brasil
-          </Link>
-          <span>/</span>
-          <span className="text-slate-800 font-medium">Amortização com FGTS</span>
-        </nav>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">Amortização com FGTS</span>
+          </nav>
 
-        {/* Title Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Banknote className="w-3.5 h-3.5" />
-            SFH & Resolução CCFGTS nº 994/2021
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Simulador de Amortização com FGTS
-          </h1>
-          <p className="mt-2 text-base sm:text-lg text-slate-600">
-            Descubra a economia real de juros ao abater o saldo devedor do imóvel com FGTS ou recursos próprios: Prazo vs Parcela.
-          </p>
-        </div>
-
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          {/* Form Parameters */}
-          <div className="md:col-span-7 bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-5">
-            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
-              <Coins className="w-5 h-5 text-emerald-600" />
-              Dados do Financiamento Imobiliário
-            </h2>
-
-            {/* Saldo Devedor */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">
-                Saldo Devedor Atual (R$)
-              </label>
-              <div className="relative">
-                <span className="absolute left-3.5 top-3 text-slate-400 font-semibold text-sm">R$</span>
-                <input
-                  type="number"
-                  min="1000"
-                  step="5000"
-                  value={saldoDevedor || ''}
-                  onChange={(e) => setSaldoDevedor(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-12 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <Banknote className="w-3.5 h-3.5" />
+              Crédito Habitacional • Lei 8.036/1990 Art. 20 & Resolução CCFGTS 994/2021
             </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Simulador de Amortização de Financiamento com FGTS 2026
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Compare o impacto financeiro de amortizar o saldo devedor com FGTS ou recursos próprios: elimine anos de juros compostos reduzindo o prazo ou reduza o valor da prestação mensal.
+            </p>
 
-            {/* Valor da Amortização */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">
-                Valor a Amortizar (FGTS ou Recursos Próprios)
-              </label>
-              <div className="relative">
-                <span className="absolute left-3.5 top-3 text-slate-400 font-semibold text-sm">R$</span>
-                <input
-                  type="number"
-                  min="500"
-                  step="1000"
-                  value={valorAmortizacao || ''}
-                  onChange={(e) => setValorAmortizacao(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-12 pr-4 py-2.5 rounded-xl border border-emerald-300 bg-emerald-50/20 font-bold text-emerald-950 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
-            </div>
-
-            {/* Prazo Restante e Taxa de Juros */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Prazo Restante (Meses)
-                </label>
-                <input
-                  type="number"
-                  min="6"
-                  max="420"
-                  value={prazoMeses || ''}
-                  onChange={(e) => setPrazoMeses(parseInt(e.target.value) || 0)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-                <span className="text-[11px] text-slate-500 mt-1 block">
-                  Ex: 360 meses (30 anos)
-                </span>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Taxa Efetiva de Juros (% a.a.)
-                </label>
-                <div className="relative">
-                  <input
-                    type="number"
-                    step="0.1"
-                    value={taxaJurosAnual || ''}
-                    onChange={(e) => setTaxaJurosAnual(parseFloat(e.target.value) || 0)}
-                    className="w-full pl-3.5 pr-8 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  />
-                  <span className="absolute right-3.5 top-3 text-slate-400 font-semibold text-xs">%</span>
-                </div>
-                <span className="text-[11px] text-slate-500 mt-1 block">
-                  Média SFH: 9,5% a 10,5% a.a.
-                </span>
-              </div>
-            </div>
-
-            {/* Sistema de Amortização */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
-                Sistema de Amortização Contratado
-              </label>
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <button
-                  type="button"
-                  onClick={() => setSistemaAmortizacao('sac')}
-                  className={`p-3 rounded-xl border text-center font-semibold transition ${
-                    sistemaAmortizacao === 'sac'
-                      ? 'border-emerald-600 bg-emerald-50 text-emerald-950 shadow-sm'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  Tabela SAC (Decrescente)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSistemaAmortizacao('price')}
-                  className={`p-3 rounded-xl border text-center font-semibold transition ${
-                    sistemaAmortizacao === 'price'
-                      ? 'border-emerald-600 bg-emerald-50 text-emerald-950 shadow-sm'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  Tabela Price (Fixa)
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Results Summary Column */}
-          <div className="md:col-span-5 space-y-6">
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
-              <h2 className="text-base font-bold text-slate-900 mb-3 pb-2 border-b border-slate-100 flex items-center justify-between">
-                <span>Estratégia de Amortização</span>
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                  SFH
-                </span>
-              </h2>
-
-              {/* Strategy Selector Pills */}
-              <div className="grid grid-cols-2 gap-2 mb-5">
-                <button
-                  type="button"
-                  onClick={() => setEstrategiaVisualizacao('prazo')}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
-                    estrategiaVisualizacao === 'prazo'
-                      ? 'bg-emerald-600 text-white shadow-sm'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                >
-                  <Clock className="w-3.5 h-3.5" />
-                  Reduzir Prazo
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEstrategiaVisualizacao('parcela')}
-                  className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
-                    estrategiaVisualizacao === 'parcela'
-                      ? 'bg-emerald-600 text-white shadow-sm'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  }`}
-                >
-                  <TrendingDown className="w-3.5 h-3.5" />
-                  Reduzir Parcela
-                </button>
-              </div>
-
-              {/* Highlight Box */}
-              {estrategiaVisualizacao === 'prazo' ? (
-                <div className="p-4 rounded-xl bg-slate-900 text-white mb-5 space-y-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 block">
-                    Economia Estimada em Juros
-                  </span>
-                  <div className="text-3xl font-black tracking-tight text-white">
-                    {formatarBRL(res.economiaJurosPrazo)}
-                  </div>
-                  <div className="text-xs text-slate-300 border-t border-slate-800 pt-2 flex items-center justify-between">
-                    <span>Tempo Eliminado:</span>
-                    <span className="font-bold text-emerald-400">{res.anosEconomizados}</span>
-                  </div>
-                </div>
-              ) : (
-                <div className="p-4 rounded-xl bg-slate-900 text-white mb-5 space-y-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 block">
-                    Alívio Mensal na Parcela
-                  </span>
-                  <div className="text-3xl font-black tracking-tight text-white">
-                    -{formatarBRL(res.reducaoMensalParcela)} / mês
-                  </div>
-                  <div className="text-xs text-slate-300 border-t border-slate-800 pt-2 flex items-center justify-between">
-                    <span>Nova Parcela:</span>
-                    <span className="font-bold text-emerald-400">{formatarBRL(res.novaParcelaReducao)}</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Detalhes Comparativos */}
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between py-1.5 border-b border-slate-100">
-                  <span className="text-slate-500">Saldo Anterior:</span>
-                  <span className="font-semibold text-slate-800">{formatarBRL(res.saldoAnterior)}</span>
-                </div>
-                <div className="flex justify-between py-1.5 border-b border-slate-100">
-                  <span className="text-slate-500">Amortização Aplicada:</span>
-                  <span className="font-semibold text-emerald-700">-{formatarBRL(res.valorAmortizado)}</span>
-                </div>
-                <div className="flex justify-between py-1.5 border-b border-slate-100">
-                  <span className="text-slate-500">Novo Saldo Devedor:</span>
-                  <span className="font-bold text-slate-900">{formatarBRL(res.novoSaldoDevedor)}</span>
-                </div>
-                {estrategiaVisualizacao === 'prazo' ? (
-                  <>
-                    <div className="flex justify-between py-1.5 border-b border-slate-100">
-                      <span className="text-slate-500">Prazo Restante:</span>
-                      <span className="font-semibold text-slate-800">
-                        {res.novoPrazoMeses} meses (antes: {res.prazoOriginalMeses})
-                      </span>
-                    </div>
-                    <div className="flex justify-between py-1.5">
-                      <span className="text-slate-500">Parcelas Eliminadas:</span>
-                      <span className="font-bold text-emerald-700">{res.mesesEconomizados} parcelas a menos</span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex justify-between py-1.5 border-b border-slate-100">
-                      <span className="text-slate-500">Juros Economizados no Total:</span>
-                      <span className="font-semibold text-emerald-700">
-                        {formatarBRL(res.economiaJurosParcela)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between py-1.5">
-                      <span className="text-slate-500">Prazo Mantido:</span>
-                      <span className="font-semibold text-slate-800">{res.prazoOriginalMeses} meses</span>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-
-            {/* Informational Callout */}
-            <div className="rounded-2xl p-5 bg-emerald-50/70 border border-emerald-100 text-emerald-950 text-xs space-y-2">
-              <div className="font-bold flex items-center gap-1.5 text-emerald-900">
-                <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                Cálculo Financeiro Local
-              </div>
-              <p className="text-emerald-800">
-                As simulações consideram a taxa nominal pactuada e amortização extraordinária direta sobre o saldo principal, em total conformidade com as diretrizes do Banco Central do Brasil.
+            {/* Answer Capsule (GEO) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Regra Estratégica da Amortização Habitacional:</p>
+              <p>
+                A redução de prazo abate diretamente parcelas vincendas do final do financiamento, eliminando os juros compostos que incidiriam durante décadas. O FGTS pode ser utilizado a cada 2 anos para amortizar saldo devedor de imóveis de até R$ 1.500.000,00 no âmbito do SFH (Lei 8.036/90).
               </p>
             </div>
-          </div>
-        </div>
+          </header>
 
-        {/* AdSense Placement */}
-        <div className="my-10">
+          {/* Interactive Client Engine */}
+          <AmortizacaoFinanciamentoFgtsClient />
+
+          {/* Middle In-Content Ad */}
           <AdSlot slot="in_content" context="legal" />
-        </div>
 
-        {/* Deep Statutory Guidance Section (800+ Words) */}
-        <article className="mt-12 bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-200/80 space-y-8 text-slate-700 leading-relaxed">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">
-              Regras e Diretrizes para Amortizar o Financiamento com FGTS
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Manual Legal e Financeiro da Amortização Imobiliária com FGTS
             </h2>
-            <p>
-              A utilização do saldo vinculado da conta do Fundo de Garantia do Tempo de Serviço (FGTS) para amortização extraordinária de dívidas decorrentes de financiamento imobiliário é regulamentada pela <strong>Lei Federal nº 8.036/1990 (Art. 20)</strong> e pelas sucessivas resoluções do Conselho Curador do FGTS (notadamente a <strong>Resolução CCFGTS nº 994/2021</strong>).
-            </p>
-            <p className="mt-3">
-              O trabalhador brasileiro possui o direito de usar o saldo disponível na conta do FGTS para três finalidades precípuas no crédito imobiliário:
-            </p>
-            <ol className="list-decimal pl-5 mt-3 space-y-2">
-              <li>
-                <strong>Amortização extraordinária do saldo devedor:</strong> Pagamento antecipado de parte do montante principal financiado, reduzindo o número de meses vincendos ou o valor unitário das prestações.
-              </li>
-              <li>
-                <strong>Liquidação total do financiamento:</strong> Quitação integral antecipada de toda a dívida remanescente junto ao agente financeiro (Caixa Econômica Federal, Bradesco, Itaú, Santander, Banco do Brasil, etc.).
-              </li>
-              <li>
-                <strong>Abatimento de até 80% do valor das prestações:</strong> Utilização programada do saldo para pagar até 80% do boleto mensal durante o período de 12 meses consecutivos.
-              </li>
-            </ol>
-          </div>
 
-          <div className="border-t border-slate-100 pt-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-3">
-              Condições Obrigatórias Exigidas pela Legislação
-            </h3>
             <p>
-              Para ter a operação autorizada pelo agente operador do FGTS, tanto o mutuário quanto o imóvel devem cumprir cumulativamente os seguintes requisitos legais:
+              O direito à utilização do saldo da conta vinculada do Fundo de Garantia do Tempo de Serviço (FGTS) para a amortização de financiamentos habitacionais é assegurado pelo <strong>Artigo 20, inciso VII da Lei Federal nº 8.036/1990</strong> e detalhado pelas instruções normativas do Conselho Curador do FGTS (CCFGTS). O mecanismo representa a forma mais poderosa à disposição do trabalhador brasileiro para se livrar do endividamento imobiliário de longo prazo e preservar seu patrimônio.
             </p>
-            <ul className="list-disc pl-5 mt-3 space-y-2">
+
+            <h3 className="text-lg font-semibold text-emerald-400">1. As Três Modalidades de Uso do FGTS no Crédito Habitacional</h3>
+            <p>
+              O titular da conta vinculada pode utilizar seu saldo em três situações contratuais distintas:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
               <li>
-                <strong>Tempo de trabalho sob o FGTS:</strong> Contar com o mínimo de 3 (três) anos de trabalho sob o regime do FGTS, somando-se os períodos trabalhados, consecutivos ou não, na mesma ou em diferentes empresas.
+                <strong>Amortização Extraordinária do Saldo Devedor:</strong> Pagamento de quantia representativa do capital principal, recalculando-se o contrato para menos meses de vigência (redução de prazo) ou para mensalidade menor (redução de parcela);
               </li>
               <li>
-                <strong>Ausência de outro financiamento ativo:</strong> Não ser titular de outro financiamento ativo no âmbito do Sistema Financeiro de Habitação (SFH) em qualquer parte do território nacional.
+                <strong>Liquidação Total Antecipada:</strong> Quitação de 100% do saldo remanescente, com cancelamento da alienação fiduciária e baixa da hipoteca no RGI;
               </li>
               <li>
-                <strong>Propriedade imobiliária no mesmo município:</strong> Não ser proprietário, usufrutuário, posseiro ou cessionário de outro imóvel residencial concluído ou em construção no mesmo município onde reside ou trabalha, nem em municípios limítrofes ou integrantes da mesma Região Metropolitana.
-              </li>
-              <li>
-                <strong>Intervalo mínimo de 2 anos:</strong> Para nova utilização de FGTS voltada à amortização de saldo devedor ou liquidação, deve transcorrer o interstício de 2 (dois) anos contados a partir da data da última movimentação com essa mesma finalidade.
-              </li>
-              <li>
-                <strong>Teto de Avaliação do Imóvel:</strong> O imóvel deve ter sido avaliado em valor não superior a R$ 1.500.000,00 na data da contratação.
+                <strong>Abatimento de até 80% das Prestações:</strong> Uso do FGTS para custear até 80% do valor de 12 parcelas mensais sucessivas, aliviando o fluxo de caixa familiar durante um ano inteiro.
               </li>
             </ul>
-          </div>
 
-          <div className="border-t border-slate-100 pt-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-3">
-              Comparativo Técnico: Reduzir Prazo vs Reduzir Parcela
-            </h3>
+            <h3 className="text-lg font-semibold text-emerald-400">2. Requisitos Legais do Mutuário e do Imóvel</h3>
             <p>
-              Ao comparecer ao banco ou simular pelo aplicativo Habitação Caixa, o mutuário deve obrigatoriamente optar entre duas modalidades de abatimento:
+              O agente financeiro operador (Caixa, Itaú, Bradesco, Santander, etc.) exige o cumprimento rigoroso dos seguintes requisitos do SFH:
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <h4 className="font-bold text-slate-900 mb-2">Redução do Prazo (Eliminar Meses)</h4>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Ao manter a prestação mensal quase inalterada, cada real amortizado abate diretamente o capital inicial emprestado, cortando meses futuros inteiros. Como os juros são calculados mensalmente sobre o saldo restante multiplicados pelo prazo, você deixa de pagar os juros compostos que incidiriam durante anos. Em quase 100% dos casos de análise financeira, esta é a opção que traz a maior economia de patrimônio familiar.
-                </p>
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <h4 className="font-bold text-slate-900 mb-2">Redução da Prestação (Alívio de Fluxo)</h4>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  O saldo devedor menor é recalculado dividindo-se pelos mesmos 360 ou 420 meses contratados originalmente. Isso reduz imediatamente a mensalidade a pagar no final do mês. É a estratégia ideal quando a família enfrentou perda momentânea de renda, nascimento de filho, ou precisa recompor a folga orçamentária do mês.
-                </p>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-600 bg-slate-900/50 text-slate-200">
+                    <th className="p-2">Critério Legal</th>
+                    <th className="p-2">Regra Vigente</th>
+                    <th className="p-2">Fundamento Legal</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Tempo de Contribuição ao FGTS</td>
+                    <td className="p-2 font-semibold text-emerald-400">Mínimo de 3 anos</td>
+                    <td className="p-2">Consecutivos ou não, na mesma ou em empresas distintas</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Intervalo entre Amortizações</td>
+                    <td className="p-2 font-semibold text-amber-400">2 anos (24 meses)</td>
+                    <td className="p-2">Para amortizar o saldo; para abater parcelas mensais, intervalo anual</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Teto de Avaliação do Imóvel</td>
+                    <td className="p-2 font-semibold text-cyan-400">Até R$ 1.500.000,00</td>
+                    <td className="p-2">Resolução CMN nº 4.676 e Resolução CCFGTS nº 994/2021</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Propriedade no Mesmo Município</td>
+                    <td className="p-2 font-semibold text-rose-400">Vedado</td>
+                    <td className="p-2">Não pode ser dono de outro imóvel residencial na mesma comarca ou região metropolitana</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
 
-          <div className="border-t border-slate-100 pt-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-3">
-              Taxa de Administração de Operação do FGTS
-            </h3>
+            <h3 className="text-lg font-semibold text-emerald-400">3. Por Que Reduzir Prazo Gera Muito Mais Economia que Reduzir Parcela?</h3>
             <p>
-              A Caixa Econômica Federal e os bancos privados autorizados costumam cobrar uma pequena tarifa operacional de intermediação da documentação perante o Agente Operador do FGTS, que varia usualmente de R$ 300 a R$ 600 por evento de saque, a qual pode ser debitada diretamente da conta do FGTS ou paga em guia avulsa pelo mutuário.
+              Nos contratos imobiliários (tanto na Tabela SAC quanto na Tabela Price), os juros mensais são calculados multiplicando-se a taxa pactuada pelo saldo devedor remanescente.
             </p>
-          </div>
-        </article>
+            <p>
+              Quando o mutuário escolhe <strong>reduzir a prestação</strong>, o prazo é mantido em 300 ou 360 meses. O saldo cai, mas os juros continuarão sendo cobrados por mais 25 ou 30 anos.
+            </p>
+            <p>
+              Por outro lado, ao escolher <strong>reduzir o prazo</strong>, a prestação mensal permanece semelhante e cada amortização elimina meses futuros do contrato. Como os juros do final do financiamento deixam de existir, o mutuário poupa dezenas ou centenas de milhares de reais em juros que jamais serão faturados pelo banco.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">4. Abertura para Financiamentos do SFI (Resolução CCFGTS 994/2021)</h3>
+            <p>
+              Desde agosto de 2021, os trabalhadores com imóveis adquiridos fora do SFH (enquadrados no Sistema de Financiamento Imobiliário - SFI) também conquistaram o direito de utilizar o saldo do FGTS para amortizar ou liquidar seus contratos, desde que o imóvel tenha sido avaliado em até R$ 1,5 milhão e o mutuário cumpra as exigências pessoais do fundo.
+            </p>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre Amortização com FGTS
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Posso amortizar o financiamento com FGTS e dinheiro próprio ao mesmo tempo?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. Você pode realizar uma amortização extraordinária mista: utilizar o saldo liberado da sua conta do FGTS e complementar com qualquer montante que possua guardado em conta corrente ou investimentos. Ambos abaterão o saldo devedor principal no mesmo ato.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>O banco pode cobrar tarifa para fazer a amortização com dinheiro próprio?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Não. A Resolução nº 3.516/2007 do Conselho Monetário Nacional (CMN) proíbe expressamente a cobrança de qualquer tarifa ou taxa de liquidação antecipada ou amortização extraordinária de crédito com recursos próprios do cliente. No caso do FGTS, há apenas uma tarifa administrativa padronizada pelo agente operador do fundo.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Cônjuges podem somar seus saldos de FGTS para amortizar o mesmo imóvel?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. Desde que ambos figurem como proponentes ou coobrigados no contrato de financiamento habitacional, os saldos das contas do FGTS de marido e mulher (ou companheiros em união estável) podem ser somados para amortizar ou quitar o imóvel familiar.
+                </p>
+              </details>
+            </div>
+          </section>
+
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
-

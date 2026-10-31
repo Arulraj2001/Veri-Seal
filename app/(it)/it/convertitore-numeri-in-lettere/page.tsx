@@ -1,325 +1,263 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  FileText,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Copy,
-  Check,
-  Coins,
-  BookOpen,
-} from 'lucide-react';
+import { Sparkles, FileText, CheckCircle2 } from 'lucide-react';
+import { ConvertitoreNumeriInLettereClient } from './ClientEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { SITE_URL } from '@/lib/constants';
 
-// Dizionari linguistici per conversione numerica in lettere italiana continua
-const UNITA = ['', 'uno', 'due', 'tre', 'quattro', 'cinque', 'sei', 'sette', 'otto', 'nove'];
-const DIECI_DICIANNOVE = [
-  'dieci', 'undici', 'dodici', 'tredici', 'quattordici', 'quindici', 'sedici', 'diciassette', 'diciotto', 'diciannove',
+export const metadata: Metadata = {
+  title: 'Convertitore Numeri in Lettere 2026 : Assegni Bancari, Contratti e Rogiti | Kagazo Italia',
+  description:
+    'Converti qualsiasi cifra numerica in parole secondo le regole legali italiane (Art. 9 R.D. 1736/1933). Scrittura continua senza spazi per assegni, rogiti notarili e fatture con elisioni vocali corrette.',
+  keywords: [
+    'convertitore numeri in lettere assegno',
+    'scrivere importo assegno bancario circolare',
+    'trascrizione continua numeri senza spazi',
+    'art 9 rd 1736 1933 prevalenza somma lettere',
+    'cifra in lettere atto notarile compravendita',
+    'elisione vocale ventuno quarantotto crusca',
+    'scrittura centesimi assegno barra frazione',
+    'convertire euro in lettere online gratis',
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/it/convertitore-numeri-in-lettere`,
+    languages: {
+      'it-IT': `${SITE_URL}/it/convertitore-numeri-in-lettere`,
+      'it': `${SITE_URL}/it/convertitore-numeri-in-lettere`,
+      'x-default': `${SITE_URL}/it/convertitore-numeri-in-lettere`,
+    },
+  },
+  openGraph: {
+    title: 'Convertitore Numeri in Lettere per Assegni | Kagazo Italia',
+    description:
+      'Strumento legale di trascrizione numerica in lettere continue per assegni, contratti e rogiti conformi alla Legge Assegno.',
+    url: `${SITE_URL}/it/convertitore-numeri-in-lettere`,
+    locale: 'it_IT',
+    siteName: 'Kagazo Italia',
+    type: 'website',
+  },
+};
+
+const FAQS = [
+  {
+    question: 'Perché negli assegni l\'importo in lettere si scrive senza spazi (tutto attaccato)?',
+    answer:
+      'La prassi bancaria e notarile italiana impone la scrittura dell\'importo in lettere in forma continua senza spazi per motivi di sicurezza antifrode. Se venissero lasciati spazi vuoti tra le parole, soggetti malintenzionati potrebbero inserire termini aggiuntivi (ad esempio anteponendo la parola "cento" davanti a "mila"), alterando la somma originariamente pattuita.',
+  },
+  {
+    question: 'Cosa prevede la legge se la cifra in numeri differisce da quella in lettere?',
+    answer:
+      'L\'Articolo 9 del Regio Decreto 21 dicembre 1933, n. 1736 (Legge sull\'Assegno) statuisce espressamente che, in caso di discordanza tra la somma scritta in cifre e quella scritta in lettere, l\'assegno è valido ed esecutivo per la somma espressa in lettere. Qualora la somma sia scritta più volte in lettere o più volte in cifre, in caso di difformità prevale la somma minore.',
+  },
+  {
+    question: 'Come devono essere scritti i centesimi e le quote decimali su un assegno?',
+    answer:
+      'I centesimi devono essere espressi in cifre numeriche separati da una barra diagonale posta subito dopo la parola in lettere continua (es. "duemilatrecento/50"). Se l\'importo è tondo e non presenta centesimi, è comunque obbligatorio apporre "/00" dopo la parola (es. "millecinquecento/00") per impedire aggiunte postume.',
+  },
+  {
+    question: 'Quali sono le regole grammaticali di elisione nei numerali composti in italiano?',
+    answer:
+      'Secondo le regole ortografiche dell\'Accademia della Crusca, nei composti con venti, trenta, quaranta, cinquanta, ecc., la vocale finale della decina cade prima di "uno" e di "otto" (es. ventuno, trentotto, quarantuno, cinquantotto). La parola "cento", invece, non perde la vocale davanti a otto (centootto), salvo rari arcaismi.',
+  },
 ];
-const DECINE = ['', '', 'venti', 'trenta', 'quaranta', 'cinquanta', 'sessanta', 'settanta', 'ottanta', 'novanta'];
-
-function convertUnder1000(n: number): string {
-  let str = '';
-  const centinaia = Math.floor(n / 100);
-  const restoCentinaia = n % 100;
-
-  if (centinaia > 0) {
-    if (centinaia === 1) {
-      str += 'cento';
-    } else {
-      str += UNITA[centinaia] + 'cento';
-    }
-  }
-
-  if (restoCentinaia >= 10 && restoCentinaia < 20) {
-    str += DIECI_DICIANNOVE[restoCentinaia - 10];
-  } else {
-    const d = Math.floor(restoCentinaia / 10);
-    const u = restoCentinaia % 10;
-    if (d > 0) {
-      let decinaStr = DECINE[d];
-      // Elisione vocale prima di uno e otto (es. ventuno, quarantotto)
-      if (u === 1 || u === 8) {
-        decinaStr = decinaStr.slice(0, -1);
-      }
-      str += decinaStr;
-    }
-    if (u > 0) {
-      str += UNITA[u];
-    }
-  }
-
-  return str;
-}
-
-function convertNumberToItalianWords(num: number): string {
-  if (num === 0) return 'zero';
-  if (num < 0) return 'meno ' + convertNumberToItalianWords(Math.abs(num));
-
-  let n = Math.floor(num);
-  let res = '';
-
-  // Miliardi
-  const miliardi = Math.floor(n / 1000000000);
-  n %= 1000000000;
-  if (miliardi === 1) {
-    res += 'unmiliardo';
-  } else if (miliardi > 1) {
-    res += convertNumberToItalianWords(miliardi) + 'miliardi';
-  }
-
-  // Milioni
-  const milioni = Math.floor(n / 1000000);
-  n %= 1000000;
-  if (milioni === 1) {
-    res += 'unmilione';
-  } else if (milioni > 1) {
-    res += convertNumberToItalianWords(milioni) + 'milioni';
-  }
-
-  // Mila
-  const mila = Math.floor(n / 1000);
-  n %= 1000;
-  if (mila === 1) {
-    res += 'mille';
-  } else if (mila > 1) {
-    res += convertUnder1000(mila) + 'mila';
-  }
-
-  // Centinaia, decine, unita
-  if (n > 0) {
-    res += convertUnder1000(n);
-  }
-
-  return res;
-}
 
 export default function ConvertitoreNumeriInLetterePage() {
-  const [valoreInput, setValoreInput] = React.useState<string>('3450.50');
-  const [copiedKey, setCopiedKey] = React.useState<string | null>(null);
-
-  const numFloat = parseFloat(valoreInput.replace(',', '.')) || 0;
-  const parteIntera = Math.floor(Math.abs(numFloat));
-  const parteDecimale = Math.round((Math.abs(numFloat) - parteIntera) * 100);
-
-  const interaInLettere = convertNumberToItalianWords(parteIntera);
-  const decimaleInLettere = convertNumberToItalianWords(parteDecimale);
-
-  const formatoAssegno = `${interaInLettere}/${String(parteDecimale).padStart(2, '0')}`;
-  const formatoAssegnoMaiuscolo = formatoAssegno.toUpperCase();
-  const formatoAttoNotarile = `${interaInLettere} euro e ${decimaleInLettere} centesimi`;
-  const formatoSoloNumero = interaInLettere;
-
-  const handleCopy = (text: string, key: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 2000);
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Convertitore Numeri in Lettere per Assegni e Rogiti',
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'All',
+        url: `${SITE_URL}/it/convertitore-numeri-in-lettere`,
+        offers: {
+          '@type': 'Offer',
+          price: '0.00',
+          priceCurrency: 'EUR',
+        },
+        provider: {
+          '@type': 'Organization',
+          name: 'Kagazo Italia',
+          url: `${SITE_URL}/it`,
+        },
+        description:
+          'Trascrive cifre numeriche in lettere in forma continua senza spazi secondo l\'Art. 9 R.D. 1736/1933 e prassi notarile.',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: SITE_URL,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Italia',
+            item: `${SITE_URL}/it`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Convertitore Numeri in Lettere',
+            item: `${SITE_URL}/it/convertitore-numeri-in-lettere`,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
   };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/it" className="hover:text-slate-800 transition-colors">Italia</Link>
-        <span>/</span>
-        <span className="text-sky-700 font-semibold">Convertitore Numeri in Lettere</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-sky-600" />
-          <span>Art. 9 R.D. 1736/1933 (Legge Assegno) & Prassi Notarile L. 89/1913</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Breadcrumb Visual */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/it" className="hover:text-emerald-400 transition-colors">Italia</Link>
+            <span>/</span>
+            <span className="text-slate-200 font-medium">Convertitore Numeri in Lettere</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Convertitore Numeri in Lettere per Assegni e Contratti <br className="hidden sm:inline" />
-          <span className="text-sky-600">Trascrizione Giuridica Continua Senza Spazi</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Regola Giuridica Fondamentale:</strong> Ai sensi dell'<strong>Articolo 9 del Regio Decreto 1736/1933</strong>, in caso di discordanza tra la cifra in numeri e la somma scritta in lettere su un assegno bancario o circolare, <strong>prevale sempre la somma scritta in lettere</strong>. Negli assegni la dicitura va scritta in forma continua senza spazi, con i centesimi separati da una barra (es. <em>tremilaquattrocentocinquanta/50</em>).
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <FileText className="w-4 h-4 text-sky-600" />
-              <span>Importo da Trascrivere</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Art. 9 R.D. 1736/1933 (Legge Assegno) & Prassi Notarile L. 89/1913</span>
             </div>
-            <button
-              type="button"
-              onClick={() => setValoreInput('3450.50')}
-              className="text-xs text-slate-500 hover:text-sky-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reimposta</span>
-            </button>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              Convertitore Numeri in Lettere per Assegni e Contratti <br className="hidden sm:inline" />
+              <span className="text-emerald-400">Trascrizione Giuridica Continua Senza Spazi</span>
+            </h1>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Trascrivi qualsiasi somma in euro in parole secondo le norme dell&apos;ordinamento giuridico italiano per la compilazione di assegni bancari, assegni circolari, contratti e rogiti notarili di compravendita immobiliare.
+            </p>
+          </header>
+
+          {/* Answer Capsule (GEO Optimization) */}
+          <section className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 backdrop-blur-sm space-y-4 shadow-xl">
+            <div className="flex items-start gap-3">
+              <FileText className="w-5 h-5 text-emerald-400 mt-1 shrink-0" />
+              <div>
+                <h2 className="text-base font-semibold text-white">
+                  Sintesi Giuridica: Regole di Trascrizione della Somma in Lettere
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                  L&apos;<strong>Articolo 9 del Regio Decreto 1736/1933</strong> stabilisce il principio cardine secondo cui in caso di discordanza tra l&apos;importo in numeri e quello in lettere, <em>prevale in ogni caso la somma scritta in lettere</em>. Nella prassi bancaria e commerciale la dicitura va redatta come un&apos;unica parola continua priva di spazi, separando i centesimi tramite barra obliqua (es. <em>tremilaquattrocentocinquanta/50</em> o <em>/00</em> se non vi sono centesimi), applicando le corrette elisioni vocaliche prima di uno e otto.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Interactive Calculator Engine */}
+          <ConvertitoreNumeriInLettereClient />
+
+          {/* In-content Ad Contextual */}
+          <div className="my-8">
+            <AdSlot slot="in_content" context="legal" />
           </div>
 
-          <div className="space-y-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex justify-between">
-                <span>Cifra Numerica (€)</span>
-                <span className="font-mono text-sky-700 font-bold">
-                  € {numFloat.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </span>
-              </label>
-              <input
-                type="text"
-                value={valoreInput}
-                onChange={(e) => setValoreInput(e.target.value)}
-                placeholder="Es. 3450.50"
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100 text-base font-bold text-slate-900 transition-all font-mono"
-              />
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 sm:p-8 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 text-emerald-400" />
+              Disciplina della Trascrizione dei Valori negli Atti Giuridici e Titoli di Credito
+            </h2>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                1. La Tutela della Certezza nei Titoli di Credito: Regio Decreto n. 1736/1933
+              </h3>
+              <p>
+                Nel diritto commerciale italiano, l&apos;assegno bancario e l&apos;assegno circolare sono titoli formali e completi destinati alla circolazione monetaria fiduciaria. L&apos;articolo 9 della Legge sull&apos;Assegno introduce una presunzione legale assoluta a tutela del prenditore del titolo:
+              </p>
+              <blockquote className="border-l-4 border-emerald-500 pl-4 py-1 italic text-slate-200">
+                &quot;Se la somma da pagare è scritta in lettere ed in cifre, l&apos;assegno bancario vale, in caso di discordanza, per la somma indicata in lettere.&quot;
+              </blockquote>
+              <p>
+                Tale precetto risponde al principio per cui la stesura per esteso delle parole richiede un grado di attenzione e ponderazione superiore rispetto alla digitazione numerica delle cifre, minimizzando il rischio di refusi materiali o distrazioni.
+              </p>
             </div>
 
-            {/* Quick Suggestions */}
-            <div className="flex flex-wrap gap-2 pt-1">
-              {['120.00', '1500.00', '3250.75', '10000.00', '125000.00'].map((val) => (
-                <button
-                  key={val}
-                  type="button"
-                  onClick={() => setValoreInput(val)}
-                  className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-mono font-bold text-slate-700 transition-colors"
-                >
-                  € {val}
-                </button>
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                2. La Tecnica della Scrittura Continua Antifrode
+              </h3>
+              <p>
+                La tradizione secolare del notariato italiano (Legge 16 febbraio 1913, n. 89) e le norme operative dell&apos;Associazione Bancaria Italiana (ABI) prescrivono che i numerali vengano saldati insieme senza soluzione di continuità. Lasciare spaziature (es. &quot;tre mila&quot; anziché &quot;tremila&quot;) permetterebbe la falsificazione del titolo mediante interpolazione di sostantivi o aggettivi moltiplicatori, alterando la volontà originaria dell&apos;emittente.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                3. Regole Fonetiche ed Elisioni Vocaliche
+              </h3>
+              <p>
+                La lingua italiana prevede norme fonotattiche precise per i composti numerici cardinali:
+              </p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  <strong>Troncamento della vocale finale della decina:</strong> Quando la decina è seguita da &quot;uno&quot; o &quot;otto&quot;, la vocale finale elide sistematicamente (ventuno, quarantotto, settantuno).
+                </li>
+                <li>
+                  <strong>Mantenimento con &quot;tre&quot;:</strong> I composti con tre (es. ventitré, quarantatré) mantengono la vocale della decina e richiedono l&apos;accento acuto finale sulla &quot;e&quot; nella scrittura disgiunta formale.
+                </li>
+                <li>
+                  <strong>Miliardi e Milioni:</strong> A differenza di &quot;mille&quot; che diventa &quot;mila&quot; al plurale, &quot;milione&quot; e &quot;miliardo&quot; conservano la desinenza flessiva regolare &quot;milioni&quot; e &quot;miliardi&quot;.
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="space-y-4 bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 sm:p-8">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <h2 className="text-xl sm:text-2xl font-bold text-white">
+                Domande Frequenti sulla Conversione Numerica in Lettere
+              </h2>
+            </div>
+            <div className="divide-y divide-slate-700/60">
+              {FAQS.map((faq, idx) => (
+                <div key={idx} className="py-4 space-y-2">
+                  <h3 className="text-base font-medium text-slate-100">
+                    {faq.question}
+                  </h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
               ))}
             </div>
+          </section>
 
-            {/* Fac-simile Assegno */}
-            <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/90 text-amber-950 space-y-3 font-mono text-xs">
-              <div className="flex justify-between items-center border-b border-amber-200/80 pb-2">
-                <span className="font-bold tracking-wider uppercase text-[10px] text-amber-800">
-                  Fac-Simile Assegno Bancario (Art. 9 R.D. 1736/33)
-                </span>
-                <span className="font-bold bg-white px-2 py-0.5 rounded border border-amber-300 text-slate-900">
-                  € **{numFloat.toFixed(2)}**
-                </span>
-              </div>
-              <div className="space-y-1">
-                <span className="text-[10px] text-amber-700 uppercase block font-sans font-bold">
-                  A vista pagate per questo assegno bancario l'importo di Euro:
-                </span>
-                <div className="bg-white p-2.5 rounded-xl border border-amber-200 text-slate-950 font-bold text-xs sm:text-sm break-all">
-                  {formatoAssegno}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Rispetta rigorosamente le elisioni vocaliche della lingua italiana (trentuno, quarantotto).</span>
-          </div>
-        </div>
-
-        {/* Formats Output Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Formati Giuridici Disponibili
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-sky-500/20 text-sky-300 font-mono">
-              Un-click Copy
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            {/* Formato 1: Assegno minuscolo */}
-            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
-              <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                <span>1. Formato Assegno (Standard ABI)</span>
-                <button
-                  type="button"
-                  onClick={() => handleCopy(formatoAssegno, 'assegno')}
-                  className="text-sky-400 hover:text-sky-300 flex items-center gap-1 cursor-pointer"
-                >
-                  {copiedKey === 'assegno' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedKey === 'assegno' ? 'Copiato' : 'Copia'}</span>
-                </button>
-              </div>
-              <p className="font-mono text-xs sm:text-sm text-emerald-300 font-bold break-all">
-                {formatoAssegno}
-              </p>
-            </div>
-
-            {/* Formato 2: Assegno MAIUSCOLO */}
-            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
-              <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                <span>2. Formato Assegno Maiuscolo</span>
-                <button
-                  type="button"
-                  onClick={() => handleCopy(formatoAssegnoMaiuscolo, 'maiuscolo')}
-                  className="text-sky-400 hover:text-sky-300 flex items-center gap-1 cursor-pointer"
-                >
-                  {copiedKey === 'maiuscolo' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedKey === 'maiuscolo' ? 'Copiato' : 'Copia'}</span>
-                </button>
-              </div>
-              <p className="font-mono text-xs sm:text-sm text-sky-300 font-bold break-all">
-                {formatoAssegnoMaiuscolo}
-              </p>
-            </div>
-
-            {/* Formato 3: Atto Notarile / Legale */}
-            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1.5">
-              <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                <span>3. Rogito Notarile & Contratti</span>
-                <button
-                  type="button"
-                  onClick={() => handleCopy(formatoAttoNotarile, 'notarile')}
-                  className="text-sky-400 hover:text-sky-300 flex items-center gap-1 cursor-pointer"
-                >
-                  {copiedKey === 'notarile' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedKey === 'notarile' ? 'Copiato' : 'Copia'}</span>
-                </button>
-              </div>
-              <p className="text-xs sm:text-sm text-amber-300 font-medium">
-                {formatoAttoNotarile}
-              </p>
-            </div>
+          {/* Bottom Ad Contextual */}
+          <div className="my-6">
+            <AdSlot slot="post_download" context="legal" />
           </div>
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            Regole Giuridiche sulla Compilazione degli Assegni e Contratti
-          </h2>
-          <p>
-            Nella redazione dei titoli di credito (assegno bancario, assegno circolare, vaglia cambiario) e degli atti pubblici notarili disciplinati dalla <strong>Legge 16 febbraio 1913, n. 89</strong>, la corretta trascrizione degli importi in lettere è un requisito essenziale di validità e certezza.
-          </p>
-          <p>
-            La regola cardinale stabilita dal legislatore all'<strong>Articolo 9 del Regio Decreto 1736/1933</strong> tutela la sicurezza dei traffici giuridici: se l'importo indicato in cifre differisce da quello trascritto in lettere, la banca o l'autorità giudiziaria considererà vincolante ed esecutiva unicamente la cifra trascritta in lettere per esteso.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Convenzione di Scrittura Continua
-          </h3>
-          <p>
-            Per evitare l'interpolazione o l'aggiunta dolosa di parole tra i termini (es. inserire la parola "cento" prima di "mila"), la prassi bancaria e notarile italiana impone che la dicitura sia redatta in un'<strong>unica parola continua priva di spazi bianchi</strong> (es. <em>duemilacinquecento/00</em>).
-          </p>
-          <p className="text-xs text-slate-600">
-            I decimali vanno sempre indicati dopo la barra obliqua anche qualora siano nulli (es. <em>/00</em>), per impedire qualsiasi successiva alterazione delle quote centesimali.
-          </p>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }

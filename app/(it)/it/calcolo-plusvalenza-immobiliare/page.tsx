@@ -1,315 +1,209 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Calculator,
-  ShieldCheck,
-  Sparkles,
-  Home,
-  RotateCcw,
-  CheckCircle2,
-  FileText,
-  AlertCircle,
-  Coins,
-} from 'lucide-react';
+import { Sparkles, Home, FileText, CheckCircle2 } from 'lucide-react';
+import { CalcoloPlusvalenzaImmobiliareClient } from './ClientEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { SITE_URL } from '@/lib/constants';
 
-interface PlusvalenzaResult {
-  prezzoVendita: number;
-  prezzoAcquisto: number;
-  speseDeducibiliTotali: number;
-  plusvalenzaLorda: number;
-  esenteAbitazionePrincipale: boolean;
-  esenteSuccessione: boolean;
-  plusvalenzaTassabile: number;
-  impostaSostitutiva26: number;
-  impostaIrpefOrdinariaStima: number;
-  nettoInTasca: number;
-}
+export const metadata: Metadata = {
+  title: 'Calcolo Plusvalenza Immobiliare 2026 : Imposta Sostitutiva 26% | Kagazo Italia',
+  description:
+    'Calcola la plusvalenza tassabile sulla vendita di immobili entro 5 anni secondo l\'Art. 67 del TUIR. Calcolo deduzione spese incrementative, imposta sostitutiva del 26% e verifica esenzioni prima casa e successione.',
+  keywords: [
+    'calcolo plusvalenza vendita casa entro 5 anni',
+    'imposta sostitutiva 26 per cento notaio rogito',
+    'art 67 comma 1 lett b tuir plusvalenze',
+    'esenzione plusvalenza abitazione principale 50 per cento',
+    'spese deducibili plusvalenza immobiliare fatture',
+    'vendita casa ereditata successione plusvalenza',
+    'tassazione plusvalenza superbonus 110 per cento',
+    'calcolo netto vendita immobile tasse',
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/it/calcolo-plusvalenza-immobiliare`,
+    languages: {
+      'it-IT': `${SITE_URL}/it/calcolo-plusvalenza-immobiliare`,
+      'it': `${SITE_URL}/it/calcolo-plusvalenza-immobiliare`,
+      'x-default': `${SITE_URL}/it/calcolo-plusvalenza-immobiliare`,
+    },
+  },
+  openGraph: {
+    title: 'Calcolo Plusvalenza Immobiliare 2026 | Kagazo Italia',
+    description:
+      'Simulatore ufficiale imposta sulla plusvalenza da cessione fabbricati ex Art. 67 TUIR con opzione per l\'imposta sostitutiva del 26%.',
+    url: `${SITE_URL}/it/calcolo-plusvalenza-immobiliare`,
+    locale: 'it_IT',
+    siteName: 'Kagazo Italia',
+    type: 'website',
+  },
+};
 
-export default function CalcoloPlusvalenzaImmobiliarePage() {
-  const [prezzoVendita, setPrezzoVendita] = React.useState<number>(240000);
-  const [prezzoAcquisto, setPrezzoAcquisto] = React.useState<number>(180000);
-  const [speseRistrutturazione, setSpeseRistrutturazione] = React.useState<number>(15000);
-  const [speseNotariliAcquisto, setSpeseNotariliAcquisto] = React.useState<number>(4500);
-  const [imposteRegistroIvaPagate, setImposteRegistroIvaPagate] = React.useState<number>(3600);
-  const [anniPossesso, setAnniPossesso] = React.useState<number>(3);
-  const [abitazionePrincipaleMaggioranza, setAbitazionePrincipaleMaggioranza] = React.useState<boolean>(false);
-  const [acquisitoPerSuccessione, setAcquisitoPerSuccessione] = React.useState<boolean>(false);
+const FAQS = [
+  {
+    question: 'Quando non si paga la plusvalenza sulla vendita di una casa?',
+    answer:
+      'La plusvalenza non è tassata se si verifica una delle seguenti condizioni stabilite dall\'Art. 67 del TUIR: (1) l\'immobile è stato posseduto per più di 5 anni; (2) l\'immobile è stato adibito ad abitazione principale del proprietario o dei suoi familiari per la maggior parte del periodo intercorso tra l\'acquisto e la vendita; (3) l\'immobile è stato acquisito per successione ereditaria mortis causa.',
+  },
+  {
+    question: 'Come si calcola la plusvalenza tassabile?',
+    answer:
+      'La plusvalenza è pari alla differenza tra il corrispettivo percepito nel rogito di vendita e il costo storico di acquisto (o di costruzione). Da tale guadagno lordo si deducono tutte le spese inerenti documentate: parcella del notaio per l\'acquisto, imposte di registro, ipotecaria e catastale o IVA versate al rogito originario, provvigione dell\'agenzia immobiliare e tutte le spese straordinarie per ristrutturazioni e migliorie apportate all\'immobile.',
+  },
+  {
+    question: 'Perché conviene richiedere l\'imposta sostitutiva del 26% al Notaio?',
+    answer:
+      'In sede di rogito notarile di compravendita, la parte venditrice persona fisica può richiedere l\'applicazione dell\'imposta sostitutiva del 26% (introdotta dalla Legge 266/2005). Il notaio riscuote l\'imposta e la versa direttamente all\'Erario. Questo evita che la plusvalenza si sommi agli altri redditi IRPEF del venditore, evitando il salto agli scaglioni fiscali superiori (35% o 43%).',
+  },
+  {
+    question: 'Come incide il Superbonus 110% sulla tassazione della plusvalenza?',
+    answer:
+      'La legge di bilancio ha introdotto una specifica disciplina per gli immobili oggetto di interventi agevolati con il Superbonus conclusi da non più di 10 anni: in caso di vendita, la plusvalenza generata è tassata al 26% e, se la cessione avviene entro 5 anni dalla fine lavori, non è possibile dedurre le spese per gli interventi incentivati fruiti con cessione del credito o sconto in fattura.',
+  },
+];
 
-  const calcolaPlusvalenza = React.useCallback((): PlusvalenzaResult => {
-    const safeVendita = Math.max(0, prezzoVendita);
-    const safeAcquisto = Math.max(0, prezzoAcquisto);
-
-    const speseDeducibiliTotali =
-      Math.max(0, speseRistrutturazione) +
-      Math.max(0, speseNotariliAcquisto) +
-      Math.max(0, imposteRegistroIvaPagate);
-
-    const plusvalenzaLorda = Math.max(0, safeVendita - (safeAcquisto + speseDeducibiliTotali));
-
-    // Esenzioni di legge Art. 67 TUIR:
-    // 1. Possesso superiore a 5 anni -> esente
-    // 2. Abitazione principale per più del 50% del tempo -> esente
-    // 3. Immobile pervenuto per successione mortis causa -> esente
-    const superati5Anni = anniPossesso >= 5;
-    const esenteAbitazione = abitazionePrincipaleMaggioranza;
-    const esenteSuccessione = acquisitoPerSuccessione;
-
-    const isEsente = superati5Anni || esenteAbitazione || esenteSuccessione;
-    const plusvalenzaTassabile = isEsente ? 0 : plusvalenzaLorda;
-
-    // Imposta sostitutiva del 26% (Legge 266/2005)
-    const impostaSostitutiva26 = plusvalenzaTassabile * 0.26;
-    // Stima IRPEF ordinaria (scaglione medio 35%)
-    const impostaIrpefOrdinariaStima = plusvalenzaTassabile * 0.35;
-
-    const nettoInTasca = safeVendita - impostaSostitutiva26;
-
-    return {
-      prezzoVendita: safeVendita,
-      prezzoAcquisto: safeAcquisto,
-      speseDeducibiliTotali,
-      plusvalenzaLorda,
-      esenteAbitazionePrincipale: esenteAbitazione || superati5Anni,
-      esenteSuccessione,
-      plusvalenzaTassabile,
-      impostaSostitutiva26,
-      impostaIrpefOrdinariaStima,
-      nettoInTasca,
-    };
-  }, [
-    prezzoVendita,
-    prezzoAcquisto,
-    speseRistrutturazione,
-    speseNotariliAcquisto,
-    imposteRegistroIvaPagate,
-    anniPossesso,
-    abitazionePrincipaleMaggioranza,
-    acquisitoPerSuccessione,
-  ]);
-
-  const res = calcolaPlusvalenza();
+export default function CalcoloPlusvalenzaPage() {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Calcolatore Plusvalenza Cessione Immobili 2026',
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'All',
+        url: `${SITE_URL}/it/calcolo-plusvalenza-immobiliare`,
+        offers: {
+          '@type': 'Offer',
+          price: '0.00',
+          priceCurrency: 'EUR',
+        },
+        provider: {
+          '@type': 'Organization',
+          name: 'Kagazo Italia',
+          url: `${SITE_URL}/it`,
+        },
+        description:
+          'Calcola l\'imposta sulla plusvalenza immobiliare del 26% con deduzione spese incrementative e verifica esenzioni quinquennali TUIR.',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: SITE_URL,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Italia',
+            item: `${SITE_URL}/it`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Calcolo Plusvalenza Immobiliare',
+            item: `${SITE_URL}/it/calcolo-plusvalenza-immobiliare`,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/it" className="hover:text-slate-800 transition-colors">Italia</Link>
-        <span>/</span>
-        <span className="text-sky-700 font-semibold">Plusvalenza Cessione Immobile</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-sky-600" />
-          <span>Art. 67 TUIR & Imposta Sostitutiva 26% dal Notaio</span>
-        </div>
+      <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
+        {/* Breadcrumb Navigation */}
+        <nav className="text-xs text-slate-500 flex items-center gap-2">
+          <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/it" className="hover:text-slate-800 transition-colors">Italia</Link>
+          <span>/</span>
+          <span className="text-sky-700 font-semibold">Plusvalenza Immobiliare</span>
+        </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Calcolo Plusvalenza Cessione Immobile <br className="hidden sm:inline" />
-          <span className="text-sky-600">Vendita entro 5 Anni & Tassazione al 26%</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Risposta Giuridica Diretta:</strong> La vendita di un immobile prima di <strong>5 anni</strong> dall'acquisto genera una plusvalenza tassabile se il prezzo di vendita supera il prezzo di acquisto incrementato dei costi deducibili (ristrutturazioni con fattura, parcella notarile di acquisto, imposte di registro e provvigione agenzia). Il venditore può scegliere tra l'<strong>imposta sostitutiva del 26%</strong> versata direttamente al Notaio o l'inserimento nel reddito complessivo IRPEF. La vendita è <strong>totalmente esente</strong> se l'immobile è stato prima casa per oltre la metà del periodo o se è stato ereditato.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Calculator className="w-4 h-4 text-sky-600" />
-              <span>Importi e Spese Deducibili</span>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setPrezzoVendita(240000);
-                setPrezzoAcquisto(180000);
-                setSpeseRistrutturazione(15000);
-                setSpeseNotariliAcquisto(4500);
-                setImposteRegistroIvaPagate(3600);
-                setAnniPossesso(3);
-                setAbitazionePrincipaleMaggioranza(false);
-                setAcquisitoPerSuccessione(false);
-              }}
-              className="text-xs text-slate-500 hover:text-sky-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reimposta</span>
-            </button>
+        {/* Title & Statutory Answer Capsule */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+            <span>Art. 67, comma 1, lett. b) TUIR (D.P.R. 917/1986)</span>
           </div>
 
-          <div className="space-y-4">
-            {/* Prezzi Vendita e Acquisto */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Prezzo di Vendita Effettivo (€)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={5000}
-                  value={prezzoVendita || ''}
-                  onChange={(e) => setPrezzoVendita(Number(e.target.value))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-900 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                />
-              </div>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
+            Calcolo Plusvalenza Immobiliare 2026 <br className="hidden sm:inline" />
+            <span className="text-sky-600">Imposta Sostitutiva 26% &amp; Spese Deducibili</span>
+          </h1>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Prezzo di Acquisto Iniziale (€)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={5000}
-                  value={prezzoAcquisto || ''}
-                  onChange={(e) => setPrezzoAcquisto(Number(e.target.value))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-900 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                />
-              </div>
-            </div>
-
-            {/* Spese Deducibili */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800">Spese di Ristrutturazione Documentate (€)</label>
-              <input
-                type="number"
-                min={0}
-                step={1000}
-                value={speseRistrutturazione}
-                onChange={(e) => setSpeseRistrutturazione(Number(e.target.value))}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Spese Notarili all'Acquisto (€)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={500}
-                  value={speseNotariliAcquisto}
-                  onChange={(e) => setSpeseNotariliAcquisto(Number(e.target.value))}
-                  className="w-full px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Imposte Pagate al Rogito (€)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={500}
-                  value={imposteRegistroIvaPagate}
-                  onChange={(e) => setImposteRegistroIvaPagate(Number(e.target.value))}
-                  className="w-full px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                />
-              </div>
-            </div>
-
-            {/* Condizioni di Esenzione */}
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-              <span className="text-xs font-bold text-slate-900 block">Condizioni di Esenzione Legale (Art. 67 TUIR)</span>
-              
-              <label className="flex items-start gap-2.5 cursor-pointer text-xs text-slate-700">
-                <input
-                  type="checkbox"
-                  checked={abitazionePrincipaleMaggioranza}
-                  onChange={(e) => setAbitazionePrincipaleMaggioranza(e.target.checked)}
-                  className="w-4 h-4 text-sky-600 rounded accent-sky-600 mt-0.5"
-                />
-                <div>
-                  <strong>Abitazione Principale:</strong> È stata adibita a dimora abituale per più della metà del periodo di possesso (ESENZIONE TOTALE).
-                </div>
-              </label>
-
-              <label className="flex items-start gap-2.5 cursor-pointer text-xs text-slate-700">
-                <input
-                  type="checkbox"
-                  checked={acquisitoPerSuccessione}
-                  onChange={(e) => setAcquisitoPerSuccessione(e.target.checked)}
-                  className="w-4 h-4 text-sky-600 rounded accent-sky-600 mt-0.5"
-                />
-                <div>
-                  <strong>Immobile Ereditato:</strong> Pervenuto per successione ereditaria (ESENZIONE TOTALE).
-                </div>
-              </label>
-            </div>
-          </div>
-
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Calcolo conforme alla disciplina dell'Art. 67, comma 1, lett. b), del D.P.R. 917/1986.</span>
+          <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+            <strong>Risposta Istituzionale Diretta:</strong> La vendita di un immobile prima di <strong>5 anni</strong> dall&apos;acquisto genera una plusvalenza tassabile se il prezzo di cessione è superiore al prezzo d&apos;acquisto maggiorato delle spese documentate (notaio, imposte di registro, ristrutturazioni straordinarie). La plusvalenza è esente se l&apos;immobile è stato adibito ad <strong>abitazione principale</strong> per la maggior parte del possesso o se acquisito per <strong>successione</strong>. In sede di rogito notarile si può optare per l&apos;<strong>imposta sostitutiva del 26%</strong>.
           </div>
         </div>
 
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Imposta Sostitutiva 26%
-            </span>
+        {/* Client Interactive Engine */}
+        <CalcoloPlusvalenzaImmobiliareClient />
+
+        {/* Strategic Ad Slot */}
+        <AdSlot slot="in_content" context="legal" />
+
+        {/* Statutory Legal Guide for AdSense */}
+        <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
+          <div className="space-y-3">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
+              La Tassazione della Plusvalenza Immobiliare nel Diritto Fiscale Italiano
+            </h2>
+            <p>
+              Il legislatore fiscale italiano considera la vendita di un immobile entro i 5 anni dal suo acquisto come un&apos;operazione potenzialmente speculativa. Per questo motivo, l&apos;eventuale guadagno economico realizzato costituisce un &quot;reddito diverso&quot; assoggettato a imposizione fiscale ai sensi dell&apos;<strong>Art. 67, comma 1, lettera b) del TUIR (Testo Unico delle Imposte sui Redditi)</strong>.
+            </p>
           </div>
 
-          {res.plusvalenzaTassabile === 0 ? (
-            <div className="p-5 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-2 text-center">
-              <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto" />
-              <div className="text-lg font-black text-white">Nessuna Imposta Dovuta</div>
-              <p className="text-xs text-slate-300">
-                La cessione beneficia dell'esenzione di legge (abitazione principale o successione) oppure non ha generato plusvalenza.
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+              <h3 className="font-black text-base text-slate-900">1. Spese Incrementative Deducibili</h3>
+              <p className="text-xs sm:text-sm text-slate-600">
+                La plusvalenza netta viene calcolata diminuendo il guadagno lordo di tutte le spese notarili del rogito di acquisto, delle imposte versate all&apos;erario (imposta di registro o IVA, imposte ipotecarie e catastali) e dei costi per opere di ristrutturazione edilizia o manutenzione straordinaria regolarmente fatturati e saldati con bonifico parlante.
               </p>
             </div>
-          ) : (
-            <>
-              <div className="p-4 rounded-2xl bg-sky-950/40 border border-sky-800/40 space-y-1">
-                <span className="text-xs text-sky-200 font-medium">Imposta Sostitutiva 26% da Versare al Notaio</span>
-                <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-                  € {res.impostaSostitutiva26.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                </div>
-                <span className="text-[11px] text-sky-300 font-medium block">
-                  Plusvalenza Netta Tassabile: € {res.plusvalenzaTassabile.toLocaleString('it-IT')}
-                </span>
-              </div>
 
-              <div className="space-y-2.5 text-xs">
-                <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                  <span>Guadagno Lordo (Vendita &minus; Acquisto)</span>
-                  <span className="font-mono text-white">€ {(res.prezzoVendita - res.prezzoAcquisto).toLocaleString('it-IT')}</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-800/70 text-emerald-400">
-                  <span>Spese Deducibili e Ristrutturazioni</span>
-                  <span className="font-mono">- € {res.speseDeducibiliTotali.toLocaleString('it-IT')}</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                  <span>Opzione IRPEF Ordinaria (Stima al 35%)</span>
-                  <span className="font-mono text-rose-400">€ {res.impostaIrpefOrdinariaStima.toLocaleString('it-IT')}</span>
-                </div>
-              </div>
-            </>
-          )}
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+              <h3 className="font-black text-base text-slate-900">2. Esenzione Abitazione Principale</h3>
+              <p className="text-xs sm:text-sm text-slate-600">
+                Anche se l&apos;immobile viene alienato prima dei 5 anni, l&apos;operazione è <strong>totalmente esente da imposte</strong> se per la maggior parte del periodo intercorso tra l&apos;acquisto e la vendita l&apos;unità immobiliare è stata adibita ad abitazione principale del cedente o dei suoi familiari (dimostrato da residenza anagrafica e allacci delle utenze domestiche).
+              </p>
+            </div>
+          </div>
 
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
-            <strong>Opzione Fiscale in Atto:</strong> L'imposta sostitutiva del 26% viene richiesta formalmente al Notaio durante il rogito notarile di vendita, evitando l'inclusione del guadagno nella dichiarazione dei redditi.
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+            <h3 className="text-xl font-black text-slate-900 tracking-tight">
+              Domande Frequenti sulla Plusvalenza Immobiliare (FAQ)
+            </h3>
+            <div className="space-y-3">
+              {FAQS.map((faq, idx) => (
+                <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                  <h4 className="font-bold text-sm text-slate-900">{faq.question}</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-6 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-          La Tassazione della Plusvalenza Immobiliare in Italia
-        </h2>
-        <p>
-          Il legislatore fiscale italiano considera la vendita di un immobile entro i 5 anni dal suo acquisto come un'operazione potenzialmente speculativa. Per questo motivo, l'eventuale guadagno economico realizzato costituisce un "reddito diverso" assoggettato a tassazione ai sensi dell'Art. 67 del TUIR.
-        </p>
-      </div>
-    </div>
+    </>
   );
 }

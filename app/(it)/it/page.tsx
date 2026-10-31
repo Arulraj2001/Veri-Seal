@@ -23,11 +23,25 @@ import {
 import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Utilità e Calcolatori Ufficiali Italia 2026 | Fisco, Lavoro e Casa',
+  title: 'Utilità e Calcolatori Ufficiali Italia 2026 | Fisco, Lavoro e Casa | Kagazo Italia',
   description:
     'Portale di 20 calcolatori statutari gratuiti per l\'Italia: Stipendio Netto 2026, Calcolo TFR, IMU con modello F24, Regime Forfettario, Prima Casa e Foto CIE 35x45.',
   alternates: {
     canonical: `${SITE_URL}/it`,
+    languages: {
+      'it-IT': `${SITE_URL}/it`,
+      'it': `${SITE_URL}/it`,
+      'x-default': `${SITE_URL}/it`,
+    },
+  },
+  openGraph: {
+    title: 'Utilità e Calcolatori Ufficiali Italia 2026 | Kagazo Italia',
+    description:
+      'Suite ufficiale di 20 calcolatori gratuiti per fisco, lavoro, immobili e utilità conformi alla normativa italiana.',
+    url: `${SITE_URL}/it`,
+    locale: 'it_IT',
+    siteName: 'Kagazo Italia',
+    type: 'website',
   },
 };
 
@@ -187,8 +201,45 @@ export default function ItalianHubPage() {
     },
   ];
 
+  const allTools = categories.flatMap((c) => c.tools);
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: 'Utilità e Calcolatori Ufficiali Italia 2026',
+        url: `${SITE_URL}/it`,
+        description:
+          'Portale di 20 calcolatori statutari gratuiti per l\'Italia: Stipendio Netto 2026, Calcolo TFR, IMU con modello F24, Regime Forfettario e Prima Casa.',
+        inLanguage: 'it-IT',
+        isPartOf: {
+          '@type': 'WebSite',
+          name: 'Kagazo',
+          url: SITE_URL,
+        },
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Suite Calcolatori Statutari Italia',
+        numberOfItems: allTools.length,
+        itemListElement: allTools.map((t, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: t.title,
+          url: `${SITE_URL}${t.href}`,
+        })),
+      },
+    ],
+  };
+
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
       {/* Hero Section */}
       <div className="text-center space-y-5 max-w-4xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold shadow-xs">
@@ -310,6 +361,7 @@ export default function ItalianHubPage() {
         </Link>
       </div>
     </div>
+  </>
   );
 }
 

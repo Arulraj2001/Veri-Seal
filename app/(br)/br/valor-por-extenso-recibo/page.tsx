@@ -1,226 +1,125 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  FileText,
-  ShieldCheck,
-  Copy,
-  CheckCircle2,
-  Printer,
-  RotateCcw,
-  Sparkles,
-  Coins,
-  Scale,
-} from 'lucide-react';
+import { Coins, ShieldCheck, HelpCircle } from 'lucide-react';
+import { ValorPorExtensoReciboClient } from './ClientEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
-const UNIDADES = ['', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'];
-const DEZ_A_DEZENOVE = [
-  'dez',
-  'onze',
-  'doze',
-  'treze',
-  'quatorze',
-  'quinze',
-  'dezesseis',
-  'dezessete',
-  'dezoito',
-  'dezenove',
-];
-const DEZENAS = ['', '', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
-const CENTENAS = [
-  '',
-  'cento',
-  'duzentos',
-  'trezentos',
-  'quatrocentos',
-  'quinhentos',
-  'seiscentos',
-  'setecentos',
-  'oitocentos',
-  'novecentos',
-];
+export const metadata: Metadata = {
+  title: 'Valor por Extenso e Gerador de Recibo de Pagamento | Lei 7.357/85 e Art. 320 CC',
+  description:
+    'Escreva valores em reais por extenso com regras gramaticais exatas e gere recibos formais de quitação com validade jurídica (Art. 320 do Código Civil e Lei do Cheque).',
+  alternates: {
+    canonical: 'https://kagazo.in/br/valor-por-extenso-recibo',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/valor-por-extenso-recibo',
+      'pt': 'https://kagazo.in/br/valor-por-extenso-recibo',
+      'x-default': 'https://kagazo.in/br/valor-por-extenso-recibo',
+    },
+  },
+  openGraph: {
+    title: 'Valor por Extenso e Emissor de Recibo de Quitação Oficial',
+    description:
+      'Conversão exata de quantias monetárias por extenso e modelo de recibo de quitação formal em conformidade com o Código Civil brasileiro.',
+    url: 'https://kagazo.in/br/valor-por-extenso-recibo',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Valor por Extenso e Emissor de Recibo de Pagamento',
+    description:
+      'Gere recibos de quitação e converta valores em reais para cheques e contratos com segurança jurídica.',
+  },
+};
 
-function converterTresDigitos(n: number): string {
-  if (n === 100) return 'cem';
-  const c = Math.floor(n / 100);
-  const d = Math.floor((n % 100) / 10);
-  const u = n % 10;
-  const partes: string[] = [];
-
-  if (c > 0) partes.push(CENTENAS[c]);
-
-  if (d === 1) {
-    partes.push(DEZ_A_DEZENOVE[u]);
-  } else {
-    if (d > 1) partes.push(DEZENAS[d]);
-    if (u > 0) partes.push(UNIDADES[u]);
-  }
-
-  return partes.join(' e ');
-}
-
-function converterNumeroPorExtenso(inteiro: number): string {
-  if (inteiro === 0) return 'zero';
-
-  const bilhoes = Math.floor(inteiro / 1000000000);
-  const milhoes = Math.floor((inteiro % 1000000000) / 1000000);
-  const milhares = Math.floor((inteiro % 1000000) / 1000);
-  const resto = inteiro % 1000;
-
-  const blocos: string[] = [];
-
-  if (bilhoes > 0) {
-    const texto = converterTresDigitos(bilhoes);
-    blocos.push(`${texto} ${bilhoes === 1 ? 'bilhão' : 'bilhões'}`);
-  }
-
-  if (milhoes > 0) {
-    const texto = converterTresDigitos(milhoes);
-    blocos.push(`${texto} ${milhoes === 1 ? 'milhão' : 'milhões'}`);
-  }
-
-  if (milhares > 0) {
-    if (milhares === 1) {
-      blocos.push('mil');
-    } else {
-      blocos.push(`${converterTresDigitos(milhares)} mil`);
-    }
-  }
-
-  if (resto > 0) {
-    blocos.push(converterTresDigitos(resto));
-  }
-
-  return blocos.join(' e ');
-}
-
-function converterReaisPorExtenso(valor: number): string {
-  if (valor <= 0) return 'zero real';
-
-  const inteiro = Math.floor(valor);
-  const centavos = Math.round((valor - inteiro) * 100);
-
-  const partes: string[] = [];
-
-  if (inteiro > 0) {
-    const textoInteiro = converterNumeroPorExtenso(inteiro);
-    const moeda = inteiro === 1 ? 'real' : 'reais';
-    partes.push(`${textoInteiro} ${moeda}`);
-  }
-
-  if (centavos > 0) {
-    const textoCentavos = converterTresDigitos(centavos);
-    const moedaCentavo = centavos === 1 ? 'centavo' : 'centavos';
-    partes.push(`${textoCentavos} ${moedaCentavo}`);
-  }
-
-  return partes.join(' e ');
-}
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Conversor de Valor por Extenso em Reais e Gerador de Recibo',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Any',
+      url: 'https://kagazo.in/br/valor-por-extenso-recibo',
+      offers: {
+        '@type': 'Offer',
+        price: '0.00',
+        priceCurrency: 'BRL',
+      },
+      description:
+        'Escreva valores monetários por extenso em reais e centavos para preenchimento de cheques, contratos e emissão de recibos formais de quitação (Art. 320 do Código Civil).',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Início',
+          item: 'https://kagazo.in/',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Brasil',
+          item: 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: 'Valor por Extenso & Recibo',
+          item: 'https://kagazo.in/br/valor-por-extenso-recibo',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Em caso de divergência em cheques e contratos, qual valor prevalece?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Segundo o Art. 12 da Lei Federal nº 7.357/1985 (Lei do Cheque) e o Art. 10 do Decreto nº 2.044/1908, caso haja contradição entre a quantia lançada em algarismos numéricos e a grafada por extenso, prevalecerá categoricamente o valor escrito por extenso. Os tribunais e as instituições bancárias conferem prevalência probatória ao extenso porque a grafia reduz radicalmente fraudes por acréscimo de dígitos ou lapsos mecanográficos.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Quais são os requisitos indispensáveis de um recibo de pagamento válido?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Conforme preceitua o Art. 320 do Código Civil Brasileiro, a quitação regular deve designar taxativamente: o valor monetário e a espécie da dívida quitada, o nome completo do devedor (ou pagador), o tempo (data) e a praça (localidade) do pagamento, e a assinatura do credor titular ou de seu representante com poderes expressos.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'O devedor pode recusar o pagamento caso o credor se recuse a fornecer o recibo?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Sim. O Art. 319 do Código Civil Brasileiro confere expressamente ao devedor o direito subjetivo de exigir a quitação formal (recibo) e de reter licitamente o pagamento integral enquanto a respectiva quitação não lhe for entregue, não incorrendo em mora nesse período.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Por quanto tempo devo arquivar recibos de pagamento para fins fiscais e judiciais?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Para tributos federais e municipais, o prazo prescricional e decadencial é de 5 anos (Art. 173 e 174 do CTN). Para relações locatícias ou dívidas contratuais de cobrança ordinária, o Código Civil estabelece prazos entre 3 e 5 anos (Art. 206 do CC). Para contribuições previdenciárias e trabalhistas (FGTS), o arquivamento preventivo deve ser mantido por até 30 anos (ou prazo prescricional de 5 anos ajuizável).',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function ValorPorExtensoReciboPage() {
-  const [valor, setValor] = React.useState<number>(3420.5);
-  const [estiloTexto, setEstiloTexto] = React.useState<'capitalizado' | 'minusculo' | 'maiusculo'>('capitalizado');
-  const [nomePagador, setNomePagador] = React.useState<string>('Carlos Eduardo Mendes');
-  const [cpfCnpjPagador, setCpfCnpjPagador] = React.useState<string>('123.456.789-00');
-  const [nomeRecebedor, setNomeRecebedor] = React.useState<string>('Mariana Silva Consultoria');
-  const [cpfCnpjRecebedor, setCpfCnpjRecebedor] = React.useState<string>('12.345.678/0001-90');
-  const [referenteA, setReferenteA] = React.useState<string>('Prestação de serviços de consultoria contábil e auditoria financeira referente ao mês.');
-  const [cidade, setCidade] = React.useState<string>('São Paulo - SP');
-  const [copiado, setCopiado] = React.useState<boolean>(false);
-  const [copiadoRecibo, setCopiadoRecibo] = React.useState<boolean>(false);
-
-  const valorExtensoPuro = React.useMemo(() => {
-    return converterReaisPorExtenso(Math.max(0, valor));
-  }, [valor]);
-
-  const valorExtensoFormatado = React.useMemo(() => {
-    if (estiloTexto === 'minusculo') return valorExtensoPuro.toLowerCase();
-    if (estiloTexto === 'maiusculo') return valorExtensoPuro.toUpperCase();
-    return valorExtensoPuro.charAt(0).toUpperCase() + valorExtensoPuro.slice(1);
-  }, [valorExtensoPuro, estiloTexto]);
-
-  const formatarBRL = (val: number) =>
-    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
-
-  const textoReciboFormal = `RECIBO DE PAGAMENTO
-
-VALOR: ${formatarBRL(valor)} (${valorExtensoFormatado})
-
-Recebi(emos) de ${nomePagador.trim() || '[Nome do Pagador]'}, inscrito(a) no CPF/CNPJ nº ${cpfCnpjPagador.trim() || '[CPF/CNPJ]'}, a importância de ${formatarBRL(valor)} (${valorExtensoFormatado}), referente a:
-${referenteA.trim() || '[Descrição dos serviços ou produtos]'}.
-
-Para maior clareza e firmeza do presente, firmo(amos) o presente recibo dando plena, rasa e geral quitação da quantia recebida.
-
-${cidade.trim() || 'Local'}, ${new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}.
-
-_____________________________________________________
-${nomeRecebedor.trim() || '[Nome do Beneficiário / Emissor]'}
-CPF/CNPJ: ${cpfCnpjRecebedor.trim() || '[CPF/CNPJ]'}`;
-
-  const copiarExtenso = () => {
-    navigator.clipboard.writeText(valorExtensoFormatado);
-    setCopiado(true);
-    setTimeout(() => setCopiado(false), 2000);
-  };
-
-  const copiarRecibo = () => {
-    navigator.clipboard.writeText(textoReciboFormal);
-    setCopiadoRecibo(true);
-    setTimeout(() => setCopiadoRecibo(false), 2000);
-  };
-
-  const imprimirRecibo = () => {
-    window.print();
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 antialiased py-10 px-4 sm:px-6 lg:px-8">
-      {/* Schema.org FAQ & SoftwareApplication */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [
-              {
-                '@type': 'SoftwareApplication',
-                name: 'Conversor de Valor por Extenso em Reais e Gerador de Recibo',
-                applicationCategory: 'BusinessApplication',
-                operatingSystem: 'Any',
-                offers: {
-                  '@type': 'Offer',
-                  price: '0.00',
-                  priceCurrency: 'BRL',
-                },
-                description:
-                  'Escreva valores monetários por extenso em reais e centavos para preenchimento de cheques, notas promissórias e emissão de recibos formais de quitação (Art. 320 do Código Civil).',
-              },
-              {
-                '@type': 'FAQPage',
-                mainEntity: [
-                  {
-                    '@type': 'Question',
-                    name: 'Em caso de divergência em cheques e contratos, qual valor prevalece?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Segundo o Art. 12 da Lei Federal nº 7.357/1985 (Lei do Cheque) e a jurisprudência uniforme civil brasileira, na hipótese de divergência entre a quantia lançada em algarismos e a expressa por extenso, prevalecerá sempre o valor escrito por extenso.',
-                    },
-                  },
-                  {
-                    '@type': 'Question',
-                    name: 'Quais os requisitos legais de um recibo de pagamento válido?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Conforme o Art. 320 do Código Civil Brasileiro, a quitação regular deve conter: o valor monetário e a espécie da dívida quitada, o nome do devedor ou quem por este pagou, o tempo e o lugar do pagamento, e a assinatura do credor ou de seu representante constituído.',
-                    },
-                  },
-                ],
-              },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
       <div className="max-w-4xl mx-auto">
@@ -237,190 +136,31 @@ CPF/CNPJ: ${cpfCnpjRecebedor.trim() || '[CPF/CNPJ]'}`;
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-3">
             <Coins className="w-3.5 h-3.5" />
-            Lei do Cheque nº 7.357/85 & Art. 320 Código Civil
+            Lei do Cheque nº 7.357/85 & Art. 320 do Código Civil
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Valor por Extenso e Emissor de Recibo
+            Valor por Extenso e Emissor de Recibo de Quitação
           </h1>
           <p className="mt-2 text-base sm:text-lg text-slate-600">
-            Converta quantias em reais para escrita por extenso e emita recibos de quitação prontos para assinatura e impressão.
+            Converta quantias em reais para escrita por extenso com exatidão gramatical e emita recibos de quitação prontos para assinatura e impressão conforme os ditames do Código Civil.
           </p>
         </div>
 
-        {/* Card Extenso Principal */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 mb-8 space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-            <div className="sm:col-span-6">
-              <label className="block text-sm font-semibold text-slate-700 mb-1">
-                Digite o Valor Numérico (R$)
-              </label>
-              <div className="relative">
-                <span className="absolute left-3.5 top-3 text-slate-400 font-semibold text-sm">R$</span>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={valor || ''}
-                  onChange={(e) => setValor(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-12 pr-4 py-2.5 rounded-xl border border-slate-200 font-bold text-xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-6">
-              <label className="block text-sm font-semibold text-slate-700 mb-1">
-                Formatação das Letras
-              </label>
-              <div className="grid grid-cols-3 gap-2 text-xs">
-                <button
-                  type="button"
-                  onClick={() => setEstiloTexto('capitalizado')}
-                  className={`py-2.5 px-2 rounded-xl border font-semibold transition ${
-                    estiloTexto === 'capitalizado'
-                      ? 'border-emerald-600 bg-emerald-50 text-emerald-950 font-bold'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  Primeira Alta
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEstiloTexto('maiusculo')}
-                  className={`py-2.5 px-2 rounded-xl border font-semibold transition ${
-                    estiloTexto === 'maiusculo'
-                      ? 'border-emerald-600 bg-emerald-50 text-emerald-950 font-bold'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  MAIÚSCULAS
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEstiloTexto('minusculo')}
-                  className={`py-2.5 px-2 rounded-xl border font-semibold transition ${
-                    estiloTexto === 'minusculo'
-                      ? 'border-emerald-600 bg-emerald-50 text-emerald-950 font-bold'
-                      : 'border-slate-200 text-slate-600 hover:bg-slate-50'
-                  }`}
-                >
-                  minúsculas
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Resultado do Valor por Extenso */}
-          <div className="p-5 rounded-2xl bg-slate-900 text-white space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
-                Valor Escrito por Extenso
-              </span>
-              <button
-                type="button"
-                onClick={copiarExtenso}
-                className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition"
-              >
-                {copiado ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                {copiado ? 'Copiado!' : 'Copiar Extenso'}
-              </button>
-            </div>
-            <p className="text-lg sm:text-xl font-bold leading-relaxed text-slate-100">
-              ({valorExtensoFormatado})
-            </p>
-          </div>
+        {/* Answer Capsule (GEO & AEO Citation Hook) */}
+        <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-5 mb-8 shadow-sm">
+          <h2 className="text-sm font-semibold text-emerald-900 uppercase tracking-wide mb-2 flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            Regra Jurídica Essencial sobre Valores por Extenso e Recibos
+          </h2>
+          <p className="text-sm text-emerald-950 leading-relaxed">
+            Em qualquer título de crédito, cheque ou contrato civil, <strong>a indicação do valor grafada por extenso tem prevalência absoluta sobre os algarismos numéricos</strong> (Art. 12 da Lei Federal nº 7.357/1985 e jurisprudência pacífica do STJ). Adicionalmente, quem realiza um pagamento possui o direito potestativo e incondicional de receber quitação formal e minuciosa com especificação da dívida (Art. 319 e 320 do Código Civil), resguardando-se contra cobranças indevidas e litígios de execução de título.
+          </p>
         </div>
 
-        {/* Gerador de Recibo de Pagamento */}
-        <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 mb-8 space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <FileText className="w-5 h-5 text-emerald-600" />
-              Emissor de Recibo de Pagamento e Quitação
-            </h2>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={copiarRecibo}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition"
-              >
-                {copiadoRecibo ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                {copiadoRecibo ? 'Recibo Copiado' : 'Copiar Texto'}
-              </button>
-              <button
-                type="button"
-                onClick={imprimirRecibo}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition"
-              >
-                <Printer className="w-3.5 h-3.5" />
-                Imprimir Recibo
-              </button>
-            </div>
-          </div>
+        {/* Client Engine */}
+        <ValorPorExtensoReciboClient />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div>
-              <label className="block text-slate-700 font-semibold mb-1">Nome de Quem Pagou (Pagador / Devedor)</label>
-              <input
-                type="text"
-                value={nomePagador}
-                onChange={(e) => setNomePagador(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-            <div>
-              <label className="block text-slate-700 font-semibold mb-1">CPF ou CNPJ do Pagador</label>
-              <input
-                type="text"
-                value={cpfCnpjPagador}
-                onChange={(e) => setCpfCnpjPagador(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-            <div>
-              <label className="block text-slate-700 font-semibold mb-1">Nome de Quem Recebeu (Beneficiário)</label>
-              <input
-                type="text"
-                value={nomeRecebedor}
-                onChange={(e) => setNomeRecebedor(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-            <div>
-              <label className="block text-slate-700 font-semibold mb-1">CPF ou CNPJ do Recebedor</label>
-              <input
-                type="text"
-                value={cpfCnpjRecebedor}
-                onChange={(e) => setCpfCnpjRecebedor(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-slate-700 font-semibold mb-1">Referente a (Descrição do Pagamento / Serviços)</label>
-              <input
-                type="text"
-                value={referenteA}
-                onChange={(e) => setReferenteA(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-            <div className="sm:col-span-2">
-              <label className="block text-slate-700 font-semibold mb-1">Cidade e Estado de Emissão</label>
-              <input
-                type="text"
-                value={cidade}
-                onChange={(e) => setCidade(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-slate-200 text-slate-900 focus:ring-1 focus:ring-emerald-500"
-              />
-            </div>
-          </div>
-
-          {/* Pré-visualização do Recibo Imprimível */}
-          <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed">
-            {textoReciboFormal}
-          </div>
-        </div>
-
-        {/* AdSense Placement */}
+        {/* In-Content Statutory Ad Slot */}
         <div className="my-10">
           <AdSlot slot="in_content" context="legal" />
         </div>
@@ -429,37 +169,180 @@ CPF/CNPJ: ${cpfCnpjRecebedor.trim() || '[CPF/CNPJ]'}`;
         <article className="mt-12 bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-200/80 space-y-8 text-slate-700 leading-relaxed">
           <div>
             <h2 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">
-              A Força Jurídica do Valor por Extenso no Direito Brasileiro
+              A Força Jurídica do Valor por Extenso no Direito Cambial Brasileiro
             </h2>
             <p>
-              O preenchimento por extenso de quantias financeiras é uma formalidade indispensável consagrada pela legislação mercantil e civil brasileira para prevenir adulterações, fraudes de acréscimo de zeros e divergências de digitação em cheques, contratos de compra e venda, títulos de crédito e recibos de quitação.
+              O hábito comercial de transcrever somas monetárias por extenso não é uma mera formalidade de cortesia ou tradição burocrática; trata-se de um dispositivo legal de segurança jurídica estabelecido para coibir a adulteração de títulos de crédito, tais como cheques, notas promissórias, letras de câmbio e contratos de compra e venda mercantil.
             </p>
             <p className="mt-3">
-              O <strong>Artigo 12 da Lei Federal nº 7.357/1985 (Lei do Cheque)</strong> expressa claramente a prevalência:
+              Historicamente consolidado no <strong>Decreto nº 2.044/1908</strong> e reiterado com ênfase no <strong>Artigo 12 da Lei do Cheque (Lei nº 7.357/1985)</strong>, o ordenamento jurídico determina categoricamente:
             </p>
-            <blockquote className="my-4 pl-4 border-l-4 border-emerald-500 italic text-slate-800 bg-slate-50 py-2">
-              "Art. 12. Feita a indicação da quantia em algarismos e por extenso, prevalece esta no caso de divergência."
+            <blockquote className="my-4 pl-4 border-l-4 border-emerald-500 italic text-slate-800 bg-slate-50 py-3 rounded-r-lg">
+              "Art. 12. Feita a indicação da quantia em algarismos e por extenso, prevalece esta no caso de divergência. Se a quantia for indicada mais de uma vez, quer por extenso, quer em algarismos, e se houver divergência, prevalece a indicação da menor quantia."
             </blockquote>
+            <p className="mt-3">
+              A razão dessa hierarquia hermenêutica é prática: alterar um numeral manuscrito ou digitado é relativamente simples (transformar um <code>1.000,00</code> em <code>11.000,00</code> através da aposição de um dígito marginal), ao passo que adulterar palavras inteiras como <em>"um mil reais"</em> para <em>"onze mil reais"</em> exige raspura visível ou adulteração grosseira de fácil detecção pericial grafotécnica.
+            </p>
           </div>
 
           <div className="border-t border-slate-100 pt-6">
             <h3 className="text-xl font-bold text-slate-900 mb-3">
-              Requisitos de Validade do Recibo de Quitação (Art. 319 e 320 do Código Civil)
+              Requisitos Legais de Validade do Recibo de Quitação (Arts. 319 e 320 do Código Civil)
             </h3>
             <p>
-              Quem paga tem o direito irrevogável de exigir a quitação formal (recibo), podendo reter legitimamente o pagamento enquanto ela não lhe for dada (Art. 319 do Código Civil). Para que tenha plena eficácia liberatória de obrigações perante a Justiça e a Receita Federal, o recibo deve conter obrigatoriamente:
+              O adimplemento da obrigação é o modo natural de extinção das dívidas civis e comerciais. No entanto, para que o devedor fique exonerado perante a ordem jurídica, é indispensável a prova inequívoca do pagamento. A prova rainha do pagamento é a <strong>quitação regular</strong>, comumente materializada no recibo.
+            </p>
+            <p className="mt-3">
+              O <strong>Artigo 319 do Código Civil Brasileiro (Lei nº 10.406/2002)</strong> estipula que:
+            </p>
+            <blockquote className="my-4 pl-4 border-l-4 border-emerald-500 italic text-slate-800 bg-slate-50 py-3 rounded-r-lg">
+              "Art. 319. O devedor que paga tem direito a quitação regular, e pode reter o pagamento, enquanto não lhe seja dada."
+            </blockquote>
+            <p className="mt-3">
+              Isso significa que, caso o credor (locador, prestador de serviço ou fornecedor) se negue a passar o recibo idôneo, o devedor não comete ilícito algum ao congelar os valores até a expedição do documento, podendo inclusive ajuizar Ação de Consignação em Pagamento (Art. 539 do CPC) para não incorrer em encargos moratórios.
+            </p>
+            <p className="mt-3">
+              Para ostentar plena validade perante juízos cíveis e autoridades fiscais, o <strong>Artigo 320 do Código Civil</strong> exige que a quitação preencha cumulativamente os seguintes elementos mínimos:
             </p>
             <ul className="list-disc pl-5 mt-3 space-y-2 text-sm">
-              <li>O valor numérico e o valor escrito por extenso em reais e centavos;</li>
-              <li>A causa do débito (especificação do serviço, contrato ou aluguel quitado);</li>
-              <li>A identificação completa do credor e do devedor com nome civil e CPF/CNPJ;</li>
-              <li>A data e a praça (cidade) onde o pagamento foi recebido;</li>
-              <li>A assinatura do credor ou de quem legitimamente o represente.</li>
+              <li><strong>O valor e a espécie da dívida quitada:</strong> O montante numérico e por extenso, indicando se refere a aluguel, prestação de consultoria, quitação de parcelamento comercial ou entrega de mercadorias;</li>
+              <li><strong>O nome do devedor:</strong> Nome completo ou razão social e respectivo número de inscrição no Cadastro Nacional de Pessoas Físicas (CPF) ou Jurídicas (CNPJ);</li>
+              <li><strong>Quem por este pagou:</strong> Se o pagamento foi realizado por terceiro interveniente (ex: fiador ou mandatário);</li>
+              <li><strong>O tempo e o lugar do pagamento:</strong> A data exata do recebimento e a comarca territorial onde se operou a liquidação;</li>
+              <li><strong>A assinatura do credor:</strong> Firma física manuscrita ou assinatura eletrônica qualificada (padrão ICP-Brasil ou Gov.br) do titular do crédito ou de seu procurador legalmente habilitado.</li>
+            </ul>
+          </div>
+
+          <div className="border-t border-slate-100 pt-6">
+            <h3 className="text-xl font-bold text-slate-900 mb-3">
+              Regras Gramaticais para Grafia de Moedas segundo o Acordo Ortográfico
+            </h3>
+            <p>
+              A grafia formal da moeda nacional (o Real, símbolo <code>R$</code>) obedece às convenções estilísticas da Academia Brasileira de Letras (ABL) e às normas operacionais do Banco Central do Brasil:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-sm">
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <h4 className="font-bold text-slate-900 mb-1">Conjunção Aditiva "e"</h4>
+                <p className="text-slate-600">
+                  Emprega-se a conjunção "e" entre as classes de ordens que formam uma unidade numérica (ex: <em>"três mil quatrocentos e vinte reais e cinquenta centavos"</em>). Não se interpõe vírgula entre as partes numéricas quando grafadas por extenso.
+                </p>
+              </div>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <h4 className="font-bold text-slate-900 mb-1">Milhar Isolado</h4>
+                <p className="text-slate-600">
+                  Para o numeral 1.000, recomenda-se em instrumentos formais o emprego de <em>"um mil reais"</em> em vez de apenas <em>"mil reais"</em>, a fim de evitar espaços vazios à esquerda em folhas de cheque e contratos cartorários.
+                </p>
+              </div>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <h4 className="font-bold text-slate-900 mb-1">Centavos e Moeda Fracionária</h4>
+                <p className="text-slate-600">
+                  Quando a quantia for menor do que um real, grafa-se unicamente a fração (ex: <em>"cinquenta centavos de real"</em> ou <em>"cinquenta centavos"</em>). Se a quantia for inteira (sem centavos), não há necessidade de mencionar "zero centavos".
+                </p>
+              </div>
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                <h4 className="font-bold text-slate-900 mb-1">Milhões e Bilhões</h4>
+                <p className="text-slate-600">
+                  Para valores terminados exatamente na casa dos milhões sem resíduo de centenas (ex: R$ 2.000.000,00), a preposição "de" antecede a palavra reais: <em>"dois milhões de reais"</em>. Existindo classes subsequentes, elimina-se a preposição: <em>"dois milhões e cinquenta mil reais"</em>.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-100 pt-6">
+            <h3 className="text-xl font-bold text-slate-900 mb-3">
+              Prazos de Guarda de Recibos e Prescrição de Dívidas
+            </h3>
+            <p>
+              Guardar os comprovantes de pagamento e os recibos pelo período legal prescricional é fundamental para blindar o patrimônio contra alegações indevidas de inadimplemento:
+            </p>
+            <ul className="list-disc pl-5 mt-3 space-y-2 text-sm">
+              <li>
+                <strong>Aluguéis e encargos locatícios:</strong> Devem ser guardados por <strong>3 anos</strong> (Art. 206, § 3º, I do Código Civil).
+              </li>
+              <li>
+                <strong>Serviços profissionais e honorários:</strong> Prazo de <strong>5 anos</strong> para cobrança de dívidas líquidas constantes de instrumento particular (Art. 206, § 5º, I do CC).
+              </li>
+              <li>
+                <strong>Tributos e Imposto de Renda (IRPF / IRPJ):</strong> Devem ser mantidos por <strong>5 anos</strong>, contados do primeiro dia do exercício seguinte àquele em que o lançamento poderia ter sido efetuado (Art. 173 do Código Tributário Nacional).
+              </li>
+              <li>
+                <strong>Quitações condominiais:</strong> A cada ano civil, o condomínio é obrigado por lei (Lei nº 12.007/2009) a emitir uma declaração de quitação anual de débitos, o que dispensa o arquivamento dos 12 recibos mensais do ano anterior.
+              </li>
             </ul>
           </div>
         </article>
+
+        {/* Perguntas Frequentes (FAQ) Accordion */}
+        <section className="mt-12 bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-200/80">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+            <HelpCircle className="w-6 h-6 text-emerald-600" />
+            Perguntas Frequentes sobre Valor por Extenso e Recibos
+          </h2>
+
+          <div className="space-y-4">
+            <details className="group border border-slate-200 rounded-xl p-4 [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center justify-between gap-1.5 font-semibold text-slate-900">
+                <span>Em caso de divergência entre números e palavras em contratos e cheques, qual tem prioridade?</span>
+                <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 sm:p-2 group-open:-rotate-180 transition duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                Prevalece categoricamente o valor grafado por extenso. Este postulado é pacificado no Direito Cambial pelo Artigo 12 da Lei nº 7.357/1985 e pelo Artigo 10 do Decreto nº 2.044/1908. Caso o valor apareça grafado por extenso mais de uma vez com discordâncias entre si, a norma determina que prevalecerá a indicação da quantia menor, assegurando proteção ao devedor de boa-fé.
+              </p>
+            </details>
+
+            <details className="group border border-slate-200 rounded-xl p-4 [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center justify-between gap-1.5 font-semibold text-slate-900">
+                <span>O recibo substitui a emissão da Nota Fiscal de Serviços (NFS-e)?</span>
+                <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 sm:p-2 group-open:-rotate-180 transition duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                Não. O recibo comum comprova a quitação de uma obrigação pecuniária civil entre duas pessoas, mas não cumpre a obrigação tributária principal perante a Prefeitura ou a Receita Federal. Empresas e pessoas jurídicas prestadoras de serviços são obrigadas por lei a emitir a competente Nota Fiscal. Para profissionais autônomos pessoas físicas que não possuem inscrição como pessoa jurídica, o documento legal adequado acompanhado do recibo é o Recibo de Pagamento a Autônomo (RPA), com as retenções previdenciárias devidas.
+              </p>
+            </details>
+
+            <details className="group border border-slate-200 rounded-xl p-4 [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center justify-between gap-1.5 font-semibold text-slate-900">
+                <span>Um comprovante de transferência Pix ou TED serve como recibo definitivo?</span>
+                <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 sm:p-2 group-open:-rotate-180 transition duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                O comprovante bancário de Pix ou TED serve como prova incontestável de transferência patrimonial de fundos, mas não descreve a causa jurídica subjacente do pagamento nem vincula automaticamente a extinção daquela dívida específica, a menos que o campo de descrição ou chave referencie explicitamente o contrato. Para blindagem cabal contra cobranças futuras e para fins de auditoria contábil, a emissão do recibo formal firmado pelo credor dando quitação irrestrita continua sendo a garantia mais segura no Direito Civil.
+              </p>
+            </details>
+
+            <details className="group border border-slate-200 rounded-xl p-4 [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center justify-between gap-1.5 font-semibold text-slate-900">
+                <span>Como proceder se o recibo contiver um erro de digitação no nome ou no valor?</span>
+                <span className="shrink-0 rounded-full bg-slate-100 p-1.5 text-slate-900 sm:p-2 group-open:-rotate-180 transition duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </summary>
+              <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                Rasuras, borrões ou emendas em recibos podem comprometer severamente sua eficácia probatória em caso de disputa pericial. A conduta juridicamente correta é inutilizar o recibo viciado e lavrar um novo instrumento escoimado de erros, ou, na impossibilidade física, emitir um termo formal aditivo de retificação assinado por ambas as partes indicando o cancelamento do documento antecedente.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        {/* Post Download / Bottom Ad Slot */}
+        <div className="mt-10">
+          <AdSlot slot="post_download" context="legal" />
+        </div>
       </div>
     </div>
   );
 }
-

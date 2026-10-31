@@ -1,293 +1,271 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Calculator,
-  ShieldCheck,
-  Sparkles,
-  CheckCircle2,
-  AlertCircle,
-  RotateCcw,
-  User,
-  Building2,
-  Calendar,
-  MapPin,
-} from 'lucide-react';
+import { Sparkles, Calculator, FileText, CheckCircle2 } from 'lucide-react';
+import { VerificaPartitaIvaCfClient } from './ClientEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { SITE_URL } from '@/lib/constants';
 
-interface DecodedCf {
-  dataNascita: string;
-  sesso: 'Maschio' | 'Femmina';
-  codiceComune: string;
-  omocodiaRilevata: boolean;
-}
+export const metadata: Metadata = {
+  title: 'Verifica Partita IVA e Codice Fiscale 2026 : Controllo Modulo 10 e Algoritmo CIN | Kagazo Italia',
+  description:
+    'Valida e decodifica online la correttezza formale di Partita IVA (11 cifre, Modulo 10) e Codice Fiscale (16 caratteri, D.M. 23/12/1976). Estrae data di nascita, sesso e comune catastale.',
+  keywords: [
+    'verifica partita iva agenzia delle entrate',
+    'controllo codice fiscale algoritmo cin',
+    'algoritmo luhn modulo 10 partita iva',
+    'decodifica codice fiscale data sesso comune',
+    'omocodia codice fiscale lettere sostitutive',
+    'controllo formale partita iva 11 cifre',
+    'valutazione anagrafe tributaria vies',
+    'dm 23 12 1976 regole codice fiscale',
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/it/verifica-partita-iva-codice-fiscale`,
+    languages: {
+      'it-IT': `${SITE_URL}/it/verifica-partita-iva-codice-fiscale`,
+      'it': `${SITE_URL}/it/verifica-partita-iva-codice-fiscale`,
+      'x-default': `${SITE_URL}/it/verifica-partita-iva-codice-fiscale`,
+    },
+  },
+  openGraph: {
+    title: 'Verifica Partita IVA e Codice Fiscale | Kagazo Italia',
+    description:
+      'Strumento ufficiale di controllo formale per Partita IVA e Codice Fiscale con algoritmo ministeriale e decodifica anagrafica.',
+    url: `${SITE_URL}/it/verifica-partita-iva-codice-fiscale`,
+    locale: 'it_IT',
+    siteName: 'Kagazo Italia',
+    type: 'website',
+  },
+};
+
+const FAQS = [
+  {
+    question: 'Come funziona il calcolo del carattere di controllo del Codice Fiscale?',
+    answer:
+      'Il sedicesimo carattere del Codice Fiscale è una lettera di controllo alfabetica determinata secondo il D.M. 23 dicembre 1976. Ai 15 caratteri precedenti viene assegnato un valore numerico dipendente dalla loro posizione: i caratteri in posizione dispari (1°, 3°, 5°...) e quelli in posizione pari (2°, 4°, 6°...) utilizzano due tabelle di conversione ponderate differenti. I valori vengono sommati e divisi per 26; il resto della divisione intera individua la lettera corrispondente (0 = A, 1 = B ... 25 = Z).',
+  },
+  {
+    question: 'Che cos\'è l\'omocodia e come viene risolta nel Codice Fiscale?',
+    answer:
+      'L\'omocodia si verifica quando due o più individui condividono identici cognomi, nomi, data di nascita e comune di nascita, generando il medesimo codice fiscale a 16 caratteri. Per evitare duplicazioni nei registri tributari, l\'Agenzia delle Entrate sostituisce una o più cifre numeriche (a partire da destra verso sinistra tra quelle relative al giorno, anno e comune) con specifiche lettere dell\'alfabeto (da L a V, escludendo vocali e lettere simili come I, O, U).',
+  },
+  {
+    question: 'Come è strutturata una Partita IVA italiana di 11 cifre?',
+    answer:
+      'La Partita IVA italiana si compone di 11 caratteri esclusivamente numerici: le prime 7 cifre corrispondono al numero di matricola progressivo attribuito al contribuente dall\'ufficio delle imposte; le successive 3 cifre (dall\'8ª alla 10ª) individuano il codice identificativo provinciale dell\'Ufficio dell\'Agenzia delle Entrate competente (da 001 a 100, oppure 120/121 per soggetti esteri o non residenti); l\'undicesima cifra è il carattere di controllo calcolato tramite l\'algoritmo di Luhn (Modulo 10).',
+  },
+  {
+    question: 'La verifica formale garantisce che la Partita IVA sia attiva e registrata?',
+    answer:
+      'La verifica formale eseguita da questo calcolatore attesta la rigorosa conformità logico-matematica del codice e l\'assenza di errori di battitura o cifre invertite. Tuttavia, per accertare se l\'attività economica sia effettivamente attiva, cessata, sospesa o se sia abilitata alle operazioni intracomunitarie (archivio VIES), è necessario consultare il servizio telematico ufficiale dell\'Agenzia delle Entrate o della Commissione Europea.',
+  },
+];
 
 export default function VerificaPartitaIvaCfPage() {
-  const [valoreInput, setValoreInput] = React.useState<string>('RSSMRA80A01H501U');
-  const [tipoVerifica, setTipoVerifica] = React.useState<'cf' | 'piva'>('cf');
-
-  // Algoritmo Ufficiale Controllo Partita IVA (11 cifre, Modulo 10)
-  const validaPartitaIva = (piva: string): { isValid: boolean; motivo: string } => {
-    const clean = piva.trim();
-    if (!/^[0-9]{11}$/.test(clean)) {
-      return { isValid: false, motivo: 'La Partita IVA deve essere composta esattamente da 11 cifre numeriche.' };
-    }
-
-    let s = 0;
-    for (let i = 0; i < 11; i++) {
-      const n = parseInt(clean[i], 10);
-      if (i % 2 === 0) {
-        // Posizione dispari (1°, 3°, 5°...)
-        s += n;
-      } else {
-        // Posizione pari (2°, 4°, 6°...): raddoppio
-        const r = n * 2;
-        s += r > 9 ? r - 9 : r;
-      }
-    }
-
-    if (s % 10 === 0) {
-      return { isValid: true, motivo: 'Partita IVA formalmente valida secondo l’algoritmo dell’Agenzia delle Entrate.' };
-    } else {
-      return { isValid: false, motivo: 'Cifra di controllo non valida: la Partita IVA non rispetta l’algoritmo di Luhn ministeriale.' };
-    }
-  };
-
-  // Tabella caratteri per Codice Fiscale (D.M. 23/12/1976)
-  const tabDispari: Record<string, number> = {
-    '0': 1, '1': 0, '2': 5, '3': 7, '4': 9, '5': 13, '6': 15, '7': 17, '8': 19, '9': 21,
-    'A': 1, 'B': 0, 'C': 5, 'D': 7, 'E': 9, 'F': 13, 'G': 15, 'H': 17, 'I': 19, 'J': 21,
-    'K': 2, 'L': 4, 'M': 18, 'N': 20, 'O': 11, 'P': 3, 'Q': 6, 'R': 8, 'S': 12, 'T': 14,
-    'U': 16, 'V': 10, 'W': 22, 'X': 25, 'Y': 24, 'Z': 23,
-  };
-
-  const tabPari: Record<string, number> = {
-    '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-    'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7, 'I': 8, 'J': 9,
-    'K': 10, 'L': 11, 'M': 12, 'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19,
-    'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25,
-  };
-
-  const mesiMap: Record<string, string> = {
-    A: 'Gennaio', B: 'Febbraio', C: 'Marzo', D: 'Aprile', E: 'Maggio', H: 'Giugno',
-    L: 'Luglio', M: 'Agosto', P: 'Settembre', R: 'Ottobre', S: 'Novembre', T: 'Dicembre',
-  };
-
-  const validaCodiceFiscale = (cf: string): { isValid: boolean; motivo: string; dati?: DecodedCf } => {
-    const clean = cf.trim().toUpperCase();
-    if (clean.length !== 16) {
-      return { isValid: false, motivo: 'Il Codice Fiscale deve contenere esattamente 16 caratteri alfanumerici.' };
-    }
-
-    // Calcolo del carattere di controllo (16° carattere)
-    let somma = 0;
-    for (let i = 0; i < 15; i++) {
-      const char = clean[i];
-      if (i % 2 === 0) {
-        // Posizione dispari (1°, 3°, 5°...)
-        somma += tabDispari[char] ?? 0;
-      } else {
-        // Posizione pari (2°, 4°, 6°...)
-        somma += tabPari[char] ?? 0;
-      }
-    }
-
-    const checkCharExpected = String.fromCharCode(65 + (somma % 26));
-    const checkCharActual = clean[15];
-
-    if (checkCharExpected !== checkCharActual) {
-      return {
-        isValid: false,
-        motivo: `Carattere di controllo errato: atteso "${checkCharExpected}", trovato "${checkCharActual}".`,
-      };
-    }
-
-    // Decodifica dati anagrafici
-    const anno2Digit = clean.substring(6, 8);
-    const meseChar = clean[8];
-    let giornoInt = parseInt(clean.substring(9, 11), 10);
-    let sesso: 'Maschio' | 'Femmina' = 'Maschio';
-
-    if (giornoInt > 40) {
-      sesso = 'Femmina';
-      giornoInt -= 40;
-    }
-
-    const codiceComune = clean.substring(11, 15);
-    const meseNome = mesiMap[meseChar] || 'Mese ' + meseChar;
-
-    return {
-      isValid: true,
-      motivo: 'Codice Fiscale formalmente corretto e conforme al D.M. 23/12/1976.',
-      dati: {
-        dataNascita: `${giornoInt} ${meseNome} (anno di nascita '..${anno2Digit}')`,
-        sesso,
-        codiceComune,
-        omocodiaRilevata: /[L-V]/.test(clean.substring(9, 11)),
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Validatore Partita IVA e Codice Fiscale Italia',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'All',
+        url: `${SITE_URL}/it/verifica-partita-iva-codice-fiscale`,
+        offers: {
+          '@type': 'Offer',
+          price: '0.00',
+          priceCurrency: 'EUR',
+        },
+        provider: {
+          '@type': 'Organization',
+          name: 'Kagazo Italia',
+          url: `${SITE_URL}/it`,
+        },
+        description:
+          'Verifica formale e decodifica anagrafica di Codice Fiscale e Partita IVA secondo le formule dell\'Agenzia delle Entrate.',
       },
-    };
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: SITE_URL,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Italia',
+            item: `${SITE_URL}/it`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Verifica Partita IVA e CF',
+            item: `${SITE_URL}/it/verifica-partita-iva-codice-fiscale`,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
   };
-
-  const esitoPiva = validaPartitaIva(valoreInput);
-  const esitoCf = validaCodiceFiscale(valoreInput);
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/it" className="hover:text-slate-800 transition-colors">Italia</Link>
-        <span>/</span>
-        <span className="text-sky-700 font-semibold">Verifica Partita IVA & CF</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-sky-600" />
-          <span>Algoritmi Ufficiali Ministero Finanze & Agenzia delle Entrate</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Breadcrumb Visual */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Home</Link>
+            <span>/</span>
+            <Link href="/it" className="hover:text-emerald-400 transition-colors">Italia</Link>
+            <span>/</span>
+            <span className="text-slate-200 font-medium">Verifica Partita IVA & CF</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Verifica Partita IVA e Codice Fiscale <br className="hidden sm:inline" />
-          <span className="text-sky-600">Validatore di Controllo e Decodifica Anagrafica</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Risposta Diretta:</strong> Il validatore esegue in tempo reale l'algoritmo matematico ufficiale di controllo: il <strong>Modulo 10 di Luhn</strong> per le Partite IVA (11 cifre) e la <strong>tabella di congruenza alfanumerica</strong> (D.M. 23/12/1976) per il Codice Fiscale (16 caratteri), estraendo sesso, data di nascita e codice catastale del comune di nascita. 100% nel browser senza interrogazioni di rete esterne.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Calculator className="w-4 h-4 text-sky-600" />
-              <span>Inserisci Codice</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Algoritmi Ufficiali Ministero Finanze & Agenzia delle Entrate</span>
             </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setTipoVerifica('cf');
-                  setValoreInput('RSSMRA80A01H501U');
-                }}
-                className={`px-3 py-1 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                  tipoVerifica === 'cf' ? 'bg-sky-600 text-white border-sky-600' : 'bg-slate-50 text-slate-700 border-slate-200'
-                }`}
-              >
-                Codice Fiscale
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setTipoVerifica('piva');
-                  setValoreInput('00743110157');
-                }}
-                className={`px-3 py-1 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                  tipoVerifica === 'piva' ? 'bg-sky-600 text-white border-sky-600' : 'bg-slate-50 text-slate-700 border-slate-200'
-                }`}
-              >
-                Partita IVA
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800">
-                {tipoVerifica === 'cf' ? 'Codice Fiscale (16 Caratteri)' : 'Partita IVA (11 Cifre)'}
-              </label>
-              <input
-                type="text"
-                maxLength={tipoVerifica === 'cf' ? 16 : 11}
-                value={valoreInput}
-                onChange={(e) => setValoreInput(e.target.value.toUpperCase())}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100 text-base font-mono font-bold text-slate-900 tracking-wider transition-all uppercase"
-                placeholder={tipoVerifica === 'cf' ? 'RSSMRA80A01H501U' : '00743110157'}
-              />
-            </div>
-          </div>
-
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Nessun dato viene salvato o trasmesso: verifica logica algoritmica 100% privata in memoria locale.</span>
-          </div>
-        </div>
-
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Esito Validazione Formale
-            </span>
-            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md font-mono ${
-              (tipoVerifica === 'cf' ? esitoCf.isValid : esitoPiva.isValid)
-                ? 'bg-emerald-500/20 text-emerald-300'
-                : 'bg-rose-500/20 text-rose-300'
-            }`}>
-              {(tipoVerifica === 'cf' ? esitoCf.isValid : esitoPiva.isValid) ? 'VALIDO' : 'NON VALIDO'}
-            </span>
-          </div>
-
-          <div className={`p-4 rounded-2xl border space-y-2 ${
-            (tipoVerifica === 'cf' ? esitoCf.isValid : esitoPiva.isValid)
-              ? 'bg-emerald-950/40 border-emerald-800/40'
-              : 'bg-rose-950/40 border-rose-800/40'
-          }`}>
-            <div className="flex items-center gap-2">
-              {(tipoVerifica === 'cf' ? esitoCf.isValid : esitoPiva.isValid) ? (
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-              ) : (
-                <AlertCircle className="w-5 h-5 text-rose-400" />
-              )}
-              <span className="text-sm font-bold text-white">
-                {(tipoVerifica === 'cf' ? esitoCf.isValid : esitoPiva.isValid)
-                  ? 'Codice Matematicamente Valido'
-                  : 'Errore nel Codice Inserito'}
-              </span>
-            </div>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              {tipoVerifica === 'cf' ? esitoCf.motivo : esitoPiva.motivo}
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              Verifica Partita IVA e Codice Fiscale <br className="hidden sm:inline" />
+              <span className="text-emerald-400">Validatore di Controllo e Decodifica Anagrafica</span>
+            </h1>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Verifica l&apos;esattezza matematica del carattere di controllo del Codice Fiscale (16 caratteri) e della Partita IVA (11 cifre). Decodifica automatica della data di nascita, sesso e codice catastale del comune di nascita in piena riservatezza client-side.
             </p>
-          </div>
+          </header>
 
-          {/* Decoded CF Info */}
-          {tipoVerifica === 'cf' && esitoCf.isValid && esitoCf.dati && (
-            <div className="space-y-2 text-xs border-t border-slate-800 pt-3">
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-sky-400" /> Data di Nascita:</span>
-                <span className="font-mono text-white font-bold">{esitoCf.dati.dataNascita}</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span className="flex items-center gap-1.5"><User className="w-3.5 h-3.5 text-sky-400" /> Sesso:</span>
-                <span className="font-mono text-white font-bold">{esitoCf.dati.sesso}</span>
-              </div>
-              <div className="flex justify-between py-1 text-slate-300">
-                <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-sky-400" /> Codice Catastale Comune:</span>
-                <span className="font-mono font-bold text-emerald-400">{esitoCf.dati.codiceComune}</span>
+          {/* Answer Capsule (GEO Optimization) */}
+          <section className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 backdrop-blur-sm space-y-4 shadow-xl">
+            <div className="flex items-start gap-3">
+              <Calculator className="w-5 h-5 text-emerald-400 mt-1 shrink-0" />
+              <div>
+                <h2 className="text-base font-semibold text-white">
+                  Sintesi Operativa: Regole Algoritmiche di Validazione Fiscale
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                  Il <strong>Codice Fiscale</strong> delle persone fisiche (D.P.R. 605/1973) impiega un carattere di controllo alfabetico in sedicesima posizione ottenuto tramite conversione ponderata dei caratteri pari e dispari con modulo 26. La <strong>Partita IVA</strong> (D.P.R. 633/1972) consta di 11 cifre, in cui l&apos;ultima cifra funge da checksum calcolato con l&apos;algoritmo Modulo 10 di Luhn sui primi 10 caratteri. Lo strumento esegue la verifica in memoria locale senza inoltrare dati ad alcun server.
+                </p>
               </div>
             </div>
-          )}
+          </section>
 
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
-            <strong>Nota di Conformità:</strong> Il test verifica l'integrità logica dei caratteri di controllo. Per verificare l'effettiva esistenza attiva all'Anagrafe Tributaria consultare il portale dell'Agenzia delle Entrate o il sistema europeo VIES.
+          {/* Interactive Calculator Engine */}
+          <VerificaPartitaIvaCfClient />
+
+          {/* In-content Ad Contextual */}
+          <div className="my-8">
+            <AdSlot slot="in_content" context="legal" />
+          </div>
+
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 sm:p-8 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 text-emerald-400" />
+              Disciplina Tributaria dei Codici Identificativi delle Persone Fisiche e Giuridiche
+            </h2>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                1. Il Codice Fiscale: D.P.R. 605/1973 e Regole di Composizione (D.M. 23/12/1976)
+              </h3>
+              <p>
+                Istituito dal D.P.R. 29 settembre 1973, n. 605 recante &quot;Disposizioni relative all&apos;anagrafe tributaria e al codice fiscale dei contribuenti&quot;, il Codice Fiscale identifica in modo univoco le persone fisiche nei rapporti con le amministrazioni e gli enti pubblici italiani. La composizione risponde a criteri matematici e fonetici precisi:
+              </p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  <strong>Cognome (3 consonanti):</strong> Si prelevano le prime tre consonanti del cognome. Se le consonanti sono insufficienti si aggiungono le vocali; se il cognome ha meno di tre lettere si aggiunge la lettera X.
+                </li>
+                <li>
+                  <strong>Nome (3 consonanti):</strong> Se il nome contiene 4 o più consonanti, si scelgono la 1ª, la 3ª e la 4ª consonante. In caso contrario, si prendono le prime 3 consonanti nell&apos;ordine, seguite da vocali o dalla lettera X se necessario.
+                </li>
+                <li>
+                  <strong>Anno, Mese e Giorno di Nascita:</strong> 2 cifre per l&apos;anno solare di nascita, 1 lettera alfabetica per il mese (da A a T secondo la tabella ministeriale) e 2 cifre per il giorno di nascita (a cui per le donne viene sommato il valore 40 per distinguerle dal genere maschile).
+                </li>
+                <li>
+                  <strong>Codice Belfiore del Comune:</strong> 4 caratteri alfanumerici corrispondenti al codice catastale ministeriale del comune italiano di nascita o dello Stato estero di nascita (prefisso Z).
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                2. La Partita IVA: D.P.R. 633/1972 e Algoritmo Modulo 10 di Luhn
+              </h3>
+              <p>
+                Ai sensi dell&apos;articolo 35 del D.P.R. 26 ottobre 1972, n. 633 (Decreto IVA), tutti i soggetti che intraprendono l&apos;esercizio di un&apos;impresa, arte o professione nel territorio dello Stato devono farne dichiarazione entro trenta giorni all&apos;Agenzia delle Entrate, che provvede ad attribuire la matricola fiscale di Partita IVA:
+              </p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  <strong>Cifre 1 - 7:</strong> Numero sequenziale progressivo di iscrizione all&apos;anagrafe dei soggetti IVA.
+                </li>
+                <li>
+                  <strong>Cifre 8 - 10:</strong> Codice identificativo della sede provinciale dell&apos;Ufficio delle Entrate che ha assegnato la matricola.
+                </li>
+                <li>
+                  <strong>Cifra 11 (Checksum):</strong> Carattere numerico di controllo calcolato moltiplicando per 2 le cifre in posizione pari e sottraendo 9 a quelle che superano 9, sommando il tutto e calcolando il complemento al multiplo di 10 superiore.
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                3. Rilevanza nella Fatturazione Elettronica (SdI) e Sanzioni
+              </h3>
+              <p>
+                Con l&apos;introduzione dell&apos;obbligo generalizzato della fatturazione elettronica tramite il Sistema di Interscambio (SdI), l&apos;esattezza del codice fiscale o della Partita IVA del cessionario/committente costituisce requisito essenziale per la tempestiva validazione del documento XML. Un codice errato o formalmente non congruente comporta lo scarto immediato della fattura con codice errore 00200 o 00305, esponendo il fornitore alle sanzioni per omessa o tardiva fatturazione (dal 90% al 180% dell&apos;imposta non documentata ex art. 6 D.Lgs. 471/1997).
+              </p>
+            </div>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="space-y-4 bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 sm:p-8">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <h2 className="text-xl sm:text-2xl font-bold text-white">
+                Domande Frequenti su Codice Fiscale e Partita IVA
+              </h2>
+            </div>
+            <div className="divide-y divide-slate-700/60">
+              {FAQS.map((faq, idx) => (
+                <div key={idx} className="py-4 space-y-2">
+                  <h3 className="text-base font-medium text-slate-100">
+                    {faq.question}
+                  </h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Bottom Ad Contextual */}
+          <div className="my-6">
+            <AdSlot slot="post_download" context="legal" />
           </div>
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-6 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-          La Struttura del Codice Fiscale e della Partita IVA in Italia
-        </h2>
-        <p>
-          Il Codice Fiscale italiano fu introdotto con il D.P.R. 605/1973 per identificare ai fini fiscali le persone fisiche. Si compone di 16 caratteri: 3 per il cognome, 3 per il nome, 2 cifre per l'anno di nascita, 1 lettera per il mese, 2 cifre per il giorno e sesso, 4 caratteri alfanumerici per il codice catastale del comune di nascita e l'ultimo carattere di controllo calcolato tramite algoritmo matematico.
-        </p>
-      </div>
-    </div>
+    </>
   );
 }

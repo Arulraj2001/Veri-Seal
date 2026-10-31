@@ -1,365 +1,294 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Building2,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Coins,
-  Percent,
-  TrendingDown,
-  Layers,
-  Scale,
-} from 'lucide-react';
+import { Layers, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { CalculadoraSimplesNacionalClient } from './ClientEngine';
 
-interface FaixaTabela {
-  limite: number;
-  aliquotaNominal: number; // em %
-  parcelaDeduzir: number;
-}
+export const metadata: Metadata = {
+  title: 'Calculadora do Simples Nacional 2026 | Alíquota Efetiva e Fator R',
+  description:
+    'Calcule a alíquota efetiva do Simples Nacional e a guia DAS pelos Anexos I, II, III, IV e V. Simulação com RBT12 e enquadramento automático do Fator R (28%) conforme a LC 123/2006.',
+  keywords: [
+    'calculadora simples nacional 2026',
+    'aliquota efetiva simples nacional',
+    'calculo fator r anexo 3 e 5',
+    'formula simples nacional rbt12',
+    'tabela simples nacional anexos',
+    'pgdas d calculo guia das'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/calculadora-simples-nacional',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/calculadora-simples-nacional',
+      'pt': 'https://kagazo.in/br/calculadora-simples-nacional',
+      'x-default': 'https://kagazo.in/br/calculadora-simples-nacional',
+    },
+  },
+  openGraph: {
+    title: 'Calculadora de Alíquota Efetiva do Simples Nacional 2026',
+    description:
+      'Descubra a alíquota real do DAS da sua empresa com a fórmula oficial da Lei Complementar nº 123/2006 e cálculo do Fator R.',
+    url: 'https://kagazo.in/br/calculadora-simples-nacional',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+};
 
-const TABELAS_SIMPLES: Record<string, FaixaTabela[]> = {
-  anexo1: [
-    { limite: 180000, aliquotaNominal: 4.0, parcelaDeduzir: 0 },
-    { limite: 360000, aliquotaNominal: 7.3, parcelaDeduzir: 5940 },
-    { limite: 720000, aliquotaNominal: 9.5, parcelaDeduzir: 13860 },
-    { limite: 1800000, aliquotaNominal: 10.7, parcelaDeduzir: 22500 },
-    { limite: 3600000, aliquotaNominal: 14.3, parcelaDeduzir: 87300 },
-    { limite: 4800000, aliquotaNominal: 19.0, parcelaDeduzir: 378000 },
-  ],
-  anexo2: [
-    { limite: 180000, aliquotaNominal: 4.5, parcelaDeduzir: 0 },
-    { limite: 360000, aliquotaNominal: 7.8, parcelaDeduzir: 5940 },
-    { limite: 720000, aliquotaNominal: 10.0, parcelaDeduzir: 13860 },
-    { limite: 1800000, aliquotaNominal: 11.2, parcelaDeduzir: 22500 },
-    { limite: 3600000, aliquotaNominal: 14.7, parcelaDeduzir: 85500 },
-    { limite: 4800000, aliquotaNominal: 30.0, parcelaDeduzir: 720000 },
-  ],
-  anexo3: [
-    { limite: 180000, aliquotaNominal: 6.0, parcelaDeduzir: 0 },
-    { limite: 360000, aliquotaNominal: 11.2, parcelaDeduzir: 9360 },
-    { limite: 720000, aliquotaNominal: 13.5, parcelaDeduzir: 17640 },
-    { limite: 1800000, aliquotaNominal: 16.0, parcelaDeduzir: 35640 },
-    { limite: 3600000, aliquotaNominal: 21.0, parcelaDeduzir: 125640 },
-    { limite: 4800000, aliquotaNominal: 33.0, parcelaDeduzir: 648000 },
-  ],
-  anexo4: [
-    { limite: 180000, aliquotaNominal: 4.5, parcelaDeduzir: 0 },
-    { limite: 360000, aliquotaNominal: 9.0, parcelaDeduzir: 8100 },
-    { limite: 720000, aliquotaNominal: 10.2, parcelaDeduzir: 12420 },
-    { limite: 1800000, aliquotaNominal: 14.0, parcelaDeduzir: 39780 },
-    { limite: 3600000, aliquotaNominal: 22.0, parcelaDeduzir: 183780 },
-    { limite: 4800000, aliquotaNominal: 33.0, parcelaDeduzir: 828000 },
-  ],
-  anexo5: [
-    { limite: 180000, aliquotaNominal: 15.5, parcelaDeduzir: 0 },
-    { limite: 360000, aliquotaNominal: 18.0, parcelaDeduzir: 4500 },
-    { limite: 720000, aliquotaNominal: 19.5, parcelaDeduzir: 9900 },
-    { limite: 1800000, aliquotaNominal: 20.5, parcelaDeduzir: 17100 },
-    { limite: 3600000, aliquotaNominal: 23.0, parcelaDeduzir: 62100 },
-    { limite: 4800000, aliquotaNominal: 30.5, parcelaDeduzir: 540000 },
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Calculadora do Simples Nacional 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'BusinessApplication',
+      'description': 'Simulador tributário da alíquota efetiva e do Documento de Arrecadação do Simples Nacional (DAS) conforme a LC 123/06 e LC 155/16.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'Simples Nacional e Fator R',
+          'item': 'https://kagazo.in/br/calculadora-simples-nacional',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'Como funciona a fórmula da alíquota efetiva do Simples Nacional?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'A Lei Complementar nº 155/2016 aboliu as alíquotas fixas e instituiu a fórmula progressiva: Alíquota Efetiva = [(RBT12 × Alíquota Nominal da Faixa) - Parcela a Deduzir] ÷ RBT12, onde RBT12 é a Receita Bruta Total acumulada nos 12 meses anteriores.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'O que é o Fator R e como ele reduz os impostos no Simples Nacional?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O Fator R é a divisão da folha de pagamento dos últimos 12 meses (incluindo pró-labore e encargos) pela receita bruta do mesmo período. Se o índice for igual ou superior a 28% (0,28), atividades sujeitas ao Anexo V (com alíquota inicial de 15,5%) migram automaticamente para o Anexo III (com alíquota inicial de apenas 6,0%), gerando grande economia tributária.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Quais atividades podem se beneficiar da regra do Fator R?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Atividades intelectuais, científicas, técnicas e de tecnologia da informação — tais como desenvolvimento de software, consultoria, perícia, jornalismo, publicidade, engenharia, arquitetura, odontologia e medicina.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'O que acontece quando a empresa ultrapassa o sublimite de R$ 3,6 milhões?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O teto global do Simples Nacional é de R$ 4,8 milhões anuais. Todavia, se a empresa ultrapassar o sublimite estadual de R$ 3,6 milhões em receita acumulada, ela continua no Simples para os tributos federais (IRPJ, CSLL, PIS, COFINS e CPP), mas passa a recolher o ICMS ou ISS por fora do DAS, no regime normal estadual/municipal.',
+          },
+        },
+      ],
+    },
   ],
 };
 
-interface SimplesResult {
-  anexoEfetivo: string;
-  fatorRCalculado: number;
-  migrouPeloFatorR: boolean;
-  faixaIdentificada: number;
-  aliquotaNominal: number;
-  parcelaDeduzir: number;
-  aliquotaEfetiva: number;
-  valorDasMes: number;
-  formulaExplicada: string;
-}
-
 export default function CalculadoraSimplesNacionalPage() {
-  const [anexoBase, setAnexoBase] = React.useState<string>('anexo3');
-  const [rbt12, setRbt12] = React.useState<number>(320000); // RBT12 (12 meses anteriores)
-  const [faturamentoMes, setFaturamentoMes] = React.useState<number>(30000);
-  const [folhaSalarios12, setFolhaSalarios12] = React.useState<number>(95000); // Para Fator R
-
-  const calcolaSimples = React.useCallback((): SimplesResult => {
-    const rbt = Math.max(1, rbt12);
-    const fatMes = Math.max(0, faturamentoMes);
-    const folha = Math.max(0, folhaSalarios12);
-
-    // Fator R: Folha de Salários / RBT12 (Art. 18 § 5º-M LC 123/06)
-    const fatorR = rbt > 0 ? folha / rbt : 0;
-    let anexoEfetivo = anexoBase;
-    let migrouPeloFatorR = false;
-
-    // Se atividade sujeita ao Fator R (Anexo V vs Anexo III):
-    if (anexoBase === 'anexo5') {
-      if (fatorR >= 0.28) {
-        anexoEfetivo = 'anexo3'; // Migra para o Anexo III (mais barato)
-        migrouPeloFatorR = true;
-      }
-    }
-
-    const tabela = TABELAS_SIMPLES[anexoEfetivo] || TABELAS_SIMPLES.anexo3;
-
-    // Identificar a faixa correspondente ao RBT12
-    let faixaIdx = 0;
-    for (let i = 0; i < tabela.length; i++) {
-      if (rbt <= tabela[i].limite) {
-        faixaIdx = i;
-        break;
-      }
-      if (i === tabela.length - 1) {
-        faixaIdx = i;
-      }
-    }
-
-    const faixa = tabela[faixaIdx];
-    const aliqNominal = faixa.aliquotaNominal;
-    const parcDed = faixa.parcelaDeduzir;
-
-    // Fórmula Oficial LC 123/2006:
-    // Alíquota Efetiva = [(RBT12 * Alíquota Nominal) - Parcela a Deduzir] / RBT12
-    let aliquotaEfetiva = ((rbt * (aliqNominal / 100) - parcDed) / rbt) * 100;
-    aliquotaEfetiva = Math.max(0, aliquotaEfetiva);
-
-    const valorDasMes = fatMes * (aliquotaEfetiva / 100);
-
-    const formulaExplicada = `[(${rbt.toLocaleString('pt-BR')} × ${aliqNominal}%) - R$ ${parcDed.toFixed(2)}] ÷ ${rbt.toLocaleString('pt-BR')} = ${aliquotaEfetiva.toFixed(2)}%`;
-
-    return {
-      anexoEfetivo,
-      fatorRCalculado: fatorR * 100,
-      migrouPeloFatorR,
-      faixaIdentificada: faixaIdx + 1,
-      aliquotaNominal: aliqNominal,
-      parcelaDeduzir: parcDed,
-      aliquotaEfetiva,
-      valorDasMes,
-      formulaExplicada,
-    };
-  }, [anexoBase, rbt12, faturamentoMes, folhaSalarios12]);
-
-  const res = calcolaSimples();
-
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/br" className="hover:text-slate-800 transition-colors">Brasil</Link>
-        <span>/</span>
-        <span className="text-emerald-700 font-semibold">Alíquota Efetiva Simples Nacional</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Lei Complementar 123/2006, LC 155/2016 & Regra do Fator R</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">Simples Nacional e Fator R</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Simulador de Alíquota Efetiva do Simples Nacional <br className="hidden sm:inline" />
-          <span className="text-emerald-600">Fórmula Oficial por Anexos (I a V), RBT12 e Fator R</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Resposta Tributária Direta:</strong> Desde a LC 155/2016, a alíquota do Simples Nacional não é mais uma taxa fixa, mas sim uma <strong>alíquota efetiva progressiva</strong> calculada pela fórmula legal: <code>[(RBT12 &times; Alíquota Nominal) &minus; Parcela a Deduzir] &divide; RBT12</code>. Empresas do Anexo V que mantêm folha de pagamento igual ou superior a <strong>28% da receita bruta (Fator R)</strong> são tributadas pelas alíquotas bem mais econômicas do <strong>Anexo III</strong>.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Layers className="w-4 h-4 text-emerald-600" />
-              <span>Parâmetros de Receita & Anexo</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <Layers className="w-3.5 h-3.5" />
+              Tributação Empresarial • LC 123/2006 & LC 155/2016
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setAnexoBase('anexo3');
-                setRbt12(320000);
-                setFaturamentoMes(30000);
-                setFolhaSalarios12(95000);
-              }}
-              className="text-xs text-slate-500 hover:text-emerald-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Redefinir</span>
-            </button>
-          </div>
-
-          <div className="space-y-4">
-            {/* Escolha do Anexo */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800">Anexo do Simples Nacional</label>
-              <select
-                value={anexoBase}
-                onChange={(e) => setAnexoBase(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-              >
-                <option value="anexo1">Anexo I: Comércio (Lojas, e-commerce, revenda)</option>
-                <option value="anexo2">Anexo II: Indústria e Fábricas</option>
-                <option value="anexo3">Anexo III: Serviços Gerais, Manutenção, Instalações, Agências</option>
-                <option value="anexo4">Anexo IV: Construção Civil, Advocacia, Vigilância, Limpeza</option>
-                <option value="anexo5">Anexo V: Tecnologia, Engenharia, Medicina, Publicidade (Sujeito a Fator R)</option>
-              </select>
-            </div>
-
-            {/* RBT12 (Receita Bruta dos 12 meses anteriores) */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex justify-between">
-                <span>Receita Bruta Acumulada em 12 Meses (RBT12)</span>
-                <span className="font-mono text-emerald-700 font-bold">R$ {rbt12.toLocaleString('pt-BR')}</span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                max={4800000}
-                step={5000}
-                value={rbt12 || ''}
-                onChange={(e) => setRbt12(Number(e.target.value))}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm font-bold text-slate-900 transition-all font-mono"
-                placeholder="Ex. 320000"
-              />
-              <span className="text-[11px] text-slate-500 block">
-                Soma de todo o faturamento dos 12 meses que antecedem o mês da apuração.
-              </span>
-            </div>
-
-            {/* Faturamento do Mês */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800 flex justify-between">
-                <span>Faturamento Faturado Neste Mês (R$)</span>
-                <span className="font-mono text-emerald-700">R$ {faturamentoMes.toLocaleString('pt-BR')}</span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                step={1000}
-                value={faturamentoMes || ''}
-                onChange={(e) => setFaturamentoMes(Number(e.target.value))}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 font-mono"
-                placeholder="Ex. 30000"
-              />
-            </div>
-
-            {/* Folha de Salários 12 Meses (Fator R) */}
-            {anexoBase === 'anexo5' && (
-              <div className="space-y-1.5 p-3.5 bg-emerald-50/70 rounded-2xl border border-emerald-200">
-                <label className="text-xs font-bold text-emerald-950 flex justify-between">
-                  <span>Folha de Pagamento + Pró-labore 12 Meses (FS12)</span>
-                  <span className="font-mono font-bold text-emerald-700">
-                    Fator R: {res.fatorRCalculado.toFixed(1)}%
-                  </span>
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step={2000}
-                  value={folhaSalarios12 || ''}
-                  onChange={(e) => setFolhaSalarios12(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl border border-emerald-300 text-xs font-bold text-slate-900 bg-white"
-                />
-                <span className="text-[11px] text-emerald-800 block">
-                  {res.fatorRCalculado >= 28
-                    ? 'Benefício do Fator R ativo (≥ 28%): Sua empresa será tributada pelo Anexo III em vez do Anexo V!'
-                    : 'Fator R abaixo de 28%: A tributação permanece no Anexo V.'}
-                </span>
-              </div>
-            )}
-          </div>
-
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Cálculo matemático rigorosamente idêntico ao sistema PGDAS-D da Receita Federal.</span>
-          </div>
-        </div>
-
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Alíquota Efetiva Apurada
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">
-              Faixa {res.faixaIdentificada} de 6
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-1">
-            <span className="text-xs text-emerald-200 font-medium">Alíquota Efetiva Real</span>
-            <div className="text-4xl sm:text-5xl font-black font-mono tracking-tight text-white">
-              {res.aliquotaEfetiva.toFixed(2)}%
-            </div>
-            <span className="text-[11px] text-emerald-300 font-medium block">
-              Alíquota nominal da faixa: {res.aliquotaNominal}% (Parcela a deduzir: R$ {res.parcelaDeduzir.toLocaleString('pt-BR')})
-            </span>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Faturamento do Mês</span>
-              <span className="font-mono text-white">R$ {faturamentoMes.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Anexo Aplicado</span>
-              <span className="font-mono text-emerald-400 font-bold uppercase">
-                {res.anexoEfetivo.replace('anexo', 'Anexo ')}
-                {res.migrouPeloFatorR ? ' (via Fator R)' : ''}
-              </span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Valor da Guia DAS do Mês</span>
-              <span className="font-mono text-emerald-300 font-black text-sm">
-                R$ {res.valorDasMes.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              </span>
-            </div>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-            <strong className="text-slate-300 block">Fórmula Legal Aplicada (LC 123/06):</strong>
-            <p className="font-mono text-emerald-300 text-[10px] break-all">{res.formulaExplicada}</p>
-          </div>
-        </div>
-      </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            A Sistemática de Cálculo do Simples Nacional (LC 123/2006)
-          </h2>
-          <p>
-            O <strong>Simples Nacional</strong> é o regime tributário diferenciado, simplificado e favorecido aplicável às Microempresas (ME) e Empresas de Pequeno Porte (EPP), disciplinado pela <strong>Lei Complementar nº 123 de 14 de dezembro de 2006</strong>.
-          </p>
-          <p>
-            Com o advento da <strong>Lei Complementar nº 155/2016</strong>, o Comitê Gestor extinguiu as alíquotas fixas por faixa de receita e instituiu o modelo matemático de <strong>alíquota efetiva progressiva</strong>, com o intuito de evitar saltos abruptos de tributação quando a empresa muda de faixa de faturamento.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            A Importância do Fator R (Art. 18 da LC 123/2006)
-          </h3>
-          <p>
-            O <strong>Fator R</strong> é a razão entre a folha de salários dos últimos 12 meses (incluindo salários de empregados, encargos de FGTS e o pró-labore dos sócios com INSS patronal) e a receita bruta do mesmo período:
-          </p>
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs sm:text-sm text-slate-800 space-y-1">
-            <p><strong>Fator R = Folha de Pagamento em 12 Meses (FS12) &divide; Receita Bruta em 12 Meses (RBT12)</strong></p>
-            <p className="text-xs text-slate-600 font-sans mt-2">
-              Se o resultado for <strong>igual ou superior a 0,28 (28%)</strong>, atividades intelectuais e científicas (como desenvolvimento de software, consultoria, engenharia e clínicas médicas) saem do pesado Anexo V (alíquota inicial de 15,5%) e são tributadas no <strong>Anexo III (alíquota inicial de apenas 6%)</strong>, gerando expressiva economia tributária para a pessoa jurídica.
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Calculadora do Simples Nacional 2026
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Simule a alíquota efetiva progressiva do DAS para os Anexos I a V, apuração de RBT12 e enquadramento automático no Fator R (redução do Anexo V para o Anexo III).
             </p>
-          </div>
+
+            {/* Answer Capsule (GEO) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Regra de Ouro do Simples Nacional:</p>
+              <p>
+                A tributação não é uma taxa fixa por faixa, mas uma alíquota efetiva obtida pela fórmula legal: [(RBT12 × Alíquota Nominal) - Parcela a Deduzir] ÷ RBT12. Empresas de serviços intelectuais com folha de pagamento igual ou superior a 28% do faturamento (Fator R) são tributadas pelas alíquotas reduzidas do Anexo III (a partir de 6%).
+              </p>
+            </div>
+          </header>
+
+          {/* Interactive Client Engine */}
+          <CalculadoraSimplesNacionalClient />
+
+          {/* Middle In-Content Ad */}
+          <AdSlot slot="in_content" context="legal" />
+
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Manual Legal do Simples Nacional: Anexos, Alíquotas Efetivas e o Fator R
+            </h2>
+
+            <p>
+              O <strong>Simples Nacional</strong> é o regime tributário simplificado e favorecido instituído pela <strong>Lei Complementar nº 123 de 14 de dezembro de 2006 (Estatuto Nacional da Microempresa e da Empresa de Pequeno Porte)</strong>. Ele unifica em uma única guia mensal (o DAS) oito tributos federais, estaduais e municipais: IRPJ, CSLL, PIS, COFINS, IPI, CPP (Previdência Patronal), ICMS e ISS.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">1. A Transição da LC 155/2016 e a Fórmula da Alíquota Efetiva</h3>
+            <p>
+              Historicamente, as empresas eram enquadradas em tabelas estáticas onde a ultrapassagem de um único centavo de faturamento gerava aumento imediato e retroativo de tributação sobre toda a receita. A <strong>Lei Complementar nº 155/2016</strong> remodelou a mecânica do regime, adotando a fórmula matemática de alíquota efetiva proporcional:
+            </p>
+            <div className="p-4 rounded-xl bg-slate-900 border border-slate-700 text-emerald-300 font-mono text-xs sm:text-sm">
+              Alíquota Efetiva = [(RBT12 &times; Alíquota Nominal da Faixa) &minus; Parcela a Deduzir] &divide; RBT12
+            </div>
+            <p>
+              Dessa forma, a alíquota cresce de maneira estritamente linear e contínua conforme o faturamento anual avança entre as faixas, eliminando distorções de planejamento tributário.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">2. Estrutura dos 5 Anexos da Lei Complementar nº 123/2006</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-600 bg-slate-900/50 text-slate-200">
+                    <th className="p-2">Anexo</th>
+                    <th className="p-2">Segmento Econômico</th>
+                    <th className="p-2">Alíquota Inicial</th>
+                    <th className="p-2">Alíquota Máxima</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  <tr>
+                    <td className="p-2 font-semibold text-emerald-400">Anexo I</td>
+                    <td className="p-2">Comércio em geral (varejo, atacado, e-commerce)</td>
+                    <td className="p-2 font-mono text-white">4,00%</td>
+                    <td className="p-2 font-mono text-slate-300">19,00%</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-emerald-400">Anexo II</td>
+                    <td className="p-2">Indústria e transformação de bens</td>
+                    <td className="p-2 font-mono text-white">4,50%</td>
+                    <td className="p-2 font-mono text-slate-300">30,00%</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-emerald-400">Anexo III</td>
+                    <td className="p-2">Serviços gerais, manutenção, agências, instalações e serviços do Fator R</td>
+                    <td className="p-2 font-mono text-white">6,00%</td>
+                    <td className="p-2 font-mono text-slate-300">33,00%</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-emerald-400">Anexo IV</td>
+                    <td className="p-2">Construção civil, advocacia, vigilância e conservação (CPP recolhida à parte)</td>
+                    <td className="p-2 font-mono text-white">4,50%</td>
+                    <td className="p-2 font-mono text-slate-300">33,00%</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-emerald-400">Anexo V</td>
+                    <td className="p-2">Tecnologia da informação, consultoria, engenharia, medicina (sem atingir Fator R)</td>
+                    <td className="p-2 font-mono text-white">15,50%</td>
+                    <td className="p-2 font-mono text-slate-300">30,50%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="text-lg font-semibold text-emerald-400">3. A Regra do Fator R (Art. 18, § 5º-M da LC 123/2006)</h3>
+            <p>
+              O Fator R representa um estímulo legal à geração de empregos formais e à distribuição de remuneração aos sócios:
+            </p>
+            <blockquote className="my-3 pl-4 border-l-4 border-emerald-500 italic text-slate-300 bg-slate-900/60 p-3 rounded-r-lg">
+              Fator R = Total da Folha de Salários dos últimos 12 meses (FS12) &divide; Receita Bruta dos últimos 12 meses (RBT12)
+            </blockquote>
+            <p>
+              Se a razão for <strong>igual ou superior a 0,28 (28%)</strong>, a atividade intelectual originalmente sujeita à pesada tributação do Anexo V (alíquota inicial de 15,5%) passa a ser tributada no <strong>Anexo III (alíquota inicial de apenas 6,0%)</strong>.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">4. Sublimites Estaduais de ICMS e ISS</h3>
+            <p>
+              Embora o limite global do Simples Nacional seja de <strong>R$ 4.800.000,00 anuais</strong>, os estados e o Distrito Federal aplicam um <strong>sublimite de R$ 3.600.000,00</strong> para efeito de recolhimento do ICMS e do ISS. Se a empresa faturar acima desse valor acumulado nos 12 meses, a arrecadação do tributo estadual e municipal deixa de integrar o DAS e passa a ser apurada nas guias normais da Fazenda Estadual ou Prefeitura.
+            </p>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre o Simples Nacional
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>O pró-labore dos sócios entra na conta do Fator R?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. O valor bruto do pró-labore retirado pelos sócios, somado à contribuição previdenciária patronal recolhida sobre ele, integra formalmente a base da folha de salários dos últimos 12 meses (FS12), sendo uma das formas mais eficientes utilizadas por empresas de tecnologia e consultoria unipessoais para atingir a marca de 28% e permanecer no Anexo III.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Qual o prazo para pagamento mensal da guia DAS?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  O Documento de Arrecadação do Simples Nacional (DAS) vence impreterivelmente no dia 20 do mês subsequente ao mês em que houver sido auferida a receita bruta faturada. Caso o dia 20 recaia em final de semana ou feriado bancário, o vencimento é prorrogado para o primeiro dia útil seguinte.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Por que o Anexo IV não tem a Contribuição Previdenciária Patronal no DAS?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Por expressa previsão do Artigo 18, § 5º-C da LC 123/2006, as empresas do Anexo IV (construção civil, limpeza, vigilância e advocacia) não têm a cota patronal de 20% do INSS embutida na guia unificada do DAS. A contribuição previdenciária patronal deve ser recolhida de forma convencional na folha de pagamento via DCTFWeb/eSocial.
+                </p>
+              </details>
+            </div>
+          </section>
+
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
         </div>
       </div>
-    </div>
+    </>
   );
 }
-

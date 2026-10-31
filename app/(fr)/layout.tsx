@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description:
     'Suite complète de calculateurs statutaires conformes URSSAF et Code du travail : salaire brut en net 2026, charges auto-entrepreneur, indemnité rupture conventionnelle, frais de notaire, PTZ, TVA et outils administratifs.',
   alternates: {
-    canonical: `${SITE_URL}/fr`,
     languages: {
       'fr-FR': `${SITE_URL}/fr`,
       'fr': `${SITE_URL}/fr`,

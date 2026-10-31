@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description:
     'Vollständige Suite rechtssicherer Rechner nach deutschem Steuer- und Arbeitsrecht: Brutto-Netto 2026, Firmenwagen 1%-Regelung, Abfindung § 34 EStG, Notarkosten GNotKG, Grunderwerbsteuer und biometrisches Passfoto.',
   alternates: {
-    canonical: `${SITE_URL}/de`,
     languages: {
       'de-DE': `${SITE_URL}/de`,
       'de': `${SITE_URL}/de`,

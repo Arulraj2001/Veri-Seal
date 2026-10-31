@@ -1,476 +1,290 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Percent,
-  ShieldCheck,
-  TrendingUp,
-  RotateCcw,
-  Building,
-  Coins,
-  CheckCircle2,
-  PieChart,
-  ArrowUpRight,
-} from 'lucide-react';
+import { Building, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { CalculadoraRendimentoAluguelClient } from './ClientEngine';
 
-interface YieldResult {
-  valorImovel: number;
-  aluguelBrutoMensal: number;
-  aluguelBrutoAnual: number;
-  taxaImobiliariaMensal: number;
-  taxaImobiliariaAnual: number;
-  iptuAnualProprietario: number;
-  condominioVacanciaAnual: number;
-  aluguelTributavelMensal: number;
-  irpfCarneLeaoMensal: number;
-  irpfCarneLeaoAnual: number;
-  receitaLiquidaMensal: number;
-  receitaLiquidaAnual: number;
-  yieldBrutoAnual: number;
-  yieldLiquidoAnual: number;
-  benchmarkCdi: number;
-}
+export const metadata: Metadata = {
+  title: 'Calculadora de Rendimento Líquido de Aluguel 2026 | Cap Rate Real e Carnê-Leão',
+  description:
+    'Calcule a rentabilidade líquida real (Cap Rate líquido) de um imóvel alugado após taxa de imobiliária, imposto de renda Carnê-Leão (Art. 31 Lei 7.713/88), IPTU e vacância.',
+  keywords: [
+    'calculadora rendimento aluguel liquido',
+    'cap rate real imovel alugado',
+    'calculo carne leao aluguel 2026',
+    'deducao taxa imobiliaria imposto de renda',
+    'rentabilidade liquida locacao residencial',
+    'art 31 lei 7713 88 aluguel'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/calculadora-rendimento-aluguel-liquido',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/calculadora-rendimento-aluguel-liquido',
+      'pt': 'https://kagazo.in/br/calculadora-rendimento-aluguel-liquido',
+      'x-default': 'https://kagazo.in/br/calculadora-rendimento-aluguel-liquido',
+    },
+  },
+  openGraph: {
+    title: 'Calculadora de Rendimento Líquido de Aluguel 2026 | Cap Rate Real',
+    description:
+      'Descubra quanto realmente sobra no seu bolso todo mês com seu imóvel alugado, deduzindo impostos federais e taxas administrativas.',
+    url: 'https://kagazo.in/br/calculadora-rendimento-aluguel-liquido',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Calculadora de Rendimento Líquido de Aluguel 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'FinanceApplication',
+      'description': 'Simulador financeiro e tributário de rentabilidade líquida de aluguéis residenciais e comerciais com abatimento de custos fiscais e operacionais.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'Rendimento Líquido de Aluguel',
+          'item': 'https://kagazo.in/br/calculadora-rendimento-aluguel-liquido',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'A comissão paga à imobiliária pode ser deduzida do Imposto de Renda?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Sim. Conforme o Artigo 31 da Lei nº 7.713/1988 e a Instrução Normativa da Receita Federal, a comissão de administração ou intermediação paga à imobiliária ou ao corretor de imóveis pode ser deduzida integralmente do rendimento bruto da locação para efeito de cálculo do Carnê-Leão.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Qual é a diferença entre Cap Rate Bruto e Cap Rate Líquido?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O Cap Rate Bruto é a divisão direta da soma dos 12 aluguéis anuais pelo valor de mercado do imóvel. Já o Cap Rate Líquido desconta a taxa de administração da imobiliária (8% a 10%), o Imposto de Renda (Carnê-Leão até 27,5%), IPTU e cotas condominiais na vacância, refletindo o dinheiro que de fato entra no bolso do investidor.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Quando o inquilino é uma empresa (CNPJ), quem recolhe o imposto de renda?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Quando o locatário for Pessoa Jurídica, a fonte pagadora (empresa) é obrigada por lei a realizar a retenção do Imposto de Renda na Fonte (IRRF - Código DARF 3208) sobre a tabela progressiva e repassar ao proprietário apenas o valor líquido, fornecendo o Informe de Rendimentos anual.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Despesas com reformas no imóvel podem ser abatidas no Carnê-Leão?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Não. Reformas, reparos e ampliações não são dedutíveis mensalmente no Carnê-Leão. No entanto, se devidamente comprovadas por notas fiscais idôneas, podem ser incorporadas ao custo de aquisição do imóvel na Declaração Anual de Ajuste para reduzir o ganho de capital em caso de futura venda.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function RendimentoAluguelLiquidoPage() {
-  const [valorImovel, setValorImovel] = React.useState<number>(500000);
-  const [aluguelMensal, setAluguelMensal] = React.useState<number>(2500);
-  const [taxaAdminPercent, setTaxaAdminPercent] = React.useState<number>(8.0);
-  const [iptuProprietario, setIptuProprietario] = React.useState<number>(0);
-  const [mesesVacanciaAno, setMesesVacanciaAno] = React.useState<number>(0.5);
-  const [condominioMensal, setCondominioMensal] = React.useState<number>(450);
-  const [calcularIrpf, setCalcularIrpf] = React.useState<boolean>(true);
-
-  const calcularYield = React.useCallback((): YieldResult => {
-    const imovel = Math.max(1, valorImovel);
-    const aluguel = Math.max(0, aluguelMensal);
-    const taxaAdminPct = Math.max(0, taxaAdminPercent) / 100;
-    const taxaImobMensal = aluguel * taxaAdminPct;
-    const taxaImobAnual = taxaImobMensal * 12;
-
-    const aluguelBrutoAnual = aluguel * 12;
-    const iptuAnual = Math.max(0, iptuProprietario);
-    const vacanciaMeses = Math.max(0, mesesVacanciaAno);
-    const condVacanciaAnual = condominioMensal * vacanciaMeses;
-
-    // Conforme Art. 31 da Lei 7.713/1988:
-    // Podem ser deduzidos do aluguel bruto para fins de IRPF: comissão da imobiliária e impostos/taxas pagos pelo locador
-    const baseCalculoIrpf = Math.max(0, aluguel - taxaImobMensal - (iptuAnual / 12));
-
-    // Cálculo progressivo simplificado do Carnê-Leão (Tabela IRPF 2026)
-    let irpfMensal = 0;
-    if (calcularIrpf) {
-      if (baseCalculoIrpf <= 2259.20) {
-        irpfMensal = 0;
-      } else if (baseCalculoIrpf <= 2826.65) {
-        irpfMensal = baseCalculoIrpf * 0.075 - 169.44;
-      } else if (baseCalculoIrpf <= 3751.05) {
-        irpfMensal = baseCalculoIrpf * 0.15 - 381.44;
-      } else if (baseCalculoIrpf <= 4664.68) {
-        irpfMensal = baseCalculoIrpf * 0.225 - 662.77;
-      } else {
-        irpfMensal = baseCalculoIrpf * 0.275 - 896.00;
-      }
-      irpfMensal = Math.max(0, irpfMensal);
-    }
-
-    const irpfAnual = irpfMensal * 12;
-
-    // Perda de receita por vacância (meses sem receber aluguel)
-    const perdaVacanciaReceita = aluguel * vacanciaMeses;
-
-    // Receita Líquida Anual
-    const receitaLiquidaAnual = Math.max(
-      0,
-      aluguelBrutoAnual - taxaImobAnual - iptuAnual - condVacanciaAnual - irpfAnual - perdaVacanciaReceita
-    );
-    const receitaLiquidaMensal = receitaLiquidaAnual / 12;
-
-    const yieldBrutoAnual = (aluguelBrutoAnual / imovel) * 100;
-    const yieldLiquidoAnual = (receitaLiquidaAnual / imovel) * 100;
-
-    return {
-      valorImovel: imovel,
-      aluguelBrutoMensal: aluguel,
-      aluguelBrutoAnual,
-      taxaImobiliariaMensal: taxaImobMensal,
-      taxaImobiliariaAnual: taxaImobAnual,
-      iptuAnualProprietario: iptuAnual,
-      condominioVacanciaAnual: condVacanciaAnual,
-      aluguelTributavelMensal: baseCalculoIrpf,
-      irpfCarneLeaoMensal: irpfMensal,
-      irpfCarneLeaoAnual: irpfAnual,
-      receitaLiquidaMensal,
-      receitaLiquidaAnual,
-      yieldBrutoAnual,
-      yieldLiquidoAnual,
-      benchmarkCdi: 10.5, // Média Selic/CDI de referência
-    };
-  }, [valorImovel, aluguelMensal, taxaAdminPercent, iptuProprietario, mesesVacanciaAno, condominioMensal, calcularIrpf]);
-
-  const res = calcularYield();
-
-  const formatarBRL = (val: number) =>
-    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
-
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased py-10 px-4 sm:px-6 lg:px-8">
-      {/* Schema.org FAQ & SoftwareApplication */}
+    <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [
-              {
-                '@type': 'SoftwareApplication',
-                name: 'Calculadora de Rendimento Líquido de Aluguel e Cap Rate Real',
-                applicationCategory: 'FinanceApplication',
-                operatingSystem: 'Any',
-                offers: {
-                  '@type': 'Offer',
-                  price: '0.00',
-                  priceCurrency: 'BRL',
-                },
-                description:
-                  'Calcule a rentabilidade líquida real de um imóvel alugado deduzindo taxa de imobiliária, imposto de renda Carnê-Leão (Art. 31 Lei 7.713/88), IPTU e vacância.',
-              },
-              {
-                '@type': 'FAQPage',
-                mainEntity: [
-                  {
-                    '@type': 'Question',
-                    name: 'O que pode ser deduzido do aluguel para não pagar imposto de renda?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Segundo o Art. 31 da Lei Federal nº 7.713/1988 e o Regulamento do Imposto de Renda (RIR), o proprietário pode deduzir do rendimento bruto da locação: a taxa de administração da imobiliária ou corretor, os tributos municipais como o IPTU (caso pagos pelo proprietário sem repasse), despesas condominiais pagas no período de vacância e taxa de cobrança de boletos.',
-                    },
-                  },
-                  {
-                    '@type': 'Question',
-                    name: 'Qual é o Cap Rate médio de imóveis residenciais no Brasil?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'No Brasil, o Cap Rate bruto de imóveis residenciais gira historicamente entre 4,5% e 6,5% ao ano. Já o Cap Rate líquido real (descontando comissão imobiliária de 8-10%, imposto de renda Carnê-Leão e despesas de vacância) situa-se frequentemente entre 3,2% e 4,8% ao ano, somando-se à valorização patrimonial do imóvel ao longo do tempo.',
-                    },
-                  },
-                ],
-              },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-4xl mx-auto">
-        {/* Navigation Breadcrumbs */}
-        <nav className="mb-6 text-sm text-slate-500 flex items-center space-x-2">
-          <Link href="/br" className="hover:text-emerald-700 transition">
-            Brasil
-          </Link>
-          <span>/</span>
-          <span className="text-slate-800 font-medium">Rendimento Líquido de Aluguel</span>
-        </nav>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">Rendimento Líquido de Aluguel</span>
+          </nav>
 
-        {/* Title Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-3">
-            <TrendingUp className="w-3.5 h-3.5" />
-            Cap Rate Real & Art. 31 Lei 7.713/1988
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Calculadora de Rendimento Líquido de Aluguel
-          </h1>
-          <p className="mt-2 text-base sm:text-lg text-slate-600">
-            Descubra o ganho real líquido do seu imóvel após comissão da imobiliária, imposto de renda Carnê-Leão, IPTU e custos de vacância.
-          </p>
-        </div>
-
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          {/* Controls Column */}
-          <div className="md:col-span-7 bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 space-y-5">
-            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
-              <Building className="w-5 h-5 text-emerald-600" />
-              Dados do Imóvel e da Locação
-            </h2>
-
-            {/* Valor de Mercado do Imóvel */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">
-                Valor de Mercado do Imóvel (R$)
-              </label>
-              <div className="relative">
-                <span className="absolute left-3.5 top-3 text-slate-400 font-semibold text-sm">R$</span>
-                <input
-                  type="number"
-                  min="50000"
-                  step="10000"
-                  value={valorImovel || ''}
-                  onChange={(e) => setValorImovel(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-12 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <Building className="w-3.5 h-3.5" />
+              Mercado Imobiliário • Cap Rate Real & Lei 7.713/1988 Art. 31
             </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Calculadora de Rendimento Líquido de Aluguel 2026
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Descubra quanto realmente sobra no seu bolso após taxa de administração imobiliária, imposto de renda Carnê-Leão mensal, IPTU anual e previsão de vacância contratual.
+            </p>
 
-            {/* Aluguel Bruto Mensal */}
-            <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1">
-                Aluguel Bruto Mensal Cobrado (R$)
-              </label>
-              <div className="relative">
-                <span className="absolute left-3.5 top-3 text-slate-400 font-semibold text-sm">R$</span>
-                <input
-                  type="number"
-                  min="100"
-                  step="100"
-                  value={aluguelMensal || ''}
-                  onChange={(e) => setAluguelMensal(parseFloat(e.target.value) || 0)}
-                  className="w-full pl-12 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-              </div>
-            </div>
-
-            {/* Taxa de Imobiliária e IRPF */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Taxa da Imobiliária (%)
-                </label>
-                <div className="relative">
-                  <input
-                    type="number"
-                    step="0.5"
-                    value={taxaAdminPercent || ''}
-                    onChange={(e) => setTaxaAdminPercent(parseFloat(e.target.value) || 0)}
-                    className="w-full pl-3.5 pr-8 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  />
-                  <span className="absolute right-3.5 top-3 text-slate-400 font-semibold text-xs">%</span>
-                </div>
-                <span className="text-[11px] text-slate-500 mt-1 block">
-                  Praxe: 8% a 10% do aluguel.
-                </span>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Vacância Estimada (Meses/ano)
-                </label>
-                <input
-                  type="number"
-                  step="0.5"
-                  min="0"
-                  max="12"
-                  value={mesesVacanciaAno || ''}
-                  onChange={(e) => setMesesVacanciaAno(parseFloat(e.target.value) || 0)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                />
-                <span className="text-[11px] text-slate-500 mt-1 block">
-                  Média: 0.5 a 1 mês a cada troca.
-                </span>
-              </div>
-            </div>
-
-            {/* Condomínio e IPTU */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  Condomínio Mensal (R$)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-3 text-slate-400 font-semibold text-xs">R$</span>
-                  <input
-                    type="number"
-                    min="0"
-                    step="50"
-                    value={condominioMensal || ''}
-                    onChange={(e) => setCondominioMensal(parseFloat(e.target.value) || 0)}
-                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  />
-                </div>
-                <span className="text-[11px] text-slate-500 mt-1 block">
-                  Custo pago pelo dono na vacância.
-                </span>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1">
-                  IPTU Anual Pago pelo Dono (R$)
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-3 text-slate-400 font-semibold text-xs">R$</span>
-                  <input
-                    type="number"
-                    min="0"
-                    step="100"
-                    value={iptuProprietario || ''}
-                    onChange={(e) => setIptuProprietario(parseFloat(e.target.value) || 0)}
-                    className="w-full pl-10 pr-3.5 py-2.5 rounded-xl border border-slate-200 bg-white font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  />
-                </div>
-                <span className="text-[11px] text-slate-500 mt-1 block">
-                  Se o inquilino pagar tudo, digite 0.
-                </span>
-              </div>
-            </div>
-
-            {/* Switch IRPF Carnê-Leão */}
-            <div className="pt-2">
-              <label className="flex items-center gap-3 cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={calcularIrpf}
-                  onChange={(e) => setCalcularIrpf(e.target.checked)}
-                  className="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300"
-                />
-                <span className="text-sm font-semibold text-slate-800">
-                  Deduzir Imposto de Renda Mensal (Carnê-Leão Pessoa Física)
-                </span>
-              </label>
-            </div>
-          </div>
-
-          {/* Results Column */}
-          <div className="md:col-span-5 space-y-6">
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80">
-              <h2 className="text-base font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center justify-between">
-                <span>Rentabilidade Real (Cap Rate)</span>
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                  Líquido Real
-                </span>
-              </h2>
-
-              <div className="p-4 rounded-xl bg-slate-900 text-white mb-5 space-y-3">
-                <div>
-                  <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 block mb-0.5">
-                    Receita Líquida Mensal no Bolso
-                  </span>
-                  <div className="text-3xl font-black tracking-tight text-white">
-                    {formatarBRL(res.receitaLiquidaMensal)}
-                  </div>
-                </div>
-                <div className="text-xs text-slate-300 border-t border-slate-800 pt-2 flex items-center justify-between">
-                  <span>Cap Rate Líquido Anual:</span>
-                  <span className="font-bold text-emerald-400 text-base">
-                    {res.yieldLiquidoAnual.toFixed(2)}% a.a.
-                  </span>
-                </div>
-                <div className="text-[11px] text-slate-400 flex items-center justify-between">
-                  <span>Yield Bruto Nominal:</span>
-                  <span>{res.yieldBrutoAnual.toFixed(2)}% a.a.</span>
-                </div>
-              </div>
-
-              {/* Detalhamento das Deduções */}
-              <div className="space-y-2.5 text-xs text-slate-700">
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Aluguel Bruto Anual:</span>
-                  <span className="font-semibold text-slate-900">{formatarBRL(res.aluguelBrutoAnual)}</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Taxa Imobiliária ({taxaAdminPercent}%):</span>
-                  <span className="font-semibold text-rose-600">-{formatarBRL(res.taxaImobiliariaAnual)}</span>
-                </div>
-                {calcularIrpf && (
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Carnê-Leão IRPF Anual:</span>
-                    <span className="font-semibold text-rose-600">-{formatarBRL(res.irpfCarneLeaoAnual)}</span>
-                  </div>
-                )}
-                {res.condominioVacanciaAnual > 0 && (
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Condomínio na Vacância:</span>
-                    <span className="font-semibold text-rose-600">-{formatarBRL(res.condominioVacanciaAnual)}</span>
-                  </div>
-                )}
-                {res.iptuAnualProprietario > 0 && (
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">IPTU Anual:</span>
-                    <span className="font-semibold text-rose-600">-{formatarBRL(res.iptuAnualProprietario)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between py-1.5 pt-2 border-t border-slate-200">
-                  <span className="font-bold text-slate-900">Total Líquido Anual:</span>
-                  <span className="font-black text-emerald-700 text-sm">{formatarBRL(res.receitaLiquidaAnual)}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Informational Callout */}
-            <div className="rounded-2xl p-5 bg-emerald-50/70 border border-emerald-100 text-emerald-950 text-xs space-y-2">
-              <div className="font-bold flex items-center gap-1.5 text-emerald-900">
-                <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                Dedução Legal Conforme Lei 7.713/88
-              </div>
-              <p className="text-emerald-800">
-                A comissão de intermediação ou administração imobiliária é legalmente dedutível da base de cálculo do Carnê-Leão, reduzindo o valor líquido que você deve repassar à Receita Federal todo mês.
+            {/* Answer Capsule (GEO) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Regra de Ouro da Rentabilidade Imobiliária:</p>
+              <p>
+                O Cap Rate líquido real costuma ser entre 25% e 40% inferior ao yield bruto anunciado. Pela legislação tributária brasileira (Art. 31 da Lei nº 7.713/1988), a comissão da imobiliária e o IPTU arcados pelo proprietário reduzem legalmente a base tributável do Carnê-Leão.
               </p>
             </div>
-          </div>
-        </div>
+          </header>
 
-        {/* AdSense Placement */}
-        <div className="my-10">
+          {/* Interactive Client Engine */}
+          <CalculadoraRendimentoAluguelClient />
+
+          {/* Middle In-Content Ad */}
           <AdSlot slot="in_content" context="legal" />
-        </div>
 
-        {/* Deep Statutory Guidance Section (800+ Words) */}
-        <article className="mt-12 bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-200/80 space-y-8 text-slate-700 leading-relaxed">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">
-              Como Calcular a Rentabilidade Real de um Imóvel Alugado
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Manual Financeiro e Fiscal da Locação Imobiliária no Brasil
             </h2>
-            <p>
-              Investir em imóveis para renda de locação é uma das mais tradicionais estratégias patrimoniais do investidor brasileiro. Todavia, um erro comum cometido por proprietários iniciantes é confundir a <strong>rentabilidade bruta (Gross Rental Yield)</strong> com a <strong>rentabilidade líquida real (Net Cap Rate)</strong>.
-            </p>
-            <p className="mt-3">
-              Enquanto o yield bruto considera apenas a divisão aritmética do aluguel anual pelo valor do imóvel, o resultado no mundo real é profundamente impactado pela comissão de administração da imobiliária (usualmente entre 8% e 10%), pelo imposto de renda mensal apurado via Carnê-Leão (cujas alíquotas marginais chegam a 27,5%), pelas taxas de condomínio e IPTU suportadas durante os meses de vacância e pelas manutenções extraordinárias prediais.
-            </p>
-          </div>
 
-          <div className="border-t border-slate-100 pt-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-3">
-              Deduções Autorizadas pela Legislação Tributária (Art. 31 da Lei nº 7.713/1988)
-            </h3>
             <p>
-              Muitos proprietários pagam mais imposto de renda do que deveriam por desconhecerem as deduções fiscais expressamente admitidas pela Receita Federal do Brasil. De acordo com o Art. 31 da Lei Federal nº 7.713/1988 e o Regulamento do Imposto de Renda (RIR), podem ser deduzidos do valor do aluguel bruto:
+              A aquisição de ativos imobiliários com foco em renda passiva é um dos pilares mais tradicionais da formação patrimonial no Brasil. Entretanto, a rentabilidade aparente (expressa pelo valor nominal do aluguel dividido pelo valor venal do imóvel) raramente corresponde ao retorno financeiro efetivo. O investidor diligente precisa dominar as variáveis operacionais e fiscais que compõem o <strong>Cap Rate Líquido (Capitalization Rate)</strong>.
             </p>
-            <ul className="list-disc pl-5 mt-3 space-y-2">
+
+            <h3 className="text-lg font-semibold text-emerald-400">1. A Diferença Fundamental: Yield Bruto vs. Cap Rate Líquido</h3>
+            <p>
+              A análise da rentabilidade divide-se em duas óticas matemáticas indispensáveis:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
               <li>
-                <strong>Comissão da Administradora ou Corretor de Imóveis:</strong> Todo o valor pago à imobiliária pela cobrança e administração mensal do imóvel é 100% dedutível da base de cálculo do imposto no mês do recebimento.
+                <strong>Rental Yield Bruto:</strong> Fórmula simples: <code>(Aluguel Mensal × 12) ÷ Valor de Mercado do Imóvel</code>. Exemplo: um aluguel de R$ 2.500 sobre imóvel de R$ 500.000 resulta em 6,00% ao ano nominal.
               </li>
               <li>
-                <strong>Impostos e Taxas Incidentes sobre o Imóvel:</strong> O IPTU (Imposto Predial e Territorial Urbano) e taxas municipais pagas pelo proprietário durante o período de locação, caso o ônus não tenha sido transferido ao inquilino.
-              </li>
-              <li>
-                <strong>Despesas de Condomínio:</strong> Despesas condominiais ordinárias efetivamente pagas pelo proprietário quando o imóvel não estiver ocupado ou quando absorvidas por contrato.
+                <strong>Cap Rate Líquido Real:</strong> Desconta do fluxo de caixa todas as despesas indispensáveis à manutenção e gestão da renda: taxa de administração imobiliária (8% a 10%), retenções de IRPF Carnê-Leão (alíquotas progressivas de até 27,5%), condomínio e IPTU suportados em meses de vacância e custos de publicidade e reformas periódicas.
               </li>
             </ul>
-          </div>
 
-          <div className="border-t border-slate-100 pt-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-3">
-              O Papel do Carnê-Leão e a Retenção na Fonte por Pessoa Jurídica
-            </h3>
+            <h3 className="text-lg font-semibold text-emerald-400">2. Deduções Legais Permitidas pelo Fisco (Art. 31 da Lei nº 7.713/1988)</h3>
             <p>
-              O regime de recolhimento tributário depende diretamente da natureza jurídica do locatário (quem assina o contrato de aluguel como inquilino):
+              A Receita Federal do Brasil permite a dedução expressa de determinadas despesas antes da aplicação da tabela progressiva do imposto de renda mensal (Carnê-Leão Web). Conforme o Artigo 31 da Lei Federal nº 7.713/1988 e o Regulamento do Imposto sobre a Renda (RIR):
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <h4 className="font-bold text-slate-900 mb-1">Locatário Pessoa Física</h4>
-                <p className="text-xs text-slate-600">
-                  O proprietário é responsável por preencher o sistema <strong>Carnê-Leão Web</strong> da Receita Federal e emitir o DARF com o código de receita <strong>0190</strong>, pagando o imposto devido até o último dia útil do mês seguinte ao do recebimento.
-                </p>
-              </div>
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                <h4 className="font-bold text-slate-900 mb-1">Locatário Pessoa Jurídica</h4>
-                <p className="text-xs text-slate-600">
-                  Quando o inquilino é uma empresa (CNPJ), a própria empresa é obrigada por lei a reter o IRRF na fonte (código DARF 3208) e repassar ao proprietário apenas o valor líquido, fornecendo o Comprovante de Rendimentos Anual para a DIRPF.
-                </p>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-600 bg-slate-900/50 text-slate-200">
+                    <th className="p-2">Despesa da Locação</th>
+                    <th className="p-2">Dedutível do IRPF?</th>
+                    <th className="p-2">Condição Legal Obrigatória</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Comissão da Imobiliária / Corretor</td>
+                    <td className="p-2 font-semibold text-emerald-400">Sim (100%)</td>
+                    <td className="p-2">Desde que comprovada por recibo ou nota fiscal de prestação de serviços emitida pela administradora.</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">IPTU e Taxas Municipais do Imóvel</td>
+                    <td className="p-2 font-semibold text-emerald-400">Sim</td>
+                    <td className="p-2">Apenas quando suportados financeiramente pelo locador (não repassados ao inquilino).</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Taxas de Condomínio Ordinárias</td>
+                    <td className="p-2 font-semibold text-emerald-400">Sim</td>
+                    <td className="p-2">Apenas as cotas ordinárias pagas pelo proprietário durante os períodos de vacância ou desocupação.</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Reformas e Benfeitorias</td>
+                    <td className="p-2 font-semibold text-rose-400">Não (no Carnê-Leão)</td>
+                    <td className="p-2">Não dedutíveis mensalmente. Podem apenas somar ao custo de aquisição na Declaração Anual.</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </article>
+
+            <h3 className="text-lg font-semibold text-emerald-400">3. Carnê-Leão (PF) versus Retenção na Fonte (PJ)</h3>
+            <p>
+              A sistemática de recolhimento tributário varia conforme a personalidade jurídica do inquilino:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong>Inquilino Pessoa Física:</strong> O locador é obrigado a acessar o Portal e-CAC da Receita Federal (Carnê-Leão Web), registrar o rendimento recebido, informar as deduções do Art. 31 e emitir o <strong>DARF sob o código 0190</strong>, cujo vencimento ocorre no último dia útil do mês subsequente.
+              </li>
+              <li>
+                <strong>Inquilino Pessoa Jurídica (Empresa):</strong> O recolhimento tributário é de responsabilidade exclusiva da fonte pagadora. A empresa inquilina retém o <strong>IRRF (DARF 3208)</strong> diretamente na fonte e efetua o pagamento ao locador já pelo valor líquido.
+              </li>
+            </ul>
+
+            <h3 className="text-lg font-semibold text-emerald-400">4. Vacância e Custo de Oportunidade</h3>
+            <p>
+              O tempo médio em que um imóvel permanece desocupado entre contratos sucessivos no Brasil gira em torno de 1 a 3 meses a cada ciclo bienal ou trienal. Durante a vacância, o investidor não apenas deixa de auferir receita, como passa a arcar integralmente com as despesas de taxa condominial e IPTU. Por isso, a simulação prudencial deve sempre prever ao menos 0,5 mês de vacância por ano para apuração do fluxo de caixa descontado real.
+            </p>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre Rendimento de Aluguel
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>O que acontece se eu não declarar o aluguel recebido no Carnê-Leão?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  As imobiliárias e administradoras são legalmente obrigadas a enviar anualmente à Receita Federal a declaração DIMOB (Declaração de Informações sobre Atividades Imobiliárias). Havendo divergência ou omissão de rendimentos por parte do locador, o CPF cai automaticamente na malha fina, sujeito a cobrança do imposto devido com multa de mora de até 75% mais juros pela taxa Selic.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Vale a pena abrir uma holding imobiliária familiar (PJ) para receber aluguéis?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Geralmente sim para proprietários com receita de locação mensal relevante. Na Pessoa Física, a alíquota marginal atinge 27,5% no Carnê-Leão. Em uma pessoa jurídica optante pelo Lucro Presumido, a tributação federal unificada (IRPJ, CSLL, PIS e COFINS) sobre a receita de locação gira em torno de 11,33% a 14,53%, gerando economia tributária substancial a partir de volumes acima de R$ 8.000 a R$ 10.000 mensais.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Como comprovar as deduções de IPTU e taxas perante a Receita Federal?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Basta manter guardados os comprovantes bancários de pagamento do IPTU e do condomínio vinculados à matrícula do imóvel pelo prazo prescricional de 5 anos, acompanhados do contrato de locação demonstrando a assunção do encargo pelo proprietário.
+                </p>
+              </details>
+            </div>
+          </section>
+
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
-

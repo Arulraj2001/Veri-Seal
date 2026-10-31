@@ -1,514 +1,257 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Briefcase,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Coins,
-  Calendar,
-  FileCheck2,
-  Scale,
-} from 'lucide-react';
+import { Sparkles, Briefcase, FileText, CheckCircle2 } from 'lucide-react';
+import { CalculadoraRescisaoCltClient } from './ClientEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { SITE_URL } from '@/lib/constants';
 
-interface RescisaoResult {
-  diasTrabalhadosMes: number;
-  saldoSalario: number;
-  anosCompletos: number;
-  diasAvisoPrevio: number;
-  valorAvisoPrevio: number;
-  meses13Proporcional: number;
-  decimoTerceiroProporcional: number;
-  mesesFeriasProporcionais: number;
-  feriasProporcionaisComTerco: number;
-  feriasVencidasComTerco: number;
-  multaFgts: number;
-  descontoInssEstimado: number;
-  descontoAvisoNaoCumprido: number;
-  totalBrutoRescisao: number;
-  totalLiquidoRescisao: number;
-  saqueFgtsLiberado: number;
-  prazoPagamentoTexto: string;
-}
+export const metadata: Metadata = {
+  title: 'Calculadora de Rescisão de Contrato CLT 2026 : Demissão, Multa FGTS e Aviso Prévio | Kagazo Brasil',
+  description:
+    'Simule com precisão o cálculo de rescisão do contrato de trabalho CLT: aviso prévio proporcional (Lei 12.506/11), 13º e férias com 1/3, saldo de salário e multa de 40% ou 20% do FGTS.',
+  keywords: [
+    'calculadora de rescisao clt 2026',
+    'calculo exato rescisao contrato de trabalho',
+    'simulador demissao sem justa causa multa fgts',
+    'aviso previo proporcional lei 12506 2011',
+    'ferias vencidas e proporcionais um terco clt',
+    'acordo mutuo demissao art 484 a clt',
+    'prazo pagamento rescisao 10 dias art 477',
+    'valor liquido a receber termo rescisao trct',
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/br/calculadora-rescisao-clt`,
+    languages: {
+      'pt-BR': `${SITE_URL}/br/calculadora-rescisao-clt`,
+      'pt': `${SITE_URL}/br/calculadora-rescisao-clt`,
+      'x-default': `${SITE_URL}/br/calculadora-rescisao-clt`,
+    },
+  },
+  openGraph: {
+    title: 'Calculadora de Rescisão de Contrato CLT 2026 | Kagazo Brasil',
+    description:
+      'Simulador completo de rescisão trabalhista conforme a CLT e Reforma Trabalhista: aviso prévio, férias, 13º e FGTS.',
+    url: `${SITE_URL}/br/calculadora-rescisao-clt`,
+    locale: 'pt_BR',
+    siteName: 'Kagazo Brasil',
+    type: 'website',
+  },
+};
+
+const FAQS = [
+  {
+    question: 'Qual é o prazo legal para a empresa pagar as verbas rescisórias?',
+    answer:
+      'Conforme o Artigo 477, § 6º da CLT (com redação unificada pela Reforma Trabalhista - Lei nº 13.467/2017), o pagamento de todas as verbas rescisórias deve ser efetuado em até 10 (dez) dias corridos a contar do término do contrato de trabalho, independentemente de o aviso prévio ter sido trabalhado, indenizado ou dispensado. O descumprimento sujeita a empresa à multa equivalente a um salário mensal do empregado (Art. 477, § 8º).',
+  },
+  {
+    question: 'Como funciona o cálculo do Aviso Prévio Proporcional (Lei 12.506/2011)?',
+    answer:
+      'A Lei nº 12.506/2011 garante um aviso prévio básico de 30 dias para empregados com até 1 ano completo de serviço na mesma empresa. A cada ano completo adicional trabalhado, acrescentam-se 3 dias ao aviso, até o teto máximo de 90 dias (alcançado com 20 anos de vínculo). O período do aviso prévio indenizado integra o tempo de serviço para todos os efeitos legais, projetando a data de saída para cálculo de férias e 13º proporcional.',
+  },
+  {
+    question: 'Quais são os direitos na Demissão por Acordo Mútuo (Art. 484-A da CLT)?',
+    answer:
+      'Na rescisão por acordo consensual, o trabalhador recebe: 1) Metade do aviso prévio (50%), se indenizado; 2) Multa de 20% sobre o saldo do FGTS (em vez de 40%); 3) Direito de sacar até 80% do saldo total depositado na conta vinculada do FGTS; 4) Pagamento integral do saldo de salário, 13º e férias (+1/3). O trabalhador, contudo, não tem direito ao benefício do Seguro-Desemprego.',
+  },
+  {
+    question: 'O empregado demitido por Justa Causa perde quais direitos?',
+    answer:
+      'Na dispensa com justa causa fundamentada no Artigo 482 da CLT (improbidade, desídia, insubordinação, etc.), o trabalhador perde o direito ao aviso prévio, ao 13º proporcional, às férias proporcionais, à multa de 40% do FGTS, ao saque do saldo do FGTS e às guias do seguro-desemprego. Ele recebe estritamente o saldo de salário dos dias trabalhados no mês e as férias vencidas simples ou em dobro acrescidas do terço constitucional.',
+  },
+];
 
 export default function CalculadoraRescisaoCltPage() {
-  const [salarioBruto, setSalarioBruto] = React.useState<number>(3800);
-  const [dataAdmissao, setDataAdmissao] = React.useState<string>('2023-03-01');
-  const [dataDemissao, setDataDemissao] = React.useState<string>('2026-04-15');
-  const [motivo, setMotivo] = React.useState<'sem_justa_causa' | 'pedido_demissao' | 'acordo_mutuo' | 'com_justa_causa'>('sem_justa_causa');
-  const [avisoPrevio, setAvisoPrevio] = React.useState<'indenizado' | 'trabalhado' | 'dispensado_descontado'>('indenizado');
-  const [saldoFgts, setSaldoFgts] = React.useState<number>(9500);
-  const [temFeriasVencidas, setTemFeriasVencidas] = React.useState<boolean>(false);
-
-  const calcolaRescisao = React.useCallback((): RescisaoResult => {
-    const salario = Math.max(0, salarioBruto);
-    const dAdm = new Date(dataAdmissao);
-    const dDem = new Date(dataDemissao);
-
-    // Contagem de tempo de serviço
-    const diffTime = Math.max(0, dDem.getTime() - dAdm.getTime());
-    const anosCompletos = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 365.25));
-
-    // Lei 12.506/2011: Aviso Prévio Proporcional (30 dias + 3 dias por ano completo, max 90 dias)
-    const diasAvisoPrevio = Math.min(90, 30 + anosCompletos * 3);
-
-    // Saldo de Salário: dias trabalhados no mês da demissão
-    const diaDoMes = dDem.getDate();
-    const diasTrabalhadosMes = Math.min(30, diaDoMes);
-    const valorDia = salario / 30;
-    const saldoSalario = diasTrabalhadosMes * valorDia;
-
-    // Cálculo do valor do Aviso Prévio
-    let valorAvisoPrevio = 0;
-    let descontoAvisoNaoCumprido = 0;
-
-    if (motivo === 'sem_justa_causa') {
-      if (avisoPrevio === 'indenizado') {
-        valorAvisoPrevio = valorDia * diasAvisoPrevio;
-      }
-    } else if (motivo === 'acordo_mutuo') {
-      // Art. 484-A CLT: Aviso indenizado pela metade (50%)
-      if (avisoPrevio === 'indenizado') {
-        valorAvisoPrevio = (valorDia * diasAvisoPrevio) * 0.5;
-      }
-    } else if (motivo === 'pedido_demissao') {
-      if (avisoPrevio === 'dispensado_descontado') {
-        descontoAvisoNaoCumprido = salario; // Desconto de 1 mês de salário
-      }
-    }
-
-    // 13º Salário Proporcional: meses trabalhados no ano corrente
-    // Fração igual ou superior a 15 dias no mês conta como 1 mês integral (Art. 1º § 2º Lei 4.090/62)
-    const mesDemissao = dDem.getMonth() + 1; // 1 a 12
-    let meses13 = diaDoMes >= 15 ? mesDemissao : Math.max(0, mesDemissao - 1);
-
-    // Se aviso indenizado sem justa causa, projeta 1 mês a mais se passar de 15 dias
-    if (motivo === 'sem_justa_causa' && avisoPrevio === 'indenizado') {
-      const dataProjetada = new Date(dDem);
-      dataProjetada.setDate(dataProjetada.getDate() + diasAvisoPrevio);
-      const mesProj = dataProjetada.getMonth() + 1;
-      meses13 = Math.min(12, Math.max(meses13, mesProj));
-    }
-
-    let decimoTerceiroProporcional = 0;
-    if (motivo !== 'com_justa_causa') {
-      decimoTerceiroProporcional = (salario / 12) * meses13;
-    }
-
-    // Férias Proporcionais + 1/3 Constitucional (Art. 146 e 147 CLT)
-    // Calcula meses desde o último aniversário de admissão
-    let mesesFerias = Math.round(((dDem.getTime() - dAdm.getTime()) / (1000 * 60 * 60 * 24 * 30.4375)) % 12);
-    if (mesesFerias === 0 && diffTime > 0) mesesFerias = 12;
-
-    let feriasProporcionaisComTerco = 0;
-    if (motivo !== 'com_justa_causa') {
-      const feriasPropSimples = (salario / 12) * mesesFerias;
-      feriasProporcionaisComTerco = feriasPropSimples * (4 / 3);
-    }
-
-    // Férias Vencidas + 1/3 (direito adquirido em qualquer modalidade)
-    let feriasVencidasComTerco = 0;
-    if (temFeriasVencidas) {
-      feriasVencidasComTerco = salario * (4 / 3);
-    }
-
-    // Multa Rescisória do FGTS (Art. 18 Lei 8.036/90 e Art. 484-A CLT)
-    let multaFgts = 0;
-    let saqueFgtsLiberado = 0;
-
-    if (motivo === 'sem_justa_causa') {
-      multaFgts = saldoFgts * 0.4; // 40% multa rescisória
-      saqueFgtsLiberado = saldoFgts + multaFgts;
-    } else if (motivo === 'acordo_mutuo') {
-      multaFgts = saldoFgts * 0.2; // 20% multa no acordo
-      saqueFgtsLiberado = saldoFgts * 0.8 + multaFgts; // Saque de até 80% do saldo
-    } else {
-      multaFgts = 0;
-      saqueFgtsLiberado = 0; // Bloqueado no pedido de demissão e justa causa
-    }
-
-    // Desconto simplificado estimado de INSS sobre Saldo + 13º
-    const inssSaldo = saldoSalario * 0.08;
-    const inss13 = decimoTerceiroProporcional * 0.08;
-    const descontoInssEstimado = inssSaldo + inss13;
-
-    // Total Bruto e Líquido
-    const totalBrutoRescisao =
-      saldoSalario +
-      valorAvisoPrevio +
-      decimoTerceiroProporcional +
-      feriasProporcionaisComTerco +
-      feriasVencidasComTerco;
-
-    const totalLiquidoRescisao = Math.max(
-      0,
-      totalBrutoRescisao - descontoInssEstimado - descontoAvisoNaoCumprido
-    );
-
-    // Prazo legal de pagamento (Art. 477 § 6º da CLT, redação dada pela Lei 13.467/2017)
-    const prazoPagamentoTexto = 'Até 10 (dez) dias corridos a partir do término do contrato de trabalho.';
-
-    return {
-      diasTrabalhadosMes,
-      saldoSalario,
-      anosCompletos,
-      diasAvisoPrevio,
-      valorAvisoPrevio,
-      meses13Proporcional: meses13,
-      decimoTerceiroProporcional,
-      mesesFeriasProporcionais: mesesFerias,
-      feriasProporcionaisComTerco,
-      feriasVencidasComTerco,
-      multaFgts,
-      descontoInssEstimado,
-      descontoAvisoNaoCumprido,
-      totalBrutoRescisao,
-      totalLiquidoRescisao,
-      saqueFgtsLiberado,
-      prazoPagamentoTexto,
-    };
-  }, [salarioBruto, dataAdmissao, dataDemissao, motivo, avisoPrevio, saldoFgts, temFeriasVencidas]);
-
-  const res = calcolaRescisao();
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Calculadora de Rescisão Trabalhista CLT Brasil',
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'All',
+        url: `${SITE_URL}/br/calculadora-rescisao-clt`,
+        offers: {
+          '@type': 'Offer',
+          price: '0.00',
+          priceCurrency: 'BRL',
+        },
+        provider: {
+          '@type': 'Organization',
+          name: 'Kagazo Brasil',
+          url: `${SITE_URL}/br`,
+        },
+        description:
+          'Simulador trabalhista completo para cálculo de rescisão CLT, aviso prévio proporcional e multa rescisória do FGTS.',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Início',
+            item: SITE_URL,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Brasil',
+            item: `${SITE_URL}/br`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Calculadora de Rescisão CLT',
+            item: `${SITE_URL}/br/calculadora-rescisao-clt`,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/br" className="hover:text-slate-800 transition-colors">Brasil</Link>
-        <span>/</span>
-        <span className="text-emerald-700 font-semibold">Calculadora de Rescisão CLT</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Art. 477 da CLT, Lei 12.506/2011 (Aviso Proporcional) & Reforma Trabalhista</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Breadcrumb Visual */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200 font-medium">Calculadora de Rescisão CLT</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Calculadora de Rescisão de Contrato CLT <br className="hidden sm:inline" />
-          <span className="text-emerald-600">Demissão, Férias, 13º e Multa de 40% do FGTS</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Resposta Trabalhista Direta:</strong> A rescisão de contrato de trabalho sob a CLT apura o <strong>saldo de salário</strong> dos dias trabalhados, o <strong>aviso prévio proporcional</strong> (30 dias mais 3 dias por ano completo, até 90 dias pela Lei 12.506/2011), o <strong>13º salário proporcional</strong>, <strong>férias vencidas e proporcionais acrescidas do terço constitucional (1/3)</strong> e a <strong>multa rescisória do FGTS</strong> (40% na demissão sem justa causa ou 20% no acordo mútuo do Art. 484-A).
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Briefcase className="w-4 h-4 text-emerald-600" />
-              <span>Parâmetros do Vínculo Empregatício</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Art. 477 CLT, Lei 12.506/2011 & Reforma Trabalhista</span>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setSalarioBruto(3800);
-                setDataAdmissao('2023-03-01');
-                setDataDemissao('2026-04-15');
-                setMotivo('sem_justa_causa');
-                setAvisoPrevio('indenizado');
-                setSaldoFgts(9500);
-                setTemFeriasVencidas(false);
-              }}
-              className="text-xs text-slate-500 hover:text-emerald-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Redefinir</span>
-            </button>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              Calculadora de Rescisão de Contrato CLT <br className="hidden sm:inline" />
+              <span className="text-emerald-400">Demissão, Férias, 13º e Multa de 40% do FGTS</span>
+            </h1>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Calcule as verbas rescisórias devidas no término do contrato individual de trabalho. Simulador completo abrangendo demissão sem justa causa, pedido de demissão, demissão por acordo mútuo (Art. 484-A) e justa causa com projeção do aviso prévio proporcional.
+            </p>
+          </header>
+
+          {/* Answer Capsule (GEO Optimization) */}
+          <section className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 backdrop-blur-sm space-y-4 shadow-xl">
+            <div className="flex items-start gap-3">
+              <Briefcase className="w-5 h-5 text-emerald-400 mt-1 shrink-0" />
+              <div>
+                <h2 className="text-base font-semibold text-white">
+                  Resumo Trabalhista: Direitos Rescisórios Conforme a Modalidade de Saída
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                  Na <strong>dispensa sem justa causa</strong>, o empregado faz jus ao saldo de salário, aviso prévio proporcional (30 a 90 dias pela Lei 12.506/11), 13º salário e férias proporcionais com 1/3 constitucional, saque integral do saldo do FGTS acrescido da <strong>multa rescisória de 40%</strong> e guias do seguro-desemprego. No <strong>acordo mútuo (Art. 484-A)</strong>, a multa do FGTS é de 20%, o saque é limitado a 80% do saldo e o aviso prévio indenizado é pago pela metade. O prazo legal de quitação é de até <strong>10 dias corridos</strong> após o término contratual.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Interactive Calculator Engine */}
+          <CalculadoraRescisaoCltClient />
+
+          {/* In-content Ad Contextual */}
+          <div className="my-8">
+            <AdSlot slot="in_content" context="legal" />
           </div>
 
-          <div className="space-y-4">
-            {/* Salário Base */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center justify-between">
-                <span>Último Salário Bruto Mensal (R$)</span>
-                <span className="font-mono text-emerald-700 font-bold text-sm">
-                  R$ {salarioBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                step={100}
-                value={salarioBruto || ''}
-                onChange={(e) => setSalarioBruto(Number(e.target.value))}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm font-bold text-slate-900 transition-all font-mono"
-                placeholder="Ex. 3800.00"
-              />
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 sm:p-8 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 text-emerald-400" />
+              Guia Completo das Verbas Rescisórias na Legislação Brasileira
+            </h2>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                1. O Aviso Prévio Proporcional e sua Projeção: Lei nº 12.506/2011
+              </h3>
+              <p>
+                A Lei Federal nº 12.506 regulamentou o inciso XXI do Artigo 7º da Constituição Federal, fixando a proporcionalidade do aviso prévio em razão do tempo de serviço:
+              </p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  <strong>Período Base:</strong> 30 (trinta) dias de aviso prévio para os trabalhadores que possuem até 1 (um) ano completo de vínculo na mesma empresa.
+                </li>
+                <li>
+                  <strong>Acréscimo Anual:</strong> São acrescidos 3 (três) dias para cada ano de serviço completo prestado ao mesmo empregador, até o limite de 60 dias de acréscimo, totalizando até 90 dias de aviso prévio.
+                </li>
+                <li>
+                  <strong>Efeitos da Projeção (OJ 82 da SDI-1 do TST):</strong> A data de saída anotada na Carteira de Trabalho Digital deve corresponder ao término do prazo do aviso prévio, ainda que indenizado. Essa projeção integra o contrato de trabalho para todos os fins, influenciando o cálculo de mais 1/12 avos de férias e de 13º salário se a contagem atingir 15 dias ou mais.
+                </li>
+              </ul>
             </div>
 
-            {/* Motivo da Rescisão */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800">Motivo do Desligamento</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setMotivo('sem_justa_causa')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    motivo === 'sem_justa_causa'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span>Demissão Sem Justa Causa</span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">Direito a 40% FGTS + Seguro</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setMotivo('pedido_demissao')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    motivo === 'pedido_demissao'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span>Pedido de Demissão</span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">Iniciativa do empregado</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setMotivo('acordo_mutuo')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    motivo === 'acordo_mutuo'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span>Acordo Mútuo (Art. 484-A)</span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">20% multa FGTS + 80% saque</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setMotivo('com_justa_causa')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    motivo === 'com_justa_causa'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span>Demissão Com Justa Causa</span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">Art. 482 CLT (Falta grave)</span>
-                </button>
-              </div>
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                2. Prazos e Sanções da Reforma Trabalhista: Art. 477 da CLT
+              </h3>
+              <p>
+                A Lei nº 13.467/2017 unificou os prazos de pagamento das verbas rescisórias. O empregador dispõe de <strong>10 (dez) dias corridos</strong>, contados a partir do término do contrato de trabalho, para disponibilizar os valores ao empregado e entregar a documentação comprobatória da rescisão aos órgãos competentes. A inobservância desse prazo sujeita a empresa ao pagamento da multa estipulada no § 8º do Art. 477, equivalente ao valor de um salário nominal integral do trabalhador.
+              </p>
             </div>
 
-            {/* Datas de Admissão e Afastamento */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Data de Admissão</label>
-                <input
-                  type="date"
-                  value={dataAdmissao}
-                  onChange={(e) => setDataAdmissao(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Data do Último Dia / Afastamento</label>
-                <input
-                  type="date"
-                  value={dataDemissao}
-                  onChange={(e) => setDataDemissao(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                3. Multa Rescisória do FGTS e Guias de Seguro-Desemprego
+              </h3>
+              <p>
+                A indenização compensatória de 40% sobre o montante de todos os depósitos realizados na conta vinculada do FGTS durante a vigência do contrato de trabalho é um direito fundamental do empregado dispensado sem justa causa (Art. 18, § 1º da Lei 8.036/1990). O cálculo da multa incide inclusive sobre os depósitos que já tenham sido eventualmente sacados pelo trabalhador durante o contrato para compra de casa própria ou em situações de calamidade pública.
+              </p>
             </div>
+          </article>
 
-            {/* Tipo de Aviso Prévio */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800 flex justify-between">
-                <span>Condição do Aviso Prévio</span>
-                <span className="text-emerald-700 font-mono font-bold">{res.diasAvisoPrevio} dias calculados</span>
-              </label>
-              <select
-                value={avisoPrevio}
-                onChange={(e) => setAvisoPrevio(e.target.value as any)}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-              >
-                <option value="indenizado">Aviso Prévio Indenizado (Pago pela empresa sem trabalhar)</option>
-                <option value="trabalhado">Aviso Prévio Trabalhado (Cumprido integralmente)</option>
-                <option value="dispensado_descontado">Aviso Não Cumprido / Descontado do Empregado</option>
-              </select>
+          {/* FAQ Accordion Section */}
+          <section className="space-y-4 bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 sm:p-8">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <h2 className="text-xl sm:text-2xl font-bold text-white">
+                Perguntas Frequentes sobre Rescisão de Contrato CLT
+              </h2>
             </div>
-
-            {/* Saldo FGTS & Férias Vencidas */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Saldo Depositado FGTS (R$)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={500}
-                  value={saldoFgts || ''}
-                  onChange={(e) => setSaldoFgts(Number(e.target.value))}
-                  placeholder="Ex. 9500.00"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 font-mono"
-                />
-              </div>
-
-              <div className="space-y-1.5 flex flex-col justify-end">
-                <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:bg-slate-100/70 transition-colors">
-                  <input
-                    type="checkbox"
-                    checked={temFeriasVencidas}
-                    onChange={(e) => setTemFeriasVencidas(e.target.checked)}
-                    className="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500"
-                  />
-                  <span className="text-xs text-slate-800 font-medium">
-                    Possui <strong>férias vencidas</strong> a indenizar (+1/3)
-                  </span>
-                </label>
-              </div>
+            <div className="divide-y divide-slate-700/60">
+              {FAQS.map((faq, idx) => (
+                <div key={idx} className="py-4 space-y-2">
+                  <h3 className="text-base font-medium text-slate-100">
+                    {faq.question}
+                  </h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
             </div>
-          </div>
+          </section>
 
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Cálculo atualizado com a projeção do aviso prévio indenizado da Lei 12.506/2011.</span>
-          </div>
-        </div>
-
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Total Líquido da Rescisão
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">
-              TRCT Oficial
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-1">
-            <span className="text-xs text-emerald-200 font-medium">Valor a Ser Pago pelo Empregador</span>
-            <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-              R$ {res.totalLiquidoRescisao.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </div>
-            <span className="text-[11px] text-emerald-300 font-medium block">
-              {res.anosCompletos} anos e {res.diasAvisoPrevio} dias de aviso proporcional
-            </span>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Saldo de Salário ({res.diasTrabalhadosMes} dias)</span>
-              <span className="font-mono text-white">R$ {res.saldoSalario.toFixed(2)}</span>
-            </div>
-            {res.valorAvisoPrevio > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Aviso Prévio Indenizado ({res.diasAvisoPrevio} dias)</span>
-                <span className="font-mono text-emerald-400 font-bold">+ R$ {res.valorAvisoPrevio.toFixed(2)}</span>
-              </div>
-            )}
-            {res.decimoTerceiroProporcional > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>13º Salário Proporcional ({res.meses13Proporcional}/12 avos)</span>
-                <span className="font-mono text-emerald-400 font-bold">+ R$ {res.decimoTerceiroProporcional.toFixed(2)}</span>
-              </div>
-            )}
-            {res.feriasProporcionaisComTerco > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Férias Proporcionais + 1/3 ({res.mesesFeriasProporcionais}/12 avos)</span>
-                <span className="font-mono text-emerald-400 font-bold">+ R$ {res.feriasProporcionaisComTerco.toFixed(2)}</span>
-              </div>
-            )}
-            {res.feriasVencidasComTerco > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Férias Vencidas + 1/3 (Integral)</span>
-                <span className="font-mono text-emerald-400 font-bold">+ R$ {res.feriasVencidasComTerco.toFixed(2)}</span>
-              </div>
-            )}
-            {res.descontoAvisoNaoCumprido > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Desconto Aviso Não Cumprido</span>
-                <span className="font-mono text-rose-400 font-bold">- R$ {res.descontoAvisoNaoCumprido.toFixed(2)}</span>
-              </div>
-            )}
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Desconto INSS Estimado</span>
-              <span className="font-mono text-rose-400 font-bold">- R$ {res.descontoInssEstimado.toFixed(2)}</span>
-            </div>
-            {res.multaFgts > 0 && (
-              <div className="flex justify-between py-1 pt-1.5 text-slate-200">
-                <span>Multa Rescisória FGTS ({motivo === 'acordo_mutuo' ? '20%' : '40%'})</span>
-                <span className="font-mono text-cyan-400 font-bold">R$ {res.multaFgts.toFixed(2)}</span>
-              </div>
-            )}
-            {res.saqueFgtsLiberado > 0 && (
-              <div className="flex justify-between py-1 text-slate-200">
-                <span>Total Liberado para Saque FGTS</span>
-                <span className="font-mono text-cyan-300 font-bold">R$ {res.saqueFgtsLiberado.toFixed(2)}</span>
-              </div>
-            )}
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-            <strong className="text-slate-300 block">Prazo de Pagamento (Art. 477 § 6º CLT):</strong>
-            <p>{res.prazoPagamentoTexto}</p>
+          {/* Bottom Ad Contextual */}
+          <div className="my-6">
+            <AdSlot slot="post_download" context="legal" />
           </div>
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            Guida às Verbas Rescisórias e Modalidades de Demissão na CLT
-          </h2>
-          <p>
-            O término do contrato individual de trabalho no Brasil é regido pelo <strong>Artigo 477 e seguintes da CLT (Decreto-Lei nº 5.452/1943)</strong> com as alterações introduzidas pela <strong>Reforma Trabalhista (Lei nº 13.467/2017)</strong> e pela <strong>Lei nº 12.506/2011</strong> (Aviso Prévio Proporcional).
-          </p>
-          <p>
-            A discriminação das parcelas rescisórias pagas ao empregado e os prazos legais devem constar de forma transparente no <strong>Termo de Rescisão do Contrato de Trabalho (TRCT)</strong>.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Regra do Aviso Prévio Proporcional (Lei nº 12.506/2011)
-          </h3>
-          <p>
-            Todo empregado dispensado sem justa causa tem direito a um aviso prévio de <strong>30 (trinta) dias</strong> para contratos com até um ano completo de serviço na mesma empresa.
-          </p>
-          <p>
-            A cada ano completo de trabalho completado, são acrescidos <strong>3 (três) dias adicionais</strong> de aviso prévio, até o limite máximo de <strong>90 (noventa) dias</strong> (equivalente a 20 anos completos de casa). O aviso prévio proporcional projeta seus efeitos para o cálculo de 13º salário e férias proporcionais.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Demissão por Acordo Mútuo (Art. 484-A da CLT)
-          </h3>
-          <p>
-            Criado pela Reforma Trabalhista, o distrato consensual entre empregado e empregador assegura:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-slate-700">
-            <li>Pagamento pela metade (50%) do aviso prévio, caso seja indenizado;</li>
-            <li>Multa indenizatória de <strong>20% sobre o saldo do FGTS</strong> (em vez dos habituais 40%);</li>
-            <li>Levantamento e saque de até <strong>80% do saldo depositado do FGTS</strong> na Caixa;</li>
-            <li>Todas as demais verbas trabalhistas (saldo de salário, férias e 13º) pagas na integralidade;</li>
-            <li>Não concessão do benefício do Seguro-Desemprego.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
-

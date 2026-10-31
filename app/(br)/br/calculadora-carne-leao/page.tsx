@@ -1,367 +1,288 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Calculator,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Coins,
-  BookOpen,
-  Receipt,
-  Scale,
-  Calendar,
-} from 'lucide-react';
+import { BookOpen, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { CalculadoraCarneLeaoClient } from './ClientEngine';
 
-interface CarneLeaoResult {
-  rendimentoBruto: number;
-  totalLivroCaixa: number;
-  deducaoInss: number;
-  deducaoDependentes: number;
-  deducaoPensao: number;
-  totalDeducoes: number;
-  baseCalculo: number;
-  aliquotaNominal: number;
-  parcelaDeduzir: number;
-  impostoDevidoDarf: number;
-  aliquotaEfetiva: number;
-  economiaGeradaLivroCaixa: number;
-}
+export const metadata: Metadata = {
+  title: 'Calculadora de Carnê-Leão 2026 | IRPF Autônomo e Dedução de Livro Caixa',
+  description:
+    'Calcule o imposto mensal do Carnê-Leão (código DARF 0190) para autônomos, médicos, psicólogos, advogados e aluguéis. Deduções oficiais de Livro Caixa, INSS e dependentes segundo o RIR/2018.',
+  keywords: [
+    'calculadora carne leao 2026',
+    'simulador irpf autonomo darf 0190',
+    'deducoes livro caixa carne leao',
+    'tabela irpf carne leao receita federal',
+    'multa isolada 50 carne leao atraso',
+    'art 104 rir despesas dedutiveis'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/calculadora-carne-leao',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/calculadora-carne-leao',
+      'pt': 'https://kagazo.in/br/calculadora-carne-leao',
+      'x-default': 'https://kagazo.in/br/calculadora-carne-leao',
+    },
+  },
+  openGraph: {
+    title: 'Calculadora de Carnê-Leão 2026 | Simulação IRPF Autônomo Oficial',
+    description:
+      'Calcule com exatidão o valor do DARF mensal 0190 e descubra a economia real proporcionada pela escrituração do Livro Caixa.',
+    url: 'https://kagazo.in/br/calculadora-carne-leao',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Calculadora de Carnê-Leão 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'BusinessApplication',
+      'description': 'Simulador tributário do recolhimento mensal obrigatório do Carnê-Leão para pessoas físicas que recebem de outras pessoas físicas ou do exterior.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'Carnê-Leão e Autônomos',
+          'item': 'https://kagazo.in/br/calculadora-carne-leao',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'Quem é obrigado a pagar o Carnê-Leão mensalmente?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Qualquer pessoa física residente fiscal no Brasil que receba rendimentos tributáveis de outra pessoa física (como honorários de médicos, dentistas, psicólogos, advogados, terapeutas e corretores), pensão alimentícia judicial, rendimentos de aluguéis ou ganhos auferidos no exterior.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Qual é o prazo limite para pagamento do DARF do Carnê-Leão?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O imposto calculado no Carnê-Leão (DARF código 0190) deve ser pago até o último dia útil do mês subsequente àquele em que os rendimentos foram efetivamente recebidos.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Posso deixar para recolher o imposto somente no ajuste anual em abril?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Não. O recolhimento do Carnê-Leão é uma obrigação tributária mensal estrita. Não recolher o imposto no mês devido e lançar tudo somente na Declaração Anual de Ajuste sujeita o contribuinte à cobrança de multa isolada de 50% sobre o valor não antecipado, além de juros pela taxa Selic.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'O que pode ser deduzido no Livro Caixa do profissional autônomo?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Conforme o Artigo 104 do Regulamento do Imposto de Renda (RIR/2018), são dedutíveis: aluguel, condomínio e IPTU do imóvel de trabalho, contas de consumo (água, luz, telefone e internet comercial), salários e encargos trabalhistas de funcionários (como recepcionista), despesas com material de consumo e taxas de conselho profissional.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function CalculadoraCarneLeaoPage() {
-  const [rendimentoBruto, setRendimentoBruto] = React.useState<number>(8500);
-  const [livroCaixa, setLivroCaixa] = React.useState<number>(1800);
-  const [inssAutonomo, setInssAutonomo] = React.useState<number>(800);
-  const [dependentes, setDependentes] = React.useState<number>(1);
-  const [pensaoAlimenticia, setPensaoAlimenticia] = React.useState<number>(0);
-
-  const calcolaCarneLeao = React.useCallback((): CarneLeaoResult => {
-    const bruto = Math.max(0, rendimentoBruto);
-    const despesas = Math.max(0, livroCaixa);
-    const inss = Math.max(0, inssAutonomo);
-    const depValor = dependentes * 189.59;
-    const pensao = Math.max(0, pensaoAlimenticia);
-
-    const totalDeducoes = despesas + inss + depValor + pensao;
-    const baseCalculo = Math.max(0, bruto - totalDeducoes);
-
-    // Tabela Mensal IRPF Receita Federal
-    let aliquotaNominal = 0;
-    let parcelaDeduzir = 0;
-
-    if (baseCalculo <= 2259.2) {
-      aliquotaNominal = 0;
-      parcelaDeduzir = 0;
-    } else if (baseCalculo <= 2826.65) {
-      aliquotaNominal = 7.5;
-      parcelaDeduzir = 169.44;
-    } else if (baseCalculo <= 3751.05) {
-      aliquotaNominal = 15.0;
-      parcelaDeduzir = 381.44;
-    } else if (baseCalculo <= 4664.68) {
-      aliquotaNominal = 22.5;
-      parcelaDeduzir = 662.77;
-    } else {
-      aliquotaNominal = 27.5;
-      parcelaDeduzir = 896.0;
-    }
-
-    const impostoDevidoDarf = Math.max(0, baseCalculo * (aliquotaNominal / 100) - parcelaDeduzir);
-    const aliquotaEfetiva = bruto > 0 ? (impostoDevidoDarf / bruto) * 100 : 0;
-
-    // Cálculo do imposto se não houvesse Livro Caixa para mensurar a economia
-    const baseSemLivroCaixa = Math.max(0, bruto - (inss + depValor + pensao));
-    let impostoSemLivro = 0;
-    if (baseSemLivroCaixa <= 2259.2) impostoSemLivro = 0;
-    else if (baseSemLivroCaixa <= 2826.65) impostoSemLivro = baseSemLivroCaixa * 0.075 - 169.44;
-    else if (baseSemLivroCaixa <= 3751.05) impostoSemLivro = baseSemLivroCaixa * 0.15 - 381.44;
-    else if (baseSemLivroCaixa <= 4664.68) impostoSemLivro = baseSemLivroCaixa * 0.225 - 662.77;
-    else impostoSemLivro = baseSemLivroCaixa * 0.275 - 896.0;
-    impostoSemLivro = Math.max(0, impostoSemLivro);
-
-    const economiaGeradaLivroCaixa = Math.max(0, impostoSemLivro - impostoDevidoDarf);
-
-    return {
-      rendimentoBruto: bruto,
-      totalLivroCaixa: despesas,
-      deducaoInss: inss,
-      deducaoDependentes: depValor,
-      deducaoPensao: pensao,
-      totalDeducoes,
-      baseCalculo,
-      aliquotaNominal,
-      parcelaDeduzir,
-      impostoDevidoDarf,
-      aliquotaEfetiva,
-      economiaGeradaLivroCaixa,
-    };
-  }, [rendimentoBruto, livroCaixa, inssAutonomo, dependentes, pensaoAlimenticia]);
-
-  const res = calcolaCarneLeao();
-
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/br" className="hover:text-slate-800 transition-colors">Brasil</Link>
-        <span>/</span>
-        <span className="text-emerald-700 font-semibold">Carnê-Leão e Autônomos</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Art. 104 e 118 do RIR/2018 (Decreto 9.580/18) & DARF Código 0190</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">Carnê-Leão e Autônomos</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Simulador de Carnê-Leão e IRPF Autônomo <br className="hidden sm:inline" />
-          <span className="text-emerald-600">Deduções de Livro Caixa e Imposto Mensal (DARF)</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Resposta Tributária Direta:</strong> O <strong>Carnê-Leão</strong> é o recolhimento mensal obrigatório do imposto de renda incidente sobre rendimentos recebidos por pessoas físicas sem retenção na fonte — como <strong>honorários de profissionais liberais (médicos, advogados, psicólogos)</strong>, <strong>aluguéis de imóveis</strong> e <strong>rendimentos do exterior</strong>. As despesas profissionais escrituradas no <strong>Livro Caixa</strong> reduzem diretamente a base de cálculo tributável.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <BookOpen className="w-4 h-4 text-emerald-600" />
-              <span>Receitas & Livro Caixa do Mês</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <BookOpen className="w-3.5 h-3.5" />
+              Tributação Federal • Decreto 9.580/2018 (RIR/18) & DARF 0190
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setRendimentoBruto(8500);
-                setLivroCaixa(1800);
-                setInssAutonomo(800);
-                setDependentes(1);
-                setPensaoAlimenticia(0);
-              }}
-              className="text-xs text-slate-500 hover:text-emerald-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Redefinir</span>
-            </button>
-          </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Calculadora de Carnê-Leão e IRPF Autônomo 2026
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Simule o DARF mensal para honorários autônomos, aluguéis e receitas do exterior. Calcule a economia do Livro Caixa digital e deduções de INSS e dependentes.
+            </p>
 
-          <div className="space-y-4">
-            {/* Rendimento Bruto */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex justify-between">
-                <span>Rendimento Bruto Recebido no Mês (R$)</span>
-                <span className="font-mono text-emerald-700 font-bold text-sm">
-                  R$ {rendimentoBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                step={200}
-                value={rendimentoBruto || ''}
-                onChange={(e) => setRendimentoBruto(Number(e.target.value))}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm font-bold text-slate-900 transition-all font-mono"
-                placeholder="Ex. 8500.00"
-              />
-              <span className="text-[11px] text-slate-500 block">
-                Total de honorários recebidos de pessoas físicas, locação de imóveis ou remessas do exterior.
-              </span>
+            {/* Answer Capsule (GEO) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Regra Legal do Carnê-Leão:</p>
+              <p>
+                O Carnê-Leão é o recolhimento mensal compulsório de rendimentos recebidos de PF ou do exterior, pago via DARF 0190 até o último dia útil do mês seguinte. As despesas operacionais escrituradas no Livro Caixa (Art. 104 do RIR/2018) abatem legalmente a base tributável. O não recolhimento tempestivo gera multa isolada de 50%.
+              </p>
             </div>
+          </header>
 
-            {/* Livro Caixa e INSS Autônomo */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800 flex justify-between">
-                  <span>Despesas de Livro Caixa (R$)</span>
-                  <span className="text-slate-400 font-normal">Art. 104 RIR</span>
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step={100}
-                  value={livroCaixa || ''}
-                  onChange={(e) => setLivroCaixa(Number(e.target.value))}
-                  placeholder="Ex. 1800.00"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 font-mono"
-                />
-                <span className="text-[10px] text-slate-400 block">Aluguel, água, luz, internet do consultório/escritório</span>
-              </div>
+          {/* Interactive Client Engine */}
+          <CalculadoraCarneLeaoClient />
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800 flex justify-between">
-                  <span>INSS Autônomo Pago (R$)</span>
-                  <span className="text-slate-400 font-normal">Guia GPS</span>
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step={50}
-                  value={inssAutonomo || ''}
-                  onChange={(e) => setInssAutonomo(Number(e.target.value))}
-                  placeholder="Ex. 800.00"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 font-mono"
-                />
-                <span className="text-[10px] text-slate-400 block">Contribuição previdenciária oficial do mês</span>
-              </div>
+          {/* Middle In-Content Ad */}
+          <AdSlot slot="in_content" context="legal" />
+
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Guia Tributário do Carnê-Leão: Obrigatoriedade, Livro Caixa e Cruzamento e-CAC
+            </h2>
+
+            <p>
+              O instituto da tributação antecipada mensal, denominado popularmente no Brasil como <strong>Carnê-Leão</strong>, encontra-se disciplinado nos <strong>Artigos 118 a 122 do Decreto nº 9.580/2018 (Regulamento do Imposto sobre a Renda - RIR/2018)</strong> e em Instruções Normativas da Secretaria Especial da Receita Federal do Brasil (RFB). O objetivo do mecanismo é garantir que o contribuinte pessoa física que não sofre retenção periódica na fonte recolha o imposto de renda no mesmo período de competência em que o numerário ingressou em seu patrimônio.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">1. Quem Está Sujeito ao Carnê-Leão Obrigatório</h3>
+            <p>
+              Estão sob a égide compulsória do Carnê-Leão:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><strong>Profissionais Liberais e Autônomos:</strong> Médicos, dentistas, psicólogos, fonoaudiólogos, fisioterapeutas, advogados, contadores, arquitetos, corretores e engenheiros que prestem serviços diretamente a clientes pessoas físicas;</li>
+              <li><strong>Proprietários Locadores:</strong> Pessoas físicas que recebam aluguéis residenciais ou comerciais pagos diretamente por inquilinos pessoas físicas;</li>
+              <li><strong>Recebimento de Pensão Alimentícia Judicial:</strong> Alimentandos que recebam importâncias a título de pensão judicial de pessoas físicas;</li>
+              <li><strong>Rendimentos do Exterior:</strong> Salários, dividendos, remunerações de trabalho remoto para fora do país e royalties recebidos de fontes sediadas fora do território brasileiro.</li>
+            </ul>
+
+            <h3 className="text-lg font-semibold text-emerald-400">2. A Sistemática do Livro Caixa Digital (Art. 104 RIR/2018)</h3>
+            <p>
+              A legislação confere ao profissional autônomo o privilégio fiscal de escriturar suas despesas operacionais no <strong>Livro Caixa</strong>, deduzindo-as integralmente da receita bruta auferida no mês antes de aplicar a tabela progressiva do imposto:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-600 bg-slate-900/50 text-slate-200">
+                    <th className="p-2">Categoria de Despesa</th>
+                    <th className="p-2">Dedutível?</th>
+                    <th className="p-2">Requisitos e Fundamento Legal</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Aluguel, Luz, Água e IPTU do Consultório</td>
+                    <td className="p-2 font-semibold text-emerald-400">Sim</td>
+                    <td className="p-2">Indispensáveis à prestação dos serviços. No caso de home office, a jurisprudência fiscal admite até 1/5 (20%) das despesas da residência caso o local seja exclusivo de atendimento.</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Folha de Salários e Encargos da Secretária</td>
+                    <td className="p-2 font-semibold text-emerald-400">Sim</td>
+                    <td className="p-2">Salário em carteira, 13º salário, férias, FGTS e cota patronal de INSS de auxiliares com vínculo formal.</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Anuidade do CRM, OAB, CRO ou CRP</td>
+                    <td className="p-2 font-semibold text-emerald-400">Sim</td>
+                    <td className="p-2">Contribuições estatutárias compulsórias exigidas pelos respectivos conselhos de classe profissional.</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Aquisição de Computadores ou Aparelhos</td>
+                    <td className="p-2 font-semibold text-rose-400">Não</td>
+                    <td className="p-2">Bens de capital e ativo imobilizado não constituem despesa de custeio corrente, sendo vedada sua dedução no Livro Caixa.</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            {/* Dependentes & Pensão */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Dependentes Legais</label>
-                <input
-                  type="number"
-                  min={0}
-                  max={10}
-                  value={dependentes}
-                  onChange={(e) => setDependentes(Math.max(0, Number(e.target.value)))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
+            <h3 className="text-lg font-semibold text-emerald-400">3. Deduções Pessoais: INSS e Dependentes</h3>
+            <p>
+              Além das despesas do Livro Caixa, o autônomo pode deduzir:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><strong>Previdência Social Oficial (GPS):</strong> A contribuição para o INSS como Contribuinte Individual recolhida no mês abatida em sua integralidade;</li>
+              <li><strong>Dependentes Econômicos:</strong> A quantia fixa legal de <strong>R$ 189,59 por dependente</strong> cadastrado;</li>
+              <li><strong>Pensão Alimentícia Homologada:</strong> A totalidade das parcelas pagas em cumprimento de decisão judicial ou escritura pública.</li>
+            </ul>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Pensão Judicial Paga (R$)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={50}
-                  value={pensaoAlimenticia || ''}
-                  onChange={(e) => setPensaoAlimenticia(Number(e.target.value))}
-                  placeholder="0,00"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 font-mono"
-                />
-              </div>
-            </div>
-          </div>
+            <h3 className="text-lg font-semibold text-emerald-400">4. A Penalidade da Multa Isolada de 50%</h3>
+            <p>
+              Um dos equívocos mais custosos cometidos por autônomos é postergar o pagamento do Carnê-Leão para o mês de abril do ano seguinte. A Receita Federal cruza os dados bancários (via e-Financeira) e os recibos emitidos na DMED (Declaração de Serviços Médicos e de Saúde) e Dmed/Cartórios.
+            </p>
+            <p>
+              A ausência de recolhimento no prazo (último dia útil do mês seguinte) tipifica falta funcional sujeita à <strong>multa isolada de 50%</strong> sobre o valor do tributo não antecipado, mesmo que o contribuinte venha a incluir o valor na Declaração de Ajuste Anual.
+            </p>
+          </article>
 
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>DARF emitido sob o código oficial de receita 0190 com vencimento no último dia útil do mês subsequente.</span>
-          </div>
-        </div>
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre o Carnê-Leão
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Como gerar a guia DARF do Carnê-Leão para pagamento?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  O programa instalado no computador foi descontinuado pela Receita Federal. O Carnê-Leão é hoje 100% web, acessado diretamente no Centro Virtual de Atendimento (Portal e-CAC) com sua conta Gov.br (nível Prata ou Ouro). O sistema calcula os dados informados e gera a guia DARF com código de barras e QR Code Pix sob o código de receita 0190.
+                </p>
+              </details>
 
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Imposto Devido no Carnê-Leão
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">
-              DARF 0190
-            </span>
-          </div>
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>O que acontece se as despesas do Livro Caixa forem maiores que a receita no mês?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  O imposto do mês será zero e o saldo excedente de despesas de Livro Caixa pode ser legalmente transportado para ser compensado nos meses seguintes do mesmo ano-calendário. Todavia, eventual saldo credor de despesas remanescente em 31 de dezembro não pode ser transportado para o ano seguinte.
+                </p>
+              </details>
 
-          <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-1">
-            <span className="text-xs text-emerald-200 font-medium">Valor do DARF a Pagar no Mês</span>
-            <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-              R$ {res.impostoDevidoDarf.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Médicos e dentistas precisam informar o CPF de cada paciente atendido?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. Desde a Instrução Normativa RFB nº 1.531/2014, profissionais da área da saúde (médicos, odontólogos, psicólogos, fisioterapeutas e fonoaudiólogos) são obrigados a individualizar no Carnê-Leão o CPF de cada paciente responsável pelo pagamento de cada consulta ou procedimento clínico realizado.
+                </p>
+              </details>
             </div>
-            <span className="text-[11px] text-emerald-300 font-medium block">
-              Alíquota efetiva real: {res.aliquotaEfetiva.toFixed(2)}% sobre o rendimento bruto
-            </span>
-          </div>
+          </section>
 
-          <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Rendimento Bruto Tributável</span>
-              <span className="font-mono text-white">R$ {res.rendimentoBruto.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Deduções de Livro Caixa</span>
-              <span className="font-mono text-emerald-400 font-bold">- R$ {res.totalLivroCaixa.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Dedução de INSS Oficial</span>
-              <span className="font-mono text-emerald-400 font-bold">- R$ {res.deducaoInss.toFixed(2)}</span>
-            </div>
-            {res.deducaoDependentes > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Dedução por Dependentes</span>
-                <span className="font-mono text-emerald-400 font-bold">- R$ {res.deducaoDependentes.toFixed(2)}</span>
-              </div>
-            )}
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Base de Cálculo Tributável Líquida</span>
-              <span className="font-mono text-cyan-300 font-bold">R$ {res.baseCalculo.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between py-1 text-slate-300">
-              <span>Faixa Aplicada da Tabela Progressiva</span>
-              <span className="font-mono text-amber-300">{res.aliquotaNominal}% (Dedução R$ {res.parcelaDeduzir.toFixed(2)})</span>
-            </div>
-          </div>
-
-          {res.economiaGeradaLivroCaixa > 0 && (
-            <div className="p-3.5 rounded-xl bg-emerald-900/30 border border-emerald-700/50 text-[11px] text-emerald-200 space-y-1">
-              <strong className="block text-emerald-300">Economia com Livro Caixa:</strong>
-              <p>A escrituração correta das despesas profissionais gerou uma economia de <strong>R$ {res.economiaGeradaLivroCaixa.toFixed(2)}</strong> neste mês.</p>
-            </div>
-          )}
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            Obrigatoriedade e Funcionamento do Carnê-Leão (RIR/2018)
-          </h2>
-          <p>
-            O <strong>Carnê-Leão</strong> é o regime de recolhimento mensal obrigatório do Imposto de Renda da Pessoa Física (IRPF) instituído pelo <strong>Decreto-Lei nº 1.709/1979</strong> e atualmente disciplinado nos <strong>Artigos 118 a 122 do Regulamento do Imposto de Renda (Decreto nº 9.580/2018)</strong>.
-          </p>
-          <p>
-            Estão sujeitos ao Carnê-Leão todos os contribuintes pessoas físicas residentes no Brasil que recebam rendimentos tributáveis de outras pessoas físicas ou de fontes situadas no exterior que não tenham sofrido retenção de imposto na fonte pagadora.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Despesas Dedutíveis no Livro Caixa (Art. 104 RIR/2018)
-          </h3>
-          <p>
-            O profissional autônomo pode deduzir da receita bruta mensal as despesas indispensáveis à realização de sua atividade profissional e à manutenção do local de trabalho:
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 space-y-1">
-              <strong className="text-emerald-950 block font-bold">Despesas Permitidas:</strong>
-              <ul className="list-disc pl-4 space-y-1 text-slate-700">
-                <li>Aluguel, condomínio, IPTU e taxa de limpeza do consultório ou escritório;</li>
-                <li>Energia elétrica, água, telefone e internet comercial;</li>
-                <li>Remuneração paga a terceiros com vínculo empregatício e encargos trabalhistas (INSS, FGTS da secretária);</li>
-                <li>Materiais de escritório, consumo clínico e descartáveis;</li>
-                <li>Contribuições aos órgãos e conselhos de classe profissional.</li>
-              </ul>
-            </div>
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 space-y-1">
-              <strong className="text-rose-950 block font-bold">Despesas Não Dedutíveis:</strong>
-              <ul className="list-disc pl-4 space-y-1 text-slate-700">
-                <li>Gastos com locomoção, combustível ou manutenção de veículo próprio (salvo para representantes comerciais);</li>
-                <li>Compra de bens de capital, computadores, maquinários ou reformas imobiliárias permanentes;</li>
-                <li>Despesas pessoais, vestuário ordinário e alimentação própria.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Penalidades pelo Não Recolhimento Mensal
-          </h3>
-          <p>
-            O recolhimento do Carnê-Leão não é facultativo: deixar para pagar todo o imposto devido na Declaração Anual de Ajuste em abril sujeita o contribuinte à <strong>multa isolada de 50%</strong> sobre o valor do imposto não recolhido no mês de competência, além de juros de mora calculados pela taxa Selic.
-          </p>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
-

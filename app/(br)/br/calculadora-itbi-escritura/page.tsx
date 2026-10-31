@@ -1,364 +1,258 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Building2,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Coins,
-  FileCheck2,
-  Home,
-  Scale,
-  Percent,
-} from 'lucide-react';
+import { Building2, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { CalculadoraItbiEscrituraClient } from './ClientEngine';
 
-const CIDADES_ITBI: Record<string, { nome: string; aliq: number }> = {
-  sao_paulo: { nome: 'São Paulo - SP (3,0%)', aliq: 3.0 },
-  rio_de_janeiro: { nome: 'Rio de Janeiro - RJ (3,0%)', aliq: 3.0 },
-  belo_horizonte: { nome: 'Belo Horizonte - MG (3,0%)', aliq: 3.0 },
-  curitiba: { nome: 'Curitiba - PR (2,7%)', aliq: 2.7 },
-  porto_alegre: { nome: 'Porto Alegre - RS (3,0%)', aliq: 3.0 },
-  salvador: { nome: 'Salvador - BA (3,0%)', aliq: 3.0 },
-  brasilia: { nome: 'Brasília - DF (3,0%)', aliq: 3.0 },
-  fortaleza: { nome: 'Fortaleza - CE (3,0%)', aliq: 3.0 },
-  recife: { nome: 'Recife - PE (3,0%)', aliq: 3.0 },
-  outra: { nome: 'Outro Município (Alíquota personalizada)', aliq: 2.5 },
+export const metadata: Metadata = {
+  title: 'Calculadora de ITBI e Escritura 2026 | Custos de Cartório e Desconto SFH',
+  description:
+    'Simule os custos reais para registrar um imóvel no Brasil: ITBI municipal (Tema 1113 STJ), escritura pública no Tabelionato e registro no RGI com 50% de desconto pelo SFH.',
+  keywords: [
+    'calculadora itbi e escritura',
+    'custos cartorio compra imovel',
+    'tema 1113 stj itbi valor venal',
+    'desconto 50 registro sfh art 290',
+    'quanto custa passar imovel para o nome',
+    'taxa itbi sao paulo rio'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/calculadora-itbi-escritura',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/calculadora-itbi-escritura',
+      'pt': 'https://kagazo.in/br/calculadora-itbi-escritura',
+      'x-default': 'https://kagazo.in/br/calculadora-itbi-escritura',
+    },
+  },
+  openGraph: {
+    title: 'Calculadora de ITBI e Custos de Cartório de Imóvel 2026',
+    description:
+      'Descubra o valor exato dos impostos municipais e emolumentos de cartório para registrar sua casa ou apartamento.',
+    url: 'https://kagazo.in/br/calculadora-itbi-escritura',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
 };
 
-interface CustosImovelResult {
-  valorImovel: number;
-  aliquotaItbi: number;
-  valorItbi: number;
-  custoEscritura: number;
-  custoRegistroOriginal: number;
-  descontoPrimeiroImovel50: number;
-  custoRegistroFinal: number;
-  totalDespesasCartorioImpostos: number;
-  percentualSobreImovel: number;
-  ehFinanciado: boolean;
-  ehPrimeiroImovelSfh: boolean;
-}
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Calculadora de ITBI e Custos de Cartório 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'BusinessApplication',
+      'description': 'Simulador jurídico de custos de transferência imobiliária no Brasil, abrangendo ITBI, escritura e desconto de registro pelo SFH.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'ITBI e Custos de Cartório',
+          'item': 'https://kagazo.in/br/calculadora-itbi-escritura',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'A prefeitura pode cobrar o ITBI com base no valor venal de referência?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Não. O Superior Tribunal de Justiça (STJ), no julgamento do Tema Repetitivo 1113 (REsp 1.937.821/SP), fixou a tese vinculante de que o ITBI deve ser calculado sobre o valor real da transação declarado pelo contribuinte em condições normais de mercado. É ilegal o arbitramento prévio unilateral da base de cálculo por valores de referência municipais.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Quem compra imóvel financiado precisa pagar escritura pública no cartório de notas?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Não. O contrato de financiamento imobiliário firmado com a instituição financeira (alienação fiduciária pelo SFH ou SFI) possui, por expressa disposição da Lei nº 4.380/1964 e da Lei nº 9.514/1997, força de escritura pública, sendo levado diretamente ao Cartório de Registro de Imóveis (RGI).',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Como funciona o desconto de 50% no registro do primeiro imóvel?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O Artigo 290 da Lei de Registros Públicos (Lei nº 6.015/1973) assegura a redução de 50% nos emolumentos cartorários de registro e averbação para a primeira aquisição de imóvel residencial financiada no âmbito do Sistema Financeiro da Habitação (SFH). Para ter o benefício, basta firmar declaração de próprio punho ao cartório.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Em que momento da compra do imóvel o ITBI deve ser pago?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O Supremo Tribunal Federal (STF), no julgamento do Tema 1124 (ARE 1.294.969), definiu que o fato gerador do ITBI ocorre somente com a efetiva transferência da propriedade imobiliária mediante registro no RGI. No entanto, as legislações municipais e os cartórios exigem o comprovante de recolhimento da guia de ITBI como condição prévia para protocolar e lavrar o registro.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function CalculadoraItbiEscrituraPage() {
-  const [valorImovel, setValorImovel] = React.useState<number>(450000);
-  const [cidadeKey, setCidadeKey] = React.useState<string>('sao_paulo');
-  const [aliqCustom, setAliqCustom] = React.useState<number>(2.5);
-  const [tipoCompra, setTipoCompra] = React.useState<'a_vista' | 'financiado'>('financiado');
-  const [primeiroImovelSfh, setPrimeiroImovelSfh] = React.useState<boolean>(true); // Art. 290 Lei 6.015/73
-
-  const calcolaCustos = React.useCallback((): CustosImovelResult => {
-    const valor = Math.max(0, valorImovel);
-    const aliq = cidadeKey === 'outra' ? Math.max(0, aliqCustom) : (CIDADES_ITBI[cidadeKey]?.aliq ?? 3.0);
-    const ehFinanciado = tipoCompra === 'financiado';
-
-    // 1. ITBI (Tema 1113 STJ: sobre o valor real da transação)
-    const valorItbi = valor * (aliq / 100);
-
-    // 2. Escritura Pública (Tabelionato de Notas)
-    // Se financiado pelo SFH/SFI, o contrato bancário tem força de escritura pública (dispensa cartório de notas)
-    let custoEscritura = 0;
-    if (!ehFinanciado) {
-      // Média nacional das tabelas estaduais de custas notariais progressivas (~0.8% a 1.2% do valor com teto)
-      custoEscritura = Math.min(8500, Math.max(1200, valor * 0.009));
-    }
-
-    // 3. Registro de Imóveis (RGI)
-    // Estimativa baseada nas tabelas estaduais de emolumentos do Tribunal de Justiça (~0.7% a 1.0%)
-    const custoRegistroOriginal = Math.min(7500, Math.max(1000, valor * 0.008));
-
-    // Art. 290 da Lei 6.015/1973: desconto de 50% para primeiro imóvel residencial financiado pelo SFH
-    let descontoPrimeiroImovel50 = 0;
-    let custoRegistroFinal = custoRegistroOriginal;
-
-    if (ehFinanciado && primeiroImovelSfh) {
-      descontoPrimeiroImovel50 = custoRegistroOriginal * 0.5;
-      custoRegistroFinal = custoRegistroOriginal - descontoPrimeiroImovel50;
-    }
-
-    const totalDespesas = valorItbi + custoEscritura + custoRegistroFinal;
-    const percentualSobreImovel = valor > 0 ? (totalDespesas / valor) * 100 : 0;
-
-    return {
-      valorImovel: valor,
-      aliquotaItbi: aliq,
-      valorItbi,
-      custoEscritura,
-      custoRegistroOriginal,
-      descontoPrimeiroImovel50,
-      custoRegistroFinal,
-      totalDespesasCartorioImpostos: totalDespesas,
-      percentualSobreImovel,
-      ehFinanciado,
-      ehPrimeiroImovelSfh: ehFinanciado && primeiroImovelSfh,
-    };
-  }, [valorImovel, cidadeKey, aliqCustom, tipoCompra, primeiroImovelSfh]);
-
-  const res = calcolaCustos();
-
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/br" className="hover:text-slate-800 transition-colors">Brasil</Link>
-        <span>/</span>
-        <span className="text-emerald-700 font-semibold">ITBI e Custos de Cartório</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Tema 1113 do STJ, Lei 6.015/1973 (Art. 290) & Emolumentos Notariais</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">ITBI e Custos de Cartório</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Calculadora de ITBI e Custos de Cartório de Imóvel <br className="hidden sm:inline" />
-          <span className="text-emerald-600">Escritura Pública, Registro RGI e Desconto SFH</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Resposta Imobiliária Direta:</strong> Na compra de um imóvel, os custos com impostos e cartórios costumam representar de <strong>4% a 6% do valor da transação</strong>. Incluem o <strong>ITBI municipal</strong> (2% a 3% sobre o valor da compra conforme tese do STJ), a <strong>Escritura Pública</strong> (dispensada em contratos financiados por banco) e o <strong>Registro de Imóveis (RGI)</strong> — que conta com <strong>desconto compulsório de 50% por lei</strong> caso seja o primeiro imóvel residencial financiado pelo SFH.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <FileCheck2 className="w-4 h-4 text-emerald-600" />
-              <span>Dados do Negócio Imobiliário</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <Building2 className="w-3.5 h-3.5" />
+              Direito Notarial e Registral • Tema 1113 STJ & Lei 6.015/1973
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setValorImovel(450000);
-                setCidadeKey('sao_paulo');
-                setAliqCustom(2.5);
-                setTipoCompra('financiado');
-                setPrimeiroImovelSfh(true);
-              }}
-              className="text-xs text-slate-500 hover:text-emerald-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Redefinir</span>
-            </button>
-          </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Calculadora de ITBI e Custos de Cartório de Imóvel 2026
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Simule detalhadamente o imposto municipal de ITBI, escritura pública no Tabelionato de Notas e registro no RGI com aplicação do desconto legal de 50% pelo SFH.
+            </p>
 
-          <div className="space-y-4">
-            {/* Valor de Compra e Venda */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex justify-between">
-                <span>Valor Efetivo da Compra do Imóvel (R$)</span>
-                <span className="font-mono text-emerald-700 font-bold text-sm">
-                  R$ {valorImovel.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-              </label>
-              <input
-                type="number"
-                min={50000}
-                step={10000}
-                value={valorImovel || ''}
-                onChange={(e) => setValorImovel(Number(e.target.value))}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm font-bold text-slate-900 transition-all font-mono"
-                placeholder="Ex. 450000"
-              />
+            {/* Answer Capsule (GEO) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Regra de Custos Notariais na Aquisição Imobiliária:</p>
+              <p>
+                Os custos totais de legalização giram entre 4% e 6% do valor da transação. Pela jurisprudência vinculante do STJ (Tema 1113), o ITBI deve incidir sobre o valor real do negócio pactuado. Compras financiadas pelo SFH dispensam escritura pública e contam com 50% de desconto no registro em cartório (Art. 290 da Lei 6.015/73).
+              </p>
             </div>
+          </header>
 
-            {/* Cidade / Município do Imóvel */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800">Município de Localização do Imóvel (ITBI)</label>
-              <select
-                value={cidadeKey}
-                onChange={(e) => setCidadeKey(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-              >
-                {Object.entries(CIDADES_ITBI).map(([key, item]) => (
-                  <option key={key} value={key}>
-                    {item.nome}
-                  </option>
-                ))}
-              </select>
+          {/* Interactive Client Engine */}
+          <CalculadoraItbiEscrituraClient />
+
+          {/* Middle In-Content Ad */}
+          <AdSlot slot="in_content" context="legal" />
+
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Guia Completo da Transferência Imobiliária: Impostos, Emolumentos e Direitos do Comprador
+            </h2>
+
+            <p>
+              No ordenamento jurídico brasileiro, a transmissão onerosa de propriedade imobiliária entre vivos não se aperfeiçoa com a assinatura do contrato particular de compra e venda nem com o pagamento integral do preço pactuado. O <strong>Artigo 1.245 do Código Civil Brasileiro</strong> consagrou o princípio registral do <em>"quem não registra não é dono"</em>, estipulando que a propriedade imobiliária somente se transfere formalmente mediante o registro do título translativo no competente Cartório de Registro de Imóveis (RGI).
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">1. O ITBI Municipal e a Revolução do Tema 1113 do STJ</h3>
+            <p>
+              O <strong>Imposto sobre a Transmissão de Bens Imóveis (ITBI)</strong> é um tributo de competência municipal previsto no Artigo 156, inciso II da Constituição Federal de 1988. Sua alíquota varia entre 2% e 3% na imensa maioria das capitais e municípios brasileiros.
+            </p>
+            <p>
+              Durante décadas, as Secretarias Municipais de Fazenda cobraram o imposto utilizando tabelas arbitrárias denominadas "Valor Venal de Referência" (frequentemente 30% a 50% superiores ao preço real pago no negócio). Em março de 2022, o <strong>Superior Tribunal de Justiça (STJ)</strong>, ao julgar o Recurso Especial repetitivo 1.937.821/SP (Tema 1113), fixou três teses com efeito vinculante nacional:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>A base de cálculo do ITBI é o valor do imóvel transmitido em condições normais de mercado, não se vinculando à base do IPTU;</li>
+              <li>O preço declarado pelo contribuinte na escritura goza de presunção de veracidade e boa-fé perante o Fisco;</li>
+              <li>É expressamente vedado ao município arbitrar previamente a base de cálculo do imposto com respaldo em valores de referência unilaterais.</li>
+            </ul>
+
+            <h3 className="text-lg font-semibold text-emerald-400">2. Escritura Pública: Quando é Obrigatória e Quando é Dispensada?</h3>
+            <p>
+              O Código Civil (Artigo 108) impõe a <strong>Escritura Pública lavrada em Tabelionato de Notas</strong> como instrumento essencial para a validade dos negócios imobiliários de valor superior a 30 salários mínimos efetuados com pagamento à vista ou parcelamento direto com o vendedor.
+            </p>
+            <p>
+              <strong>A Exceção Legal dos Financiamentos Bancários:</strong> O Artigo 61, § 5º da Lei nº 4.380/1964 e o Artigo 38 da Lei nº 9.514/1997 estabelecem que os contratos de alienação fiduciária emitidos por bancos (Caixa Econômica, Itaú, Bradesco, etc.) possuem legalmente <em>força de escritura pública</em>. O comprador financiado economiza 100% dos custos com o Tabelionato de Notas, levando o contrato bancário impresso diretamente ao RGI.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">3. Desconto Legal de 50% no Registro pelo SFH (Art. 290 da Lei nº 6.015/1973)</h3>
+            <p>
+              Poucos mutuários conhecem a proteção conferida pelo <strong>Artigo 290 da Lei de Registros Públicos</strong>:
+            </p>
+            <blockquote className="my-3 pl-4 border-l-4 border-emerald-500 italic text-slate-300 bg-slate-900/60 p-3 rounded-r-lg">
+              "Os emolumentos devidos pelos atos de aquisição de imóveis financiados pelo Sistema Financeiro da Habitação para fins residenciais, quando se tratar de primeira aquisição do mutuário, serão reduzidos em 50% (cinquenta por cento)."
+            </blockquote>
+            <p>
+              Para usufruir da redução legal na hora de protocolar o registro no cartório, basta preencher uma declaração simples atestando sob as penas da lei que aquela é a primeira residência própria adquirida com financiamento do SFH.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">4. Inclusão dos Custos no Financiamento Imobiliário</h3>
+            <p>
+              A regulamentação do Conselho Monetário Nacional (CMN) e as políticas de crédito dos principais bancos autorizam que até <strong>5% do saldo financiado</strong> seja utilizado especificamente para a quitação das guias de ITBI e dos emolumentos notariais e registrais, aliviando o desembolso financeiro imediato dos adquirentes no ato da assinatura.
+            </p>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre ITBI e Escritura
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Se a prefeitura cobrar o ITBI pelo valor de referência, o que devo fazer?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  O contribuinte pode formular impugnação administrativa anexando a cópia do contrato de compra e venda e citando expressamente o Tema 1113 do STJ. Caso a prefeitura recuse a emissão da guia pelo valor pactuado, é cabível impetrar Mandado de Segurança com pedido de liminar na Vara da Fazenda Pública para garantir o pagamento sobre a base correta.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Quem paga o ITBI: o comprador ou o vendedor?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Salvo convenção expressa em contrário firmada em contrato particular, as leis municipais determinam que o sujeito passivo (contribuinte responsável) do ITBI é o adquirente (comprador) do imóvel. O Artigo 490 do Código Civil corrobora que as despesas de escritura e registro correm habitualmente por conta do comprador.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Existe isenção de ITBI para programas como o Minha Casa Minha Vida?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. Diversos municípios brasileiros concedem isenção integral ou alíquotas substancialmente reduzidas (por exemplo, 0,5% a 1%) para imóveis de interesse social enquadrados na Faixa 1 e Faixa 2 do Programa Minha Casa Minha Vida (MCMV), visando facilitar o acesso à habitação popular.
+                </p>
+              </details>
             </div>
+          </section>
 
-            {cidadeKey === 'outra' && (
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Alíquota de ITBI da sua Cidade (%)</label>
-                <input
-                  type="number"
-                  min={1}
-                  max={5}
-                  step={0.1}
-                  value={aliqCustom}
-                  onChange={(e) => setAliqCustom(Number(e.target.value))}
-                  className="w-full px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white"
-                />
-              </div>
-            )}
-
-            {/* Modalidade de Aquisição */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800">Forma de Pagamento / Modalidade</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setTipoCompra('financiado')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    tipoCompra === 'financiado'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span>Financiamento Habitacional</span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">Dispensa escritura pública em cartório</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setTipoCompra('a_vista')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    tipoCompra === 'a_vista'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span>Pagamento À Vista / Direto</span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">Exige escritura pública no Tabelião</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Desconto 50% Primeiro Imóvel SFH */}
-            {tipoCompra === 'financiado' && (
-              <label className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 cursor-pointer hover:bg-emerald-100/70 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={primeiroImovelSfh}
-                  onChange={(e) => setPrimeiroImovelSfh(e.target.checked)}
-                  className="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500"
-                />
-                <div className="text-xs text-emerald-950">
-                  <strong className="block font-bold">Primeiro Imóvel Residencial financiado pelo SFH</strong>
-                  <span className="text-[11px] text-emerald-800">
-                    Aplica desconto compulsório de <strong>50% nos emolumentos de registro (Art. 290 da Lei 6.015/73)</strong>.
-                  </span>
-                </div>
-              </label>
-            )}
-          </div>
-
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Conforme Tema 1113 do STJ: o ITBI deve incidir sobre o valor real do negócio declarado pelo adquirente.</span>
-          </div>
-        </div>
-
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Total de Custos de Transferência
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">
-              {res.percentualSobreImovel.toFixed(2)}% do Imóvel
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-1">
-            <span className="text-xs text-emerald-200 font-medium">Estimativa Total de Impostos & Cartório</span>
-            <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-              R$ {res.totalDespesasCartorioImpostos.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </div>
-            <span className="text-[11px] text-emerald-300 font-medium block">
-              Prefeitura Municipal + Cartório de Registro de Imóveis (RGI)
-            </span>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>ITBI Prefeitura ({res.aliquotaItbi}%)</span>
-              <span className="font-mono text-emerald-400 font-bold">R$ {res.valorItbi.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Escritura Pública (Tabelionato de Notas)</span>
-              <span className="font-mono text-white">
-                {res.ehFinanciado ? 'R$ 0,00 (Contrato bancário substitui)' : `R$ ${res.custoEscritura.toFixed(2)}`}
-              </span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Registro de Imóveis RGI</span>
-              <span className="font-mono text-white">R$ {res.custoRegistroOriginal.toFixed(2)}</span>
-            </div>
-            {res.descontoPrimeiroImovel50 > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Desconto 50% 1º Imóvel SFH (Art. 290)</span>
-                <span className="font-mono text-emerald-400 font-bold">- R$ {res.descontoPrimeiroImovel50.toFixed(2)}</span>
-              </div>
-            )}
-            <div className="flex justify-between py-1 text-slate-300 font-semibold">
-              <span>Registro RGI com Desconto</span>
-              <span className="font-mono text-cyan-300 font-bold">R$ {res.custoRegistroFinal.toFixed(2)}</span>
-            </div>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-            <strong className="text-slate-300 block">Dica de Financiamento:</strong>
-            <p>A maioria dos bancos (Caixa, Itaú, Bradesco, Santander) permite incluir até <strong>5% do valor do financiamento</strong> para custear o ITBI e despesas de cartório, diluindo o desembolso inicial nas parcelas mensais.</p>
-          </div>
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            Guia dos Custos de Transferência de Imóveis no Brasil
-          </h2>
-          <p>
-            No direito civil e registral brasileiro, a transferência da propriedade de um imóvel entre pessoas vivas não se consuma com o simples contrato particular ou pagamento do preço, mas sim pelo <strong>registro do título translativo no Registro de Imóveis (Art. 1.245 do Código Civil)</strong>.
-          </p>
-          <p>
-            Para efetivar esse registro legal, o comprador deve recolher obrigatoriamente o tributo municipal de transmissão (ITBI) e arcar com os emolumentos dos cartórios competentes.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            A Tese do Tema 1113 do Superior Tribunal de Justiça (STJ)
-          </h3>
-          <p>
-            Por muitos anos, várias capitais brasileiras cobravam o ITBI sobre um "valor venal de referência" fixado unilateralmente pela prefeitura (frequentemente muito acima do preço de venda real do imóvel).
-          </p>
-          <p>
-            No julgamento vinculante do <strong>Recurso Especial 1.937.821/SP (Tema 1113)</strong>, a 1ª Seção do STJ pacificou de forma definitiva três teses vinculantes:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-slate-700">
-            <li>A base de cálculo do ITBI é o <strong>valor do imóvel transmitido em condições normais de mercado</strong>, não estando vinculada à base de cálculo do IPTU;</li>
-            <li>O valor da transação declarado pelo contribuinte goza da presunção de que é condizente com o valor de mercado, que somente pode ser desvirtuada pelo Fisco mediante processo administrativo próprio;</li>
-            <li>O município não pode arbitrar previamente a base de cálculo do ITBI com respaldo em valor de referência por ele estabelecido unilateralmente.</li>
-          </ul>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Desconto de 50% nas Custas do Cartório (Art. 290 Lei 6.015/73)
-          </h3>
-          <p>
-            O <strong>Artigo 290 da Lei de Registros Públicos (Lei nº 6.015/1973)</strong> determina que os emolumentos devidos pelos atos de registro e averbação relativos a imóveis financiados pelo Sistema Financeiro da Habitação (SFH) para fins exclusivamente residenciais <strong>serão reduzidos em 50% (cinquenta por cento)</strong> caso seja a primeira aquisição imobiliária do mutuário.
-          </p>
-          <p className="text-xs text-slate-600">
-            Para usufruir do desconto legal, basta apresentar ao Cartório de Registro de Imóveis uma declaração firmada de próprio punho atestando que aquele é o primeiro imóvel residencial adquirido com recursos do SFH.
-          </p>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
-

@@ -10,6 +10,9 @@ import {
   FileSpreadsheet,
   CheckCircle2,
   ExternalLink,
+  Camera,
+  AlertTriangle,
+  FileText,
 } from 'lucide-react';
 import { ExamDimensionChartEngine } from '@/components/tools/ExamDimensionChartEngine';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
@@ -66,6 +69,16 @@ const CHART_FAQS = [
     question: 'Can candidates resize and generate these exact specifications directly from their smartphones?',
     answer:
       'Yes. Kagazo operates 100% in volatile device RAM (HTML5 Canvas & WebAssembly) without uploading images to any cloud server. Every exam in this table links directly to a calibrated one-click tool on Kagazo.',
+  },
+  {
+    question: 'What is the new UPSC 10-day photo rule introduced in recent notifications?',
+    answer:
+      'UPSC mandates that the uploaded photograph must not be older than 10 days from the opening date of the online application process. The candidate face must occupy three-fourths of the photograph, and the candidate full name and date on which the photograph was taken must be clearly stamped at the bottom.',
+  },
+  {
+    question: 'Why are signatures in capital letters rejected by SSC and IBPS?',
+    answer:
+      'According to standard banking and recruitment guidelines, signatures must be written in normal running handwriting. Writing the name in all capital block letters is considered a printed name rather than a legal signature, leading to automatic cancellation of the candidature during document verification.',
   },
 ];
 
@@ -150,6 +163,119 @@ export default function ExamPhotoDimensionChartPage() {
           <AdSlot slot="in_content" />
         </div>
 
+        {/* Deep Statutory & Technical Guide (800+ Words) */}
+        <article className="no-print bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-10 space-y-8 text-text-main/80 text-sm leading-relaxed">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-black text-text-main mb-4 tracking-tight">
+              Statutory Guidelines for All India Recruitment Images (2026 Cycle)
+            </h2>
+            <p>
+              Applying for national and state public examinations in India requires absolute adherence to digital image standards. Modern recruitment portals utilized by the <strong>Union Public Service Commission (UPSC)</strong>, <strong>Staff Selection Commission (SSC)</strong>, <strong>National Testing Agency (NTA)</strong>, and the <strong>Institute of Banking Personnel Selection (IBPS)</strong> utilize automated computer vision algorithms that cross-check uploaded image files against strict aspect ratios, compression bounds, and resolution parameters before permitting fee submission.
+            </p>
+            <p className="mt-3">
+              Failing to meet these criteria results in immediate application cancellation or disqualification at the biometric verification phase on examination day.
+            </p>
+          </div>
+
+          <div className="border-t border-surface-darker/60 pt-6 space-y-4">
+            <h3 className="text-lg font-bold text-text-main flex items-center gap-2">
+              <Camera className="w-5 h-5 text-primary" />
+              <span>1. UPSC One Time Registration (OTR) and Civil Services Standards</span>
+            </h3>
+            <p>
+              Under recent gazette updates issued by the UPSC, the photograph uploaded during online registration must comply with the following mandatory parameters:
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm">
+              <li>
+                <strong>Recency Mandate:</strong> The photograph must not be older than 10 days from the commencement of the online application window for that specific examination.
+              </li>
+              <li>
+                <strong>Face Coverage:</strong> The candidate facial structure (from crown of head to chin) must occupy at least <strong>3/4th (75%)</strong> of the total image area.
+              </li>
+              <li>
+                <strong>Candidate Name &amp; Date Stamp:</strong> The lower 20% of the image must incorporate a clear white text banner displaying the candidate&apos;s full name as printed on their Matriculation certificate, followed by the exact date (DD/MM/YYYY) on which the photograph was captured.
+              </li>
+              <li>
+                <strong>Appearance Consistency:</strong> If a male candidate sports a beard or spectacles in the uploaded photograph, he must maintain identical facial hair and eyeglasses during the Preliminary, Mains, and Personality Test (Interview) rounds.
+              </li>
+            </ul>
+          </div>
+
+          <div className="border-t border-surface-darker/60 pt-6 space-y-4">
+            <h3 className="text-lg font-bold text-text-main flex items-center gap-2">
+              <FileText className="w-5 h-5 text-primary" />
+              <span>2. Staff Selection Commission (SSC) Live Capture vs Upload Rules</span>
+            </h3>
+            <p>
+              With the launch of the new SSC Application Portal (ssc.gov.in), the Staff Selection Commission introduced live webcam photo capture combined with an uploaded signature:
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm">
+              <li>
+                <strong>Live Photo Capture:</strong> Candidates must sit in an evenly illuminated room with a plain white or light-coloured wall behind them. Wearing caps, dark glasses, beanies, or masks is strictly prohibited.
+              </li>
+              <li>
+                <strong>Signature Size &amp; Ink:</strong> The signature must measure <strong>4.0 cm width × 2.0 cm height</strong> with a file size strictly bounded between <strong>10 KB and 20 KB</strong>. The signature must be signed on clean white paper using a black ink ballpoint pen.
+              </li>
+              <li>
+                <strong>No Block Capitals:</strong> Writing the candidate name in capital letters (e.g., "RAHUL SHARMA") will lead to instantaneous summary rejection under the Commission&apos;s instructions.
+              </li>
+            </ul>
+          </div>
+
+          <div className="border-t border-surface-darker/60 pt-6 space-y-4">
+            <h3 className="text-lg font-bold text-text-main flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-amber-600" />
+              <span>3. NTA NEET &amp; JEE Postcard Size Photo Mandate</span>
+            </h3>
+            <p>
+              The National Testing Agency requires two distinct photographic uploads for medical (NEET-UG) and engineering (JEE Main) aspirants:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1">
+                <span className="font-bold text-text-main block">Passport Size (10 KB to 200 KB)</span>
+                <p className="text-text-main/70">
+                  Standard 3.5×4.5 cm image showing 80% face coverage with both ears clearly visible against a bright white background. No shadow behind head.
+                </p>
+              </div>
+              <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1">
+                <span className="font-bold text-text-main block">Postcard Size (4×6 Inches / 10 KB to 200 KB)</span>
+                <p className="text-text-main/70">
+                  A high-resolution 4×6 inch photograph required for admit card paste-down and attendance sheet biometric matching during exam hall entry.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-surface-darker/60 pt-6 space-y-4">
+            <h3 className="text-lg font-bold text-text-main">
+              4. Banking Exams (IBPS, SBI, RBI): Thumb Impressions &amp; Declarations
+            </h3>
+            <p>
+              Banking recruitment processes include auxiliary biometrics that must follow exact dimensional parameters:
+            </p>
+            <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm">
+              <li>
+                <strong>Left Thumb Impression (LTI):</strong> Must be taken on white paper using blue or black stamp ink pad. File size must be between <strong>20 KB and 50 KB</strong>, with dimensions of <strong>240×240 pixels (3×3 cm at 200 DPI)</strong>. If a candidate does not have a left thumb, the right thumb may be used with explicit notification.
+              </li>
+              <li>
+                <strong>Handwritten Declaration:</strong> Must be written in the candidate&apos;s own handwriting in English only on unlined white paper. Dimensions must be <strong>800×400 pixels (10×5 cm at 200 DPI)</strong> with a file size between <strong>50 KB and 100 KB</strong>. Declarations written in block capital letters are rejected.
+              </li>
+            </ul>
+          </div>
+
+          <div className="border-t border-surface-darker/60 pt-6 space-y-4">
+            <h3 className="text-lg font-bold text-text-main">
+              5. Why Digital DPI Resolution Matters Over Raw Pixel Count
+            </h3>
+            <p>
+              Many applicants attempt to reduce file size by repeatedly compressing images over messaging apps like WhatsApp. While this lowers the file size under 50 KB, it degrades the internal dots-per-inch (DPI) to sub-72 levels, blurring iris features and fingerprint ridge lines.
+            </p>
+            <p className="text-xs sm:text-sm text-text-main/70">
+              Kagazo&apos;s client-side canvas engines preserve crisp <strong>200 to 300 DPI vector density</strong> while mathematically adjusting JPEG quantization tables, ensuring your image satisfies both file-size ceilings (e.g. 20–50 KB) and biometric resolution scans.
+            </p>
+          </div>
+        </article>
+
         {/* Editorial Section & FAQs */}
         <div className="no-print space-y-10 pt-4">
           <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">
@@ -196,6 +322,9 @@ export default function ExamPhotoDimensionChartPage() {
               ))}
             </div>
           </section>
+
+          {/* Bottom Ad Slot */}
+          <AdSlot slot="post_download" />
         </div>
       </div>
     </div>

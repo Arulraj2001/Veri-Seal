@@ -1,375 +1,281 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Clock,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Coins,
-  TrendingUp,
-  Moon,
-  Sun,
-  Scale,
-} from 'lucide-react';
+import { Clock, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { CalculoHorasExtrasDsrClient } from './ClientEngine';
 
-interface HorasExtrasResult {
-  valorHoraNormal: number;
-  divisorJornada: number;
-  valorHora50: number;
-  totalExtras50: number;
-  valorHora100: number;
-  totalExtras100: number;
-  totalHorasExtrasBruto: number;
-  horasNoturnasConvertidas: number;
-  totalAdicionalNoturno: number;
-  reflexoDsr: number;
-  formulaDsrExplicada: string;
-  totalGeralReceber: number;
-}
+export const metadata: Metadata = {
+  title: 'Cálculo de Horas Extras e DSR 2026 | Adicional de 50%, 100% e Noturno',
+  description:
+    'Calcule horas extras de 50% e 100%, adicional noturno (hora reduzida 52m30s) e reflexo exato no DSR (Súmula 172 do TST). Simulador trabalhista oficial atualizado para 2026.',
+  keywords: [
+    'calculo horas extras clt',
+    'simulador horas extras 50 e 100',
+    'reflexo dsr sumula 172 tst',
+    'calculo adicional noturno clt',
+    'divisor jornada 220 200 clt',
+    'nova oj 394 tst dsr horas extras'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/calculo-horas-extras-dsr',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/calculo-horas-extras-dsr',
+      'pt': 'https://kagazo.in/br/calculo-horas-extras-dsr',
+      'x-default': 'https://kagazo.in/br/calculo-horas-extras-dsr',
+    },
+  },
+  openGraph: {
+    title: 'Cálculo de Horas Extras e Reflexo no DSR 2026 | Simulador Trabalhista CLT',
+    description:
+      'Calcule com precisão matemática suas horas extras a 50% e 100%, hora noturna ficta e reflexos no descanso semanal remunerado.',
+    url: 'https://kagazo.in/br/calculo-horas-extras-dsr',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Calculadora de Horas Extras e DSR 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'BusinessApplication',
+      'description': 'Simulador jurídico de horas extras a 50%, 100%, adicional noturno e reflexo no DSR segundo a Súmula 172 do TST e a CLT.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'Horas Extras e DSR',
+          'item': 'https://kagazo.in/br/calculo-horas-extras-dsr',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'Qual é o percentual mínimo da hora extra pela legislação brasileira?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O artigo 7º, inciso XVI da Constituição Federal estipula que a hora extraordinária deve ser remunerada com no mínimo 50% de acréscimo sobre o valor da hora normal em dias úteis. Em domingos e feriados não compensados, a remuneração é de 100% (em dobro), conforme a Lei nº 605/1949.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Como funciona a fórmula oficial de cálculo do DSR sobre horas extras?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Conforme a Súmula 172 do TST e a Lei nº 605/1949, a fórmula oficial é: (Valor Total das Horas Extras do Mês ÷ Número de Dias Úteis) × Número de Domingos e Feriados do Mês. Sábados são considerados dias úteis para fins de divisão do DSR, salvo disposição contrária em convenção coletiva.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'O que mudou com a nova redação da OJ 394 da SDI-1 do TST?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O Pleno do Tribunal Superior do Trabalho alterou a redação da OJ 394 em março de 2023. Ficou pacificado que a majoração do valor do DSR decorrente da integração das horas extras habituais repercute, sim, no cálculo de férias, 13º salário, aviso prévio e FGTS, sem configurar bis in idem para os cálculos a partir da data de modulação.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Como funciona a redução da hora noturna na CLT?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O artigo 73, § 1º da CLT determina que a hora noturna urbana (trabalhada entre 22h e 5h) é computada como tendo 52 minutos e 30 segundos (hora ficta), além de receber um adicional salarial mínimo de 20% sobre a hora diurna.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function CalculoHorasExtrasDsrPage() {
-  const [salarioBruto, setSalarioBruto] = React.useState<number>(3300);
-  const [jornadaSemanal, setJornadaSemanal] = React.useState<number>(44); // 44h -> 220 divisor
-  const [qtdHoras50, setQtdHoras50] = React.useState<number>(20);
-  const [qtdHoras100, setQtdHoras100] = React.useState<number>(8);
-  const [qtdHorasNoturnas, setQtdHorasNoturnas] = React.useState<number>(0);
-  const [diasUteisMes, setDiasUteisMes] = React.useState<number>(25);
-  const [domingosEFeriados, setDomingosEFeriados] = React.useState<number>(5);
-
-  const calcolaHoras = React.useCallback((): HorasExtrasResult => {
-    const salario = Math.max(0, salarioBruto);
-
-    // Divisor padrão CLT (Art. 64 CLT)
-    // 44h semanais -> 220
-    // 40h semanais -> 200
-    // 36h semanais -> 180
-    // 30h semanais -> 150
-    let divisorJornada = 220;
-    if (jornadaSemanal === 40) divisorJornada = 200;
-    else if (jornadaSemanal === 36) divisorJornada = 180;
-    else if (jornadaSemanal === 30) divisorJornada = 150;
-    else divisorJornada = 220;
-
-    const valorHoraNormal = salario / divisorJornada;
-
-    // Horas Extras 50% (dias úteis normais - Art. 7º XVI CF/88)
-    const valorHora50 = valorHoraNormal * 1.5;
-    const totalExtras50 = valorHora50 * Math.max(0, qtdHoras50);
-
-    // Horas Extras 100% (domingos e feriados civis/religiosos - Lei 605/49)
-    const valorHora100 = valorHoraNormal * 2.0;
-    const totalExtras100 = valorHora100 * Math.max(0, qtdHoras100);
-
-    const totalHorasExtrasBruto = totalExtras50 + totalExtras100;
-
-    // Adicional Noturno (Art. 73 CLT: 20% com redução da hora noturna para 52m30s = fator 1.142857)
-    const horasNoturnasConvertidas = Math.max(0, qtdHorasNoturnas) * (60 / 52.5);
-    const totalAdicionalNoturno = horasNoturnasConvertidas * valorHoraNormal * 0.2;
-
-    // Reflexo no DSR (Descanso Semanal Remunerado - Súmula 172 TST e Lei 605/49)
-    // Fórmula oficial: (Total em R$ das horas extras e noturnas / Dias Úteis) * Domingos e Feriados
-    const baseParaDsr = totalHorasExtrasBruto + totalAdicionalNoturno;
-    const diasUteisSafe = Math.max(1, diasUteisMes);
-    const domingosSafe = Math.max(0, domingosEFeriados);
-
-    const reflexoDsr = (baseParaDsr / diasUteisSafe) * domingosSafe;
-    const formulaDsrExplicada = `(R$ ${baseParaDsr.toFixed(2)} ÷ ${diasUteisSafe} dias úteis) × ${domingosSafe} domingos/feriados = R$ ${reflexoDsr.toFixed(2)}`;
-
-    const totalGeralReceber = totalHorasExtrasBruto + totalAdicionalNoturno + reflexoDsr;
-
-    return {
-      valorHoraNormal,
-      divisorJornada,
-      valorHora50,
-      totalExtras50,
-      valorHora100,
-      totalExtras100,
-      totalHorasExtrasBruto,
-      horasNoturnasConvertidas,
-      totalAdicionalNoturno,
-      reflexoDsr,
-      formulaDsrExplicada,
-      totalGeralReceber,
-    };
-  }, [salarioBruto, jornadaSemanal, qtdHoras50, qtdHoras100, qtdHorasNoturnas, diasUteisMes, domingosEFeriados]);
-
-  const res = calcolaHoras();
-
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/br" className="hover:text-slate-800 transition-colors">Brasil</Link>
-        <span>/</span>
-        <span className="text-emerald-700 font-semibold">Horas Extras e DSR</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Art. 59 e 73 da CLT, Súmula 172 do TST & Lei 605/1949</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">Horas Extras e DSR</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Cálculo de Horas Extras e Reflexo no DSR <br className="hidden sm:inline" />
-          <span className="text-emerald-600">Adicional de 50%, 100% e Hora Noturna Reduzida</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Resposta Trabalhista Direta:</strong> A hora extraordinária trabalhada em dias úteis tem acréscimo legal mínimo de <strong>50%</strong> (Art. 7º XVI da CF/88), enquanto horas em domingos e feriados têm adicional de <strong>100%</strong>. Conforme a <strong>Súmula nº 172 do TST</strong>, as horas extras habituais geram <strong>reflexo obrigatório no Descanso Semanal Remunerado (DSR)</strong>, calculado dividindo o total das horas extras pelos dias úteis do mês e multiplicando pelo número de domingos e feriados.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Clock className="w-4 h-4 text-emerald-600" />
-              <span>Jornada & Apuração de Horas</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <Clock className="w-3.5 h-3.5" />
+              Consolidação das Leis do Trabalho • Art. 59 e 73 CLT • Súmula 172 TST
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setSalarioBruto(3300);
-                setJornadaSemanal(44);
-                setQtdHoras50(20);
-                setQtdHoras100(8);
-                setQtdHorasNoturnas(0);
-                setDiasUteisMes(25);
-                setDomingosEFeriados(5);
-              }}
-              className="text-xs text-slate-500 hover:text-emerald-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Redefinir</span>
-            </button>
-          </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Calculadora de Horas Extras e Reflexo no DSR 2026
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Simule o valor exato a receber por horas suplementares a 50%, 100%, adicional noturno com redução ficta e apuração do reflexo no descanso semanal remunerado.
+            </p>
 
-          <div className="space-y-4">
-            {/* Salário Base & Divisor */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex justify-between">
-                  <span>Salário Bruto (R$)</span>
-                  <span className="font-mono text-emerald-700">R$ {salarioBruto.toLocaleString('pt-BR')}</span>
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step={100}
-                  value={salarioBruto || ''}
-                  onChange={(e) => setSalarioBruto(Number(e.target.value))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm font-bold text-slate-900 transition-all font-mono"
-                  placeholder="Ex. 3300.00"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800 flex justify-between">
-                  <span>Jornada de Trabalho Semanal</span>
-                  <span className="text-emerald-700 font-bold font-mono">Divisor {res.divisorJornada}</span>
-                </label>
-                <select
-                  value={jornadaSemanal}
-                  onChange={(e) => setJornadaSemanal(Number(e.target.value))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                >
-                  <option value={44}>44 horas semanais (Divisor 220 CLT Padrão)</option>
-                  <option value={40}>40 horas semanais (Divisor 200)</option>
-                  <option value={36}>36 horas semanais (Divisor 180 - Turnos)</option>
-                  <option value={30}>30 horas semanais (Divisor 150)</option>
-                </select>
-              </div>
+            {/* Answer Capsule (GEO) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Resposta Imediata sobre Horas Extras e DSR:</p>
+              <p>
+                O valor da hora regular é obtido dividindo o salário contratual pelo divisor da jornada (220 para 44h semanais). Horas em dias úteis recebem 50% de adicional e domingos/feriados 100%. Por força da Súmula 172 do TST, as horas extras habituais obrigatoriamente refletem sobre o DSR através da fórmula: (Total das Extras ÷ Dias Úteis) × Domingos e Feriados.
+              </p>
             </div>
+          </header>
 
-            {/* Horas Extras 50% e 100% */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800 flex justify-between">
-                  <span>Horas Extras 50% (Dias Úteis)</span>
-                  <span className="text-slate-400 font-mono">R$ {res.valorHora50.toFixed(2)}/h</span>
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step={1}
-                  value={qtdHoras50}
-                  onChange={(e) => setQtdHoras50(Math.max(0, Number(e.target.value)))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
+          {/* Interactive Client Engine */}
+          <CalculoHorasExtrasDsrClient />
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800 flex justify-between">
-                  <span>Horas Extras 100% (Domingos/Feriados)</span>
-                  <span className="text-slate-400 font-mono">R$ {res.valorHora100.toFixed(2)}/h</span>
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step={1}
-                  value={qtdHoras100}
-                  onChange={(e) => setQtdHoras100(Math.max(0, Number(e.target.value)))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
+          {/* Middle Ad */}
+          <AdSlot slot="in_content" context="legal" />
+
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Manual Legal das Horas Suplementares: Divisores, Adicionais e Jurisprudência
+            </h2>
+
+            <p>
+              A jornada normal de trabalho fixada pela Constituição da República Federativa do Brasil de 1988 (Art. 7º, XIII) possui limite máximo de 8 horas diárias e 44 horas semanais. O labor prestado além dessa baliza horária constitui serviço extraordinário, regido pelo Artigo 59 da CLT e acompanhado de expressiva jurisprudência protetiva emanada do Tribunal Superior do Trabalho (TST).
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">1. Como Identificar o Divisor Salarial Correto</h3>
+            <p>
+              O divisor salarial é o coeficiente aritmético utilizado para transformar o salário mensal do empregado no valor de uma hora individual de trabalho:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><strong>Jornada de 44 horas semanais:</strong> Divisor <strong>220</strong> (44h ÷ 6 dias úteis × 30 dias do mês comercial).</li>
+              <li><strong>Jornada de 40 horas semanais:</strong> Divisor <strong>200</strong> (40h ÷ 6 dias úteis × 30 dias).</li>
+              <li><strong>Jornada de 36 horas semanais:</strong> Divisor <strong>180</strong> (frequente em regime de turnos ininterruptos de revezamento).</li>
+              <li><strong>Jornada de 30 horas semanais:</strong> Divisor <strong>150</strong> (comum em contratos bancários ou de teleatendimento).</li>
+            </ul>
+
+            <h3 className="text-lg font-semibold text-emerald-400">2. Percentuais Legais e Normas Coletivas (50% e 100%)</h3>
+            <p>
+              A legislação federal prevê pisos percentuais inegociáveis para a remuneração das horas suplementares:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-600 bg-slate-900/50 text-slate-200">
+                    <th className="p-2">Tipo de Hora Extra</th>
+                    <th className="p-2">Adicional Mínimo</th>
+                    <th className="p-2">Fundamento Legal</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  <tr>
+                    <td className="p-2">Dias úteis ordinários (Seg a Sáb)</td>
+                    <td className="p-2 font-semibold text-emerald-400">+50% (Valor × 1,5)</td>
+                    <td className="p-2">Art. 7º, XVI da CF/88 e Art. 59, § 1º CLT</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">Domingos e Feriados não compensados</td>
+                    <td className="p-2 font-semibold text-amber-400">+100% (Valor × 2,0)</td>
+                    <td className="p-2">Art. 9º da Lei nº 605/1949 e Súmula 146 TST</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">Horas Noturnas (22h às 5h)</td>
+                    <td className="p-2 font-semibold text-cyan-400">+20% cumulativo</td>
+                    <td className="p-2">Art. 73 da CLT (cumula com os 50% ou 100%)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            {/* Adicional Noturno */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800 flex justify-between">
-                <span>Horas Noturnas Trabalhadas (22h às 5h)</span>
-                <span className="text-slate-400 font-normal">Hora ficta 52m30s + 20%</span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                step={1}
-                value={qtdHorasNoturnas}
-                onChange={(e) => setQtdHorasNoturnas(Math.max(0, Number(e.target.value)))}
-                placeholder="0"
-                className="w-full px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-              />
+            <h3 className="text-lg font-semibold text-emerald-400">3. A Mecânica do DSR e a Histórica Mudança da OJ 394 TST</h3>
+            <p>
+              O Descanso Semanal Remunerado (DSR) é previsto pela Lei nº 605/1949. O trabalhador mensalista já tem seus repousos semanais remunerados embutidos no salário de 30 dias. Porém, ao prestar horas extras nos dias úteis, o trabalhador aumenta sua produção e o seu cansaço semanal.
+            </p>
+            <p>
+              Por esse motivo, a <strong>Súmula nº 172 do TST</strong> impõe que <em>"Computam-se no cálculo do repouso remunerado as horas extraordinárias habitualmente prestadas"</em>.
+            </p>
+            <p>
+              <strong>Impacto do Julgamento do TST (IRR-10169-57.2013.5.05.0024):</strong> Durante anos, a OJ 394 vedava a soma do DSR majorado pelas horas extras na base de cálculo de férias, 13º e FGTS (alegando repetição indevida de cálculos). Em decisão paradigmática de 2023, o Tribunal Pleno reverteu seu entendimento: o DSR sobre horas extras agora <strong>repercute expressamente</strong> nas parcelas contratuais e rescisórias para o período posterior à modulação dos efeitos.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">4. Trabalho Noturno Urbano e a Redução Ficta (Art. 73 CLT)</h3>
+            <p>
+              No trabalho urbano compreendido entre 22:00 horas e 05:00 horas, o legislador consagrou o instituto da hora noturna reduzida. Cada hora noturna de relógio é contabilizada legalmente como 52 minutos e 30 segundos. Na prática, uma hora cheia de 60 minutos trabalhada à noite corresponde a aproximadamente <strong>1,14285 horas pagas</strong>, além do adicional de 20%.
+            </p>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre Horas Extras e DSR
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>O sábado é considerado dia útil para a fórmula de DSR?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. De acordo com a jurisprudência dominante do TST e a Lei 605/1949, o sábado é dia útil não trabalhado (dia útil remunerado). Portanto, ele entra no divisor de dias úteis da fórmula, exceto quando houver previsão expressa contrária em Acordo ou Convenção Coletiva de Trabalho classificando o sábado como dia de repouso semanal remunerado (comum em categorias bancárias).
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Horas extras eventuais geram direito ao DSR?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. Mesmo que a prestação ocorra em semanas isoladas do mês, todas as horas extras realizadas no respectivo período de apuração geram o correspondente reflexo pecuniário no DSR daquele mesmo mês. A habitualidade é requisito para a integração em verbas futuras (férias e 13º), mas o DSR do mês é devido sempre.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Banco de horas anula o pagamento de horas extras a 50%?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Se houver regime válido de banco de horas (individual até 6 meses ou coletivo até 1 ano, conforme Art. 59, § 2º e § 5º da CLT), as horas excedentes podem ser compensadas com folgas. No entanto, se o saldo positivo não for integralmente compensado no prazo limite estipulado, as horas remanescentes devem ser quitadas em dinheiro com o adicional legal de 50% ou superior.
+                </p>
+              </details>
             </div>
+          </section>
 
-            {/* Calendário do Mês para DSR */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Dias Úteis no Mês (Seg a Sáb)</label>
-                <input
-                  type="number"
-                  min={1}
-                  max={27}
-                  value={diasUteisMes}
-                  onChange={(e) => setDiasUteisMes(Math.max(1, Number(e.target.value)))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Domingos e Feriados no Mês</label>
-                <input
-                  type="number"
-                  min={1}
-                  max={10}
-                  value={domingosEFeriados}
-                  onChange={(e) => setDomingosEFeriados(Math.max(0, Number(e.target.value)))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Valor da hora base apurado: R$ {res.valorHoraNormal.toFixed(2)} por hora contratual.</span>
-          </div>
-        </div>
-
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Total Adicional a Receber
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">
-              Com Reflexo DSR
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-1">
-            <span className="text-xs text-emerald-200 font-medium">Acréscimo Bruto no Holerite</span>
-            <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-              R$ {res.totalGeralReceber.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </div>
-            <span className="text-[11px] text-emerald-300 font-medium block">
-              Total de Horas Extras + DSR Súmula 172
-            </span>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Horas Extras 50% ({qtdHoras50}h a R$ {res.valorHora50.toFixed(2)})</span>
-              <span className="font-mono text-emerald-400 font-bold">+ R$ {res.totalExtras50.toFixed(2)}</span>
-            </div>
-            {res.totalExtras100 > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Horas Extras 100% ({qtdHoras100}h a R$ {res.valorHora100.toFixed(2)})</span>
-                <span className="font-mono text-emerald-400 font-bold">+ R$ {res.totalExtras100.toFixed(2)}</span>
-              </div>
-            )}
-            {res.totalAdicionalNoturno > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Adicional Noturno 20% ({qtdHorasNoturnas}h noturnas)</span>
-                <span className="font-mono text-cyan-400 font-bold">+ R$ {res.totalAdicionalNoturno.toFixed(2)}</span>
-              </div>
-            )}
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Reflexo no DSR (Súmula 172 TST)</span>
-              <span className="font-mono text-amber-400 font-bold">+ R$ {res.reflexoDsr.toFixed(2)}</span>
-            </div>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-            <strong className="text-slate-300 block">Fórmula de Reflexo no DSR Aplicada:</strong>
-            <p className="font-mono text-emerald-300 text-[10px] break-all">{res.formulaDsrExplicada}</p>
-          </div>
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            A Disciplina Legal das Horas Extras e do DSR na CLT
-          </h2>
-          <p>
-            A jornada padrão de trabalho prevista no <strong>Artigo 7º, inciso XIII da Constituição Federal</strong> e no <strong>Artigo 58 da CLT</strong> é de até <strong>8 horas diárias e 44 horas semanais</strong>. Qualquer trabalho executado além dos limites contratuais ordinários qualifica-se como serviço extraordinário.
-          </p>
-          <p>
-            O Artigo 59 da CLT limita a prestação de horas extras ao máximo de <strong>2 (duas) horas suplementares por dia</strong>, mediante acordo individual, convenção ou acordo coletivo de trabalho.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Súmula nº 172 do TST: Por que o DSR Deve Ser Pago?
-          </h3>
-          <p>
-            O <strong>Descanso Semanal Remunerado (DSR / RSR)</strong>, disciplinado pela <strong>Lei nº 605/1949</strong>, é o direito ao repouso preferencialmente aos domingos sem perda da remuneração diária.
-          </p>
-          <p>
-            A jurisprudência do Tribunal Superior do Trabalho consolidou na <strong>Súmula 172</strong> que o trabalhador que cumpre horas extras habituais durante a semana sofre desgaste superior ao ordinário, fazendo jus à repercussão financeira proporcional dessas horas extras sobre os domingos e feriados em que descansa.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Adicional Noturno e a Hora Noturna Ficta (Art. 73 CLT)
-          </h3>
-          <p>
-            No trabalho urbano, considera-se noturno aquele realizado entre as <strong>22h de um dia e as 5h do dia seguinte</strong>:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-slate-700">
-            <li>
-              <strong>Adicional de 20%:</strong> A remuneração da hora noturna tem um acréscimo legal de pelo menos 20% sobre a hora diurna.
-            </li>
-            <li>
-              <strong>Redução Ficta do Tempo:</strong> A hora noturna não dura 60 minutos, mas sim <strong>52 minutos e 30 segundos</strong> (fator de equivalência de 1,142857). Sete horas de relógio trabalhadas no período noturno equivalem legalmente a 8 horas trabalhadas.
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
-

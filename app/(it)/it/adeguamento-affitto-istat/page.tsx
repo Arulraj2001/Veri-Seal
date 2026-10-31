@@ -1,285 +1,209 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Calculator,
-  ShieldCheck,
-  Sparkles,
-  Home,
-  RotateCcw,
-  CheckCircle2,
-  FileText,
-  AlertCircle,
-  Copy,
-} from 'lucide-react';
+import { Sparkles, Home, FileText, CheckCircle2 } from 'lucide-react';
+import { AdeguamentoAffittoIstatClient } from './ClientEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { SITE_URL } from '@/lib/constants';
 
-interface AdeguamentoResult {
-  canoneAttuale: number;
-  percentualeIstatFoi: number;
-  quotaApplicabilePercentuale: number;
-  variazionePercentualeEffettiva: number;
-  aumentoMensile: number;
-  nuovoCanoneMensile: number;
-  aumentoAnnuale: number;
-  nuovoCanoneAnnuale: number;
-  bloccoCedolareSecca: boolean;
-}
+export const metadata: Metadata = {
+  title: 'Adeguamento Canone Affitto ISTAT 2026 : Calcolo FOI 100% e 75% | Kagazo Italia',
+  description:
+    'Calcola l\'aggiornamento del canone di locazione con l\'indice ISTAT FOI (100% per canone libero 4+4, 75% per canone concordato 3+2 e commerciale). Genera fac-simile lettera per l\'inquilino e verifica blocco cedolare secca.',
+  keywords: [
+    'adeguamento istat canone affitto 2026',
+    'calcolo indice foi istat locazioni',
+    'aumento affitto 100 per cento o 75',
+    'lettera richiesta aumento istat inquilino fac simile',
+    'cedolare secca blocco aumento istat',
+    'legge 392 78 art 32 canone locazione',
+    'scadenza comunicazione istat canone',
+    'calcolo rivalutazione affitto istat',
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/it/adeguamento-affitto-istat`,
+    languages: {
+      'it-IT': `${SITE_URL}/it/adeguamento-affitto-istat`,
+      'it': `${SITE_URL}/it/adeguamento-affitto-istat`,
+      'x-default': `${SITE_URL}/it/adeguamento-affitto-istat`,
+    },
+  },
+  openGraph: {
+    title: 'Adeguamento Canone Affitto ISTAT 2026 | Kagazo Italia',
+    description:
+      'Calcolatore ufficiale aumento canone di locazione ISTAT FOI con fac-simile lettera raccomandata per inquilino e normative Art. 32 L. 392/78.',
+    url: `${SITE_URL}/it/adeguamento-affitto-istat`,
+    locale: 'it_IT',
+    siteName: 'Kagazo Italia',
+    type: 'website',
+  },
+};
 
-export default function AdeguamentoAffittoIstatPage() {
-  const [canoneMensile, setCanoneMensile] = React.useState<number>(850);
-  const [variazioneIstat, setVariazioneIstat] = React.useState<number>(1.8); // 1.8% variazione FOI annuale recente
-  const [tipoContratto, setTipoContratto] = React.useState<'libero_100' | 'concordato_75' | 'commerciale_75'>('libero_100');
-  const [regimeFiscale, setRegimeFiscale] = React.useState<'ordinario' | 'cedolare_secca'>('ordinario');
-  const [copiedLetter, setCopiedLetter] = React.useState<boolean>(false);
+const FAQS = [
+  {
+    question: 'Come si calcola l\'adeguamento ISTAT del canone di affitto?',
+    answer:
+      'L\'aggiornamento si calcola moltiplicando il canone mensile pattuito per la variazione percentuale annua dell\'indice ISTAT FOI (famiglie di operai e impiegati al netto dei tabacchi). Nei contratti liberi 4+4 si applica generalmente il 100% della variazione se previsto nel contratto, mentre nei contratti a canone concordato 3+2 e ad uso commerciale 6+6 si applica per legge al massimo il 75% dell\'indice.',
+  },
+  {
+    question: 'Chi ha la Cedolare Secca può aumentare l\'affitto con l\'ISTAT?',
+    answer:
+      'No, in nessun caso. L\'Articolo 3, comma 11 del Decreto Legislativo n. 23/2011 stabilisce espressamente che l\'opzione per la Cedolare Secca comporta la rinuncia irrevocabile da parte del locatore alla facoltà di chiedere l\'aggiornamento del canone a qualsiasi titolo, inclusa la variazione ISTAT, per tutto il periodo di durata dell\'opzione.',
+  },
+  {
+    question: 'L\'aumento ISTAT scatta in automatico o va richiesto?',
+    answer:
+      'L\'aumento non è mai automatico. Secondo la giurisprudenza consolidata della Corte di Cassazione, l\'adeguamento del canone deve essere formalmente richiesto dal locatore all\'inquilino tramite raccomandata con ricevuta di ritorno o PEC. La decorrenza scatta dal mese successivo al ricevimento della comunicazione.',
+  },
+  {
+    question: 'Il proprietario può richiedere gli arretrati ISTAT non riscossi negli anni passati?',
+    answer:
+      'No. Il locatore non può pretendere il pagamento retroattivo delle somme non richieste nei mesi o anni precedenti. Tuttavia, ha facoltà di rideterminare il canone attuale calcolando la rivalutazione ISTAT cumulata dalla data di stipula del contratto, richiedendo il nuovo importo solo per le mensilità future a decorrere dalla richiesta.',
+  },
+];
 
-  const calcolaAdeguamento = React.useCallback((): AdeguamentoResult => {
-    const safeCanone = Math.max(0, canoneMensile);
-    const bloccoCedolareSecca = regimeFiscale === 'cedolare_secca';
-
-    if (bloccoCedolareSecca) {
-      return {
-        canoneAttuale: safeCanone,
-        percentualeIstatFoi: variazioneIstat,
-        quotaApplicabilePercentuale: 0,
-        variazionePercentualeEffettiva: 0,
-        aumentoMensile: 0,
-        nuovoCanoneMensile: safeCanone,
-        aumentoAnnuale: 0,
-        nuovoCanoneAnnuale: safeCanone * 12,
-        bloccoCedolareSecca: true,
-      };
-    }
-
-    const quotaApplicabile = tipoContratto === 'libero_100' ? 1.0 : 0.75;
-    const variazionePercentualeEffettiva = variazioneIstat * quotaApplicabile;
-
-    const aumentoMensile = safeCanone * (variazionePercentualeEffettiva / 100);
-    const nuovoCanoneMensile = safeCanone + aumentoMensile;
-
-    const aumentoAnnuale = aumentoMensile * 12;
-    const nuovoCanoneAnnuale = nuovoCanoneMensile * 12;
-
-    return {
-      canoneAttuale: safeCanone,
-      percentualeIstatFoi: variazioneIstat,
-      quotaApplicabilePercentuale: quotaApplicabile * 100,
-      variazionePercentualeEffettiva,
-      aumentoMensile,
-      nuovoCanoneMensile,
-      aumentoAnnuale,
-      nuovoCanoneAnnuale,
-      bloccoCedolareSecca: false,
-    };
-  }, [canoneMensile, variazioneIstat, tipoContratto, regimeFiscale]);
-
-  const res = calcolaAdeguamento();
-
-  const letteraFacsimile = `Raccomandata A/R o PEC
-Oggetto: Comunicazione di aggiornamento del canone di locazione per variazione ISTAT
-Gentile Inquilino,
-in relazione al contratto di locazione dell'immobile di nostra proprietà sito in [Indirizzo], Le comunichiamo che, ai sensi dell'apposita clausola contrattuale, a decorrere dal mese di [Mese Prossimo], il canone mensile di locazione viene adeguato in base alla variazione dell'indice dei prezzi al consumo FOI accertato dall'ISTAT (${res.percentualeIstatFoi}% con applicazione al ${res.quotaApplicabilePercentuale}%).
-Il nuovo canone mensile è pertanto rideterminato in € ${res.nuovoCanoneMensile.toFixed(2)} (con un incremento mensile di € ${res.aumentoMensile.toFixed(2)}).
-Distinti saluti.`;
-
-  const handleCopyLetter = () => {
-    navigator.clipboard.writeText(letteraFacsimile);
-    setCopiedLetter(true);
-    setTimeout(() => setCopiedLetter(false), 2000);
+export default function AdeguamentoAffittoPage() {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Calcolatore Adeguamento Canone Affitto ISTAT 2026',
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'All',
+        url: `${SITE_URL}/it/adeguamento-affitto-istat`,
+        offers: {
+          '@type': 'Offer',
+          price: '0.00',
+          priceCurrency: 'EUR',
+        },
+        provider: {
+          '@type': 'Organization',
+          name: 'Kagazo Italia',
+          url: `${SITE_URL}/it`,
+        },
+        description:
+          'Calcola l\'adeguamento ISTAT FOI per contratti di locazione liberi (100%) e concordati (75%) con generatore lettera raccomandata.',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: SITE_URL,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Italia',
+            item: `${SITE_URL}/it`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Adeguamento Affitto ISTAT',
+            item: `${SITE_URL}/it/adeguamento-affitto-istat`,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
   };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/it" className="hover:text-slate-800 transition-colors">Italia</Link>
-        <span>/</span>
-        <span className="text-sky-700 font-semibold">Adeguamento Affitto ISTAT</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-sky-600" />
-          <span>Indice ISTAT FOI (Famiglie Operai e Impiegati) Legge 431/1998</span>
-        </div>
+      <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
+        {/* Breadcrumb Navigation */}
+        <nav className="text-xs text-slate-500 flex items-center gap-2">
+          <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/it" className="hover:text-slate-800 transition-colors">Italia</Link>
+          <span>/</span>
+          <span className="text-sky-700 font-semibold">Adeguamento Affitto ISTAT</span>
+        </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Adeguamento Canone Affitto ISTAT 2026 <br className="hidden sm:inline" />
-          <span className="text-sky-600">Calcolo Indice FOI 100% o 75% & Lettera per Inquilino</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Risposta Giuridica Diretta:</strong> L’adeguamento ISTAT del canone di locazione si calcola moltiplicando il canone mensile in corso per la variazione percentuale annua dell’<strong>indice FOI</strong> (senza tabacchi). Nei contratti liberi 4+4 si applica generalmente il <strong>100%</strong> dell'indice, mentre nei contratti a canone concordato (3+2) e commerciali (6+6) il limite massimo di legge è il <strong>75%</strong>. Se il proprietario ha optato per il regime della <strong>Cedolare Secca</strong>, qualsiasi aggiornamento del canone è nullo per legge.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Calculator className="w-4 h-4 text-sky-600" />
-              <span>Parametri Contrattuali</span>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setCanoneMensile(850);
-                setVariazioneIstat(1.8);
-                setTipoContratto('libero_100');
-                setRegimeFiscale('ordinario');
-              }}
-              className="text-xs text-slate-500 hover:text-sky-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reimposta</span>
-            </button>
+        {/* Title & Statutory Answer Capsule */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-xs font-bold shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+            <span>Indice ISTAT FOI (Famiglie Operai e Impiegati) Legge 431/1998</span>
           </div>
 
-          <div className="space-y-4">
-            {/* Canone attuale e Indice ISTAT */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Canone Mensile Attuale (€)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={20}
-                  value={canoneMensile || ''}
-                  onChange={(e) => setCanoneMensile(Number(e.target.value))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-900 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                />
-              </div>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
+            Adeguamento Canone Affitto ISTAT 2026 <br className="hidden sm:inline" />
+            <span className="text-sky-600">Calcolo Indice FOI 100% o 75% &amp; Lettera per Inquilino</span>
+          </h1>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Variazione Annuale ISTAT FOI (%)</label>
-                <input
-                  type="number"
-                  step={0.1}
-                  value={variazioneIstat}
-                  onChange={(e) => setVariazioneIstat(Number(e.target.value))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-900 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                />
-              </div>
-            </div>
+          <div className="p-4 rounded-2xl bg-sky-50/70 border border-sky-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+            <strong>Risposta Giuridica Diretta:</strong> L’adeguamento ISTAT del canone di locazione si calcola moltiplicando il canone mensile in corso per la variazione percentuale annua dell’<strong>indice FOI</strong> (senza tabacchi). Nei contratti liberi 4+4 si applica generalmente il <strong>100%</strong> dell&apos;indice, mentre nei contratti a canone concordato (3+2) e commerciali (6+6) il limite massimo di legge è il <strong>75%</strong>. Se il proprietario ha optato per il regime della <strong>Cedolare Secca</strong>, qualsiasi aggiornamento del canone è nullo per legge.
+          </div>
+        </div>
 
-            {/* Tipologia Contratto e Regime Fiscale */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Tipo di Contratto di Locazione</label>
-                <select
-                  value={tipoContratto}
-                  onChange={(e) => setTipoContratto(e.target.value as any)}
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                >
-                  <option value="libero_100">Contratto Libero 4+4 (100% ISTAT)</option>
-                  <option value="concordato_75">Canone Concordato 3+2 (75% ISTAT)</option>
-                  <option value="commerciale_75">Locazione Commerciale 6+6 (75% ISTAT)</option>
-                </select>
-              </div>
+        {/* Client Interactive Engine */}
+        <AdeguamentoAffittoIstatClient />
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Regime Fiscale del Locatore</label>
-                <select
-                  value={regimeFiscale}
-                  onChange={(e) => setRegimeFiscale(e.target.value as any)}
-                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                >
-                  <option value="ordinario">Regime Ordinario IRPEF (Adeguamento Consentito)</option>
-                  <option value="cedolare_secca">Cedolare Secca (Adeguamento VIETATO)</option>
-                </select>
-              </div>
-            </div>
+        {/* Strategic Ad Slot */}
+        <AdSlot slot="in_content" context="legal" />
+
+        {/* Statutory Legal Guide for AdSense */}
+        <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
+          <div className="space-y-3">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
+              La Disciplina Giuridica dell&apos;Adeguamento ISTAT nei Contratti di Locazione
+            </h2>
+            <p>
+              L&apos;adeguamento del canone di locazione è la facoltà riconosciuta al locatore di aggiornare periodicamente l&apos;importo dell&apos;affitto per proteggerlo dall&apos;inflazione e dalla perdita del potere d&apos;acquisto della moneta. Tale meccanismo è ancorato all&apos;<strong>indice nazionale dei prezzi al consumo per le famiglie di operai e impiegati (FOI) al netto dei tabacchi</strong> elaborato mensilmente dall&apos;Istituto Nazionale di Statistica (ISTAT) e pubblicato sulla Gazzetta Ufficiale.
+            </p>
           </div>
 
-          {/* Facsimile Lettera */}
-          {!res.bloccoCedolareSecca && (
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-sky-600" />
-                  <span>Modello Lettera di Richiesta Adeguamento per Inquilino</span>
-                </span>
-                <button
-                  type="button"
-                  onClick={handleCopyLetter}
-                  className="text-[11px] font-bold text-sky-700 hover:text-sky-900 flex items-center gap-1 transition-colors cursor-pointer"
-                >
-                  {copiedLetter ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedLetter ? 'Copiata!' : 'Copia Lettera'}</span>
-                </button>
-              </div>
-              <p className="text-[11px] text-slate-600 font-mono leading-relaxed border-t border-slate-200 pt-2 whitespace-pre-line">
-                {letteraFacsimile}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+              <h3 className="font-black text-base text-slate-900">1. Contratti a Canone Libero (4+4)</h3>
+              <p className="text-xs sm:text-sm text-slate-600">
+                Nei contratti a canone libero stipulati ai sensi dell&apos;Art. 2, comma 1 della Legge 431/1998, le parti possono concordare liberamente l&apos;applicazione dell&apos;adeguamento fino al <strong>100% della variazione annuale dell&apos;indice FOI</strong>. Tuttavia, se nel contratto di locazione non è presente un&apos;esplicita clausola che prevede l&apos;aggiornamento ISTAT, il proprietario non ha diritto ad applicarlo unilateralmente.
               </p>
             </div>
-          )}
-        </div>
 
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Esito Rideterminazione
-            </span>
-          </div>
-
-          {res.bloccoCedolareSecca ? (
-            <div className="p-5 rounded-2xl bg-rose-950/40 border border-rose-800/40 space-y-2 text-center">
-              <AlertCircle className="w-8 h-8 text-rose-400 mx-auto" />
-              <div className="text-base font-black text-white">Aggiornamento Non Applicabile</div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Chi sceglie il regime fiscale della <strong>Cedolare Secca</strong> rinuncia espressamente per legge (Art. 3, comma 11, D.Lgs. 23/2011) a qualsiasi aggiornamento ISTAT del canone.
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 space-y-2">
+              <h3 className="font-black text-base text-slate-900">2. Contratti Concordati (3+2) e Commerciali (6+6)</h3>
+              <p className="text-xs sm:text-sm text-slate-600">
+                Per i contratti a canone concordato (Art. 2, comma 3, Legge 431/1998) e per le locazioni ad uso diverso dall&apos;abitazione (negozi, uffici, capannoni ex Art. 32 Legge 392/1978), la legge impone un tetto invalicabile: l&apos;aggiornamento non può mai superare il <strong>75% della variazione dell&apos;indice ISTAT</strong>. Eventuali pattuizioni contrattuali che prevedono il 100% sono considerate nulle per violazione di norma imperativa.
               </p>
             </div>
-          ) : (
-            <>
-              <div className="p-4 rounded-2xl bg-sky-950/40 border border-sky-800/40 space-y-1">
-                <span className="text-xs text-sky-200 font-medium">Nuovo Canone Mensile da Richiedere</span>
-                <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-                  € {res.nuovoCanoneMensile.toFixed(2)}
-                </div>
-                <span className="text-[11px] text-emerald-400 font-bold block">
-                  Aumento Mensile: +€ {res.aumentoMensile.toFixed(2)} (+{res.variazionePercentualeEffettiva.toFixed(2)}%)
-                </span>
-              </div>
+          </div>
 
-              <div className="space-y-2.5 text-xs">
-                <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                  <span>Canone Annuale Attuale</span>
-                  <span className="font-mono text-white">€ {(res.canoneAttuale * 12).toFixed(2)}</span>
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+            <h3 className="text-xl font-black text-slate-900 tracking-tight">
+              Domande Frequenti sull&apos;Adeguamento ISTAT Affitti (FAQ)
+            </h3>
+            <div className="space-y-3">
+              {FAQS.map((faq, idx) => (
+                <div key={idx} className="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                  <h4 className="font-bold text-sm text-slate-900">{faq.question}</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">{faq.answer}</p>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                  <span>Nuovo Canone Annuale Rideterminato</span>
-                  <span className="font-mono font-bold text-white">€ {res.nuovoCanoneAnnuale.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                  <span>Incremento Annuale Complessivo</span>
-                  <span className="font-mono text-emerald-400">+ € {res.aumentoAnnuale.toFixed(2)}</span>
-                </div>
-              </div>
-            </>
-          )}
-
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400">
-            <strong>Decorrenza Giuridica:</strong> L'aumento non scatta in automatico. È indispensabile inviare una comunicazione formale (lettera raccomandata A/R o PEC) all'inquilino. Non possono essere richiesti arretrati retroattivi.
+              ))}
+            </div>
           </div>
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-6 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-          La Clausola di Adeguamento ISTAT nei Contratti di Locazione
-        </h2>
-        <p>
-          L'adeguamento del canone di locazione è la facoltà riconosciuta al locatore di aggiornare l'importo mensile dell'affitto per adeguarlo al costo della vita rilevato dall'Istituto Nazionale di Statistica (ISTAT) attraverso l'indice FOI per le famiglie di operai e impiegati.
-        </p>
-      </div>
-    </div>
+    </>
   );
 }

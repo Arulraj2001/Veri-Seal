@@ -1,149 +1,246 @@
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Cookie, ShieldCheck, Eye, Lock, ArrowRight } from 'lucide-react';
+import {
+  Cookie,
+  ShieldCheck,
+  Eye,
+  Lock,
+  Globe2,
+  CheckCircle2,
+  Scale,
+  Settings,
+} from 'lucide-react';
 import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy & Consent Guide — Kagazo',
+  title: 'Cookie Policy & Global Consent Framework — Kagazo',
   description:
-    'Information on how Kagazo uses cookies, local browser storage, and privacy-first telemetry in accordance with India DPDP Act 2023 and Google AdSense policies.',
+    'Comprehensive Cookie Policy covering GDPR (EU), LGPD (Brazil), UK GDPR, India DPDP Act 2023, and Google AdSense compliance. Learn how we protect your privacy.',
   alternates: {
     canonical: `${SITE_URL}/cookies`,
   },
   openGraph: {
-    title: 'Cookie Policy — Kagazo',
+    title: 'Cookie Policy & Global Privacy Framework — Kagazo',
     description:
-      'Understand how Kagazo uses cookies and local browser storage to provide free tools while protecting your personal privacy.',
+      'Understand how Kagazo uses essential cookies, local browser storage, and privacy-first telemetry in strict compliance with international privacy laws.',
     url: `${SITE_URL}/cookies`,
     siteName: 'Kagazo',
     type: 'website',
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      name: 'Cookie Policy & Consent Guide',
+      description:
+        'Official cookie and local storage disclosure covering GDPR, LGPD, and Google AdSense compliance policies.',
+      url: `${SITE_URL}/cookies`,
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: SITE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Cookies',
+          item: `${SITE_URL}/cookies`,
+        },
+      ],
+    },
+  ],
+};
+
 export default function CookiesPage() {
   return (
-    <div className="pt-28 pb-16 sm:pt-36 sm:pb-24">
+    <div className="pt-28 pb-16 sm:pt-36 sm:pb-24 bg-slate-50 text-slate-800 antialiased">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Navigation Breadcrumb */}
+        <nav className="mb-6 text-sm text-slate-500 flex items-center space-x-2">
+          <Link href="/" className="hover:text-primary transition">
+            Home
+          </Link>
+          <span>/</span>
+          <span className="text-slate-800 font-medium">Cookie Policy</span>
+        </nav>
+
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-light text-primary border border-primary/20 text-xs font-bold uppercase tracking-wider mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold uppercase tracking-wider mb-4">
             <Cookie className="w-3.5 h-3.5" />
-            <span>Transparency &amp; Consent</span>
+            <span>International Consent &amp; Privacy Standards</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black text-text-main tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
             Cookie Policy
           </h1>
-          <p className="mt-4 text-base sm:text-lg text-text-main/70 leading-relaxed">
-            How we protect your identity while maintaining free utilities, session state, and policy-compliant advertising.
+          <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
+            How Kagazo utilizes essential cookies, local browser storage, and privacy-first advertising partners to maintain free civic utilities without compromising personal privacy.
           </p>
         </div>
 
         {/* Content Body */}
-        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-surface-darker shadow-xs space-y-8 text-text-main/80 text-sm sm:text-base leading-relaxed">
+        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-slate-200/80 shadow-xs space-y-10 text-slate-700 text-sm sm:text-base leading-relaxed">
+          {/* Section 1: What Are Cookies */}
           <section className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-black text-text-main">
-              1. What Are Cookies?
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+              1. What Are Cookies and Local Storage?
             </h2>
             <p>
-              Cookies are small alphanumeric text files stored on your computer or mobile device by your web browser when you visit a website. They allow websites to remember user preferences, maintain secure login sessions, and understand how visitors interact with the site to optimize performance and usability.
+              Cookies are small alphanumeric data packets stored directly on your computing device by your web browser when you access websites. Modern web platforms also utilize browser local storage (<code>localStorage</code> and <code>sessionStorage</code>) to maintain user preferences and offline capabilities without repeatedly pinging remote servers.
+            </p>
+            <p>
+              Kagazo adheres strictly to the principle of <strong>data minimization</strong>. We only invoke cookies and local storage where technically indispensable for security, user preferences, aggregate performance telemetry, and non-intrusive contextual advertising.
             </p>
           </section>
 
-          <section className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-black text-text-main">
-              2. How Kagazo Uses Cookies &amp; Local Storage
+          {/* Section 2: Global Statutory Compliance */}
+          <section className="space-y-4 border-t border-slate-100 pt-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <Globe2 className="w-5 h-5 text-emerald-600" />
+              <span>2. Multi-Jurisdiction Privacy Compliance</span>
             </h2>
             <p>
-              Kagazo is fundamentally designed on a <strong>Zero-Retention, Privacy-First Architecture</strong>. We do NOT use cookies to track, inspect, or build personal profiles around your identity documents, Aadhaar records, or exam marks.
+              Because Kagazo serves users across 9 sovereign regions, our cookie framework is engineered to satisfy the strictest international data protection directives:
             </p>
-            <p>We use cookies and browser storage strictly for three purposes:</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-              <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                <div className="font-bold text-text-main text-sm flex items-center gap-1.5">
-                  <Lock className="w-4 h-4 text-primary" />
-                  <span>Essential Cookies</span>
-                </div>
-                <p className="text-xs text-text-main/70 leading-relaxed">
-                  Required for user authentication, security tokens (CSRF mitigation), and anonymous daily usage counters.
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                <span className="font-bold text-slate-900 block">🇪🇺 European Union (GDPR &amp; ePrivacy)</span>
+                <p className="text-slate-600">
+                  Full adherence to Regulation (EU) 2016/679 (GDPR) and the ePrivacy Directive (Directive 2002/58/EC). Non-essential cookies require clear, affirmative user consent prior to placement.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                <div className="font-bold text-text-main text-sm flex items-center gap-1.5">
-                  <Eye className="w-4 h-4 text-primary" />
-                  <span>Preference Storage</span>
-                </div>
-                <p className="text-xs text-text-main/70 leading-relaxed">
-                  Preserves your selected language preference (English vs. Tamil) and UI settings across page reloads.
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                <span className="font-bold text-slate-900 block">🇧🇷 Brazil (LGPD)</span>
+                <p className="text-slate-600">
+                  Compliant with Lei Geral de Proteção de Dados (Lei nº 13.709/2018). Respects the principles of purpose, adequacy, necessity, and user rights to revoke consent.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-surface border border-surface-darker space-y-1.5">
-                <div className="font-bold text-text-main text-sm flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-primary" />
-                  <span>Performance Telemetry</span>
-                </div>
-                <p className="text-xs text-text-main/70 leading-relaxed">
-                  Aggregated, anonymous telemetry (Google Analytics 4 &amp; Vercel Analytics) measuring page load times and errors.
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                <span className="font-bold text-slate-900 block">🇬🇧 United Kingdom (UK GDPR)</span>
+                <p className="text-slate-600">
+                  Conforms to the UK Data Protection Act 2018 and Privacy and Electronic Communications Regulations (PECR) for British users.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                <span className="font-bold text-slate-900 block">🇮🇳 India (DPDP Act 2023)</span>
+                <p className="text-slate-600">
+                  Operates under the Digital Personal Data Protection Act, 2023, ensuring zero unauthorized retention of digital identifiers or citizen biometric data.
                 </p>
               </div>
             </div>
           </section>
 
-          <section className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-black text-text-main">
-              3. Google AdSense &amp; Advertising Cookies
+          {/* Section 3: Categories of Cookies */}
+          <section className="space-y-4 border-t border-slate-100 pt-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+              3. Categories of Cookies Used on Kagazo
             </h2>
-            <p>
-              To keep our document verification and exam resizer tools 100% free for students and cyber café operators, Kagazo may display contextual advertisements served by <strong>Google AdSense</strong> and authorized advertising partners.
-            </p>
-            <ul className="list-disc pl-5 space-y-1.5 pt-1 text-sm">
-              <li>Google uses cookies (including the DoubleClick cookie) to serve ads based on prior visits to our website or other sites on the internet.</li>
-              <li>Google&apos;s use of advertising cookies enables it and its partners to serve personalized or non-personalized ads based on your visit history.</li>
-              <li>Users may opt out of personalized advertising by visiting Google&apos;s Ads Settings: <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">google.com/settings/ads</a>.</li>
-              <li>Alternatively, you can opt out of a third-party vendor&apos;s use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">aboutads.info</a>.</li>
-            </ul>
-          </section>
 
-          <section className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-black text-text-main">
-              4. Client-Side In-Memory Guarantee (No Document Cookie Storage)
-            </h2>
-            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs sm:text-sm">
-              <strong>Strict Guarantee:</strong> The government PDF files, marksheets, photographs, signatures, and biometric scans you process on Kagazo are NEVER embedded, saved, or referenced inside any HTTP cookie or tracking pixel. Processing executes in volatile RAM and is destroyed the moment your browser tab is closed.
+            <div className="space-y-4">
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <div className="flex items-center gap-2 font-bold text-slate-900 text-base">
+                  <Lock className="w-4 h-4 text-emerald-600" />
+                  <span>A. Strictly Necessary &amp; Security Cookies</span>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  These cookies are vital for the operation of the website, enabling security defenses (such as CSRF mitigation tokens), load-balancing sessions, and rate-limiting against automated scraping. They do not store any personally identifiable information and cannot be switched off in our systems.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <div className="flex items-center gap-2 font-bold text-slate-900 text-base">
+                  <Eye className="w-4 h-4 text-emerald-600" />
+                  <span>B. Functional &amp; Preference Storage</span>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  Used to remember user selections across page reloads (e.g. chosen tax year, currency display settings, or dark/light theme). This data is stored strictly in your local browser storage and is never transmitted to our backend.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <div className="flex items-center gap-2 font-bold text-slate-900 text-base">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span>C. Performance &amp; Aggregate Telemetry</span>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  We collect anonymized, aggregated telemetry to understand page load speeds, Web Vitals, and browser compatibility. IP addresses are automatically truncated and anonymized before processing.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <div className="flex items-center gap-2 font-bold text-slate-900 text-base">
+                  <Cookie className="w-4 h-4 text-emerald-600" />
+                  <span>D. Google AdSense &amp; Advertising Cookies</span>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  To keep our civic tools, statutory calculators, and PDF engines 100% free for students, job applicants, and small business owners worldwide, Kagazo displays contextual advertisements powered by <strong>Google AdSense</strong>.
+                </p>
+                <ul className="list-disc pl-5 space-y-1 text-xs text-slate-600 mt-2">
+                  <li>Google and its certified third-party vendor partners use cookies (such as the DoubleClick cookie) to serve ads based on your prior visits to our site or other websites.</li>
+                  <li>In regions governed by GDPR and LGPD, personalized advertising cookies are deployed exclusively when the user provides explicit consent via a Google-certified Consent Management Platform (CMP).</li>
+                  <li>Users can opt out of personalized advertising at any time by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-bold hover:underline">Google Ads Settings</a> or <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-bold hover:underline">aboutads.info</a>.</li>
+                </ul>
+              </div>
             </div>
           </section>
 
-          <section className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-black text-text-main">
-              5. How You Can Manage or Block Cookies
+          {/* Section 4: Strict Zero-Document Storage Guarantee */}
+          <section className="space-y-3 border-t border-slate-100 pt-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+              4. Absolute Document Privacy Guarantee
+            </h2>
+            <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 text-xs sm:text-sm leading-relaxed">
+              <strong>Strict Commitment:</strong> The PDF documents, government certificates, identity numbers (Aadhaar, PAN, CPF, CNPJ, RFC, Codice Fiscale), passport photographs, and financial values you process on Kagazo are <strong>NEVER saved, tracked, or referenced inside any cookie, tracking beacon, or advertising pixel</strong>. All file manipulations occur in ephemeral RAM or local browser memory.
+            </div>
+          </section>
+
+          {/* Section 5: Managing and Disabling Cookies */}
+          <section className="space-y-3 border-t border-slate-100 pt-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <Settings className="w-5 h-5 text-emerald-600" />
+              <span>5. How to Control and Manage Cookies</span>
             </h2>
             <p>
-              You have the right to accept, reject, or delete cookies at any time through your browser settings:
+              You maintain complete sovereignty over your browser cookies and can block or delete them at any time:
             </p>
-            <ul className="list-disc pl-5 space-y-1 text-sm">
+            <ul className="list-disc pl-5 space-y-1 text-sm text-slate-600">
               <li><strong>Google Chrome:</strong> Settings &gt; Privacy and Security &gt; Third-party cookies.</li>
               <li><strong>Mozilla Firefox:</strong> Settings &gt; Privacy &amp; Security &gt; Cookies and Site Data.</li>
-              <li><strong>Apple Safari:</strong> Preferences &gt; Privacy &gt; Block all cookies.</li>
+              <li><strong>Apple Safari:</strong> Settings &gt; Safari &gt; Advanced &gt; Block All Cookies.</li>
               <li><strong>Microsoft Edge:</strong> Settings &gt; Cookies and site permissions.</li>
             </ul>
-            <p className="text-xs text-text-main/70 pt-1">
-              *Note: Disabling essential cookies may prevent session persistence or language switching, but basic client-side photo resizing will continue to function.
-            </p>
           </section>
 
-          <section className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-black text-text-main">
-              6. Updates &amp; Contact
+          {/* Section 6: Contact */}
+          <section className="space-y-3 border-t border-slate-100 pt-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+              6. Policy Inquiries
             </h2>
             <p>
-              This policy is reviewed periodically to remain strictly compliant with the <strong>Digital Personal Data Protection (DPDP) Act, 2023</strong> and international privacy regulations. For any questions regarding our cookie practices:
+              For inquiries regarding our cookie management framework or privacy protections:
             </p>
-            <div className="p-4 rounded-2xl bg-surface border border-surface-darker text-sm space-y-1">
-              <div><strong>Email:</strong> <a href="mailto:support@kagazo.in" className="text-primary hover:underline font-semibold">support@kagazo.in</a></div>
-              <div><strong>Privacy Policy:</strong> <Link href="/privacy" className="text-primary hover:underline font-semibold">kagazo.in/privacy</Link></div>
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm space-y-1">
+              <div><strong>Desk:</strong> Kagazo Data Protection &amp; Privacy Office</div>
+              <div><strong>Email:</strong> <a href="mailto:privacy@kagazo.in" className="text-emerald-600 hover:underline font-semibold">privacy@kagazo.in</a></div>
+              <div><strong>Privacy Policy:</strong> <Link href="/privacy" className="text-emerald-600 hover:underline font-semibold">kagazo.in/privacy</Link></div>
             </div>
           </section>
         </div>

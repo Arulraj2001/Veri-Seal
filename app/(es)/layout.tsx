@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description:
     'Suite completa de calculadoras laborales, fiscales, hipotecarias y de trámites en España: IRPF 2026, sueldo neto, finiquito, hipoteca Euríbor, ITP, foto DNI y facturas PDF.',
   alternates: {
-    canonical: `${SITE_URL}/es`,
     languages: {
       'es-ES': `${SITE_URL}/es`,
       'es': `${SITE_URL}/es`,

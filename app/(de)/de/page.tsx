@@ -177,8 +177,45 @@ export default function GermanHubPage() {
     },
   ];
 
+  const allTools = categories.flatMap((c) => c.tools);
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: 'Portal Offizielle Rechner Deutschland 2026',
+        url: `${SITE_URL}/de`,
+        description:
+          '20 amtlich geprüfte Gesetzes- & Finanzrechner für Deutschland 2026: Brutto-Netto, Abfindung § 34 EStG, Notarkosten GNotKG, Bürgerliches Gesetzbuch (BGB).',
+        inLanguage: 'de-DE',
+        isPartOf: {
+          '@type': 'WebSite',
+          name: 'Kagazo',
+          url: SITE_URL,
+        },
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Gesetzes- und Steuerrechner Deutschland',
+        numberOfItems: allTools.length,
+        itemListElement: allTools.map((t, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: t.title,
+          url: `${SITE_URL}${t.href}`,
+        })),
+      },
+    ],
+  };
+
   return (
-    <div className="py-12 sm:py-20">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <div className="py-12 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-16">
         {/* Hero Section */}
         <div className="max-w-3xl space-y-4">
@@ -254,5 +291,6 @@ export default function GermanHubPage() {
         </div>
       </div>
     </div>
+  </>
   );
 }

@@ -1,389 +1,301 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Calendar,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Coins,
-  Sun,
-  Palmtree,
-  DollarSign,
-} from 'lucide-react';
+import { Palmtree, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { CalculoFeriasCltClient } from './ClientEngine';
 
-interface FeriasResult {
-  diasDireito: number;
-  diasGozados: number;
-  diasAbono: number;
-  valorDiasGozados: number;
-  tercoConstitucionalGozo: number;
-  totalGozoBruto: number;
-  valorAbonoPecuniario: number;
-  tercoAbonoPecuniario: number;
-  totalAbonoIsento: number;
-  adiantamento13Salario: number;
-  descontoInssFerias: number;
-  descontoIrrfFerias: number;
-  totalLiquidoFerias: number;
-  prazoPagamentoTexto: string;
-}
+export const metadata: Metadata = {
+  title: 'Calculadora de Férias CLT 2026 | 1/3 Constitucional, Abono e Descontos',
+  description:
+    'Calcule o valor exato das suas férias CLT em 2026. Simule salário base, 1/3 constitucional, venda de 10 dias (abono pecuniário), adiantamento de 13º e descontos oficiais de INSS e IRRF.',
+  keywords: [
+    'calculo ferias clt',
+    'calculadora de ferias 2026',
+    'simulador ferias 1 terco',
+    'venda de ferias abono pecuniario',
+    'desconto inss irrf ferias',
+    'prazo pagamento ferias art 145 clt',
+    'tabela faltas ferias art 130 clt'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/calculo-ferias-clt',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/calculo-ferias-clt',
+      'pt': 'https://kagazo.in/br/calculo-ferias-clt',
+      'x-default': 'https://kagazo.in/br/calculo-ferias-clt',
+    },
+  },
+  openGraph: {
+    title: 'Calculadora de Férias CLT 2026 | Simulação Oficial Completa',
+    description:
+      'Descubra quanto você vai receber de férias líquidas. Cálculo preciso de 1/3 constitucional, abono pecuniário isento e tabela de retenção INSS/IRRF 2026.',
+    url: 'https://kagazo.in/br/calculo-ferias-clt',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Calculadora de Férias CLT 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'BusinessApplication',
+      'description': 'Simulador jurídico e trabalhista das férias CLT com 1/3 constitucional, abono de 10 dias e deduções fiscais.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'Cálculo de Férias CLT',
+          'item': 'https://kagazo.in/br/calculo-ferias-clt',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'Qual é o prazo legal para o pagamento das férias pelo empregador?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'De acordo com o artigo 145 da Consolidação das Leis do Trabalho (CLT), a remuneração das férias e o abono pecuniário devem ser quitados integralmente até 2 (dois) dias antes do início do respectivo período de descanso do colaborador.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Como funciona a venda de 10 dias de férias (abono pecuniário)?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Conforme o artigo 143 da CLT, o trabalhador tem o direito de converter 1/3 do seu período de férias em dinheiro. Em um período padrão de 30 dias, é possível vender até 10 dias. Sobre o valor do abono pecuniário e seu respectivo terço constitucional NÃO incidem descontos de INSS nem de IRRF, conforme consolidado pelas Súmulas 125 e 136 do STJ.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Como as faltas injustificadas afetam os dias de férias?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'O artigo 130 da CLT estabelece a escala de dias de gozo de férias no ano aquisitivo: até 5 faltas dá direito a 30 dias; de 6 a 14 faltas o direito cai para 24 dias; de 15 a 23 faltas cai para 18 dias; de 24 a 32 faltas dá direito a 12 dias. Com mais de 32 faltas injustificadas, o direito às férias é integralmente perdido.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'O desconto de INSS e IRRF das férias é feito em conjunto com o salário normal?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Não. O cálculo de retenção na fonte do IRRF sobre férias é tributado de forma exclusiva e em separado do salário mensal comum, aplicando-se a tabela progressiva oficial sobre a soma dos dias de gozo e do terço constitucional.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function CalculoFeriasCltPage() {
-  const [salarioBruto, setSalarioBruto] = React.useState<number>(4000);
-  const [diasDescanso, setDiasDescanso] = React.useState<number>(20);
-  const [vender10Dias, setVender10Dias] = React.useState<boolean>(true); // Abono Pecuniário Art. 143
-  const [adiantar13, setAdiantar13] = React.useState<boolean>(false);
-  const [faltasInjustificadas, setFaltasInjustificadas] = React.useState<number>(0);
-  const [dependentes, setDependentes] = React.useState<number>(0);
-
-  const calcolaFerias = React.useCallback((): FeriasResult => {
-    const salario = Math.max(0, salarioBruto);
-    const valorDia = salario / 30;
-
-    // Tabela de dias de direito a férias conforme faltas (Art. 130 CLT)
-    let diasDireito = 30;
-    if (faltasInjustificadas <= 5) diasDireito = 30;
-    else if (faltasInjustificadas <= 14) diasDireito = 24;
-    else if (faltasInjustificadas <= 23) diasDireito = 18;
-    else if (faltasInjustificadas <= 32) diasDireito = 12;
-    else diasDireito = 0;
-
-    const diasAbono = vender10Dias ? Math.min(10, Math.floor(diasDireito / 3)) : 0;
-    const diasGozados = Math.max(0, diasDireito - diasAbono);
-
-    // 1. Dias de Gozo e Terço Constitucional
-    const valorDiasGozados = valorDia * diasGozados;
-    const tercoConstitucionalGozo = valorDiasGozados / 3;
-    const totalGozoBruto = valorDiasGozados + tercoConstitucionalGozo;
-
-    // 2. Abono Pecuniário (Isento de INSS e IRRF - Súmulas 125/136 STJ)
-    const valorAbonoPecuniario = valorDia * diasAbono;
-    const tercoAbonoPecuniario = valorAbonoPecuniario / 3;
-    const totalAbonoIsento = valorAbonoPecuniario + tercoAbonoPecuniario;
-
-    // 3. Adiantamento de 50% do 13º Salário (Lei 4.749/65)
-    const adiantamento13Salario = adiantar13 ? salario * 0.5 : 0;
-
-    // 4. Tributação (INSS e IRRF incidem apenas sobre o total de gozo)
-    let inss = 0;
-    const f1 = 1412.0;
-    const f2 = 2666.68;
-    const f3 = 4000.03;
-    const teto = 7786.02;
-
-    if (totalGozoBruto <= f1) inss = totalGozoBruto * 0.075;
-    else if (totalGozoBruto <= f2) inss = f1 * 0.075 + (totalGozoBruto - f1) * 0.09;
-    else if (totalGozoBruto <= f3) inss = f1 * 0.075 + (f2 - f1) * 0.09 + (totalGozoBruto - f2) * 0.12;
-    else if (totalGozoBruto <= teto)
-      inss = f1 * 0.075 + (f2 - f1) * 0.09 + (f3 - f2) * 0.12 + (totalGozoBruto - f3) * 0.14;
-    else inss = f1 * 0.075 + (f2 - f1) * 0.09 + (f3 - f2) * 0.12 + (teto - f3) * 0.14;
-
-    const baseIrrf = Math.max(0, totalGozoBruto - inss - dependentes * 189.59);
-    let irrf = 0;
-    if (baseIrrf <= 2259.2) irrf = 0;
-    else if (baseIrrf <= 2826.65) irrf = baseIrrf * 0.075 - 169.44;
-    else if (baseIrrf <= 3751.05) irrf = baseIrrf * 0.15 - 381.44;
-    else if (baseIrrf <= 4664.68) irrf = baseIrrf * 0.225 - 662.77;
-    else irrf = baseIrrf * 0.275 - 896.0;
-    irrf = Math.max(0, irrf);
-
-    const totalLiquidoFerias =
-      totalGozoBruto - inss - irrf + totalAbonoIsento + adiantamento13Salario;
-
-    const prazoPagamentoTexto =
-      'O pagamento da remuneração das férias e do abono deve ser efetuado até 2 (dois) dias antes do início do período de gozo (Artigo 145 da CLT).';
-
-    return {
-      diasDireito,
-      diasGozados,
-      diasAbono,
-      valorDiasGozados,
-      tercoConstitucionalGozo,
-      totalGozoBruto,
-      valorAbonoPecuniario,
-      tercoAbonoPecuniario,
-      totalAbonoIsento,
-      adiantamento13Salario,
-      descontoInssFerias: inss,
-      descontoIrrfFerias: irrf,
-      totalLiquidoFerias,
-      prazoPagamentoTexto,
-    };
-  }, [salarioBruto, diasDescanso, vender10Dias, adiantar13, faltasInjustificadas, dependentes]);
-
-  const res = calcolaFerias();
-
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/br" className="hover:text-slate-800 transition-colors">Brasil</Link>
-        <span>/</span>
-        <span className="text-emerald-700 font-semibold">Cálculo de Férias CLT</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Art. 129 a 145 da CLT, Art. 7º XVII CF/88 & Abono Pecuniário</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">Cálculo de Férias CLT</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Cálculo de Férias CLT e Abono Pecuniário <br className="hidden sm:inline" />
-          <span className="text-emerald-600">Terço Constitucional (1/3), Venda de Dias e 13º</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Resposta Trabalhista Direta:</strong> A cada 12 meses de trabalho (período aquisitivo), o empregado CLT adquire direito a <strong>30 dias de férias</strong> remuneradas com acréscimo de <strong>1/3 constitucional</strong>. É direito facultativo do trabalhador vender até 1/3 das férias (<strong>10 dias de abono pecuniário</strong>), quantia que é <em>totalmente isenta de desconto de INSS e IRRF</em>. O pagamento deve ser realizado impreterivelmente até 2 dias antes do início do descanso.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Palmtree className="w-4 h-4 text-emerald-600" />
-              <span>Configuração das Férias</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <Palmtree className="w-3.5 h-3.5" />
+              Legislação Trabalhista Brasileira • CLT Art. 129 a 145
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setSalarioBruto(4000);
-                setDiasDescanso(20);
-                setVender10Dias(true);
-                setAdiantar13(false);
-                setFaltasInjustificadas(0);
-                setDependentes(0);
-              }}
-              className="text-xs text-slate-500 hover:text-emerald-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Redefinir</span>
-            </button>
-          </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Calculadora de Férias CLT 2026
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Simule detalhadamente o valor líquido das férias, terço constitucional de 1/3, abono pecuniário isento, adiantamento de 13º salário e deduções de INSS e IRRF com base na tabela oficial.
+            </p>
 
-          <div className="space-y-4">
-            {/* Salário Base */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center justify-between">
-                <span>Salário Bruto Mensal (R$)</span>
-                <span className="font-mono text-emerald-700 font-bold text-sm">
-                  R$ {salarioBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                step={100}
-                value={salarioBruto || ''}
-                onChange={(e) => setSalarioBruto(Number(e.target.value))}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm font-bold text-slate-900 transition-all font-mono"
-                placeholder="Ex. 4000.00"
-              />
+            {/* Answer Capsule (GEO Optimization) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Regra de Ouro do Cálculo de Férias CLT:</p>
+              <p>
+                O valor bruto é composto pela remuneração dos dias de descanso acrescida de 1/3 constitucional (Art. 7º, XVII da CF/88). Caso haja venda de até 10 dias (abono pecuniário), esse montante é 100% isento de INSS e Imposto de Renda. O pagamento legal deve ocorrer rigorosamente até 2 dias antes do descanso.
+              </p>
+            </div>
+          </header>
+
+          {/* Interactive Tool Client Engine */}
+          <CalculoFeriasCltClient />
+
+          {/* Middle In-Content Ad */}
+          <AdSlot slot="in_content" context="legal" />
+
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Guia Completo das Férias Trabalhistas (CLT): Direitos, Prazos e Cálculos
+            </h2>
+
+            <p>
+              O direito às férias anuais remuneradas constitui uma garantia fundamental do trabalhador brasileiro, assegurada pelo artigo 7º, inciso XVII da Constituição Federal de 1988 e minuciosamente regulamentada pelos artigos 129 a 145 da Consolidação das Leis do Trabalho (CLT). O descanso anual tem por finalidade a recuperação física e mental do empregado após doze meses ininterruptos de dedicação laboral, configurando o chamado período aquisitivo.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">1. Período Aquisitivo vs. Período Concessivo</h3>
+            <p>
+              O vínculo de trabalho submete-se a dois ciclos temporais fundamentais para a concessão das férias:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong>Período Aquisitivo (Art. 130 CLT):</strong> Corresponde aos 12 meses de trabalho contados a partir da data de admissão do empregado, nos quais é conquistado o direito de descansar.
+              </li>
+              <li>
+                <strong>Período Concessivo (Art. 134 CLT):</strong> Corresponde aos 12 meses subsequentes ao término do período aquisitivo, intervalo no qual o empregador é obrigado a conceder o descanso remunerado. Caso as férias não sejam usufruídas dentro desse prazo concessivo, o empregador deverá pagar a remuneração em dobro (Art. 137 da CLT).
+              </li>
+            </ul>
+
+            <h3 className="text-lg font-semibold text-emerald-400">2. Escala de Redução de Férias por Faltas Injustificadas</h3>
+            <p>
+              O artigo 130 da CLT disciplina que ausências injustificadas ao serviço durante o período aquisitivo penalizam diretamente a quantidade de dias de repouso aos quais o trabalhador terá direito:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-600 bg-slate-900/50 text-slate-200">
+                    <th className="p-2">Faltas Injustificadas no Período</th>
+                    <th className="p-2">Dias de Férias Concedidos</th>
+                    <th className="p-2">Redução</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  <tr>
+                    <td className="p-2">Até 5 faltas</td>
+                    <td className="p-2 font-semibold text-emerald-400">30 dias corridos</td>
+                    <td className="p-2">Nenhuma perda</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">De 6 a 14 faltas</td>
+                    <td className="p-2 font-semibold text-amber-400">24 dias corridos</td>
+                    <td className="p-2">Perda de 6 dias</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">De 15 a 23 faltas</td>
+                    <td className="p-2 font-semibold text-amber-400">18 dias corridos</td>
+                    <td className="p-2">Perda de 12 dias</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">De 24 a 32 faltas</td>
+                    <td className="p-2 font-semibold text-red-400">12 dias corridos</td>
+                    <td className="p-2">Perda de 18 dias</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2">Acima de 32 faltas</td>
+                    <td className="p-2 font-semibold text-red-500">0 dias (Perda total)</td>
+                    <td className="p-2">Perda do direito integral</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            {/* Venda de Dias (Abono) e Adiantamento 13º */}
-            <div className="space-y-2 pt-1">
-              <label className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:bg-slate-100/70 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={vender10Dias}
-                  onChange={(e) => setVender10Dias(e.target.checked)}
-                  className="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500"
-                />
-                <div className="text-xs text-slate-800">
-                  <strong className="block text-slate-900">Vender 10 dias de férias (Abono Pecuniário Art. 143 CLT)</strong>
-                  <span className="text-slate-500 text-[11px]">Goza 20 dias de descanso e recebe 10 dias em dinheiro com 1/3, isentos de imposto.</span>
-                </div>
-              </label>
+            <h3 className="text-lg font-semibold text-emerald-400">3. Venda de Férias: Abono Pecuniário (Art. 143 CLT)</h3>
+            <p>
+              É faculdade exclusiva do trabalhador converter 1/3 do seu período de direito a férias em abono pecuniário (a popularmente chamada "venda de 10 dias"). O empregador não pode impor a venda, nem recusar a solicitação se requerida pelo funcionário até 15 dias antes do término do período aquisitivo.
+            </p>
+            <p>
+              <strong>Vantagem Tributária:</strong> O abono pecuniário e seu respectivo 1/3 possuem caráter estritamente indenizatório. Em consonância com a jurisprudência pacificada pelas Súmulas 125 e 136 do Superior Tribunal de Justiça (STJ), sobre esses montantes <em>não há incidência de contribuição previdenciária (INSS) nem retenção de Imposto de Renda (IRRF)</em>.
+            </p>
 
-              <label className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:bg-slate-100/70 transition-colors">
-                <input
-                  type="checkbox"
-                  checked={adiantar13}
-                  onChange={(e) => setAdiantar13(e.target.checked)}
-                  className="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500"
-                />
-                <div className="text-xs text-slate-800">
-                  <strong className="block text-slate-900">Adiantar 1ª Parcela do 13º Salário (50%)</strong>
-                  <span className="text-slate-500 text-[11px]">Solicitado em janeiro ou conforme convenção coletiva, sem desconto de INSS.</span>
-                </div>
-              </label>
+            <h3 className="text-lg font-semibold text-emerald-400">4. Prazo Improrrogável de Pagamento (Art. 145 CLT)</h3>
+            <p>
+              A legislação trabalhista impõe que a remuneração das férias deve ser disponibilizada ao trabalhador com pelo menos <strong>2 dias de antecedência</strong> do início do período de gozo. O descumprimento desse prazo acarreta infração trabalhista e gera passivo de penalidades administrativas e indenizações.
+            </p>
+
+            <h3 className="text-lg font-semibold text-emerald-400">5. Fracionamento das Férias após a Reforma Trabalhista</h3>
+            <p>
+              Desde a vigência da Lei nº 13.467/2017, havendo concordância mútua entre empregado e empregador, as férias de 30 dias podem ser usufruídas em até <strong>3 períodos</strong>, desde que:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Um dos períodos não seja inferior a 14 dias corridos;</li>
+              <li>Nenhum dos demais períodos seja inferior a 5 dias corridos cada um;</li>
+              <li>O início das férias não ocorra no período de dois dias que antecede feriado ou dia de repouso semanal remunerado (DSR).</li>
+            </ul>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre Cálculo de Férias CLT
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Posso pedir adiantamento da 1ª parcela do 13º salário nas férias?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. O artigo 2º, § 2º da Lei nº 4.749/1965 prevê que o empregado pode solicitar o adiantamento de 50% do 13º salário por ocasião das férias, desde que formule o pedido formalmente à empresa durante o mês de janeiro do ano correspondente.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Horas extras e comissões entram no cálculo das férias?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. Conforme o artigo 142 da CLT e Súmula 151 do TST, todos os adicionais habituais — tais como horas extras, adicional noturno, insalubridade, periculosidade e comissões — são integrados pela sua média aritmética duodecimal na base de cálculo da remuneração das férias.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>O que acontece se a empresa atrasar o pagamento das férias?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  O pagamento efetuado fora do prazo do artigo 145 da CLT (até 2 dias antes do início do descanso) desvirtua a finalidade do descanso remunerado e sujeita o empregador a autuações da fiscalização do trabalho, bem como à jurisprudência consolidada de reparação ao trabalhador.
+                </p>
+              </details>
             </div>
+          </section>
 
-            {/* Faltas Injustificadas e Dependentes */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800 flex justify-between">
-                  <span>Faltas Injustificadas no Ano</span>
-                  <span className="text-slate-400 font-normal">Art. 130 CLT</span>
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  max={35}
-                  value={faltasInjustificadas}
-                  onChange={(e) => setFaltasInjustificadas(Math.max(0, Number(e.target.value)))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Dependentes IRRF</label>
-                <input
-                  type="number"
-                  min={0}
-                  max={10}
-                  value={dependentes}
-                  onChange={(e) => setDependentes(Math.max(0, Number(e.target.value)))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>O abono pecuniário não sofre retenção de encargos trabalhistas conforme Súmulas 125 e 136 do STJ.</span>
-          </div>
-        </div>
-
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Total Líquido de Férias
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">
-              {res.diasGozados} Dias de Descanso
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-1">
-            <span className="text-xs text-emerald-200 font-medium">Valor Líquido a Receber</span>
-            <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-              R$ {res.totalLiquidoFerias.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </div>
-            <span className="text-[11px] text-emerald-300 font-medium block">
-              {res.diasAbono > 0 ? `Inclui ${res.diasAbono} dias de abono pecuniário isento` : 'Férias integrais de 30 dias'}
-            </span>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Remuneração Dias Gozados ({res.diasGozados} dias)</span>
-              <span className="font-mono text-white">R$ {res.valorDiasGozados.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Terço Constitucional (1/3 sobre gozo)</span>
-              <span className="font-mono text-white">+ R$ {res.tercoConstitucionalGozo.toFixed(2)}</span>
-            </div>
-            {res.totalAbonoIsento > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Abono Pecuniário ({res.diasAbono} dias + 1/3)</span>
-                <span className="font-mono text-emerald-400 font-bold">+ R$ {res.totalAbonoIsento.toFixed(2)}</span>
-              </div>
-            )}
-            {res.adiantamento13Salario > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>Adiantamento 1ª Parcela 13º (50%)</span>
-                <span className="font-mono text-cyan-400 font-bold">+ R$ {res.adiantamento13Salario.toFixed(2)}</span>
-              </div>
-            )}
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Desconto INSS Férias</span>
-              <span className="font-mono text-rose-400 font-bold">- R$ {res.descontoInssFerias.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Desconto IRRF Férias</span>
-              <span className="font-mono text-rose-400 font-bold">- R$ {res.descontoIrrfFerias.toFixed(2)}</span>
-            </div>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-            <strong className="text-slate-300 block">Prazo Legal de Pagamento (Art. 145 CLT):</strong>
-            <p>{res.prazoPagamentoTexto}</p>
-          </div>
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            Direito a Férias na CLT: Período Aquisitivo e Concessivo
-          </h2>
-          <p>
-            O instituto das férias remuneradas é um direito social fundamental previsto no <strong>Artigo 7º, inciso XVII da Constituição Federal de 1988</strong> e detalhado nos <strong>Artigos 129 a 145 da Consolidação das Leis do Trabalho</strong>.
-          </p>
-          <p>
-            O trabalhador completa o <em>período aquisitivo</em> a cada 12 (doze) meses de vigência do contrato de trabalho. Nos 12 meses seguintes (o <em>período concessivo</em>), o empregador deve obrigatoriamente conceder e remunerar os dias de descanso sob pena de ter que pagar a remuneração em dobro (Art. 137 da CLT).
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Abono Pecuniário: Venda de 1/3 das Férias (Art. 143 CLT)
-          </h3>
-          <p>
-            O <strong>abono pecuniário</strong> é a conversão em dinheiro de 1/3 dos dias de férias a que o empregado tem direito. É um direito potestativo do empregado — ou seja, a empresa não pode obrigar o funcionário a vender suas férias, tampouco pode recusar a venda se solicitada no prazo de até 15 dias antes do término do período aquisitivo.
-          </p>
-          <p className="text-xs text-slate-600">
-            <em>Vantagem Fiscal:</em> Por possuir natureza puramente indenizatória, o valor dos dias de abono e de seu 1/3 constitucional não integra o salário de contribuição da previdência (sem desconto de INSS) e não sofre tributação de imposto de renda retido na fonte (Súmulas 125 e 136 do Superior Tribunal de Justiça).
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Tabela de Redução por Faltas Injustificadas (Art. 130 CLT)
-          </h3>
-          <p>
-            As ausências ao trabalho não justificadas legalmente (sem atestado médico ou previsão no Art. 473 CLT) reduzem a quantidade de dias de férias a que o trabalhador terá direito:
-          </p>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-xs sm:text-sm border-collapse">
-              <thead>
-                <tr className="border-b border-slate-200 bg-slate-50 text-slate-700">
-                  <th className="py-2.5 px-3 font-bold">Número de Faltas Injustificadas</th>
-                  <th className="py-2.5 px-3 font-bold">Dias de Férias a Gozar</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-600">
-                <tr>
-                  <td className="py-2.5 px-3">Até 5 faltas</td>
-                  <td className="py-2.5 px-3 font-bold text-emerald-700">30 dias corridos</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 px-3">De 6 a 14 faltas</td>
-                  <td className="py-2.5 px-3 font-bold text-emerald-700">24 dias corridos</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 px-3">De 15 a 23 faltas</td>
-                  <td className="py-2.5 px-3 font-bold text-emerald-700">18 dias corridos</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 px-3">De 24 a 32 faltas</td>
-                  <td className="py-2.5 px-3 font-bold text-emerald-700">12 dias corridos</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 px-3">Mais de 32 faltas</td>
-                  <td className="py-2.5 px-3 font-bold text-rose-600">Perde o direito às férias</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
-

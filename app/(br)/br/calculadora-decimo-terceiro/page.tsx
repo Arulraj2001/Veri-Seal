@@ -1,356 +1,287 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Coins,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Calendar,
-  Gift,
-  TrendingUp,
-} from 'lucide-react';
+import { Gift, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { CalculadoraDecimoTerceiroClient } from './ClientEngine';
 
-interface DecimoTerceiroResult {
-  salarioBaseCalculo: number;
-  mesesTrabalhados: number;
-  decimoBrutoTotal: number;
-  primeiraParcelaBruta: number;
-  primeiraParcelaLiquida: number; // sem descontos
-  segundaParcelaBruta: number;
-  inssTotalDecimo: number;
-  irrfTotalDecimo: number;
-  segundaParcelaLiquida: number;
-  totalLiquidoRecebido: number;
-  prazosPagamento: { parcela1: string; parcela2: string };
-}
+export const metadata: Metadata = {
+  title: 'Calculadora do Décimo Terceiro Salário 2026 | 1ª e 2ª Parcelas Líquidas',
+  description:
+    'Calcule o 13º salário com exatidão: simule a 1ª parcela (sem descontos até 30/nov) e a 2ª parcela (com INSS e IRRF até 20/dez), proporcionalidade de avos e média de horas extras.',
+  keywords: [
+    'calculadora decimo terceiro 2026',
+    'calculo 13 salario liquido clt',
+    'primeira parcela decimo terceiro',
+    'segunda parcela decimo terceiro descontos',
+    'lei 4090 62 gratificacao natalina',
+    'prazo pagamento decimo terceiro'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/calculadora-decimo-terceiro',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/calculadora-decimo-terceiro',
+      'pt': 'https://kagazo.in/br/calculadora-decimo-terceiro',
+      'x-default': 'https://kagazo.in/br/calculadora-decimo-terceiro',
+    },
+  },
+  openGraph: {
+    title: 'Calculadora de Décimo Terceiro Salário 2026 | Simulação CLT Oficial',
+    description:
+      'Descubra quanto você vai receber na 1ª e 2ª parcelas do 13º salário com dedução oficial de INSS e IRRF retidos na fonte.',
+    url: 'https://kagazo.in/br/calculadora-decimo-terceiro',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Calculadora de Décimo Terceiro Salário 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'BusinessApplication',
+      'description': 'Simulador trabalhista da Gratificação Natalina (13º salário) segundo as Leis 4.090/62 e 4.749/65, com apuração de 1ª e 2ª parcelas e tributação exclusiva.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'Décimo Terceiro Salário',
+          'item': 'https://kagazo.in/br/calculadora-decimo-terceiro',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'Quais são as datas limites para o pagamento do 13º salário?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Pela Lei nº 4.749/1965, a 1ª parcela deve ser quitada entre 1º de fevereiro e 30 de novembro de cada ano (ou por ocasião das férias, se solicitado em janeiro). A 2ª parcela deve ser paga obrigatoriamente até o dia 20 de dezembro.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Por que a 1ª parcela não tem descontos e a 2ª parcela vem com valor menor?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'A legislação estabelece que a 1ª parcela corresponde a um adiantamento puro de 50% do salário bruto devido. A apuração tributária (INSS e IRRF) incide de forma definitiva sobre o valor total do 13º e é descontada integralmente na 2ª parcela, razão pela qual o valor líquido de dezembro é sempre substancialmente menor.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Quantos dias no mês preciso trabalhar para garantir o direito a 1/12 avos?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Conforme o Artigo 1º, § 2º da Lei nº 4.090/1962, a fração igual ou superior a 15 (quinze) dias trabalhados no mês civil confere o direito a 1/12 avos da gratificação natalina.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'O 13º salário é somado aos rendimentos mensais na declaração do IRPF?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Não. O 13º salário é sujeito à tributação exclusiva na fonte. O imposto retido em dezembro é definitivo e não pode ser restituído nem gera cobrança adicional na Declaração de Ajuste Anual.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function CalculadoraDecimoTerceiroPage() {
-  const [salarioBruto, setSalarioBruto] = React.useState<number>(4200);
-  const [mediaHorasExtras, setMediaHorasExtras] = React.useState<number>(300);
-  const [mesesTrabalhados, setMesesTrabalhados] = React.useState<number>(12);
-  const [dependentes, setDependentes] = React.useState<number>(1);
-  const [pensaoAlimenticia, setPensaoAlimenticia] = React.useState<number>(0);
-
-  const calcola13 = React.useCallback((): DecimoTerceiroResult => {
-    const salario = Math.max(0, salarioBruto);
-    const mediaAdicionais = Math.max(0, mediaHorasExtras);
-    const salarioBase = salario + mediaAdicionais;
-    const meses = Math.min(12, Math.max(1, mesesTrabalhados));
-
-    // Valor Bruto Total proporcional aos meses trabalhados (Art. 1º Lei 4.090/62)
-    const decimoBrutoTotal = (salarioBase / 12) * meses;
-
-    // 1ª Parcela: 50% bruto sem qualquer desconto (Art. 2º Lei 4.749/65)
-    const primeiraParcelaBruta = decimoBrutoTotal * 0.5;
-    const primeiraParcelaLiquida = primeiraParcelaBruta;
-
-    // 2ª Parcela: Valor total menos adiantamento da 1ª parcela
-    const segundaParcelaBruta = decimoBrutoTotal - primeiraParcelaBruta;
-
-    // Tributação exclusiva na fonte sobre o valor TOTAL do 13º salário (INSS e IRRF)
-    let inss = 0;
-    const f1 = 1412.0;
-    const f2 = 2666.68;
-    const f3 = 4000.03;
-    const teto = 7786.02;
-
-    if (decimoBrutoTotal <= f1) inss = decimoBrutoTotal * 0.075;
-    else if (decimoBrutoTotal <= f2) inss = f1 * 0.075 + (decimoBrutoTotal - f1) * 0.09;
-    else if (decimoBrutoTotal <= f3) inss = f1 * 0.075 + (f2 - f1) * 0.09 + (decimoBrutoTotal - f2) * 0.12;
-    else if (decimoBrutoTotal <= teto)
-      inss = f1 * 0.075 + (f2 - f1) * 0.09 + (f3 - f2) * 0.12 + (decimoBrutoTotal - f3) * 0.14;
-    else inss = f1 * 0.075 + (f2 - f1) * 0.09 + (f3 - f2) * 0.12 + (teto - f3) * 0.14;
-
-    const baseIrrf = Math.max(0, decimoBrutoTotal - inss - dependentes * 189.59 - pensaoAlimenticia);
-    let irrf = 0;
-    if (baseIrrf <= 2259.2) irrf = 0;
-    else if (baseIrrf <= 2826.65) irrf = baseIrrf * 0.075 - 169.44;
-    else if (baseIrrf <= 3751.05) irrf = baseIrrf * 0.15 - 381.44;
-    else if (baseIrrf <= 4664.68) irrf = baseIrrf * 0.225 - 662.77;
-    else irrf = baseIrrf * 0.275 - 896.0;
-    irrf = Math.max(0, irrf);
-
-    // Na 2ª parcela desconta-se o INSS e o IRRF calculados sobre o total
-    const segundaParcelaLiquida = Math.max(0, segundaParcelaBruta - inss - irrf);
-    const totalLiquidoRecebido = primeiraParcelaLiquida + segundaParcelaLiquida;
-
-    const prazosPagamento = {
-      parcela1: 'Paga entre 1º de fevereiro e 30 de novembro (Lei 4.749/65)',
-      parcela2: 'Paga impreterivelmente até o dia 20 de dezembro de cada ano',
-    };
-
-    return {
-      salarioBaseCalculo: salarioBase,
-      mesesTrabalhados: meses,
-      decimoBrutoTotal,
-      primeiraParcelaBruta,
-      primeiraParcelaLiquida,
-      segundaParcelaBruta,
-      inssTotalDecimo: inss,
-      irrfTotalDecimo: irrf,
-      segundaParcelaLiquida,
-      totalLiquidoRecebido,
-      prazosPagamento,
-    };
-  }, [salarioBruto, mediaHorasExtras, mesesTrabalhados, dependentes, pensaoAlimenticia]);
-
-  const res = calcola13();
-
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/br" className="hover:text-slate-800 transition-colors">Brasil</Link>
-        <span>/</span>
-        <span className="text-emerald-700 font-semibold">Décimo Terceiro Salário (13º)</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Lei 4.090/1962, Lei 4.749/1965 & Súmula 45 do TST (Médias)</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">Décimo Terceiro Salário</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Calculadora do Décimo Terceiro Salário (13º) <br className="hidden sm:inline" />
-          <span className="text-emerald-600">Previsão da 1ª e 2ª Parcelas com INSS e IRRF</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Resposta Trabalhista Direta:</strong> A <strong>Gratificação de Natal (13º salário)</strong> é devida a todo empregado CLT na proporção de <strong>1/12 avos por mês trabalhado</strong> (fração de 15 dias conta como mês integral). A <strong>1ª parcela</strong> (50% do valor) é paga até <strong>30 de novembro</strong> sem qualquer desconto de INSS ou imposto de renda. A <strong>2ª parcela</strong> é paga até <strong>20 de dezembro</strong>, momento em que incidem os descontos oficiais de INSS e IRRF sobre o valor total.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Gift className="w-4 h-4 text-emerald-600" />
-              <span>Dados Salariais & Período</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <Gift className="w-3.5 h-3.5" />
+              Gratificação Natalina • Lei 4.090/1962 & Lei 4.749/1965
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setSalarioBruto(4200);
-                setMediaHorasExtras(300);
-                setMesesTrabalhados(12);
-                setDependentes(1);
-                setPensaoAlimenticia(0);
-              }}
-              className="text-xs text-slate-500 hover:text-emerald-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Redefinir</span>
-            </button>
-          </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Calculadora do Décimo Terceiro Salário 2026
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Simule detalhadamente o valor líquido das duas parcelas do 13º salário, considerando a proporcionalidade de meses trabalhados, médias salariais e alíquotas oficiais de INSS e IRRF retidas na fonte.
+            </p>
 
-          <div className="space-y-4">
-            {/* Salário Base */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center justify-between">
-                <span>Salário Bruto Contratual (R$)</span>
-                <span className="font-mono text-emerald-700 font-bold text-sm">
-                  R$ {salarioBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                </span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                step={100}
-                value={salarioBruto || ''}
-                onChange={(e) => setSalarioBruto(Number(e.target.value))}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm font-bold text-slate-900 transition-all font-mono"
-                placeholder="Ex. 4200.00"
-              />
+            {/* Answer Capsule (GEO Optimization) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Regra de Ouro do 13º Salário no Brasil:</p>
+              <p>
+                A primeira parcela (50% do bruto) é paga até 30 de novembro sem nenhum desconto previdenciário ou tributário. A segunda parcela é paga até 20 de dezembro e suporta a totalidade das deduções de INSS progressivo e IRRF sobre a soma total da gratificação natalina.
+              </p>
             </div>
+          </header>
 
-            {/* Média Horas Extras & Meses Trabalhados */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800 flex justify-between">
-                  <span>Média de Horas Extras / Adicionais (R$)</span>
-                  <span className="text-slate-400 font-normal">Súmula 45 TST</span>
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  step={50}
-                  value={mediaHorasExtras || ''}
-                  onChange={(e) => setMediaHorasExtras(Number(e.target.value))}
-                  placeholder="0,00"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 font-mono"
-                />
-              </div>
+          {/* Interactive Client Engine */}
+          <CalculadoraDecimoTerceiroClient />
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800 flex justify-between">
-                  <span>Meses Trabalhados no Ano</span>
-                  <span className="text-emerald-700 font-bold font-mono">{mesesTrabalhados}/12 avos</span>
-                </label>
-                <input
-                  type="number"
-                  min={1}
-                  max={12}
-                  value={mesesTrabalhados}
-                  onChange={(e) => setMesesTrabalhados(Math.min(12, Math.max(1, Number(e.target.value))))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
-            </div>
+          {/* Middle In-Content Ad */}
+          <AdSlot slot="in_content" context="legal" />
 
-            {/* Dependentes & Pensão */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Dependentes IRRF</label>
-                <input
-                  type="number"
-                  min={0}
-                  max={10}
-                  value={dependentes}
-                  onChange={(e) => setDependentes(Math.max(0, Number(e.target.value)))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Guia Completo da Gratificação Natalina: Prazos, Frações e Deduções Fiscais
+            </h2>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-800">Pensão Alimentícia (R$)</label>
-                <input
-                  type="number"
-                  min={0}
-                  step={50}
-                  value={pensaoAlimenticia || ''}
-                  onChange={(e) => setPensaoAlimenticia(Number(e.target.value))}
-                  placeholder="0,00"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
-                />
-              </div>
-            </div>
-          </div>
+            <p>
+              A Gratificação de Natal, consagrada no vocabulário nacional como <strong>13º Salário</strong>, foi introduzida no ordenamento jurídico brasileiro pela Lei nº 4.090, sancionada em 13 de julho de 1962, e complementada pela Lei nº 4.749/1965 e Decreto nº 57.155/1965. Trata-se de uma obrigação legal irrenunciável devida a todos os trabalhadores urbanos, rurais e domésticos regidos pela Consolidação das Leis do Trabalho (CLT).
+            </p>
 
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>O 13º salário tem tributação exclusiva e definitiva na fonte, não se misturando com a remuneração mensal ordinária de dezembro.</span>
-          </div>
-        </div>
-
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Total Líquido do 13º Salário
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">
-              2 Parcelas
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-1">
-            <span className="text-xs text-emerald-200 font-medium">Valor Total Líquido (1ª + 2ª)</span>
-            <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-              R$ {res.totalLiquidoRecebido.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </div>
-            <span className="text-[11px] text-emerald-300 font-medium block">
-              Valor bruto integral apurado: R$ {res.decimoBrutoTotal.toFixed(2)}
-            </span>
-          </div>
-
-          {/* Cards das 2 Parcelas */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-bold block">
-                1ª Parcela (Até 30/Nov)
-              </span>
-              <div className="text-lg font-black font-mono text-emerald-400">
-                R$ {res.primeiraParcelaLiquida.toFixed(2)}
-              </div>
-              <span className="text-[10px] text-slate-400 block">50% bruto sem descontos</span>
-            </div>
-
-            <div className="p-3.5 rounded-2xl bg-slate-900 border border-slate-800 space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider font-bold block">
-                2ª Parcela (Até 20/Dez)
-              </span>
-              <div className="text-lg font-black font-mono text-cyan-400">
-                R$ {res.segundaParcelaLiquida.toFixed(2)}
-              </div>
-              <span className="text-[10px] text-slate-400 block">Líquida pós INSS e IRRF</span>
-            </div>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Desconto INSS (Tributação exclusiva 13º)</span>
-              <span className="font-mono text-rose-400 font-bold">- R$ {res.inssTotalDecimo.toFixed(2)}</span>
-            </div>
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>Desconto IRRF (Tributação exclusiva 13º)</span>
-              <span className="font-mono text-rose-400 font-bold">- R$ {res.irrfTotalDecimo.toFixed(2)}</span>
-            </div>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] text-slate-400 space-y-1.5">
-            <strong className="text-slate-300 block">Calendário Oficial de Pagamento:</strong>
-            <ul className="space-y-1">
-              <li>• <strong>1ª Parcela:</strong> {res.prazosPagamento.parcela1}.</li>
-              <li>• <strong>2ª Parcela:</strong> {res.prazosPagamento.parcela2}.</li>
+            <h3 className="text-lg font-semibold text-emerald-400">1. A Regra dos 15 Dias e a Proporcionalidade de Avos</h3>
+            <p>
+              O direito à gratificação integral (12/12 avos) é adquirido quando o trabalhador mantém vínculo empregatício ininterrupto ao longo de todo o ano civil (de 1º de janeiro a 31 de dezembro). Caso tenha sido admitido no curso do ano ou tenha sofrido rescisão, a remuneração é proporcional:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                <strong>Fração Igual ou Superior a 15 Dias (Art. 1º, § 2º Lei 4.090/62):</strong> Cada mês em que o colaborador trabalhou pelo menos 15 dias confere o direito a 1/12 (um doze avos) do salário devido em dezembro.
+              </li>
+              <li>
+                <strong>Trabalho Inferior a 15 Dias:</strong> Caso o empregado seja admitido no dia 18 de um mês com 30 dias, por exemplo, ele terá laborado apenas 13 dias naquele mês, não perfazendo a fração legal para aquele mês específico.
+              </li>
+              <li>
+                <strong>Faltas Injustificadas no Mês:</strong> Se as faltas injustificadas no decorrer de um mesmo mês civil somarem mais de 15 dias, o colaborador perderá o avo correspondente àquele período de apuração.
+              </li>
             </ul>
-          </div>
+
+            <h3 className="text-lg font-semibold text-emerald-400">2. Divisão Obrigatória em Duas Parcelas</h3>
+            <p>
+              A Lei nº 4.749/1965 veda expressamente o pagamento do 13º salário em parcela única no mês de dezembro, instituindo um cronograma bipartido de desembolso:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-600 bg-slate-900/50 text-slate-200">
+                    <th className="p-2">Parcela</th>
+                    <th className="p-2">Prazo Limite de Quitação</th>
+                    <th className="p-2">Composição e Descontos</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  <tr>
+                    <td className="p-2 font-semibold text-emerald-400">1ª Parcela (Adiantamento)</td>
+                    <td className="p-2">Entre 01/fev e 30/nov</td>
+                    <td className="p-2">Exatamente 50% do valor apurado. <strong>Sem nenhum desconto</strong> de INSS ou IRRF. FGTS (8%) é recolhido pelo empregador.</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-cyan-400">2ª Parcela (Quitação)</td>
+                    <td className="p-2">Até 20 de dezembro</td>
+                    <td className="p-2">Valor bruto total menos a 1ª parcela adiantada, subtraídos os descontos integrais de INSS e IRRF da totalidade do benefício.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="text-lg font-semibold text-emerald-400">3. Integração de Variáveis e Médias Salariais (Súmula 45 TST)</h3>
+            <p>
+              A base de cálculo da gratificação natalina não se restringe ao salário base fixado em carteira. Conforme a <strong>Súmula nº 45 do TST</strong>, a remuneração de serviço suplementar, habitualmente prestado, integra o cálculo da gratificação natalina.
+            </p>
+            <p>
+              Portanto, todas as parcelas de natureza contraprestativa habitual integram a média duodecimal apurada entre janeiro e novembro (com ajuste complementar em janeiro seguinte para apuração das variáveis de dezembro):
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Média das horas extras prestadas ao longo do período;</li>
+              <li>Média do adicional noturno e das horas noturnas reduzidas;</li>
+              <li>Adicionais de insalubridade e de periculosidade contratuais;</li>
+              <li>Comissões, percentagens e gratificações de função habituais.</li>
+            </ul>
+
+            <h3 className="text-lg font-semibold text-emerald-400">4. Tributação Exclusiva na Fonte e Multas por Descumprimento</h3>
+            <p>
+              O Decreto nº 9.580/2018 (Regulamento do Imposto sobre a Renda) e a legislação da Previdência Social consolidam que a gratificação natalina sofre retenção tributária com caráter <strong>exclusivo na fonte</strong>. O valor recolhido no dia 20 de dezembro encerra a obrigação tributária do empregado perante o Fisco quanto a essa receita, não se sujeitando a compensação de deduções na apuração anual ordinária.
+            </p>
+            <p>
+              O descumprimento dos prazos de quitação estipulados sujeita a empresa a auto de infração lavrado pela fiscalização do Ministério do Trabalho e Emprego (MTE), gerando multa administrativa por empregado prejudicado, sem prejuízo de incidência de juros e correção monetária.
+            </p>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre o 13º Salário
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>A empresa pode pagar o 13º salário em uma única parcela em dezembro?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Não. A Lei nº 4.749/1965 estabelece taxativamente a obrigatoriedade do adiantamento da 1ª parcela até 30 de novembro. O pagamento integral em cota única somente em dezembro constitui infração administrativa trabalhista e sujeita o empregador a autuação pelos auditores fiscais do MTE.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Quem foi demitido por justa causa tem direito ao 13º salário proporcional?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Não. O Artigo 3º da Lei nº 4.090/1962 estabelece expressamente que a demissão decorrente de falta grave com justa causa (Art. 482 da CLT) acarreta a perda total do direito ao recebimento do 13º salário proporcional. No entanto, qualquer outro tipo de desligamento (sem justa causa, pedido de demissão, término de contrato a termo ou rescisão indireta) preserva integralmente o direito ao recebimento dos avos proporcionais.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>O empregado afastado por auxílio-doença recebe o 13º de quem?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Durante os primeiros 15 dias de afastamento médico, a responsabilidade do pagamento proporcional do 13º cabe ao empregador. A partir do 16º dia, quando tem início o benefício do INSS (auxílio por incapacidade temporária), a responsabilidade pelo pagamento proporcional da gratificação natalina correspondente àquele período de afastamento é transferida à Previdência Social através do Abono Anual previdenciário.
+                </p>
+              </details>
+            </div>
+          </section>
+
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
         </div>
       </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            A Lei do Décimo Terceiro Salário no Brasil (Lei nº 4.090/1962)
-          </h2>
-          <p>
-            A Gratificação Natalina para os Trabalhadores, popularmente conhecida como <strong>13º Salário</strong>, foi instituída pela <strong>Lei nº 4.090 de 13 de julho de 1962</strong> e posteriormente regulamentada pela <strong>Lei nº 4.749/1965</strong>.
-          </p>
-          <p>
-            Trata-se de um benefício compulsório devido a todo empregado que trabalhe sob o regime da CLT, servidores públicos e aposentados ou pensionistas do INSS.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Regra dos 15 Dias e Proporcionalidade de Avos
-          </h3>
-          <p>
-            O cálculo do 13º baseia-se na contagem dos meses em que o empregado trabalhou no ano calendário:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-slate-700">
-            <li>
-              <strong>Fração Igual ou Superior a 15 Dias:</strong> O Artigo 1º, § 2º da Lei 4.090/1962 estabelece que a fração igual ou superior a 15 (quinze) dias de trabalho no mês é considerada como mês integral (1/12 avos).
-            </li>
-            <li>
-              <strong>Impacto de Faltas Injustificadas:</strong> Se no decorrer de um mês o trabalhador faltar sem justificativa legal por mais de 15 dias, ele perde o direito ao avo daquele mês específico.
-            </li>
-            <li>
-              <strong>Integração de Horas Extras e Adicionais (Súmula 45 TST):</strong> A remuneração base não se limita ao salário fixo: deve incluir a média anual de horas extras, adicional noturno, adicional de periculosidade ou insalubridade e comissões recebidas.
-            </li>
-          </ul>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Tributação Exclusiva na Fonte
-          </h3>
-          <p>
-            A incidência tributária do 13º salário possui uma característica jurídica singular: os descontos de <strong>INSS e IRRF são exclusivos na fonte</strong>. Isso significa que na Declaração Anual de Ajuste do IRPF o valor do 13º não se soma aos rendimentos tributáveis mensais ordinários para fins de mudança de faixa na declaração, sendo tributado de forma definitiva no pagamento de dezembro.
-          </p>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
-

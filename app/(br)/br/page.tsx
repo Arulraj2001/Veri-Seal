@@ -23,11 +23,25 @@ import {
 import { SITE_URL } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Utilitários e Calculadoras Oficiais do Brasil 2026 | CLT, MEI, Financiamento e PJe',
+  title: 'Utilitários e Calculadoras Oficiais do Brasil 2026 | CLT, MEI e Financiamento | Kagazo Brasil',
   description:
     'Portal de 20 calculadoras estatutárias gratuitas para o Brasil: Salário Líquido CLT 2026, Rescisão Trabalhista, DAS MEI, Financiamento SAC vs Price, CPF/CNPJ e Foto 3x4.',
   alternates: {
     canonical: `${SITE_URL}/br`,
+    languages: {
+      'pt-BR': `${SITE_URL}/br`,
+      'pt': `${SITE_URL}/br`,
+      'x-default': `${SITE_URL}/br`,
+    },
+  },
+  openGraph: {
+    title: 'Utilitários e Calculadoras Oficiais do Brasil 2026 | Kagazo Brasil',
+    description:
+      'Suíte de 20 calculadoras gratuitas para CLT, rescisão, impostos federais, MEI e utilitários estatutários do Brasil.',
+    url: `${SITE_URL}/br`,
+    locale: 'pt_BR',
+    siteName: 'Kagazo Brasil',
+    type: 'website',
   },
 };
 
@@ -187,8 +201,45 @@ export default function BrazilHubPage() {
     },
   ];
 
+  const allTools = categories.flatMap((c) => c.tools);
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: 'Utilitários e Calculadoras Oficiais do Brasil 2026',
+        url: `${SITE_URL}/br`,
+        description:
+          'Portal de 20 calculadoras estatutárias gratuitas para o Brasil: Salário Líquido CLT 2026, Rescisão Trabalhista, DAS MEI, Financiamento SAC vs Price, CPF/CNPJ e Foto 3x4.',
+        inLanguage: 'pt-BR',
+        isPartOf: {
+          '@type': 'WebSite',
+          name: 'Kagazo',
+          url: SITE_URL,
+        },
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Suíte de Ferramentas Estatutárias Brasil',
+        numberOfItems: allTools.length,
+        itemListElement: allTools.map((t, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: t.title,
+          url: `${SITE_URL}${t.href}`,
+        })),
+      },
+    ],
+  };
+
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-16">
       {/* Hero Section */}
       <div className="text-center space-y-5 max-w-4xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-xs">
@@ -309,6 +360,7 @@ export default function BrazilHubPage() {
         </div>
       </div>
     </div>
+  </>
   );
 }
 

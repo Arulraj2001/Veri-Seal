@@ -188,8 +188,45 @@ export default function SpanishHubPage() {
     },
   ];
 
+  const allTools = categories.flatMap((c) => c.tools);
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: 'Portal Oficial de Herramientas y Calculadoras en España 2026',
+        url: `${SITE_URL}/es`,
+        description:
+          '20 herramientas y calculadoras estatutarias oficiales para España 2026: Sueldo neto, IRPF autónomos, Despido e indemnización, Hipoteca Euríbor e ITP compraventa.',
+        inLanguage: 'es-ES',
+        isPartOf: {
+          '@type': 'WebSite',
+          name: 'Kagazo',
+          url: SITE_URL,
+        },
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Calculadoras y Herramientas España',
+        numberOfItems: allTools.length,
+        itemListElement: allTools.map((t, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: t.title,
+          url: `${SITE_URL}${t.href}`,
+        })),
+      },
+    ],
+  };
+
   return (
-    <div className="py-12 sm:py-20">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <div className="py-12 sm:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-16">
         {/* Hero Section */}
         <div className="max-w-3xl space-y-4">
@@ -271,5 +308,6 @@ export default function SpanishHubPage() {
         </div>
       </div>
     </div>
+  </>
   );
 }

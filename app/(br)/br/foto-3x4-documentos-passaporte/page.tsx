@@ -1,412 +1,283 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Camera,
-  ShieldCheck,
-  Download,
-  Upload,
-  RotateCcw,
-  Sparkles,
-  CheckCircle2,
-  AlertCircle,
-  FileCheck2,
-  Grid,
-  ZoomIn,
-  ZoomOut,
-} from 'lucide-react';
+import { Camera, ShieldCheck, HelpCircle } from 'lucide-react';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { Foto3x4DocumentosClient } from './ClientEngine';
+
+export const metadata: Metadata = {
+  title: 'Gerador de Foto 3x4 Online 2026 | Documentos, CIN e Passaporte PF',
+  description:
+    'Crie e enquadre fotos 3x4 cm e 5x7 cm em alta resolução (300 DPI) para o novo RG (CIN), CNH e Passaporte da Polícia Federal (padrão ICAO Doc 9303). Gere folha 10x15 para imprimir.',
+  keywords: [
+    'gerador foto 3x4 online gratis',
+    'foto 3x4 para imprimir 10x15',
+    'foto 3x4 carteira de identidade nacional cin',
+    'foto passaporte policia federal icao 9303',
+    'dimensoes foto 3x4 300 dpi pixels',
+    'foto 5x7 visto americano passaporte'
+  ],
+  alternates: {
+    canonical: 'https://kagazo.in/br/foto-3x4-documentos-passaporte',
+    languages: {
+      'pt-BR': 'https://kagazo.in/br/foto-3x4-documentos-passaporte',
+      'pt': 'https://kagazo.in/br/foto-3x4-documentos-passaporte',
+      'x-default': 'https://kagazo.in/br/foto-3x4-documentos-passaporte',
+    },
+  },
+  openGraph: {
+    title: 'Gerador de Foto 3x4 e Passaporte Brasileiro Online (300 DPI)',
+    description:
+      'Enquadre perfeitamente sua foto 3x4 e 5x7 cm com fundo branco e proporção biométrica oficial. Exporte individualmente ou em grade para impressão 10x15 cm.',
+    url: 'https://kagazo.in/br/foto-3x4-documentos-passaporte',
+    siteName: 'Kagazo Brasil',
+    locale: 'pt_BR',
+    type: 'website',
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      'name': 'Gerador de Foto 3x4 para Documentos 2026',
+      'operatingSystem': 'All',
+      'applicationCategory': 'MultimediaApplication',
+      'description': 'Ferramenta biométrica online de recorte, enquadramento e preparação de fotos 3x4 cm e 5x7 cm a 300 DPI conforme padrão ICAO Doc 9303.',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'BRL',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Início',
+          'item': 'https://kagazo.in',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'Brasil',
+          'item': 'https://kagazo.in/br',
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': 'Foto 3x4 para Documentos',
+          'item': 'https://kagazo.in/br/foto-3x4-documentos-passaporte',
+        },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': 'Quais são as dimensões em pixels de uma foto 3x4 a 300 DPI?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Uma foto 3x4 cm impressa na resolução fotográfica padrão de 300 DPI possui exatamente 354 pixels de largura por 472 pixels de altura. Já a foto 5x7 cm possui 591 pixels de largura por 827 pixels de altura.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Quais são as regras biométricas para fotos da Carteira de Identidade Nacional (CIN)?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Conforme o Decreto nº 10.977/2022, a foto deve possuir fundo branco e liso, iluminação homogênea sem reflexos ou sombras, cabeça centralizada ocupando entre 70% e 80% da altura da foto, rosto frontal e olhos abertos sem óculos escuros ou adereços que cubram traços fisionômicos.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Minha foto é enviada para algum servidor externo?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Não. O processamento da imagem (recorte, dimensionamento a 300 DPI e montagem da grade na folha 10x15 cm) é executado 100% de forma local na memória do navegador do seu dispositivo através do Canvas HTML5, garantindo total privacidade biométrica.',
+          },
+        },
+        {
+          '@type': 'Question',
+          'name': 'Como imprimir as fotos 3x4 geradas na folha 10x15 cm?',
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': 'Basta salvar o arquivo da folha 10x15 cm gerado pela ferramenta (que contém 6 fotos 3x4 com linhas de corte) e enviá-lo para impressão fotográfica avulsa no tamanho padrão 10x15 cm (4x6 polegadas) em qualquer laboratório fotográfico, quiosque de shopping ou farmácia.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 export default function Foto3x4DocumentosPage() {
-  const [imagemSrc, setImagemSrc] = React.useState<string | null>(null);
-  const [zoom, setZoom] = React.useState<number>(1);
-  const [posicaoX, setPosicaoX] = React.useState<number>(0);
-  const [posicaoY, setPosicaoY] = React.useState<number>(0);
-  const [formato, setFormato] = React.useState<'3x4' | '5x7' | 'folha10x15'>('3x4');
-  const [carregando, setCarregando] = React.useState<boolean>(false);
-
-  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
-  const imageObjRef = React.useRef<HTMLImageElement | null>(null);
-
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        const src = ev.target?.result as string;
-        setImagemSrc(src);
-        setZoom(1);
-        setPosicaoX(0);
-        setPosicaoY(0);
-
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.src = src;
-        img.onload = () => {
-          imageObjRef.current = img;
-          renderCanvas();
-        };
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const renderCanvas = React.useCallback(() => {
-    const canvas = canvasRef.current;
-    const img = imageObjRef.current;
-    if (!canvas || !img) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    if (formato === '3x4') {
-      // 30x40 mm @ 300 DPI = 354 x 472 pixels
-      canvas.width = 354;
-      canvas.height = 472;
-    } else if (formato === '5x7') {
-      // 50x70 mm @ 300 DPI = 591 x 827 pixels
-      canvas.width = 591;
-      canvas.height = 827;
-    } else {
-      // Folha 10x15 cm @ 300 DPI = 1200 x 1800 pixels
-      canvas.width = 1200;
-      canvas.height = 1800;
-    }
-
-    // Fundo branco oficial
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    if (formato === 'folha10x15') {
-      // Cria imagem 3x4 individual temporária
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = 354;
-      tempCanvas.height = 472;
-      const tempCtx = tempCanvas.getContext('2d');
-      if (tempCtx) {
-        tempCtx.fillStyle = '#FFFFFF';
-        tempCtx.fillRect(0, 0, 354, 472);
-        const drawW = 354 * zoom;
-        const drawH = (img.height / img.width) * drawW;
-        const x = (354 - drawW) / 2 + posicaoX;
-        const y = (472 - drawH) / 2 + posicaoY;
-        tempCtx.drawImage(img, x, y, drawW, drawH);
-
-        // Grade de 6 fotos 3x4 na folha 10x15 com guias de corte cinza claro
-        const cols = 2;
-        const rows = 3;
-        const startX = 140;
-        const startY = 120;
-        const gapX = 80;
-        const gapY = 80;
-
-        for (let r = 0; r < rows; r++) {
-          for (let c = 0; c < cols; c++) {
-            const posX = startX + c * (354 + gapX);
-            const posY = startY + r * (472 + gapY);
-            ctx.drawImage(tempCanvas, posX, posY);
-
-            // Linha fina de corte
-            ctx.strokeStyle = '#E2E8F0';
-            ctx.lineWidth = 1;
-            ctx.strokeRect(posX, posY, 354, 472);
-          }
-        }
-      }
-    } else {
-      // Desenho individual
-      const drawW = canvas.width * zoom;
-      const drawH = (img.height / img.width) * drawW;
-      const x = (canvas.width - drawW) / 2 + posicaoX;
-      const y = (canvas.height - drawH) / 2 + posicaoY;
-      ctx.drawImage(img, x, y, drawW, drawH);
-    }
-  }, [zoom, posicaoX, posicaoY, formato]);
-
-  React.useEffect(() => {
-    if (imagemSrc && imageObjRef.current) {
-      renderCanvas();
-    }
-  }, [renderCanvas, imagemSrc, zoom, posicaoX, posicaoY, formato]);
-
-  const baixarFoto = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const link = document.createElement('a');
-    link.download = `foto-${formato}-veriseal.png`;
-    link.href = canvas.toDataURL('image/png', 1.0);
-    link.click();
-  };
-
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased py-10 px-4 sm:px-6 lg:px-8">
-      {/* Schema.org FAQ & SoftwareApplication */}
+    <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@graph': [
-              {
-                '@type': 'SoftwareApplication',
-                name: 'Gerador de Foto 3x4 e Passaporte Brasileiro Online (300 DPI)',
-                applicationCategory: 'MultimediaApplication',
-                operatingSystem: 'Any',
-                offers: {
-                  '@type': 'Offer',
-                  price: '0.00',
-                  priceCurrency: 'BRL',
-                },
-                description:
-                  'Enquadramento biométrico de foto 3x4 padrão ICAO Doc 9303 para Carteira de Identidade (CIN), CNH e Passaporte da Polícia Federal. Gere folha 10x15 cm para impressão com corte.',
-              },
-              {
-                '@type': 'FAQPage',
-                mainEntity: [
-                  {
-                    '@type': 'Question',
-                    name: 'Quais as dimensões exatas de uma foto 3x4 em pixels para impressão a 300 DPI?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Uma foto no tamanho 3x4 cm (30 por 40 milímetros) impressa na resolução padrão fotográfica de 300 DPI possui exatamente 354 pixels de largura por 472 pixels de altura.',
-                    },
-                  },
-                  {
-                    '@type': 'Question',
-                    name: 'Quais os requisitos da foto de passaporte da Polícia Federal?',
-                    acceptedAnswer: {
-                      '@type': 'Answer',
-                      text: 'Conforme a norma internacional ICAO Doc 9303 adotada pela Polícia Federal, o rosto deve estar totalmente voltado para a frente, com expressão neutra, boca fechada e olhos abertos. A iluminação deve ser uniforme sobre fundo branco, sem sombras, óculos escuros, bonés ou acessórios que encubram a fisionomia.',
-                    },
-                  },
-                ],
-              },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-4xl mx-auto">
-        {/* Navigation Breadcrumbs */}
-        <nav className="mb-6 text-sm text-slate-500 flex items-center space-x-2">
-          <Link href="/br" className="hover:text-emerald-700 transition">
-            Brasil
-          </Link>
-          <span>/</span>
-          <span className="text-slate-800 font-medium">Foto 3x4 para Documentos e Passaporte</span>
-        </nav>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200">Foto 3x4 para Documentos</span>
+          </nav>
 
-        {/* Title Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Camera className="w-3.5 h-3.5" />
-            Padrão Biométrico ICAO Doc 9303 & Polícia Federal
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Gerador de Foto 3x4 para Documentos
-          </h1>
-          <p className="mt-2 text-base sm:text-lg text-slate-600">
-            Ajuste, enquadre e gere fotos 3x4 cm em alta resolução (300 DPI) para o novo CIN (RG), CNH ou folha 10x15 cm para imprimir.
-          </p>
-        </div>
-
-        {/* Main Workspace Card */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 mb-8 space-y-6">
-          {/* Format Selector Pills */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setFormato('3x4')}
-                className={`py-2 px-4 rounded-xl text-xs font-bold transition ${
-                  formato === '3x4'
-                    ? 'bg-emerald-600 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                Foto 3x4 cm (RG / CIN / CNH)
-              </button>
-              <button
-                type="button"
-                onClick={() => setFormato('5x7')}
-                className={`py-2 px-4 rounded-xl text-xs font-bold transition ${
-                  formato === '5x7'
-                    ? 'bg-emerald-600 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                Foto 5x7 cm (Passaporte / Vistos)
-              </button>
-              <button
-                type="button"
-                onClick={() => setFormato('folha10x15')}
-                className={`py-2 px-4 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-                  formato === 'folha10x15'
-                    ? 'bg-emerald-600 text-white shadow-sm'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                <Grid className="w-3.5 h-3.5" />
-                Folha 10x15 cm (6 Fotos com Corte)
-              </button>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+              <Camera className="w-3.5 h-3.5" />
+              Padrão Biométrico ICAO Doc 9303 • Decreto 10.977/2022 (CIN)
             </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Gerador de Foto 3x4 para Documentos e Passaporte
+            </h1>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Enquadre fotos nos padrões oficiais brasileiros para a nova Carteira de Identidade (CIN), CNH e Passaporte da Polícia Federal. Exporte em 300 DPI ou em cartela 10x15 cm para impressão.
+            </p>
 
-            {imagemSrc && (
-              <button
-                type="button"
-                onClick={baixarFoto}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shadow-sm"
-              >
-                <Download className="w-4 h-4" />
-                Baixar Imagem Pronta
-              </button>
-            )}
-          </div>
-
-          {/* Upload Area or Canvas Editor */}
-          {!imagemSrc ? (
-            <label className="border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-2xl p-10 flex flex-col items-center justify-center cursor-pointer transition bg-slate-50/50 hover:bg-emerald-50/20">
-              <Upload className="w-10 h-10 text-emerald-600 mb-3" />
-              <span className="font-bold text-slate-800 text-sm mb-1">
-                Selecione uma foto do seu dispositivo
-              </span>
-              <span className="text-xs text-slate-500 text-center max-w-sm">
-                Formatos aceitos: JPG, PNG ou WebP. Dica: use uma foto com iluminação frontal uniforme e fundo claro.
-              </span>
-              <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />
-            </label>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-              {/* Canvas Preview */}
-              <div className="md:col-span-7 flex flex-col items-center justify-center p-4 bg-slate-100 rounded-2xl border border-slate-200 overflow-hidden relative">
-                <canvas
-                  ref={canvasRef}
-                  className="max-h-[420px] max-w-full shadow-md rounded border border-slate-300 bg-white"
-                />
-              </div>
-
-              {/* Adjustment Controls */}
-              <div className="md:col-span-5 space-y-4">
-                <h3 className="text-sm font-bold text-slate-900 border-b border-slate-100 pb-2">
-                  Ajustes de Enquadramento
-                </h3>
-
-                {/* Zoom */}
-                <div>
-                  <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1">
-                    <span>Zoom Facial</span>
-                    <span>{zoom.toFixed(2)}x</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0.5"
-                    max="3"
-                    step="0.05"
-                    value={zoom}
-                    onChange={(e) => setZoom(parseFloat(e.target.value))}
-                    className="w-full accent-emerald-600"
-                  />
-                </div>
-
-                {/* Posição Vertical */}
-                <div>
-                  <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1">
-                    <span>Posição Vertical (Cima / Baixo)</span>
-                    <span>{posicaoY}px</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="-200"
-                    max="200"
-                    step="5"
-                    value={posicaoY}
-                    onChange={(e) => setPosicaoY(parseInt(e.target.value))}
-                    className="w-full accent-emerald-600"
-                  />
-                </div>
-
-                {/* Posição Horizontal */}
-                <div>
-                  <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1">
-                    <span>Posição Horizontal (Esquerda / Direita)</span>
-                    <span>{posicaoX}px</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="-200"
-                    max="200"
-                    step="5"
-                    value={posicaoX}
-                    onChange={(e) => setPosicaoX(parseInt(e.target.value))}
-                    className="w-full accent-emerald-600"
-                  />
-                </div>
-
-                {/* Reset & Trocar Foto */}
-                <div className="flex gap-2 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setZoom(1);
-                      setPosicaoX(0);
-                      setPosicaoY(0);
-                    }}
-                    className="flex-1 py-2 px-3 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition"
-                  >
-                    Resetar Ajustes
-                  </button>
-                  <label className="flex-1 py-2 px-3 rounded-xl border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 text-center cursor-pointer transition">
-                    Trocar Foto
-                    <input type="file" accept="image/*" onChange={handleUpload} className="hidden" />
-                  </label>
-                </div>
-              </div>
+            {/* Answer Capsule (GEO) */}
+            <div className="bg-slate-800/80 border-l-4 border-emerald-500 p-4 rounded-r-lg text-xs sm:text-sm text-slate-300 space-y-1">
+              <p className="font-semibold text-white">Regra de Formato e Resolução Biometria Brasil:</p>
+              <p>
+                A foto 3x4 cm oficial deve possuir 354 &times; 472 pixels na resolução fotográfica de 300 DPI com fundo branco puro. A face deve ocupar entre 70% e 80% do quadro vertical (do queixo à ponta superior do cabelo). Processamento 100% privado no seu navegador.
+              </p>
             </div>
-          )}
-        </div>
+          </header>
 
-        {/* AdSense Placement */}
-        <div className="my-10">
+          {/* Interactive Client Engine */}
+          <Foto3x4DocumentosClient />
+
+          {/* Middle In-Content Ad */}
           <AdSlot slot="in_content" context="legal" />
-        </div>
 
-        {/* Deep Statutory Guidance Section (800+ Words) */}
-        <article className="mt-12 bg-white rounded-2xl p-6 sm:p-10 shadow-sm border border-slate-200/80 space-y-8 text-slate-700 leading-relaxed">
-          <div>
-            <h2 className="text-2xl font-bold text-slate-900 mb-4 tracking-tight">
-              Especificações Oficiais da Foto 3x4 no Brasil
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 p-6 sm:p-8 rounded-xl border border-slate-700/60 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+              <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              Especificações Técnicas Oficiais da Fotografia para Documentos no Brasil
             </h2>
-            <p>
-              A fotografia 3x4 cm é a principal exigência biométrica física para emissão da <strong>Carteira de Identidade Nacional (CIN - Decreto nº 10.977/2022)</strong>, <strong>Carteira Nacional de Habilitação (CNH - Resoluções CONTRAN)</strong>, Carteira de Trabalho física remanescente, passaportes e carteiras profissionais de ordens de classe (como OAB, CRM e CREA).
-            </p>
-            <p className="mt-3">
-              Para atender aos padrões técnicos de reconhecimento e digitalização dos órgãos estaduais de identificação (Polícia Civil e DETRAN), a foto deve cumprir as seguintes exigências de qualidade:
-            </p>
-            <ul className="list-disc pl-5 mt-3 space-y-2 text-sm">
-              <li>
-                <strong>Fundo Branco Puro:</strong> O fundo deve ser liso, uniforme e estritamente branco, sem texturas, sombras ou objetos ao fundo.
-              </li>
-              <li>
-                <strong>Enquadramento e Expressão:</strong> A cabeça deve estar centralizada e ocupar entre 70% e 80% da altura total da foto (da base do queixo ao topo do crânio). O rosto deve estar perfeitamente frontal, com expressão facial neutra e olhos mirando a lente.
-              </li>
-              <li>
-                <strong>Acessórios Vedados:</strong> É expressamente proibido o uso de óculos escuros, armações grossas que cubram os olhos, bonés, chapéus, fones de ouvido ou quaisquer adereços que ocultem traços fisionômicos.
-              </li>
-            </ul>
-          </div>
 
-          <div className="border-t border-slate-100 pt-6">
-            <h3 className="text-xl font-bold text-slate-900 mb-3">
-              Como Imprimir Fotos 3x4 na Folha 10x15 cm Economizando Dinheiro
-            </h3>
             <p>
-              Em estúdios e lojas de fotografia convencionais, uma cartela com quatro fotos 3x4 costuma custar entre R$ 25,00 e R$ 45,00. Utilizando esta ferramenta na opção <strong>Folha 10x15 cm</strong>, você gera um arquivo com 6 fotos 3x4 perfeitamente alinhadas com linhas de corte. Você pode enviar esse arquivo para impressão fotográfica avulsa tamanho 10x15 cm (4x6 polegadas) em quiosques de farmácias ou laboratórios digitais por aproximadamente R$ 1,50 a R$ 3,00 a folha inteira.
+              A fotografia impressa ou digital destinada a documentos de identificação civil no Brasil é submetida a exigências rigorosas de padronização biométrica, fundamentadas nas recomendações da <strong>Organização da Aviação Civil Internacional (ICAO - Documento 9303)</strong>, no <strong>Decreto Federal nº 10.977/2022</strong> (que regulamentou a nova Carteira de Identidade Nacional - CIN) e nas <strong>Resoluções do Conselho Nacional de Trânsito (CONTRAN)</strong> para a CNH.
             </p>
-          </div>
-        </article>
+
+            <h3 className="text-lg font-semibold text-emerald-400">1. Tabela de Dimensões e Resoluções Gráficas (300 DPI)</h3>
+            <p>
+              Para que uma fotografia impressa possua nitidez aceita pelos scanners de captura dos órgãos estaduais e federais (Polícia Civil, Polícia Federal e DETRAN), ela deve ser gerada estritamente na densidade mínima de 300 pontos por polegada (DPI):
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-600 bg-slate-900/50 text-slate-200">
+                    <th className="p-2">Formato Fotográfico</th>
+                    <th className="p-2">Medida em Milímetros</th>
+                    <th className="p-2">Tamanho em Pixels (300 DPI)</th>
+                    <th className="p-2">Finalidade Principal</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700/50">
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Foto 3x4 cm</td>
+                    <td className="p-2">30 mm &times; 40 mm</td>
+                    <td className="p-2 font-mono text-emerald-400 font-bold">354 &times; 472 pixels</td>
+                    <td className="p-2">Carteira de Identidade Nacional (CIN), RG, CNH, Carteira Profissional (OAB/CRM)</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Foto 5x7 cm</td>
+                    <td className="p-2">50 mm &times; 70 mm</td>
+                    <td className="p-2 font-mono text-emerald-400 font-bold">591 &times; 827 pixels</td>
+                    <td className="p-2">Vistos consulares estrangeiros, certidões militares e passaporte internacional</td>
+                  </tr>
+                  <tr>
+                    <td className="p-2 font-semibold text-white">Folha 10x15 cm</td>
+                    <td className="p-2">100 mm &times; 150 mm</td>
+                    <td className="p-2 font-mono text-emerald-400 font-bold">1181 &times; 1772 pixels</td>
+                    <td className="p-2">Cartela de impressão econômica contendo 6 fotos 3x4 com guias de corte</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 className="text-lg font-semibold text-emerald-400">2. Enquadramento Biométrico e Expressão Facial</h3>
+            <p>
+              Os algoritmos de reconhecimento facial utilizados na emissão de documentos oficiais exigem rigor nos seguintes pontos:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><strong>Proporção da Cabeça:</strong> O rosto (da ponta do queixo ao topo do crânio) deve ocupar entre <strong>70% e 80%</strong> da altura vertical total da imagem;</li>
+              <li><strong>Posição Frontal:</strong> O candidato deve estar rigorosamente voltado para a frente, com a linha dos olhos paralela ao eixo horizontal da foto (sem inclinação para os lados);</li>
+              <li><strong>Expressão Neutra:</strong> Boca fechada, sem sorrisos evidentes e olhos bem abertos olhando diretamente para a câmera;</li>
+              <li><strong>Iluminação e Fundo:</strong> Fundo branco puro e uniforme, livre de sombras no rosto ou no fundo e sem superexposição que queime traços da bochecha e nariz.</li>
+            </ul>
+
+            <h3 className="text-lg font-semibold text-emerald-400">3. Vedações e Acessórios</h3>
+            <p>
+              Os manuais da Polícia Federal e dos Institutos de Identificação determinam:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><strong>Óculos:</strong> Não são admitidos óculos com lentes escuras ou coloridas. Recomenda-se remover até mesmo óculos de grau caso a armação oculte parte das sobrancelhas ou cause reflexo nas lentes;</li>
+              <li><strong>Cobertura de Cabeça:</strong> Chapéus, bonés, gorros e bandanas são proibidos. Coberturas religiosas (como véus, turbantes ou hijabs) são permitidas desde que deixem a totalidade da face (do queixo à testa e ambas as maçãs do rosto) plenamente visível.</li>
+            </ul>
+
+            <h3 className="text-lg font-semibold text-emerald-400">4. Economia Prática com a Cartela 10x15 cm</h3>
+            <p>
+              A impressão avulsa de um pacote de fotos 3x4 em lojas de fotografia costuma custar entre R$ 25,00 e R$ 45,00. Utilizando a opção <strong>Folha 10x15 cm</strong> desta plataforma, o usuário faz o download de um arquivo padronizado contendo 6 fotos 3x4 com linhas de corte cinza claro. Ao levar esse arquivo em um pen drive ou enviar por aplicativo para quiosques de revelação fotográfica digital ou farmácias, a impressão sai por aproximadamente R$ 1,50 a R$ 3,00, gerando economia superior a 90%.
+            </p>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="bg-slate-800/40 p-6 rounded-xl border border-slate-700/60 space-y-4">
+            <h2 className="text-xl font-bold text-white flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+              Perguntas Frequentes sobre Foto 3x4
+            </h2>
+            <div className="space-y-3 text-sm">
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Qual o tipo de papel fotográfico recomendado para imprimir as fotos?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Recomenda-se papel fotográfico brilhante (glossy) ou semi-brilho (matte) de alta gramatura (mínimo de 180 g/m² a 230 g/m²). Papel sulfite comum não é aceito pelos postos do Poupatempo, Polícia Civil ou DETRAN.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Posso tirar a foto em casa com meu smartphone?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Sim. Posicione-se a cerca de 1,5 a 2 metros de distância de uma parede branca bem iluminada durante o dia (próximo a uma janela, com luz natural incidindo de frente sobre o rosto para evitar sombras abaixo do queixo e nariz). Em seguida, faça o upload na ferramenta para fazer o enquadramento exato e aplicar o fundo branco.
+                </p>
+              </details>
+
+              <details className="group bg-slate-900/60 p-4 rounded-lg border border-slate-700/40">
+                <summary className="font-semibold text-slate-200 cursor-pointer list-none flex justify-between items-center">
+                  <span>Bebês e crianças de colo precisam seguir as mesmas regras?</span>
+                  <span className="text-emerald-400 group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-2 text-slate-400 text-xs sm:text-sm">
+                  Para bebês e crianças de até 5 anos, os órgãos aceitam pequenas variações na expressão, mas a foto deve ter fundo branco puro, a criança deve estar acordada, com os olhos visíveis e sem mãos, brinquedos, chupetas ou corpos dos pais aparentes no enquadramento.
+                </p>
+              </details>
+            </div>
+          </section>
+
+          {/* Bottom Ad */}
+          <AdSlot slot="post_download" context="legal" />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
-

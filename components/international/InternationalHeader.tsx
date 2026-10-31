@@ -633,14 +633,7 @@ export function InternationalHeader({ country }: { country: CountryCode }) {
             </div>
           </Link>
 
-          {/* Quick link back to Global Hub */}
-          <Link
-            href="/"
-            className="hidden xl:inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-slate-950 border-l border-slate-200 pl-4 transition-colors"
-            title="Kagazo Global Citizen Suite"
-          >
-            <span>&larr; Global Suite</span>
-          </Link>
+
         </div>
 
         {/* Center: Desktop Categorized Navigation with Mega-Dropdown */}

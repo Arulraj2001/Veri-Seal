@@ -1,383 +1,257 @@
-'use client';
-
 import * as React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Building2,
-  ShieldCheck,
-  Sparkles,
-  RotateCcw,
-  CheckCircle2,
-  AlertCircle,
-  Coins,
-  Store,
-  Truck,
-  Wrench,
-  Percent,
-} from 'lucide-react';
+import { Sparkles, Building2, FileText, CheckCircle2 } from 'lucide-react';
+import { CalculadoraDasMeiClient } from './ClientEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { SITE_URL } from '@/lib/constants';
 
-interface DasMeiResult {
-  salarioMinimo: number;
-  inssValor: number;
-  icmsValor: number;
-  issValor: number;
-  valorTotalDasMensal: number;
-  custoAnualDas: number;
-  faturamentoAcumuladoAno: number;
-  limiteAnual: number;
-  statusFaturamento: 'dentro_limite' | 'alerta_20' | 'desenquadramento_grave';
-  percentualUtilizadoLimite: number;
-}
+export const metadata: Metadata = {
+  title: 'Calculadora DAS MEI 2026 : Valor Mensal, Tabela INSS, ICMS, ISS e Limite Anual | Kagazo Brasil',
+  description:
+    'Calcule o valor exato da guia DAS MEI em 2026 segundo a Lei Complementar 123/2006. Valores para Comércio, Serviços, MEI Caminhoneiro (LC 188/21) e monitoramento do limite de R$ 81.000.',
+  keywords: [
+    'calculadora das mei 2026',
+    'valor guia mensal mei comercio servicos',
+    'quanto custa mei por mes 2026',
+    'limite faturamento anual mei 81 mil',
+    'recolhimento inss mei 5 porcento salario minimo',
+    'mei caminhoneiro 12 porcento lc 188 2021',
+    'vencimento boleto das dia 20 portal empreendedor',
+    'desenquadramento mei excesso faturamento 20 porcento',
+  ],
+  alternates: {
+    canonical: `${SITE_URL}/br/calculadora-das-mei`,
+    languages: {
+      'pt-BR': `${SITE_URL}/br/calculadora-das-mei`,
+      'pt': `${SITE_URL}/br/calculadora-das-mei`,
+      'x-default': `${SITE_URL}/br/calculadora-das-mei`,
+    },
+  },
+  openGraph: {
+    title: 'Calculadora DAS MEI 2026 | Kagazo Brasil',
+    description:
+      'Simulador tributário oficial do MEI: valores mensais do DAS para todas as atividades, Previdência e teto de faturamento.',
+    url: `${SITE_URL}/br/calculadora-das-mei`,
+    locale: 'pt_BR',
+    siteName: 'Kagazo Brasil',
+    type: 'website',
+  },
+};
+
+const FAQS = [
+  {
+    question: 'Qual é o valor da guia DAS do MEI em 2026 e quando vence?',
+    answer:
+      'A guia DAS (Documento de Arrecadação do Simples Nacional) vence todo dia 20 de cada mês (ou no primeiro dia útil subsequente). O valor é composto por: 5% do Salário Mínimo nacional a título de contribuição previdenciária ao INSS, somado a R$ 1,00 de ICMS (se atuar no comércio ou indústria) e/ou R$ 5,00 de ISS (se for prestador de serviços). Para o MEI Caminhoneiro, a alíquota previdenciária é de 12% do salário mínimo.',
+  },
+  {
+    question: 'Qual é o teto máximo de faturamento anual do MEI?',
+    answer:
+      'O limite geral de receita bruta anual para o Microempreendedor Individual é de R$ 81.000,00 por ano-calendário (equivalente a uma média mensal de R$ 6.750,00). Para empresas abertas durante o ano, o limite é proporcional aos meses de atividade. Já para o MEI Caminhoneiro (LC 188/2021), o teto de faturamento anual é de R$ 251.600,00.',
+  },
+  {
+    question: 'O que acontece se o MEI faturar mais do que o limite permitido?',
+    answer:
+      'Se o faturamento ultrapassar o teto em até 20% (até R$ 97.200,00), o MEI recolhe o DAS normalmente até o fim do ano e, em janeiro seguinte, recolhe uma guia DAS complementar sobre o excesso, migrando para Microempresa (ME) no Simples Nacional. Se o faturamento ultrapassar mais de 20% do teto, o desenquadramento é retroativo a janeiro do mesmo ano (ou data de abertura), com tributação sobre todas as receitas pelo Simples Nacional.',
+  },
+  {
+    question: 'O pagamento do DAS garante quais benefícios previdenciários do INSS?',
+    answer:
+      'O recolhimento do DAS assegura ao MEI: aposentadoria por idade (62 anos para mulheres e 65 anos para homens, com 15 anos de carência); auxílio por incapacidade temporária (auxílio-doença); salário-maternidade (com carência de 10 meses de contribuição); e, para seus dependentes legais, pensão por morte e auxílio-reclusão.',
+  },
+];
 
 export default function CalculadoraDasMeiPage() {
-  const [salarioMinimo, setSalarioMinimo] = React.useState<number>(1412);
-  const [tipoAtividade, setTipoAtividade] = React.useState<'comercio' | 'servicos' | 'comercio_servicos' | 'caminhoneiro'>('servicos');
-  const [faturamentoEstimadoAno, setFaturamentoEstimadoAno] = React.useState<number>(60000);
-
-  const calcolaDas = React.useCallback((): DasMeiResult => {
-    const sm = Math.max(0, salarioMinimo);
-    const fat = Math.max(0, faturamentoEstimadoAno);
-
-    let inssValor = 0;
-    let icmsValor = 0;
-    let issValor = 0;
-    let limiteAnual = 81000;
-
-    if (tipoAtividade === 'caminhoneiro') {
-      // MEI Caminhoneiro: 12% do salário mínimo (LC 188/2021)
-      inssValor = sm * 0.12;
-      icmsValor = 1.0;
-      issValor = 5.0;
-      limiteAnual = 251600;
-    } else {
-      // MEI Geral: 5% do salário mínimo
-      inssValor = sm * 0.05;
-
-      if (tipoAtividade === 'comercio') {
-        icmsValor = 1.0;
-        issValor = 0;
-      } else if (tipoAtividade === 'servicos') {
-        icmsValor = 0;
-        issValor = 5.0;
-      } else {
-        // Comércio e Serviços
-        icmsValor = 1.0;
-        issValor = 5.0;
-      }
-    }
-
-    const valorTotalDasMensal = inssValor + icmsValor + issValor;
-    const custoAnualDas = valorTotalDasMensal * 12;
-
-    const percentualUtilizadoLimite = limiteAnual > 0 ? (fat / limiteAnual) * 100 : 0;
-    let statusFaturamento: 'dentro_limite' | 'alerta_20' | 'desenquadramento_grave' = 'dentro_limite';
-
-    if (fat <= limiteAnual) {
-      statusFaturamento = 'dentro_limite';
-    } else if (fat <= limiteAnual * 1.2) {
-      statusFaturamento = 'alerta_20';
-    } else {
-      statusFaturamento = 'desenquadramento_grave';
-    }
-
-    return {
-      salarioMinimo: sm,
-      inssValor,
-      icmsValor,
-      issValor,
-      valorTotalDasMensal,
-      custoAnualDas,
-      faturamentoAcumuladoAno: fat,
-      limiteAnual,
-      statusFaturamento,
-      percentualUtilizadoLimite,
-    };
-  }, [salarioMinimo, tipoAtividade, faturamentoEstimadoAno]);
-
-  const res = calcolaDas();
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'SoftwareApplication',
+        name: 'Calculadora DAS MEI Brasil 2026',
+        applicationCategory: 'FinanceApplication',
+        operatingSystem: 'All',
+        url: `${SITE_URL}/br/calculadora-das-mei`,
+        offers: {
+          '@type': 'Offer',
+          price: '0.00',
+          priceCurrency: 'BRL',
+        },
+        provider: {
+          '@type': 'Organization',
+          name: 'Kagazo Brasil',
+          url: `${SITE_URL}/br`,
+        },
+        description:
+          'Calcule o valor da guia mensal DAS para MEI (Comércio, Serviços e Caminhoneiro) e monitore o teto de faturamento anual.',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Início',
+            item: SITE_URL,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Brasil',
+            item: `${SITE_URL}/br`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Calculadora DAS MEI',
+            item: `${SITE_URL}/br/calculadora-das-mei`,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-10">
-      <nav className="text-xs text-slate-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-slate-800 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/br" className="hover:text-slate-800 transition-colors">Brasil</Link>
-        <span>/</span>
-        <span className="text-emerald-700 font-semibold">DAS MEI 2026</span>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
-      <div className="space-y-4">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-2xs">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Lei Complementar 123/2006, LC 188/2021 & Portal do Empreendedor</span>
-        </div>
+      <div className="min-h-screen bg-slate-900 text-slate-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto space-y-8">
+          {/* Breadcrumb Visual */}
+          <nav aria-label="Breadcrumb" className="text-xs text-slate-400 flex items-center space-x-2">
+            <Link href="/" className="hover:text-emerald-400 transition-colors">Início</Link>
+            <span>/</span>
+            <Link href="/br" className="hover:text-emerald-400 transition-colors">Brasil</Link>
+            <span>/</span>
+            <span className="text-slate-200 font-medium">DAS MEI 2026</span>
+          </nav>
 
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-          Calculadora DAS MEI 2026 Atualizada <br className="hidden sm:inline" />
-          <span className="text-emerald-600">Valor da Guia Mensal, ICMS, ISS e Limite Anual</span>
-        </h1>
-
-        <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
-          <strong>Resposta Tributária Direta:</strong> O <strong>Microempreendedor Individual (MEI)</strong> recolhe mensalmente a guia única do <strong>DAS (Documento de Arrecadação do Simples Nacional)</strong>, com vencimento em todo dia 20. O valor compõe-se de <strong>5% do Salário Mínimo (INSS)</strong>, acrescido de <strong>R$ 1,00 de ICMS</strong> (comércio/indústria) e/ou <strong>R$ 5,00 de ISS</strong> (prestação de serviços). O limite anual de faturamento geral é de <strong>R$ 81.000,00</strong>.
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Controls Column (7 cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/90 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
-            <div className="flex items-center gap-2 font-black text-sm text-slate-900 uppercase tracking-wider">
-              <Building2 className="w-4 h-4 text-emerald-600" />
-              <span>Atividade & Faturamento</span>
+          {/* Header */}
+          <header className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Lei Complementar 123/2006, LC 188/2021 & Portal do Empreendedor</span>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setSalarioMinimo(1412);
-                setTipoAtividade('servicos');
-                setFaturamentoEstimadoAno(60000);
-              }}
-              className="text-xs text-slate-500 hover:text-emerald-600 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Redefinir</span>
-            </button>
-          </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              Calculadora DAS MEI 2026 Atualizada <br className="hidden sm:inline" />
+              <span className="text-emerald-400">Valor da Guia Mensal, ICMS, ISS e Limite Anual</span>
+            </h1>
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Consulte os valores oficiais da guia unificada DAS do Microempreendedor Individual. Apuração de INSS, ICMS e ISS para comércio, prestação de serviços e MEI caminhoneiro, com termômetro de faturamento anual contra o teto de R$ 81.000,00.
+            </p>
+          </header>
 
-          <div className="space-y-4">
-            {/* Tipo de Atividade */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800">Tipo de Atividade Econômica</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setTipoAtividade('servicos')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    tipoAtividade === 'servicos'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Wrench className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Prestação de Serviços</span>
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">INSS + R$ 5,00 ISS</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setTipoAtividade('comercio')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    tipoAtividade === 'comercio'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Store className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Comércio ou Indústria</span>
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">INSS + R$ 1,00 ICMS</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setTipoAtividade('comercio_servicos')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    tipoAtividade === 'comercio_servicos'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span>Comércio e Serviços (Misto)</span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">INSS + R$ 1,00 + R$ 5,00</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setTipoAtividade('caminhoneiro')}
-                  className={`px-3 py-2.5 rounded-xl border text-xs font-bold transition-all text-left flex flex-col justify-between ${
-                    tipoAtividade === 'caminhoneiro'
-                      ? 'bg-emerald-50 border-emerald-600 text-emerald-950 ring-1 ring-emerald-600'
-                      : 'border-slate-200 text-slate-700 hover:border-slate-300'
-                  }`}
-                >
-                  <span className="flex items-center gap-1.5">
-                    <Truck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>MEI Caminhoneiro</span>
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-normal mt-1">12% INSS (LC 188/21)</span>
-                </button>
+          {/* Answer Capsule (GEO Optimization) */}
+          <section className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 backdrop-blur-sm space-y-4 shadow-xl">
+            <div className="flex items-start gap-3">
+              <Building2 className="w-5 h-5 text-emerald-400 mt-1 shrink-0" />
+              <div>
+                <h2 className="text-base font-semibold text-white">
+                  Resumo Tributário: Composição da Contribuição do MEI
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                  O <strong>Microempreendedor Individual (MEI)</strong> recolhe mensalmente o <strong>DAS</strong> com vencimento todo <strong>dia 20</strong>. A guia inclui a contribuição previdenciária de <strong>5% do salário mínimo</strong> (R$ 70,60 para SM de R$ 1.412,00 ou 12% para MEI Caminhoneiro), mais <strong>R$ 1,00 de ICMS</strong> estadual e/ou <strong>R$ 5,00 de ISS</strong> municipal. O teto de faturamento é de <strong>R$ 81.000,00 anuais</strong> (R$ 251.600,00 para caminhoneiros), assegurando cobertura integral de benefícios previdenciários do INSS.
+                </p>
               </div>
             </div>
+          </section>
 
-            {/* Salário Mínimo */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-800 flex justify-between">
-                <span>Salário Mínimo Nacional de Referência (R$)</span>
-                <span className="font-mono text-emerald-700">R$ {salarioMinimo.toFixed(2)}</span>
-              </label>
-              <input
-                type="number"
-                min={1300}
-                step={10}
-                value={salarioMinimo || ''}
-                onChange={(e) => setSalarioMinimo(Number(e.target.value))}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 font-mono"
-              />
-            </div>
+          {/* Interactive Calculator Engine */}
+          <CalculadoraDasMeiClient />
 
-            {/* Faturamento Anual Estimado */}
-            <div className="space-y-1.5">
-              <label className="text-xs font-black uppercase tracking-wider text-slate-800 flex justify-between">
-                <span>Faturamento Anual do MEI (R$)</span>
-                <span className="font-mono text-emerald-700 font-bold">
-                  R$ {faturamentoEstimadoAno.toLocaleString('pt-BR')}
-                </span>
-              </label>
-              <input
-                type="number"
-                min={0}
-                step={1000}
-                value={faturamentoEstimadoAno || ''}
-                onChange={(e) => setFaturamentoEstimadoAno(Number(e.target.value))}
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 text-sm font-bold text-slate-900 transition-all font-mono"
-                placeholder="Ex. 60000"
-              />
-              <span className="text-[11px] text-slate-500 block">
-                Limite do MEI: R$ {res.limiteAnual.toLocaleString('pt-BR')} por ano civil (
-                {res.percentualUtilizadoLimite.toFixed(1)}% utilizado).
-              </span>
-            </div>
+          {/* In-content Ad Contextual */}
+          <div className="my-8">
+            <AdSlot slot="in_content" context="legal" />
           </div>
 
-          <div className="pt-2 flex items-center gap-2 text-xs text-slate-600 font-medium">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Guia DAS oficial calculada conforme as resoluções do Comitê Gestor do Simples Nacional (CGSN).</span>
-          </div>
-        </div>
+          {/* Authoritative Statutory Guide */}
+          <article className="prose prose-invert max-w-none bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 sm:p-8 space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 text-emerald-400" />
+              Regime Jurídico e Tributário do Microempreendedor Individual
+            </h2>
 
-        {/* Results Column (5 cols) */}
-        <div className="lg:col-span-5 bg-slate-950 text-white p-6 sm:p-7 rounded-3xl shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400">
-              Valor da Guia Mensal DAS
-            </span>
-            <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 font-mono">
-              Vencimento Dia 20
-            </span>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 space-y-1">
-            <span className="text-xs text-emerald-200 font-medium">Valor Mensal Fixo Unificado</span>
-            <div className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white">
-              R$ {res.valorTotalDasMensal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </div>
-            <span className="text-[11px] text-emerald-300 font-medium block">
-              R$ {res.custoAnualDas.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} por ano (12 guias)
-            </span>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-              <span>INSS Previdência Social ({tipoAtividade === 'caminhoneiro' ? '12%' : '5%'})</span>
-              <span className="font-mono text-emerald-400 font-bold">R$ {res.inssValor.toFixed(2)}</span>
-            </div>
-            {res.icmsValor > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>ICMS Estadual (Comércio/Indústria)</span>
-                <span className="font-mono text-cyan-400 font-bold">R$ {res.icmsValor.toFixed(2)}</span>
-              </div>
-            )}
-            {res.issValor > 0 && (
-              <div className="flex justify-between py-1 border-b border-slate-800/70 text-slate-300">
-                <span>ISS Municipal (Prestador de Serviços)</span>
-                <span className="font-mono text-cyan-400 font-bold">R$ {res.issValor.toFixed(2)}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Alerta de Faturamento */}
-          <div
-            className={`p-3.5 rounded-xl border text-[11px] space-y-1 ${
-              res.statusFaturamento === 'dentro_limite'
-                ? 'bg-slate-900 border-slate-800 text-slate-300'
-                : res.statusFaturamento === 'alerta_20'
-                ? 'bg-amber-950/40 border-amber-800/60 text-amber-200'
-                : 'bg-rose-950/40 border-rose-800/60 text-rose-200'
-            }`}
-          >
-            <strong className="block font-bold">Status do Faturamento Anual:</strong>
-            {res.statusFaturamento === 'dentro_limite' && (
-              <p>Faturamento regular dentro do teto anual do MEI ({res.percentualUtilizadoLimite.toFixed(1)}%).</p>
-            )}
-            {res.statusFaturamento === 'alerta_20' && (
-              <p>Atenção: Faturamento ultrapassou o teto em até 20%. Será necessário recolher DAS complementar e migrar para ME no próximo ano.</p>
-            )}
-            {res.statusFaturamento === 'desenquadramento_grave' && (
-              <p>Crítico: Faturamento ultrapassou 20% do teto. Desenquadramento do MEI com tributação retroativa pelo Simples Nacional.</p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <AdSlot slot="in_content" context="legal" />
-
-      {/* Guide Content */}
-      <div className="bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-sm space-y-8 text-slate-800 leading-relaxed text-sm sm:text-base">
-        <div className="space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
-            Como Funciona a Tributação do MEI no Brasil
-          </h2>
-          <p>
-            O <strong>Microempreendedor Individual (MEI)</strong> foi instituído pela <strong>Lei Complementar nº 128/2008</strong>, que inseriu novos dispositivos na <strong>Lei Complementar nº 123/2006</strong> (Estatuto Nacional da Microempresa).
-          </p>
-          <p>
-            A principal vantagem do MEI é o enquadramento no <strong>SIMEI (Sistema de Recolhimento em Valores Fixos Mensais dos Tributos do Simples Nacional)</strong>. Em vez de pagar percentuais sobre cada nota fiscal emitida, o empreendedor recolhe uma quantia fixa mensal, independentemente do volume faturado naquele mês.
-          </p>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Benefícios Previdenciários Assegurados pelo DAS
-          </h3>
-          <p>
-            O pagamento pontual da guia mensal DAS garante ao microempreendedor a qualidade de segurado da Previdência Social, assegurando:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-slate-700">
-            <li>Aposentadoria por idade (62 anos para mulheres e 65 anos para homens, com carência mínima de 15 anos de contribuição);</li>
-            <li>Auxílio por incapacidade temporária (antigo auxílio-doença);</li>
-            <li>Salário-maternidade (com carência de 10 contribuições mensais);</li>
-            <li>Pensão por morte e auxílio-reclusão para os dependentes diretos.</li>
-          </ul>
-        </div>
-
-        <div className="space-y-4 pt-4 border-t border-slate-100">
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Regras de Desenquadramento por Excesso de Receita
-          </h3>
-          <p>
-            Ao monitorar o faturamento anual do MEI, existem duas situações previstas na legislação:
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <strong className="text-slate-900 block font-bold">1. Excesso de até 20% (Até R$ 97.200,00)</strong>
-              <p className="text-slate-600">
-                O empreendedor continua pagando o DAS normal até dezembro. Em janeiro do ano seguinte, gera uma guia complementar sobre o valor excedido e passa a atuar como Microempresa (ME).
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                1. O Sistema SIMEI e a Lei Complementar nº 123/2006
+              </h3>
+              <p>
+                O regime do MEI foi introduzido pela Lei Complementar nº 128/2008 no âmbito do Estatuto Nacional da Microempresa e Empresa de Pequeno Porte (Lei Complementar nº 123/2006), criando o <strong>Sistema de Recolhimento em Valores Fixos Mensais dos Tributos abrangidos pelo Simples Nacional (SIMEI)</strong>. O modelo desburocratizou o recolhimento tributário ao dispensar a escrituração contábil complexa e unificar impostos federais, estaduais e municipais em uma única guia de arrecadação bancária.
               </p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-              <strong className="text-slate-900 block font-bold">2. Excesso Superior a 20% (Acima de R$ 97.200,00)</strong>
-              <p className="text-slate-600">
-                O desenquadramento é retroativo a janeiro do mesmo ano (ou mês de abertura), obrigando o recolhimento de tributos pelo Simples Nacional com juros e multa sobre todas as notas fiscais emitidas no ano.
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                2. A Natureza Híbrida do DAS: Tributos e Seguridade Social
+              </h3>
+              <p>
+                A arrecadação do DAS não possui natureza estritamente tributária fiscal, integrando recursos de seguridade social e de receita compartilhada:
+              </p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  <strong>Contribuição Previdenciária ao INSS (5% do SM):</strong> Destinada ao custeio do Regime Geral de Previdência Social, atribuindo ao empresário a condição de segurado contribuinte individual com direito a auxílio-doença, salário-maternidade e aposentadoria por idade.
+                </li>
+                <li>
+                  <strong>Imposto Sobre Circulação de Mercadorias (ICMS - R$ 1,00):</strong> Cota fixa repassada ao Estado da federação onde o MEI está domiciliado para atividades comerciais, fabris ou industriais.
+                </li>
+                <li>
+                  <strong>Imposto Sobre Serviços de Qualquer Natureza (ISS - R$ 5,00):</strong> Cota fixa creditada ao Município de localização do estabelecimento para todas as atividades de prestação de serviços.
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white">
+                3. A Disciplina do MEI Caminhoneiro (Lei Complementar nº 188/2021)
+              </h3>
+              <p>
+                Diante das peculiaridades econômicas do transporte autônomo de cargas, a Lei Complementar nº 188/2021 instituiu a modalidade especial do MEI Caminhoneiro. Em razão dos elevados custos operacionais de combustível e manutenção veicular, o teto de receita bruta foi elevado para <strong>R$ 251.600,00 anuais</strong>, e a alíquota previdenciária fixada em <strong>12% do salário mínimo</strong>, resguardando os mesmos direitos protetivos aos transportadores autônomos.
               </p>
             </div>
+          </article>
+
+          {/* FAQ Accordion Section */}
+          <section className="space-y-4 bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 sm:p-8">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <h2 className="text-xl sm:text-2xl font-bold text-white">
+                Perguntas Frequentes sobre a Guia DAS MEI
+              </h2>
+            </div>
+            <div className="divide-y divide-slate-700/60">
+              {FAQS.map((faq, idx) => (
+                <div key={idx} className="py-4 space-y-2">
+                  <h3 className="text-base font-medium text-slate-100">
+                    {faq.question}
+                  </h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Bottom Ad Contextual */}
+          <div className="my-6">
+            <AdSlot slot="post_download" context="legal" />
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
-
