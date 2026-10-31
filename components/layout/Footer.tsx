@@ -8,6 +8,8 @@ import {
   Check,
   Copy,
   Headphones,
+  Globe2,
+  ShieldCheck,
 } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 import { translations } from '@/lib/translations';
@@ -390,164 +392,194 @@ export function Footer() {
 
         </div>
 
-        {/* International Statutory Portals Banner */}
-        <div className="py-6 border-b border-surface-darker/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
-                <span>🌐</span>
-                <span>International Statutory Suites (100 Tools)</span>
-              </span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                100% In-Browser • Client-Side
-              </span>
+        {/* International Statutory Portals Banner (160 Tools across 8 Nations) */}
+        <div className="py-8 border-b border-surface-darker/80 space-y-5">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black uppercase tracking-wider text-text-main flex items-center gap-1.5">
+                  <Globe2 className="w-4 h-4 text-primary" />
+                  <span>International Sovereign Statutory Portals</span>
+                </span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                  160 Tools • 100% In-Browser
+                </span>
+              </div>
+              <p className="text-xs text-text-main/70">
+                Compliant statutory calculation, tax simulation, and document verification engines tailored to 8 national jurisdictions.
+              </p>
             </div>
-            <p className="text-xs text-text-main/70">
-              Compliant statutory calculation and document verification engines tailored to national jurisdictions.
-            </p>
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Zero Data Retention</span>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
             <Link
               href="/es"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-orange-300 hover:bg-orange-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+              className="flex flex-col items-start p-2.5 rounded-xl bg-surface border border-surface-darker hover:border-orange-400 hover:bg-orange-50/50 hover:shadow-xs transition-all group"
             >
-              <span className="text-base group-hover:scale-110 transition-transform">🇪🇸</span>
-              <span>España</span>
-              <span className="text-[10px] font-bold text-orange-700 bg-orange-100 px-1.5 py-0.5 rounded">20 Herramientas</span>
+              <div className="flex items-center gap-1.5 w-full">
+                <span className="text-base group-hover:scale-110 transition-transform">🇪🇸</span>
+                <span className="font-bold text-xs text-text-main truncate">España</span>
+              </div>
+              <span className="mt-1 text-[10px] font-bold text-orange-700 bg-orange-100/80 px-1.5 py-0.5 rounded">
+                20 Herramientas
+              </span>
             </Link>
 
             <Link
               href="/de"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-amber-300 hover:bg-amber-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+              className="flex flex-col items-start p-2.5 rounded-xl bg-surface border border-surface-darker hover:border-amber-400 hover:bg-amber-50/50 hover:shadow-xs transition-all group"
             >
-              <span className="text-base group-hover:scale-110 transition-transform">🇩🇪</span>
-              <span>Deutschland</span>
-              <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">20 Rechner</span>
+              <div className="flex items-center gap-1.5 w-full">
+                <span className="text-base group-hover:scale-110 transition-transform">🇩🇪</span>
+                <span className="font-bold text-xs text-text-main truncate">Deutschland</span>
+              </div>
+              <span className="mt-1 text-[10px] font-bold text-amber-700 bg-amber-100/80 px-1.5 py-0.5 rounded">
+                20 Rechner
+              </span>
             </Link>
 
             <Link
               href="/fr"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-blue-300 hover:bg-blue-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+              className="flex flex-col items-start p-2.5 rounded-xl bg-surface border border-surface-darker hover:border-blue-400 hover:bg-blue-50/50 hover:shadow-xs transition-all group"
             >
-              <span className="text-base group-hover:scale-110 transition-transform">🇫🇷</span>
-              <span>France</span>
-              <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">20 Simulateurs</span>
+              <div className="flex items-center gap-1.5 w-full">
+                <span className="text-base group-hover:scale-110 transition-transform">🇫🇷</span>
+                <span className="font-bold text-xs text-text-main truncate">France</span>
+              </div>
+              <span className="mt-1 text-[10px] font-bold text-blue-700 bg-blue-100/80 px-1.5 py-0.5 rounded">
+                20 Simulateurs
+              </span>
             </Link>
 
             <Link
               href="/it"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-sky-300 hover:bg-sky-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+              className="flex flex-col items-start p-2.5 rounded-xl bg-surface border border-surface-darker hover:border-sky-400 hover:bg-sky-50/50 hover:shadow-xs transition-all group"
             >
-              <span className="text-base group-hover:scale-110 transition-transform">🇮🇹</span>
-              <span>Italia</span>
-              <span className="text-[10px] font-bold text-sky-700 bg-sky-100 px-1.5 py-0.5 rounded">20 Calcolatori</span>
+              <div className="flex items-center gap-1.5 w-full">
+                <span className="text-base group-hover:scale-110 transition-transform">🇮🇹</span>
+                <span className="font-bold text-xs text-text-main truncate">Italia</span>
+              </div>
+              <span className="mt-1 text-[10px] font-bold text-sky-700 bg-sky-100/80 px-1.5 py-0.5 rounded">
+                20 Calcolatori
+              </span>
             </Link>
 
             <Link
               href="/br"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-emerald-300 hover:bg-emerald-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+              className="flex flex-col items-start p-2.5 rounded-xl bg-surface border border-surface-darker hover:border-emerald-400 hover:bg-emerald-50/50 hover:shadow-xs transition-all group"
             >
-              <span className="text-base group-hover:scale-110 transition-transform">🇧🇷</span>
-              <span>Brasil</span>
-              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">20 Ferramentas</span>
+              <div className="flex items-center gap-1.5 w-full">
+                <span className="text-base group-hover:scale-110 transition-transform">🇧🇷</span>
+                <span className="font-bold text-xs text-text-main truncate">Brasil</span>
+              </div>
+              <span className="mt-1 text-[10px] font-bold text-emerald-700 bg-emerald-100/80 px-1.5 py-0.5 rounded">
+                20 Ferramentas
+              </span>
             </Link>
 
             <Link
               href="/uk"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-indigo-300 hover:bg-indigo-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+              className="flex flex-col items-start p-2.5 rounded-xl bg-surface border border-surface-darker hover:border-indigo-400 hover:bg-indigo-50/50 hover:shadow-xs transition-all group"
             >
-              <span className="text-base group-hover:scale-110 transition-transform">🇬🇧</span>
-              <span>United Kingdom</span>
-              <span className="text-[10px] font-bold text-indigo-900 bg-indigo-100 px-1.5 py-0.5 rounded">20 Tools</span>
+              <div className="flex items-center gap-1.5 w-full">
+                <span className="text-base group-hover:scale-110 transition-transform">🇬🇧</span>
+                <span className="font-bold text-xs text-text-main truncate">United Kingdom</span>
+              </div>
+              <span className="mt-1 text-[10px] font-bold text-indigo-900 bg-indigo-100/80 px-1.5 py-0.5 rounded">
+                20 Tools
+              </span>
             </Link>
 
             <Link
               href="/mx"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-emerald-500 hover:bg-emerald-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+              className="flex flex-col items-start p-2.5 rounded-xl bg-surface border border-surface-darker hover:border-emerald-500 hover:bg-emerald-50/50 hover:shadow-xs transition-all group"
             >
-              <span className="text-base group-hover:scale-110 transition-transform">🇲🇽</span>
-              <span>México</span>
-              <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-1.5 py-0.5 rounded">20 Herramientas</span>
+              <div className="flex items-center gap-1.5 w-full">
+                <span className="text-base group-hover:scale-110 transition-transform">🇲🇽</span>
+                <span className="font-bold text-xs text-text-main truncate">México</span>
+              </div>
+              <span className="mt-1 text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-1.5 py-0.5 rounded">
+                20 Herramientas
+              </span>
             </Link>
 
             <Link
               href="/au"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-surface-darker hover:border-amber-500 hover:bg-amber-50/60 transition-all text-xs font-bold text-text-main group shadow-2xs"
+              className="flex flex-col items-start p-2.5 rounded-xl bg-surface border border-surface-darker hover:border-amber-500 hover:bg-amber-50/50 hover:shadow-xs transition-all group"
             >
-              <span className="text-base group-hover:scale-110 transition-transform">🇦🇺</span>
-              <span>Australia</span>
-              <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded">20 Tools</span>
+              <div className="flex items-center gap-1.5 w-full">
+                <span className="text-base group-hover:scale-110 transition-transform">🇦🇺</span>
+                <span className="font-bold text-xs text-text-main truncate">Australia</span>
+              </div>
+              <span className="mt-1 text-[10px] font-bold text-amber-800 bg-amber-100/80 px-1.5 py-0.5 rounded">
+                20 Tools
+              </span>
             </Link>
           </div>
         </div>
 
-        {/* Bottom Bar: Symmetrical Copyright, Legal Quick Links & India Badge */}
-        <div className="pt-6 sm:pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-text-main/70">
-          <p className="text-center lg:text-left leading-relaxed">
-            © 2026 Kagazo. {t.footer_rights || (isTamil ? 'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை' : 'All rights reserved')} — {isTamil
-              ? 'இந்திய அரசு PDF டிஜிட்டல் கையொப்பங்களை சரிபார்க்கும் இலவச தளம்.'
-              : 'Free online tool for Indian government PDF digital signature verification.'}
-          </p>
-
-          {/* Quick Legal & Contact Links */}
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-3.5 text-xs font-semibold text-text-main/70 shrink-0">
+        {/* Legal, Trust & Corporate Navigation Bar */}
+        <div className="py-5 border-b border-surface-darker/60 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+          <nav aria-label="Legal & Trust Links" className="flex flex-wrap items-center justify-center md:justify-start gap-x-5 gap-y-2 text-text-main/75 font-medium">
             <Link href="/privacy" className="hover:text-primary transition-colors">
               Privacy Policy
             </Link>
-            <span>•</span>
             <Link href="/terms" className="hover:text-primary transition-colors">
               Terms of Service
             </Link>
-            <span>•</span>
             <Link href="/disclaimer" className="hover:text-primary transition-colors">
               Disclaimer
             </Link>
-            <span>•</span>
             <Link href="/cookies" className="hover:text-primary transition-colors">
-              Cookies
+              Cookie Policy
             </Link>
-            <span>•</span>
+            <Link href="/how-it-works" className="hover:text-primary font-bold text-text-main transition-colors">
+              How It Works
+            </Link>
+            <Link href="/about" className="hover:text-primary font-bold text-text-main transition-colors">
+              About Us
+            </Link>
             <Link href="/tools" className="hover:text-primary transition-colors">
               Tools Directory
             </Link>
-            <span>•</span>
             <Link href="/blog" className="hover:text-primary transition-colors">
               Blog &amp; Guides
             </Link>
-            <span>•</span>
-            <Link href="/es" className="hover:text-orange-600 font-bold transition-colors">
-              🇪🇸 España (20)
+          </nav>
+
+          <div className="flex items-center gap-3 shrink-0">
+            <Link
+              href="/contact"
+              className="text-xs font-bold text-text-main hover:text-primary transition-colors flex items-center gap-1.5 bg-surface border border-surface-darker px-3 py-1.5 rounded-xl hover:border-primary/40 shadow-2xs"
+            >
+              <Headphones className="w-3.5 h-3.5 text-primary" />
+              <span>Support Desk</span>
             </Link>
-            <span>•</span>
-            <Link href="/de" className="hover:text-amber-600 font-bold transition-colors">
-              🇩🇪 Deutschland (20)
-            </Link>
-            <span>•</span>
-            <Link href="/fr" className="hover:text-blue-600 font-bold transition-colors">
-              🇫🇷 France (20)
-            </Link>
-            <span>•</span>
-            <Link href="/it" className="hover:text-sky-600 font-bold transition-colors">
-              🇮🇹 Italia (20)
-            </Link>
-            <span>•</span>
-            <Link href="/contact" className="hover:text-primary transition-colors">
-              Support Desk
-            </Link>
-            <span>•</span>
             <a
               href={`mailto:${contactEmail}`}
-              className="hover:text-primary text-primary font-bold transition-colors inline-flex items-center gap-1"
+              className="text-xs font-bold text-primary hover:underline flex items-center gap-1.5 bg-primary-light/60 border border-primary/20 px-3 py-1.5 rounded-xl transition-all"
             >
-              <Mail className="w-3 h-3 text-primary" />
+              <Mail className="w-3.5 h-3.5" />
               <span>{contactEmail}</span>
             </a>
           </div>
+        </div>
 
-          {/* Made with Love for India badge */}
-          <div className="flex items-center gap-1.5 shrink-0 bg-white border border-surface-darker px-3.5 py-1.5 rounded-full font-bold shadow-2xs text-text-main text-[11px]">
-            <span>{t.footer_made || (isTamil ? 'இந்தியாவிற்காக ❤️ உடன் உருவாக்கப்பட்டது 🇮🇳' : 'Made with ❤️ for India 🇮🇳')}</span>
+        {/* Bottom Bar: Full-Width Symmetrical Copyright & Badge */}
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-text-main/70">
+          <p className="text-center sm:text-left leading-relaxed text-text-main/75 max-w-2xl">
+            © 2026 Kagazo. {t.footer_rights || (isTamil ? 'அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை' : 'All rights reserved')} — {isTamil
+              ? 'இந்திய அரசு PDF டிஜிட்டல் கையொப்பங்களை சரிபார்க்கும் இலவச தளம்.'
+              : 'Free cryptographically verified sovereign PDF digital signature validator, biometric photo studios, and statutory civic utilities.'}
+          </p>
+
+          {/* Made with Love Badge */}
+          <div className="flex items-center gap-2 shrink-0 bg-white border border-surface-darker px-4 py-2 rounded-full font-bold shadow-2xs text-text-main text-xs">
+            <span>{t.footer_made || (isTamil ? 'இந்தியாவிற்காக ❤️ உடன் உருவாக்கப்பட்டது 🇮🇳' : 'Made with ❤️ for India 🇮🇳 & Global Citizens 🌐')}</span>
           </div>
         </div>
 
