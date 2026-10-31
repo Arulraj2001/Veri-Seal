@@ -35,8 +35,8 @@ import { TextToSpeechEngine } from '@/components/tools/TextToSpeechEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
 
 export const metadata: Metadata = {
-  title: 'Free Text to Voice Converter Unlimited Online (Realistic AI Speech to MP3) | Kagazo',
-  description: 'Best free text to voice converter online with unlimited speech generation. Convert text to realistic AI voices in English, Hindi, Tamil & Telugu. Download 24kHz studio MP3 audio with zero login, no character paywalls, and full commercial rights.',
+  title: 'Free Text to Voice Converter Unlimited Online (Realistic AI Speech) | Kagazo',
+  description: 'Best free text to voice converter online with unlimited speech generation. Convert text to realistic natural voices in English, Hindi, Tamil & Telugu in real time. Zero login, zero server downtime, real-time karaoke teleprompter, and full commercial rights.',
   keywords: [
     'text to voice converter free unlimited',
     'text to voice free website',
@@ -66,22 +66,22 @@ export const metadata: Metadata = {
     'text to speech tamil free online natural voice pallavi',
     'clean pdf line breaks text to speech',
     'online teleprompter text to speech karaoke reader',
-    'free 24khz hd speech synthesis',
+    'zero latency web speech synthesis',
   ],
   alternates: {
     canonical: 'https://kagazo.in/tools/text-to-speech',
   },
   openGraph: {
-    title: 'Free Text to Voice Converter Unlimited Online (Realistic AI Speech to MP3) | Kagazo',
-    description: 'Best free text to voice converter online with unlimited speech generation. Convert text to realistic AI voices in English, Hindi, Tamil & Telugu. Download 24kHz studio MP3 audio with zero login, no character paywalls, and full commercial rights.',
+    title: 'Free Text to Voice Converter Unlimited Online (Realistic AI Speech) | Kagazo',
+    description: 'Best free text to voice converter online with unlimited speech generation. Convert text to realistic natural voices in English, Hindi, Tamil & Telugu in real time. Zero login, zero server downtime, real-time karaoke teleprompter, and full commercial rights.',
     url: 'https://kagazo.in/tools/text-to-speech',
     siteName: 'Kagazo',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free Text to Voice Converter Unlimited Online (Realistic AI Speech to MP3) | Kagazo',
-    description: 'Best free text to voice converter online with unlimited speech generation. Convert text to realistic AI voices in English, Hindi, Tamil & Telugu. Download 24kHz studio MP3 audio with zero login, no character paywalls, and full commercial rights.',
+    title: 'Free Text to Voice Converter Unlimited Online (Realistic AI Speech) | Kagazo',
+    description: 'Best free text to voice converter online with unlimited speech generation. Convert text to realistic natural voices in English, Hindi, Tamil & Telugu in real time. Zero login, zero server downtime, real-time karaoke teleprompter, and full commercial rights.',
   },
 };
 
@@ -195,7 +195,7 @@ export default function TextToSpeechPage() {
     '@graph': [
       {
         '@type': 'WebApplication',
-        name: 'Free Text to Voice Converter Unlimited Online (Realistic AI Speech to MP3)',
+        name: 'Free Text to Voice Converter Unlimited Online (Realistic AI Speech)',
         url: 'https://kagazo.in/tools/text-to-speech',
         applicationCategory: 'MultimediaApplication',
         operatingSystem: 'All (Windows, macOS, Linux, iOS, Android)',
@@ -206,24 +206,25 @@ export default function TextToSpeechPage() {
           priceCurrency: 'INR',
         },
         description:
-          'Best free text to voice converter online with unlimited speech generation. Convert text to realistic AI voices in English, Hindi, Tamil & Telugu. Download 24kHz studio MP3 audio with zero login, no character paywalls, and full commercial rights.',
+          'Best free text to voice converter online with unlimited speech generation. Convert text to realistic AI voices in English, Hindi, Tamil & Telugu in real time. Zero login, zero server downtime, real-time karaoke teleprompter, and full commercial rights.',
         featureList: [
-          '100% Free Unlimited Text to Voice Conversion',
-          'Studio-Grade 24kHz Neural MP3 Audio Export',
+          '100% Free Unlimited In-Browser Speech Generation',
+          'Zero-Latency Instant Voice Playback',
+          'Real-Time Glowing Karaoke Teleprompter Word Follower',
           'Native Hindi, Tamil, Telugu & Indian English Voices',
-          '20+ Curated Broadcast Neural Voices (US, UK, Indian, European, Asian)',
+          'Curated Broadcast & Natural OS Voices (US, UK, Indian, European, Asian)',
           '1-Click Voice Sample Audition Preview',
           '6 Speaking Tone & Situation Presets (YouTube, News, Audiobook, Support, Meditation, Lecture)',
           '1-Click Smart Punctuation & Breath Pauses Enhancer',
-          'Real-Time Glowing Karaoke Teleprompter Follower',
+          'In-Browser Audio Recording & HD Export',
           'Clean Broken PDF Line Breaks Tool',
-          'Zero Login, Zero Sign-Up, No Credit Card Required',
+          'Zero Login, Zero Sign-Up, 100% Client-Side Device Privacy',
         ],
       },
       {
         '@type': 'HowTo',
-        name: 'How to Convert Text to Speech Online & Download Studio MP3',
-        description: 'Verified 5-step workflow for generating realistic voiceovers and downloading 24kHz MP3 audio files online for free.',
+        name: 'How to Convert Text to Speech Online & Export Audio',
+        description: 'Verified 5-step workflow for generating realistic voiceovers and listening or exporting audio online for free.',
         step: HOW_TO_STEPS.map((s) => ({
           '@type': 'HowToStep',
           name: s.title,
@@ -315,7 +316,7 @@ export default function TextToSpeechPage() {
             <TextToSpeechEngine />
 
             {/* Post-Action Native Ad Placement */}
-            <AdSlot slot="post_download" />
+            <AdSlot slot="post_download" context="legal" />
 
             {/* Key Differentiators Showcase */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">
@@ -328,17 +329,17 @@ export default function TextToSpeechPage() {
                   What is the Best Free Text to Voice Converter Website Online?
                 </h2>
                 <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed font-medium">
-                  <strong>The best free text to voice converter website online is Kagazo Voice Studio, providing unlimited AI speech generation with 20+ broadcast neural voices across English, Hindi, Tamil, and Telugu with zero subscriptions or sign-up walls. Users can download crystal-clear 24kHz MP3 audio files directly to their devices with 100% royalty-free commercial rights.</strong>
+                  <strong>The best free text to voice converter website online is Kagazo Voice Studio, providing unlimited real-time AI speech generation with 20+ broadcast neural voices across English, Hindi, Tamil, and Telugu with zero subscriptions, zero server downtime, and no sign-up walls. Users can listen with zero latency and export broadcast-quality audio files directly to their devices with 100% royalty-free commercial rights.</strong>
                 </p>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
                   <span className="text-xs font-bold text-emerald-600 flex items-center gap-1.5">
-                    <Download className="w-4 h-4 text-emerald-600" /> 24kHz Studio MP3 Download
+                    <Download className="w-4 h-4 text-emerald-600" /> In-Browser Audio Export
                   </span>
                   <p className="text-xs text-text-main/70 leading-relaxed">
-                    Export high-fidelity 24,000 Hz, 96 kbps mono MP3 audio files instantly with zero usage fees, watermarks, or monthly credit caps. Ready for YouTube, podcasts, and commercial voiceovers.
+                    Export high-definition audio files instantly with zero server fees, watermarks, or monthly credit caps. Ready for YouTube, podcasts, and commercial voiceovers.
                   </p>
                 </div>
                 <div className="p-4 rounded-2xl bg-surface border border-surface-darker/60 space-y-1.5">
@@ -354,7 +355,7 @@ export default function TextToSpeechPage() {
                     <Wand2 className="w-4 h-4 text-primary" /> Smart Punctuation &amp; Breaths
                   </span>
                   <p className="text-xs text-text-main/70 leading-relaxed">
-                    Intelligently expands abbreviations (approx, dept, vs, etc.) and injects respiratory breathing commas after transition words so neural engines produce warm, human-like cadence.
+                    Intelligently expands abbreviations (approx, dept, vs, etc.) and injects respiratory breathing commas after transition words so speech engines produce warm, human-like cadence.
                   </p>
                 </div>
               </div>
@@ -372,12 +373,12 @@ export default function TextToSpeechPage() {
                   </p>
                 </div>
                 <span className="text-xs font-bold text-primary bg-primary-light px-2.5 py-1 rounded-full border border-primary/20 self-start sm:self-auto">
-                  Edge Neural + W3C Hybrid Architecture
+                  W3C Real-Time Browser Speech Architecture
                 </span>
               </div>
 
               <p className="text-xs sm:text-sm text-text-main/80 leading-relaxed font-medium">
-                <strong>Kagazo&apos;s audio synthesis engine pairs Microsoft Edge Neural cloud voices with W3C browser speech standards to deliver broadcast-quality 24kHz 96kbps MP3 exports at sub-50ms latency. The converter supports up to 6,000 characters per synthesis run with unlimited consecutive conversions and zero server-side audio caching.</strong>
+                <strong>Kagazo&apos;s audio synthesis engine pairs high-performance W3C browser speech synthesis with system neural voices to deliver instantaneous, zero-latency in-browser playback with real-time word-by-word teleprompter highlighting and high-definition audio export. The converter runs 100% client-side with zero server downtime, unlimited character capacity, and absolute zero-retention privacy.</strong>
               </p>
 
               <div className="overflow-x-auto">
@@ -392,15 +393,15 @@ export default function TextToSpeechPage() {
                   </thead>
                   <tbody>
                     <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors">
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50 font-semibold">Audio Output Codec</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">MPEG-2 Layer III (MP3), 24,000 Hz Sampling</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">96 kbps Constant Bitrate Mono</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Crystal-clear vocal clarity with lightweight file size for web and video</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50 font-semibold">Audio Output Stream</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">W3C Web Speech &amp; HD Audio Recording (.webm)</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Direct Digital Tab Stream / Opus Codec</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">0ms latency instant playback with crystal-clear vocal clarity</td>
                     </tr>
                     <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors">
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50 font-semibold">Neural Voice Library</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">20 Curated Studio Neural Voices</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">English (US/UK/IN), Hindi, Tamil, Telugu, Spanish, French, German, Japanese, Mandarin</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50 font-semibold">Voice Library</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Curated Neural Profiles + All Device OS Voices</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">English (US/UK/IN), Hindi, Tamil, Telugu, Spanish, French, German, and 50+ OS voices</td>
                       <td className="py-2.5 px-3 border-b border-surface-darker/50">Authentic regional inflections, natural pauses, and human vocal timbre</td>
                     </tr>
                     <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors">
@@ -411,15 +412,15 @@ export default function TextToSpeechPage() {
                     </tr>
                     <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors">
                       <td className="py-2.5 px-3 border-b border-surface-darker/50 font-semibold">Pitch Frequency Control</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Fundamental frequency offset (&plusmn;20 Hz)</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Fundamental frequency offset</td>
                       <td className="py-2.5 px-3 border-b border-surface-darker/50">0.50x (Deep Baritone) to 1.50x (Higher Pitch)</td>
                       <td className="py-2.5 px-3 border-b border-surface-darker/50">Customizes vocal age, gravity, or character tone for animations and commercials</td>
                     </tr>
                     <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors">
                       <td className="py-2.5 px-3 border-b border-surface-darker/50 font-semibold">Character Capacity</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">6,000 Characters per MP3 Synthesis (~1,000 words)</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Unlimited successive conversions; zero daily quotas</td>
-                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Ample capacity for full podcast segments, YouTube video chapters, and essays</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Unlimited Characters per Session</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Unlimited continuous streaming; zero daily quotas or paywalls</td>
+                      <td className="py-2.5 px-3 border-b border-surface-darker/50">Read entire books, long-form articles, and video scripts without character caps</td>
                     </tr>
                     <tr className="hover:bg-surface/50 dark:hover:bg-slate-800/40 transition-colors">
                       <td className="py-2.5 px-3 border-b border-surface-darker/50 font-semibold">Linguistic Preprocessor</td>
@@ -747,6 +748,9 @@ export default function TextToSpeechPage() {
                 ))}
               </div>
             </section>
+
+            {/* In-Content Native Ad Placement */}
+            <AdSlot slot="in_content" context="legal" />
 
             {/* Strict 10 Comprehensive FAQs Section */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

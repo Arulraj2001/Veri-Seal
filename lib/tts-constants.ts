@@ -118,3 +118,50 @@ export const SITUATION_PRESETS: SituationPreset[] = [
   },
 ];
 
+export function matchBrowserVoice(
+  curatedId: string,
+  browserVoices: SpeechSynthesisVoice[]
+): SpeechSynthesisVoice | null {
+  if (!browserVoices || browserVoices.length === 0) return null;
+
+  const curated = POPULAR_NEURAL_VOICES.find((v) => v.id === curatedId);
+  if (!curated) return browserVoices[0] || null;
+
+  // 1. Try finding by name substring (e.g. "Jenny", "Guy", "Swara", "Madhur", "Pallavi", etc.)
+  const firstName = curated.name.split(' ')[0].toLowerCase();
+  const nameMatch = browserVoices.find((bv) =>
+    bv.name.toLowerCase().includes(firstName)
+  );
+  if (nameMatch) return nameMatch;
+
+  // 2. Try finding by exact locale match (e.g. "en-US", "hi-IN", "ta-IN")
+  const localeMatches = browserVoices.filter(
+    (bv) =>
+      bv.lang.toLowerCase() === curated.locale.toLowerCase() ||
+      bv.lang.replace('_', '-').toLowerCase() === curated.locale.toLowerCase()
+  );
+  if (localeMatches.length > 0) {
+    // Prefer natural/neural/Google/Microsoft/Apple voices
+    const naturalMatch = localeMatches.find((bv) =>
+      /natural|online|neural|google|siri|premium/i.test(bv.name)
+    );
+    return naturalMatch || localeMatches[0];
+  }
+
+  // 3. Try matching language prefix (e.g. "hi", "ta", "te", "es", "en")
+  const langPrefix = curated.locale.split('-')[0].toLowerCase();
+  const langPrefixMatches = browserVoices.filter((bv) =>
+    bv.lang.toLowerCase().startsWith(langPrefix)
+  );
+  if (langPrefixMatches.length > 0) {
+    const naturalMatch = langPrefixMatches.find((bv) =>
+      /natural|online|neural|google|siri|premium/i.test(bv.name)
+    );
+    return naturalMatch || langPrefixMatches[0];
+  }
+
+  // 4. Default fallback
+  return browserVoices.find((bv) => bv.default) || browserVoices[0] || null;
+}
+
+
