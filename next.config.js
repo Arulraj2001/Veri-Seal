@@ -7,9 +7,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    serverComponentsExternalPackages: ['msedge-tts'],
-  },
+  experimental: {},
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -119,6 +117,16 @@ const nextConfig = {
       {
         source: '/blog/gstin-verification-online-free',
         destination: '/blog/how-to-verify-gst-number-spot-fake-invoices-gstin-guide',
+        permanent: true,
+      },
+      {
+        source: '/tools/tnpsc-photo-resizer',
+        destination: '/tools/tnpsc-photo-signature-resizer',
+        permanent: true,
+      },
+      {
+        source: '/tools/signature-resizer',
+        destination: '/tools/tnpsc-photo-signature-resizer',
         permanent: true,
       },
     ];

@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import PhotoSheetEngine from '@/components/tools/PhotoSheetEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { ActionFlowBridge } from '@/components/tools/ActionFlowBridge';
 
 export const metadata: Metadata = {
   title: '8 Passport Photos on 4x6 Paper Maker (300 DPI Print Free) | Kagazo',
@@ -264,6 +265,9 @@ export default function PassportPhotoSheetMakerPage() {
 
             {/* Post-Action Native Ad Placement */}
             <AdSlot slot="post_download" />
+
+            {/* Workflow Action Bridge */}
+            <ActionFlowBridge workflow="passport" currentStepHref="/tools/passport-photo-sheet-maker" />
 
             {/* Key Differentiators Showcase */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">

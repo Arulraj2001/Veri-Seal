@@ -162,6 +162,14 @@ export function Footer() {
             <ul className="space-y-2 text-xs font-medium">
               <li>
                 <Link
+                  href="/tools/tnpsc-photo-signature-resizer"
+                  className="text-emerald-700 font-bold hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
+                >
+                  TNPSC Photo &amp; Sign ★
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/tools/passport-photo-sheet-maker"
                   className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
@@ -227,6 +235,14 @@ export function Footer() {
             <ul className="space-y-2 text-xs font-medium">
               <li>
                 <Link
+                  href="/tools/ssc-photo-signature-resizer"
+                  className="text-indigo-600 font-bold hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
+                >
+                  SSC Photo &amp; Sign ★
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/tools/compress-pdf-to-200kb"
                   className="text-text-main/75 hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
                 >
@@ -290,6 +306,14 @@ export function Footer() {
               {isTamil ? 'முடிவு அமைப்புகள்' : 'Decision OS & Tax'}
             </h4>
             <ul className="space-y-2 text-xs font-medium">
+              <li>
+                <Link
+                  href="/tools/text-to-speech"
+                  className="text-primary font-bold hover:text-primary transition-colors block py-0.5 leading-tight hover:translate-x-0.5 transform duration-150"
+                >
+                  Text to Voice Converter ★
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/tools/income-tax-calculator-2025-26"

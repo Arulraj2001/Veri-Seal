@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import ThumbImpressionEngine from '@/components/tools/ThumbImpressionEngine';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { ActionFlowBridge } from '@/components/tools/ActionFlowBridge';
 
 export const metadata: Metadata = {
   title: 'Left Thumb Impression (LTI) Resizer: 20–50 KB (IBPS, SBI, RRB) | Kagazo',
@@ -346,6 +347,9 @@ export default function ThumbImpressionPage() {
 
             {/* Post-Action Native AdSlot */}
             <AdSlot slot="post_download" />
+
+            {/* Workflow Action Bridge */}
+            <ActionFlowBridge workflow="tnpsc" currentStepHref="/tools/thumb-impression-resizer" />
 
             {/* Official Specifications Cheatsheet */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-6">

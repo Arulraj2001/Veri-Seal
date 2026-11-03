@@ -18,6 +18,7 @@ import {
 import { PdfCompressorEngine } from '@/components/tools/PdfCompressorEngine';
 import { TOOL_CONFIGS } from '@/components/tools/tool-configs';
 import { AdSlot } from '@/components/ads/AdSlot';
+import { ActionFlowBridge } from '@/components/tools/ActionFlowBridge';
 
 const config = TOOL_CONFIGS['compress-pdf-to-200kb'];
 
@@ -304,6 +305,9 @@ export default function CompressPdfTo200KbPage() {
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
+
+            {/* Workflow Action Bridge */}
+            <ActionFlowBridge workflow="tnpsc" currentStepHref="/tools/compress-pdf-to-200kb" />
 
             {/* Key Differentiators Showcase */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">

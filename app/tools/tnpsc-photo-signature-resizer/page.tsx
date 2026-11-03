@@ -24,6 +24,7 @@ import { AdSlot } from '@/components/ads/AdSlot';
 import { Breadcrumb } from '@/components/ui/Breadcrumb';
 import { RelatedTools } from '@/components/ui/RelatedTools';
 import { AnswerCapsule } from '@/components/seo/AnswerCapsule';
+import { ActionFlowBridge } from '@/components/tools/ActionFlowBridge';
 
 export const metadata: Metadata = {
   title: 'TNPSC Photo & Signature Resizer (200x230px, 20–50KB) — OTR 2026 Free | Kagazo',
@@ -288,6 +289,9 @@ export default function TnpscPhotoSignatureResizerPage() {
 
             {/* Post-Download Native AdSlot */}
             <AdSlot slot="post_download" />
+
+            {/* Workflow Action Bridge */}
+            <ActionFlowBridge workflow="tnpsc" currentStepHref="/tools/tnpsc-photo-signature-resizer" />
 
             {/* Tool Introduction & Key Differentiator */}
             <section className="bg-white rounded-3xl border border-surface-darker shadow-card p-6 sm:p-8 space-y-4">

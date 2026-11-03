@@ -2072,32 +2072,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...blogRoutes.map((r) => r.url),
   ]);
 
-  const dynamicToolRoutes: MetadataRoute.Sitemap = [];
-  for (const tool of TOOLS_CATALOG) {
-    if (!tool.slug || tool.slug.startsWith('/#')) continue;
-    const cleanPath = tool.slug.startsWith('/') ? tool.slug : `/${tool.slug}`;
-    const toolUrl = `${baseUrl}${cleanPath}`;
-    if (!existingUrls.has(toolUrl)) {
-      existingUrls.add(toolUrl);
-      dynamicToolRoutes.push({
-        url: toolUrl,
-        lastModified: now,
-        changeFrequency: 'daily',
-        priority: 0.95,
-      });
-    }
-  }
-
-  const settings = await getMergedSettings();
-  const allRoutes = [
-    ...staticRoutes,
-    ...dynamicToolRoutes,
-    ...seoRoutes,
-    ...blogRoutes,
-  ];
-
-  // Exclude low-intent generic dev/network utilities to preserve Google crawl budget for Indian Gov & Exam tools
-  const EXCLUDED_GENERIC_SLUGS = new Set([
+  // Generic utility slugs: included with calibrated priority to prevent "Discovered - currently not indexed"
+  const GENERIC_DEV_SLUGS = new Set([
     'youtube-thumbnail-downloader', 'color-picker', 'color-converter', 'whatsapp-link-generator',
     'qr-code-generator', 'qr-code-reader', 'barcode-generator', 'barcode-reader',
     'utm-link-generator', 'mailto-link-generator', 'paypal-link-generator', 'dns-lookup',
@@ -2111,12 +2087,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'hash-generator', 'uuid-generator'
   ]);
 
-  let finalRoutes = allRoutes.filter((r) => {
-    const slug = r.url.replace(`${baseUrl}/tools/`, '').replace(`${baseUrl}/`, '');
-    return !EXCLUDED_GENERIC_SLUGS.has(slug);
-  });
+  const dynamicToolRoutes: MetadataRoute.Sitemap = [];
+  for (const tool of TOOLS_CATALOG) {
+    if (!tool.slug || tool.slug.startsWith('/#')) continue;
+    const cleanPath = tool.slug.startsWith('/') ? tool.slug : `/${tool.slug}`;
+    const toolUrl = `${baseUrl}${cleanPath}`;
+    if (!existingUrls.has(toolUrl)) {
+      existingUrls.add(toolUrl);
+      const rawSlug = cleanPath.replace('/tools/', '').replace('/', '');
+      const isGeneric = GENERIC_DEV_SLUGS.has(rawSlug);
+      dynamicToolRoutes.push({
+        url: toolUrl,
+        lastModified: now,
+        changeFrequency: isGeneric ? 'monthly' : 'daily',
+        priority: isGeneric ? 0.70 : 0.95,
+      });
+    }
+  }
 
+  const settings = await getMergedSettings();
+  const allRoutes = [
+    ...staticRoutes,
+    ...dynamicToolRoutes,
+    ...seoRoutes,
+    ...blogRoutes,
+  ];
 
-
-  return finalRoutes;
+  return allRoutes;
 }
