@@ -105,6 +105,9 @@ export const metadata: Metadata = {
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '7hCnl0uBreoGPe1TQgNlojWQ2YMEbBUtQ5m842qDYD8',
+    other: {
+      'p:domain_verify': '5e5b16ec8695e1b98830955cea910feb',
+    },
   },
   other: {
     'revisit-after': '1 day',
@@ -205,6 +208,7 @@ export default function RootLayout({
 
         {/* Google Site Verification & Search Engine Auto-Crawling */}
         <meta name="google-site-verification" content="7hCnl0uBreoGPe1TQgNlojWQ2YMEbBUtQ5m842qDYD8" />
+        <meta name="p:domain_verify" content="5e5b16ec8695e1b98830955cea910feb" />
         <meta name="revisit-after" content="1 day" />
 
         {/* Preconnect for Google Fonts and Supabase */}
